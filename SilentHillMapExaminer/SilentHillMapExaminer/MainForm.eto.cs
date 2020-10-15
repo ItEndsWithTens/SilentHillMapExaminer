@@ -1,25 +1,16 @@
 using Eto.Drawing;
 using Eto.Forms;
+using Eto.Veldrid;
 
 namespace SilentHillMapExaminer
 {
 	partial class MainForm : Form
 	{
-		RichTextArea rtaFileContents = new RichTextArea();
-
 		void InitializeComponent()
 		{
 			Title = "Silent Hill Map Examiner";
 			ClientSize = new Size(400, 350);
 			Padding = 10;
-
-			Content = new StackLayout
-			{
-				Items =
-				{
-					rtaFileContents
-				}
-			};
 
 			var quitCommand = new Command { MenuText = "Quit", Shortcut = Application.Instance.CommonModifier | Keys.Q };
 			quitCommand.Executed += (sender, e) => Application.Instance.Quit();
