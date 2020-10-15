@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilentHillMapExaminer", "SilentHillMapExaminer\SilentHillMapExaminer\SilentHillMapExaminer.csproj", "{EA5EF392-6CD4-4133-8993-1FD05B81FDDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilentHillMapExaminer.Gtk", "SilentHillMapExaminer\SilentHillMapExaminer.Gtk\SilentHillMapExaminer.Gtk.csproj", "{03FF9F3D-A054-48C0-8C96-E3FEBE23E0ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilentHillMapExaminer.Mac", "SilentHillMapExaminer\SilentHillMapExaminer.Mac\SilentHillMapExaminer.Mac.csproj", "{AFBF0E6E-2712-4D70-A1FB-F32C9397F9A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilentHillMapExaminer.Wpf", "SilentHillMapExaminer\SilentHillMapExaminer.Wpf\SilentHillMapExaminer.Wpf.csproj", "{A2DA2334-078C-43A7-85A1-60F4EDB908BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA5EF392-6CD4-4133-8993-1FD05B81FDDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA5EF392-6CD4-4133-8993-1FD05B81FDDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA5EF392-6CD4-4133-8993-1FD05B81FDDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA5EF392-6CD4-4133-8993-1FD05B81FDDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03FF9F3D-A054-48C0-8C96-E3FEBE23E0ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03FF9F3D-A054-48C0-8C96-E3FEBE23E0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03FF9F3D-A054-48C0-8C96-E3FEBE23E0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03FF9F3D-A054-48C0-8C96-E3FEBE23E0ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFBF0E6E-2712-4D70-A1FB-F32C9397F9A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFBF0E6E-2712-4D70-A1FB-F32C9397F9A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFBF0E6E-2712-4D70-A1FB-F32C9397F9A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFBF0E6E-2712-4D70-A1FB-F32C9397F9A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2DA2334-078C-43A7-85A1-60F4EDB908BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2DA2334-078C-43A7-85A1-60F4EDB908BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2DA2334-078C-43A7-85A1-60F4EDB908BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2DA2334-078C-43A7-85A1-60F4EDB908BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7FBAF1CA-0999-4AA0-A932-125771E0D8D0}
+	EndGlobalSection
+EndGlobal
