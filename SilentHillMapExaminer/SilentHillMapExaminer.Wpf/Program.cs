@@ -1,14 +1,14 @@
-﻿using System;
-using Eto.Forms;
+﻿using Eto.Forms;
+using System;
 
 namespace SilentHillMapExaminer.Wpf
 {
-    class MainClass
-    {
-        [STAThread]
-        public static void Main(string[] args)
-        {
-            new Application(Eto.Platforms.Wpf).Run(new MainForm());
-        }
-    }
+	class MainClass
+	{
+		[STAThread]
+		public static void Main(string[] args)
+		{
+			new Application(Eto.Platforms.Wpf).Run(new MainForm());
+		}
+	}
 }
