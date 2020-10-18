@@ -1,5 +1,8 @@
 using Eto.Forms;
 using Eto.Veldrid;
+using Microsoft.DotNet.PlatformAbstractions;
+using System;
+using System.Text;
 using Veldrid;
 
 namespace SilentHillMapExaminer
@@ -30,8 +33,20 @@ namespace SilentHillMapExaminer
 			}
 		}
 
-		RichTextArea rtaFileContents = new RichTextArea();
+		private Command CmdOpen = new Command
+		{
+			MenuText = "&Open...",
+			Shortcut = Application.Instance.CommonModifier | Keys.O
+		};
+
+		RichTextArea rtaFileContents = new RichTextArea()
+		{
+			Font = new Eto.Drawing.Font(Eto.Drawing.FontFamilies.Monospace, 14.0f),
+			ReadOnly = true,
+			Wrap = false
+		};
 		VeldridSurface vlsMapDisplay;
+		Splitter splMain;
 
 		public UITimer Clock { get; } = new UITimer();
 
@@ -53,14 +68,27 @@ namespace SilentHillMapExaminer
 			vlsMapDisplay.VeldridInitialized += (sender, e) => VeldridReady = true;
 			vlsMapDisplay.Size = new Eto.Drawing.Size(200, 200);
 
-			var tblMain = new TableLayout(2, 1);
-			tblMain.Spacing = new Eto.Drawing.Size(10, 0);
 
-			tblMain.Add(rtaFileContents, 0, 0);
-			tblMain.Add(vlsMapDisplay, 1, 0);
+			rtaFileContents.SelectionChanged += RtaFileContents_SelectionChanged;
 
-			Content = tblMain;
+			splMain = new Splitter
+			{
+				Orientation = Orientation.Horizontal,
+				Panel1 = rtaFileContents,
+				Panel1MinimumSize = 64,
+				Panel2 = vlsMapDisplay,
+				Panel2MinimumSize = 64
+			};
 
+			//var tblMain = new TableLayout(2, 1);
+			//tblMain.Spacing = new Eto.Drawing.Size(10, 0);
+			//
+			//tblMain.Add(rtaFileContents, 0, 0);
+			//tblMain.Add(vlsMapDisplay, 1, 0);
+
+			Content = splMain;
+
+			CmdOpen.Executed += CmdOpen_Executed;
 
 			Clock.Interval = 1.0f / 60.0f;
 			Clock.Elapsed += Clock_Elapsed;
@@ -79,6 +107,77 @@ namespace SilentHillMapExaminer
 
 			vlsMapDisplay.GraphicsDevice.SubmitCommands(CommandList);
 			vlsMapDisplay.GraphicsDevice.SwapBuffers(vlsMapDisplay.Swapchain);
+		}
+
+		private void CloseMap()
+		{
+			// TODO: Delete Veldrid buffers, etc.
+		}
+
+		private void CmdOpen_Executed(object sender, System.EventArgs e)
+		{
+			var dlgOpenFile = new OpenFileDialog()
+			{
+				MultiSelect = false,
+				CheckFileExists = true
+			};
+
+			DialogResult result = dlgOpenFile.ShowDialog(this);
+
+			if (result == DialogResult.Cancel)
+			{
+				return;
+			}
+
+			CloseMap();
+
+			OpenMap(dlgOpenFile.FileName);
+		}
+
+		private void OpenMap(string fileName)
+		{
+			if (String.IsNullOrEmpty(fileName))
+			{
+				return;
+			}
+
+			byte[] raw = System.IO.File.ReadAllBytes(fileName);
+
+			var sb = new StringBuilder();
+
+			for (int i = 0; i < raw.Length; i++)
+			{
+				if (i > 0 && i % 16 == 0)
+				{
+					sb.Append(Environment.NewLine);
+				}
+
+				if (i % 16 != 0 && i % 4 == 0)
+				{
+					sb.Append(" ");
+				}
+
+				sb.Append(raw[i].ToString("X2"));
+			}
+
+			rtaFileContents.Text = sb.ToString();
+
+			// 2 characters per byte, 4 bytes per word, 4 words per line, but
+			// then there are 3 spaces separating said words, plus 1 newline.
+			Eto.Drawing.SizeF lineSize = rtaFileContents.Font.MeasureString(rtaFileContents.Text.Substring(0, 36));
+
+			// Unfortunately that's just the string itself, so add some cushion
+			// to account for scrollbars and what all.
+			splMain.Panel1MinimumSize = (int)lineSize.Width + 32;
+		}
+
+		private void RtaFileContents_SelectionChanged(object sender, EventArgs e)
+		{
+			var random = new System.Random();
+
+			var color = new Eto.Drawing.Color((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
+
+			rtaFileContents.SelectionBackground = color;
 		}
 
 		private void SetUpVeldrid()
