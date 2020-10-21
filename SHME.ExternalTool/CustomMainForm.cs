@@ -75,7 +75,11 @@ namespace BizHawk.Client.EmuHawk
 			//}
 
 			//Boxes[0].Position = new Vector3(155.5f, -8.5f, 0.15f);
-			Boxes[0].Position = new Vector3(0.5f);
+			Boxes[0].Position = new Vector3(0.0f, 0.0f, 0.0f);
+
+			Boxes.Add(generator.Generate().ToWorld());
+
+			Boxes[1].Position = new Vector3(159.5f, -0.5f, -13.5f);
 		}
 
 		public bool AskSaveChanges()
@@ -96,34 +100,24 @@ namespace BizHawk.Client.EmuHawk
 
 			switch (type)
 			{
+				//case ToolFormUpdateType.General:
+				//case ToolFormUpdateType.FastPreFrame:
 				case ToolFormUpdateType.PreFrame:
-					//TestMakingHarryWalkOnAir();
-					break;
-				case ToolFormUpdateType.PostFrame:
+					// The drawn boxes seem much more tightly attached to the
+					// world when this is done in PreFrame as opposed to PostFrame.
 					ReportAngles();
 					ReportPosition();
 					DrawStuff();
 					break;
+				//case ToolFormUpdateType.FastPostFrame:
+				//case ToolFormUpdateType.PostFrame:
+					//ReportAngles();
+					//ReportPosition();
+					//DrawStuff();
+					//break;
 				default:
 					break;
 			}
-		}
-
-		// I don't hold out much hope of getting this to work; can't
-		// seem to walk if the height is set beyond about -0.702 (higher
-		// up is lower numbers, for some reason I haven't figured out).
-		private void TestMakingHarryWalkOnAir()
-		{
-			bool success = Single.TryParse(TbxPositionZ.Text, out float z);
-
-			if (!success)
-			{
-				return;
-			}
-
-			Core.SetHarryZ(Mem, z);
-			Mem?.WriteS32((long)MainRamAddresses.HarryParalyzed, 0x00000000);
-			Mem?.WriteS32((long)MainRamAddresses.HarryPositionZTwo, 0x00000000);
 		}
 
 		private void ReportAngles()
@@ -150,6 +144,15 @@ namespace BizHawk.Client.EmuHawk
 			LblCameraPositionX.Text = position[3].ToString("N2");
 			LblCameraPositionY.Text = position[4].ToString("N2");
 			LblCameraPositionZ.Text = position[5].ToString("N2");
+
+			Vector3 boxCoords = CoordinateConverter.Convert(
+				Boxes[0].Position,
+				CoordinateType.YUpRightHanded,
+				CoordinateType.SilentHill);
+
+			LblBoxX.Text = boxCoords.X.ToString();
+			LblBoxY.Text = boxCoords.Y.ToString();
+			LblBoxZ.Text = boxCoords.Z.ToString();
 		}
 
 		private void BtnGetPosition_Click(object sender, EventArgs e)
@@ -206,80 +209,54 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			// Silent Hill uses what seem to be right handed coordinates, but
-			// rotated so that positive Z points down, for whatever reason. Also
-			// could be described as left handed coordinates with Z inverted? I
-			// guess. Very annoying to sort this shit out.
-			//
-			// Starting Harry position:
-			// X: -6.08
-			// Y: 154.02
-			// Z: 0
-			//
-			// Renderable positions are assumed to be Z up, left handed.
-			//Box.Position = new Vector3(-6.08f, -154.02f, 0.0f);
-			//Box.Position = new Vector3(-6.0f, -154f, 0.0f);
-			//Box.Position = new Vector3(0.5f, 0.0f, -0.5f);
-			//Box.Position = new Vector3(0.0f, 0.0f, -0.5f);
-
-			// Starting camera position:
-			// X: 156.48
-			// Y: -5.56
-			// Z: -2.50
-			//Camera.Position = new Vector3(156.48f, -2.50f, 5.56f);
-
 			List<float> position = Core.GetPosition(Mem);
 			List<float> angles = Core.GetAngles(Mem);
-			Camera.Position = new Vector3(
-				//Single.Parse(lblCameraPositionX.Text),
-				//Single.Parse(lblCameraPositionZ.Text),
-				//Single.Parse(lblCameraPositionY.Text));
-				position[3],
-				position[5],
-				position[4]);
-			//Camera.Position = new Vector3(-2.0f, 0.0f, 0.0f);
 
-			// SH camera pitch uses +90 for straight down, -90 for straight up.
-			//Camera.Pitch = Single.Parse(lblCameraPitch.Text);
-			//Camera.Yaw = -Single.Parse(lblCameraYaw.Text);
-			//Camera.Roll = Single.Parse(lblCameraRoll.Text);
-			Camera.Pitch = angles[3];
-			Camera.Yaw = -angles[4];
+			Camera.Position = CoordinateConverter.Convert(position.GetRange(3, 3), CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
+
+			//TODO: Need to sort out angle conversion. Not sure why it doesn't work yet.
+			Camera.Pitch = -angles[3];
+			Camera.Yaw = angles[4];
 			Camera.Roll = angles[5];
-
-			// Why, above, do I need to negate the camera Yaw but not the camera
-			// Z position? Coordinate system bullshit. Go figure.
-
 
 			Camera.UpdateProjectionMatrix();
 
 			Gui.DrawNew("emu"); // The name 'emu' is apparently required.
 
 			var origin = new Point(84, 16);
+			Gui.DrawBox(origin.X, origin.Y, 640 + (origin.X - 1), 448 + (origin.Y - 1));
+			Gui.DrawLine(origin.X, origin.Y + 448 / 2, origin.X + 640 - 1, origin.Y + 448 / 2);
+			Gui.DrawLine(origin.X + 640 / 2, origin.Y, origin.X + 640 / 2, origin.Y + 448 - 1);
 
 			foreach (Renderable box in Boxes)
 			{
-
 				if (!Camera.CanSee(box))
 				{
-					//Gui.DrawFinish();
-					//return;
+					// FIXME: Should be just a 'continue', right? Need to test, too late right now, need sleep.
+					Gui.DrawFinish();
+					return;
 				}
-
-				Gui.DrawBox(origin.X, origin.Y, 640 + (origin.X - 1), 448 + (origin.Y - 1));
 
 				// Remember that the projection, view, model order from GL
 				// shaders is reversed in C#, to account for OpenTK's row
 				// major matrix layout.
 				Matrix4 matrix = box.ModelMatrix * Camera.ViewMatrix * Camera.ProjectionMatrix;
 
-				foreach (Polygon p in box.Polygons)
+				List<(Polygon, Renderable)> visible = Camera.GetVisiblePolygons(Boxes);
+
+				//foreach (Polygon p in box.Polygons)
+				foreach ((Polygon p, Renderable _) in visible)
 				{
 					foreach (int i in p.LineLoopIndices)
 					{
 						Vertex v = box.Vertices[i];
 
-						Vector4 clip = new Vector4(v.Position, 1.0f) * matrix;
+						Vector3 converted = CoordinateConverter.Convert(
+							v.Position,
+							CoordinateType.YUpRightHanded,
+							CoordinateType.SilentHill);
+
+						Vector4 clip = new Vector4(converted, 1.0f) * matrix;
 
 						Vector3 ndc = clip.Xyz / clip.W;
 
@@ -290,7 +267,9 @@ namespace BizHawk.Client.EmuHawk
 						Points.Add(screen);
 					}
 
-					Gui.DrawPolygon(Points.ToArray(), Color.White);
+					int argb = box.Vertices[p.LineLoopIndices[0]].Color.ToArgb();
+
+					Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb), Color.FromArgb(argb));
 					Points.Clear();
 				}
 			}
@@ -302,6 +281,88 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Camera.Fov = TrkFov.Value;
 			LblFov.Text = TrkFov.Value.ToString();
+		}
+
+		private void TrkBoxVerticalCoord_Scroll(object sender, EventArgs e)
+		{
+			Vector3 oldPosition = Boxes[0].Position;
+
+			Boxes[0].Position = new Vector3(oldPosition.X, -TrkBoxVerticalCoord.Value, oldPosition.Z);
+
+			LblBoxVerticalCoord.Text = (-TrkBoxVerticalCoord.Value).ToString();
+		}
+
+		private void BtnGrabMapGraphic_Click(object sender, EventArgs e)
+		{
+			List<byte> headerBytes = Mem.ReadByteRange((long)MainRamAddresses.SomeRandomTim, TimHeader.Length);
+
+			var header = new TimHeader(headerBytes.ToArray());
+
+			int timLength = header.ImageHeaderOfs + header.ImageBlockLength;
+
+			List<byte> timBytes = Mem.ReadByteRange((long)MainRamAddresses.SomeRandomTim, timLength);
+			var mapGraphic = new Tim(header, timBytes.ToArray());
+
+			PbxMapGraphic.Image = mapGraphic.Bitmap;
+			PbxMapGraphic.SizeMode = PictureBoxSizeMode.StretchImage;
+			PbxMapGraphic.Width = 640;
+		}
+
+		private void BtnBoxGetPosition_Click(object sender, EventArgs e)
+		{
+			NudBoxX.Text = LblBoxX.Text;
+			NudBoxY.Text = LblBoxY.Text;
+			NudBoxZ.Text = LblBoxZ.Text;
+		}
+
+		private void BtnBoxSetPosition_Click(object sender, EventArgs e)
+		{
+			Boxes[0].Position = CoordinateConverter.Convert(
+				new Vector3(
+					(float)NudBoxX.Value,
+					(float)NudBoxY.Value,
+					(float)NudBoxZ.Value),
+				CoordinateType.SilentHill,
+				CoordinateType.YUpRightHanded);
+		}
+
+		private void NudBoxX_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable box = Boxes[0];
+
+			box.Position = CoordinateConverter.Convert(
+				new Vector3(
+					(float)NudBoxX.Value,
+					box.Position.Y,
+					box.Position.Z),
+				CoordinateType.SilentHill,
+				CoordinateType.YUpRightHanded);
+		}
+
+		private void NudBoxY_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable box = Boxes[0];
+
+			box.Position = CoordinateConverter.Convert(
+				new Vector3(
+					box.Position.X,
+					(float)NudBoxY.Value,
+					box.Position.Z),
+				CoordinateType.SilentHill,
+				CoordinateType.YUpRightHanded);
+		}
+
+		private void NudBoxZ_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable box = Boxes[0];
+
+			box.Position = CoordinateConverter.Convert(
+				new Vector3(
+					box.Position.X,
+					box.Position.Y,
+					(float)NudBoxZ.Value),
+				CoordinateType.SilentHill,
+				CoordinateType.YUpRightHanded);
 		}
 	}
 }

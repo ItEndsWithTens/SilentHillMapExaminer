@@ -144,7 +144,7 @@ namespace SHME.ExternalTool
 		/// </summary>
 		public Color4? Tint { get; set; } = null;
 
-		public event EventHandler Updated;
+		public event EventHandler? Updated;
 
 		public Renderable()
 		{
@@ -158,7 +158,7 @@ namespace SHME.ExternalTool
 		}
 		public Renderable(List<Vector3> points) : this()
 		{
-			foreach (var point in points)
+			foreach (Vector3 point in points)
 			{
 				Vertices.Add(new Vertex(point.X, point.Y, point.Z));
 			}
@@ -167,7 +167,7 @@ namespace SHME.ExternalTool
 		}
 		public Renderable(List<Vertex> vertices) : this()
 		{
-			foreach (var vertex in vertices)
+			foreach (Vertex vertex in vertices)
 			{
 				Vertices.Add(vertex);
 			}
@@ -195,14 +195,14 @@ namespace SHME.ExternalTool
 		{
 			if (Transformability.HasFlag(Transformability.Rotate))
 			{
-				for (var i = 0; i < Vertices.Count; i++)
+				for (int i = 0; i < Vertices.Count; i++)
 				{
-					var world = Vertices[i].ModelToWorld(ModelMatrix);
+					Vertex world = Vertices[i].ModelToWorld(ModelMatrix);
 					var rotated = Vertex.Rotate(world, pitch, yaw, roll);
 					Vertices[i] = rotated.WorldToModel(ModelMatrix);
 				}
 
-				for (var i = 0; i < Polygons.Count; i++)
+				for (int i = 0; i < Polygons.Count; i++)
 				{
 					Polygons[i] = Polygon.Rotate(Polygons[i], pitch, yaw, roll);
 				}
@@ -288,21 +288,20 @@ namespace SHME.ExternalTool
 		{
 			if (CoordinateSpace == CoordinateSpace.World)
 			{
-				for (var i = 0; i < Vertices.Count; i++)
+				for (int i = 0; i < Vertices.Count; i++)
 				{
 					Vertices[i] = Vertex.TranslateRelative(Vertices[i], diff);
 				}
 			}
 
-			for (var i = 0; i < Polygons.Count; i++)
+			for (int i = 0; i < Polygons.Count; i++)
 			{
 				Polygons[i] = Polygon.TranslateRelative(Polygons[i], diff);
 			}
 
 			if (CoordinateSpace == CoordinateSpace.Model)
 			{
-				var yUpRightHand = new Vector3(diff.X, diff.Z, -diff.Y);
-				ModelMatrix *= Matrix4.CreateTranslation(yUpRightHand);
+				ModelMatrix *= Matrix4.CreateTranslation(diff);
 			}
 
 			Aabb += diff;
@@ -338,13 +337,13 @@ namespace SHME.ExternalTool
 		public Aabb UpdateBounds()
 		{
 			var worldVerts = new List<Vector3>();
-			foreach (var v in Vertices)
+			foreach (Vertex v in Vertices)
 			{
-				var model = new Vector4(v.Position.X, v.Position.Z, -v.Position.Y, 1.0f);
-				var world = model * ModelMatrix;
+				var model = new Vector4(v.Position, 1.0f);
 
-				var updated = new Vector3(world.X, -world.Z, world.Y);
-				worldVerts.Add(updated);
+				Vector4 world = model * ModelMatrix;
+
+				worldVerts.Add(world.Xyz);
 			}
 
 			Aabb = new Aabb(worldVerts);
@@ -357,6 +356,8 @@ namespace SHME.ExternalTool
 			switch (CoordinateSpace)
 			{
 				case CoordinateSpace.Model:
+					// TODO: Figure out if this is necessary, and if it is, convert
+					// it to Y-up right-handed like everything else.
 					//ModelMatrix = Matrix4.CreateTranslation(Position.X, Position.Z, -Position.Y);
 					break;
 				case CoordinateSpace.World:

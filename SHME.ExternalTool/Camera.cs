@@ -30,15 +30,9 @@ namespace SHME.ExternalTool
 
 		public bool Contains(Aabb aabb)
 		{
-			// Note the component swap! Not the swap of Y and Z, that's only due
-			// to the difference in up axis between objects in world space and
-			// the camera's coordinate system. The swap of Max.Y and Min.Y for
-			// the new min/max, however, is thanks to switching left-handed 
-			// coordinates to right-handed; that flips the sign of the camera's
-			// lens axis, so the old min and max become the new max and min.
 			bool outsideX = aabb.Max.X < Bounds.Min.X || aabb.Min.X > Bounds.Max.X;
-			bool outsideY = aabb.Max.Z < Bounds.Min.Y || aabb.Min.Z > Bounds.Max.Y;
-			bool outsideZ = -aabb.Min.Y < Bounds.Min.Z || -aabb.Max.Y > Bounds.Max.Z;
+			bool outsideY = aabb.Max.Y < Bounds.Min.Y || aabb.Min.Y > Bounds.Max.Y;
+			bool outsideZ = aabb.Max.Z < Bounds.Min.Z || aabb.Min.Z > Bounds.Max.Z;
 
 			return !(outsideX || outsideY || outsideZ);
 		}
@@ -183,18 +177,8 @@ namespace SHME.ExternalTool
 			set
 			{
 				_position = value;
-				WorldPosition = new Vector3(value.X, value.Z, -value.Y);
 				Rotate();
 			}
-		}
-
-		/// <summary>
-		/// This camera's position in Z-up, left-handed coordinates.
-		/// </summary>
-		public Vector3 WorldPosition
-		{
-			get { return new Vector3(Position.X, -Position.Z, Position.Y); }
-			private set { }
 		}
 
 		private float _pitch;
@@ -268,13 +252,12 @@ namespace SHME.ExternalTool
 			// Hopefully this is enough for Silent Hill, since one unit is the
 			// size of one sidewalk paver in fogworld.
 			_nearClip = 0.01f;
-			_farClip = 128.0f;
+			_farClip = 20.0f;
 
 			WorldUp = new Vector3(0.0f, 1.0f, 0.0f);
 			Position = new Vector3(0.0f, 0.0f, 0.0f);
 
 			Pitch = 0.0f;
-			//Yaw = -90.0f;
 			Yaw = 0.0f;
 			Roll = 0.0f;
 
@@ -360,14 +343,9 @@ namespace SHME.ExternalTool
 
 				foreach (Polygon p in r.Polygons)
 				{
-					// OpenGL offers its own backface culling, if it's enabled, but
-					// that only does its work after a draw call. Letting cameras
-					// check ahead of time allows skipping the setup of those calls.
 					Vector3 point = r.Vertices[p.Indices[0]];
-					var yUpRightHand = new Vector4(point.X, point.Z, -point.Y, 1.0f);
-					Vector4 transformed = yUpRightHand * r.ModelMatrix;
-					var zUpLeftHand = new Vector3(transformed.X, -transformed.Z, transformed.Y);
-					Vector3 toPoint = WorldPosition - new Vector3(zUpLeftHand);
+					Vector4 transformed = new Vector4(point, 1.0f) * r.ModelMatrix;
+					Vector3 toPoint = Position - transformed.Xyz;
 
 					if (Vector3.Dot(toPoint, p.Normal) > 0.0f)
 					{

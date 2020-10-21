@@ -2,6 +2,10 @@
 using System;
 using System.Collections.Generic;
 
+// NOTE: Converted to Y-up, right-handed coordinates only! Convenience functions
+// will be added later to work with the Z-up, left-handed coordinates I find more
+// personally comfortable.
+
 namespace SHME.ExternalTool
 {
 	public class Polygon
@@ -69,21 +73,15 @@ namespace SHME.ExternalTool
 			Matrix4 rotation = rotZ * rotY * rotX;
 
 			var p = new Polygon(polygon);
+			
+			Vector4 rotated = new Vector4(p.BasisS, 1.0f)  * rotation;
+			p.BasisS = rotated.Xyz;
 
-			var yUpRightHand = new Vector4(p.BasisS.X, p.BasisS.Z, -p.BasisS.Y, 1.0f);
-			Vector4 rotated = yUpRightHand * rotation;
-			var zUpLeftHand = new Vector3(rotated.X, -rotated.Z, rotated.Y);
-			p.BasisS = zUpLeftHand;
+			rotated = new Vector4(p.BasisT, 1.0f) * rotation;
+			p.BasisT = rotated.Xyz;
 
-			yUpRightHand = new Vector4(p.BasisT.X, p.BasisT.Z, -p.BasisT.Y, 1.0f);
-			rotated = yUpRightHand * rotation;
-			zUpLeftHand = new Vector3(rotated.X, -rotated.Z, rotated.Y);
-			p.BasisT = zUpLeftHand;
-
-			yUpRightHand = new Vector4(p.Normal.X, p.Normal.Z, -p.Normal.Y, 1.0f);
-			rotated = yUpRightHand * rotation;
-			zUpLeftHand = new Vector3(rotated.X, -rotated.Z, rotated.Y);
-			p.Normal = zUpLeftHand;
+			rotated = new Vector4(p.Normal, 1.0f) * rotation;
+			p.Normal = rotated.Xyz;
 
 			return p;
 		}

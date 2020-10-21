@@ -3,6 +3,10 @@ using OpenTK.Graphics;
 using System;
 using System.Runtime.InteropServices;
 
+// NOTE: Converted to Y-up, right-handed coordinates only! Convenience functions
+// will be added later to work with the Z-up, left-handed coordinates I find more
+// personally comfortable.
+
 namespace SHME.ExternalTool
 {
 	public static class VertexExtensions
@@ -27,11 +31,9 @@ namespace SHME.ExternalTool
 
 			Matrix4 rotation = rotZ * rotY * rotX;
 
-			var yUpRightHand = new Vector4(vector.X, vector.Z, -vector.Y, 1.0f);
-			Vector4 rotated = yUpRightHand * rotation;
-			var zUpLeftHand = new Vector3(rotated.X, -rotated.Z, rotated.Y);
+			Vector4 rotated = new Vector4(vector, 1.0f) * rotation;
 
-			return zUpLeftHand;
+			return rotated.Xyz;
 		}
 
 		public static Vertex ModelToWorld(this Vertex v, Matrix4 modelMatrix)
@@ -41,7 +43,7 @@ namespace SHME.ExternalTool
 
 		public static Vertex WorldToModel(this Vertex v, Matrix4 modelMatrix)
 		{
-			var inverted = modelMatrix;
+			Matrix4 inverted = modelMatrix;
 			inverted.Invert();
 
 			return ConvertCoordinateSpace(v, inverted);
@@ -49,11 +51,11 @@ namespace SHME.ExternalTool
 
 		public static Vertex ConvertCoordinateSpace(Vertex v, Matrix4 matrix)
 		{
-			var vec4 = new Vector4(v.Position.X, v.Position.Z, -v.Position.Y, 1.0f);
-			Vector4 converted = vec4 * matrix;
-			var vec3 = new Vector3(converted.X, -converted.Z, converted.Y);
+			var vec4 = new Vector4(v, 1.0f);
 
-			return new Vertex(v) { Position = vec3 };
+			Vector4 converted = vec4 * matrix;
+
+			return new Vertex(v) { Position = converted.Xyz };
 		}
 	}
 
@@ -76,15 +78,15 @@ namespace SHME.ExternalTool
 		{
 		}
 		public Vertex(float x, float y, float z) :
-			this(new Vector3(x, y, z), new Vector3(0.0f, 0.0f, 1.0f), Color4.White)
+			this(new Vector3(x, y, z), new Vector3(0.0f, 1.0f, 0.0f), Color4.White)
 		{
 		}
 		public Vertex(float x, float y, float z, Color4 color) :
-			this(new Vector3(x, y, z), new Vector3(0.0f, 0.0f, 1.0f), color)
+			this(new Vector3(x, y, z), new Vector3(0.0f, 1.0f, 0.0f), color)
 		{
 		}
 		public Vertex(Vector3 position, Color4 color) :
-			this(position, new Vector3(0.0f, 0.0f, 1.0f), color)
+			this(position, new Vector3(0.0f, 1.0f, 0.0f), color)
 		{
 		}
 		public Vertex(Vector3 position, Vector3 normal, Color4 color) :
