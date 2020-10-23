@@ -104,7 +104,10 @@ namespace BizHawk.Client.EmuHawk
 				//case ToolFormUpdateType.General:
 				//case ToolFormUpdateType.FastPreFrame:
 				case ToolFormUpdateType.PreFrame:
-					ReportControls();
+					if (CbxEnableControlsSection.Checked)
+					{
+						ReportControls();
+					}
 					//ReportAngles();
 					//ReportPosition();
 					//DrawStuff();
@@ -112,6 +115,10 @@ namespace BizHawk.Client.EmuHawk
 				//case ToolFormUpdateType.FastPostFrame:
 				case ToolFormUpdateType.PostFrame:
 					ReportAngles();
+					if (CbxEnableOverlaySection.Checked)
+					{
+						ReportOverlayInfo();
+					}
 					ReportPosition();
 					DrawStuff();
 					break;
@@ -183,6 +190,17 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private void ReportOverlayInfo()
+		{
+			LblOverlayCamPositionX.Text = Camera.Position.X.ToString();
+			LblOverlayCamPositionY.Text = Camera.Position.Y.ToString();
+			LblOverlayCamPositionZ.Text = Camera.Position.Z.ToString();
+
+			LblOverlayCamPitch.Text = Camera.Pitch.ToString();
+			LblOverlayCamYaw.Text = Camera.Yaw.ToString();
+			LblOverlayCamRoll.Text = Camera.Roll.ToString();
+		}
+
 		private void ReportPosition()
 		{
 			List<float> position = Core.GetPosition(Mem);
@@ -203,14 +221,6 @@ namespace BizHawk.Client.EmuHawk
 			LblBoxX.Text = boxCoords.X.ToString();
 			LblBoxY.Text = boxCoords.Y.ToString();
 			LblBoxZ.Text = boxCoords.Z.ToString();
-
-			LblOverlayCamPositionX.Text = Camera.Position.X.ToString();
-			LblOverlayCamPositionY.Text = Camera.Position.Y.ToString();
-			LblOverlayCamPositionZ.Text = Camera.Position.Z.ToString();
-
-			LblOverlayCamPitch.Text = Camera.Pitch.ToString();
-			LblOverlayCamYaw.Text = Camera.Yaw.ToString();
-			LblOverlayCamRoll.Text = Camera.Roll.ToString();
 		}
 
 		private void BtnGetPosition_Click(object sender, EventArgs e)

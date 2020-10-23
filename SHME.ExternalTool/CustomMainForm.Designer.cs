@@ -32,6 +32,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryYaw = new System.Windows.Forms.Label();
             this.LblHarryPitch = new System.Windows.Forms.Label();
             this.GbxCamera = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.LblFov = new System.Windows.Forms.Label();
             this.TrkFov = new System.Windows.Forms.TrackBar();
             this.LblCameraRoll = new System.Windows.Forms.Label();
@@ -63,6 +64,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.LblOverlayCamRoll = new System.Windows.Forms.Label();
             this.LblOverlayCamYaw = new System.Windows.Forms.Label();
             this.LblOverlayCamPitch = new System.Windows.Forms.Label();
@@ -79,8 +81,10 @@ namespace BizHawk.Client.EmuHawk
             this.BtnBoxSetPosition = new System.Windows.Forms.Button();
             this.LblBoxX = new System.Windows.Forms.Label();
             this.LblBoxY = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.CbxEnableOverlaySection = new System.Windows.Forms.CheckBox();
+            this.CbxEnableControlsSection = new System.Windows.Forms.CheckBox();
+            this.CbxEnableCameraSection = new System.Windows.Forms.CheckBox();
+            this.CbxEnableHarrySection = new System.Windows.Forms.CheckBox();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -211,6 +215,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxHarry
             // 
+            this.GbxHarry.Controls.Add(this.CbxEnableHarrySection);
             this.GbxHarry.Controls.Add(this.LblHarryPositionZ);
             this.GbxHarry.Controls.Add(this.TbxPositionZ);
             this.GbxHarry.Controls.Add(this.BtnSetAngles);
@@ -292,6 +297,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxCamera
             // 
+            this.GbxCamera.Controls.Add(this.CbxEnableCameraSection);
             this.GbxCamera.Controls.Add(this.label1);
             this.GbxCamera.Controls.Add(this.LblFov);
             this.GbxCamera.Controls.Add(this.TrkFov);
@@ -308,10 +314,19 @@ namespace BizHawk.Client.EmuHawk
             this.GbxCamera.TabStop = false;
             this.GbxCamera.Text = "Camera";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(119, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Y down, X north, Z east";
+            // 
             // LblFov
             // 
             this.LblFov.AutoSize = true;
-            this.LblFov.Location = new System.Drawing.Point(182, 194);
+            this.LblFov.Location = new System.Drawing.Point(182, 158);
             this.LblFov.Name = "LblFov";
             this.LblFov.Size = new System.Drawing.Size(34, 13);
             this.LblFov.TabIndex = 8;
@@ -319,7 +334,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // TrkFov
             // 
-            this.TrkFov.Location = new System.Drawing.Point(9, 210);
+            this.TrkFov.Location = new System.Drawing.Point(9, 174);
             this.TrkFov.Maximum = 120;
             this.TrkFov.Minimum = 1;
             this.TrkFov.Name = "TrkFov";
@@ -429,6 +444,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxControls
             // 
+            this.GbxControls.Controls.Add(this.CbxEnableControlsSection);
             this.GbxControls.Controls.Add(this.LblButtonR3);
             this.GbxControls.Controls.Add(this.LblButtonL3);
             this.GbxControls.Controls.Add(this.LblButtonR2);
@@ -598,6 +614,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxOverlay
             // 
+            this.GbxOverlay.Controls.Add(this.CbxEnableOverlaySection);
             this.GbxOverlay.Controls.Add(this.label2);
             this.GbxOverlay.Controls.Add(this.LblOverlayCamRoll);
             this.GbxOverlay.Controls.Add(this.LblOverlayCamYaw);
@@ -611,6 +628,15 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabIndex = 15;
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(94, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Y up, right-handed";
             // 
             // LblOverlayCamRoll
             // 
@@ -797,23 +823,49 @@ namespace BizHawk.Client.EmuHawk
             this.LblBoxY.TabIndex = 25;
             this.LblBoxY.Text = "<box y>";
             // 
-            // label2
+            // CbxEnableOverlaySection
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Y up, right-handed";
+            this.CbxEnableOverlaySection.AutoSize = true;
+            this.CbxEnableOverlaySection.Location = new System.Drawing.Point(331, 419);
+            this.CbxEnableOverlaySection.Name = "CbxEnableOverlaySection";
+            this.CbxEnableOverlaySection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableOverlaySection.TabIndex = 14;
+            this.CbxEnableOverlaySection.Text = "Enable";
+            this.CbxEnableOverlaySection.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // CbxEnableControlsSection
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 13);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Y down, X north, Z east";
+            this.CbxEnableControlsSection.AutoSize = true;
+            this.CbxEnableControlsSection.Location = new System.Drawing.Point(279, 419);
+            this.CbxEnableControlsSection.Name = "CbxEnableControlsSection";
+            this.CbxEnableControlsSection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableControlsSection.TabIndex = 15;
+            this.CbxEnableControlsSection.Text = "Enable";
+            this.CbxEnableControlsSection.UseVisualStyleBackColor = true;
+            // 
+            // CbxEnableCameraSection
+            // 
+            this.CbxEnableCameraSection.AutoSize = true;
+            this.CbxEnableCameraSection.Checked = true;
+            this.CbxEnableCameraSection.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxEnableCameraSection.Location = new System.Drawing.Point(337, 243);
+            this.CbxEnableCameraSection.Name = "CbxEnableCameraSection";
+            this.CbxEnableCameraSection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableCameraSection.TabIndex = 15;
+            this.CbxEnableCameraSection.Text = "Enable";
+            this.CbxEnableCameraSection.UseVisualStyleBackColor = true;
+            // 
+            // CbxEnableHarrySection
+            // 
+            this.CbxEnableHarrySection.AutoSize = true;
+            this.CbxEnableHarrySection.Checked = true;
+            this.CbxEnableHarrySection.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxEnableHarrySection.Location = new System.Drawing.Point(271, 243);
+            this.CbxEnableHarrySection.Name = "CbxEnableHarrySection";
+            this.CbxEnableHarrySection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableHarrySection.TabIndex = 16;
+            this.CbxEnableHarrySection.Text = "Enable";
+            this.CbxEnableHarrySection.UseVisualStyleBackColor = true;
             // 
             // CustomMainForm
             // 
@@ -909,5 +961,9 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblButtonL1;
 		private Label label2;
 		private Label label1;
+		private CheckBox CbxEnableOverlaySection;
+		private CheckBox CbxEnableHarrySection;
+		private CheckBox CbxEnableCameraSection;
+		private CheckBox CbxEnableControlsSection;
 	}
 }
