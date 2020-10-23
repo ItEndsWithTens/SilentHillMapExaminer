@@ -45,6 +45,20 @@ namespace BizHawk.Client.EmuHawk
             this.PbxMapGraphic = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TbpBasics = new System.Windows.Forms.TabPage();
+            this.GbxControls = new System.Windows.Forms.GroupBox();
+            this.LblButtonDown = new System.Windows.Forms.Label();
+            this.LblButtonRight = new System.Windows.Forms.Label();
+            this.LblButtonLeft = new System.Windows.Forms.Label();
+            this.LblButtonUp = new System.Windows.Forms.Label();
+            this.LblButtonStart = new System.Windows.Forms.Label();
+            this.LblButtonSelect = new System.Windows.Forms.Label();
+            this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.LblOverlayCamRoll = new System.Windows.Forms.Label();
+            this.LblOverlayCamYaw = new System.Windows.Forms.Label();
+            this.LblOverlayCamPitch = new System.Windows.Forms.Label();
+            this.LblOverlayCamPositionZ = new System.Windows.Forms.Label();
+            this.LblOverlayCamPositionY = new System.Windows.Forms.Label();
+            this.LblOverlayCamPositionX = new System.Windows.Forms.Label();
             this.TbpMap = new System.Windows.Forms.TabPage();
             this.TbpBox = new System.Windows.Forms.TabPage();
             this.NudBoxZ = new System.Windows.Forms.NumericUpDown();
@@ -57,26 +71,30 @@ namespace BizHawk.Client.EmuHawk
             this.LblBoxY = new System.Windows.Forms.Label();
             this.LblBoxVerticalCoord = new System.Windows.Forms.Label();
             this.TrkBoxVerticalCoord = new System.Windows.Forms.TrackBar();
-            this.GbxOverlay = new System.Windows.Forms.GroupBox();
-            this.LblOverlayCamRoll = new System.Windows.Forms.Label();
-            this.LblOverlayCamYaw = new System.Windows.Forms.Label();
-            this.LblOverlayCamPitch = new System.Windows.Forms.Label();
-            this.LblOverlayCamPositionZ = new System.Windows.Forms.Label();
-            this.LblOverlayCamPositionY = new System.Windows.Forms.Label();
-            this.LblOverlayCamPositionX = new System.Windows.Forms.Label();
+            this.LblButtonTriangle = new System.Windows.Forms.Label();
+            this.LblButtonSquare = new System.Windows.Forms.Label();
+            this.LblButtonCircle = new System.Windows.Forms.Label();
+            this.LblButtonX = new System.Windows.Forms.Label();
+            this.LblButtonL1 = new System.Windows.Forms.Label();
+            this.LblButtonL2 = new System.Windows.Forms.Label();
+            this.LblButtonR2 = new System.Windows.Forms.Label();
+            this.LblButtonR1 = new System.Windows.Forms.Label();
+            this.LblButtonL3 = new System.Windows.Forms.Label();
+            this.LblButtonR3 = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxMapGraphic)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.TbpBasics.SuspendLayout();
+            this.GbxControls.SuspendLayout();
+            this.GbxOverlay.SuspendLayout();
             this.TbpMap.SuspendLayout();
             this.TbpBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrkBoxVerticalCoord)).BeginInit();
-            this.GbxOverlay.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -397,6 +415,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // TbpBasics
             // 
+            this.TbpBasics.Controls.Add(this.GbxControls);
             this.TbpBasics.Controls.Add(this.GbxOverlay);
             this.TbpBasics.Controls.Add(this.GbxHarry);
             this.TbpBasics.Controls.Add(this.GbxCamera);
@@ -407,6 +426,154 @@ namespace BizHawk.Client.EmuHawk
             this.TbpBasics.TabIndex = 0;
             this.TbpBasics.Text = "Basics";
             this.TbpBasics.UseVisualStyleBackColor = true;
+            // 
+            // GbxControls
+            // 
+            this.GbxControls.Controls.Add(this.LblButtonR3);
+            this.GbxControls.Controls.Add(this.LblButtonL3);
+            this.GbxControls.Controls.Add(this.LblButtonR2);
+            this.GbxControls.Controls.Add(this.LblButtonR1);
+            this.GbxControls.Controls.Add(this.LblButtonL2);
+            this.GbxControls.Controls.Add(this.LblButtonL1);
+            this.GbxControls.Controls.Add(this.LblButtonX);
+            this.GbxControls.Controls.Add(this.LblButtonCircle);
+            this.GbxControls.Controls.Add(this.LblButtonSquare);
+            this.GbxControls.Controls.Add(this.LblButtonTriangle);
+            this.GbxControls.Controls.Add(this.LblButtonDown);
+            this.GbxControls.Controls.Add(this.LblButtonRight);
+            this.GbxControls.Controls.Add(this.LblButtonLeft);
+            this.GbxControls.Controls.Add(this.LblButtonUp);
+            this.GbxControls.Controls.Add(this.LblButtonStart);
+            this.GbxControls.Controls.Add(this.LblButtonSelect);
+            this.GbxControls.Location = new System.Drawing.Point(6, 278);
+            this.GbxControls.Name = "GbxControls";
+            this.GbxControls.Size = new System.Drawing.Size(338, 442);
+            this.GbxControls.TabIndex = 16;
+            this.GbxControls.TabStop = false;
+            this.GbxControls.Text = "Controls";
+            // 
+            // LblButtonDown
+            // 
+            this.LblButtonDown.AutoSize = true;
+            this.LblButtonDown.Location = new System.Drawing.Point(41, 170);
+            this.LblButtonDown.Name = "LblButtonDown";
+            this.LblButtonDown.Size = new System.Drawing.Size(35, 13);
+            this.LblButtonDown.TabIndex = 5;
+            this.LblButtonDown.Text = "Down";
+            // 
+            // LblButtonRight
+            // 
+            this.LblButtonRight.AutoSize = true;
+            this.LblButtonRight.Location = new System.Drawing.Point(70, 138);
+            this.LblButtonRight.Name = "LblButtonRight";
+            this.LblButtonRight.Size = new System.Drawing.Size(32, 13);
+            this.LblButtonRight.TabIndex = 4;
+            this.LblButtonRight.Text = "Right";
+            // 
+            // LblButtonLeft
+            // 
+            this.LblButtonLeft.AutoSize = true;
+            this.LblButtonLeft.Location = new System.Drawing.Point(18, 138);
+            this.LblButtonLeft.Name = "LblButtonLeft";
+            this.LblButtonLeft.Size = new System.Drawing.Size(25, 13);
+            this.LblButtonLeft.TabIndex = 3;
+            this.LblButtonLeft.Text = "Left";
+            // 
+            // LblButtonUp
+            // 
+            this.LblButtonUp.AutoSize = true;
+            this.LblButtonUp.Location = new System.Drawing.Point(48, 106);
+            this.LblButtonUp.Name = "LblButtonUp";
+            this.LblButtonUp.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonUp.TabIndex = 2;
+            this.LblButtonUp.Text = "Up";
+            // 
+            // LblButtonStart
+            // 
+            this.LblButtonStart.AutoSize = true;
+            this.LblButtonStart.Location = new System.Drawing.Point(168, 201);
+            this.LblButtonStart.Name = "LblButtonStart";
+            this.LblButtonStart.Size = new System.Drawing.Size(29, 13);
+            this.LblButtonStart.TabIndex = 1;
+            this.LblButtonStart.Text = "Start";
+            // 
+            // LblButtonSelect
+            // 
+            this.LblButtonSelect.AutoSize = true;
+            this.LblButtonSelect.Location = new System.Drawing.Point(120, 201);
+            this.LblButtonSelect.Name = "LblButtonSelect";
+            this.LblButtonSelect.Size = new System.Drawing.Size(37, 13);
+            this.LblButtonSelect.TabIndex = 0;
+            this.LblButtonSelect.Text = "Select";
+            // 
+            // GbxOverlay
+            // 
+            this.GbxOverlay.Controls.Add(this.LblOverlayCamRoll);
+            this.GbxOverlay.Controls.Add(this.LblOverlayCamYaw);
+            this.GbxOverlay.Controls.Add(this.LblOverlayCamPitch);
+            this.GbxOverlay.Controls.Add(this.LblOverlayCamPositionZ);
+            this.GbxOverlay.Controls.Add(this.LblOverlayCamPositionY);
+            this.GbxOverlay.Controls.Add(this.LblOverlayCamPositionX);
+            this.GbxOverlay.Location = new System.Drawing.Point(350, 278);
+            this.GbxOverlay.Name = "GbxOverlay";
+            this.GbxOverlay.Size = new System.Drawing.Size(396, 442);
+            this.GbxOverlay.TabIndex = 15;
+            this.GbxOverlay.TabStop = false;
+            this.GbxOverlay.Text = "Overlay";
+            // 
+            // LblOverlayCamRoll
+            // 
+            this.LblOverlayCamRoll.AutoSize = true;
+            this.LblOverlayCamRoll.Location = new System.Drawing.Point(6, 115);
+            this.LblOverlayCamRoll.Name = "LblOverlayCamRoll";
+            this.LblOverlayCamRoll.Size = new System.Drawing.Size(28, 13);
+            this.LblOverlayCamRoll.TabIndex = 11;
+            this.LblOverlayCamRoll.Text = "Roll:";
+            // 
+            // LblOverlayCamYaw
+            // 
+            this.LblOverlayCamYaw.AutoSize = true;
+            this.LblOverlayCamYaw.Location = new System.Drawing.Point(6, 98);
+            this.LblOverlayCamYaw.Name = "LblOverlayCamYaw";
+            this.LblOverlayCamYaw.Size = new System.Drawing.Size(31, 13);
+            this.LblOverlayCamYaw.TabIndex = 10;
+            this.LblOverlayCamYaw.Text = "Yaw:";
+            // 
+            // LblOverlayCamPitch
+            // 
+            this.LblOverlayCamPitch.AutoSize = true;
+            this.LblOverlayCamPitch.Location = new System.Drawing.Point(6, 81);
+            this.LblOverlayCamPitch.Name = "LblOverlayCamPitch";
+            this.LblOverlayCamPitch.Size = new System.Drawing.Size(34, 13);
+            this.LblOverlayCamPitch.TabIndex = 9;
+            this.LblOverlayCamPitch.Text = "Pitch:";
+            // 
+            // LblOverlayCamPositionZ
+            // 
+            this.LblOverlayCamPositionZ.AutoSize = true;
+            this.LblOverlayCamPositionZ.Location = new System.Drawing.Point(6, 50);
+            this.LblOverlayCamPositionZ.Name = "LblOverlayCamPositionZ";
+            this.LblOverlayCamPositionZ.Size = new System.Drawing.Size(57, 13);
+            this.LblOverlayCamPositionZ.TabIndex = 8;
+            this.LblOverlayCamPositionZ.Text = "Position Z:";
+            // 
+            // LblOverlayCamPositionY
+            // 
+            this.LblOverlayCamPositionY.AutoSize = true;
+            this.LblOverlayCamPositionY.Location = new System.Drawing.Point(6, 33);
+            this.LblOverlayCamPositionY.Name = "LblOverlayCamPositionY";
+            this.LblOverlayCamPositionY.Size = new System.Drawing.Size(57, 13);
+            this.LblOverlayCamPositionY.TabIndex = 7;
+            this.LblOverlayCamPositionY.Text = "Position Y:";
+            // 
+            // LblOverlayCamPositionX
+            // 
+            this.LblOverlayCamPositionX.AutoSize = true;
+            this.LblOverlayCamPositionX.Location = new System.Drawing.Point(6, 16);
+            this.LblOverlayCamPositionX.Name = "LblOverlayCamPositionX";
+            this.LblOverlayCamPositionX.Size = new System.Drawing.Size(57, 13);
+            this.LblOverlayCamPositionX.TabIndex = 6;
+            this.LblOverlayCamPositionX.Text = "Position X:";
             // 
             // TbpMap
             // 
@@ -559,74 +726,95 @@ namespace BizHawk.Client.EmuHawk
             this.TrkBoxVerticalCoord.TabIndex = 11;
             this.TrkBoxVerticalCoord.Value = 1;
             // 
-            // GbxOverlay
+            // LblButtonTriangle
             // 
-            this.GbxOverlay.Controls.Add(this.LblOverlayCamRoll);
-            this.GbxOverlay.Controls.Add(this.LblOverlayCamYaw);
-            this.GbxOverlay.Controls.Add(this.LblOverlayCamPitch);
-            this.GbxOverlay.Controls.Add(this.LblOverlayCamPositionZ);
-            this.GbxOverlay.Controls.Add(this.LblOverlayCamPositionY);
-            this.GbxOverlay.Controls.Add(this.LblOverlayCamPositionX);
-            this.GbxOverlay.Location = new System.Drawing.Point(6, 278);
-            this.GbxOverlay.Name = "GbxOverlay";
-            this.GbxOverlay.Size = new System.Drawing.Size(338, 442);
-            this.GbxOverlay.TabIndex = 15;
-            this.GbxOverlay.TabStop = false;
-            this.GbxOverlay.Text = "Overlay";
+            this.LblButtonTriangle.AutoSize = true;
+            this.LblButtonTriangle.Location = new System.Drawing.Point(235, 106);
+            this.LblButtonTriangle.Name = "LblButtonTriangle";
+            this.LblButtonTriangle.Size = new System.Drawing.Size(45, 13);
+            this.LblButtonTriangle.TabIndex = 6;
+            this.LblButtonTriangle.Text = "Triangle";
             // 
-            // LblOverlayCamRoll
+            // LblButtonSquare
             // 
-            this.LblOverlayCamRoll.AutoSize = true;
-            this.LblOverlayCamRoll.Location = new System.Drawing.Point(6, 115);
-            this.LblOverlayCamRoll.Name = "LblOverlayCamRoll";
-            this.LblOverlayCamRoll.Size = new System.Drawing.Size(28, 13);
-            this.LblOverlayCamRoll.TabIndex = 11;
-            this.LblOverlayCamRoll.Text = "Roll:";
+            this.LblButtonSquare.AutoSize = true;
+            this.LblButtonSquare.Location = new System.Drawing.Point(199, 138);
+            this.LblButtonSquare.Name = "LblButtonSquare";
+            this.LblButtonSquare.Size = new System.Drawing.Size(41, 13);
+            this.LblButtonSquare.TabIndex = 7;
+            this.LblButtonSquare.Text = "Square";
             // 
-            // LblOverlayCamYaw
+            // LblButtonCircle
             // 
-            this.LblOverlayCamYaw.AutoSize = true;
-            this.LblOverlayCamYaw.Location = new System.Drawing.Point(6, 98);
-            this.LblOverlayCamYaw.Name = "LblOverlayCamYaw";
-            this.LblOverlayCamYaw.Size = new System.Drawing.Size(31, 13);
-            this.LblOverlayCamYaw.TabIndex = 10;
-            this.LblOverlayCamYaw.Text = "Yaw:";
+            this.LblButtonCircle.AutoSize = true;
+            this.LblButtonCircle.Location = new System.Drawing.Point(279, 138);
+            this.LblButtonCircle.Name = "LblButtonCircle";
+            this.LblButtonCircle.Size = new System.Drawing.Size(33, 13);
+            this.LblButtonCircle.TabIndex = 8;
+            this.LblButtonCircle.Text = "Circle";
             // 
-            // LblOverlayCamPitch
+            // LblButtonX
             // 
-            this.LblOverlayCamPitch.AutoSize = true;
-            this.LblOverlayCamPitch.Location = new System.Drawing.Point(6, 81);
-            this.LblOverlayCamPitch.Name = "LblOverlayCamPitch";
-            this.LblOverlayCamPitch.Size = new System.Drawing.Size(34, 13);
-            this.LblOverlayCamPitch.TabIndex = 9;
-            this.LblOverlayCamPitch.Text = "Pitch:";
+            this.LblButtonX.AutoSize = true;
+            this.LblButtonX.Location = new System.Drawing.Point(250, 170);
+            this.LblButtonX.Name = "LblButtonX";
+            this.LblButtonX.Size = new System.Drawing.Size(14, 13);
+            this.LblButtonX.TabIndex = 9;
+            this.LblButtonX.Text = "X";
             // 
-            // LblOverlayCamPositionZ
+            // LblButtonL1
             // 
-            this.LblOverlayCamPositionZ.AutoSize = true;
-            this.LblOverlayCamPositionZ.Location = new System.Drawing.Point(6, 50);
-            this.LblOverlayCamPositionZ.Name = "LblOverlayCamPositionZ";
-            this.LblOverlayCamPositionZ.Size = new System.Drawing.Size(57, 13);
-            this.LblOverlayCamPositionZ.TabIndex = 8;
-            this.LblOverlayCamPositionZ.Text = "Position Z:";
+            this.LblButtonL1.AutoSize = true;
+            this.LblButtonL1.Location = new System.Drawing.Point(22, 67);
+            this.LblButtonL1.Name = "LblButtonL1";
+            this.LblButtonL1.Size = new System.Drawing.Size(19, 13);
+            this.LblButtonL1.TabIndex = 10;
+            this.LblButtonL1.Text = "L1";
             // 
-            // LblOverlayCamPositionY
+            // LblButtonL2
             // 
-            this.LblOverlayCamPositionY.AutoSize = true;
-            this.LblOverlayCamPositionY.Location = new System.Drawing.Point(6, 33);
-            this.LblOverlayCamPositionY.Name = "LblOverlayCamPositionY";
-            this.LblOverlayCamPositionY.Size = new System.Drawing.Size(57, 13);
-            this.LblOverlayCamPositionY.TabIndex = 7;
-            this.LblOverlayCamPositionY.Text = "Position Y:";
+            this.LblButtonL2.AutoSize = true;
+            this.LblButtonL2.Location = new System.Drawing.Point(22, 33);
+            this.LblButtonL2.Name = "LblButtonL2";
+            this.LblButtonL2.Size = new System.Drawing.Size(19, 13);
+            this.LblButtonL2.TabIndex = 11;
+            this.LblButtonL2.Text = "L2";
             // 
-            // LblOverlayCamPositionX
+            // LblButtonR2
             // 
-            this.LblOverlayCamPositionX.AutoSize = true;
-            this.LblOverlayCamPositionX.Location = new System.Drawing.Point(6, 16);
-            this.LblOverlayCamPositionX.Name = "LblOverlayCamPositionX";
-            this.LblOverlayCamPositionX.Size = new System.Drawing.Size(57, 13);
-            this.LblOverlayCamPositionX.TabIndex = 6;
-            this.LblOverlayCamPositionX.Text = "Position X:";
+            this.LblButtonR2.AutoSize = true;
+            this.LblButtonR2.Location = new System.Drawing.Point(279, 33);
+            this.LblButtonR2.Name = "LblButtonR2";
+            this.LblButtonR2.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonR2.TabIndex = 13;
+            this.LblButtonR2.Text = "R2";
+            // 
+            // LblButtonR1
+            // 
+            this.LblButtonR1.AutoSize = true;
+            this.LblButtonR1.Location = new System.Drawing.Point(279, 67);
+            this.LblButtonR1.Name = "LblButtonR1";
+            this.LblButtonR1.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonR1.TabIndex = 12;
+            this.LblButtonR1.Text = "R1";
+            // 
+            // LblButtonL3
+            // 
+            this.LblButtonL3.AutoSize = true;
+            this.LblButtonL3.Location = new System.Drawing.Point(83, 230);
+            this.LblButtonL3.Name = "LblButtonL3";
+            this.LblButtonL3.Size = new System.Drawing.Size(19, 13);
+            this.LblButtonL3.TabIndex = 14;
+            this.LblButtonL3.Text = "L3";
+            // 
+            // LblButtonR3
+            // 
+            this.LblButtonR3.AutoSize = true;
+            this.LblButtonR3.Location = new System.Drawing.Point(213, 230);
+            this.LblButtonR3.Name = "LblButtonR3";
+            this.LblButtonR3.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonR3.TabIndex = 15;
+            this.LblButtonR3.Text = "R3";
             // 
             // CustomMainForm
             // 
@@ -641,6 +829,10 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.PbxMapGraphic)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.TbpBasics.ResumeLayout(false);
+            this.GbxControls.ResumeLayout(false);
+            this.GbxControls.PerformLayout();
+            this.GbxOverlay.ResumeLayout(false);
+            this.GbxOverlay.PerformLayout();
             this.TbpMap.ResumeLayout(false);
             this.TbpMap.PerformLayout();
             this.TbpBox.ResumeLayout(false);
@@ -649,8 +841,6 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrkBoxVerticalCoord)).EndInit();
-            this.GbxOverlay.ResumeLayout(false);
-            this.GbxOverlay.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -704,5 +894,22 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblOverlayCamPositionZ;
 		private Label LblOverlayCamPositionY;
 		private Label LblOverlayCamPositionX;
+		private GroupBox GbxControls;
+		private Label LblButtonStart;
+		private Label LblButtonSelect;
+		private Label LblButtonDown;
+		private Label LblButtonRight;
+		private Label LblButtonLeft;
+		private Label LblButtonUp;
+		private Label LblButtonX;
+		private Label LblButtonCircle;
+		private Label LblButtonSquare;
+		private Label LblButtonTriangle;
+		private Label LblButtonR3;
+		private Label LblButtonL3;
+		private Label LblButtonR2;
+		private Label LblButtonR1;
+		private Label LblButtonL2;
+		private Label LblButtonL1;
 	}
 }

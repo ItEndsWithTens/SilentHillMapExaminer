@@ -1,10 +1,13 @@
 ﻿using BizHawk.Client.Common;
+using BizHawk.Common;
 using OpenTK;
 using OpenTK.Graphics;
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
@@ -103,18 +106,17 @@ namespace BizHawk.Client.EmuHawk
 				//case ToolFormUpdateType.General:
 				//case ToolFormUpdateType.FastPreFrame:
 				case ToolFormUpdateType.PreFrame:
-					// The drawn boxes seem much more tightly attached to the
-					// world when this is done in PreFrame as opposed to PostFrame.
+					ReportControls();
+					//ReportAngles();
+					//ReportPosition();
+					//DrawStuff();
+					break;
+				//case ToolFormUpdateType.FastPostFrame:
+				case ToolFormUpdateType.PostFrame:
 					ReportAngles();
 					ReportPosition();
 					DrawStuff();
 					break;
-				//case ToolFormUpdateType.FastPostFrame:
-				//case ToolFormUpdateType.PostFrame:
-					//ReportAngles();
-					//ReportPosition();
-					//DrawStuff();
-					//break;
 				default:
 					break;
 			}
@@ -131,6 +133,56 @@ namespace BizHawk.Client.EmuHawk
 			LblCameraPitch.Text = angles[3].ToString("N2");
 			LblCameraYaw.Text = angles[4].ToString("N2");
 			LblCameraRoll.Text = angles[5].ToString("N2");
+		}
+
+		[Flags]
+		private enum ButtonFlags : ushort
+		{
+			Select = 0b00000000_00000001,
+			L3 = 0b00000000_00000010,
+			R3 = 0b00000000_00000100,
+			Start = 0b00000000_00001000,
+			Up = 0b00000000_00010000,
+			Right = 0b00000000_00100000,
+			Down = 0b00000000_01000000,
+			Left = 0b00000000_10000000,
+			L2 = 0b00000001_00000000,
+			R2 = 0b00000010_00000000,
+			L1 = 0b00000100_00000000,
+			R1 = 0b00001000_00000000,
+			Triangle = 0b00010000_00000000,
+			Circle = 0b00100000_00000000,
+			X = 0b01000000_00000000,
+			Square = 0b10000000_00000000
+		}
+
+		private void ReportControls()
+		{
+			var raw = (ButtonFlags)Mem.ReadU16((long)MainRamAddresses.ButtonFlags);
+
+			foreach (ButtonFlags button in Enum.GetValues(typeof(ButtonFlags)))
+			{
+				string buttonName = $"LblButton{Enum.GetName(typeof(ButtonFlags), button)}";
+
+				Type thisType = typeof(CustomMainForm);
+				FieldInfo? info = thisType.GetField(buttonName, BindingFlags.Instance | BindingFlags.NonPublic);
+
+				if (info != null)
+				{
+					var label = (Label)info.GetValue(this);
+
+					// For whatever reason, Silent Hill uses 0 for
+					// button pressed and 1 for released.
+					if (!raw.HasFlag(button))
+					{
+						label.ForeColor = Color.Lime;
+					}
+					else
+					{
+						label.ForeColor = Color.Red;
+					}
+				}
+			}
 		}
 
 		private void ReportPosition()

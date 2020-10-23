@@ -44,7 +44,7 @@ namespace SHME.ExternalTool
 
 	public enum MainRamAddresses : long
 	{
-		// Hmm...could these conceivable be the translation parts of
+		// Hmm...could these conceivably be the translation parts of
 		// a full-on projection matrix? Hadn't paid too much attention
 		// to the stuff surrounding them, but it's plausible. If I can
 		// interpret the whole thing I can determine the FOV, aspect
@@ -75,7 +75,9 @@ namespace SHME.ExternalTool
 
 		HarryParalyzed = 0xBA150,
 
-		SomeRandomTim = 0x1CF600 // Could be the map? Need to see.
+		ButtonFlags = 0xC71A2,
+
+		SomeRandomTim = 0x1CF600, // Could be the map? Need to see.
 	}
 
 	public class Core
