@@ -46,6 +46,16 @@ namespace BizHawk.Client.EmuHawk
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TbpBasics = new System.Windows.Forms.TabPage();
             this.GbxControls = new System.Windows.Forms.GroupBox();
+            this.LblButtonR3 = new System.Windows.Forms.Label();
+            this.LblButtonL3 = new System.Windows.Forms.Label();
+            this.LblButtonR2 = new System.Windows.Forms.Label();
+            this.LblButtonR1 = new System.Windows.Forms.Label();
+            this.LblButtonL2 = new System.Windows.Forms.Label();
+            this.LblButtonL1 = new System.Windows.Forms.Label();
+            this.LblButtonX = new System.Windows.Forms.Label();
+            this.LblButtonCircle = new System.Windows.Forms.Label();
+            this.LblButtonSquare = new System.Windows.Forms.Label();
+            this.LblButtonTriangle = new System.Windows.Forms.Label();
             this.LblButtonDown = new System.Windows.Forms.Label();
             this.LblButtonRight = new System.Windows.Forms.Label();
             this.LblButtonLeft = new System.Windows.Forms.Label();
@@ -69,18 +79,8 @@ namespace BizHawk.Client.EmuHawk
             this.BtnBoxSetPosition = new System.Windows.Forms.Button();
             this.LblBoxX = new System.Windows.Forms.Label();
             this.LblBoxY = new System.Windows.Forms.Label();
-            this.LblBoxVerticalCoord = new System.Windows.Forms.Label();
-            this.TrkBoxVerticalCoord = new System.Windows.Forms.TrackBar();
-            this.LblButtonTriangle = new System.Windows.Forms.Label();
-            this.LblButtonSquare = new System.Windows.Forms.Label();
-            this.LblButtonCircle = new System.Windows.Forms.Label();
-            this.LblButtonX = new System.Windows.Forms.Label();
-            this.LblButtonL1 = new System.Windows.Forms.Label();
-            this.LblButtonL2 = new System.Windows.Forms.Label();
-            this.LblButtonR2 = new System.Windows.Forms.Label();
-            this.LblButtonR1 = new System.Windows.Forms.Label();
-            this.LblButtonL3 = new System.Windows.Forms.Label();
-            this.LblButtonR3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -94,7 +94,6 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrkBoxVerticalCoord)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -293,6 +292,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxCamera
             // 
+            this.GbxCamera.Controls.Add(this.label1);
             this.GbxCamera.Controls.Add(this.LblFov);
             this.GbxCamera.Controls.Add(this.TrkFov);
             this.GbxCamera.Controls.Add(this.LblCameraRoll);
@@ -331,7 +331,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraRoll
             // 
             this.LblCameraRoll.AutoSize = true;
-            this.LblCameraRoll.Location = new System.Drawing.Point(6, 115);
+            this.LblCameraRoll.Location = new System.Drawing.Point(6, 141);
             this.LblCameraRoll.Name = "LblCameraRoll";
             this.LblCameraRoll.Size = new System.Drawing.Size(28, 13);
             this.LblCameraRoll.TabIndex = 5;
@@ -340,7 +340,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraYaw
             // 
             this.LblCameraYaw.AutoSize = true;
-            this.LblCameraYaw.Location = new System.Drawing.Point(6, 98);
+            this.LblCameraYaw.Location = new System.Drawing.Point(6, 124);
             this.LblCameraYaw.Name = "LblCameraYaw";
             this.LblCameraYaw.Size = new System.Drawing.Size(31, 13);
             this.LblCameraYaw.TabIndex = 4;
@@ -349,7 +349,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPitch
             // 
             this.LblCameraPitch.AutoSize = true;
-            this.LblCameraPitch.Location = new System.Drawing.Point(6, 81);
+            this.LblCameraPitch.Location = new System.Drawing.Point(6, 107);
             this.LblCameraPitch.Name = "LblCameraPitch";
             this.LblCameraPitch.Size = new System.Drawing.Size(34, 13);
             this.LblCameraPitch.TabIndex = 3;
@@ -358,7 +358,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionZ
             // 
             this.LblCameraPositionZ.AutoSize = true;
-            this.LblCameraPositionZ.Location = new System.Drawing.Point(6, 50);
+            this.LblCameraPositionZ.Location = new System.Drawing.Point(6, 76);
             this.LblCameraPositionZ.Name = "LblCameraPositionZ";
             this.LblCameraPositionZ.Size = new System.Drawing.Size(57, 13);
             this.LblCameraPositionZ.TabIndex = 2;
@@ -367,7 +367,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionY
             // 
             this.LblCameraPositionY.AutoSize = true;
-            this.LblCameraPositionY.Location = new System.Drawing.Point(6, 33);
+            this.LblCameraPositionY.Location = new System.Drawing.Point(6, 59);
             this.LblCameraPositionY.Name = "LblCameraPositionY";
             this.LblCameraPositionY.Size = new System.Drawing.Size(57, 13);
             this.LblCameraPositionY.TabIndex = 1;
@@ -376,7 +376,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionX
             // 
             this.LblCameraPositionX.AutoSize = true;
-            this.LblCameraPositionX.Location = new System.Drawing.Point(6, 16);
+            this.LblCameraPositionX.Location = new System.Drawing.Point(6, 42);
             this.LblCameraPositionX.Name = "LblCameraPositionX";
             this.LblCameraPositionX.Size = new System.Drawing.Size(57, 13);
             this.LblCameraPositionX.TabIndex = 0;
@@ -452,6 +452,96 @@ namespace BizHawk.Client.EmuHawk
             this.GbxControls.TabStop = false;
             this.GbxControls.Text = "Controls";
             // 
+            // LblButtonR3
+            // 
+            this.LblButtonR3.AutoSize = true;
+            this.LblButtonR3.Location = new System.Drawing.Point(213, 230);
+            this.LblButtonR3.Name = "LblButtonR3";
+            this.LblButtonR3.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonR3.TabIndex = 15;
+            this.LblButtonR3.Text = "R3";
+            // 
+            // LblButtonL3
+            // 
+            this.LblButtonL3.AutoSize = true;
+            this.LblButtonL3.Location = new System.Drawing.Point(83, 230);
+            this.LblButtonL3.Name = "LblButtonL3";
+            this.LblButtonL3.Size = new System.Drawing.Size(19, 13);
+            this.LblButtonL3.TabIndex = 14;
+            this.LblButtonL3.Text = "L3";
+            // 
+            // LblButtonR2
+            // 
+            this.LblButtonR2.AutoSize = true;
+            this.LblButtonR2.Location = new System.Drawing.Point(279, 33);
+            this.LblButtonR2.Name = "LblButtonR2";
+            this.LblButtonR2.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonR2.TabIndex = 13;
+            this.LblButtonR2.Text = "R2";
+            // 
+            // LblButtonR1
+            // 
+            this.LblButtonR1.AutoSize = true;
+            this.LblButtonR1.Location = new System.Drawing.Point(279, 67);
+            this.LblButtonR1.Name = "LblButtonR1";
+            this.LblButtonR1.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonR1.TabIndex = 12;
+            this.LblButtonR1.Text = "R1";
+            // 
+            // LblButtonL2
+            // 
+            this.LblButtonL2.AutoSize = true;
+            this.LblButtonL2.Location = new System.Drawing.Point(22, 33);
+            this.LblButtonL2.Name = "LblButtonL2";
+            this.LblButtonL2.Size = new System.Drawing.Size(19, 13);
+            this.LblButtonL2.TabIndex = 11;
+            this.LblButtonL2.Text = "L2";
+            // 
+            // LblButtonL1
+            // 
+            this.LblButtonL1.AutoSize = true;
+            this.LblButtonL1.Location = new System.Drawing.Point(22, 67);
+            this.LblButtonL1.Name = "LblButtonL1";
+            this.LblButtonL1.Size = new System.Drawing.Size(19, 13);
+            this.LblButtonL1.TabIndex = 10;
+            this.LblButtonL1.Text = "L1";
+            // 
+            // LblButtonX
+            // 
+            this.LblButtonX.AutoSize = true;
+            this.LblButtonX.Location = new System.Drawing.Point(250, 170);
+            this.LblButtonX.Name = "LblButtonX";
+            this.LblButtonX.Size = new System.Drawing.Size(14, 13);
+            this.LblButtonX.TabIndex = 9;
+            this.LblButtonX.Text = "X";
+            // 
+            // LblButtonCircle
+            // 
+            this.LblButtonCircle.AutoSize = true;
+            this.LblButtonCircle.Location = new System.Drawing.Point(279, 138);
+            this.LblButtonCircle.Name = "LblButtonCircle";
+            this.LblButtonCircle.Size = new System.Drawing.Size(33, 13);
+            this.LblButtonCircle.TabIndex = 8;
+            this.LblButtonCircle.Text = "Circle";
+            // 
+            // LblButtonSquare
+            // 
+            this.LblButtonSquare.AutoSize = true;
+            this.LblButtonSquare.Location = new System.Drawing.Point(199, 138);
+            this.LblButtonSquare.Name = "LblButtonSquare";
+            this.LblButtonSquare.Size = new System.Drawing.Size(41, 13);
+            this.LblButtonSquare.TabIndex = 7;
+            this.LblButtonSquare.Text = "Square";
+            // 
+            // LblButtonTriangle
+            // 
+            this.LblButtonTriangle.AutoSize = true;
+            this.LblButtonTriangle.Location = new System.Drawing.Point(235, 106);
+            this.LblButtonTriangle.Name = "LblButtonTriangle";
+            this.LblButtonTriangle.Size = new System.Drawing.Size(45, 13);
+            this.LblButtonTriangle.TabIndex = 6;
+            this.LblButtonTriangle.Text = "Triangle";
+            // 
             // LblButtonDown
             // 
             this.LblButtonDown.AutoSize = true;
@@ -508,6 +598,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxOverlay
             // 
+            this.GbxOverlay.Controls.Add(this.label2);
             this.GbxOverlay.Controls.Add(this.LblOverlayCamRoll);
             this.GbxOverlay.Controls.Add(this.LblOverlayCamYaw);
             this.GbxOverlay.Controls.Add(this.LblOverlayCamPitch);
@@ -524,7 +615,7 @@ namespace BizHawk.Client.EmuHawk
             // LblOverlayCamRoll
             // 
             this.LblOverlayCamRoll.AutoSize = true;
-            this.LblOverlayCamRoll.Location = new System.Drawing.Point(6, 115);
+            this.LblOverlayCamRoll.Location = new System.Drawing.Point(6, 142);
             this.LblOverlayCamRoll.Name = "LblOverlayCamRoll";
             this.LblOverlayCamRoll.Size = new System.Drawing.Size(28, 13);
             this.LblOverlayCamRoll.TabIndex = 11;
@@ -533,7 +624,7 @@ namespace BizHawk.Client.EmuHawk
             // LblOverlayCamYaw
             // 
             this.LblOverlayCamYaw.AutoSize = true;
-            this.LblOverlayCamYaw.Location = new System.Drawing.Point(6, 98);
+            this.LblOverlayCamYaw.Location = new System.Drawing.Point(6, 125);
             this.LblOverlayCamYaw.Name = "LblOverlayCamYaw";
             this.LblOverlayCamYaw.Size = new System.Drawing.Size(31, 13);
             this.LblOverlayCamYaw.TabIndex = 10;
@@ -542,7 +633,7 @@ namespace BizHawk.Client.EmuHawk
             // LblOverlayCamPitch
             // 
             this.LblOverlayCamPitch.AutoSize = true;
-            this.LblOverlayCamPitch.Location = new System.Drawing.Point(6, 81);
+            this.LblOverlayCamPitch.Location = new System.Drawing.Point(6, 108);
             this.LblOverlayCamPitch.Name = "LblOverlayCamPitch";
             this.LblOverlayCamPitch.Size = new System.Drawing.Size(34, 13);
             this.LblOverlayCamPitch.TabIndex = 9;
@@ -551,7 +642,7 @@ namespace BizHawk.Client.EmuHawk
             // LblOverlayCamPositionZ
             // 
             this.LblOverlayCamPositionZ.AutoSize = true;
-            this.LblOverlayCamPositionZ.Location = new System.Drawing.Point(6, 50);
+            this.LblOverlayCamPositionZ.Location = new System.Drawing.Point(6, 77);
             this.LblOverlayCamPositionZ.Name = "LblOverlayCamPositionZ";
             this.LblOverlayCamPositionZ.Size = new System.Drawing.Size(57, 13);
             this.LblOverlayCamPositionZ.TabIndex = 8;
@@ -560,7 +651,7 @@ namespace BizHawk.Client.EmuHawk
             // LblOverlayCamPositionY
             // 
             this.LblOverlayCamPositionY.AutoSize = true;
-            this.LblOverlayCamPositionY.Location = new System.Drawing.Point(6, 33);
+            this.LblOverlayCamPositionY.Location = new System.Drawing.Point(6, 60);
             this.LblOverlayCamPositionY.Name = "LblOverlayCamPositionY";
             this.LblOverlayCamPositionY.Size = new System.Drawing.Size(57, 13);
             this.LblOverlayCamPositionY.TabIndex = 7;
@@ -569,7 +660,7 @@ namespace BizHawk.Client.EmuHawk
             // LblOverlayCamPositionX
             // 
             this.LblOverlayCamPositionX.AutoSize = true;
-            this.LblOverlayCamPositionX.Location = new System.Drawing.Point(6, 16);
+            this.LblOverlayCamPositionX.Location = new System.Drawing.Point(6, 43);
             this.LblOverlayCamPositionX.Name = "LblOverlayCamPositionX";
             this.LblOverlayCamPositionX.Size = new System.Drawing.Size(57, 13);
             this.LblOverlayCamPositionX.TabIndex = 6;
@@ -597,8 +688,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbpBox.Controls.Add(this.BtnBoxSetPosition);
             this.TbpBox.Controls.Add(this.LblBoxX);
             this.TbpBox.Controls.Add(this.LblBoxY);
-            this.TbpBox.Controls.Add(this.LblBoxVerticalCoord);
-            this.TbpBox.Controls.Add(this.TrkBoxVerticalCoord);
             this.TbpBox.Location = new System.Drawing.Point(4, 22);
             this.TbpBox.Name = "TbpBox";
             this.TbpBox.Padding = new System.Windows.Forms.Padding(3);
@@ -708,113 +797,23 @@ namespace BizHawk.Client.EmuHawk
             this.LblBoxY.TabIndex = 25;
             this.LblBoxY.Text = "<box y>";
             // 
-            // LblBoxVerticalCoord
+            // label2
             // 
-            this.LblBoxVerticalCoord.AutoSize = true;
-            this.LblBoxVerticalCoord.Location = new System.Drawing.Point(145, 182);
-            this.LblBoxVerticalCoord.Name = "LblBoxVerticalCoord";
-            this.LblBoxVerticalCoord.Size = new System.Drawing.Size(103, 13);
-            this.LblBoxVerticalCoord.TabIndex = 12;
-            this.LblBoxVerticalCoord.Text = "<box vertical coord>";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(94, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Y up, right-handed";
             // 
-            // TrkBoxVerticalCoord
+            // label1
             // 
-            this.TrkBoxVerticalCoord.Location = new System.Drawing.Point(6, 198);
-            this.TrkBoxVerticalCoord.Minimum = -1;
-            this.TrkBoxVerticalCoord.Name = "TrkBoxVerticalCoord";
-            this.TrkBoxVerticalCoord.Size = new System.Drawing.Size(381, 45);
-            this.TrkBoxVerticalCoord.TabIndex = 11;
-            this.TrkBoxVerticalCoord.Value = 1;
-            // 
-            // LblButtonTriangle
-            // 
-            this.LblButtonTriangle.AutoSize = true;
-            this.LblButtonTriangle.Location = new System.Drawing.Point(235, 106);
-            this.LblButtonTriangle.Name = "LblButtonTriangle";
-            this.LblButtonTriangle.Size = new System.Drawing.Size(45, 13);
-            this.LblButtonTriangle.TabIndex = 6;
-            this.LblButtonTriangle.Text = "Triangle";
-            // 
-            // LblButtonSquare
-            // 
-            this.LblButtonSquare.AutoSize = true;
-            this.LblButtonSquare.Location = new System.Drawing.Point(199, 138);
-            this.LblButtonSquare.Name = "LblButtonSquare";
-            this.LblButtonSquare.Size = new System.Drawing.Size(41, 13);
-            this.LblButtonSquare.TabIndex = 7;
-            this.LblButtonSquare.Text = "Square";
-            // 
-            // LblButtonCircle
-            // 
-            this.LblButtonCircle.AutoSize = true;
-            this.LblButtonCircle.Location = new System.Drawing.Point(279, 138);
-            this.LblButtonCircle.Name = "LblButtonCircle";
-            this.LblButtonCircle.Size = new System.Drawing.Size(33, 13);
-            this.LblButtonCircle.TabIndex = 8;
-            this.LblButtonCircle.Text = "Circle";
-            // 
-            // LblButtonX
-            // 
-            this.LblButtonX.AutoSize = true;
-            this.LblButtonX.Location = new System.Drawing.Point(250, 170);
-            this.LblButtonX.Name = "LblButtonX";
-            this.LblButtonX.Size = new System.Drawing.Size(14, 13);
-            this.LblButtonX.TabIndex = 9;
-            this.LblButtonX.Text = "X";
-            // 
-            // LblButtonL1
-            // 
-            this.LblButtonL1.AutoSize = true;
-            this.LblButtonL1.Location = new System.Drawing.Point(22, 67);
-            this.LblButtonL1.Name = "LblButtonL1";
-            this.LblButtonL1.Size = new System.Drawing.Size(19, 13);
-            this.LblButtonL1.TabIndex = 10;
-            this.LblButtonL1.Text = "L1";
-            // 
-            // LblButtonL2
-            // 
-            this.LblButtonL2.AutoSize = true;
-            this.LblButtonL2.Location = new System.Drawing.Point(22, 33);
-            this.LblButtonL2.Name = "LblButtonL2";
-            this.LblButtonL2.Size = new System.Drawing.Size(19, 13);
-            this.LblButtonL2.TabIndex = 11;
-            this.LblButtonL2.Text = "L2";
-            // 
-            // LblButtonR2
-            // 
-            this.LblButtonR2.AutoSize = true;
-            this.LblButtonR2.Location = new System.Drawing.Point(279, 33);
-            this.LblButtonR2.Name = "LblButtonR2";
-            this.LblButtonR2.Size = new System.Drawing.Size(21, 13);
-            this.LblButtonR2.TabIndex = 13;
-            this.LblButtonR2.Text = "R2";
-            // 
-            // LblButtonR1
-            // 
-            this.LblButtonR1.AutoSize = true;
-            this.LblButtonR1.Location = new System.Drawing.Point(279, 67);
-            this.LblButtonR1.Name = "LblButtonR1";
-            this.LblButtonR1.Size = new System.Drawing.Size(21, 13);
-            this.LblButtonR1.TabIndex = 12;
-            this.LblButtonR1.Text = "R1";
-            // 
-            // LblButtonL3
-            // 
-            this.LblButtonL3.AutoSize = true;
-            this.LblButtonL3.Location = new System.Drawing.Point(83, 230);
-            this.LblButtonL3.Name = "LblButtonL3";
-            this.LblButtonL3.Size = new System.Drawing.Size(19, 13);
-            this.LblButtonL3.TabIndex = 14;
-            this.LblButtonL3.Text = "L3";
-            // 
-            // LblButtonR3
-            // 
-            this.LblButtonR3.AutoSize = true;
-            this.LblButtonR3.Location = new System.Drawing.Point(213, 230);
-            this.LblButtonR3.Name = "LblButtonR3";
-            this.LblButtonR3.Size = new System.Drawing.Size(21, 13);
-            this.LblButtonR3.TabIndex = 15;
-            this.LblButtonR3.Text = "R3";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(119, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Y down, X north, Z east";
             // 
             // CustomMainForm
             // 
@@ -840,7 +839,6 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrkBoxVerticalCoord)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -877,8 +875,6 @@ namespace BizHawk.Client.EmuHawk
 		private TabPage TbpBasics;
 		private TabPage TbpMap;
 		private TabPage TbpBox;
-		private Label LblBoxVerticalCoord;
-		private TrackBar TrkBoxVerticalCoord;
 		private Label LblBoxZ;
 		private Button BtnBoxGetPosition;
 		private Button BtnBoxSetPosition;
@@ -911,5 +907,7 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblButtonR1;
 		private Label LblButtonL2;
 		private Label LblButtonL1;
+		private Label label2;
+		private Label label1;
 	}
 }

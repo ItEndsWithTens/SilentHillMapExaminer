@@ -24,7 +24,8 @@ namespace SHME.ExternalTool
 	//	Roll is rotation about X
 	//
 	// Positive rotation goes counter-clockwise, as seen facing the negative
-	// direction of the given axis.
+	// direction of the given axis. A yaw value of 0 in game aims Harry north,
+	// along Bachman Road, hence the unconventional use of the labels X and Z.
 	//
 	// The 3D rendering conventions of this library obey a more traditional
 	// Y-up, right-handed coordinate system, which means:

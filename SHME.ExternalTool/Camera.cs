@@ -329,7 +329,7 @@ namespace SHME.ExternalTool
 			Frustum?.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
 		}
 
-		private List<(Polygon, Renderable)> _visiblePolygons = new List<(Polygon, Renderable)>();
+		private readonly List<(Polygon, Renderable)> _visiblePolygons = new List<(Polygon, Renderable)>();
 		public List<(Polygon, Renderable)> GetVisiblePolygons(IEnumerable<Renderable> renderables)
 		{
 			_visiblePolygons.Clear();
@@ -345,9 +345,9 @@ namespace SHME.ExternalTool
 				{
 					Vector3 point = r.Vertices[p.Indices[0]];
 					Vector4 transformed = new Vector4(point, 1.0f) * r.ModelMatrix;
-					Vector3 toPoint = Position - transformed.Xyz;
+					Vector3 toPoint = transformed.Xyz - Position;
 
-					if (Vector3.Dot(toPoint, p.Normal) > 0.0f)
+					if (Vector3.Dot(toPoint, p.Normal) < 0.0f)
 					{
 						_visiblePolygons.Add((p, r));
 					}

@@ -1,5 +1,4 @@
 ﻿using BizHawk.Client.Common;
-using BizHawk.Common;
 using OpenTK;
 using OpenTK.Graphics;
 using SHME.ExternalTool;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
@@ -80,9 +78,9 @@ namespace BizHawk.Client.EmuHawk
 			//Boxes[0].Position = new Vector3(155.5f, -8.5f, 0.15f);
 			Boxes[0].Position = new Vector3(0.0f, 0.0f, 0.0f);
 
-			Boxes.Add(generator.Generate().ToWorld());
+			//Boxes.Add(generator.Generate().ToWorld());
 
-			Boxes[1].Position = new Vector3(159.5f, -0.5f, -13.5f);
+			//Boxes[1].Position = new Vector3(159.5f, -0.5f, -13.5f);
 		}
 
 		public bool AskSaveChanges()
@@ -138,22 +136,22 @@ namespace BizHawk.Client.EmuHawk
 		[Flags]
 		private enum ButtonFlags : ushort
 		{
-			Select = 0b00000000_00000001,
-			L3 = 0b00000000_00000010,
-			R3 = 0b00000000_00000100,
-			Start = 0b00000000_00001000,
-			Up = 0b00000000_00010000,
-			Right = 0b00000000_00100000,
-			Down = 0b00000000_01000000,
-			Left = 0b00000000_10000000,
-			L2 = 0b00000001_00000000,
-			R2 = 0b00000010_00000000,
-			L1 = 0b00000100_00000000,
-			R1 = 0b00001000_00000000,
+			Select =   0b00000000_00000001,
+			L3 =       0b00000000_00000010,
+			R3 =       0b00000000_00000100,
+			Start =    0b00000000_00001000,
+			Up =       0b00000000_00010000,
+			Right =    0b00000000_00100000,
+			Down =     0b00000000_01000000,
+			Left =     0b00000000_10000000,
+			L2 =       0b00000001_00000000,
+			R2 =       0b00000010_00000000,
+			L1 =       0b00000100_00000000,
+			R1 =       0b00001000_00000000,
 			Triangle = 0b00010000_00000000,
-			Circle = 0b00100000_00000000,
-			X = 0b01000000_00000000,
-			Square = 0b10000000_00000000
+			Circle =   0b00100000_00000000,
+			X =        0b01000000_00000000,
+			Square =   0b10000000_00000000
 		}
 
 		private void ReportControls()
@@ -205,6 +203,14 @@ namespace BizHawk.Client.EmuHawk
 			LblBoxX.Text = boxCoords.X.ToString();
 			LblBoxY.Text = boxCoords.Y.ToString();
 			LblBoxZ.Text = boxCoords.Z.ToString();
+
+			LblOverlayCamPositionX.Text = Camera.Position.X.ToString();
+			LblOverlayCamPositionY.Text = Camera.Position.Y.ToString();
+			LblOverlayCamPositionZ.Text = Camera.Position.Z.ToString();
+
+			LblOverlayCamPitch.Text = Camera.Pitch.ToString();
+			LblOverlayCamYaw.Text = Camera.Yaw.ToString();
+			LblOverlayCamRoll.Text = Camera.Roll.ToString();
 		}
 
 		private void BtnGetPosition_Click(object sender, EventArgs e)
@@ -266,8 +272,7 @@ namespace BizHawk.Client.EmuHawk
 
 			Camera.Position = CoordinateConverter.Convert(position.GetRange(3, 3), CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 
-			//TODO: Need to sort out angle conversion. Not sure why it doesn't work yet.
-			Camera.Pitch = -angles[3];
+			Camera.Pitch = angles[3];
 			Camera.Yaw = angles[4];
 			Camera.Roll = angles[5];
 
@@ -280,50 +285,39 @@ namespace BizHawk.Client.EmuHawk
 			Gui.DrawLine(origin.X, origin.Y + 448 / 2, origin.X + 640 - 1, origin.Y + 448 / 2);
 			Gui.DrawLine(origin.X + 640 / 2, origin.Y, origin.X + 640 / 2, origin.Y + 448 - 1);
 
-			foreach (Renderable box in Boxes)
+			// Remember that the projection, view, model order from GL
+			// shaders is reversed in C#, to account for OpenTK's row
+			// major matrix layout.
+			Matrix4 matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
+
+			List<(Polygon, Renderable)> visible = Camera.GetVisiblePolygons(Boxes);
+
+			foreach ((Polygon p, Renderable r) in visible)
 			{
-				if (!Camera.CanSee(box))
+				matrix = r.ModelMatrix * matrix;
+
+				foreach (int i in p.LineLoopIndices)
 				{
-					// FIXME: Should be just a 'continue', right? Need to test, too late right now, need sleep.
-					Gui.DrawFinish();
-					return;
+					Vertex v = r.Vertices[i];
+
+					Vector4 clip = new Vector4(v.Position, 1.0f) * matrix;
+
+					Vector3 ndc = clip.Xyz / clip.W;
+
+					// To account for Silent Hill's downward pointing vertical
+					// axis, the Y component needs to be inverted.
+					var screen = new Point(
+						(int)((ndc.X + 1) * 320 + origin.X),
+						(int)((-ndc.Y + 1) * 224 + origin.Y));
+
+					Points.Add(screen);
 				}
 
-				// Remember that the projection, view, model order from GL
-				// shaders is reversed in C#, to account for OpenTK's row
-				// major matrix layout.
-				Matrix4 matrix = box.ModelMatrix * Camera.ViewMatrix * Camera.ProjectionMatrix;
+				int argb = r.Vertices[p.LineLoopIndices[0]].Color.ToArgb();
 
-				List<(Polygon, Renderable)> visible = Camera.GetVisiblePolygons(Boxes);
+				Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb), Color.FromArgb(argb));
 
-				//foreach (Polygon p in box.Polygons)
-				foreach ((Polygon p, Renderable _) in visible)
-				{
-					foreach (int i in p.LineLoopIndices)
-					{
-						Vertex v = box.Vertices[i];
-
-						Vector3 converted = CoordinateConverter.Convert(
-							v.Position,
-							CoordinateType.YUpRightHanded,
-							CoordinateType.SilentHill);
-
-						Vector4 clip = new Vector4(converted, 1.0f) * matrix;
-
-						Vector3 ndc = clip.Xyz / clip.W;
-
-						var screen = new Point(
-							(int)((ndc.X + 1) * 320 + origin.X),
-							(int)((ndc.Y + 1) * 224 + origin.Y));
-
-						Points.Add(screen);
-					}
-
-					int argb = box.Vertices[p.LineLoopIndices[0]].Color.ToArgb();
-
-					Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb), Color.FromArgb(argb));
-					Points.Clear();
-				}
+				Points.Clear();
 			}
 
 			Gui.DrawFinish();
@@ -333,15 +327,6 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Camera.Fov = TrkFov.Value;
 			LblFov.Text = TrkFov.Value.ToString();
-		}
-
-		private void TrkBoxVerticalCoord_Scroll(object sender, EventArgs e)
-		{
-			Vector3 oldPosition = Boxes[0].Position;
-
-			Boxes[0].Position = new Vector3(oldPosition.X, -TrkBoxVerticalCoord.Value, oldPosition.Z);
-
-			LblBoxVerticalCoord.Text = (-TrkBoxVerticalCoord.Value).ToString();
 		}
 
 		private void BtnGrabMapGraphic_Click(object sender, EventArgs e)
@@ -369,52 +354,40 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnBoxSetPosition_Click(object sender, EventArgs e)
 		{
-			Boxes[0].Position = CoordinateConverter.Convert(
-				new Vector3(
-					(float)NudBoxX.Value,
-					(float)NudBoxY.Value,
-					(float)NudBoxZ.Value),
-				CoordinateType.SilentHill,
-				CoordinateType.YUpRightHanded);
+			Boxes[0].Position = new Vector3(
+				(float)NudBoxX.Value,
+				-(float)NudBoxY.Value,
+				(float)NudBoxZ.Value);
 		}
 
 		private void NudBoxX_ValueChanged(object sender, EventArgs e)
 		{
 			Renderable box = Boxes[0];
 
-			box.Position = CoordinateConverter.Convert(
-				new Vector3(
-					(float)NudBoxX.Value,
-					box.Position.Y,
-					box.Position.Z),
-				CoordinateType.SilentHill,
-				CoordinateType.YUpRightHanded);
+			box.Position = new Vector3(
+				(float)NudBoxX.Value,
+				box.Position.Y,
+				box.Position.Z);
 		}
 
 		private void NudBoxY_ValueChanged(object sender, EventArgs e)
 		{
 			Renderable box = Boxes[0];
 
-			box.Position = CoordinateConverter.Convert(
-				new Vector3(
-					box.Position.X,
-					(float)NudBoxY.Value,
-					box.Position.Z),
-				CoordinateType.SilentHill,
-				CoordinateType.YUpRightHanded);
+			box.Position = new Vector3(
+				box.Position.X,
+				-(float)NudBoxY.Value, // Convert to SH coordinate space
+				box.Position.Z);
 		}
 
 		private void NudBoxZ_ValueChanged(object sender, EventArgs e)
 		{
 			Renderable box = Boxes[0];
 
-			box.Position = CoordinateConverter.Convert(
-				new Vector3(
-					box.Position.X,
-					box.Position.Y,
-					(float)NudBoxZ.Value),
-				CoordinateType.SilentHill,
-				CoordinateType.YUpRightHanded);
+			box.Position = new Vector3(
+				box.Position.X,
+				box.Position.Y,
+				(float)NudBoxZ.Value);
 		}
 	}
 }
