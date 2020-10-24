@@ -58,10 +58,10 @@ namespace SHME.ExternalTool
 				new Vertex(Min.X, Min.Y, Max.Z),
 
 				// Positive Y (top)
-				new Vertex(Max.X, Max.Y, Min.Z, Color4.Blue),
-				new Vertex(Min.X, Max.Y, Min.Z, Color4.Blue),
-				new Vertex(Min.X, Max.Y, Max.Z, Color4.Blue),
-				new Vertex(Max.X, Max.Y, Max.Z, Color4.Blue),
+				new Vertex(Max.X, Max.Y, Min.Z, Color4.Lime),
+				new Vertex(Min.X, Max.Y, Min.Z, Color4.Lime),
+				new Vertex(Min.X, Max.Y, Max.Z, Color4.Lime),
+				new Vertex(Max.X, Max.Y, Max.Z, Color4.Lime),
 
 				// Negative X (left)
 				new Vertex(Min.X, Min.Y, Min.Z),
@@ -76,10 +76,10 @@ namespace SHME.ExternalTool
 				new Vertex(Max.X, Min.Y, Min.Z, Color4.Red),
 
 				// Positive Z (back)
-				new Vertex(Min.X, Min.Y, Max.Z, Color4.Lime),
-				new Vertex(Max.X, Min.Y, Max.Z, Color4.Lime),
-				new Vertex(Max.X, Max.Y, Max.Z, Color4.Lime),
-				new Vertex(Min.X, Max.Y, Max.Z, Color4.Lime),
+				new Vertex(Min.X, Min.Y, Max.Z, Color4.Blue),
+				new Vertex(Max.X, Min.Y, Max.Z, Color4.Blue),
+				new Vertex(Max.X, Max.Y, Max.Z, Color4.Blue),
+				new Vertex(Min.X, Max.Y, Max.Z, Color4.Blue),
 
 				// Negative Z (front)
 				new Vertex(Max.X, Min.Y, Min.Z),
