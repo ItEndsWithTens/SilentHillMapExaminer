@@ -1,0 +1,3 @@
+[submodule "lib/BizHawk"]
+	path = lib/BizHawk
+	url = https://github.com/TASVideos/BizHawk.git

@@ -4,6 +4,8 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <TargetFramework>net48</TargetFramework>
+
+    <BizHawkOutputDir>$(ProjectDir)../lib/BizHawk/output/</BizHawkOutputDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,15 +13,15 @@
     <PackageReference Include="OpenTK" Version="3.0.1" />
     <PackageReference Include="OpenTK.GLControl" Version="3.0.1" />
     
-    <Reference Include="BizHawk.Client.Common" HintPath="$(ProjectDir)../lib/BizHawk/dll/BizHawk.Client.Common.dll" />
-    <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(ProjectDir)../lib/BizHawk/EmuHawk.exe" />
-    <Reference Include="BizHawk.Common" HintPath="$(ProjectDir)../lib/BizHawk/dll/BizHawk.Common.dll" />
-    <Reference Include="BizHawk.WinForms.Controls" HintPath="$(ProjectDir)../lib/BizHawk/dll/BizHawk.WinForms.Controls.dll" />
+    <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)dll/BizHawk.Client.Common.dll" />
+    <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(BizHawkOutputDir)EmuHawk.exe" />
+    <Reference Include="BizHawk.Common" HintPath="$(BizHawkOutputDir)dll/BizHawk.Common.dll" />
+    <Reference Include="BizHawk.WinForms.Controls" HintPath="$(BizHawkOutputDir)dll/BizHawk.WinForms.Controls.dll" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Copy SourceFiles="$(OutputPath)$(MSBuildProjectName).dll" DestinationFolder="$(ProjectDir)../lib/BizHawk/ExternalTools" />
+    <Copy SourceFiles="$(OutputPath)$(MSBuildProjectName).dll" DestinationFolder="$(BizHawkOutputDir)ExternalTools" />
   </Target>
 
 </Project>

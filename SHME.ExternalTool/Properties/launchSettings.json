@@ -2,9 +2,9 @@
   "profiles": {
     "SHME.ExternalTool": {
       "commandName": "Executable",
-      "executablePath": "D:\\Development\\SilentHillMapExaminer\\lib\\BizHawk\\EmuHawk.exe",
+      "executablePath": ".\\EmuHawk.exe",
       "commandLineArgs": "--open-ext-tool-dll=SHME.ExternalTool",
-      "workingDirectory": "D:\\Development\\SilentHillMapExaminer\\lib\\BizHawk\\"
+      "workingDirectory": "..\\lib\\BizHawk\\output"
     }
   }
 }
