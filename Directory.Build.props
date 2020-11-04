@@ -1,0 +1,34 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <RestoreAdditionalProjectSources>https://www.myget.org/F/eto/</RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <Company>Rob Martens</Company>
+    <Copyright>Copyright © $([System.DateTime]::Now.Year)</Copyright>
+    <Product>Silent Hill Map Examiner</Product>
+
+    <BuildOS Condition="$([MSBuild]::IsOsPlatform(`Windows`)) == true">Windows</BuildOS>
+    <BuildOS Condition="$([MSBuild]::IsOsPlatform(`Linux`)) == true">Linux</BuildOS>
+    <BuildOS Condition="$([MSBuild]::IsOsPlatform(`OSX`)) == true">macOS</BuildOS>
+
+    <TopLevelDirectory>$(MSBuildThisFileDirectory)</TopLevelDirectory>
+    <BizHawkOutputDir>$(TopLevelDirectory)lib\BizHawk\output\</BizHawkOutputDir>
+
+    <ArtifactsDir>$(TopLevelDirectory)artifacts\</ArtifactsDir>
+    <BaseIntermediateOutputPath>$(ArtifactsDir)obj\$(BuildOS)\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(ArtifactsDir)bin\$(MSBuildProjectName)\</BaseOutputPath>
+
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Deterministic>true</Deterministic>
+    <MacBuildBundle>true</MacBuildBundle>
+    <MacBundleName>$(Product)</MacBundleName>
+    <MacBundleMono>false</MacBundleMono>
+
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+</Project>

@@ -25,6 +25,8 @@ namespace BizHawk.Client.EmuHawk
             this.TbxHarryRoll = new System.Windows.Forms.TextBox();
             this.BtnGetAngles = new System.Windows.Forms.Button();
             this.GbxHarry = new System.Windows.Forms.GroupBox();
+            this.LblHarryHealth = new System.Windows.Forms.Label();
+            this.CbxEnableHarrySection = new System.Windows.Forms.CheckBox();
             this.LblHarryPositionZ = new System.Windows.Forms.Label();
             this.TbxPositionZ = new System.Windows.Forms.TextBox();
             this.BtnSetAngles = new System.Windows.Forms.Button();
@@ -32,6 +34,8 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryYaw = new System.Windows.Forms.Label();
             this.LblHarryPitch = new System.Windows.Forms.Label();
             this.GbxCamera = new System.Windows.Forms.GroupBox();
+            this.CbxCameraFreeze = new System.Windows.Forms.CheckBox();
+            this.CbxEnableCameraSection = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.LblFov = new System.Windows.Forms.Label();
             this.TrkFov = new System.Windows.Forms.TrackBar();
@@ -47,6 +51,7 @@ namespace BizHawk.Client.EmuHawk
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TbpBasics = new System.Windows.Forms.TabPage();
             this.GbxControls = new System.Windows.Forms.GroupBox();
+            this.CbxEnableControlsSection = new System.Windows.Forms.CheckBox();
             this.LblButtonR3 = new System.Windows.Forms.Label();
             this.LblButtonL3 = new System.Windows.Forms.Label();
             this.LblButtonR2 = new System.Windows.Forms.Label();
@@ -64,6 +69,8 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.CbxEnableTriggerDisplay = new System.Windows.Forms.CheckBox();
+            this.CbxEnableOverlaySection = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.LblOverlayCamRoll = new System.Windows.Forms.Label();
             this.LblOverlayCamYaw = new System.Windows.Forms.Label();
@@ -81,10 +88,55 @@ namespace BizHawk.Client.EmuHawk
             this.BtnBoxSetPosition = new System.Windows.Forms.Button();
             this.LblBoxX = new System.Windows.Forms.Label();
             this.LblBoxY = new System.Windows.Forms.Label();
-            this.CbxEnableOverlaySection = new System.Windows.Forms.CheckBox();
-            this.CbxEnableControlsSection = new System.Windows.Forms.CheckBox();
-            this.CbxEnableCameraSection = new System.Windows.Forms.CheckBox();
-            this.CbxEnableHarrySection = new System.Windows.Forms.CheckBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.LblCalculatedRoll = new System.Windows.Forms.Label();
+            this.LblCalculatedYaw = new System.Windows.Forms.Label();
+            this.LblCalculatedPitch = new System.Windows.Forms.Label();
+            this.LblCalculated = new System.Windows.Forms.Label();
+            this.LblMatrix33 = new System.Windows.Forms.Label();
+            this.LblMatrix32 = new System.Windows.Forms.Label();
+            this.LblMatrix31 = new System.Windows.Forms.Label();
+            this.LblMatrix23 = new System.Windows.Forms.Label();
+            this.LblMatrix22 = new System.Windows.Forms.Label();
+            this.LblMatrix21 = new System.Windows.Forms.Label();
+            this.LblMatrix13 = new System.Windows.Forms.Label();
+            this.LblMatrix12 = new System.Windows.Forms.Label();
+            this.LblMatrix11 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.LblGteZ = new System.Windows.Forms.Label();
+            this.LblGteY = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.LblGteX = new System.Windows.Forms.Label();
+            this.LblRegisterTest = new System.Windows.Forms.Label();
+            this.TbpInfo = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.CbxStats = new System.Windows.Forms.CheckBox();
+            this.LblDistanceRun = new System.Windows.Forms.Label();
+            this.LblDistanceWalked = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.BtnWorldTintDefault = new System.Windows.Forms.Button();
+            this.BtnFogColorDefault = new System.Windows.Forms.Button();
+            this.CbxCustomWorldTint = new System.Windows.Forms.CheckBox();
+            this.NudWorldTintB = new System.Windows.Forms.NumericUpDown();
+            this.NudWorldTintG = new System.Windows.Forms.NumericUpDown();
+            this.NudWorldTintR = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.BtnWorldTintColor = new System.Windows.Forms.Button();
+            this.CbxFogCustom = new System.Windows.Forms.CheckBox();
+            this.NudFogB = new System.Windows.Forms.NumericUpDown();
+            this.NudFogG = new System.Windows.Forms.NumericUpDown();
+            this.NudFogR = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.BtnFogColor = new System.Windows.Forms.Button();
+            this.CbxFog = new System.Windows.Forms.CheckBox();
+            this.BtnCustomFogCurrent = new System.Windows.Forms.Button();
+            this.BtnCustomWorldTintCurrent = new System.Windows.Forms.Button();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -98,6 +150,15 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).BeginInit();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFogB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFogG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -215,6 +276,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxHarry
             // 
+            this.GbxHarry.Controls.Add(this.LblHarryHealth);
             this.GbxHarry.Controls.Add(this.CbxEnableHarrySection);
             this.GbxHarry.Controls.Add(this.LblHarryPositionZ);
             this.GbxHarry.Controls.Add(this.TbxPositionZ);
@@ -241,6 +303,27 @@ namespace BizHawk.Client.EmuHawk
             this.GbxHarry.TabIndex = 13;
             this.GbxHarry.TabStop = false;
             this.GbxHarry.Text = "Harry";
+            // 
+            // LblHarryHealth
+            // 
+            this.LblHarryHealth.AutoSize = true;
+            this.LblHarryHealth.Location = new System.Drawing.Point(6, 243);
+            this.LblHarryHealth.Name = "LblHarryHealth";
+            this.LblHarryHealth.Size = new System.Drawing.Size(74, 13);
+            this.LblHarryHealth.TabIndex = 19;
+            this.LblHarryHealth.Text = "<harry health>";
+            // 
+            // CbxEnableHarrySection
+            // 
+            this.CbxEnableHarrySection.AutoSize = true;
+            this.CbxEnableHarrySection.Checked = true;
+            this.CbxEnableHarrySection.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxEnableHarrySection.Location = new System.Drawing.Point(271, 243);
+            this.CbxEnableHarrySection.Name = "CbxEnableHarrySection";
+            this.CbxEnableHarrySection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableHarrySection.TabIndex = 16;
+            this.CbxEnableHarrySection.Text = "Enable";
+            this.CbxEnableHarrySection.UseVisualStyleBackColor = true;
             // 
             // LblHarryPositionZ
             // 
@@ -297,6 +380,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxCamera
             // 
+            this.GbxCamera.Controls.Add(this.CbxCameraFreeze);
             this.GbxCamera.Controls.Add(this.CbxEnableCameraSection);
             this.GbxCamera.Controls.Add(this.label1);
             this.GbxCamera.Controls.Add(this.LblFov);
@@ -313,6 +397,29 @@ namespace BizHawk.Client.EmuHawk
             this.GbxCamera.TabIndex = 14;
             this.GbxCamera.TabStop = false;
             this.GbxCamera.Text = "Camera";
+            // 
+            // CbxCameraFreeze
+            // 
+            this.CbxCameraFreeze.AutoSize = true;
+            this.CbxCameraFreeze.Location = new System.Drawing.Point(9, 225);
+            this.CbxCameraFreeze.Name = "CbxCameraFreeze";
+            this.CbxCameraFreeze.Size = new System.Drawing.Size(58, 17);
+            this.CbxCameraFreeze.TabIndex = 16;
+            this.CbxCameraFreeze.Text = "Freeze";
+            this.CbxCameraFreeze.UseVisualStyleBackColor = true;
+            this.CbxCameraFreeze.CheckedChanged += new System.EventHandler(this.CbxCameraFreeze_CheckedChanged);
+            // 
+            // CbxEnableCameraSection
+            // 
+            this.CbxEnableCameraSection.AutoSize = true;
+            this.CbxEnableCameraSection.Checked = true;
+            this.CbxEnableCameraSection.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxEnableCameraSection.Location = new System.Drawing.Point(337, 243);
+            this.CbxEnableCameraSection.Name = "CbxEnableCameraSection";
+            this.CbxEnableCameraSection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableCameraSection.TabIndex = 15;
+            this.CbxEnableCameraSection.Text = "Enable";
+            this.CbxEnableCameraSection.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -422,6 +529,10 @@ namespace BizHawk.Client.EmuHawk
             this.tabControl1.Controls.Add(this.TbpBasics);
             this.tabControl1.Controls.Add(this.TbpMap);
             this.tabControl1.Controls.Add(this.TbpBox);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.TbpInfo);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -467,6 +578,16 @@ namespace BizHawk.Client.EmuHawk
             this.GbxControls.TabIndex = 16;
             this.GbxControls.TabStop = false;
             this.GbxControls.Text = "Controls";
+            // 
+            // CbxEnableControlsSection
+            // 
+            this.CbxEnableControlsSection.AutoSize = true;
+            this.CbxEnableControlsSection.Location = new System.Drawing.Point(279, 419);
+            this.CbxEnableControlsSection.Name = "CbxEnableControlsSection";
+            this.CbxEnableControlsSection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableControlsSection.TabIndex = 15;
+            this.CbxEnableControlsSection.Text = "Enable";
+            this.CbxEnableControlsSection.UseVisualStyleBackColor = true;
             // 
             // LblButtonR3
             // 
@@ -614,6 +735,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxOverlay
             // 
+            this.GbxOverlay.Controls.Add(this.CbxEnableTriggerDisplay);
             this.GbxOverlay.Controls.Add(this.CbxEnableOverlaySection);
             this.GbxOverlay.Controls.Add(this.label2);
             this.GbxOverlay.Controls.Add(this.LblOverlayCamRoll);
@@ -628,6 +750,27 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabIndex = 15;
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay";
+            // 
+            // CbxEnableTriggerDisplay
+            // 
+            this.CbxEnableTriggerDisplay.AutoSize = true;
+            this.CbxEnableTriggerDisplay.Location = new System.Drawing.Point(331, 419);
+            this.CbxEnableTriggerDisplay.Name = "CbxEnableTriggerDisplay";
+            this.CbxEnableTriggerDisplay.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableTriggerDisplay.TabIndex = 15;
+            this.CbxEnableTriggerDisplay.Text = "Enable";
+            this.CbxEnableTriggerDisplay.UseVisualStyleBackColor = true;
+            this.CbxEnableTriggerDisplay.CheckedChanged += new System.EventHandler(this.CbxEnableTriggerDisplay_CheckedChanged);
+            // 
+            // CbxEnableOverlaySection
+            // 
+            this.CbxEnableOverlaySection.AutoSize = true;
+            this.CbxEnableOverlaySection.Location = new System.Drawing.Point(9, 170);
+            this.CbxEnableOverlaySection.Name = "CbxEnableOverlaySection";
+            this.CbxEnableOverlaySection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableOverlaySection.TabIndex = 14;
+            this.CbxEnableOverlaySection.Text = "Enable";
+            this.CbxEnableOverlaySection.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -823,49 +966,563 @@ namespace BizHawk.Client.EmuHawk
             this.LblBoxY.TabIndex = 25;
             this.LblBoxY.Text = "<box y>";
             // 
-            // CbxEnableOverlaySection
+            // tabPage1
             // 
-            this.CbxEnableOverlaySection.AutoSize = true;
-            this.CbxEnableOverlaySection.Location = new System.Drawing.Point(331, 419);
-            this.CbxEnableOverlaySection.Name = "CbxEnableOverlaySection";
-            this.CbxEnableOverlaySection.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableOverlaySection.TabIndex = 14;
-            this.CbxEnableOverlaySection.Text = "Enable";
-            this.CbxEnableOverlaySection.UseVisualStyleBackColor = true;
+            this.tabPage1.Controls.Add(this.LblCalculatedRoll);
+            this.tabPage1.Controls.Add(this.LblCalculatedYaw);
+            this.tabPage1.Controls.Add(this.LblCalculatedPitch);
+            this.tabPage1.Controls.Add(this.LblCalculated);
+            this.tabPage1.Controls.Add(this.LblMatrix33);
+            this.tabPage1.Controls.Add(this.LblMatrix32);
+            this.tabPage1.Controls.Add(this.LblMatrix31);
+            this.tabPage1.Controls.Add(this.LblMatrix23);
+            this.tabPage1.Controls.Add(this.LblMatrix22);
+            this.tabPage1.Controls.Add(this.LblMatrix21);
+            this.tabPage1.Controls.Add(this.LblMatrix13);
+            this.tabPage1.Controls.Add(this.LblMatrix12);
+            this.tabPage1.Controls.Add(this.LblMatrix11);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.LblGteZ);
+            this.tabPage1.Controls.Add(this.LblGteY);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.LblGteX);
+            this.tabPage1.Controls.Add(this.LblRegisterTest);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(752, 726);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "GTE";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // CbxEnableControlsSection
+            // LblCalculatedRoll
             // 
-            this.CbxEnableControlsSection.AutoSize = true;
-            this.CbxEnableControlsSection.Location = new System.Drawing.Point(279, 419);
-            this.CbxEnableControlsSection.Name = "CbxEnableControlsSection";
-            this.CbxEnableControlsSection.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableControlsSection.TabIndex = 15;
-            this.CbxEnableControlsSection.Text = "Enable";
-            this.CbxEnableControlsSection.UseVisualStyleBackColor = true;
+            this.LblCalculatedRoll.AutoSize = true;
+            this.LblCalculatedRoll.Location = new System.Drawing.Point(23, 527);
+            this.LblCalculatedRoll.Name = "LblCalculatedRoll";
+            this.LblCalculatedRoll.Size = new System.Drawing.Size(35, 13);
+            this.LblCalculatedRoll.TabIndex = 18;
+            this.LblCalculatedRoll.Text = "label3";
             // 
-            // CbxEnableCameraSection
+            // LblCalculatedYaw
             // 
-            this.CbxEnableCameraSection.AutoSize = true;
-            this.CbxEnableCameraSection.Checked = true;
-            this.CbxEnableCameraSection.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxEnableCameraSection.Location = new System.Drawing.Point(337, 243);
-            this.CbxEnableCameraSection.Name = "CbxEnableCameraSection";
-            this.CbxEnableCameraSection.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableCameraSection.TabIndex = 15;
-            this.CbxEnableCameraSection.Text = "Enable";
-            this.CbxEnableCameraSection.UseVisualStyleBackColor = true;
+            this.LblCalculatedYaw.AutoSize = true;
+            this.LblCalculatedYaw.Location = new System.Drawing.Point(23, 505);
+            this.LblCalculatedYaw.Name = "LblCalculatedYaw";
+            this.LblCalculatedYaw.Size = new System.Drawing.Size(35, 13);
+            this.LblCalculatedYaw.TabIndex = 17;
+            this.LblCalculatedYaw.Text = "label3";
             // 
-            // CbxEnableHarrySection
+            // LblCalculatedPitch
             // 
-            this.CbxEnableHarrySection.AutoSize = true;
-            this.CbxEnableHarrySection.Checked = true;
-            this.CbxEnableHarrySection.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxEnableHarrySection.Location = new System.Drawing.Point(271, 243);
-            this.CbxEnableHarrySection.Name = "CbxEnableHarrySection";
-            this.CbxEnableHarrySection.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableHarrySection.TabIndex = 16;
-            this.CbxEnableHarrySection.Text = "Enable";
-            this.CbxEnableHarrySection.UseVisualStyleBackColor = true;
+            this.LblCalculatedPitch.AutoSize = true;
+            this.LblCalculatedPitch.Location = new System.Drawing.Point(23, 482);
+            this.LblCalculatedPitch.Name = "LblCalculatedPitch";
+            this.LblCalculatedPitch.Size = new System.Drawing.Size(35, 13);
+            this.LblCalculatedPitch.TabIndex = 16;
+            this.LblCalculatedPitch.Text = "label3";
+            // 
+            // LblCalculated
+            // 
+            this.LblCalculated.AutoSize = true;
+            this.LblCalculated.Location = new System.Drawing.Point(23, 448);
+            this.LblCalculated.Name = "LblCalculated";
+            this.LblCalculated.Size = new System.Drawing.Size(91, 13);
+            this.LblCalculated.TabIndex = 15;
+            this.LblCalculated.Text = "Calculated values";
+            // 
+            // LblMatrix33
+            // 
+            this.LblMatrix33.AutoSize = true;
+            this.LblMatrix33.Location = new System.Drawing.Point(196, 355);
+            this.LblMatrix33.Name = "LblMatrix33";
+            this.LblMatrix33.Size = new System.Drawing.Size(35, 13);
+            this.LblMatrix33.TabIndex = 14;
+            this.LblMatrix33.Text = "label3";
+            // 
+            // LblMatrix32
+            // 
+            this.LblMatrix32.AutoSize = true;
+            this.LblMatrix32.Location = new System.Drawing.Point(196, 333);
+            this.LblMatrix32.Name = "LblMatrix32";
+            this.LblMatrix32.Size = new System.Drawing.Size(35, 13);
+            this.LblMatrix32.TabIndex = 13;
+            this.LblMatrix32.Text = "label3";
+            // 
+            // LblMatrix31
+            // 
+            this.LblMatrix31.AutoSize = true;
+            this.LblMatrix31.Location = new System.Drawing.Point(196, 310);
+            this.LblMatrix31.Name = "LblMatrix31";
+            this.LblMatrix31.Size = new System.Drawing.Size(35, 13);
+            this.LblMatrix31.TabIndex = 12;
+            this.LblMatrix31.Text = "label3";
+            // 
+            // LblMatrix23
+            // 
+            this.LblMatrix23.AutoSize = true;
+            this.LblMatrix23.Location = new System.Drawing.Point(106, 355);
+            this.LblMatrix23.Name = "LblMatrix23";
+            this.LblMatrix23.Size = new System.Drawing.Size(35, 13);
+            this.LblMatrix23.TabIndex = 11;
+            this.LblMatrix23.Text = "label3";
+            // 
+            // LblMatrix22
+            // 
+            this.LblMatrix22.AutoSize = true;
+            this.LblMatrix22.Location = new System.Drawing.Point(106, 333);
+            this.LblMatrix22.Name = "LblMatrix22";
+            this.LblMatrix22.Size = new System.Drawing.Size(35, 13);
+            this.LblMatrix22.TabIndex = 10;
+            this.LblMatrix22.Text = "label3";
+            // 
+            // LblMatrix21
+            // 
+            this.LblMatrix21.AutoSize = true;
+            this.LblMatrix21.Location = new System.Drawing.Point(106, 310);
+            this.LblMatrix21.Name = "LblMatrix21";
+            this.LblMatrix21.Size = new System.Drawing.Size(35, 13);
+            this.LblMatrix21.TabIndex = 9;
+            this.LblMatrix21.Text = "label3";
+            // 
+            // LblMatrix13
+            // 
+            this.LblMatrix13.AutoSize = true;
+            this.LblMatrix13.Location = new System.Drawing.Point(23, 355);
+            this.LblMatrix13.Name = "LblMatrix13";
+            this.LblMatrix13.Size = new System.Drawing.Size(35, 13);
+            this.LblMatrix13.TabIndex = 8;
+            this.LblMatrix13.Text = "label3";
+            // 
+            // LblMatrix12
+            // 
+            this.LblMatrix12.AutoSize = true;
+            this.LblMatrix12.Location = new System.Drawing.Point(23, 333);
+            this.LblMatrix12.Name = "LblMatrix12";
+            this.LblMatrix12.Size = new System.Drawing.Size(35, 13);
+            this.LblMatrix12.TabIndex = 7;
+            this.LblMatrix12.Text = "label3";
+            // 
+            // LblMatrix11
+            // 
+            this.LblMatrix11.AutoSize = true;
+            this.LblMatrix11.Location = new System.Drawing.Point(23, 310);
+            this.LblMatrix11.Name = "LblMatrix11";
+            this.LblMatrix11.Size = new System.Drawing.Size(35, 13);
+            this.LblMatrix11.TabIndex = 6;
+            this.LblMatrix11.Text = "label3";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(23, 273);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Some matrix";
+            // 
+            // LblGteZ
+            // 
+            this.LblGteZ.AutoSize = true;
+            this.LblGteZ.Location = new System.Drawing.Point(23, 207);
+            this.LblGteZ.Name = "LblGteZ";
+            this.LblGteZ.Size = new System.Drawing.Size(35, 13);
+            this.LblGteZ.TabIndex = 4;
+            this.LblGteZ.Text = "label3";
+            // 
+            // LblGteY
+            // 
+            this.LblGteY.AutoSize = true;
+            this.LblGteY.Location = new System.Drawing.Point(23, 185);
+            this.LblGteY.Name = "LblGteY";
+            this.LblGteY.Size = new System.Drawing.Size(35, 13);
+            this.LblGteY.TabIndex = 3;
+            this.LblGteY.Text = "label3";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(23, 134);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(118, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "GTE Translation Vector";
+            // 
+            // LblGteX
+            // 
+            this.LblGteX.AutoSize = true;
+            this.LblGteX.Location = new System.Drawing.Point(23, 162);
+            this.LblGteX.Name = "LblGteX";
+            this.LblGteX.Size = new System.Drawing.Size(35, 13);
+            this.LblGteX.TabIndex = 1;
+            this.LblGteX.Text = "label3";
+            // 
+            // LblRegisterTest
+            // 
+            this.LblRegisterTest.AutoSize = true;
+            this.LblRegisterTest.Location = new System.Drawing.Point(23, 24);
+            this.LblRegisterTest.Name = "LblRegisterTest";
+            this.LblRegisterTest.Size = new System.Drawing.Size(35, 13);
+            this.LblRegisterTest.TabIndex = 0;
+            this.LblRegisterTest.Text = "label3";
+            // 
+            // TbpInfo
+            // 
+            this.TbpInfo.Location = new System.Drawing.Point(4, 22);
+            this.TbpInfo.Name = "TbpInfo";
+            this.TbpInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.TbpInfo.Size = new System.Drawing.Size(752, 726);
+            this.TbpInfo.TabIndex = 4;
+            this.TbpInfo.Text = "Info";
+            this.TbpInfo.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.CbxStats);
+            this.tabPage2.Controls.Add(this.LblDistanceRun);
+            this.tabPage2.Controls.Add(this.LblDistanceWalked);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(752, 726);
+            this.tabPage2.TabIndex = 5;
+            this.tabPage2.Text = "Stats";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // CbxStats
+            // 
+            this.CbxStats.AutoSize = true;
+            this.CbxStats.Checked = true;
+            this.CbxStats.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxStats.Location = new System.Drawing.Point(687, 703);
+            this.CbxStats.Name = "CbxStats";
+            this.CbxStats.Size = new System.Drawing.Size(59, 17);
+            this.CbxStats.TabIndex = 4;
+            this.CbxStats.Text = "Enable";
+            this.CbxStats.UseVisualStyleBackColor = true;
+            // 
+            // LblDistanceRun
+            // 
+            this.LblDistanceRun.AutoSize = true;
+            this.LblDistanceRun.Location = new System.Drawing.Point(101, 16);
+            this.LblDistanceRun.Name = "LblDistanceRun";
+            this.LblDistanceRun.Size = new System.Drawing.Size(34, 13);
+            this.LblDistanceRun.TabIndex = 3;
+            this.LblDistanceRun.Text = "<run>";
+            // 
+            // LblDistanceWalked
+            // 
+            this.LblDistanceWalked.AutoSize = true;
+            this.LblDistanceWalked.Location = new System.Drawing.Point(101, 3);
+            this.LblDistanceWalked.Name = "LblDistanceWalked";
+            this.LblDistanceWalked.Size = new System.Drawing.Size(53, 13);
+            this.LblDistanceWalked.TabIndex = 2;
+            this.LblDistanceWalked.Text = "<walked>";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 16);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(70, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Distance run:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Distance walked:";
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.BtnCustomWorldTintCurrent);
+            this.tabPage3.Controls.Add(this.BtnCustomFogCurrent);
+            this.tabPage3.Controls.Add(this.BtnWorldTintDefault);
+            this.tabPage3.Controls.Add(this.BtnFogColorDefault);
+            this.tabPage3.Controls.Add(this.CbxCustomWorldTint);
+            this.tabPage3.Controls.Add(this.NudWorldTintB);
+            this.tabPage3.Controls.Add(this.NudWorldTintG);
+            this.tabPage3.Controls.Add(this.NudWorldTintR);
+            this.tabPage3.Controls.Add(this.label10);
+            this.tabPage3.Controls.Add(this.label11);
+            this.tabPage3.Controls.Add(this.label12);
+            this.tabPage3.Controls.Add(this.BtnWorldTintColor);
+            this.tabPage3.Controls.Add(this.CbxFogCustom);
+            this.tabPage3.Controls.Add(this.NudFogB);
+            this.tabPage3.Controls.Add(this.NudFogG);
+            this.tabPage3.Controls.Add(this.NudFogR);
+            this.tabPage3.Controls.Add(this.label9);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.label5);
+            this.tabPage3.Controls.Add(this.BtnFogColor);
+            this.tabPage3.Controls.Add(this.CbxFog);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(752, 726);
+            this.tabPage3.TabIndex = 6;
+            this.tabPage3.Text = "Fog";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // BtnWorldTintDefault
+            // 
+            this.BtnWorldTintDefault.Location = new System.Drawing.Point(265, 131);
+            this.BtnWorldTintDefault.Name = "BtnWorldTintDefault";
+            this.BtnWorldTintDefault.Size = new System.Drawing.Size(87, 23);
+            this.BtnWorldTintDefault.TabIndex = 18;
+            this.BtnWorldTintDefault.Text = "Default";
+            this.BtnWorldTintDefault.UseVisualStyleBackColor = true;
+            this.BtnWorldTintDefault.Click += new System.EventHandler(this.BtnWorldTintDefault_Click);
+            // 
+            // BtnFogColorDefault
+            // 
+            this.BtnFogColorDefault.Location = new System.Drawing.Point(112, 131);
+            this.BtnFogColorDefault.Name = "BtnFogColorDefault";
+            this.BtnFogColorDefault.Size = new System.Drawing.Size(87, 23);
+            this.BtnFogColorDefault.TabIndex = 17;
+            this.BtnFogColorDefault.Text = "Default";
+            this.BtnFogColorDefault.UseVisualStyleBackColor = true;
+            this.BtnFogColorDefault.Click += new System.EventHandler(this.BtnFogColorDefault_Click);
+            // 
+            // CbxCustomWorldTint
+            // 
+            this.CbxCustomWorldTint.AutoSize = true;
+            this.CbxCustomWorldTint.Location = new System.Drawing.Point(223, 6);
+            this.CbxCustomWorldTint.Name = "CbxCustomWorldTint";
+            this.CbxCustomWorldTint.Size = new System.Drawing.Size(106, 17);
+            this.CbxCustomWorldTint.TabIndex = 16;
+            this.CbxCustomWorldTint.Text = "Custom world tint";
+            this.CbxCustomWorldTint.UseVisualStyleBackColor = true;
+            // 
+            // NudWorldTintB
+            // 
+            this.NudWorldTintB.Location = new System.Drawing.Point(265, 76);
+            this.NudWorldTintB.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.NudWorldTintB.Name = "NudWorldTintB";
+            this.NudWorldTintB.Size = new System.Drawing.Size(52, 20);
+            this.NudWorldTintB.TabIndex = 15;
+            this.NudWorldTintB.Value = new decimal(new int[] {
+            138,
+            0,
+            0,
+            0});
+            this.NudWorldTintB.ValueChanged += new System.EventHandler(this.NudWorldTintB_ValueChanged);
+            // 
+            // NudWorldTintG
+            // 
+            this.NudWorldTintG.Location = new System.Drawing.Point(265, 50);
+            this.NudWorldTintG.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.NudWorldTintG.Name = "NudWorldTintG";
+            this.NudWorldTintG.Size = new System.Drawing.Size(52, 20);
+            this.NudWorldTintG.TabIndex = 14;
+            this.NudWorldTintG.Value = new decimal(new int[] {
+            128,
+            0,
+            0,
+            0});
+            this.NudWorldTintG.ValueChanged += new System.EventHandler(this.NudWorldTintG_ValueChanged);
+            // 
+            // NudWorldTintR
+            // 
+            this.NudWorldTintR.Location = new System.Drawing.Point(265, 24);
+            this.NudWorldTintR.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.NudWorldTintR.Name = "NudWorldTintR";
+            this.NudWorldTintR.Size = new System.Drawing.Size(52, 20);
+            this.NudWorldTintR.TabIndex = 13;
+            this.NudWorldTintR.Value = new decimal(new int[] {
+            121,
+            0,
+            0,
+            0});
+            this.NudWorldTintR.ValueChanged += new System.EventHandler(this.NudWorldTintR_ValueChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(221, 78);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(38, 13);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Fog B:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(220, 52);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(39, 13);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Fog G:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(220, 26);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(39, 13);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "Fog R:";
+            // 
+            // BtnWorldTintColor
+            // 
+            this.BtnWorldTintColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(128)))), ((int)(((byte)(138)))));
+            this.BtnWorldTintColor.Location = new System.Drawing.Point(323, 24);
+            this.BtnWorldTintColor.Name = "BtnWorldTintColor";
+            this.BtnWorldTintColor.Size = new System.Drawing.Size(29, 72);
+            this.BtnWorldTintColor.TabIndex = 9;
+            this.BtnWorldTintColor.UseVisualStyleBackColor = false;
+            this.BtnWorldTintColor.Click += new System.EventHandler(this.BtnWorldTintColor_Click);
+            // 
+            // CbxFogCustom
+            // 
+            this.CbxFogCustom.AutoSize = true;
+            this.CbxFogCustom.Location = new System.Drawing.Point(70, 3);
+            this.CbxFogCustom.Name = "CbxFogCustom";
+            this.CbxFogCustom.Size = new System.Drawing.Size(79, 17);
+            this.CbxFogCustom.TabIndex = 8;
+            this.CbxFogCustom.Text = "Custom fog";
+            this.CbxFogCustom.UseVisualStyleBackColor = true;
+            // 
+            // NudFogB
+            // 
+            this.NudFogB.Location = new System.Drawing.Point(112, 73);
+            this.NudFogB.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.NudFogB.Name = "NudFogB";
+            this.NudFogB.Size = new System.Drawing.Size(52, 20);
+            this.NudFogB.TabIndex = 7;
+            this.NudFogB.Value = new decimal(new int[] {
+            116,
+            0,
+            0,
+            0});
+            this.NudFogB.ValueChanged += new System.EventHandler(this.NudFogB_ValueChanged);
+            // 
+            // NudFogG
+            // 
+            this.NudFogG.Location = new System.Drawing.Point(112, 47);
+            this.NudFogG.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.NudFogG.Name = "NudFogG";
+            this.NudFogG.Size = new System.Drawing.Size(52, 20);
+            this.NudFogG.TabIndex = 6;
+            this.NudFogG.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.NudFogG.ValueChanged += new System.EventHandler(this.NudFogG_ValueChanged);
+            // 
+            // NudFogR
+            // 
+            this.NudFogR.Location = new System.Drawing.Point(112, 21);
+            this.NudFogR.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.NudFogR.Name = "NudFogR";
+            this.NudFogR.Size = new System.Drawing.Size(52, 20);
+            this.NudFogR.TabIndex = 5;
+            this.NudFogR.Value = new decimal(new int[] {
+            108,
+            0,
+            0,
+            0});
+            this.NudFogR.ValueChanged += new System.EventHandler(this.NudFogR_ValueChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(68, 75);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(38, 13);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Fog B:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(67, 49);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(39, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Fog G:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(67, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(39, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Fog R:";
+            // 
+            // BtnFogColor
+            // 
+            this.BtnFogColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(100)))), ((int)(((byte)(116)))));
+            this.BtnFogColor.Location = new System.Drawing.Point(170, 21);
+            this.BtnFogColor.Name = "BtnFogColor";
+            this.BtnFogColor.Size = new System.Drawing.Size(29, 72);
+            this.BtnFogColor.TabIndex = 1;
+            this.BtnFogColor.UseVisualStyleBackColor = false;
+            this.BtnFogColor.Click += new System.EventHandler(this.BtnFogColor_Click);
+            // 
+            // CbxFog
+            // 
+            this.CbxFog.AutoSize = true;
+            this.CbxFog.Checked = true;
+            this.CbxFog.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxFog.Location = new System.Drawing.Point(6, 3);
+            this.CbxFog.Name = "CbxFog";
+            this.CbxFog.Size = new System.Drawing.Size(44, 17);
+            this.CbxFog.TabIndex = 0;
+            this.CbxFog.Text = "Fog";
+            this.CbxFog.UseVisualStyleBackColor = true;
+            // 
+            // BtnCustomFogCurrent
+            // 
+            this.BtnCustomFogCurrent.Location = new System.Drawing.Point(112, 102);
+            this.BtnCustomFogCurrent.Name = "BtnCustomFogCurrent";
+            this.BtnCustomFogCurrent.Size = new System.Drawing.Size(87, 23);
+            this.BtnCustomFogCurrent.TabIndex = 19;
+            this.BtnCustomFogCurrent.Text = "Current";
+            this.BtnCustomFogCurrent.UseVisualStyleBackColor = true;
+            this.BtnCustomFogCurrent.Click += new System.EventHandler(this.BtnCustomFogCurrent_Click);
+            // 
+            // BtnCustomWorldTintCurrent
+            // 
+            this.BtnCustomWorldTintCurrent.Location = new System.Drawing.Point(265, 102);
+            this.BtnCustomWorldTintCurrent.Name = "BtnCustomWorldTintCurrent";
+            this.BtnCustomWorldTintCurrent.Size = new System.Drawing.Size(87, 23);
+            this.BtnCustomWorldTintCurrent.TabIndex = 20;
+            this.BtnCustomWorldTintCurrent.Text = "Current";
+            this.BtnCustomWorldTintCurrent.UseVisualStyleBackColor = true;
+            this.BtnCustomWorldTintCurrent.Click += new System.EventHandler(this.BtnCustomWorldTintCurrent_Click);
             // 
             // CustomMainForm
             // 
@@ -891,6 +1548,18 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFogB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFogG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -965,5 +1634,57 @@ namespace BizHawk.Client.EmuHawk
 		private CheckBox CbxEnableHarrySection;
 		private CheckBox CbxEnableCameraSection;
 		private CheckBox CbxEnableControlsSection;
+		private TabPage tabPage1;
+		private Label LblRegisterTest;
+		private Label LblGteZ;
+		private Label LblGteY;
+		private Label label3;
+		private Label LblGteX;
+		private Label LblMatrix33;
+		private Label LblMatrix32;
+		private Label LblMatrix31;
+		private Label LblMatrix23;
+		private Label LblMatrix22;
+		private Label LblMatrix21;
+		private Label LblMatrix13;
+		private Label LblMatrix12;
+		private Label LblMatrix11;
+		private Label label4;
+		private Label LblCalculatedRoll;
+		private Label LblCalculatedYaw;
+		private Label LblCalculatedPitch;
+		private Label LblCalculated;
+		private CheckBox CbxEnableTriggerDisplay;
+		private TabPage TbpInfo;
+		private Label LblHarryHealth;
+		private CheckBox CbxCameraFreeze;
+		private TabPage tabPage2;
+		private Label label8;
+		private Label label7;
+		private Label LblDistanceRun;
+		private Label LblDistanceWalked;
+		private CheckBox CbxStats;
+		private TabPage tabPage3;
+		private CheckBox CbxFog;
+		private Button BtnFogColor;
+		private Label label9;
+		private Label label6;
+		private Label label5;
+		private NumericUpDown NudFogB;
+		private NumericUpDown NudFogG;
+		private NumericUpDown NudFogR;
+		private CheckBox CbxFogCustom;
+		private CheckBox CbxCustomWorldTint;
+		private NumericUpDown NudWorldTintB;
+		private NumericUpDown NudWorldTintG;
+		private NumericUpDown NudWorldTintR;
+		private Label label10;
+		private Label label11;
+		private Label label12;
+		private Button BtnWorldTintColor;
+		private Button BtnWorldTintDefault;
+		private Button BtnFogColorDefault;
+		private Button BtnCustomWorldTintCurrent;
+		private Button BtnCustomFogCurrent;
 	}
 }

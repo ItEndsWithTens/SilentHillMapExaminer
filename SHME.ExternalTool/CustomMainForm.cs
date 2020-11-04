@@ -104,27 +104,117 @@ namespace BizHawk.Client.EmuHawk
 				//case ToolFormUpdateType.General:
 				//case ToolFormUpdateType.FastPreFrame:
 				case ToolFormUpdateType.PreFrame:
+					UpdateFog();
+					break;
+				case ToolFormUpdateType.PostFrame:
 					if (CbxEnableControlsSection.Checked)
 					{
 						ReportControls();
 					}
-					//ReportAngles();
-					//ReportPosition();
-					//DrawStuff();
+					ReportAngles();
+					ReportPosition();
+					//ReportMisc();
+					if (CbxEnableTriggerDisplay.Checked)
+					{
+						DrawStuff();
+					}
+					if (CbxStats.Checked)
+					{
+						ReportStats();
+					}
+					//GetRegisterTest();
 					break;
 				//case ToolFormUpdateType.FastPostFrame:
-				case ToolFormUpdateType.PostFrame:
-					ReportAngles();
-					if (CbxEnableOverlaySection.Checked)
-					{
-						ReportOverlayInfo();
-					}
-					ReportPosition();
-					DrawStuff();
-					break;
+				//case ToolFormUpdateType.PostFrame:
+				//	ReportAngles();
+				//	if (CbxEnableOverlaySection.Checked)
+				//	{
+				//		ReportOverlayInfo();
+				//	}
+				//	ReportPosition();
+				//	DrawStuff();
+				//	break;
 				default:
 					break;
 			}
+		}
+
+		private void UpdateFog()
+		{
+			if (!CbxFog.Checked)
+			{
+				Mem?.WriteByte((long)MainRamAddresses.FogEnabled, 0);
+			}
+
+			if (CbxFogCustom.Checked)
+			{
+				Mem?.WriteByte((long)MainRamAddresses.FogColorR, (byte)NudFogR.Value);
+				Mem?.WriteByte((long)MainRamAddresses.FogColorG, (byte)NudFogG.Value);
+				Mem?.WriteByte((long)MainRamAddresses.FogColorB, (byte)NudFogB.Value);
+			}
+
+			if (CbxCustomWorldTint.Checked)
+			{
+				Mem?.WriteByte((long)MainRamAddresses.WorldTintR, (byte)NudWorldTintR.Value);
+				Mem?.WriteByte((long)MainRamAddresses.WorldTintG, (byte)NudWorldTintG.Value);
+				Mem?.WriteByte((long)MainRamAddresses.WorldTintB, (byte)NudWorldTintB.Value);
+			}
+		}
+
+		private void ReportStats()
+		{
+			float walkedRaw = Core.QToFloat(Mem.ReadS32((long)MainRamAddresses.DistanceWalked));
+			float runRaw = Core.QToFloat(Mem.ReadS32((long)MainRamAddresses.DistanceRun));
+
+			LblDistanceWalked.Text = $"{walkedRaw / 1000.0f:N3} km";
+			LblDistanceRun.Text = $"{runRaw / 1000.0f:N3} km";
+		}
+
+		private void ReportMisc()
+		{
+			LblGteX.Text = Core.QToFloat(Mem.ReadS32((long)MainRamAddresses.GteTranslationInputX)).ToString();
+			LblGteY.Text = Core.QToFloat(Mem.ReadS32((long)MainRamAddresses.GteTranslationInputY)).ToString();
+			LblGteZ.Text = Core.QToFloat(Mem.ReadS32((long)MainRamAddresses.GteTranslationInputZ)).ToString();
+
+			int mat11 = (Mem.ReadS32((long)MainRamAddresses.Mat11_12) & 0b00000000_11111111) >> 0;
+			int mat12 = (Mem.ReadS32((long)MainRamAddresses.Mat11_12) & 0b11111111_00000000) >> 8;
+
+			int mat13 = (Mem.ReadS32((long)MainRamAddresses.Mat13_21) & 0b00000000_11111111) >> 0;
+			int mat21 = (Mem.ReadS32((long)MainRamAddresses.Mat13_21) & 0b11111111_00000000) >> 8;
+
+			int mat22 = (Mem.ReadS32((long)MainRamAddresses.Mat22_23) & 0b00000000_11111111) >> 0;
+			int mat23 = (Mem.ReadS32((long)MainRamAddresses.Mat22_23) & 0b11111111_00000000) >> 8;
+
+			int mat31 = (Mem.ReadS32((long)MainRamAddresses.Mat31_32) & 0b00000000_11111111) >> 0;
+			int mat32 = (Mem.ReadS32((long)MainRamAddresses.Mat31_32) & 0b11111111_00000000) >> 8;
+
+			int mat33 = (Mem.ReadS32((long)MainRamAddresses.Mat33) & 0b00000000_11111111) >> 0;
+
+			LblMatrix11.Text = Core.QToFloat(mat11).ToString();
+			LblMatrix12.Text = Core.QToFloat(mat12).ToString();
+			LblMatrix13.Text = Core.QToFloat(mat13).ToString();
+
+			LblMatrix21.Text = Core.QToFloat(mat21).ToString();
+			LblMatrix22.Text = Core.QToFloat(mat22).ToString();
+			LblMatrix23.Text = Core.QToFloat(mat23).ToString();
+
+			LblMatrix31.Text = Core.QToFloat(mat31).ToString();
+			LblMatrix32.Text = Core.QToFloat(mat32).ToString();
+			LblMatrix33.Text = Core.QToFloat(mat33).ToString();
+
+			LblCalculatedPitch.Text = (Math.Asin(mat31) * (180.0 / Math.PI)).ToString();
+			LblCalculatedYaw.Text = (Math.Atan2(mat21, mat11) * (180.0 / Math.PI)).ToString();
+			LblCalculatedRoll.Text = (Math.Atan2(mat32, mat33) * (180.0 / Math.PI)).ToString();
+		}
+
+		private void GetRegisterTest()
+		{
+			ulong? blar = Emulation.GetRegister("r17");
+
+			
+			var breakvar = 4;
+
+			LblRegisterTest.Text = blar.ToString();
 		}
 
 		private void ReportAngles()
@@ -221,6 +311,8 @@ namespace BizHawk.Client.EmuHawk
 			LblBoxX.Text = boxCoords.X.ToString();
 			LblBoxY.Text = boxCoords.Y.ToString();
 			LblBoxZ.Text = boxCoords.Z.ToString();
+
+			LblHarryHealth.Text = Core.QToFloat(Mem.ReadS32((long)MainRamAddresses.HarryHealth)).ToString();
 		}
 
 		private void BtnGetPosition_Click(object sender, EventArgs e)
@@ -330,6 +422,26 @@ namespace BizHawk.Client.EmuHawk
 				Points.Clear();
 			}
 
+			int tableAddressRaw = Mem.ReadS32((long)MainRamAddresses.TriggerVertexTable);
+			int tableAddress = (int)(tableAddressRaw - 0x80000000);
+			tableAddress += 0xC;
+
+			int vertZ = Mem.ReadS32((long)tableAddress + 0x0);
+			int vertY = Mem.ReadS32((long)tableAddress + 0x4);
+			int vertX = Mem.ReadS32((long)tableAddress + 0x8);
+
+			float qZ = Core.QToFloat(vertZ);
+			float qY = Core.QToFloat(vertY);
+			float qX = Core.QToFloat(vertX);
+
+			Vector4 clop = new Vector4(qX, qY, qZ, 1.0f) * matrix;
+			Vector3 ndc2 = clop.Xyz / clop.W;
+			var screeb = new Point(
+				(int)((ndc2.X + 1) * 320 + origin.X),
+				(int)((-ndc2.Y + 1) * 224 + origin.Y));
+
+			Gui.DrawText(screeb.X, screeb.Y, "VERTEX");
+
 			Gui.DrawFinish();
 		}
 
@@ -341,13 +453,13 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnGrabMapGraphic_Click(object sender, EventArgs e)
 		{
-			List<byte> headerBytes = Mem.ReadByteRange((long)MainRamAddresses.SomeRandomTim, TimHeader.Length);
+			List<byte> headerBytes = Mem.ReadByteRange((long)MainRamAddresses.MapTim, TimHeader.Length);
 
 			var header = new TimHeader(headerBytes.ToArray());
 
 			int timLength = header.ImageHeaderOfs + header.ImageBlockLength;
 
-			List<byte> timBytes = Mem.ReadByteRange((long)MainRamAddresses.SomeRandomTim, timLength);
+			List<byte> timBytes = Mem.ReadByteRange((long)MainRamAddresses.MapTim, timLength);
 			var mapGraphic = new Tim(header, timBytes.ToArray());
 
 			PbxMapGraphic.Image = mapGraphic.Bitmap;
@@ -398,6 +510,130 @@ namespace BizHawk.Client.EmuHawk
 				box.Position.X,
 				box.Position.Y,
 				(float)NudBoxZ.Value);
+		}
+
+		private void CbxEnableTriggerDisplay_CheckedChanged(object sender, EventArgs e)
+		{
+			if (!CbxEnableTriggerDisplay.Checked)
+			{
+				Gui.DrawNew("emu");
+				Gui.ClearGraphics();
+				Gui.DrawFinish();
+			}
+		}
+
+		private void CbxCameraFreeze_CheckedChanged(object sender, EventArgs e)
+		{
+			if (CbxCameraFreeze.Checked)
+			{
+				Mem?.WriteByte((long)MainRamAddresses.IsCameraUnlocked, 0x0);
+			}
+			else
+			{
+				Mem?.WriteByte((long)MainRamAddresses.IsCameraUnlocked, 0x1);
+			}
+		}
+
+		private void NudFogR_ValueChanged(object sender, EventArgs e)
+		{
+			BtnFogColor.BackColor = Color.FromArgb(
+				(int)NudFogR.Value,
+				BtnFogColor.BackColor.G,
+				BtnFogColor.BackColor.B);
+		}
+
+		private void NudFogG_ValueChanged(object sender, EventArgs e)
+		{
+			BtnFogColor.BackColor = Color.FromArgb(
+				BtnFogColor.BackColor.R,
+				(int)NudFogG.Value,
+				BtnFogColor.BackColor.B);
+		}
+
+		private void NudFogB_ValueChanged(object sender, EventArgs e)
+		{
+			BtnFogColor.BackColor = Color.FromArgb(
+				BtnFogColor.BackColor.R,
+				BtnFogColor.BackColor.G,
+				(int)NudFogB.Value);
+		}
+
+		private void BtnFogColor_Click(object sender, EventArgs e)
+		{
+			var dialog = new ColorDialog();
+			DialogResult result = dialog.ShowDialog(this);
+
+			if (result == DialogResult.OK)
+			{
+				NudFogR.Value = dialog.Color.R;
+				NudFogG.Value = dialog.Color.G;
+				NudFogB.Value = dialog.Color.B;
+			}
+		}
+
+		private void NudWorldTintR_ValueChanged(object sender, EventArgs e)
+		{
+			BtnWorldTintColor.BackColor = Color.FromArgb(
+				(int)NudWorldTintR.Value,
+				BtnWorldTintColor.BackColor.G,
+				BtnWorldTintColor.BackColor.B);
+		}
+
+		private void NudWorldTintG_ValueChanged(object sender, EventArgs e)
+		{
+			BtnWorldTintColor.BackColor = Color.FromArgb(
+				BtnWorldTintColor.BackColor.R,
+				(int)NudWorldTintG.Value,
+				BtnWorldTintColor.BackColor.B);
+		}
+
+		private void NudWorldTintB_ValueChanged(object sender, EventArgs e)
+		{
+			BtnWorldTintColor.BackColor = Color.FromArgb(
+				BtnWorldTintColor.BackColor.R,
+				BtnWorldTintColor.BackColor.G,
+				(int)NudWorldTintB.Value);
+		}
+
+		private void BtnWorldTintColor_Click(object sender, EventArgs e)
+		{
+			var dialog = new ColorDialog();
+			DialogResult result = dialog.ShowDialog(this);
+
+			if (result == DialogResult.OK)
+			{
+				NudWorldTintR.Value = dialog.Color.R;
+				NudWorldTintG.Value = dialog.Color.G;
+				NudWorldTintB.Value = dialog.Color.B;
+			}
+		}
+
+		private void BtnFogColorDefault_Click(object sender, EventArgs e)
+		{
+			NudFogR.Value = 108;
+			NudFogG.Value = 100;
+			NudFogB.Value = 116;
+		}
+
+		private void BtnWorldTintDefault_Click(object sender, EventArgs e)
+		{
+			NudWorldTintR.Value = 121;
+			NudWorldTintG.Value = 128;
+			NudWorldTintB.Value = 138;
+		}
+
+		private void BtnCustomFogCurrent_Click(object sender, EventArgs e)
+		{
+			NudFogR.Value = Mem.ReadByte((long)MainRamAddresses.FogColorR);
+			NudFogG.Value = Mem.ReadByte((long)MainRamAddresses.FogColorG);
+			NudFogB.Value = Mem.ReadByte((long)MainRamAddresses.FogColorB);
+		}
+
+		private void BtnCustomWorldTintCurrent_Click(object sender, EventArgs e)
+		{
+			NudWorldTintR.Value = Mem.ReadByte((long)MainRamAddresses.WorldTintR);
+			NudWorldTintG.Value = Mem.ReadByte((long)MainRamAddresses.WorldTintG);
+			NudWorldTintB.Value = Mem.ReadByte((long)MainRamAddresses.WorldTintB);
 		}
 	}
 }

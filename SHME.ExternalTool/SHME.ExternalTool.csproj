@@ -4,8 +4,6 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <TargetFramework>net48</TargetFramework>
-
-    <BizHawkOutputDir>$(ProjectDir)../lib/BizHawk/output/</BizHawkOutputDir>
   </PropertyGroup>
 
   <ItemGroup>
