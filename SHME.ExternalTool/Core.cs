@@ -136,6 +136,12 @@ namespace SHME.ExternalTool
 
 		ScreenBrightness = 0xC4170,
 
+		// 32 bit, Q24.8 format; has no effect when fog is disabled.
+		DrawDistance = 0xC4178,
+
+		FogThing1 = 0xC417c,
+		FogThing2 = 0xC4180,
+
 		FogColorR = 0xC4184,
 		FogColorG = 0xC4185,
 		FogColorB = 0xC4186,
@@ -192,13 +198,21 @@ namespace SHME.ExternalTool
 
 		// Silent Hill appears to use the Q(20.12) fixed point number format,
 		// at least for Harry's position.
-		public int FloatToQ(float f)
+		public int FloatToQ(float number)
 		{
-			return (int)(f * Math.Pow(2.0, 12.0));
+			return FloatToQ(number, 12);
+		}
+		public int FloatToQ(float number, int fractionalBits)
+		{
+			return (int)(number * Math.Pow(2.0, fractionalBits));
 		}
 		public float QToFloat(int q)
 		{
-			return (float)((float)q * Math.Pow(2.0, -12.0));
+			return QToFloat(q, 12);
+		}
+		public float QToFloat(int q, int fractionalBits)
+		{
+			return (float)((float)q * Math.Pow(2.0, -fractionalBits));
 		}
 
 		public List<float> GetAngles(IMemoryApi mem)

@@ -116,6 +116,8 @@ namespace BizHawk.Client.EmuHawk
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.BtnCustomWorldTintCurrent = new System.Windows.Forms.Button();
+            this.BtnCustomFogCurrent = new System.Windows.Forms.Button();
             this.BtnWorldTintDefault = new System.Windows.Forms.Button();
             this.BtnFogColorDefault = new System.Windows.Forms.Button();
             this.CbxCustomWorldTint = new System.Windows.Forms.CheckBox();
@@ -135,8 +137,8 @@ namespace BizHawk.Client.EmuHawk
             this.label5 = new System.Windows.Forms.Label();
             this.BtnFogColor = new System.Windows.Forms.Button();
             this.CbxFog = new System.Windows.Forms.CheckBox();
-            this.BtnCustomFogCurrent = new System.Windows.Forms.Button();
-            this.BtnCustomWorldTintCurrent = new System.Windows.Forms.Button();
+            this.LblCameraDrawDistance = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -380,6 +382,8 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxCamera
             // 
+            this.GbxCamera.Controls.Add(this.label13);
+            this.GbxCamera.Controls.Add(this.LblCameraDrawDistance);
             this.GbxCamera.Controls.Add(this.CbxCameraFreeze);
             this.GbxCamera.Controls.Add(this.CbxEnableCameraSection);
             this.GbxCamera.Controls.Add(this.label1);
@@ -1270,6 +1274,26 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage3.Text = "Fog";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // BtnCustomWorldTintCurrent
+            // 
+            this.BtnCustomWorldTintCurrent.Location = new System.Drawing.Point(265, 102);
+            this.BtnCustomWorldTintCurrent.Name = "BtnCustomWorldTintCurrent";
+            this.BtnCustomWorldTintCurrent.Size = new System.Drawing.Size(87, 23);
+            this.BtnCustomWorldTintCurrent.TabIndex = 20;
+            this.BtnCustomWorldTintCurrent.Text = "Current";
+            this.BtnCustomWorldTintCurrent.UseVisualStyleBackColor = true;
+            this.BtnCustomWorldTintCurrent.Click += new System.EventHandler(this.BtnCustomWorldTintCurrent_Click);
+            // 
+            // BtnCustomFogCurrent
+            // 
+            this.BtnCustomFogCurrent.Location = new System.Drawing.Point(112, 102);
+            this.BtnCustomFogCurrent.Name = "BtnCustomFogCurrent";
+            this.BtnCustomFogCurrent.Size = new System.Drawing.Size(87, 23);
+            this.BtnCustomFogCurrent.TabIndex = 19;
+            this.BtnCustomFogCurrent.Text = "Current";
+            this.BtnCustomFogCurrent.UseVisualStyleBackColor = true;
+            this.BtnCustomFogCurrent.Click += new System.EventHandler(this.BtnCustomFogCurrent_Click);
+            // 
             // BtnWorldTintDefault
             // 
             this.BtnWorldTintDefault.Location = new System.Drawing.Point(265, 131);
@@ -1504,25 +1528,23 @@ namespace BizHawk.Client.EmuHawk
             this.CbxFog.Text = "Fog";
             this.CbxFog.UseVisualStyleBackColor = true;
             // 
-            // BtnCustomFogCurrent
+            // LblCameraDrawDistance
             // 
-            this.BtnCustomFogCurrent.Location = new System.Drawing.Point(112, 102);
-            this.BtnCustomFogCurrent.Name = "BtnCustomFogCurrent";
-            this.BtnCustomFogCurrent.Size = new System.Drawing.Size(87, 23);
-            this.BtnCustomFogCurrent.TabIndex = 19;
-            this.BtnCustomFogCurrent.Text = "Current";
-            this.BtnCustomFogCurrent.UseVisualStyleBackColor = true;
-            this.BtnCustomFogCurrent.Click += new System.EventHandler(this.BtnCustomFogCurrent_Click);
+            this.LblCameraDrawDistance.AutoSize = true;
+            this.LblCameraDrawDistance.Location = new System.Drawing.Point(305, 16);
+            this.LblCameraDrawDistance.Name = "LblCameraDrawDistance";
+            this.LblCameraDrawDistance.Size = new System.Drawing.Size(85, 13);
+            this.LblCameraDrawDistance.TabIndex = 17;
+            this.LblCameraDrawDistance.Text = "<draw distance>";
             // 
-            // BtnCustomWorldTintCurrent
+            // label13
             // 
-            this.BtnCustomWorldTintCurrent.Location = new System.Drawing.Point(265, 102);
-            this.BtnCustomWorldTintCurrent.Name = "BtnCustomWorldTintCurrent";
-            this.BtnCustomWorldTintCurrent.Size = new System.Drawing.Size(87, 23);
-            this.BtnCustomWorldTintCurrent.TabIndex = 20;
-            this.BtnCustomWorldTintCurrent.Text = "Current";
-            this.BtnCustomWorldTintCurrent.UseVisualStyleBackColor = true;
-            this.BtnCustomWorldTintCurrent.Click += new System.EventHandler(this.BtnCustomWorldTintCurrent_Click);
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(221, 16);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(78, 13);
+            this.label13.TabIndex = 18;
+            this.label13.Text = "Draw distance:";
             // 
             // CustomMainForm
             // 
@@ -1686,5 +1708,7 @@ namespace BizHawk.Client.EmuHawk
 		private Button BtnFogColorDefault;
 		private Button BtnCustomWorldTintCurrent;
 		private Button BtnCustomFogCurrent;
+		private Label LblCameraDrawDistance;
+		private Label label13;
 	}
 }
