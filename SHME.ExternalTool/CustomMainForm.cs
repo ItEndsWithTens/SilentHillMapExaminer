@@ -2,7 +2,6 @@
 using OpenTK;
 using OpenTK.Graphics;
 using SHME.ExternalTool;
-using SHME.ExternalTool.Addresses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,8 +12,8 @@ namespace BizHawk.Client.EmuHawk
 {
 	[ExternalTool(CustomMainForm.ToolName, Description = CustomMainForm.ToolDescription)]
 
-	// FIXME: Figure this part out, not sure what format the hash needs.
-	//[ExternalToolApplicability.SingleRom(CoreSystem.Playstation, "1D4A3FF7")]
+	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
+	[ExternalToolApplicability.RomWhitelist(CoreSystem.Playstation, USRetailConstants.HashBizHawk)]
 
 	public partial class CustomMainForm : Form, IExternalToolForm
 	{
@@ -27,21 +26,8 @@ namespace BizHawk.Client.EmuHawk
 		[RequiredApi]
 		public IJoypadApi? Joy { get; set; }
 
-		private IEmuClientApi? _emu;
 		[RequiredApi]
-		public IEmuClientApi? Emu
-		{
-			get { return _emu; }
-			set
-			{
-				_emu = value;
-
-				if (Emu != null)
-				{
-					Emu.RomLoaded += (sender, e) => Ready = true;
-				}
-			}
-		}
+		public IEmuClientApi? Emu { get; set; }
 
 		[RequiredApi]
 		public IEmulationApi? Emulation { get; set; }
@@ -57,15 +43,18 @@ namespace BizHawk.Client.EmuHawk
 
 		public Core Core { get; } = new Core();
 
-		private bool Ready { get; set; } = false;
-
 		public Camera Camera { get; set; } = new Camera() { Fov = 120.0f };
 
 		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
 
+		public Rom Rom { get; set; }
+
 		public CustomMainForm()
 		{
 			InitializeComponent();
+
+			Core.Rom = new USRetail();
+			Rom = Core.Rom;
 
 			TrkFov.Value = (int)Camera.Fov;
 
@@ -95,7 +84,7 @@ namespace BizHawk.Client.EmuHawk
 
 		public void UpdateValues(ToolFormUpdateType type)
 		{
-			if (!Ready)
+			if (Emu == null || Mem == null || GI?.GetRomName() == "Null")
 			{
 				return;
 			}
@@ -144,28 +133,28 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (!CbxFog.Checked)
 			{
-				Mem?.WriteByte((long)MainRam.FogEnabled, 0);
+				Mem?.WriteByte(Rom.Addresses.MainRam.FogEnabled, 0);
 			}
 
 			if (CbxFogCustom.Checked)
 			{
-				Mem?.WriteByte((long)MainRam.FogColorR, (byte)NudFogR.Value);
-				Mem?.WriteByte((long)MainRam.FogColorG, (byte)NudFogG.Value);
-				Mem?.WriteByte((long)MainRam.FogColorB, (byte)NudFogB.Value);
+				Mem?.WriteByte(Rom.Addresses.MainRam.FogColorR, (byte)NudFogR.Value);
+				Mem?.WriteByte(Rom.Addresses.MainRam.FogColorG, (byte)NudFogG.Value);
+				Mem?.WriteByte(Rom.Addresses.MainRam.FogColorB, (byte)NudFogB.Value);
 			}
 
 			if (CbxCustomWorldTint.Checked)
 			{
-				Mem?.WriteByte((long)MainRam.WorldTintR, (byte)NudWorldTintR.Value);
-				Mem?.WriteByte((long)MainRam.WorldTintG, (byte)NudWorldTintG.Value);
-				Mem?.WriteByte((long)MainRam.WorldTintB, (byte)NudWorldTintB.Value);
+				Mem?.WriteByte(Rom.Addresses.MainRam.WorldTintR, (byte)NudWorldTintR.Value);
+				Mem?.WriteByte(Rom.Addresses.MainRam.WorldTintG, (byte)NudWorldTintG.Value);
+				Mem?.WriteByte(Rom.Addresses.MainRam.WorldTintB, (byte)NudWorldTintB.Value);
 			}
 		}
 
 		private void ReportStats()
 		{
-			float walkedRaw = Core.QToFloat(Mem.ReadS32((long)MainRam.DistanceWalked));
-			float runRaw = Core.QToFloat(Mem.ReadS32((long)MainRam.DistanceRun));
+			float walkedRaw = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DistanceWalked));
+			float runRaw = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DistanceRun));
 
 			LblDistanceWalked.Text = $"{walkedRaw / 1000.0f:N3} km";
 			LblDistanceRun.Text = $"{runRaw / 1000.0f:N3} km";
@@ -173,23 +162,23 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportMisc()
 		{
-			LblGteX.Text = Core.QToFloat(Mem.ReadS32((long)MainRam.GteTranslationInputX)).ToString();
-			LblGteY.Text = Core.QToFloat(Mem.ReadS32((long)MainRam.GteTranslationInputY)).ToString();
-			LblGteZ.Text = Core.QToFloat(Mem.ReadS32((long)MainRam.GteTranslationInputZ)).ToString();
+			LblGteX.Text = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputX)).ToString();
+			LblGteY.Text = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputY)).ToString();
+			LblGteZ.Text = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputZ)).ToString();
 
-			int mat11 = (Mem.ReadS32((long)MainRam.Mat11_12) & 0b00000000_11111111) >> 0;
-			int mat12 = (Mem.ReadS32((long)MainRam.Mat11_12) & 0b11111111_00000000) >> 8;
+			int mat11 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat11_12) & 0b00000000_11111111) >> 0;
+			int mat12 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat11_12) & 0b11111111_00000000) >> 8;
 
-			int mat13 = (Mem.ReadS32((long)MainRam.Mat13_21) & 0b00000000_11111111) >> 0;
-			int mat21 = (Mem.ReadS32((long)MainRam.Mat13_21) & 0b11111111_00000000) >> 8;
+			int mat13 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat13_21) & 0b00000000_11111111) >> 0;
+			int mat21 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat13_21) & 0b11111111_00000000) >> 8;
 
-			int mat22 = (Mem.ReadS32((long)MainRam.Mat22_23) & 0b00000000_11111111) >> 0;
-			int mat23 = (Mem.ReadS32((long)MainRam.Mat22_23) & 0b11111111_00000000) >> 8;
+			int mat22 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat22_23) & 0b00000000_11111111) >> 0;
+			int mat23 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat22_23) & 0b11111111_00000000) >> 8;
 
-			int mat31 = (Mem.ReadS32((long)MainRam.Mat31_32) & 0b00000000_11111111) >> 0;
-			int mat32 = (Mem.ReadS32((long)MainRam.Mat31_32) & 0b11111111_00000000) >> 8;
+			int mat31 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat31_32) & 0b00000000_11111111) >> 0;
+			int mat32 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat31_32) & 0b11111111_00000000) >> 8;
 
-			int mat33 = (Mem.ReadS32((long)MainRam.Mat33) & 0b00000000_11111111) >> 0;
+			int mat33 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat33) & 0b00000000_11111111) >> 0;
 
 			LblMatrix11.Text = Core.QToFloat(mat11).ToString();
 			LblMatrix12.Text = Core.QToFloat(mat12).ToString();
@@ -254,7 +243,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportControls()
 		{
-			var raw = (ButtonFlags)Mem.ReadU16((long)MainRam.ButtonFlags);
+			var raw = (ButtonFlags)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
 			foreach (ButtonFlags button in Enum.GetValues(typeof(ButtonFlags)))
 			{
@@ -313,9 +302,9 @@ namespace BizHawk.Client.EmuHawk
 			LblBoxY.Text = boxCoords.Y.ToString();
 			LblBoxZ.Text = boxCoords.Z.ToString();
 
-			LblHarryHealth.Text = Core.QToFloat(Mem.ReadS32((long)MainRam.HarryHealth)).ToString();
+			LblHarryHealth.Text = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryHealth)).ToString();
 
-			float drawDistance = Core.QToFloat(Mem.ReadS32((long)MainRam.DrawDistance), 8);
+			float drawDistance = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DrawDistance), 8);
 
 			LblCameraDrawDistance.Text = $"{drawDistance:N3}m";
 		}
@@ -427,7 +416,7 @@ namespace BizHawk.Client.EmuHawk
 				Points.Clear();
 			}
 
-			int tableAddressRaw = Mem.ReadS32((long)MainRam.TriggerVertexTable);
+			int tableAddressRaw = Mem.ReadS32(Rom.Addresses.MainRam.TriggerVertexTable);
 			int tableAddress = (int)(tableAddressRaw - 0x80000000);
 			tableAddress += 0xC;
 
@@ -458,13 +447,13 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnGrabMapGraphic_Click(object sender, EventArgs e)
 		{
-			List<byte> headerBytes = Mem.ReadByteRange((long)MainRam.MapTim, TimHeader.Length);
+			List<byte> headerBytes = Mem.ReadByteRange(Rom.Addresses.MainRam.MapTim, TimHeader.Length);
 
 			var header = new TimHeader(headerBytes.ToArray());
 
 			int timLength = header.ImageHeaderOfs + header.ImageBlockLength;
 
-			List<byte> timBytes = Mem.ReadByteRange((long)MainRam.MapTim, timLength);
+			List<byte> timBytes = Mem.ReadByteRange(Rom.Addresses.MainRam.MapTim, timLength);
 			var mapGraphic = new Tim(header, timBytes.ToArray());
 
 			PbxMapGraphic.Image = mapGraphic.Bitmap;
@@ -531,11 +520,11 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (CbxCameraFreeze.Checked)
 			{
-				Mem?.WriteByte((long)MainRam.IsCameraUnlocked, 0x0);
+				Mem?.WriteByte(Rom.Addresses.MainRam.IsCameraUnlocked, 0x0);
 			}
 			else
 			{
-				Mem?.WriteByte((long)MainRam.IsCameraUnlocked, 0x1);
+				Mem?.WriteByte(Rom.Addresses.MainRam.IsCameraUnlocked, 0x1);
 			}
 		}
 
@@ -629,16 +618,16 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnCustomFogCurrent_Click(object sender, EventArgs e)
 		{
-			NudFogR.Value = Mem.ReadByte((long)MainRam.FogColorR);
-			NudFogG.Value = Mem.ReadByte((long)MainRam.FogColorG);
-			NudFogB.Value = Mem.ReadByte((long)MainRam.FogColorB);
+			NudFogR.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorR);
+			NudFogG.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorG);
+			NudFogB.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorB);
 		}
 
 		private void BtnCustomWorldTintCurrent_Click(object sender, EventArgs e)
 		{
-			NudWorldTintR.Value = Mem.ReadByte((long)MainRam.WorldTintR);
-			NudWorldTintG.Value = Mem.ReadByte((long)MainRam.WorldTintG);
-			NudWorldTintB.Value = Mem.ReadByte((long)MainRam.WorldTintB);
+			NudWorldTintR.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintR);
+			NudWorldTintG.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintG);
+			NudWorldTintB.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintB);
 		}
 	}
 }

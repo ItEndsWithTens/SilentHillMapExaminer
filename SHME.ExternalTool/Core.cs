@@ -1,5 +1,4 @@
 ﻿using BizHawk.Client.Common;
-using SHME.ExternalTool.Addresses;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +6,8 @@ namespace SHME.ExternalTool
 {
 	public class Core
 	{
+		public Rom? Rom { get; set; }
+
 		public uint DegreesToGameUnits(float degrees)
 		{
 			return (uint)Utility.ScaleToRange(degrees, 0.0, 360.0, 0.0, 4096.0);
@@ -40,13 +41,13 @@ namespace SHME.ExternalTool
 
 		public List<float> GetAngles(IMemoryApi mem)
 		{
-			uint harryPitch = mem.ReadU16((long)MainRam.HarryPitch);
-			uint harryYaw = mem.ReadU16((long)MainRam.HarryYaw);
-			uint harryRoll = mem.ReadU16((long)MainRam.HarryRoll);
+			uint harryPitch = mem.ReadU16(Rom.Addresses.MainRam.HarryPitch);
+			uint harryYaw = mem.ReadU16(Rom.Addresses.MainRam.HarryYaw);
+			uint harryRoll = mem.ReadU16(Rom.Addresses.MainRam.HarryRoll);
 
-			uint cameraPitch = mem.ReadU16((long)MainRam.CameraActualPitch);
-			uint cameraYaw = mem.ReadU16((long)MainRam.CameraActualYaw);
-			uint cameraRoll = mem.ReadU16((long)MainRam.CameraActualRoll);
+			uint cameraPitch = mem.ReadU16(Rom.Addresses.MainRam.CameraActualPitch);
+			uint cameraYaw = mem.ReadU16(Rom.Addresses.MainRam.CameraActualYaw);
+			uint cameraRoll = mem.ReadU16(Rom.Addresses.MainRam.CameraActualRoll);
 
 			return new List<float>()
 			{
@@ -62,15 +63,15 @@ namespace SHME.ExternalTool
 
 		public void SetPitch(IMemoryApi mem, float pitch)
 		{
-			mem.WriteU16((long)MainRam.HarryPitch, DegreesToGameUnits(pitch));
+			mem.WriteU16(Rom.Addresses.MainRam.HarryPitch, DegreesToGameUnits(pitch));
 		}
 		public void SetYaw(IMemoryApi mem, float yaw)
 		{
-			mem.WriteU16((long)MainRam.HarryYaw, DegreesToGameUnits(yaw));
+			mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, DegreesToGameUnits(yaw));
 		}
 		public void SetRoll(IMemoryApi mem, float roll)
 		{
-			mem.WriteU16((long)MainRam.HarryRoll, DegreesToGameUnits(roll));
+			mem.WriteU16(Rom.Addresses.MainRam.HarryRoll, DegreesToGameUnits(roll));
 		}
 		public void SetAngles(IMemoryApi mem, float pitch, float yaw, float roll)
 		{
@@ -81,13 +82,13 @@ namespace SHME.ExternalTool
 
 		public List<float> GetPosition(IMemoryApi mem)
 		{
-			float harryX = QToFloat(mem.ReadS32((long)MainRam.HarryPositionX));
-			float harryY = QToFloat(mem.ReadS32((long)MainRam.HarryPositionY));
-			float harryZ = QToFloat(mem.ReadS32((long)MainRam.HarryPositionZ));
+			float harryX = QToFloat(mem.ReadS32(Rom.Addresses.MainRam.HarryPositionX));
+			float harryY = QToFloat(mem.ReadS32(Rom.Addresses.MainRam.HarryPositionY));
+			float harryZ = QToFloat(mem.ReadS32(Rom.Addresses.MainRam.HarryPositionZ));
 
-			float cameraX = QToFloat(mem.ReadS32((long)MainRam.CameraPositionActualX));
-			float cameraY = QToFloat(mem.ReadS32((long)MainRam.CameraPositionActualY));
-			float cameraZ = QToFloat(mem.ReadS32((long)MainRam.CameraPositionActualZ));
+			float cameraX = QToFloat(mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualX));
+			float cameraY = QToFloat(mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualY));
+			float cameraZ = QToFloat(mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualZ));
 
 			return new List<float>()
 			{
@@ -98,15 +99,15 @@ namespace SHME.ExternalTool
 
 		public void SetHarryX(IMemoryApi mem, float x)
 		{
-			mem.WriteS32((long)MainRam.HarryPositionX, FloatToQ(x));
+			mem.WriteS32(Rom.Addresses.MainRam.HarryPositionX, FloatToQ(x));
 		}
 		public void SetHarryY(IMemoryApi mem, float y)
 		{
-			mem.WriteS32((long)MainRam.HarryPositionY, FloatToQ(y));
+			mem.WriteS32(Rom.Addresses.MainRam.HarryPositionY, FloatToQ(y));
 		}
 		public void SetHarryZ(IMemoryApi mem, float z)
 		{
-			mem.WriteS32((long)MainRam.HarryPositionZ, FloatToQ(z));
+			mem.WriteS32(Rom.Addresses.MainRam.HarryPositionZ, FloatToQ(z));
 		}
 		public void SetHarryPosition(IMemoryApi mem, float x, float y, float z)
 		{
