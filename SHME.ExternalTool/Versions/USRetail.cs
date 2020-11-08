@@ -5,16 +5,13 @@
 		public override string Name => USRetailConstants.Name;
 
 		public override string HashBizHawk => USRetailConstants.HashBizHawk;
-
 		public override string HashCrc32 => USRetailConstants.HashCrc32;
-
 		public override string HashMd5 => USRetailConstants.HashMd5;
-
 		public override string HashSha1 => USRetailConstants.HashSha1;
 
 		public override Addresses Addresses { get; } = new Addresses()
 		{
-			MainRam = new MainRamAddresses
+			MainRam = new MainRamAddresses()
 			{
 				ACameraThingFirst = 0xC3804,
 				CameraMatrixTranslationZ = 0xC3850,
@@ -58,8 +55,8 @@
 
 				CameraActualPitch = 0xB9D5E,
 				CameraActualYaw = 0xB9D60, // No.
-										   //CameraActualYaw = 0xB9D68, // No.
-										   //CameraActualYaw = 0xB9D78, // No.
+				//CameraActualYaw = 0xB9D68, // No.
+				//CameraActualYaw = 0xB9D78, // No.
 				CameraActualRoll = 0xB9D62,
 
 				CameraIdealPitch = 0xB9D88,
