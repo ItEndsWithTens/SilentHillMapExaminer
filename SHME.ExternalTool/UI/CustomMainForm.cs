@@ -89,8 +89,6 @@ namespace BizHawk.Client.EmuHawk
 
 			switch (type)
 			{
-				//case ToolFormUpdateType.General:
-				//case ToolFormUpdateType.FastPreFrame:
 				case ToolFormUpdateType.PreFrame:
 					UpdateFog();
 					break;
@@ -112,16 +110,6 @@ namespace BizHawk.Client.EmuHawk
 					}
 					//GetRegisterTest();
 					break;
-				//case ToolFormUpdateType.FastPostFrame:
-				//case ToolFormUpdateType.PostFrame:
-				//	ReportAngles();
-				//	if (CbxEnableOverlaySection.Checked)
-				//	{
-				//		ReportOverlayInfo();
-				//	}
-				//	ReportPosition();
-				//	DrawStuff();
-				//	break;
 				default:
 					break;
 			}

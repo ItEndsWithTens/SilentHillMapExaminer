@@ -4,6 +4,8 @@
 	{
 		private void ReportStats()
 		{
+			LblHarryHealth.Text = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryHealth)).ToString();
+
 			float walkedRaw = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DistanceWalked));
 			float runRaw = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DistanceRun));
 

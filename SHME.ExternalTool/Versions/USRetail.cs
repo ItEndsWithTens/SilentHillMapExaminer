@@ -102,7 +102,7 @@
 				// 32 bit, Q24.8 format; has no effect when fog is disabled.
 				DrawDistance = 0xC4178,
 
-				FogThing1 = 0xC417c,
+				FogThing1 = 0xC417C,
 				FogThing2 = 0xC4180,
 
 				FogColorR = 0xC4184,

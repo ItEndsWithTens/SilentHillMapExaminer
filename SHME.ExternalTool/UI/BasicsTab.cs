@@ -106,8 +106,6 @@ namespace BizHawk.Client.EmuHawk
 			LblBoxY.Text = boxCoords.Y.ToString();
 			LblBoxZ.Text = boxCoords.Z.ToString();
 
-			LblHarryHealth.Text = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryHealth)).ToString();
-
 			float drawDistance = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DrawDistance), 8);
 
 			LblCameraDrawDistance.Text = $"{drawDistance:N3}m";
