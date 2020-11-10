@@ -11,7 +11,15 @@ namespace BizHawk.Client.EmuHawk
 		{
 			List<byte> headerBytes = Mem.ReadByteRange(Rom.Addresses.MainRam.MapTim, TimHeader.Length);
 
-			var header = new TimHeader(headerBytes.ToArray());
+			TimHeader header;
+			try
+			{
+				header = new TimHeader(headerBytes.ToArray());
+			}
+			catch (ArgumentException)
+			{
+				return;
+			}
 
 			int timLength = header.ImageHeaderOfs + header.ImageBlockLength;
 

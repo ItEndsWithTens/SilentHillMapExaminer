@@ -82,6 +82,11 @@ namespace SHME.ExternalTool
 			ID = BitConverter.ToChar(headerBytes, 0);
 			Version = BitConverter.ToChar(headerBytes, 1);
 
+			if (ID != 0x10 || Version != 0x00)
+			{
+				throw new ArgumentException("Byte array is not a TIM header!");
+			}
+
 			int flagWord = BitConverter.ToInt32(headerBytes, 4);
 			Pmode = flagWord & 0b00000111;
 			CF = (flagWord & 0b00001000 >> 3) == 1;
