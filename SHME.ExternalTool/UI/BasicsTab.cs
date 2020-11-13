@@ -1,8 +1,8 @@
-﻿using OpenTK;
-using SHME.ExternalTool;
+﻿using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
 

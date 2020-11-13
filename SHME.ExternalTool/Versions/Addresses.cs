@@ -1,44 +1,5 @@
 ﻿namespace SHME.ExternalTool
 {
-	// Reference:
-	//
-	// Silent Hill's coordinate system appears to be consistent with the one
-	// described in Sony's "File Formats" document. The March 2000 revision,
-	// chapter 2, page 2-4, describes a scheme used in PLY files that also
-	// seems to apply in other contexts, this game's world coordinates being
-	// one of them. It's unusual, and relative to the town map view, accessed
-	// with the triangle button in game, is oriented as follows:
-	//
-	//	Positive X points north
-	//	Positive Z points east
-	//	Positive Y points down
-	//
-	// Rotations therefore follow the convention of:
-	//
-	//	Pitch is rotation about Z
-	//	Yaw is rotation about Y
-	//	Roll is rotation about X
-	//
-	// Positive rotation goes counter-clockwise, as seen facing the negative
-	// direction of the given axis. A yaw value of 0 in game aims Harry north,
-	// along Bachman Road, hence the unconventional use of X for north-south.
-	//
-	// The 3D rendering conventions of this library obey a more traditional
-	// Y-up, right-handed coordinate system, which means:
-	//
-	//	Positive X points east
-	//	Positive Z points south
-	//	Positive Y points up
-	//
-	// Rotations in turn become:
-	//
-	//	Pitch is rotation about Z
-	//	Yaw is rotation about Y
-	//	Roll is rotation about X
-	//
-	// Positive rotation goes counter-clockwise, as seen facing the negative
-	// direction of the given axis.
-
 	public class Addresses
 	{
 		public MainRamAddresses MainRam { get; set; } = new MainRamAddresses();

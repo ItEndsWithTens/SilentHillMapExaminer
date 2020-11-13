@@ -1,17 +1,17 @@
-﻿using OpenTK.Graphics;
+﻿using System.Drawing;
 
 namespace SHME.ExternalTool
 {
 	public class RenderableGenerator
 	{
-		public Color4 Color { get; set; } = Color4.White;
+		public Color Color { get; set; } = Color.White;
 
 		public Transformability Transformability { get; set; }
 
 		public RenderableGenerator()
 		{
 		}
-		public RenderableGenerator(Color4 color)
+		public RenderableGenerator(Color color)
 		{
 			Color = color;
 		}

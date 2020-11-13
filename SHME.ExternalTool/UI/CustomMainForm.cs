@@ -1,9 +1,8 @@
 ﻿using BizHawk.Client.Common;
-using OpenTK;
-using OpenTK.Graphics;
 using SHME.ExternalTool;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
@@ -56,7 +55,7 @@ namespace BizHawk.Client.EmuHawk
 
 			TrkFov.Value = (int)Camera.Fov;
 
-			var generator = new BoxGenerator(1.0f, Color4.White);
+			var generator = new BoxGenerator(1.0f, Color.White);
 
 			//for (int i = 0; i < 4; i++)
 			//{
@@ -142,10 +141,10 @@ namespace BizHawk.Client.EmuHawk
 			Gui.DrawLine(origin.X, origin.Y + 448 / 2, origin.X + 640 - 1, origin.Y + 448 / 2);
 			Gui.DrawLine(origin.X + 640 / 2, origin.Y, origin.X + 640 / 2, origin.Y + 448 - 1);
 
-			// Remember that the projection, view, model order from GL
-			// shaders is reversed in C#, to account for OpenTK's row
+			// Remember that the projection, view, model order from OpenGL
+			// shaders is reversed in C#, to account for System.Numeric's row
 			// major matrix layout.
-			Matrix4 matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
+			Matrix4x4 matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
 
 			List<(Polygon, Renderable)> visible = Camera.GetVisiblePolygons(Boxes);
 
@@ -157,9 +156,11 @@ namespace BizHawk.Client.EmuHawk
 				{
 					Vertex v = r.Vertices[i];
 
-					Vector4 clip = new Vector4(v.Position, 1.0f) * matrix;
+					Vector4 clip = Vector4.Transform(v.Position, matrix);
 
-					Vector3 ndc = clip.Xyz / clip.W;
+					Vector4 divided = clip / clip.W;
+
+					var ndc = new Vector3(divided.X, divided.Y, divided.Z);
 
 					// To account for Silent Hill's downward pointing vertical
 					// axis, the Y component needs to be inverted.
@@ -189,8 +190,9 @@ namespace BizHawk.Client.EmuHawk
 			float qY = Core.QToFloat(vertY);
 			float qX = Core.QToFloat(vertX);
 
-			Vector4 clop = new Vector4(qX, qY, qZ, 1.0f) * matrix;
-			Vector3 ndc2 = clop.Xyz / clop.W;
+			Vector4 clop = Vector4.Transform(new Vector3(qX, qY, qZ), matrix);
+			Vector4 divibed = clop / clop.W;
+			Vector3 ndc2 = new Vector3(divibed.X, divibed.Y, divibed.Z);
 			var screeb = new Point(
 				(int)((ndc2.X + 1) * 320 + origin.X),
 				(int)((-ndc2.Y + 1) * 224 + origin.Y));

@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SHME.ExternalTool
 {
@@ -86,8 +86,8 @@ namespace SHME.ExternalTool
 			// degrees, and a triangle's angles add up to 180.
 			float remaining = GetRemainingAngle(half);
 
-			float factor = distance / (float)Math.Sin(MathHelper.DegreesToRadians(remaining));
-			return (float)Math.Sin(MathHelper.DegreesToRadians(half)) * factor;
+			float factor = distance / (float)Math.Sin(MathUtilities.DegreesToRadians(remaining));
+			return (float)Math.Sin(MathUtilities.DegreesToRadians(half)) * factor;
 		}
 
 		private static float GetRemainingAngle(float angle)
@@ -228,8 +228,8 @@ namespace SHME.ExternalTool
 
 		public Frustum Frustum { get; }
 
-		public Matrix4 ViewMatrix { get; private set; }
-		public Matrix4 ProjectionMatrix { get; set; }
+		public Matrix4x4 ViewMatrix { get; private set; }
+		public Matrix4x4 ProjectionMatrix { get; set; }
 
 		private Vector3 WorldUp;
 		public Vector3 Front;
@@ -274,19 +274,19 @@ namespace SHME.ExternalTool
 		public void Rotate()
 		{
 			// TODO: Hook up Roll. Not critical, but nice to have.
-			float yawRad = MathHelper.DegreesToRadians(Yaw);
-			float pitchRad = MathHelper.DegreesToRadians(Pitch);
+			float yawRad = (float)MathUtilities.DegreesToRadians(Yaw);
+			float pitchRad = (float)MathUtilities.DegreesToRadians(Pitch);
 
 			Front.X = Convert.ToSingle(Math.Cos(pitchRad) * Math.Cos(yawRad));
 			Front.Y = Convert.ToSingle(Math.Sin(pitchRad));
 			Front.Z = Convert.ToSingle(Math.Cos(pitchRad) * Math.Sin(yawRad));
 
-			Front.Normalize();
+			Front = Vector3.Normalize(Front);
 
 			Right = Vector3.Normalize(Vector3.Cross(Front, WorldUp));
 			Up = Vector3.Normalize(Vector3.Cross(Right, Front));
 
-			ViewMatrix = Matrix4.LookAt(Position, Position + Front, Up);
+			ViewMatrix = Matrix4x4.CreateLookAt(Position, Position + Front, Up);
 
 			Frustum?.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
 		}
@@ -324,7 +324,7 @@ namespace SHME.ExternalTool
 
 		public void UpdateProjectionMatrix()
 		{
-			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(Fov), AspectRatio, NearClip, FarClip);
+			ProjectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView((float)MathUtilities.DegreesToRadians(Fov), AspectRatio, NearClip, FarClip);
 
 			Frustum?.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
 		}
@@ -344,8 +344,8 @@ namespace SHME.ExternalTool
 				foreach (Polygon p in r.Polygons)
 				{
 					Vector3 point = r.Vertices[p.Indices[0]];
-					Vector4 transformed = new Vector4(point, 1.0f) * r.ModelMatrix;
-					Vector3 toPoint = transformed.Xyz - Position;
+					Vector3 transformed = Vector3.Transform(point, r.ModelMatrix);
+					Vector3 toPoint = transformed - Position;
 
 					if (Vector3.Dot(toPoint, p.Normal) < 0.0f)
 					{

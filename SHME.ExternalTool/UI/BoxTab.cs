@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using SHME.ExternalTool;
+﻿using SHME.ExternalTool;
 using System;
+using System.Numerics;
 
 namespace BizHawk.Client.EmuHawk
 {

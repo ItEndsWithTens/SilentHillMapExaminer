@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using OpenTK.Graphics;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Numerics;
 
 namespace SHME.ExternalTool
 {
@@ -10,13 +10,13 @@ namespace SHME.ExternalTool
 		public float Depth { get; set; }
 		public float Height { get; set; }
 
-		public GemGenerator() : this(8.0f, 8.0f, 16.0f, Color4.Yellow)
+		public GemGenerator() : this(8.0f, 8.0f, 16.0f, Color.Yellow)
 		{
 		}
-		public GemGenerator(Color4 color) : this(8.0f, 8.0f, 16.0f, color)
+		public GemGenerator(Color color) : this(8.0f, 8.0f, 16.0f, color)
 		{
 		}
-		public GemGenerator(float width, float depth, float height, Color4 color) : base(color)
+		public GemGenerator(float width, float depth, float height, Color color) : base(color)
 		{
 			Width = width;
 			Depth = depth;
@@ -92,7 +92,7 @@ namespace SHME.ExternalTool
 				Vector3 a = modelVerts[p.Indices[1]] - modelVerts[p.Indices[0]];
 				Vector3 b = modelVerts[p.Indices[2]] - modelVerts[p.Indices[0]];
 				p.Normal = Vector3.Cross(a, b);
-				p.Normal.Normalize();
+				p.Normal = Vector3.Normalize(p.Normal);
 
 				gem.Polygons.Add(p);
 				gem.Indices.AddRange(p.Indices);

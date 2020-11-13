@@ -1,11 +1,7 @@
-﻿using OpenTK;
-using OpenTK.Graphics;
-using System;
+﻿using System;
+using System.Drawing;
+using System.Numerics;
 using System.Runtime.InteropServices;
-
-// NOTE: Converted to Y-up, right-handed coordinates only! Convenience functions
-// will be added later to work with the Z-up, left-handed coordinates I find more
-// personally comfortable.
 
 namespace SHME.ExternalTool
 {
@@ -25,37 +21,34 @@ namespace SHME.ExternalTool
 			// Assumes that objects are pointing toward +X; thereby pitch
 			// represents rotation around world Y (camera Z), yaw is world
 			// Z (camera Y), and roll is world/camera X.
-			Matrix4 rotZ = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(pitch));
-			Matrix4 rotY = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(yaw));
-			Matrix4 rotX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(roll));
+			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(pitch));
+			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(yaw));
+			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(roll));
 
-			Matrix4 rotation = rotZ * rotY * rotX;
+			Matrix4x4 rotation = rotZ * rotY * rotX;
 
-			Vector4 rotated = new Vector4(vector, 1.0f) * rotation;
+			Vector3 rotated = Vector3.Transform(vector, rotation);
 
-			return rotated.Xyz;
+			return rotated;
 		}
 
-		public static Vertex ModelToWorld(this Vertex v, Matrix4 modelMatrix)
+		public static Vertex ModelToWorld(this Vertex v, Matrix4x4 modelMatrix)
 		{
 			return ConvertCoordinateSpace(v, modelMatrix);
 		}
 
-		public static Vertex WorldToModel(this Vertex v, Matrix4 modelMatrix)
+		public static Vertex WorldToModel(this Vertex v, Matrix4x4 modelMatrix)
 		{
-			Matrix4 inverted = modelMatrix;
-			inverted.Invert();
+			Matrix4x4.Invert(modelMatrix, out Matrix4x4 inverted);
 
 			return ConvertCoordinateSpace(v, inverted);
 		}
 
-		public static Vertex ConvertCoordinateSpace(Vertex v, Matrix4 matrix)
+		public static Vertex ConvertCoordinateSpace(Vertex v, Matrix4x4 matrix)
 		{
-			var vec4 = new Vector4(v, 1.0f);
+			Vector3 converted = Vector3.Transform(v, matrix);
 
-			Vector4 converted = vec4 * matrix;
-
-			return new Vertex(v) { Position = converted.Xyz };
+			return new Vertex(v) { Position = converted };
 		}
 	}
 
@@ -67,7 +60,7 @@ namespace SHME.ExternalTool
 
 		public Vector3 Normal { get; set; }
 
-		public Color4 Color { get; set; }
+		public Color Color { get; set; }
 
 		public Vector2 TexCoords { get; set; }
 
@@ -78,22 +71,22 @@ namespace SHME.ExternalTool
 		{
 		}
 		public Vertex(float x, float y, float z) :
-			this(new Vector3(x, y, z), new Vector3(0.0f, 1.0f, 0.0f), Color4.White)
+			this(new Vector3(x, y, z), new Vector3(0.0f, 1.0f, 0.0f), Color.White)
 		{
 		}
-		public Vertex(float x, float y, float z, Color4 color) :
+		public Vertex(float x, float y, float z, Color color) :
 			this(new Vector3(x, y, z), new Vector3(0.0f, 1.0f, 0.0f), color)
 		{
 		}
-		public Vertex(Vector3 position, Color4 color) :
+		public Vertex(Vector3 position, Color color) :
 			this(position, new Vector3(0.0f, 1.0f, 0.0f), color)
 		{
 		}
-		public Vertex(Vector3 position, Vector3 normal, Color4 color) :
+		public Vertex(Vector3 position, Vector3 normal, Color color) :
 			this(position, normal, color, new Vector2())
 		{
 		}
-		public Vertex(Vector3 position, Vector3 normal, Color4 color, Vector2 texCoords)
+		public Vertex(Vector3 position, Vector3 normal, Color color, Vector2 texCoords)
 		{
 			Position = position;
 			Normal = normal;
@@ -112,9 +105,11 @@ namespace SHME.ExternalTool
 
 		public static Vertex TranslateRelative(Vertex v, Vector3 diff)
 		{
+			Vector3 translated = v.Position + diff;
+
 			return new Vertex(v)
 			{
-				Position = new Vector3(v.Position + diff)
+				Position = new Vector3(translated.X, translated.Y, translated.Z)
 			};
 		}
 		public static Vertex TranslateRelative(Vertex v, float diffX, float diffY, float diffZ)
@@ -142,7 +137,7 @@ namespace SHME.ExternalTool
 
 		public static Vector3 ToVector3(Vertex vertex)
 		{
-			return new Vector3(vertex.Position);
+			return new Vector3(vertex.Position.X, vertex.Position.Y, vertex.Position.Z);
 		}
 		public static implicit operator Vector3(Vertex vertex)
 		{

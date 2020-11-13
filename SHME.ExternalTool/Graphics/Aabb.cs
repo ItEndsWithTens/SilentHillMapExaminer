@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SHME.ExternalTool
 {
@@ -59,8 +59,8 @@ namespace SHME.ExternalTool
 		}
 		public Aabb(Aabb aabb)
 		{
-			Min = new Vector3(aabb.Min);
-			Max = new Vector3(aabb.Max);
+			Min = new Vector3(aabb.Min.X, aabb.Min.Y, aabb.Min.Z);
+			Max = new Vector3(aabb.Max.X, aabb.Max.Y, aabb.Max.Z);
 		}
 
 		private void Init(List<Vector3> points)

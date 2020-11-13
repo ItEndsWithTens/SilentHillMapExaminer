@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="all" />
-    <PackageReference Include="OpenTK" Version="3.0.1" />
-    <PackageReference Include="OpenTK.GLControl" Version="3.0.1" />
     
     <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)dll/BizHawk.Client.Common.dll" />
     <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(BizHawkOutputDir)EmuHawk.exe" />

@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 // NOTE: Converted to Y-up, right-handed coordinates only! Convenience functions
 // will be added later to work with the Z-up, left-handed coordinates I find more
@@ -47,12 +47,12 @@ namespace SHME.ExternalTool
 			Indices = new List<int>(p.Indices);
 			LineLoopIndices = new List<int>(p.LineLoopIndices);
 			IntendedTextureName = p.IntendedTextureName;
-			BasisS = new Vector3(p.BasisS);
-			BasisT = new Vector3(p.BasisT);
+			BasisS = new Vector3(p.BasisS.X, p.BasisS.Y, p.BasisS.Z);
+			BasisT = new Vector3(p.BasisT.X, p.BasisT.Y, p.BasisT.Z);
 			Offset = new Vector2(p.Offset.X, p.Offset.Y);
 			Rotation = p.Rotation;
 			Scale = new Vector2(p.Scale.X, p.Scale.Y);
-			Normal = new Vector3(p.Normal);
+			Normal = new Vector3(p.Normal.X, p.Normal.Y, p.Normal.Z);
 		}
 
 		public static Polygon Rotate(Polygon polygon, float pitch, float yaw, float roll)
@@ -66,22 +66,16 @@ namespace SHME.ExternalTool
 				pitch = 360.0f - pitch;
 			}
 
-			Matrix4 rotZ = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(pitch));
-			Matrix4 rotY = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(yaw));
-			Matrix4 rotX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(roll));
+			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(pitch));
+			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(yaw));
+			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(roll));
 
-			Matrix4 rotation = rotZ * rotY * rotX;
+			Matrix4x4 rotation = rotZ * rotY * rotX;
 
 			var p = new Polygon(polygon);
-			
-			Vector4 rotated = new Vector4(p.BasisS, 1.0f)  * rotation;
-			p.BasisS = rotated.Xyz;
-
-			rotated = new Vector4(p.BasisT, 1.0f) * rotation;
-			p.BasisT = rotated.Xyz;
-
-			rotated = new Vector4(p.Normal, 1.0f) * rotation;
-			p.Normal = rotated.Xyz;
+			p.BasisS = Vector3.Transform(p.BasisS, rotation);
+			p.BasisT = Vector3.Transform(p.BasisT, rotation);
+			p.Normal = Vector3.Transform(p.Normal, rotation);
 
 			return p;
 		}

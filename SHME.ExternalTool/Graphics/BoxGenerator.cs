@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using OpenTK.Graphics;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Numerics;
 
 namespace SHME.ExternalTool
 {
@@ -9,16 +9,16 @@ namespace SHME.ExternalTool
 		public Vector3 Min { get; set; }
 		public Vector3 Max { get; set; }
 
-		public BoxGenerator() : this(Color4.Yellow)
+		public BoxGenerator() : this(Color.Yellow)
 		{
 		}
-		public BoxGenerator(Color4 color) : this(16.0f, color)
+		public BoxGenerator(Color color) : this(16.0f, color)
 		{
 		}
-		public BoxGenerator(float size, Color4 color) : this(size, size, size, color)
+		public BoxGenerator(float size, Color color) : this(size, size, size, color)
 		{
 		}
-		public BoxGenerator(float width, float depth, float height, Color4 color) : base()
+		public BoxGenerator(float width, float depth, float height, Color color) : base()
 		{
 			float Width = width;
 			float Depth = depth;
@@ -38,9 +38,9 @@ namespace SHME.ExternalTool
 			Min = min;
 			Max = max;
 
-			Color = Color4.White;
+			Color = Color.White;
 		}
-		public BoxGenerator(Vector3 min, Vector3 max, Color4 color) : this(min, max)
+		public BoxGenerator(Vector3 min, Vector3 max, Color color) : this(min, max)
 		{
 			Color = color;
 		}
@@ -58,10 +58,10 @@ namespace SHME.ExternalTool
 				new Vertex(Min.X, Min.Y, Max.Z),
 
 				// Positive Y (top)
-				new Vertex(Max.X, Max.Y, Min.Z, Color4.Lime),
-				new Vertex(Min.X, Max.Y, Min.Z, Color4.Lime),
-				new Vertex(Min.X, Max.Y, Max.Z, Color4.Lime),
-				new Vertex(Max.X, Max.Y, Max.Z, Color4.Lime),
+				new Vertex(Max.X, Max.Y, Min.Z, Color.Lime),
+				new Vertex(Min.X, Max.Y, Min.Z, Color.Lime),
+				new Vertex(Min.X, Max.Y, Max.Z, Color.Lime),
+				new Vertex(Max.X, Max.Y, Max.Z, Color.Lime),
 
 				// Negative X (left)
 				new Vertex(Min.X, Min.Y, Min.Z),
@@ -70,16 +70,16 @@ namespace SHME.ExternalTool
 				new Vertex(Min.X, Max.Y, Min.Z),
 
 				// Positive X (right)
-				new Vertex(Max.X, Max.Y, Min.Z, Color4.Red),
-				new Vertex(Max.X, Max.Y, Max.Z, Color4.Red),
-				new Vertex(Max.X, Min.Y, Max.Z, Color4.Red),
-				new Vertex(Max.X, Min.Y, Min.Z, Color4.Red),
+				new Vertex(Max.X, Max.Y, Min.Z, Color.Red),
+				new Vertex(Max.X, Max.Y, Max.Z, Color.Red),
+				new Vertex(Max.X, Min.Y, Max.Z, Color.Red),
+				new Vertex(Max.X, Min.Y, Min.Z, Color.Red),
 
 				// Positive Z (back)
-				new Vertex(Min.X, Min.Y, Max.Z, Color4.Blue),
-				new Vertex(Max.X, Min.Y, Max.Z, Color4.Blue),
-				new Vertex(Max.X, Max.Y, Max.Z, Color4.Blue),
-				new Vertex(Min.X, Max.Y, Max.Z, Color4.Blue),
+				new Vertex(Min.X, Min.Y, Max.Z, Color.Blue),
+				new Vertex(Max.X, Min.Y, Max.Z, Color.Blue),
+				new Vertex(Max.X, Max.Y, Max.Z, Color.Blue),
+				new Vertex(Min.X, Max.Y, Max.Z, Color.Blue),
 
 				// Negative Z (front)
 				new Vertex(Max.X, Min.Y, Min.Z),
@@ -113,7 +113,7 @@ namespace SHME.ExternalTool
 				Vector3 a = modelVerts[p.Indices[1]] - modelVerts[p.Indices[0]];
 				Vector3 b = modelVerts[p.Indices[2]] - modelVerts[p.Indices[0]];
 				p.Normal = Vector3.Cross(a, b);
-				p.Normal.Normalize();
+				p.Normal = Vector3.Normalize(p.Normal);
 
 				box.Polygons.Add(p);
 				box.Indices.AddRange(p.Indices);

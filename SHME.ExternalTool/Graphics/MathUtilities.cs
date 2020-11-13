@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SHME.ExternalTool
 {
@@ -20,9 +20,20 @@ namespace SHME.ExternalTool
 		public static bool ApproximatelyEquivalent(Vector3 a, Vector3 b, float tolerance)
 		{
 			return
-				MathHelper.ApproximatelyEquivalent(a.X, b.X, tolerance) &&
-				MathHelper.ApproximatelyEquivalent(a.Y, b.Y, tolerance) &&
-				MathHelper.ApproximatelyEquivalent(a.Z, b.Z, tolerance);
+				ApproximatelyEquivalent(a.X, b.X, tolerance) &&
+				ApproximatelyEquivalent(a.Y, b.Y, tolerance) &&
+				ApproximatelyEquivalent(a.Z, b.Z, tolerance);
+		}
+		public static bool ApproximatelyEquivalent(double a, double b, double tolerance)
+		{
+			if (Math.Abs(b - a) <= tolerance)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		/// <summary>
@@ -96,6 +107,15 @@ namespace SHME.ExternalTool
 			}
 
 			return combinations;
+		}
+
+		public static float DegreesToRadians(float degrees)
+		{
+			return (float)(degrees * (Math.PI / 180.0));
+		}
+		public static float RadiansToDegrees(float radians)
+		{
+			return (float)(radians * (180.0 / Math.PI));
 		}
 
 		/// <summary>
@@ -191,7 +211,7 @@ namespace SHME.ExternalTool
 			double result = Double.NaN;
 
 			double angle = SignedAngleBetweenVectors(a, b, normal);
-			if (angle > 0.0 || MathHelper.ApproximatelyEquivalent(angle, -180.0, 0.001))
+			if (angle > 0.0 || ApproximatelyEquivalent(angle, -180.0, 0.001))
 			{
 				result = angle;
 			}
@@ -257,7 +277,7 @@ namespace SHME.ExternalTool
 			float dot1 = Vector3.Dot(normal, Vector3.Cross(a, b));
 			float dot2 = Vector3.Dot(a, b);
 
-			return MathHelper.RadiansToDegrees(Math.Atan2(dot1, dot2));
+			return RadiansToDegrees((float)Math.Atan2(dot1, dot2));
 		}
 
 		public static List<Vertex> SortVertices(List<Vertex> vertices, Vector3 normal, Winding winding)

@@ -1,7 +1,7 @@
-﻿using OpenTK;
-using OpenTK.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Numerics;
 
 namespace SHME.ExternalTool
 {
@@ -26,13 +26,13 @@ namespace SHME.ExternalTool
 				{
 					worldVerts.Add(
 						vertex.ModelToWorld(
-							Matrix4.CreateTranslation(world.Position)));
+							Matrix4x4.CreateTranslation(world.Position)));
 				}
 
 				world.Vertices = worldVerts;
 
 				world.CoordinateSpace = CoordinateSpace.World;
-				world.ModelMatrix = Matrix4.Identity;
+				world.ModelMatrix = Matrix4x4.Identity;
 			}
 
 			return world;
@@ -92,7 +92,7 @@ namespace SHME.ExternalTool
 		/// be drawn with minimal effort, as well as UI elements associated with
 		/// said objects, or placeholder meshes, etc. Set the CoordinateSpace
 		/// field to switch the matrix used for this Renderable.</remarks>
-		public Matrix4 ModelMatrix { get; set; }
+		public Matrix4x4 ModelMatrix { get; set; }
 
 		public List<Polygon> Polygons { get; } = new List<Polygon>();
 
@@ -142,7 +142,7 @@ namespace SHME.ExternalTool
 		/// <summary>
 		/// If defined, this color will replace this Renderable's deselected color.
 		/// </summary>
-		public Color4? Tint { get; set; } = null;
+		public Color? Tint { get; set; } = null;
 
 		public event EventHandler? Updated;
 
@@ -151,7 +151,7 @@ namespace SHME.ExternalTool
 			Aabb = new Aabb();
 			CoordinateSpace = CoordinateSpace.World;
 			Indices = new List<int>();
-			ModelMatrix = Matrix4.Identity;
+			ModelMatrix = Matrix4x4.Identity;
 			Transformability = Transformability.All;
 			Translucent = false;
 			Vertices = new List<Vertex>();
@@ -301,7 +301,7 @@ namespace SHME.ExternalTool
 
 			if (CoordinateSpace == CoordinateSpace.Model)
 			{
-				ModelMatrix *= Matrix4.CreateTranslation(diff);
+				ModelMatrix *= Matrix4x4.CreateTranslation(diff);
 			}
 
 			Aabb += diff;
@@ -321,7 +321,7 @@ namespace SHME.ExternalTool
 		/// Give this renderable's vertices an arbitrary color, ignoring the
 		/// values in its Colors dictionary.
 		/// </summary>
-		public void SetColor(Color4 color)
+		public void SetColor(Color color)
 		{
 			for (int i = 0; i < Vertices.Count; i++)
 			{
@@ -339,11 +339,9 @@ namespace SHME.ExternalTool
 			var worldVerts = new List<Vector3>();
 			foreach (Vertex v in Vertices)
 			{
-				var model = new Vector4(v.Position, 1.0f);
+				Vector3 world = Vector3.Transform(v.Position, ModelMatrix);
 
-				Vector4 world = model * ModelMatrix;
-
-				worldVerts.Add(world.Xyz);
+				worldVerts.Add(world);
 			}
 
 			Aabb = new Aabb(worldVerts);
@@ -362,7 +360,7 @@ namespace SHME.ExternalTool
 					break;
 				case CoordinateSpace.World:
 				default:
-					ModelMatrix = Matrix4.Identity;
+					ModelMatrix = Matrix4x4.Identity;
 					break;
 				case CoordinateSpace.View:
 					break;
