@@ -19,8 +19,14 @@ namespace SHME.ExternalTool
 		public double MaxAngleH { get; set; } = 180.0;
 		public double MaxAngleV { get; set; } = 180.0;
 
-		public Aabb Bounds { get; private set; }
+		public Aabb Bounds { get; private set; } = new Aabb();
 
+		public Frustum()
+		{
+			Update(
+				new Vector3(0.0f), new Vector3(0.0f, 0.0f, -1.0f), new Vector3(1.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f),
+				75.0f, 1.0f, 0.01f, 1.0f);
+		}
 		public Frustum(
 			Vector3 position, Vector3 front, Vector3 right, Vector3 up,
 			float fov, float aspect, float near, float far)
@@ -226,7 +232,7 @@ namespace SHME.ExternalTool
 			}
 		}
 
-		public Frustum Frustum { get; }
+		public Frustum Frustum { get; } = new Frustum();
 
 		public Matrix4x4 ViewMatrix { get; private set; }
 		public Matrix4x4 ProjectionMatrix { get; set; }
@@ -238,19 +244,17 @@ namespace SHME.ExternalTool
 
 		public Camera()
 		{
-			// TODO: Fix this! SH doesn't seem to have FOV in any particular
-			// form, so I'll be trying to calculate it from the number it
-			// gives me, which I've tentatively assumed is the focal length in
-			// game units. Fingers crossed.
+			// TODO: Fix this! SH has a value in memory that gets read into what
+			// the GTE docs call the "projection plane distance" register, but
+			// it defaults to 0xE0 (224, the framebuffer height). Need to dig
+			// deeper into the code with Ghidra, see how the value is used.
 			_fov = 75.0f;
 
-			// Silent Hill uses a 256x448 frame buffer, but stretches that to
-			// 640 width on display, apparently (according to an EmuHawk screen
-			// capture, examined in IrfanView).
-			_aspectRatio = 640.0f / 448.0f;
+			// Gameplay in Silent Hill is rendered to a 320x224 framebuffer, as
+			// opposed to the inventory and map screens, which are 320x448.
+			_aspectRatio = 320.0f / 224.0f;
 
-			// Hopefully this is enough for Silent Hill, since one unit is the
-			// size of one sidewalk paver in fogworld.
+			// The default SH draw distance is 14.5 world units.
 			_nearClip = 0.01f;
 			_farClip = 20.0f;
 
@@ -288,7 +292,7 @@ namespace SHME.ExternalTool
 
 			ViewMatrix = Matrix4x4.CreateLookAt(Position, Position + Front, Up);
 
-			Frustum?.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
+			Frustum.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
 		}
 
 		public void TranslateRelative(bool forward, bool backward, bool left, bool right, bool up, bool down, float distance)
@@ -326,7 +330,7 @@ namespace SHME.ExternalTool
 		{
 			ProjectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView((float)MathUtilities.DegreesToRadians(Fov), AspectRatio, NearClip, FarClip);
 
-			Frustum?.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
+			Frustum.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
 		}
 
 		private readonly List<(Polygon, Renderable)> _visiblePolygons = new List<(Polygon, Renderable)>();
