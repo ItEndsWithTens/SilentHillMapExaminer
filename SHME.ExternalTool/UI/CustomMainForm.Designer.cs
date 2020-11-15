@@ -79,6 +79,14 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamPositionZ = new System.Windows.Forms.Label();
             this.LblOverlayCamPositionY = new System.Windows.Forms.Label();
             this.LblOverlayCamPositionX = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
+            this.LblHarryHealth = new System.Windows.Forms.Label();
+            this.CbxStats = new System.Windows.Forms.CheckBox();
+            this.LblDistanceRun = new System.Windows.Forms.Label();
+            this.LblDistanceWalked = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.TbpMap = new System.Windows.Forms.TabPage();
             this.TbpBox = new System.Windows.Forms.TabPage();
             this.NudBoxZ = new System.Windows.Forms.NumericUpDown();
@@ -110,14 +118,6 @@ namespace BizHawk.Client.EmuHawk
             this.LblGteX = new System.Windows.Forms.Label();
             this.LblRegisterTest = new System.Windows.Forms.Label();
             this.TbpInfo = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label14 = new System.Windows.Forms.Label();
-            this.LblHarryHealth = new System.Windows.Forms.Label();
-            this.CbxStats = new System.Windows.Forms.CheckBox();
-            this.LblDistanceRun = new System.Windows.Forms.Label();
-            this.LblDistanceWalked = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.BtnCustomWorldTintCurrent = new System.Windows.Forms.Button();
             this.BtnCustomFogCurrent = new System.Windows.Forms.Button();
@@ -140,6 +140,11 @@ namespace BizHawk.Client.EmuHawk
             this.label5 = new System.Windows.Forms.Label();
             this.BtnFogColor = new System.Windows.Forms.Button();
             this.CbxFog = new System.Windows.Forms.CheckBox();
+            this.LblSpawnZ = new System.Windows.Forms.Label();
+            this.LblSpawnX = new System.Windows.Forms.Label();
+            this.LblSpawnInfo = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -148,13 +153,13 @@ namespace BizHawk.Client.EmuHawk
             this.TbpBasics.SuspendLayout();
             this.GbxControls.SuspendLayout();
             this.GbxOverlay.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.TbpMap.SuspendLayout();
             this.TbpBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).BeginInit();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintG)).BeginInit();
@@ -279,6 +284,11 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxHarry
             // 
+            this.GbxHarry.Controls.Add(this.label19);
+            this.GbxHarry.Controls.Add(this.label18);
+            this.GbxHarry.Controls.Add(this.LblSpawnZ);
+            this.GbxHarry.Controls.Add(this.LblSpawnX);
+            this.GbxHarry.Controls.Add(this.LblSpawnInfo);
             this.GbxHarry.Controls.Add(this.CbxEnableHarrySection);
             this.GbxHarry.Controls.Add(this.LblHarryPositionZ);
             this.GbxHarry.Controls.Add(this.TbxPositionZ);
@@ -301,7 +311,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxHarry.Controls.Add(this.BtnSetHarryPitch);
             this.GbxHarry.Location = new System.Drawing.Point(6, 6);
             this.GbxHarry.Name = "GbxHarry";
-            this.GbxHarry.Size = new System.Drawing.Size(338, 266);
+            this.GbxHarry.Size = new System.Drawing.Size(338, 433);
             this.GbxHarry.TabIndex = 13;
             this.GbxHarry.TabStop = false;
             this.GbxHarry.Text = "Harry";
@@ -311,7 +321,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxEnableHarrySection.AutoSize = true;
             this.CbxEnableHarrySection.Checked = true;
             this.CbxEnableHarrySection.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxEnableHarrySection.Location = new System.Drawing.Point(271, 243);
+            this.CbxEnableHarrySection.Location = new System.Drawing.Point(273, 410);
             this.CbxEnableHarrySection.Name = "CbxEnableHarrySection";
             this.CbxEnableHarrySection.Size = new System.Drawing.Size(59, 17);
             this.CbxEnableHarrySection.TabIndex = 16;
@@ -386,7 +396,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxCamera.Controls.Add(this.LblCameraPositionX);
             this.GbxCamera.Location = new System.Drawing.Point(350, 6);
             this.GbxCamera.Name = "GbxCamera";
-            this.GbxCamera.Size = new System.Drawing.Size(396, 266);
+            this.GbxCamera.Size = new System.Drawing.Size(396, 433);
             this.GbxCamera.TabIndex = 14;
             this.GbxCamera.TabStop = false;
             this.GbxCamera.Text = "Game camera";
@@ -498,7 +508,7 @@ namespace BizHawk.Client.EmuHawk
             // LblFov
             // 
             this.LblFov.AutoSize = true;
-            this.LblFov.Location = new System.Drawing.Point(181, 214);
+            this.LblFov.Location = new System.Drawing.Point(181, 182);
             this.LblFov.Name = "LblFov";
             this.LblFov.Size = new System.Drawing.Size(34, 13);
             this.LblFov.TabIndex = 8;
@@ -506,7 +516,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // TrkFov
             // 
-            this.TrkFov.Location = new System.Drawing.Point(6, 230);
+            this.TrkFov.Location = new System.Drawing.Point(6, 198);
             this.TrkFov.Maximum = 120;
             this.TrkFov.Minimum = 1;
             this.TrkFov.Name = "TrkFov";
@@ -583,9 +593,9 @@ namespace BizHawk.Client.EmuHawk
             this.GbxControls.Controls.Add(this.LblButtonUp);
             this.GbxControls.Controls.Add(this.LblButtonStart);
             this.GbxControls.Controls.Add(this.LblButtonSelect);
-            this.GbxControls.Location = new System.Drawing.Point(6, 278);
+            this.GbxControls.Location = new System.Drawing.Point(6, 445);
             this.GbxControls.Name = "GbxControls";
-            this.GbxControls.Size = new System.Drawing.Size(338, 442);
+            this.GbxControls.Size = new System.Drawing.Size(338, 275);
             this.GbxControls.TabIndex = 16;
             this.GbxControls.TabStop = false;
             this.GbxControls.Text = "Controls";
@@ -593,7 +603,7 @@ namespace BizHawk.Client.EmuHawk
             // CbxEnableControlsSection
             // 
             this.CbxEnableControlsSection.AutoSize = true;
-            this.CbxEnableControlsSection.Location = new System.Drawing.Point(279, 419);
+            this.CbxEnableControlsSection.Location = new System.Drawing.Point(273, 252);
             this.CbxEnableControlsSection.Name = "CbxEnableControlsSection";
             this.CbxEnableControlsSection.Size = new System.Drawing.Size(59, 17);
             this.CbxEnableControlsSection.TabIndex = 15;
@@ -757,9 +767,9 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.Controls.Add(this.LblOverlayCamPositionZ);
             this.GbxOverlay.Controls.Add(this.LblOverlayCamPositionY);
             this.GbxOverlay.Controls.Add(this.LblOverlayCamPositionX);
-            this.GbxOverlay.Location = new System.Drawing.Point(350, 278);
+            this.GbxOverlay.Location = new System.Drawing.Point(350, 445);
             this.GbxOverlay.Name = "GbxOverlay";
-            this.GbxOverlay.Size = new System.Drawing.Size(396, 442);
+            this.GbxOverlay.Size = new System.Drawing.Size(396, 275);
             this.GbxOverlay.TabIndex = 15;
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
@@ -767,7 +777,7 @@ namespace BizHawk.Client.EmuHawk
             // CbxEnableTriggerDisplay
             // 
             this.CbxEnableTriggerDisplay.AutoSize = true;
-            this.CbxEnableTriggerDisplay.Location = new System.Drawing.Point(331, 419);
+            this.CbxEnableTriggerDisplay.Location = new System.Drawing.Point(331, 249);
             this.CbxEnableTriggerDisplay.Name = "CbxEnableTriggerDisplay";
             this.CbxEnableTriggerDisplay.Size = new System.Drawing.Size(59, 17);
             this.CbxEnableTriggerDisplay.TabIndex = 15;
@@ -847,6 +857,89 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamPositionX.Size = new System.Drawing.Size(57, 13);
             this.LblOverlayCamPositionX.TabIndex = 6;
             this.LblOverlayCamPositionX.Text = "Position X:";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.label14);
+            this.tabPage2.Controls.Add(this.LblHarryHealth);
+            this.tabPage2.Controls.Add(this.CbxStats);
+            this.tabPage2.Controls.Add(this.LblDistanceRun);
+            this.tabPage2.Controls.Add(this.LblDistanceWalked);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(752, 726);
+            this.tabPage2.TabIndex = 5;
+            this.tabPage2.Text = "Stats";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 3);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(67, 13);
+            this.label14.TabIndex = 21;
+            this.label14.Text = "Harry health:";
+            // 
+            // LblHarryHealth
+            // 
+            this.LblHarryHealth.AutoSize = true;
+            this.LblHarryHealth.Location = new System.Drawing.Point(76, 3);
+            this.LblHarryHealth.Name = "LblHarryHealth";
+            this.LblHarryHealth.Size = new System.Drawing.Size(74, 13);
+            this.LblHarryHealth.TabIndex = 20;
+            this.LblHarryHealth.Text = "<harry health>";
+            // 
+            // CbxStats
+            // 
+            this.CbxStats.AutoSize = true;
+            this.CbxStats.Checked = true;
+            this.CbxStats.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxStats.Location = new System.Drawing.Point(687, 703);
+            this.CbxStats.Name = "CbxStats";
+            this.CbxStats.Size = new System.Drawing.Size(59, 17);
+            this.CbxStats.TabIndex = 4;
+            this.CbxStats.Text = "Enable";
+            this.CbxStats.UseVisualStyleBackColor = true;
+            // 
+            // LblDistanceRun
+            // 
+            this.LblDistanceRun.AutoSize = true;
+            this.LblDistanceRun.Location = new System.Drawing.Point(98, 46);
+            this.LblDistanceRun.Name = "LblDistanceRun";
+            this.LblDistanceRun.Size = new System.Drawing.Size(34, 13);
+            this.LblDistanceRun.TabIndex = 3;
+            this.LblDistanceRun.Text = "<run>";
+            // 
+            // LblDistanceWalked
+            // 
+            this.LblDistanceWalked.AutoSize = true;
+            this.LblDistanceWalked.Location = new System.Drawing.Point(98, 33);
+            this.LblDistanceWalked.Name = "LblDistanceWalked";
+            this.LblDistanceWalked.Size = new System.Drawing.Size(53, 13);
+            this.LblDistanceWalked.TabIndex = 2;
+            this.LblDistanceWalked.Text = "<walked>";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 46);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(70, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Distance run:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 33);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Distance walked:";
             // 
             // TbpMap
             // 
@@ -1189,89 +1282,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbpInfo.Text = "Info";
             this.TbpInfo.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.label14);
-            this.tabPage2.Controls.Add(this.LblHarryHealth);
-            this.tabPage2.Controls.Add(this.CbxStats);
-            this.tabPage2.Controls.Add(this.LblDistanceRun);
-            this.tabPage2.Controls.Add(this.LblDistanceWalked);
-            this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(752, 726);
-            this.tabPage2.TabIndex = 5;
-            this.tabPage2.Text = "Stats";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 3);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(67, 13);
-            this.label14.TabIndex = 21;
-            this.label14.Text = "Harry health:";
-            // 
-            // LblHarryHealth
-            // 
-            this.LblHarryHealth.AutoSize = true;
-            this.LblHarryHealth.Location = new System.Drawing.Point(76, 3);
-            this.LblHarryHealth.Name = "LblHarryHealth";
-            this.LblHarryHealth.Size = new System.Drawing.Size(74, 13);
-            this.LblHarryHealth.TabIndex = 20;
-            this.LblHarryHealth.Text = "<harry health>";
-            // 
-            // CbxStats
-            // 
-            this.CbxStats.AutoSize = true;
-            this.CbxStats.Checked = true;
-            this.CbxStats.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxStats.Location = new System.Drawing.Point(687, 703);
-            this.CbxStats.Name = "CbxStats";
-            this.CbxStats.Size = new System.Drawing.Size(59, 17);
-            this.CbxStats.TabIndex = 4;
-            this.CbxStats.Text = "Enable";
-            this.CbxStats.UseVisualStyleBackColor = true;
-            // 
-            // LblDistanceRun
-            // 
-            this.LblDistanceRun.AutoSize = true;
-            this.LblDistanceRun.Location = new System.Drawing.Point(98, 46);
-            this.LblDistanceRun.Name = "LblDistanceRun";
-            this.LblDistanceRun.Size = new System.Drawing.Size(34, 13);
-            this.LblDistanceRun.TabIndex = 3;
-            this.LblDistanceRun.Text = "<run>";
-            // 
-            // LblDistanceWalked
-            // 
-            this.LblDistanceWalked.AutoSize = true;
-            this.LblDistanceWalked.Location = new System.Drawing.Point(98, 33);
-            this.LblDistanceWalked.Name = "LblDistanceWalked";
-            this.LblDistanceWalked.Size = new System.Drawing.Size(53, 13);
-            this.LblDistanceWalked.TabIndex = 2;
-            this.LblDistanceWalked.Text = "<walked>";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 46);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 13);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Distance run:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 33);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Distance walked:";
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.BtnCustomWorldTintCurrent);
@@ -1557,6 +1567,51 @@ namespace BizHawk.Client.EmuHawk
             this.CbxFog.Text = "Fog";
             this.CbxFog.UseVisualStyleBackColor = true;
             // 
+            // LblSpawnZ
+            // 
+            this.LblSpawnZ.AutoSize = true;
+            this.LblSpawnZ.Location = new System.Drawing.Point(139, 264);
+            this.LblSpawnZ.Name = "LblSpawnZ";
+            this.LblSpawnZ.Size = new System.Drawing.Size(40, 13);
+            this.LblSpawnZ.TabIndex = 21;
+            this.LblSpawnZ.Text = "678.90";
+            // 
+            // LblSpawnX
+            // 
+            this.LblSpawnX.AutoSize = true;
+            this.LblSpawnX.Location = new System.Drawing.Point(93, 264);
+            this.LblSpawnX.Name = "LblSpawnX";
+            this.LblSpawnX.Size = new System.Drawing.Size(40, 13);
+            this.LblSpawnX.TabIndex = 19;
+            this.LblSpawnX.Text = "123.45";
+            // 
+            // LblSpawnInfo
+            // 
+            this.LblSpawnInfo.AutoSize = true;
+            this.LblSpawnInfo.Location = new System.Drawing.Point(93, 298);
+            this.LblSpawnInfo.Name = "LblSpawnInfo";
+            this.LblSpawnInfo.Size = new System.Drawing.Size(70, 13);
+            this.LblSpawnInfo.TabIndex = 20;
+            this.LblSpawnInfo.Text = "<spawn info>";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(6, 264);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(81, 13);
+            this.label18.TabIndex = 19;
+            this.label18.Text = "Last spawn XZ:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(6, 298);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(84, 13);
+            this.label19.TabIndex = 22;
+            this.label19.Text = "Last spawn info:";
+            // 
             // CustomMainForm
             // 
             this.ClientSize = new System.Drawing.Size(784, 776);
@@ -1574,6 +1629,8 @@ namespace BizHawk.Client.EmuHawk
             this.GbxControls.PerformLayout();
             this.GbxOverlay.ResumeLayout(false);
             this.GbxOverlay.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.TbpMap.ResumeLayout(false);
             this.TbpMap.PerformLayout();
             this.TbpBox.ResumeLayout(false);
@@ -1583,8 +1640,6 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintB)).EndInit();
@@ -1722,5 +1777,10 @@ namespace BizHawk.Client.EmuHawk
 		private Label label13;
 		private Label label14;
 		private Label LblHarryHealth;
+		private Label label19;
+		private Label label18;
+		private Label LblSpawnZ;
+		private Label LblSpawnX;
+		private Label LblSpawnInfo;
 	}
 }

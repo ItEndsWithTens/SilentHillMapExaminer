@@ -76,6 +76,10 @@
 		public long FramebufferHeight { get; set; }
 		public long ProjectionPlaneDistanceCurrent { get; set; }
 
+		public long HarrySpawnZ { get; set; }
+		public long HarrySpawnInfo { get; set; }
+		public long HarrySpawnX { get; set; }
+
 		public long FogEnabled { get; set; }
 
 		public long ScreenBrightness { get; set; }

@@ -19,8 +19,7 @@ namespace SHME.ExternalTool
 			}
 
 			// Assumes that objects are pointing toward +X; thereby pitch
-			// represents rotation around world Y (camera Z), yaw is world
-			// Z (camera Y), and roll is world/camera X.
+			// represents rotation around Z, yaw around Y, and roll around X.
 			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(pitch));
 			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(yaw));
 			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(roll));
