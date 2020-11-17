@@ -110,9 +110,17 @@ namespace BizHawk.Client.EmuHawk
 
 			LblCameraDrawDistance.Text = $"{drawDistance:N3}m";
 
-			LblSpawnX.Text = $"{Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnX)):N2}";
-			LblSpawnInfo.Text = $"0x{Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnInfo):X}";
-			LblSpawnZ.Text = $"{Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnZ)):N2}";
+			int spawnZ = Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnZ);
+			uint spawnInfo = Mem.ReadU32(Rom.Addresses.MainRam.HarrySpawnInfo);
+			int spawnX = Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnX);
+
+			var sf = new SpawnPoint(spawnZ, spawnInfo, spawnX);
+
+			LblSpawnX.Text = $"{sf.X:N2}";
+			LblSpawnThing0.Text = $"0x{sf.Thing0:X2}";
+			LblSpawnYaw.Text = $"{sf.Yaw:N2}";
+			LblSpawnThing1.Text = $"0x{sf.Thing1:X2}";
+			LblSpawnZ.Text = $"{sf.Z:N2}";
 		}
 
 		private void BtnGetPosition_Click(object sender, EventArgs e)

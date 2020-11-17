@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static SHME.ExternalTool.Core;
 
 namespace BizHawk.Client.EmuHawk
 {
@@ -20,9 +17,9 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportMisc()
 		{
-			LblGteX.Text = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputX)).ToString();
-			LblGteY.Text = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputY)).ToString();
-			LblGteZ.Text = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputZ)).ToString();
+			LblGteX.Text = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputX)).ToString();
+			LblGteY.Text = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputY)).ToString();
+			LblGteZ.Text = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputZ)).ToString();
 
 			int mat11 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat11_12) & 0b00000000_11111111) >> 0;
 			int mat12 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat11_12) & 0b11111111_00000000) >> 8;
@@ -38,17 +35,17 @@ namespace BizHawk.Client.EmuHawk
 
 			int mat33 = (Mem.ReadS32(Rom.Addresses.MainRam.Mat33) & 0b00000000_11111111) >> 0;
 
-			LblMatrix11.Text = Core.QToFloat(mat11).ToString();
-			LblMatrix12.Text = Core.QToFloat(mat12).ToString();
-			LblMatrix13.Text = Core.QToFloat(mat13).ToString();
+			LblMatrix11.Text = QToFloat(mat11).ToString();
+			LblMatrix12.Text = QToFloat(mat12).ToString();
+			LblMatrix13.Text = QToFloat(mat13).ToString();
 
-			LblMatrix21.Text = Core.QToFloat(mat21).ToString();
-			LblMatrix22.Text = Core.QToFloat(mat22).ToString();
-			LblMatrix23.Text = Core.QToFloat(mat23).ToString();
+			LblMatrix21.Text = QToFloat(mat21).ToString();
+			LblMatrix22.Text = QToFloat(mat22).ToString();
+			LblMatrix23.Text = QToFloat(mat23).ToString();
 
-			LblMatrix31.Text = Core.QToFloat(mat31).ToString();
-			LblMatrix32.Text = Core.QToFloat(mat32).ToString();
-			LblMatrix33.Text = Core.QToFloat(mat33).ToString();
+			LblMatrix31.Text = QToFloat(mat31).ToString();
+			LblMatrix32.Text = QToFloat(mat32).ToString();
+			LblMatrix33.Text = QToFloat(mat33).ToString();
 
 			LblCalculatedPitch.Text = (Math.Asin(mat31) * (180.0 / Math.PI)).ToString();
 			LblCalculatedYaw.Text = (Math.Atan2(mat21, mat11) * (180.0 / Math.PI)).ToString();

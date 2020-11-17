@@ -8,11 +8,11 @@ namespace SHME.ExternalTool
 	{
 		public Rom? Rom { get; set; }
 
-		public uint DegreesToGameUnits(float degrees)
+		public static uint DegreesToGameUnits(float degrees)
 		{
 			return (uint)Utility.ScaleToRange(degrees, 0.0, 360.0, 0.0, 4096.0);
 		}
-		public float GameUnitsToDegrees(uint gameUnits)
+		public static float GameUnitsToDegrees(uint gameUnits)
 		{
 			// Rotations in Silent Hill have only 12 significant bits.
 			uint masked = gameUnits & 0b00000000_00000000_00001111_11111111;
@@ -22,19 +22,19 @@ namespace SHME.ExternalTool
 
 		// Silent Hill appears to use the Q(20.12) fixed point number format,
 		// at least for Harry's position.
-		public int FloatToQ(float number)
+		public static int FloatToQ(float number)
 		{
 			return FloatToQ(number, 12);
 		}
-		public int FloatToQ(float number, int fractionalBits)
+		public static int FloatToQ(float number, int fractionalBits)
 		{
 			return (int)(number * Math.Pow(2.0, fractionalBits));
 		}
-		public float QToFloat(int q)
+		public static float QToFloat(int q)
 		{
 			return QToFloat(q, 12);
 		}
-		public float QToFloat(int q, int fractionalBits)
+		public static float QToFloat(int q, int fractionalBits)
 		{
 			return (float)((float)q * Math.Pow(2.0, -fractionalBits));
 		}
