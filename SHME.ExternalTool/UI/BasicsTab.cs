@@ -98,7 +98,7 @@ namespace BizHawk.Client.EmuHawk
 			LblCameraPositionY.Text = position[4].ToString("N2");
 			LblCameraPositionZ.Text = position[5].ToString("N2");
 
-			float drawDistance = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DrawDistance), 8);
+			float drawDistance = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DrawDistance), 8);
 
 			LblCameraDrawDistance.Text = $"{drawDistance:N3}m";
 

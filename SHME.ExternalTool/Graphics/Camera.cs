@@ -4,6 +4,12 @@ using System.Numerics;
 
 namespace SHME.ExternalTool
 {
+	public enum CullMode
+	{
+		None,
+		Back
+	}
+
 	public class Frustum
 	{
 		public Vector3 NearTopLeft { get; set; } = new Vector3();
@@ -232,6 +238,8 @@ namespace SHME.ExternalTool
 			}
 		}
 
+		public CullMode CullMode { get; set; } = CullMode.Back;
+
 		public Frustum Frustum { get; } = new Frustum();
 
 		public Matrix4x4 ViewMatrix { get; private set; }
@@ -354,6 +362,13 @@ namespace SHME.ExternalTool
 					if (Vector3.Dot(toPoint, p.Normal) < 0.0f)
 					{
 						_visiblePolygons.Add((p, r));
+					}
+					else if (CullMode == CullMode.None)
+					{
+						// Keeping backfaces at the start of the list makes sure
+						// they're drawn first, and won't overdraw any colored
+						// edges when rendering as wireframes.
+						_visiblePolygons.Insert(0, (p, r));
 					}
 				}
 			}
