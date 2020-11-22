@@ -25,6 +25,13 @@ namespace BizHawk.Client.EmuHawk
             this.TbxHarryRoll = new System.Windows.Forms.TextBox();
             this.BtnGetAngles = new System.Windows.Forms.Button();
             this.GbxHarry = new System.Windows.Forms.GroupBox();
+            this.LblSpawnThing2 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.LblSpawnThing1 = new System.Windows.Forms.Label();
+            this.LblSpawnYaw = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.LblSpawnZ = new System.Windows.Forms.Label();
@@ -145,11 +152,6 @@ namespace BizHawk.Client.EmuHawk
             this.label5 = new System.Windows.Forms.Label();
             this.BtnFogColor = new System.Windows.Forms.Button();
             this.CbxFog = new System.Windows.Forms.CheckBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.LblSpawnYaw = new System.Windows.Forms.Label();
-            this.LblSpawnThing1 = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -289,6 +291,8 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxHarry
             // 
+            this.GbxHarry.Controls.Add(this.LblSpawnThing2);
+            this.GbxHarry.Controls.Add(this.label20);
             this.GbxHarry.Controls.Add(this.LblSpawnThing1);
             this.GbxHarry.Controls.Add(this.LblSpawnYaw);
             this.GbxHarry.Controls.Add(this.label17);
@@ -325,6 +329,69 @@ namespace BizHawk.Client.EmuHawk
             this.GbxHarry.TabIndex = 13;
             this.GbxHarry.TabStop = false;
             this.GbxHarry.Text = "Harry";
+            // 
+            // LblSpawnThing2
+            // 
+            this.LblSpawnThing2.AutoSize = true;
+            this.LblSpawnThing2.Location = new System.Drawing.Point(71, 393);
+            this.LblSpawnThing2.Name = "LblSpawnThing2";
+            this.LblSpawnThing2.Size = new System.Drawing.Size(48, 13);
+            this.LblSpawnThing2.TabIndex = 29;
+            this.LblSpawnThing2.Text = "<thing2>";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(22, 393);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(43, 13);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "Thing2:";
+            // 
+            // LblSpawnThing1
+            // 
+            this.LblSpawnThing1.AutoSize = true;
+            this.LblSpawnThing1.Location = new System.Drawing.Point(71, 369);
+            this.LblSpawnThing1.Name = "LblSpawnThing1";
+            this.LblSpawnThing1.Size = new System.Drawing.Size(48, 13);
+            this.LblSpawnThing1.TabIndex = 27;
+            this.LblSpawnThing1.Text = "<thing1>";
+            // 
+            // LblSpawnYaw
+            // 
+            this.LblSpawnYaw.AutoSize = true;
+            this.LblSpawnYaw.Location = new System.Drawing.Point(71, 346);
+            this.LblSpawnYaw.Name = "LblSpawnYaw";
+            this.LblSpawnYaw.Size = new System.Drawing.Size(38, 13);
+            this.LblSpawnYaw.TabIndex = 26;
+            this.LblSpawnYaw.Text = "<yaw>";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(22, 369);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(43, 13);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "Thing1:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(22, 346);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(31, 13);
+            this.label16.TabIndex = 24;
+            this.label16.Text = "Yaw:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(22, 321);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 13);
+            this.label15.TabIndex = 23;
+            this.label15.Text = "Thing0:";
             // 
             // label19
             // 
@@ -1622,51 +1689,6 @@ namespace BizHawk.Client.EmuHawk
             this.CbxFog.Text = "Fog";
             this.CbxFog.UseVisualStyleBackColor = true;
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(22, 321);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(43, 13);
-            this.label15.TabIndex = 23;
-            this.label15.Text = "Thing0:";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(22, 346);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(31, 13);
-            this.label16.TabIndex = 24;
-            this.label16.Text = "Yaw:";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(22, 369);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(43, 13);
-            this.label17.TabIndex = 25;
-            this.label17.Text = "Thing1:";
-            // 
-            // LblSpawnYaw
-            // 
-            this.LblSpawnYaw.AutoSize = true;
-            this.LblSpawnYaw.Location = new System.Drawing.Point(71, 346);
-            this.LblSpawnYaw.Name = "LblSpawnYaw";
-            this.LblSpawnYaw.Size = new System.Drawing.Size(38, 13);
-            this.LblSpawnYaw.TabIndex = 26;
-            this.LblSpawnYaw.Text = "<yaw>";
-            // 
-            // LblSpawnThing1
-            // 
-            this.LblSpawnThing1.AutoSize = true;
-            this.LblSpawnThing1.Location = new System.Drawing.Point(71, 369);
-            this.LblSpawnThing1.Name = "LblSpawnThing1";
-            this.LblSpawnThing1.Size = new System.Drawing.Size(48, 13);
-            this.LblSpawnThing1.TabIndex = 27;
-            this.LblSpawnThing1.Text = "<thing1>";
-            // 
             // CustomMainForm
             // 
             this.ClientSize = new System.Drawing.Size(784, 776);
@@ -1842,5 +1864,7 @@ namespace BizHawk.Client.EmuHawk
 		private Label label17;
 		private Label label16;
 		private Label label15;
+		private Label LblSpawnThing2;
+		private Label label20;
 	}
 }

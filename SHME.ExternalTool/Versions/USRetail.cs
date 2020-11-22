@@ -81,7 +81,7 @@
 
 				HarryPositionZTwo = 0xBA040,
 
-				HarryParalyzed = 0xBA150,
+				HarryState = 0xBA150,
 
 				InventoryFirst = 0xBCA34,
 				Inventory = 0xBCADC, // Not quite. The most significant byte reflects the number of item slots, but doesn't give you the items.

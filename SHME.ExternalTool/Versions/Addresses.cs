@@ -63,7 +63,7 @@
 
 		public long HarryPositionZTwo { get; set; }
 
-		public long HarryParalyzed { get; set; }
+		public long HarryState { get; set; }
 
 		public long InventoryFirst { get; set; }
 		public long Inventory { get; set; }

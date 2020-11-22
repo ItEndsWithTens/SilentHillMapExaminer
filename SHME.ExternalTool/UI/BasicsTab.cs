@@ -120,6 +120,7 @@ namespace BizHawk.Client.EmuHawk
 			LblSpawnThing0.Text = $"0x{sf.Thing0:X2}";
 			LblSpawnYaw.Text = $"{sf.Yaw:N2}";
 			LblSpawnThing1.Text = $"0x{sf.Thing1:X2}";
+			LblSpawnThing2.Text = $"0x{sf.Thing2:X2}";
 			LblSpawnZ.Text = $"{sf.Z:N2}";
 		}
 
