@@ -11,6 +11,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             this.BtnGetPosition = new System.Windows.Forms.Button();
             this.BtnSetPosition = new System.Windows.Forms.Button();
             this.TbxPositionX = new System.Windows.Forms.TextBox();
@@ -82,6 +83,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.NudPoiArraySize = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
+            this.BtnReadPois = new System.Windows.Forms.Button();
             this.CbxEnableTriggerDisplay = new System.Windows.Forms.CheckBox();
             this.CbxEnableOverlaySection = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -152,6 +156,7 @@ namespace BizHawk.Client.EmuHawk
             this.label5 = new System.Windows.Forms.Label();
             this.BtnFogColor = new System.Windows.Forms.Button();
             this.CbxFog = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -160,6 +165,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpBasics.SuspendLayout();
             this.GbxControls.SuspendLayout();
             this.GbxOverlay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudPoiArraySize)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.TbpMap.SuspendLayout();
             this.TbpBox.SuspendLayout();
@@ -630,11 +636,12 @@ namespace BizHawk.Client.EmuHawk
             // LblFov
             // 
             this.LblFov.AutoSize = true;
-            this.LblFov.Location = new System.Drawing.Point(181, 182);
+            this.LblFov.Location = new System.Drawing.Point(189, 182);
             this.LblFov.Name = "LblFov";
-            this.LblFov.Size = new System.Drawing.Size(34, 13);
+            this.LblFov.Size = new System.Drawing.Size(19, 13);
             this.LblFov.TabIndex = 8;
-            this.LblFov.Text = "<fov>";
+            this.LblFov.Text = "54";
+            this.toolTip1.SetToolTip(this.LblFov, "Overlay camera FOV");
             // 
             // TrkFov
             // 
@@ -644,7 +651,8 @@ namespace BizHawk.Client.EmuHawk
             this.TrkFov.Name = "TrkFov";
             this.TrkFov.Size = new System.Drawing.Size(384, 45);
             this.TrkFov.TabIndex = 6;
-            this.TrkFov.Value = 1;
+            this.toolTip1.SetToolTip(this.TrkFov, "Overlay camera FOV");
+            this.TrkFov.Value = 54;
             this.TrkFov.Scroll += new System.EventHandler(this.TrkFov_Scroll);
             // 
             // BtnGrabMapGraphic
@@ -878,6 +886,9 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxOverlay
             // 
+            this.GbxOverlay.Controls.Add(this.NudPoiArraySize);
+            this.GbxOverlay.Controls.Add(this.label21);
+            this.GbxOverlay.Controls.Add(this.BtnReadPois);
             this.GbxOverlay.Controls.Add(this.CbxEnableTriggerDisplay);
             this.GbxOverlay.Controls.Add(this.CbxEnableOverlaySection);
             this.GbxOverlay.Controls.Add(this.label2);
@@ -895,6 +906,44 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabIndex = 15;
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
+            // 
+            // NudPoiArraySize
+            // 
+            this.NudPoiArraySize.Location = new System.Drawing.Point(265, 17);
+            this.NudPoiArraySize.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.NudPoiArraySize.Name = "NudPoiArraySize";
+            this.NudPoiArraySize.Size = new System.Drawing.Size(37, 20);
+            this.NudPoiArraySize.TabIndex = 32;
+            this.toolTip1.SetToolTip(this.NudPoiArraySize, "The game\'s first map has 71 points of interest; change this as necessary for othe" +
+        "r levels");
+            this.NudPoiArraySize.Value = new decimal(new int[] {
+            71,
+            0,
+            0,
+            0});
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(184, 21);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(75, 13);
+            this.label21.TabIndex = 31;
+            this.label21.Text = "POI array size:";
+            // 
+            // BtnReadPois
+            // 
+            this.BtnReadPois.Location = new System.Drawing.Point(308, 16);
+            this.BtnReadPois.Name = "BtnReadPois";
+            this.BtnReadPois.Size = new System.Drawing.Size(75, 23);
+            this.BtnReadPois.TabIndex = 16;
+            this.BtnReadPois.Text = "Read POIs";
+            this.BtnReadPois.UseVisualStyleBackColor = true;
+            this.BtnReadPois.Click += new System.EventHandler(this.BtnReadPois_Click);
             // 
             // CbxEnableTriggerDisplay
             // 
@@ -1706,6 +1755,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxControls.PerformLayout();
             this.GbxOverlay.ResumeLayout(false);
             this.GbxOverlay.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudPoiArraySize)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.TbpMap.ResumeLayout(false);
@@ -1866,5 +1916,10 @@ namespace BizHawk.Client.EmuHawk
 		private Label label15;
 		private Label LblSpawnThing2;
 		private Label label20;
+		private Button BtnReadPois;
+		private Label label21;
+		private NumericUpDown NudPoiArraySize;
+		private ToolTip toolTip1;
+		private System.ComponentModel.IContainer components;
 	}
 }

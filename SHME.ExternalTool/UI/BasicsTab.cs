@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
+using static SHME.ExternalTool.Core;
 
 namespace BizHawk.Client.EmuHawk
 {
@@ -97,15 +98,6 @@ namespace BizHawk.Client.EmuHawk
 			LblCameraPositionY.Text = position[4].ToString("N2");
 			LblCameraPositionZ.Text = position[5].ToString("N2");
 
-			Vector3 boxCoords = CoordinateConverter.Convert(
-				Boxes[0].Position,
-				CoordinateType.YUpRightHanded,
-				CoordinateType.SilentHill);
-
-			LblBoxX.Text = boxCoords.X.ToString();
-			LblBoxY.Text = boxCoords.Y.ToString();
-			LblBoxZ.Text = boxCoords.Z.ToString();
-
 			float drawDistance = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DrawDistance), 8);
 
 			LblCameraDrawDistance.Text = $"{drawDistance:N3}m";
@@ -114,7 +106,7 @@ namespace BizHawk.Client.EmuHawk
 			uint spawnInfo = Mem.ReadU32(Rom.Addresses.MainRam.HarrySpawnInfo);
 			int spawnX = Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnX);
 
-			var sf = new SpawnPoint(spawnZ, spawnInfo, spawnX);
+			var sf = new PointOfInterest(spawnZ, spawnInfo, spawnX);
 
 			LblSpawnX.Text = $"{sf.X:N2}";
 			LblSpawnThing0.Text = $"0x{sf.Thing0:X2}";
@@ -144,6 +136,27 @@ namespace BizHawk.Client.EmuHawk
 			TbxHarryPitch.Text = LblHarryPitch.Text;
 			TbxHarryYaw.Text = LblHarryYaw.Text;
 			TbxHarryRoll.Text = LblHarryRoll.Text;
+		}
+
+		private void BtnReadPois_Click(object sender, System.EventArgs e)
+		{
+			Boxes.Clear();
+
+			var generator = new BoxGenerator(1.0f, Color.White);
+
+			int spawnPointSize = 12;
+			for (int i = 0; i < NudPoiArraySize.Value; i++)
+			{
+				long ofs = 0xDF320 + (spawnPointSize * i);
+
+				float x = QToFloat(Mem.ReadS32(ofs + 8));
+				float z = QToFloat(Mem.ReadS32(ofs + 0));
+
+				Renderable box = generator.Generate().ToWorld();
+				box.Position = new Vector3(x, 0.0f, z);
+
+				Boxes.Add(box);
+			}
 		}
 
 		private void BtnSetHarryPitch_Click(object sender, EventArgs e)

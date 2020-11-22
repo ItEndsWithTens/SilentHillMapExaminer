@@ -2,7 +2,7 @@
 
 namespace SHME.ExternalTool
 {
-	public class SpawnPoint
+	public class PointOfInterest
 	{
 		public float Z { get; }
 
@@ -22,10 +22,10 @@ namespace SHME.ExternalTool
 
 		public float X { get; }
 
-		public SpawnPoint(int z, uint info, int x) : this(QToFloat(z), info, QToFloat(x))
+		public PointOfInterest(int z, uint info, int x) : this(QToFloat(z), info, QToFloat(x))
 		{
 		}
-		public SpawnPoint(float z, uint info, float x)
+		public PointOfInterest(float z, uint info, float x)
 		{
 			Z = z;
 

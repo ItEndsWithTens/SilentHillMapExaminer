@@ -129,7 +129,7 @@
 				Pointer4 = 0xC9578 + 0x14,
 				Value2 = 0xC9578 + 0x18, // No freeze
 				Pointer5 = 0xC9578 + 0x1C, // No freeze
-				TriggerVertexTable = 0xC9578 + 0x20, // Freeze
+				PointsOfInterest = 0xC9578 + 0x20,
 				Pointer7 = 0xC9578 + 0x24, // No freeze
 				Pointer8 = 0xC9578 + 0x28, // Freeze
 				Pointer9 = 0xC9578 + 0x2C, // No freeze

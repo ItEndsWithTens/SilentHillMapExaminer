@@ -40,7 +40,7 @@ namespace BizHawk.Client.EmuHawk
 
 		public Core Core { get; } = new Core();
 
-		public Camera Camera { get; set; } = new Camera() { Fov = 120.0f };
+		public Camera Camera { get; set; } = new Camera() { Fov = 50.0f };
 
 		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
 
@@ -54,20 +54,6 @@ namespace BizHawk.Client.EmuHawk
 			Rom = Core.Rom;
 
 			TrkFov.Value = (int)Camera.Fov;
-
-			var generator = new BoxGenerator(1.0f, Color.White);
-
-			//for (int i = 0; i < 4; i++)
-			//{
-				Boxes.Add(generator.Generate().ToWorld());
-			//}
-
-			//Boxes[0].Position = new Vector3(155.5f, -8.5f, 0.15f);
-			Boxes[0].Position = new Vector3(0.0f, 0.0f, 0.0f);
-
-			//Boxes.Add(generator.Generate().ToWorld());
-
-			//Boxes[1].Position = new Vector3(159.5f, -0.5f, -13.5f);
 		}
 
 		public bool AskSaveChanges()
@@ -173,31 +159,10 @@ namespace BizHawk.Client.EmuHawk
 
 				int argb = r.Vertices[p.LineLoopIndices[0]].Color.ToArgb();
 
-				Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb), Color.FromArgb(argb));
+				Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb));
 
 				Points.Clear();
 			}
-
-			int tableAddressRaw = Mem.ReadS32(Rom.Addresses.MainRam.TriggerVertexTable);
-			int tableAddress = (int)(tableAddressRaw - 0x80000000);
-			tableAddress += 0xC;
-
-			int vertZ = Mem.ReadS32((long)tableAddress + 0x0);
-			int vertY = Mem.ReadS32((long)tableAddress + 0x4);
-			int vertX = Mem.ReadS32((long)tableAddress + 0x8);
-
-			float qZ = Core.QToFloat(vertZ);
-			float qY = Core.QToFloat(vertY);
-			float qX = Core.QToFloat(vertX);
-
-			Vector4 clop = Vector4.Transform(new Vector3(qX, qY, qZ), matrix);
-			Vector4 divibed = clop / clop.W;
-			Vector3 ndc2 = new Vector3(divibed.X, divibed.Y, divibed.Z);
-			var screeb = new Point(
-				(int)((ndc2.X + 1) * 320 + origin.X),
-				(int)((-ndc2.Y + 1) * 224 + origin.Y));
-
-			Gui.DrawText(screeb.X, screeb.Y, "VERTEX");
 
 			Gui.DrawFinish();
 		}
