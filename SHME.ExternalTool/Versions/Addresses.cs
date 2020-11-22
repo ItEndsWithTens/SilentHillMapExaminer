@@ -7,6 +7,8 @@
 
 	public class MainRamAddresses
 	{
+		public long BaseAddress { get; set; }
+
 		public long VramCroppedWidth { get; set; }
 		public long VramCroppedHeight { get; set; }
 

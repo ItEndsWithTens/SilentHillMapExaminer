@@ -13,6 +13,8 @@
 		{
 			MainRam = new MainRamAddresses()
 			{
+				BaseAddress = 0x80000000,
+
 				ACameraThingFirst = 0xC3804,
 				CameraMatrixTranslationZ = 0xC3850,
 				CameraMatrixTranslationY = 0xC3854,

@@ -144,10 +144,12 @@ namespace BizHawk.Client.EmuHawk
 
 			var generator = new BoxGenerator(1.0f, Color.White);
 
-			int spawnPointSize = 12;
+			int poiSize = 12;
 			for (int i = 0; i < NudPoiArraySize.Value; i++)
 			{
-				long ofs = 0xDF320 + (spawnPointSize * i);
+				int poiArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointsOfInterest);
+				poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+				int ofs = poiArrayAddress + (poiSize * i);
 
 				float x = QToFloat(Mem.ReadS32(ofs + 8));
 				float z = QToFloat(Mem.ReadS32(ofs + 0));
