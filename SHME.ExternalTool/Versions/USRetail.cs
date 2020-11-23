@@ -55,6 +55,10 @@
 				CameraPositionActualY = 0xB9D24,
 				CameraPositionActualX = 0xB9D28,
 
+				CameraLookAtZ = 0xB9D4C,
+				CameraLookAtY = 0xB9D50,
+				CameraLookAtX = 0xB9D54,
+
 				CameraActualPitch = 0xB9D5E,
 				CameraActualYaw = 0xB9D60, // No.
 				//CameraActualYaw = 0xB9D68, // No.

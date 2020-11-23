@@ -283,6 +283,13 @@ namespace SHME.ExternalTool
 			return Frustum.Contains(r.Aabb);
 		}
 
+		public void LookAt(Vector3 target)
+		{
+			ViewMatrix = Matrix4x4.CreateLookAt(Position, target, Up);
+
+			UpdateProjectionMatrix();
+		}
+
 		public void Rotate()
 		{
 			// TODO: Hook up Roll. Not critical, but nice to have.

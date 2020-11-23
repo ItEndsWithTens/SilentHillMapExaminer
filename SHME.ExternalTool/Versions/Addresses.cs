@@ -39,6 +39,10 @@
 		public long CameraPositionActualY { get; set; }
 		public long CameraPositionActualX { get; set; }
 
+		public long CameraLookAtZ { get; set; }
+		public long CameraLookAtY { get; set; }
+		public long CameraLookAtX { get; set; }
+
 		public long CameraActualPitch { get; set; }
 		public long CameraActualYaw { get; set; }
 		public long CameraActualRoll { get; set; }
