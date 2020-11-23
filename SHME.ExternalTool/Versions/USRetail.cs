@@ -101,6 +101,8 @@
 				HarrySpawnInfo = 0xBCDB4,
 				HarrySpawnX = 0xBCDB8,
 
+				HarryModelPointer = 0xBE46C,
+
 				FogEnabled = 0xC4169,
 
 				ScreenBrightness = 0xC4170,

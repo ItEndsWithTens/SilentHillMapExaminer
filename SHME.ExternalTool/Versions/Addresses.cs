@@ -82,6 +82,8 @@
 		public long HarrySpawnInfo { get; set; }
 		public long HarrySpawnX { get; set; }
 
+		public long HarryModelPointer { get; set; }
+
 		public long FogEnabled { get; set; }
 
 		public long ScreenBrightness { get; set; }

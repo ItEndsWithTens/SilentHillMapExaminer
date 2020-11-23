@@ -85,10 +85,7 @@ namespace BizHawk.Client.EmuHawk
 					ReportAngles();
 					ReportPosition();
 					//ReportMisc();
-					if (CbxEnableTriggerDisplay.Checked)
-					{
-						DrawStuff();
-					}
+					DrawStuff();
 					if (CbxStats.Checked)
 					{
 						ReportStats();
@@ -101,10 +98,16 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private List<Point> Points = new List<Point>();
+		private List<(Polygon, Renderable)> VisiblePolygons = new List<(Polygon, Renderable)>();
 
 		private void DrawStuff()
 		{
 			if (Gui == null || Mem == null)
+			{
+				return;
+			}
+
+			if (!CbxEnableTriggerDisplay.Checked && !CbxEnableModelDisplay.Checked)
 			{
 				return;
 			}
@@ -132,9 +135,17 @@ namespace BizHawk.Client.EmuHawk
 			// major matrix layout.
 			Matrix4x4 matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
 
-			List<(Polygon, Renderable)> visible = Camera.GetVisiblePolygons(Boxes);
+			VisiblePolygons.Clear();
+			if (CbxEnableTriggerDisplay.Checked)
+			{
+				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(Boxes));
+			}
+			if (CbxEnableModelDisplay.Checked)
+			{
+				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(ModelBoxes));
+			}
 
-			foreach ((Polygon p, Renderable r) in visible)
+			foreach ((Polygon p, Renderable r) in VisiblePolygons)
 			{
 				matrix = r.ModelMatrix * matrix;
 

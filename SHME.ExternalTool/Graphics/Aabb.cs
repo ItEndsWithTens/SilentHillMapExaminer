@@ -38,6 +38,20 @@ namespace SHME.ExternalTool
 			Min = new Vector3();
 			Max = new Vector3();
 		}
+		public Aabb(List<Renderable> renderables) : base()
+		{
+			var points = new List<Vector3>();
+
+			foreach (Renderable r in renderables)
+			{
+				foreach (Vertex v in r.Vertices)
+				{
+					points.Add(v.Position);
+				}
+			}
+
+			Init(points);
+		}
 		public Aabb(List<Vertex> vertices) : base()
 		{
 			var points = new List<Vector3>();

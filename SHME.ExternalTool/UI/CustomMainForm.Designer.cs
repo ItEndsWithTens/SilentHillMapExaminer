@@ -104,15 +104,20 @@ namespace BizHawk.Client.EmuHawk
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.TbpMap = new System.Windows.Forms.TabPage();
-            this.TbpBox = new System.Windows.Forms.TabPage();
-            this.NudBoxZ = new System.Windows.Forms.NumericUpDown();
-            this.NudBoxY = new System.Windows.Forms.NumericUpDown();
-            this.NudBoxX = new System.Windows.Forms.NumericUpDown();
-            this.LblBoxZ = new System.Windows.Forms.Label();
-            this.BtnBoxGetPosition = new System.Windows.Forms.Button();
-            this.BtnBoxSetPosition = new System.Windows.Forms.Button();
-            this.LblBoxX = new System.Windows.Forms.Label();
-            this.LblBoxY = new System.Windows.Forms.Label();
+            this.TbpModel = new System.Windows.Forms.TabPage();
+            this.CbxEnableModelDisplay = new System.Windows.Forms.CheckBox();
+            this.CmbModelSubmeshName = new System.Windows.Forms.ComboBox();
+            this.LblModelScale = new System.Windows.Forms.Label();
+            this.TrkModelScale = new System.Windows.Forms.TrackBar();
+            this.BtnReadHarryModel = new System.Windows.Forms.Button();
+            this.NudModelZ = new System.Windows.Forms.NumericUpDown();
+            this.NudModelY = new System.Windows.Forms.NumericUpDown();
+            this.NudModelX = new System.Windows.Forms.NumericUpDown();
+            this.LblModelZ = new System.Windows.Forms.Label();
+            this.BtnModelGetPosition = new System.Windows.Forms.Button();
+            this.BtnModelSetPosition = new System.Windows.Forms.Button();
+            this.LblModelX = new System.Windows.Forms.Label();
+            this.LblModelY = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.LblCalculatedRoll = new System.Windows.Forms.Label();
             this.LblCalculatedYaw = new System.Windows.Forms.Label();
@@ -168,10 +173,11 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudPoiArraySize)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.TbpMap.SuspendLayout();
-            this.TbpBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudBoxZ)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudBoxY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).BeginInit();
+            this.TbpModel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TrkModelScale)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudModelZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudModelY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudModelX)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintB)).BeginInit();
@@ -680,7 +686,7 @@ namespace BizHawk.Client.EmuHawk
             this.tabControl1.Controls.Add(this.TbpBasics);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.TbpMap);
-            this.tabControl1.Controls.Add(this.TbpBox);
+            this.tabControl1.Controls.Add(this.TbpModel);
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.TbpInfo);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -1124,124 +1130,206 @@ namespace BizHawk.Client.EmuHawk
             this.TbpMap.Text = "Map";
             this.TbpMap.UseVisualStyleBackColor = true;
             // 
-            // TbpBox
+            // TbpModel
             // 
-            this.TbpBox.Controls.Add(this.NudBoxZ);
-            this.TbpBox.Controls.Add(this.NudBoxY);
-            this.TbpBox.Controls.Add(this.NudBoxX);
-            this.TbpBox.Controls.Add(this.LblBoxZ);
-            this.TbpBox.Controls.Add(this.BtnBoxGetPosition);
-            this.TbpBox.Controls.Add(this.BtnBoxSetPosition);
-            this.TbpBox.Controls.Add(this.LblBoxX);
-            this.TbpBox.Controls.Add(this.LblBoxY);
-            this.TbpBox.Location = new System.Drawing.Point(4, 22);
-            this.TbpBox.Name = "TbpBox";
-            this.TbpBox.Padding = new System.Windows.Forms.Padding(3);
-            this.TbpBox.Size = new System.Drawing.Size(752, 726);
-            this.TbpBox.TabIndex = 2;
-            this.TbpBox.Text = "Box";
-            this.TbpBox.UseVisualStyleBackColor = true;
+            this.TbpModel.Controls.Add(this.CbxEnableModelDisplay);
+            this.TbpModel.Controls.Add(this.CmbModelSubmeshName);
+            this.TbpModel.Controls.Add(this.LblModelScale);
+            this.TbpModel.Controls.Add(this.TrkModelScale);
+            this.TbpModel.Controls.Add(this.BtnReadHarryModel);
+            this.TbpModel.Controls.Add(this.NudModelZ);
+            this.TbpModel.Controls.Add(this.NudModelY);
+            this.TbpModel.Controls.Add(this.NudModelX);
+            this.TbpModel.Controls.Add(this.LblModelZ);
+            this.TbpModel.Controls.Add(this.BtnModelGetPosition);
+            this.TbpModel.Controls.Add(this.BtnModelSetPosition);
+            this.TbpModel.Controls.Add(this.LblModelX);
+            this.TbpModel.Controls.Add(this.LblModelY);
+            this.TbpModel.Location = new System.Drawing.Point(4, 22);
+            this.TbpModel.Name = "TbpModel";
+            this.TbpModel.Padding = new System.Windows.Forms.Padding(3);
+            this.TbpModel.Size = new System.Drawing.Size(752, 726);
+            this.TbpModel.TabIndex = 2;
+            this.TbpModel.Text = "Model";
+            this.TbpModel.UseVisualStyleBackColor = true;
             // 
-            // NudBoxZ
+            // CbxEnableModelDisplay
             // 
-            this.NudBoxZ.Location = new System.Drawing.Point(199, 33);
-            this.NudBoxZ.Maximum = new decimal(new int[] {
+            this.CbxEnableModelDisplay.AutoSize = true;
+            this.CbxEnableModelDisplay.Location = new System.Drawing.Point(687, 703);
+            this.CbxEnableModelDisplay.Name = "CbxEnableModelDisplay";
+            this.CbxEnableModelDisplay.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableModelDisplay.TabIndex = 35;
+            this.CbxEnableModelDisplay.Text = "Enable";
+            this.CbxEnableModelDisplay.UseVisualStyleBackColor = true;
+            this.CbxEnableModelDisplay.CheckedChanged += new System.EventHandler(this.CbxEnableModelDisplay_CheckedChanged);
+            // 
+            // CmbModelSubmeshName
+            // 
+            this.CmbModelSubmeshName.FormattingEnabled = true;
+            this.CmbModelSubmeshName.Items.AddRange(new object[] {
+            "CHEST_",
+            "HEAD1",
+            "NECK",
+            "LSHOUL",
+            "LJOU",
+            "LZEN",
+            "RSHOUL",
+            "RJOU",
+            "RZEN",
+            "HIP_TC",
+            "HIP2_T",
+            "LMOMO",
+            "LSUNE",
+            "LFOOT",
+            "RMOMO",
+            "RSUNE",
+            "RFOOT",
+            "LHAND",
+            "LHAND2",
+            "RHAND",
+            "RHAND2",
+            "RHAND3",
+            "RHAND4",
+            "*"});
+            this.CmbModelSubmeshName.Location = new System.Drawing.Point(130, 8);
+            this.CmbModelSubmeshName.Name = "CmbModelSubmeshName";
+            this.CmbModelSubmeshName.Size = new System.Drawing.Size(121, 21);
+            this.CmbModelSubmeshName.TabIndex = 34;
+            this.CmbModelSubmeshName.Text = "HEAD1";
+            // 
+            // LblModelScale
+            // 
+            this.LblModelScale.AutoSize = true;
+            this.LblModelScale.Location = new System.Drawing.Point(164, 54);
+            this.LblModelScale.Name = "LblModelScale";
+            this.LblModelScale.Size = new System.Drawing.Size(31, 13);
+            this.LblModelScale.TabIndex = 32;
+            this.LblModelScale.Text = "1000";
+            this.toolTip1.SetToolTip(this.LblModelScale, "Arbitrary model scale factor");
+            // 
+            // TrkModelScale
+            // 
+            this.TrkModelScale.Location = new System.Drawing.Point(6, 70);
+            this.TrkModelScale.Maximum = 2000;
+            this.TrkModelScale.Minimum = 1;
+            this.TrkModelScale.Name = "TrkModelScale";
+            this.TrkModelScale.Size = new System.Drawing.Size(346, 45);
+            this.TrkModelScale.TabIndex = 31;
+            this.toolTip1.SetToolTip(this.TrkModelScale, "Arbitrary model scale factor");
+            this.TrkModelScale.Value = 1000;
+            this.TrkModelScale.Scroll += new System.EventHandler(this.TrkModelScale_Scroll);
+            // 
+            // BtnReadHarryModel
+            // 
+            this.BtnReadHarryModel.Location = new System.Drawing.Point(6, 6);
+            this.BtnReadHarryModel.Name = "BtnReadHarryModel";
+            this.BtnReadHarryModel.Size = new System.Drawing.Size(118, 23);
+            this.BtnReadHarryModel.TabIndex = 30;
+            this.BtnReadHarryModel.Text = "Read Harry submesh";
+            this.BtnReadHarryModel.UseVisualStyleBackColor = true;
+            this.BtnReadHarryModel.Click += new System.EventHandler(this.BtnReadHarryModel_Click);
+            // 
+            // NudModelZ
+            // 
+            this.NudModelZ.Location = new System.Drawing.Point(199, 158);
+            this.NudModelZ.Maximum = new decimal(new int[] {
             32768,
             0,
             0,
             0});
-            this.NudBoxZ.Minimum = new decimal(new int[] {
+            this.NudModelZ.Minimum = new decimal(new int[] {
             32768,
             0,
             0,
             -2147483648});
-            this.NudBoxZ.Name = "NudBoxZ";
-            this.NudBoxZ.Size = new System.Drawing.Size(50, 20);
-            this.NudBoxZ.TabIndex = 29;
-            this.NudBoxZ.ValueChanged += new System.EventHandler(this.NudBoxZ_ValueChanged);
+            this.NudModelZ.Name = "NudModelZ";
+            this.NudModelZ.Size = new System.Drawing.Size(50, 20);
+            this.NudModelZ.TabIndex = 29;
+            this.NudModelZ.ValueChanged += new System.EventHandler(this.NudModelZ_ValueChanged);
             // 
-            // NudBoxY
+            // NudModelY
             // 
-            this.NudBoxY.Location = new System.Drawing.Point(143, 33);
-            this.NudBoxY.Maximum = new decimal(new int[] {
+            this.NudModelY.Location = new System.Drawing.Point(143, 158);
+            this.NudModelY.Maximum = new decimal(new int[] {
             32768,
             0,
             0,
             0});
-            this.NudBoxY.Minimum = new decimal(new int[] {
+            this.NudModelY.Minimum = new decimal(new int[] {
             32768,
             0,
             0,
             -2147483648});
-            this.NudBoxY.Name = "NudBoxY";
-            this.NudBoxY.Size = new System.Drawing.Size(50, 20);
-            this.NudBoxY.TabIndex = 28;
-            this.NudBoxY.ValueChanged += new System.EventHandler(this.NudBoxY_ValueChanged);
+            this.NudModelY.Name = "NudModelY";
+            this.NudModelY.Size = new System.Drawing.Size(50, 20);
+            this.NudModelY.TabIndex = 28;
+            this.NudModelY.ValueChanged += new System.EventHandler(this.NudModelY_ValueChanged);
             // 
-            // NudBoxX
+            // NudModelX
             // 
-            this.NudBoxX.Location = new System.Drawing.Point(87, 33);
-            this.NudBoxX.Maximum = new decimal(new int[] {
+            this.NudModelX.Location = new System.Drawing.Point(87, 158);
+            this.NudModelX.Maximum = new decimal(new int[] {
             32768,
             0,
             0,
             0});
-            this.NudBoxX.Minimum = new decimal(new int[] {
+            this.NudModelX.Minimum = new decimal(new int[] {
             32768,
             0,
             0,
             -2147483648});
-            this.NudBoxX.Name = "NudBoxX";
-            this.NudBoxX.Size = new System.Drawing.Size(50, 20);
-            this.NudBoxX.TabIndex = 27;
-            this.NudBoxX.ValueChanged += new System.EventHandler(this.NudBoxX_ValueChanged);
+            this.NudModelX.Name = "NudModelX";
+            this.NudModelX.Size = new System.Drawing.Size(50, 20);
+            this.NudModelX.TabIndex = 27;
+            this.NudModelX.ValueChanged += new System.EventHandler(this.NudModelX_ValueChanged);
             // 
-            // LblBoxZ
+            // LblModelZ
             // 
-            this.LblBoxZ.AutoSize = true;
-            this.LblBoxZ.Location = new System.Drawing.Point(202, 12);
-            this.LblBoxZ.Name = "LblBoxZ";
-            this.LblBoxZ.Size = new System.Drawing.Size(44, 13);
-            this.LblBoxZ.TabIndex = 26;
-            this.LblBoxZ.Text = "<box z>";
+            this.LblModelZ.AutoSize = true;
+            this.LblModelZ.Location = new System.Drawing.Point(212, 137);
+            this.LblModelZ.Name = "LblModelZ";
+            this.LblModelZ.Size = new System.Drawing.Size(24, 13);
+            this.LblModelZ.TabIndex = 26;
+            this.LblModelZ.Text = "<z>";
             // 
-            // BtnBoxGetPosition
+            // BtnModelGetPosition
             // 
-            this.BtnBoxGetPosition.Location = new System.Drawing.Point(6, 32);
-            this.BtnBoxGetPosition.Name = "BtnBoxGetPosition";
-            this.BtnBoxGetPosition.Size = new System.Drawing.Size(75, 23);
-            this.BtnBoxGetPosition.TabIndex = 19;
-            this.BtnBoxGetPosition.Text = "Get position";
-            this.BtnBoxGetPosition.UseVisualStyleBackColor = true;
-            this.BtnBoxGetPosition.Click += new System.EventHandler(this.BtnBoxGetPosition_Click);
+            this.BtnModelGetPosition.Location = new System.Drawing.Point(6, 157);
+            this.BtnModelGetPosition.Name = "BtnModelGetPosition";
+            this.BtnModelGetPosition.Size = new System.Drawing.Size(75, 23);
+            this.BtnModelGetPosition.TabIndex = 19;
+            this.BtnModelGetPosition.Text = "Get position";
+            this.BtnModelGetPosition.UseVisualStyleBackColor = true;
+            this.BtnModelGetPosition.Click += new System.EventHandler(this.BtnModelGetPosition_Click);
             // 
-            // BtnBoxSetPosition
+            // BtnModelSetPosition
             // 
-            this.BtnBoxSetPosition.Location = new System.Drawing.Point(255, 32);
-            this.BtnBoxSetPosition.Name = "BtnBoxSetPosition";
-            this.BtnBoxSetPosition.Size = new System.Drawing.Size(75, 23);
-            this.BtnBoxSetPosition.TabIndex = 20;
-            this.BtnBoxSetPosition.Text = "Set position";
-            this.BtnBoxSetPosition.UseVisualStyleBackColor = true;
-            this.BtnBoxSetPosition.Click += new System.EventHandler(this.BtnBoxSetPosition_Click);
+            this.BtnModelSetPosition.Location = new System.Drawing.Point(255, 157);
+            this.BtnModelSetPosition.Name = "BtnModelSetPosition";
+            this.BtnModelSetPosition.Size = new System.Drawing.Size(75, 23);
+            this.BtnModelSetPosition.TabIndex = 20;
+            this.BtnModelSetPosition.Text = "Set position";
+            this.BtnModelSetPosition.UseVisualStyleBackColor = true;
+            this.BtnModelSetPosition.Click += new System.EventHandler(this.BtnModelSetPosition_Click);
             // 
-            // LblBoxX
+            // LblModelX
             // 
-            this.LblBoxX.AutoSize = true;
-            this.LblBoxX.Location = new System.Drawing.Point(90, 12);
-            this.LblBoxX.Name = "LblBoxX";
-            this.LblBoxX.Size = new System.Drawing.Size(44, 13);
-            this.LblBoxX.TabIndex = 24;
-            this.LblBoxX.Text = "<box x>";
+            this.LblModelX.AutoSize = true;
+            this.LblModelX.Location = new System.Drawing.Point(100, 137);
+            this.LblModelX.Name = "LblModelX";
+            this.LblModelX.Size = new System.Drawing.Size(24, 13);
+            this.LblModelX.TabIndex = 24;
+            this.LblModelX.Text = "<x>";
             // 
-            // LblBoxY
+            // LblModelY
             // 
-            this.LblBoxY.AutoSize = true;
-            this.LblBoxY.Location = new System.Drawing.Point(146, 12);
-            this.LblBoxY.Name = "LblBoxY";
-            this.LblBoxY.Size = new System.Drawing.Size(44, 13);
-            this.LblBoxY.TabIndex = 25;
-            this.LblBoxY.Text = "<box y>";
+            this.LblModelY.AutoSize = true;
+            this.LblModelY.Location = new System.Drawing.Point(156, 137);
+            this.LblModelY.Name = "LblModelY";
+            this.LblModelY.Size = new System.Drawing.Size(24, 13);
+            this.LblModelY.TabIndex = 25;
+            this.LblModelY.Text = "<y>";
             // 
             // tabPage1
             // 
@@ -1760,11 +1848,12 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage2.PerformLayout();
             this.TbpMap.ResumeLayout(false);
             this.TbpMap.PerformLayout();
-            this.TbpBox.ResumeLayout(false);
-            this.TbpBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudBoxZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudBoxY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudBoxX)).EndInit();
+            this.TbpModel.ResumeLayout(false);
+            this.TbpModel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TrkModelScale)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudModelZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudModelY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudModelX)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -1810,15 +1899,15 @@ namespace BizHawk.Client.EmuHawk
 		private TabControl tabControl1;
 		private TabPage TbpBasics;
 		private TabPage TbpMap;
-		private TabPage TbpBox;
-		private Label LblBoxZ;
-		private Button BtnBoxGetPosition;
-		private Button BtnBoxSetPosition;
-		private Label LblBoxX;
-		private Label LblBoxY;
-		private NumericUpDown NudBoxZ;
-		private NumericUpDown NudBoxY;
-		private NumericUpDown NudBoxX;
+		private TabPage TbpModel;
+		private Label LblModelZ;
+		private Button BtnModelGetPosition;
+		private Button BtnModelSetPosition;
+		private Label LblModelX;
+		private Label LblModelY;
+		private NumericUpDown NudModelZ;
+		private NumericUpDown NudModelY;
+		private NumericUpDown NudModelX;
 		private GroupBox GbxOverlay;
 		private Label LblOverlayCamRoll;
 		private Label LblOverlayCamYaw;
@@ -1921,5 +2010,10 @@ namespace BizHawk.Client.EmuHawk
 		private NumericUpDown NudPoiArraySize;
 		private ToolTip toolTip1;
 		private System.ComponentModel.IContainer components;
+		private Button BtnReadHarryModel;
+		private Label LblModelScale;
+		private TrackBar TrkModelScale;
+		private ComboBox CmbModelSubmeshName;
+		private CheckBox CbxEnableModelDisplay;
 	}
 }
