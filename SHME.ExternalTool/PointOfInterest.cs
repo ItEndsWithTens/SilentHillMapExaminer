@@ -4,7 +4,7 @@ namespace SHME.ExternalTool
 {
 	public class PointOfInterest
 	{
-		public float Z { get; }
+		public float X { get; }
 
 		public byte Thing0 { get; } // TODO: Decipher this
 
@@ -20,14 +20,14 @@ namespace SHME.ExternalTool
 
 		public byte Thing2 { get; }
 
-		public float X { get; }
+		public float Z { get; }
 
-		public PointOfInterest(int z, uint info, int x) : this(QToFloat(z), info, QToFloat(x))
+		public PointOfInterest(int x, uint info, int z) : this(QToFloat(x), info, QToFloat(z))
 		{
 		}
-		public PointOfInterest(float z, uint info, float x)
+		public PointOfInterest(float x, uint info, float z)
 		{
-			Z = z;
+			X = x;
 
 			uint raw0 = (info & 0b00000000_00000000_00000000_11111111) >> 0;
 			uint raw1 = (info & 0b00000000_00000000_00001111_00000000) >> 8;
@@ -39,7 +39,7 @@ namespace SHME.ExternalTool
 			Yaw = GameUnitsToDegrees(raw2);
 			Thing0 = (byte)raw3;
 
-			X = x;
+			Z = z;
 		}
 	}
 }

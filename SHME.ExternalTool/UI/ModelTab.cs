@@ -17,10 +17,19 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnModelSetPosition_Click(object sender, EventArgs e)
 		{
-			Boxes[0].Position = new Vector3(
+			var aabb = new Aabb(ModelBoxes);
+
+			var target = new Vector3(
 				(float)NudModelX.Value,
 				-(float)NudModelY.Value,
-				(float)NudModelZ.Value);
+				-(float)NudModelZ.Value);
+
+			Vector3 diff = target - aabb.Center;
+
+			foreach (Renderable box in ModelBoxes)
+			{
+				box.Position += diff;
+			}
 		}
 
 		private void NudModelX_ValueChanged(object sender, EventArgs e)
@@ -64,7 +73,7 @@ namespace BizHawk.Client.EmuHawk
 			var target = new Vector3(
 					aabb.Center.X,
 					aabb.Center.Y,
-					(float)NudModelZ.Value);
+					-(float)NudModelZ.Value);
 
 			Vector3 diff = target - aabb.Center;
 

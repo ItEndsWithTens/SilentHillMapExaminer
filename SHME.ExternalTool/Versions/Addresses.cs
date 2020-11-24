@@ -13,9 +13,9 @@
 		public long VramCroppedHeight { get; set; }
 
 		public long ACameraThingFirst { get; set; }
-		public long CameraMatrixTranslationZ { get; set; }
-		public long CameraMatrixTranslationY { get; set; }
 		public long CameraMatrixTranslationX { get; set; }
+		public long CameraMatrixTranslationY { get; set; }
+		public long CameraMatrixTranslationZ { get; set; }
 		public long Blah1 { get; set; }
 		public long ACameraThingLast { get; set; }
 
@@ -31,17 +31,17 @@
 
 		public long IsCameraUnlocked { get; set; }
 
-		public long CameraPositionIdealZ { get; set; }
-		public long CameraPositionIdealY { get; set; }
 		public long CameraPositionIdealX { get; set; }
+		public long CameraPositionIdealY { get; set; }
+		public long CameraPositionIdealZ { get; set; }
 
-		public long CameraPositionActualZ { get; set; }
-		public long CameraPositionActualY { get; set; }
 		public long CameraPositionActualX { get; set; }
+		public long CameraPositionActualY { get; set; }
+		public long CameraPositionActualZ { get; set; }
 
-		public long CameraLookAtZ { get; set; }
-		public long CameraLookAtY { get; set; }
 		public long CameraLookAtX { get; set; }
+		public long CameraLookAtY { get; set; }
+		public long CameraLookAtZ { get; set; }
 
 		public long CameraActualPitch { get; set; }
 		public long CameraActualYaw { get; set; }
@@ -53,9 +53,9 @@
 
 		public long CameraLockedToHead { get; set; }
 
-		public long HarryPositionZ { get; set; }
-		public long HarryPositionY { get; set; }
 		public long HarryPositionX { get; set; }
+		public long HarryPositionY { get; set; }
+		public long HarryPositionZ { get; set; }
 
 		public long HarryHealth { get; set; }
 
@@ -67,7 +67,7 @@
 		public long HarryYaw { get; set; }
 		public long HarryRoll { get; set; }
 
-		public long HarryPositionZTwo { get; set; }
+		public long HarryPositionXTwo { get; set; }
 
 		public long HarryState { get; set; }
 
@@ -82,9 +82,9 @@
 		public long FramebufferHeight { get; set; }
 		public long ProjectionPlaneDistanceCurrent { get; set; }
 
-		public long HarrySpawnZ { get; set; }
-		public long HarrySpawnInfo { get; set; }
 		public long HarrySpawnX { get; set; }
+		public long HarrySpawnInfo { get; set; }
+		public long HarrySpawnZ { get; set; }
 
 		public long HarryModelPointer { get; set; }
 

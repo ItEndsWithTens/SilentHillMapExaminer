@@ -77,13 +77,13 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportOverlayInfo()
 		{
-			LblOverlayCamPositionX.Text = Camera.Position.X.ToString();
-			LblOverlayCamPositionY.Text = Camera.Position.Y.ToString();
-			LblOverlayCamPositionZ.Text = Camera.Position.Z.ToString();
+			LblOverlayCamPositionX.Text = $"{Camera.Position.X:N2}";
+			LblOverlayCamPositionY.Text = $"{Camera.Position.Y:N2}";
+			LblOverlayCamPositionZ.Text = $"{Camera.Position.Z:N2}";
 
-			LblOverlayCamPitch.Text = Camera.Pitch.ToString();
-			LblOverlayCamYaw.Text = Camera.Yaw.ToString();
-			LblOverlayCamRoll.Text = Camera.Roll.ToString();
+			LblOverlayCamPitch.Text = $"{Camera.Pitch:N2}";
+			LblOverlayCamYaw.Text = $"{Camera.Yaw:N2}";
+			LblOverlayCamRoll.Text = $"{Camera.Roll:N2}";
 		}
 
 		private void ReportPosition()
@@ -102,11 +102,11 @@ namespace BizHawk.Client.EmuHawk
 
 			LblCameraDrawDistance.Text = $"{drawDistance:N3}m";
 
-			int spawnZ = Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnZ);
-			uint spawnInfo = Mem.ReadU32(Rom.Addresses.MainRam.HarrySpawnInfo);
 			int spawnX = Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnX);
+			uint spawnInfo = Mem.ReadU32(Rom.Addresses.MainRam.HarrySpawnInfo);
+			int spawnZ = Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnZ);
 
-			var sf = new PointOfInterest(spawnZ, spawnInfo, spawnX);
+			var sf = new PointOfInterest(spawnX, spawnInfo, spawnZ);
 
 			LblSpawnX.Text = $"{sf.X:N2}";
 			LblSpawnThing0.Text = $"0x{sf.Thing0:X2}";
@@ -151,11 +151,11 @@ namespace BizHawk.Client.EmuHawk
 				poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 				int ofs = poiArrayAddress + (poiSize * i);
 
-				float x = QToFloat(Mem.ReadS32(ofs + 8));
-				float z = QToFloat(Mem.ReadS32(ofs + 0));
+				float x = QToFloat(Mem.ReadS32(ofs + 0));
+				float z = QToFloat(Mem.ReadS32(ofs + 8));
 
 				Renderable box = generator.Generate().ToWorld();
-				box.Position = new Vector3(x, 0.0f, z);
+				box.Position = new Vector3(x, 0.0f, -z);
 
 				Boxes.Add(box);
 			}

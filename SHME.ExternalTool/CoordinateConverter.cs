@@ -47,12 +47,12 @@ namespace SHME.ExternalTool
 
 		private static Vector3 YUpRightHandedToSilentHill(Vector3 from)
 		{
-			return new Vector3(from.X, -from.Y, from.Z);
+			return new Vector3(from.X, -from.Y, -from.Z);
 		}
 
 		private static Vector3 SilentHillToYUpRightHanded(Vector3 from)
 		{
-			return new Vector3(from.X, -from.Y, from.Z);
+			return new Vector3(from.X, -from.Y, -from.Z);
 		}
 	}
 }

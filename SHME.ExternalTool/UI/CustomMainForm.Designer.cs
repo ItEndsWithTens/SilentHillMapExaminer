@@ -583,7 +583,9 @@ namespace BizHawk.Client.EmuHawk
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(119, 13);
             this.label1.TabIndex = 14;
-            this.label1.Text = "Y down, X north, Z east";
+            this.label1.Text = "X east, Y down, Z north";
+            this.toolTip1.SetToolTip(this.label1, "Cardinal directions relative to the top-down map view of Old Silent\r\nHill. The ar" +
+        "ea maps of indoor levels may not match this.");
             // 
             // LblCameraRoll
             // 
@@ -977,9 +979,11 @@ namespace BizHawk.Client.EmuHawk
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 16);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(105, 13);
+            this.label2.Size = new System.Drawing.Size(107, 13);
             this.label2.TabIndex = 13;
-            this.label2.Text = "Y up, X north, Z east";
+            this.label2.Text = "X east, Y up, Z south";
+            this.toolTip1.SetToolTip(this.label2, "Cardinal directions relative to the top-down map view of Old Silent\r\nHill. The ar" +
+        "ea maps of indoor levels may not match this.");
             // 
             // LblOverlayCamRoll
             // 

@@ -16,9 +16,9 @@
 				BaseAddress = 0x80000000,
 
 				ACameraThingFirst = 0xC3804,
-				CameraMatrixTranslationZ = 0xC3850,
+				CameraMatrixTranslationX = 0xC3850,
 				CameraMatrixTranslationY = 0xC3854,
-				CameraMatrixTranslationX = 0xC3858,
+				CameraMatrixTranslationZ = 0xC3858,
 				Blah1 = 0xC3888, // As the camera's ideal yaw reaches 0, this reaches 1.
 				ACameraThingLast = 0xC3898,
 
@@ -47,13 +47,13 @@
 				// to the stuff surrounding them, but it's plausible. If I can
 				// interpret the whole thing I can determine the FOV, aspect
 				// ratio, the whole deal. Just need to figure it all out.
-				CameraPositionIdealZ = 0xB9D14,
+				CameraPositionIdealX = 0xB9D14,
 				CameraPositionIdealY = 0xB9D18,
-				CameraPositionIdealX = 0xB9D1C,
+				CameraPositionIdealZ = 0xB9D1C,
 
-				CameraPositionActualZ = 0xB9D20,
+				CameraPositionActualX = 0xB9D20,
 				CameraPositionActualY = 0xB9D24,
-				CameraPositionActualX = 0xB9D28,
+				CameraPositionActualZ = 0xB9D28,
 
 				CameraLookAtZ = 0xB9D4C,
 				CameraLookAtY = 0xB9D50,
@@ -71,9 +71,9 @@
 
 				CameraLockedToHead = 0xB9DA8,
 
-				HarryPositionZ = 0xBA024,
+				HarryPositionX = 0xBA024,
 				HarryPositionY = 0xBA028,
-				HarryPositionX = 0xBA02C,
+				HarryPositionZ = 0xBA02C,
 
 				HarryHealth = 0xBA0BC,
 
@@ -85,7 +85,7 @@
 				HarryYaw = 0xBA032, // Mirrored at 0xBA036
 				HarryRoll = 0xBA034,
 
-				HarryPositionZTwo = 0xBA040,
+				HarryPositionXTwo = 0xBA040,
 
 				HarryState = 0xBA150,
 
@@ -101,9 +101,9 @@
 				FramebufferHeight = 0xBCCB2,
 				ProjectionPlaneDistanceCurrent = 0xB9D00,
 
-				HarrySpawnZ = 0xBCDB0,
+				HarrySpawnX = 0xBCDB0,
 				HarrySpawnInfo = 0xBCDB4,
-				HarrySpawnX = 0xBCDB8,
+				HarrySpawnZ = 0xBCDB8,
 
 				HarryModelPointer = 0xBE46C,
 
