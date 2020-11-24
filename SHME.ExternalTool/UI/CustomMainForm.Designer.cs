@@ -917,7 +917,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.NudPoiArraySize.Location = new System.Drawing.Point(265, 17);
             this.NudPoiArraySize.Maximum = new decimal(new int[] {
-            255,
+            1000,
             0,
             0,
             0});
