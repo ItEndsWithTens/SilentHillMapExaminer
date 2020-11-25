@@ -45,11 +45,14 @@ namespace SHME.ExternalTool
 			return converted;
 		}
 
+		// Silent Hill uses a coordinate system where X points east, Y points
+		// down, and Z points north. The overlay camera instead uses a more
+		// traditional Y-up, right-handed system, in which X points east, Y
+		// points up, and Z points south. Conversions are thankfully simple.
 		private static Vector3 YUpRightHandedToSilentHill(Vector3 from)
 		{
 			return new Vector3(from.X, -from.Y, -from.Z);
 		}
-
 		private static Vector3 SilentHillToYUpRightHanded(Vector3 from)
 		{
 			return new Vector3(from.X, -from.Y, -from.Z);

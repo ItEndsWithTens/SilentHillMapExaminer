@@ -8,14 +8,16 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private void BtnModelGetPosition_Click(object sender, EventArgs e)
+		private void BtnModelGetHarryPosition_Click(object sender, EventArgs e)
 		{
-			NudModelX.Text = LblModelX.Text;
-			NudModelY.Text = LblModelY.Text;
-			NudModelZ.Text = LblModelZ.Text;
+			List<float> position = Core.GetPosition(Mem);
+
+			NudModelX.Text = position[0].ToString("N2");
+			NudModelY.Text = position[1].ToString("N2");
+			NudModelZ.Text = position[2].ToString("N2");
 		}
 
-		private void BtnModelSetPosition_Click(object sender, EventArgs e)
+		private void BtnModelSetModelPosition_Click(object sender, EventArgs e)
 		{
 			var aabb = new Aabb(ModelBoxes);
 
@@ -34,6 +36,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void NudModelX_ValueChanged(object sender, EventArgs e)
 		{
+			if (ModelBoxes.Count == 0)
+			{
+				return;
+			}
+
 			var aabb = new Aabb(ModelBoxes);
 
 			var target = new Vector3(
@@ -51,6 +58,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void NudModelY_ValueChanged(object sender, EventArgs e)
 		{
+			if (ModelBoxes.Count == 0)
+			{
+				return;
+			}
+
 			var aabb = new Aabb(ModelBoxes);
 
 			var target = new Vector3(
@@ -68,6 +80,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void NudModelZ_ValueChanged(object sender, EventArgs e)
 		{
+			if (ModelBoxes.Count == 0)
+			{
+				return;
+			}
+
 			var aabb = new Aabb(ModelBoxes);
 
 			var target = new Vector3(

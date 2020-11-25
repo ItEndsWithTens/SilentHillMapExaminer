@@ -44,6 +44,7 @@ namespace BizHawk.Client.EmuHawk
 		public Camera Camera { get; set; } = new Camera() { Fov = 50.0f, CullMode = CullMode.None };
 
 		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
+		public List<Renderable> TestBoxes { get; set; } = new List<Renderable>();
 
 		public Rom Rom { get; set; }
 
@@ -55,6 +56,8 @@ namespace BizHawk.Client.EmuHawk
 			Rom = Core.Rom;
 
 			TrkFov.Value = (int)Camera.Fov;
+
+			CmbRenderMode.SelectedIndex = 0;
 		}
 
 		public bool AskSaveChanges()
@@ -85,7 +88,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					ReportAngles();
 					ReportPosition();
-					if (CbxEnableOverlaySection.Checked)
+					if (CbxEnableOverlayCameraReporting.Checked)
 					{
 						ReportOverlayInfo();
 					}
@@ -103,6 +106,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private List<Point> Points { get; } = new List<Point>();
+		private List<Color> Colors { get; } = new List<Color>();
 		private List<(Polygon, Renderable)> VisiblePolygons { get; } = new List<(Polygon, Renderable)>();
 
 		private void DrawStuff()
@@ -115,36 +119,32 @@ namespace BizHawk.Client.EmuHawk
 			List<float> position = Core.GetPosition(Mem);
 			List<float> angles = Core.GetAngles(Mem);
 
-			Camera.Position = CoordinateConverter.Convert(position.GetRange(3, 3), CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
+			Vector3 convertedPosition = CoordinateConverter.Convert(position.GetRange(3, 3), CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
+			Vector3 convertedAngles = AngleConverter.Convert(angles.GetRange(3, 3), CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 
-			// There are two separate worlds: one, that of the game, in which a
-			// camera is looking at a set of geometry and is set to a yaw of 0
-			// degrees. Another, that of the overlay, where a separate camera is
-			// looking at a different set of geometry, also at a yaw of 0. Said
-			// geometry is in the same position and orientation relative to this
-			// camera that the other geometry is to its camera.
-			//
-			// The big wrinkle is that both cameras disagree on which way yaw 0
-			// points. The first thinks it should be north, toward positive Z,
-			// while the latter uses east, toward positive X.
-			//
-			// Since both cameras share the characteristic of increasing pitch
-			// values tilting the camera up, the pitch value doesn't need to be
-			// modified. Likewise, roll needs no adjustment. But because the two
-			// cameras' yaws are 90 degrees apart, the yaw of the overlay needs
-			// to be adjusted so that the scenes will properly overlap.
-			//
-			// Each camera uses a different world up vector, Silent Hill's 'up'
-			// pointing down and the overlay's pointing up, so yaw rotations go
-			// in opposite directions. Nonetheless, simply subtracting 90 from
-			// the game's yaw easily achieves the alignment of both cameras.
-			Camera.Pitch = angles[3];
-			Camera.Yaw = angles[4] - 90.0f;
-			Camera.Roll = angles[5];
+			if (CbxOverlayCameraMatchGame.Checked)
+			{
+				Camera.Position = convertedPosition;
 
-			Camera.UpdateProjectionMatrix();
+				Camera.Pitch = convertedAngles.X;
+				Camera.Yaw = convertedAngles.Y;
+				Camera.Roll = convertedAngles.Z;
 
-			if (!CbxEnableTriggerDisplay.Checked && !CbxEnableModelDisplay.Checked)
+				Camera.UpdateProjectionMatrix();
+
+				if (CbxEnableOverlayCameraReporting.Checked)
+				{
+					NudOverlayCameraX.Text = $"{Camera.Position.X:N0}";
+					NudOverlayCameraY.Text = $"{Camera.Position.Y:N0}";
+					NudOverlayCameraZ.Text = $"{Camera.Position.Z:N0}";
+
+					NudOverlayCameraPitch.Text = $"{Camera.Pitch:N0}";
+					NudOverlayCameraYaw.Text = $"{Camera.Yaw:N0}";
+					NudOverlayCameraRoll.Text = $"{Camera.Roll:N0}";
+				}
+			}
+
+			if (!CbxEnableOverlay.Checked && !CbxEnableModelDisplay.Checked)
 			{
 				return;
 			}
@@ -164,13 +164,17 @@ namespace BizHawk.Client.EmuHawk
 			Matrix4x4 matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
 
 			VisiblePolygons.Clear();
-			if (CbxEnableTriggerDisplay.Checked)
+			if (CbxEnableOverlay.Checked)
 			{
 				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(Boxes));
 			}
 			if (CbxEnableModelDisplay.Checked)
 			{
 				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(ModelBoxes));
+			}
+			if (CbxOverlayTestBox.Checked)
+			{
+				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(TestBox));
 			}
 
 			foreach ((Polygon p, Renderable r) in VisiblePolygons)
@@ -197,13 +201,31 @@ namespace BizHawk.Client.EmuHawk
 						(int)((-ndc.Y + 1) * 224 + origin.Y));
 
 					Points.Add(screen);
+					Colors.Add(v.Color);
 				}
 
 				int argb = r.Vertices[p.LineLoopIndices[0]].Color.ToArgb();
 
-				Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb));
+				if (CmbRenderMode.SelectedIndex == 0)
+				{
+					Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb));
+				}
+				else if (CmbRenderMode.SelectedIndex == 1)
+				{
+					Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb), Color.FromArgb(argb));
+				}
+				else if (CmbRenderMode.SelectedIndex == 2)
+				{
+					for (int i = 0; i < Points.Count; i++)
+					{
+						Point point = Points[i];
+
+						Gui.DrawEllipse(point.X, point.Y, 4, 4, Colors[i], Colors[i]);
+					}
+				}
 
 				Points.Clear();
+				Colors.Clear();
 			}
 
 			Gui.DrawFinish();

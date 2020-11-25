@@ -124,5 +124,95 @@ namespace SHME.ExternalTool
 
 			return box;
 		}
+
+		public Renderable GenerateRainbowBox()
+		{
+			Color colorMinMinMin = Color.Black;
+			Color colorMaxMinMin = Color.Red;
+			Color colorMaxMinMax = Color.Lime;
+			Color colorMinMinMax = Color.Blue;
+
+			Color colorMaxMaxMin = Color.Cyan;
+			Color colorMinMaxMin = Color.Magenta;
+			Color colorMinMaxMax = Color.Yellow;
+			Color colorMaxMaxMax = Color.White;
+
+			var modelVerts = new List<Vertex>()
+			{
+				// Comments assume Y-up, right-handed coordinates.
+
+				// Negative Y (bottom)
+				new Vertex(Min.X, Min.Y, Min.Z, colorMinMinMin),
+				new Vertex(Max.X, Min.Y, Min.Z, colorMaxMinMin),
+				new Vertex(Max.X, Min.Y, Max.Z, colorMaxMinMax),
+				new Vertex(Min.X, Min.Y, Max.Z, colorMinMinMax),
+
+				// Positive Y (top)
+				new Vertex(Max.X, Max.Y, Min.Z, colorMaxMaxMin),
+				new Vertex(Min.X, Max.Y, Min.Z, colorMinMaxMin),
+				new Vertex(Min.X, Max.Y, Max.Z, colorMinMaxMax),
+				new Vertex(Max.X, Max.Y, Max.Z, colorMaxMaxMax),
+
+				// Negative X (left)
+				new Vertex(Min.X, Min.Y, Min.Z, colorMinMinMin),
+				new Vertex(Min.X, Min.Y, Max.Z, colorMinMinMax),
+				new Vertex(Min.X, Max.Y, Max.Z, colorMinMaxMax),
+				new Vertex(Min.X, Max.Y, Min.Z, colorMinMaxMin),
+
+				// Positive X (right)
+				new Vertex(Max.X, Max.Y, Min.Z, colorMaxMaxMin),
+				new Vertex(Max.X, Max.Y, Max.Z, colorMaxMaxMax),
+				new Vertex(Max.X, Min.Y, Max.Z, colorMaxMinMax),
+				new Vertex(Max.X, Min.Y, Min.Z, colorMaxMinMin),
+
+				// Positive Z (back)
+				new Vertex(Min.X, Min.Y, Max.Z, colorMinMinMax),
+				new Vertex(Max.X, Min.Y, Max.Z, colorMaxMinMax),
+				new Vertex(Max.X, Max.Y, Max.Z, colorMaxMaxMax),
+				new Vertex(Min.X, Max.Y, Max.Z, colorMinMaxMax),
+
+				// Negative Z (front)
+				new Vertex(Max.X, Min.Y, Min.Z, colorMaxMinMin),
+				new Vertex(Min.X, Min.Y, Min.Z, colorMinMinMin),
+				new Vertex(Min.X, Max.Y, Min.Z, colorMinMaxMin),
+				new Vertex(Max.X, Max.Y, Min.Z, colorMaxMaxMin)
+			};
+
+			var box = new Renderable(modelVerts)
+			{
+				CoordinateSpace = CoordinateSpace.Model
+			};
+
+			for (int i = 0; i < 24; i += 4)
+			{
+				var p = new Polygon();
+
+				p.LineLoopIndices.Add(i + 0);
+				p.LineLoopIndices.Add(i + 1);
+				p.LineLoopIndices.Add(i + 2);
+				p.LineLoopIndices.Add(i + 3);
+
+				p.Indices.Add(i + 0);
+				p.Indices.Add(i + 1);
+				p.Indices.Add(i + 2);
+
+				p.Indices.Add(i + 0);
+				p.Indices.Add(i + 2);
+				p.Indices.Add(i + 3);
+
+				Vector3 a = modelVerts[p.Indices[1]] - modelVerts[p.Indices[0]];
+				Vector3 b = modelVerts[p.Indices[2]] - modelVerts[p.Indices[0]];
+				p.Normal = Vector3.Cross(a, b);
+				p.Normal = Vector3.Normalize(p.Normal);
+
+				box.Polygons.Add(p);
+				box.Indices.AddRange(p.Indices);
+				box.LineLoopIndices.AddRange(p.LineLoopIndices);
+			}
+
+			box.Transformability = Transformability.Translate;
+
+			return box;
+		}
 	}
 }

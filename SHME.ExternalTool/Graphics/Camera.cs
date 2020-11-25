@@ -292,13 +292,32 @@ namespace SHME.ExternalTool
 
 		public void Rotate()
 		{
-			// TODO: Hook up Roll. Not critical, but nice to have.
-			float yawRad = (float)MathUtilities.DegreesToRadians(Yaw);
-			float pitchRad = (float)MathUtilities.DegreesToRadians(Pitch);
+			// TODO: Hook up Roll.
+			float yawRad = MathUtilities.DegreesToRadians(Yaw);
+			float pitchRad = MathUtilities.DegreesToRadians(Pitch);
 
 			Front.X = Convert.ToSingle(Math.Cos(pitchRad) * Math.Cos(yawRad));
 			Front.Y = Convert.ToSingle(Math.Sin(pitchRad));
-			Front.Z = Convert.ToSingle(Math.Cos(pitchRad) * Math.Sin(yawRad));
+
+			// There are two contexts of "handedness" at play in this camera's
+			// coordinate system. One is the concern of which way the positive
+			// ends of the axes point, with "left-handed" coordinates having the
+			// positive Z axis point in the direction the camera is looking, and
+			// "right-handed" being the opposite. The other handedness concerns
+			// the direction of rotations, with the "left hand rule" being that
+			// rotations about a given axis go clockwise when looking toward the
+			// negative direction of that axis, while the "right hand rule" has
+			// the rotations go counter-clockwise.
+			//
+			// This camera uses right hand rotation but with a right-handed
+			// coordinate space, which complicates these calculations a little
+			// bit. Pitch is already obeying right-handed rotation, but yaw is
+			// slightly more involved. Grabbing the sine of the yaw value will
+			// achieve the result of rotating in the direction of the positive Z
+			// axis, which for a right-handed coordinate system means rotations
+			// follow the left hand rule, opposite the intended direction. It's
+			// luckily a simple matter of negating the sine value to fix that.
+			Front.Z = Convert.ToSingle(Math.Cos(pitchRad) * -Math.Sin(yawRad));
 
 			Front = Vector3.Normalize(Front);
 
@@ -343,12 +362,16 @@ namespace SHME.ExternalTool
 
 		public void UpdateProjectionMatrix()
 		{
-			ProjectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView((float)MathUtilities.DegreesToRadians(Fov), AspectRatio, NearClip, FarClip);
+			ProjectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(MathUtilities.DegreesToRadians(Fov), AspectRatio, NearClip, FarClip);
 
 			Frustum.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
 		}
 
 		private readonly List<(Polygon, Renderable)> _visiblePolygons = new List<(Polygon, Renderable)>();
+		public List<(Polygon, Renderable)> GetVisiblePolygons(Renderable renderable)
+		{
+			return GetVisiblePolygons(new List<Renderable>() { renderable });
+		}
 		public List<(Polygon, Renderable)> GetVisiblePolygons(IEnumerable<Renderable> renderables)
 		{
 			_visiblePolygons.Clear();

@@ -32,7 +32,6 @@ namespace BizHawk.Client.EmuHawk
 			Square =   0b10000000_00000000
 		}
 
-
 		private void ReportAngles()
 		{
 			List<float> angles = Core.GetAngles(Mem);
@@ -138,7 +137,7 @@ namespace BizHawk.Client.EmuHawk
 			TbxHarryRoll.Text = LblHarryRoll.Text;
 		}
 
-		private void BtnReadPois_Click(object sender, System.EventArgs e)
+		private void BtnReadPois_Click(object sender, EventArgs e)
 		{
 			Boxes.Clear();
 
@@ -192,7 +191,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CbxEnableTriggerDisplay_CheckedChanged(object sender, EventArgs e)
 		{
-			if (!CbxEnableTriggerDisplay.Checked)
+			if (!CbxEnableOverlay.Checked)
 			{
 				Gui.DrawNew("emu");
 				Gui.ClearGraphics();
@@ -210,6 +209,85 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Mem?.WriteByte(Rom.Addresses.MainRam.IsCameraUnlocked, 0x1);
 			}
+		}
+
+		private void CbxOverlayCameraMatchGame_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if (!CbxOverlayCameraMatchGame.Checked)
+			{
+				Camera.Position = new Vector3(
+					(float)NudOverlayCameraX.Value,
+					(float)NudOverlayCameraY.Value,
+					(float)NudOverlayCameraZ.Value);
+
+				Camera.Pitch = (float)NudOverlayCameraPitch.Value;
+				Camera.Yaw = (float)NudOverlayCameraYaw.Value;
+				Camera.Roll = (float)NudOverlayCameraRoll.Value;
+			}
+		}
+
+		private void NudOverlayCameraPitch_ValueChanged(object sender, EventArgs e)
+		{
+			Camera.Pitch = (float)NudOverlayCameraPitch.Value;
+		}
+
+		private void NudOverlayCameraYaw_ValueChanged(object sender, EventArgs e)
+		{
+			Camera.Yaw = (float)NudOverlayCameraYaw.Value;
+		}
+
+		private void NudOverlayCameraRoll_ValueChanged(object sender, EventArgs e)
+		{
+			Camera.Roll = (float)NudOverlayCameraRoll.Value;
+		}
+
+		private void NudOverlayCameraX_ValueChanged(object sender, EventArgs e)
+		{
+			Camera.Position = new Vector3(
+				(float)NudOverlayCameraX.Value,
+				Camera.Position.Y,
+				Camera.Position.Z);
+		}
+
+		private void NudOverlayCameraY_ValueChanged(object sender, EventArgs e)
+		{
+			Camera.Position = new Vector3(
+				Camera.Position.X,
+				(float)NudOverlayCameraY.Value,
+				Camera.Position.Z);
+		}
+
+		private void NudOverlayCameraZ_ValueChanged(object sender, EventArgs e)
+		{
+			Camera.Position = new Vector3(
+				Camera.Position.X,
+				Camera.Position.Y,
+				(float)NudOverlayCameraZ.Value);
+		}
+
+		private Renderable TestBox { get; } = new BoxGenerator(1.0f, Color.White).GenerateRainbowBox().ToWorld();
+		private void NudOverlayTestBoxX_ValueChanged(object sender, EventArgs e)
+		{
+			TestBox.Position = new Vector3(
+				(float)NudOverlayTestBoxX.Value,
+				TestBox.Position.Y,
+				TestBox.Position.Z);
+		}
+
+		private void NudOverlayTestBoxY_ValueChanged(object sender, EventArgs e)
+		{
+			TestBox.Position = new Vector3(
+				TestBox.Position.X,
+				-(float)NudOverlayTestBoxY.Value, // Convert from SH coords
+				TestBox.Position.Z);
+		}
+
+		private void NudOverlayTestBoxZ_ValueChanged(object sender, EventArgs e)
+		{
+			TestBox.Position = new Vector3(
+				TestBox.Position.X,
+				TestBox.Position.Y,
+				-(float)NudOverlayTestBoxZ.Value); // Convert from SH coords
 		}
 	}
 }
