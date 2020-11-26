@@ -296,10 +296,7 @@ namespace SHME.ExternalTool
 			float yawRad = MathUtilities.DegreesToRadians(Yaw);
 			float pitchRad = MathUtilities.DegreesToRadians(Pitch);
 
-			Front.X = Convert.ToSingle(Math.Cos(pitchRad) * Math.Cos(yawRad));
-			Front.Y = Convert.ToSingle(Math.Sin(pitchRad));
-
-			// There are two contexts of "handedness" at play in this camera's
+			// There are two contexts of "handedness" at play in any camera's
 			// coordinate system. One is the concern of which way the positive
 			// ends of the axes point, with "left-handed" coordinates having the
 			// positive Z axis point in the direction the camera is looking, and
@@ -309,14 +306,29 @@ namespace SHME.ExternalTool
 			// negative direction of that axis, while the "right hand rule" has
 			// the rotations go counter-clockwise.
 			//
-			// This camera uses right hand rotation but with a right-handed
-			// coordinate space, which complicates these calculations a little
-			// bit. Pitch is already obeying right-handed rotation, but yaw is
-			// slightly more involved. Grabbing the sine of the yaw value will
-			// achieve the result of rotating in the direction of the positive Z
-			// axis, which for a right-handed coordinate system means rotations
-			// follow the left hand rule, opposite the intended direction. It's
-			// luckily a simple matter of negating the sine value to fix that.
+			// This camera uses right-handed coordinate space, but aims to also
+			// use right hand rotation, which complicates these calculations a
+			// little bit.
+			//
+			// When looking "down" at a given plane, that is to say looking in
+			// the negative direction of the perpendicular axis, one axis runs
+			// horizontally relative to the view and one runs vertically.
+			//
+			// Rotating a unit vector within that plane requires modifying two
+			// of its components, one per axis. For the vertical axis, taking
+			// the sine of the rotation value for the axis of rotation will in
+			// fact give you a counter-clockwise turn, but only assuming the
+			// positive ends of the horizontal and vertical axes point right
+			// and up, respectively.
+			//
+			// This plugin's coordinate system being right-handed, pitch is not
+			// an issue, and simply taking the sine of the pitch value gives the
+			// new Y component of the front vector. Yaw is a different story,
+			// thanks to the direction of the positive Z axis, and negating the
+			// sine result becomes necessary to achieve the right hand rule and
+			// produce counter-clockwise rotation.
+			Front.X = Convert.ToSingle(Math.Cos(pitchRad) * Math.Cos(yawRad));
+			Front.Y = Convert.ToSingle(Math.Sin(pitchRad));
 			Front.Z = Convert.ToSingle(Math.Cos(pitchRad) * -Math.Sin(yawRad));
 
 			Front = Vector3.Normalize(Front);
