@@ -292,9 +292,9 @@ namespace SHME.ExternalTool
 
 		public void Rotate()
 		{
-			// TODO: Hook up Roll.
 			float yawRad = MathUtilities.DegreesToRadians(Yaw);
 			float pitchRad = MathUtilities.DegreesToRadians(Pitch);
+			float rollRad = MathUtilities.DegreesToRadians(Roll);
 
 			// There are two contexts of "handedness" at play in any camera's
 			// coordinate system. One is the concern of which way the positive
@@ -318,8 +318,8 @@ namespace SHME.ExternalTool
 			// of its components, one per axis. For the vertical axis, taking
 			// the sine of the rotation value for the axis of rotation will in
 			// fact give you a counter-clockwise turn, but only assuming the
-			// positive ends of the horizontal and vertical axes point right
-			// and up, respectively.
+			// positive ends of the horizontal and vertical axes point right and
+			// up, respectively.
 			//
 			// This plugin's coordinate system being right-handed, pitch is not
 			// an issue, and simply taking the sine of the pitch value gives the
@@ -334,6 +334,9 @@ namespace SHME.ExternalTool
 			Front = Vector3.Normalize(Front);
 
 			Right = Vector3.Normalize(Vector3.Cross(Front, WorldUp));
+			Matrix4x4 matrixRoll = Matrix4x4.CreateFromAxisAngle(Front, rollRad);
+			Right = Vector3.Transform(Right, matrixRoll);
+
 			Up = Vector3.Normalize(Vector3.Cross(Right, Front));
 
 			ViewMatrix = Matrix4x4.CreateLookAt(Position, Position + Front, Up);
