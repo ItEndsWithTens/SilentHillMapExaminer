@@ -1,10 +1,10 @@
 ﻿using BizHawk.Client.Common;
 using SHME.ExternalTool;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using System.Windows.Forms;
-using static SHME.ExternalTool.Core;
 
 namespace BizHawk.Client.EmuHawk
 {
@@ -130,6 +130,8 @@ namespace BizHawk.Client.EmuHawk
 				Camera.Yaw = convertedAngles.Y;
 				Camera.Roll = convertedAngles.Z;
 
+				Camera.Fov = CalculateGameFov();
+
 				Camera.UpdateProjectionMatrix();
 
 				if (CbxEnableOverlayCameraReporting.Checked)
@@ -162,6 +164,15 @@ namespace BizHawk.Client.EmuHawk
 			// shaders is reversed in C#, to account for System.Numeric's row
 			// major matrix layout.
 			Matrix4x4 matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
+
+			if (CmbRenderMode.SelectedIndex == 1)
+			{
+				Camera.CullMode = CullMode.Back;
+			}
+			else
+			{
+				Camera.CullMode = CullMode.None;
+			}
 
 			VisiblePolygons.Clear();
 			if (CbxEnableOverlay.Checked)
@@ -229,6 +240,29 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			Gui.DrawFinish();
+		}
+
+		private float CalculateGameFov()
+		{
+			// The idea that the render height and projection plane distance are
+			// meant to be used this way to determine a vertical FOV is hardly
+			// set in stone, but it seems about right when eyeballing things.
+			uint distance = Mem.ReadU16(Rom.Addresses.MainRam.ProjectionPlaneDistanceCurrent);
+			uint height = Mem.ReadU16(Rom.Addresses.MainRam.FramebufferHeight);
+
+			return CalculateFov(distance, height);
+		}
+		private float CalculateFov(uint distance, uint height)
+		{
+			float opposite = height / 2.0f;
+
+			float hSquared = (float)(Math.Pow(distance, 2.0f) + Math.Pow(opposite, 2.0f));
+
+			float h = (float)Math.Sqrt(hSquared);
+
+			float halfAngle = (float)Math.Asin(opposite / h);
+
+			return MathUtilities.RadiansToDegrees(halfAngle * 2.0f);
 		}
 	}
 }

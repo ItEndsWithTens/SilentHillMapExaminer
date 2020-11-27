@@ -185,7 +185,20 @@ namespace BizHawk.Client.EmuHawk
 
 		private void TrkFov_Scroll(object sender, EventArgs e)
 		{
-			Camera.Fov = TrkFov.Value;
+			uint height = Mem.ReadU16(Rom.Addresses.MainRam.FramebufferHeight);
+
+			float opposite = height / 2.0f;
+
+			float halfAngle = TrkFov.Value / 2.0f;
+
+			float h = (float)(opposite / Math.Sin(MathUtilities.DegreesToRadians(halfAngle)));
+
+			float adjacentSquared = (float)(Math.Pow(h, 2.0f) - Math.Pow(opposite, 2.0f));
+
+			uint distance = (uint)Math.Sqrt(adjacentSquared);
+
+			Mem.WriteU16(Rom.Addresses.MainRam.ProjectionPlaneDistanceCurrent, distance);
+			
 			LblFov.Text = TrkFov.Value.ToString();
 		}
 
