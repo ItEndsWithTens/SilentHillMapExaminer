@@ -25,7 +25,14 @@ namespace SHME.ExternalTool
 		public double MaxAngleH { get; set; } = 180.0;
 		public double MaxAngleV { get; set; } = 180.0;
 
-		public Aabb Bounds { get; private set; } = new Aabb();
+		public Plane Left { get; private set; }
+		public Plane Right { get; private set; }
+		public Plane Top { get; private set; }
+		public Plane Bottom { get; private set; }
+		public Plane Near { get; private set; }
+		public Plane Far { get; private set; }
+
+		public List<Plane> Planes { get; } = new List<Plane>();
 
 		public Frustum()
 		{
@@ -42,11 +49,31 @@ namespace SHME.ExternalTool
 
 		public bool Contains(Aabb aabb)
 		{
-			bool outsideX = aabb.Max.X < Bounds.Min.X || aabb.Min.X > Bounds.Max.X;
-			bool outsideY = aabb.Max.Y < Bounds.Min.Y || aabb.Min.Y > Bounds.Max.Y;
-			bool outsideZ = aabb.Max.Z < Bounds.Min.Z || aabb.Min.Z > Bounds.Max.Z;
+			bool contains = true;
 
-			return !(outsideX || outsideY || outsideZ);
+			foreach (Plane p in Planes)
+			{
+				bool allPointsInFront = true;
+
+				foreach (Vector3 point in aabb.Points)
+				{
+					float dot = Vector3.Dot(p.Normal, point - p.Points[0]);
+					
+					if (dot <= 0.0)
+					{
+						allPointsInFront = false;
+						break;
+					}
+				}
+
+				if (allPointsInFront)
+				{
+					contains = false;
+					break;
+				}
+			}
+
+			return contains;
 		}
 
 		public void Update(Vector3 position, Vector3 front, Vector3 right, Vector3 up, float fov, float aspect, float near, float far)
@@ -76,15 +103,20 @@ namespace SHME.ExternalTool
 			FarBottomLeft = (farTarget - farEdgeHorizontal) - farEdgeVertical;
 			FarBottomRight = (farTarget + farEdgeHorizontal) - farEdgeVertical;
 
-			Bounds = new Aabb(
-				NearTopLeft,
-				NearTopRight,
-				NearBottomLeft,
-				NearBottomRight,
-				FarTopLeft,
-				FarTopRight,
-				FarBottomLeft,
-				FarBottomRight);
+			Left = new Plane(NearTopLeft, FarTopLeft, FarBottomLeft, Winding.Ccw);
+			Right = new Plane(NearTopRight, NearBottomRight, FarBottomRight, Winding.Ccw);
+			Top = new Plane(NearTopLeft, NearTopRight, FarTopRight, Winding.Ccw);
+			Bottom = new Plane(NearBottomRight, NearBottomLeft, FarBottomLeft, Winding.Ccw);
+			Near = new Plane(NearTopLeft, NearBottomLeft, NearBottomRight, Winding.Ccw);
+			Far = new Plane(FarBottomRight, FarBottomLeft, FarTopLeft, Winding.Ccw);
+
+			Planes.Clear();
+			Planes.Add(Left);
+			Planes.Add(Right);
+			Planes.Add(Top);
+			Planes.Add(Bottom);
+			Planes.Add(Near);
+			Planes.Add(Far);
 
 			MaxAngleH = GetRemainingAngle((fov * aspect) / 2.0f);
 			MaxAngleV = GetRemainingAngle(fov / 2.0f);

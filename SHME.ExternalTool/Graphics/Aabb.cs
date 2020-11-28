@@ -16,7 +16,7 @@ namespace SHME.ExternalTool
 			set
 			{
 				min = value;
-				Center = Min + ((Max - Min) / 2.0f);
+				Update();
 			}
 		}
 
@@ -27,11 +27,13 @@ namespace SHME.ExternalTool
 			set
 			{
 				max = value;
-				Center = Min + ((Max - Min) / 2.0f);
+				Update();
 			}
 		}
 
 		public Vector3 Center { get; private set; }
+
+		public List<Vector3> Points { get; } = new List<Vector3>();
 
 		public Aabb()
 		{
@@ -118,6 +120,21 @@ namespace SHME.ExternalTool
 
 			Min = newMin;
 			Max = newMax;
+		}
+
+		private void Update()
+		{
+			Center = Min + ((Max - Min) / 2.0f);
+
+			Points.Clear();
+			Points.Add(Min);
+			Points.Add(new Vector3(Max.X, Min.Y, Min.Z));
+			Points.Add(new Vector3(Max.X, Min.Y, Max.Z));
+			Points.Add(new Vector3(Min.X, Min.Y, Max.Z));
+			Points.Add(new Vector3(Max.X, Max.Y, Min.Z));
+			Points.Add(new Vector3(Min.X, Max.Y, Min.Z));
+			Points.Add(new Vector3(Min.X, Max.Y, Max.Z));
+			Points.Add(Max);
 		}
 
 		/// <summary>
