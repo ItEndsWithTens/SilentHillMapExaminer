@@ -154,8 +154,8 @@ namespace BizHawk.Client.EmuHawk
 			Gui.DrawNew("emu"); // The name 'emu' is apparently required.
 
 			var origin = new Point(84, 16);
-			int w = 640;
 			int h = 448;
+			int w = (int)(h * Camera.AspectRatio);
 			Gui.DrawBox(origin.X, origin.Y, w + (origin.X - 1), h + (origin.Y - 1));
 			Gui.DrawLine(origin.X, origin.Y + h / 2, origin.X + w - 1, origin.Y + h / 2);
 			Gui.DrawLine(origin.X + w / 2, origin.Y, origin.X + w / 2, origin.Y + h - 1);
@@ -208,8 +208,8 @@ namespace BizHawk.Client.EmuHawk
 					// the axis as increasing downwards. Flipping the sign of
 					// the Y component puts the point where it should be.
 					var screen = new Point(
-						(int)((ndc.X + 1) * 320 + origin.X),
-						(int)((-ndc.Y + 1) * 224 + origin.Y));
+						(int)((ndc.X + 1) * (w / 2) + origin.X),
+						(int)((-ndc.Y + 1) * (h / 2) + origin.Y));
 
 					Points.Add(screen);
 					Colors.Add(v.Color);

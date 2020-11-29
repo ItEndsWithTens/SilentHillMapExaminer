@@ -22,9 +22,6 @@ namespace SHME.ExternalTool
 		public Vector3 FarBottomLeft { get; set; } = new Vector3();
 		public Vector3 FarBottomRight { get; set; } = new Vector3();
 
-		public double MaxAngleH { get; set; } = 180.0;
-		public double MaxAngleV { get; set; } = 180.0;
-
 		public Plane Left { get; private set; }
 		public Plane Right { get; private set; }
 		public Plane Top { get; private set; }
@@ -56,10 +53,8 @@ namespace SHME.ExternalTool
 				bool allPointsInFront = true;
 
 				foreach (Vector3 point in aabb.Points)
-				{
-					float dot = Vector3.Dot(p.Normal, point - p.Points[0]);
-					
-					if (dot <= 0.0)
+				{	
+					if (Vector3.Dot(p.Normal, point - p.Points[0]) <= 0.0f)
 					{
 						allPointsInFront = false;
 						break;
@@ -81,11 +76,11 @@ namespace SHME.ExternalTool
 			Vector3 nearTarget = position + (front * near);
 			Vector3 farTarget = position + (front * far);
 
-			float nearHalfWidth = GetHalf(fov * aspect, near);
 			float nearHalfHeight = GetHalf(fov, near);
+			float nearHalfWidth = nearHalfHeight * aspect;
 
-			float farHalfWidth = GetHalf(fov * aspect, far);
 			float farHalfHeight = GetHalf(fov, far);
+			float farHalfWidth = farHalfHeight * aspect;
 
 			Vector3 nearEdgeHorizontal = right * nearHalfWidth;
 			Vector3 nearEdgeVertical = up * nearHalfHeight;
@@ -117,26 +112,15 @@ namespace SHME.ExternalTool
 			Planes.Add(Bottom);
 			Planes.Add(Near);
 			Planes.Add(Far);
-
-			MaxAngleH = GetRemainingAngle((fov * aspect) / 2.0f);
-			MaxAngleV = GetRemainingAngle(fov / 2.0f);
 		}
 
 		private static float GetHalf(float fov, float distance)
 		{
 			float half = fov / 2.0f;
 
-			// The angle where the view direction hits a clip plane is 90
-			// degrees, and a triangle's angles add up to 180.
-			float remaining = GetRemainingAngle(half);
+			float hyp = (float)(distance / Math.Cos(MathUtilities.DegreesToRadians(half)));
 
-			float factor = distance / (float)Math.Sin(MathUtilities.DegreesToRadians(remaining));
-			return (float)Math.Sin(MathUtilities.DegreesToRadians(half)) * factor;
-		}
-
-		private static float GetRemainingAngle(float angle)
-		{
-			return 90.0f - angle;
+			return (float)Math.Sqrt(Math.Pow(hyp, 2.0) - Math.Pow(distance, 2.0));
 		}
 	}
 
@@ -197,6 +181,7 @@ namespace SHME.ExternalTool
 			set
 			{
 				_nearClip = value;
+
 				UpdateProjectionMatrix();
 			}
 		}
@@ -207,6 +192,7 @@ namespace SHME.ExternalTool
 			set
 			{
 				_farClip = value;
+
 				UpdateProjectionMatrix();
 			}
 		}
