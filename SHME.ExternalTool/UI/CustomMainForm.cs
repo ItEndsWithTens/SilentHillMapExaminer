@@ -153,9 +153,31 @@ namespace BizHawk.Client.EmuHawk
 
 			Gui.DrawNew("emu"); // The name 'emu' is apparently required.
 
-			var origin = new Point(84, 16);
-			int h = 448;
-			int w = (int)(h * Camera.AspectRatio);
+			int w = 320;
+			int h = 224;
+			var origin = new Point(0, 0);
+			if (Emu.BufferWidth() == 350)
+			{
+				w = 320;
+				origin.X = 17;
+			}
+			else if(Emu.BufferWidth() == 800)
+			{
+				w = 640;
+				origin.X = 84;
+			}
+
+			if (Emu.BufferHeight() == 240)
+			{
+				h = 224;
+				origin.Y = 8;
+			}
+			else if (Emu.BufferHeight() == 480)
+			{
+				h = 448;
+				origin.Y = 16;
+			}
+
 			Gui.DrawBox(origin.X, origin.Y, w + (origin.X - 1), h + (origin.Y - 1));
 			Gui.DrawLine(origin.X, origin.Y + h / 2, origin.X + w - 1, origin.Y + h / 2);
 			Gui.DrawLine(origin.X + w / 2, origin.Y, origin.X + w / 2, origin.Y + h - 1);
