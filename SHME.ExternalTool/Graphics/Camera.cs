@@ -22,12 +22,12 @@ namespace SHME.ExternalTool
 		public Vector3 FarBottomLeft { get; set; } = new Vector3();
 		public Vector3 FarBottomRight { get; set; } = new Vector3();
 
-		public Plane Left { get; private set; }
-		public Plane Right { get; private set; }
-		public Plane Top { get; private set; }
-		public Plane Bottom { get; private set; }
-		public Plane Near { get; private set; }
-		public Plane Far { get; private set; }
+		public Plane Left { get; private set; } = new Plane();
+		public Plane Right { get; private set; } = new Plane();
+		public Plane Top { get; private set; } = new Plane();
+		public Plane Bottom { get; private set; } = new Plane();
+		public Plane Near { get; private set; } = new Plane();
+		public Plane Far { get; private set; } = new Plane();
 
 		public List<Plane> Planes { get; } = new List<Plane>();
 
@@ -292,8 +292,6 @@ namespace SHME.ExternalTool
 			Roll = 0.0f;
 
 			UpdateProjectionMatrix();
-
-			Frustum = new Frustum(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
 		}
 
 		public bool CanSee(Renderable r)

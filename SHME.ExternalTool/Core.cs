@@ -6,7 +6,7 @@ namespace SHME.ExternalTool
 {
 	public class Core
 	{
-		public Rom? Rom { get; set; }
+		public Rom Rom { get; set; } = new USRetail();
 
 		public static uint DegreesToGameUnits(float degrees)
 		{
@@ -22,13 +22,13 @@ namespace SHME.ExternalTool
 
 		// Silent Hill appears to use the Q(20.12) fixed point number format,
 		// at least for Harry's position.
-		public static int FloatToQ(float number)
+		public static int FloatToQ(float f)
 		{
-			return FloatToQ(number, 12);
+			return FloatToQ(f, 12);
 		}
-		public static int FloatToQ(float number, int fractionalBits)
+		public static int FloatToQ(float f, int fractionalBits)
 		{
-			return (int)(number * Math.Pow(2.0, fractionalBits));
+			return (int)(f * Math.Pow(2.0, fractionalBits));
 		}
 		public static float QToFloat(int q)
 		{

@@ -232,7 +232,7 @@ namespace SHME.ExternalTool
 			return Equals(obj as Aabb);
 		}
 
-		public bool Equals(Aabb other)
+		public bool Equals(Aabb? other)
 		{
 			return other != null && Min.Equals(other.Min) && Max.Equals(other.Max);
 		}
@@ -246,12 +246,12 @@ namespace SHME.ExternalTool
 			return hashCode;
 		}
 
-		public static bool operator ==(Aabb lhs, Aabb rhs)
+		public static bool operator ==(Aabb? lhs, Aabb? rhs)
 		{
-			return EqualityComparer<Aabb>.Default.Equals(lhs, rhs);
+			return EqualityComparer<Aabb?>.Default.Equals(lhs, rhs);
 		}
 
-		public static bool operator !=(Aabb lhs, Aabb rhs)
+		public static bool operator !=(Aabb? lhs, Aabb? rhs)
 		{
 			return !(lhs == rhs);
 		}

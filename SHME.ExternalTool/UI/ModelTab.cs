@@ -10,7 +10,7 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private void BtnModelGetHarryPosition_Click(object sender, EventArgs e)
 		{
-			List<float> position = Core.GetPosition(Mem);
+			List<float> position = Core.GetPosition(Mem!);
 
 			NudModelX.Text = position[0].ToString("N2");
 			NudModelY.Text = position[1].ToString("N2");
@@ -100,16 +100,16 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private Ilm Model { get; set; }
+		private Ilm? Model { get; set; }
 		private List<Renderable> ModelBoxes { get; } = new List<Renderable>();
 
 		private void BtnReadHarryModel_Click(object sender, EventArgs e)
 		{
-			int harryModelAddressRaw = Mem.ReadS32(Rom.Addresses.MainRam.HarryModelPointer);
+			int harryModelAddressRaw = Mem!.ReadS32(Rom.Addresses.MainRam.HarryModelPointer);
 
 			int harryModelAddress = harryModelAddressRaw - (int)Rom.Addresses.MainRam.BaseAddress;
 
-			List<byte> headerBytes = Mem.ReadByteRange(harryModelAddress, IlmHeader.Length);
+			List<byte> headerBytes = Mem!.ReadByteRange(harryModelAddress, IlmHeader.Length);
 
 			IlmHeader header;
 			try
@@ -122,7 +122,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			// Can't get an actual stream from ApiHawk, but this'll do nicely.
-			List<byte> remaining = Mem.ReadByteRange(harryModelAddress, (int)(Mem.GetMemoryDomainSize() - harryModelAddress));
+			List<byte> remaining = Mem!.ReadByteRange(harryModelAddress, (int)(Mem!.GetMemoryDomainSize() - harryModelAddress));
 
 			Model = new Ilm(header, remaining, TrkModelScale.Value);
 
@@ -157,9 +157,9 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (!CbxEnableModelDisplay.Checked)
 			{
-				Gui.DrawNew("emu");
-				Gui.ClearGraphics();
-				Gui.DrawFinish();
+				Gui!.DrawNew("emu");
+				Gui!.ClearGraphics();
+				Gui!.DrawFinish();
 			}
 		}
 

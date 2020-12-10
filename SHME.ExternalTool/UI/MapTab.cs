@@ -9,7 +9,7 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private void BtnGrabMapGraphic_Click(object sender, EventArgs e)
 		{
-			List<byte> headerBytes = Mem.ReadByteRange(Rom.Addresses.MainRam.MapTim, TimHeader.Length);
+			List<byte> headerBytes = Mem!.ReadByteRange(Rom.Addresses.MainRam.MapTim, TimHeader.Length);
 
 			TimHeader header;
 			try
@@ -23,7 +23,7 @@ namespace BizHawk.Client.EmuHawk
 
 			int timLength = header.ImageHeaderOfs + header.ImageBlockLength;
 
-			List<byte> timBytes = Mem.ReadByteRange(Rom.Addresses.MainRam.MapTim, timLength);
+			List<byte> timBytes = Mem!.ReadByteRange(Rom.Addresses.MainRam.MapTim, timLength);
 			var mapGraphic = new Tim(header, timBytes.ToArray());
 
 			PbxMapGraphic.Image = mapGraphic.Bitmap;

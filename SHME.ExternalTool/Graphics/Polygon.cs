@@ -21,7 +21,7 @@ namespace SHME.ExternalTool
 		/// The name of the texture meant to be applied to this polygon; if said
 		/// texture isn't loaded, a placeholder will be used for CurrentTexture.
 		/// </summary>
-		public string IntendedTextureName { get; set; }
+		public string IntendedTextureName { get; set; } = "";
 
 		/// <summary>
 		/// The texture currently applied to this polygon. If the texture named

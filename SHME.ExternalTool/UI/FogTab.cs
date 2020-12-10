@@ -118,16 +118,16 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnCustomFogCurrent_Click(object sender, EventArgs e)
 		{
-			NudFogR.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorR);
-			NudFogG.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorG);
-			NudFogB.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorB);
+			NudFogR.Value = Mem!.ReadByte(Rom.Addresses.MainRam.FogColorR);
+			NudFogG.Value = Mem!.ReadByte(Rom.Addresses.MainRam.FogColorG);
+			NudFogB.Value = Mem!.ReadByte(Rom.Addresses.MainRam.FogColorB);
 		}
 
 		private void BtnCustomWorldTintCurrent_Click(object sender, EventArgs e)
 		{
-			NudWorldTintR.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintR);
-			NudWorldTintG.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintG);
-			NudWorldTintB.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintB);
+			NudWorldTintR.Value = Mem!.ReadByte(Rom.Addresses.MainRam.WorldTintR);
+			NudWorldTintG.Value = Mem!.ReadByte(Rom.Addresses.MainRam.WorldTintG);
+			NudWorldTintB.Value = Mem!.ReadByte(Rom.Addresses.MainRam.WorldTintB);
 		}
 	}
 }

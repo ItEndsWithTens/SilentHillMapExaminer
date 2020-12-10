@@ -6,6 +6,11 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private void ReportStats()
 		{
+			if (Mem == null)
+			{
+				return;
+			}
+
 			LblHarryHealth.Text = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryHealth)).ToString();
 
 			float walkedRaw = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DistanceWalked));

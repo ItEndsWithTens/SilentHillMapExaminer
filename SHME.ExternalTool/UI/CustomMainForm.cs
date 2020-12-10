@@ -46,14 +46,11 @@ namespace BizHawk.Client.EmuHawk
 		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
 		public List<Renderable> TestBoxes { get; set; } = new List<Renderable>();
 
-		public Rom Rom { get; set; }
+		public Rom Rom => Core.Rom;
 
 		public CustomMainForm()
 		{
 			InitializeComponent();
-
-			Core.Rom = new USRetail();
-			Rom = Core.Rom;
 
 			TrkFov.Value = (int)Camera.Fov;
 
@@ -111,7 +108,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void DrawStuff()
 		{
-			if (Gui == null || Mem == null)
+			if (Gui == null || Mem == null || Emu == null)
 			{
 				return;
 			}
@@ -266,6 +263,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private float CalculateGameFov()
 		{
+			if (Mem == null)
+			{
+				return 0.0f;
+			}
+
 			// The idea that the render height and projection plane distance are
 			// meant to be used this way to determine a vertical FOV is hardly
 			// set in stone, but it seems about right when eyeballing things.

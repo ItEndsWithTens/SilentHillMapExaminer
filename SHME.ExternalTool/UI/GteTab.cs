@@ -7,6 +7,11 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private void GetRegisterTest()
 		{
+			if (Emulation == null)
+			{
+				return;
+			}
+
 			ulong? blar = Emulation.GetRegister("r17");
 
 
@@ -17,6 +22,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportMisc()
 		{
+			if (Mem == null)
+			{
+				return;
+			}
+
 			LblGteX.Text = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputX)).ToString();
 			LblGteY.Text = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputY)).ToString();
 			LblGteZ.Text = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.GteTranslationInputZ)).ToString();

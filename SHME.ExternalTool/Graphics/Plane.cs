@@ -15,6 +15,9 @@ namespace SHME.ExternalTool
 
 		public readonly Winding Winding;
 
+		public Plane() : this(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 0.0f, 1.0f), new Vector3(1.0f, 0.0f, 0.0f), Winding.Ccw)
+		{
+		}
 		public Plane(Vector3 _a, Vector3 _b, Vector3 _c, Winding _winding) : this(new Vertex(_a), new Vertex(_b), new Vertex(_c), _winding)
 		{
 		}
