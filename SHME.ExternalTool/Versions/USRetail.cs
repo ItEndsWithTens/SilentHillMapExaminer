@@ -55,9 +55,9 @@
 				CameraPositionActualY = 0xB9D24,
 				CameraPositionActualZ = 0xB9D28,
 
-				CameraLookAtZ = 0xB9D4C,
+				CameraLookAtX = 0xB9D4C,
 				CameraLookAtY = 0xB9D50,
-				CameraLookAtX = 0xB9D54,
+				CameraLookAtZ = 0xB9D54,
 
 				CameraActualPitch = 0xB9D5E,
 				CameraActualYaw = 0xB9D60, // No.
@@ -131,27 +131,27 @@
 
 				MapHeader = 0xC9578,
 				MapChunkset = 0xC9578 + 0x4,
-				Pointer2 = 0xC9578 + 0x8, // Freeze on increment (code?)
-				Value1 = 0xC9578 + 0xC, // No freeze on increment (data?)
-				Pointer3 = 0xC9578 + 0x10, // Freeze
+				Pointer2 = 0xC9578 + 0x8,
+				Value1 = 0xC9578 + 0xC,
+				Pointer3 = 0xC9578 + 0x10,
 				Pointer4 = 0xC9578 + 0x14,
-				Value2 = 0xC9578 + 0x18, // No freeze
-				Pointer5 = 0xC9578 + 0x1C, // No freeze
-				PointsOfInterest = 0xC9578 + 0x20,
-				Pointer7 = 0xC9578 + 0x24, // No freeze
-				Pointer8 = 0xC9578 + 0x28, // Freeze
-				Pointer9 = 0xC9578 + 0x2C, // No freeze
-				Pointer10 = 0xC9578 + 0x30, // No freeze
-				Pointer11 = 0xC9578 + 0x34, // No freeze
-				Pointer12 = 0xC9578 + 0x38, // No freeze
-				Pointer13 = 0xC9578 + 0x3C, // No freeze
-				Pointer14 = 0xC9578 + 0x40, // No freeze
-				Pointer15 = 0xC9578 + 0x44, // Freeze
+				Value2 = 0xC9578 + 0x18,
+				Pointer5 = 0xC9578 + 0x1C,
+				PointerToArrayOfPointsOfInterest = 0xC9578 + 0x20,
+				PointerToArrayOfSomeSortOfFunctionPointers = 0xC9578 + 0x24,
+				Pointer8 = 0xC9578 + 0x28,
+				Pointer9 = 0xC9578 + 0x2C,
+				Pointer10 = 0xC9578 + 0x30,
+				Pointer11 = 0xC9578 + 0x34,
+				Pointer12 = 0xC9578 + 0x38,
+				Pointer13 = 0xC9578 + 0x3C,
+				Pointer14 = 0xC9578 + 0x40,
+				Pointer15 = 0xC9578 + 0x44,
 				Value3 = 0xC9578 + 0x48,
-				Pointer16 = 0xC9578 + 0x4C, // No freeze
-				Pointer17 = 0xC9578 + 0x50, // No freeze
+				Pointer16 = 0xC9578 + 0x4C,
+				Pointer17 = 0xC9578 + 0x50,
 				Value4 = 0xC9578 + 0x54,
-				Pointer18 = 0xC9578 + 0x58, // Freeze
+				Pointer18 = 0xC9578 + 0x58,
 				Value5 = 0xC9578 + 0x5C,
 
 				MapTim = 0x1CF600

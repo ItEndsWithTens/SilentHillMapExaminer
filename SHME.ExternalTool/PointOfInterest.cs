@@ -34,10 +34,10 @@ namespace SHME.ExternalTool
 			uint raw2 = (info & 0b00000000_11111111_11110000_00000000) >> 12;
 			uint raw3 = (info & 0b11111111_00000000_00000000_00000000) >> 24;
 
-			Thing2 = (byte)raw0;
+			Thing0 = (byte)raw0;
 			Thing1 = (byte)raw1;
 			Yaw = GameUnitsToDegrees(raw2);
-			Thing0 = (byte)raw3;
+			Thing2 = (byte)raw3;
 
 			Z = z;
 		}

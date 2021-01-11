@@ -104,8 +104,6 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayCameraRoll = new System.Windows.Forms.NumericUpDown();
             this.NudOverlayCameraYaw = new System.Windows.Forms.NumericUpDown();
             this.NudOverlayCameraPitch = new System.Windows.Forms.NumericUpDown();
-            this.NudPoiArraySize = new System.Windows.Forms.NumericUpDown();
-            this.label21 = new System.Windows.Forms.Label();
             this.BtnReadPois = new System.Windows.Forms.Button();
             this.CbxEnableOverlay = new System.Windows.Forms.CheckBox();
             this.CbxEnableOverlayCameraReporting = new System.Windows.Forms.CheckBox();
@@ -183,6 +181,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFogColor = new System.Windows.Forms.Button();
             this.CbxFog = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.LblPoiCount = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -200,7 +199,6 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraRoll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraYaw)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraPitch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudPoiArraySize)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.TbpMap.SuspendLayout();
             this.TbpModel.SuspendLayout();
@@ -929,6 +927,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxOverlay
             // 
+            this.GbxOverlay.Controls.Add(this.LblPoiCount);
             this.GbxOverlay.Controls.Add(this.CmbRenderMode);
             this.GbxOverlay.Controls.Add(this.label28);
             this.GbxOverlay.Controls.Add(this.label29);
@@ -950,8 +949,6 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.Controls.Add(this.NudOverlayCameraRoll);
             this.GbxOverlay.Controls.Add(this.NudOverlayCameraYaw);
             this.GbxOverlay.Controls.Add(this.NudOverlayCameraPitch);
-            this.GbxOverlay.Controls.Add(this.NudPoiArraySize);
-            this.GbxOverlay.Controls.Add(this.label21);
             this.GbxOverlay.Controls.Add(this.BtnReadPois);
             this.GbxOverlay.Controls.Add(this.CbxEnableOverlay);
             this.GbxOverlay.Controls.Add(this.CbxEnableOverlayCameraReporting);
@@ -1254,37 +1251,9 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayCameraPitch.TabIndex = 33;
             this.NudOverlayCameraPitch.ValueChanged += new System.EventHandler(this.NudOverlayCameraPitch_ValueChanged);
             // 
-            // NudPoiArraySize
-            // 
-            this.NudPoiArraySize.Location = new System.Drawing.Point(87, 290);
-            this.NudPoiArraySize.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.NudPoiArraySize.Name = "NudPoiArraySize";
-            this.NudPoiArraySize.Size = new System.Drawing.Size(37, 20);
-            this.NudPoiArraySize.TabIndex = 32;
-            this.toolTip1.SetToolTip(this.NudPoiArraySize, "The game\'s first map has 71 points of interest; change this as necessary for othe" +
-        "r levels");
-            this.NudPoiArraySize.Value = new decimal(new int[] {
-            71,
-            0,
-            0,
-            0});
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(6, 294);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(75, 13);
-            this.label21.TabIndex = 31;
-            this.label21.Text = "POI array size:";
-            // 
             // BtnReadPois
             // 
-            this.BtnReadPois.Location = new System.Drawing.Point(130, 289);
+            this.BtnReadPois.Location = new System.Drawing.Point(9, 289);
             this.BtnReadPois.Name = "BtnReadPois";
             this.BtnReadPois.Size = new System.Drawing.Size(75, 23);
             this.BtnReadPois.TabIndex = 16;
@@ -2172,6 +2141,15 @@ namespace BizHawk.Client.EmuHawk
             this.CbxFog.Text = "Fog";
             this.CbxFog.UseVisualStyleBackColor = true;
             // 
+            // LblPoiCount
+            // 
+            this.LblPoiCount.AutoSize = true;
+            this.LblPoiCount.Location = new System.Drawing.Point(90, 294);
+            this.LblPoiCount.Name = "LblPoiCount";
+            this.LblPoiCount.Size = new System.Drawing.Size(13, 13);
+            this.LblPoiCount.TabIndex = 54;
+            this.LblPoiCount.Text = "0";
+            // 
             // CustomMainForm
             // 
             this.ClientSize = new System.Drawing.Size(784, 776);
@@ -2198,7 +2176,6 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraRoll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraYaw)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraPitch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudPoiArraySize)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.TbpMap.ResumeLayout(false);
@@ -2359,8 +2336,6 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblSpawnThing2;
 		private Label label20;
 		private Button BtnReadPois;
-		private Label label21;
-		private NumericUpDown NudPoiArraySize;
 		private ToolTip toolTip1;
 		private System.ComponentModel.IContainer components;
 		private Button BtnReadHarryModel;
@@ -2391,5 +2366,6 @@ namespace BizHawk.Client.EmuHawk
 		private ComboBox CmbRenderMode;
 		private Label LblFov;
 		private TrackBar TrkFov;
+		private Label LblPoiCount;
 	}
 }

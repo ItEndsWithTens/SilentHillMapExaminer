@@ -117,8 +117,8 @@
 		public long Pointer4 { get; set; }
 		public long Value2 { get; set; }
 		public long Pointer5 { get; set; }
-		public long PointsOfInterest { get; set; }
-		public long Pointer7 { get; set; }
+		public long PointerToArrayOfPointsOfInterest { get; set; }
+		public long PointerToArrayOfSomeSortOfFunctionPointers { get; set; }
 		public long Pointer8 { get; set; }
 		public long Pointer9 { get; set; }
 		public long Pointer10 { get; set; }

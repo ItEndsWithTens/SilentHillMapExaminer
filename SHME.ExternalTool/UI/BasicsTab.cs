@@ -158,12 +158,21 @@ namespace BizHawk.Client.EmuHawk
 
 			var generator = new BoxGenerator(1.0f, Color.White);
 
-			int poiSize = 12;
-			for (int i = 0; i < NudPoiArraySize.Value; i++)
+			int poiArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
+			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+
+			int functionPointersArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfSomeSortOfFunctionPointers);
+			functionPointersArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+
+			int poiArrayBytes = functionPointersArrayAddress - poiArrayAddress;
+			int poiBytes = 12;
+			int poiCount = poiArrayBytes / poiBytes;
+
+			LblPoiCount.Text = poiCount.ToString();
+
+			for (int i = 0; i < poiCount; i++)
 			{
-				int poiArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointsOfInterest);
-				poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
-				int ofs = poiArrayAddress + (poiSize * i);
+				int ofs = poiArrayAddress + (poiBytes * i);
 
 				float x = QToFloat(Mem!.ReadS32(ofs + 0));
 				float z = QToFloat(Mem!.ReadS32(ofs + 8));
