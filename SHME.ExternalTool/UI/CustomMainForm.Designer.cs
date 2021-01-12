@@ -83,6 +83,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.LblPoiCount = new System.Windows.Forms.Label();
             this.CmbRenderMode = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
@@ -180,8 +181,11 @@ namespace BizHawk.Client.EmuHawk
             this.label5 = new System.Windows.Forms.Label();
             this.BtnFogColor = new System.Windows.Forms.Button();
             this.CbxFog = new System.Windows.Forms.CheckBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.LblStringCount = new System.Windows.Forms.Label();
+            this.BtnReadStrings = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.LblPoiCount = new System.Windows.Forms.Label();
+            this.RtbStrings = new System.Windows.Forms.RichTextBox();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -214,6 +218,7 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudFogB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFogG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).BeginInit();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -725,6 +730,7 @@ namespace BizHawk.Client.EmuHawk
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.TbpInfo);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -965,6 +971,15 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabIndex = 15;
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
+            // 
+            // LblPoiCount
+            // 
+            this.LblPoiCount.AutoSize = true;
+            this.LblPoiCount.Location = new System.Drawing.Point(90, 294);
+            this.LblPoiCount.Name = "LblPoiCount";
+            this.LblPoiCount.Size = new System.Drawing.Size(13, 13);
+            this.LblPoiCount.TabIndex = 54;
+            this.LblPoiCount.Text = "0";
             // 
             // CmbRenderMode
             // 
@@ -2141,14 +2156,45 @@ namespace BizHawk.Client.EmuHawk
             this.CbxFog.Text = "Fog";
             this.CbxFog.UseVisualStyleBackColor = true;
             // 
-            // LblPoiCount
+            // tabPage4
             // 
-            this.LblPoiCount.AutoSize = true;
-            this.LblPoiCount.Location = new System.Drawing.Point(90, 294);
-            this.LblPoiCount.Name = "LblPoiCount";
-            this.LblPoiCount.Size = new System.Drawing.Size(13, 13);
-            this.LblPoiCount.TabIndex = 54;
-            this.LblPoiCount.Text = "0";
+            this.tabPage4.Controls.Add(this.RtbStrings);
+            this.tabPage4.Controls.Add(this.LblStringCount);
+            this.tabPage4.Controls.Add(this.BtnReadStrings);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(752, 726);
+            this.tabPage4.TabIndex = 7;
+            this.tabPage4.Text = "Strings";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // LblStringCount
+            // 
+            this.LblStringCount.AutoSize = true;
+            this.LblStringCount.Location = new System.Drawing.Point(87, 11);
+            this.LblStringCount.Name = "LblStringCount";
+            this.LblStringCount.Size = new System.Drawing.Size(13, 13);
+            this.LblStringCount.TabIndex = 55;
+            this.LblStringCount.Text = "0";
+            // 
+            // BtnReadStrings
+            // 
+            this.BtnReadStrings.Location = new System.Drawing.Point(6, 6);
+            this.BtnReadStrings.Name = "BtnReadStrings";
+            this.BtnReadStrings.Size = new System.Drawing.Size(75, 23);
+            this.BtnReadStrings.TabIndex = 0;
+            this.BtnReadStrings.Text = "Read strings";
+            this.BtnReadStrings.UseVisualStyleBackColor = true;
+            this.BtnReadStrings.Click += new System.EventHandler(this.BtnReadStrings_Click);
+            // 
+            // RtbStrings
+            // 
+            this.RtbStrings.Location = new System.Drawing.Point(6, 35);
+            this.RtbStrings.Name = "RtbStrings";
+            this.RtbStrings.Size = new System.Drawing.Size(740, 685);
+            this.RtbStrings.TabIndex = 56;
+            this.RtbStrings.Text = "";
             // 
             // CustomMainForm
             // 
@@ -2196,6 +2242,8 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudFogB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFogG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -2367,5 +2415,9 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblFov;
 		private TrackBar TrkFov;
 		private Label LblPoiCount;
+		private TabPage tabPage4;
+		private Button BtnReadStrings;
+		private Label LblStringCount;
+		private RichTextBox RtbStrings;
 	}
 }

@@ -119,10 +119,10 @@
 		public long Pointer5 { get; set; }
 		public long PointerToArrayOfPointsOfInterest { get; set; }
 		public long PointerToArrayOfSomeSortOfFunctionPointers { get; set; }
-		public long Pointer8 { get; set; }
+		public long PointerToEndOfArrayOfPointersToStrings { get; set; }
 		public long Pointer9 { get; set; }
 		public long Pointer10 { get; set; }
-		public long Pointer11 { get; set; }
+		public long PointerToArrayOfPointersToStrings { get; set; }
 		public long Pointer12 { get; set; }
 		public long Pointer13 { get; set; }
 		public long Pointer14 { get; set; }
