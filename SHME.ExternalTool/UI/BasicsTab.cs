@@ -120,14 +120,14 @@ namespace BizHawk.Client.EmuHawk
 			uint spawnInfo = Mem.ReadU32(Rom.Addresses.MainRam.HarrySpawnInfo);
 			int spawnZ = Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnZ);
 
-			var sf = new PointOfInterest(spawnX, spawnInfo, spawnZ);
+			var last = new PointOfInterest(spawnX, spawnInfo, spawnZ);
 
-			LblSpawnX.Text = $"{sf.X:N2}";
-			LblSpawnThing0.Text = $"0x{sf.Thing0:X2}";
-			LblSpawnYaw.Text = $"{sf.Yaw:N2}";
-			LblSpawnThing1.Text = $"0x{sf.Thing1:X2}";
-			LblSpawnThing2.Text = $"0x{sf.Thing2:X2}";
-			LblSpawnZ.Text = $"{sf.Z:N2}";
+			LblSpawnX.Text = $"{last.X:N2}";
+			LblSpawnThing0.Text = $"0x{last.Thing0:X2}";
+			LblSpawnThing1.Text = $"0x{last.Thing1:X2}";
+			LblSpawnYaw.Text = $"{last.Yaw:N2}";
+			LblSpawnThing2.Text = $"0x{last.Thing2:X2}";
+			LblSpawnZ.Text = $"{last.Z:N2}";
 		}
 
 		private void BtnGetPosition_Click(object sender, EventArgs e)
@@ -168,19 +168,28 @@ namespace BizHawk.Client.EmuHawk
 			int poiBytes = 12;
 			int poiCount = poiArrayBytes / poiBytes;
 
-			LblPoiCount.Text = poiCount.ToString();
+			LblPoiCount1.Text = poiCount.ToString();
+			LblPoiCount2.Text = poiCount.ToString();
+
+			LbxPois.Items.Clear();
 
 			for (int i = 0; i < poiCount; i++)
 			{
 				int ofs = poiArrayAddress + (poiBytes * i);
 
 				float x = QToFloat(Mem!.ReadS32(ofs + 0));
+				uint info = Mem!.ReadU32(ofs + 4);
 				float z = QToFloat(Mem!.ReadS32(ofs + 8));
 
+				var poi = new PointOfInterest(x, info, z);
+
 				Renderable box = generator.Generate().ToWorld();
-				box.Position = new Vector3(x, 0.0f, -z);
+				box.Position = new Vector3(poi.X, 0.0f, -poi.Z);
 
 				Boxes.Add(box);
+
+				Pois.Add(poi, box);
+				LbxPois.Items.Add(poi);
 			}
 		}
 

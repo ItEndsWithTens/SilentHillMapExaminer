@@ -41,5 +41,10 @@ namespace SHME.ExternalTool
 
 			Z = z;
 		}
+
+		public override string ToString()
+		{
+			return $"{X}, {Z}";
+		}
 	}
 }

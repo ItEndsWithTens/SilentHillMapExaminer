@@ -231,10 +231,25 @@ namespace BizHawk.Client.EmuHawk
 						(int)((-ndc.Y + 1) * (h / 2) + origin.Y));
 
 					Points.Add(screen);
-					Colors.Add(v.Color);
+					if (r.Tint != null)
+					{
+						Colors.Add((Color)r.Tint);
+					}
+					else
+					{
+						Colors.Add(v.Color);
+					}
 				}
 
-				int argb = r.Vertices[p.LineLoopIndices[0]].Color.ToArgb();
+				int argb;
+				if (r.Tint != null)
+				{
+					argb = ((Color)r.Tint).ToArgb();
+				}
+				else
+				{
+					argb = r.Vertices[p.LineLoopIndices[0]].Color.ToArgb();
+				}
 
 				if (CmbRenderMode.SelectedIndex == 0)
 				{

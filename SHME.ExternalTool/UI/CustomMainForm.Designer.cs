@@ -83,7 +83,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
-            this.LblPoiCount = new System.Windows.Forms.Label();
+            this.LblPoiCount1 = new System.Windows.Forms.Label();
             this.CmbRenderMode = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
@@ -182,10 +182,26 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFogColor = new System.Windows.Forms.Button();
             this.CbxFog = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.RtbStrings = new System.Windows.Forms.RichTextBox();
             this.LblStringCount = new System.Windows.Forms.Label();
             this.BtnReadStrings = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.LblPoiCount2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.LbxPois = new System.Windows.Forms.ListBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.RtbStrings = new System.Windows.Forms.RichTextBox();
+            this.LblSelectedPoiThing2 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.LblSelectedPoiThing1 = new System.Windows.Forms.Label();
+            this.LblSelectedPoiYaw = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.LblSelectedPoiZ = new System.Windows.Forms.Label();
+            this.LblSelectedPoiX = new System.Windows.Forms.Label();
+            this.LblSelectedPoiThing0 = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -219,6 +235,7 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudFogG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -396,7 +413,7 @@ namespace BizHawk.Client.EmuHawk
             // LblSpawnThing1
             // 
             this.LblSpawnThing1.AutoSize = true;
-            this.LblSpawnThing1.Location = new System.Drawing.Point(71, 369);
+            this.LblSpawnThing1.Location = new System.Drawing.Point(70, 345);
             this.LblSpawnThing1.Name = "LblSpawnThing1";
             this.LblSpawnThing1.Size = new System.Drawing.Size(48, 13);
             this.LblSpawnThing1.TabIndex = 27;
@@ -405,7 +422,7 @@ namespace BizHawk.Client.EmuHawk
             // LblSpawnYaw
             // 
             this.LblSpawnYaw.AutoSize = true;
-            this.LblSpawnYaw.Location = new System.Drawing.Point(71, 346);
+            this.LblSpawnYaw.Location = new System.Drawing.Point(71, 369);
             this.LblSpawnYaw.Name = "LblSpawnYaw";
             this.LblSpawnYaw.Size = new System.Drawing.Size(38, 13);
             this.LblSpawnYaw.TabIndex = 26;
@@ -414,7 +431,7 @@ namespace BizHawk.Client.EmuHawk
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(22, 369);
+            this.label17.Location = new System.Drawing.Point(22, 345);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(43, 13);
             this.label17.TabIndex = 25;
@@ -423,7 +440,7 @@ namespace BizHawk.Client.EmuHawk
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(22, 346);
+            this.label16.Location = new System.Drawing.Point(22, 369);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(31, 13);
             this.label16.TabIndex = 24;
@@ -724,6 +741,7 @@ namespace BizHawk.Client.EmuHawk
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.TbpBasics);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.TbpMap);
             this.tabControl1.Controls.Add(this.TbpModel);
@@ -933,7 +951,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxOverlay
             // 
-            this.GbxOverlay.Controls.Add(this.LblPoiCount);
+            this.GbxOverlay.Controls.Add(this.LblPoiCount1);
             this.GbxOverlay.Controls.Add(this.CmbRenderMode);
             this.GbxOverlay.Controls.Add(this.label28);
             this.GbxOverlay.Controls.Add(this.label29);
@@ -972,14 +990,14 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
             // 
-            // LblPoiCount
+            // LblPoiCount1
             // 
-            this.LblPoiCount.AutoSize = true;
-            this.LblPoiCount.Location = new System.Drawing.Point(90, 294);
-            this.LblPoiCount.Name = "LblPoiCount";
-            this.LblPoiCount.Size = new System.Drawing.Size(13, 13);
-            this.LblPoiCount.TabIndex = 54;
-            this.LblPoiCount.Text = "0";
+            this.LblPoiCount1.AutoSize = true;
+            this.LblPoiCount1.Location = new System.Drawing.Point(90, 294);
+            this.LblPoiCount1.Name = "LblPoiCount1";
+            this.LblPoiCount1.Size = new System.Drawing.Size(13, 13);
+            this.LblPoiCount1.TabIndex = 54;
+            this.LblPoiCount1.Text = "0";
             // 
             // CmbRenderMode
             // 
@@ -2169,6 +2187,14 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage4.Text = "Strings";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // RtbStrings
+            // 
+            this.RtbStrings.Location = new System.Drawing.Point(6, 35);
+            this.RtbStrings.Name = "RtbStrings";
+            this.RtbStrings.Size = new System.Drawing.Size(740, 685);
+            this.RtbStrings.TabIndex = 56;
+            this.RtbStrings.Text = "";
+            // 
             // LblStringCount
             // 
             this.LblStringCount.AutoSize = true;
@@ -2188,13 +2214,167 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadStrings.UseVisualStyleBackColor = true;
             this.BtnReadStrings.Click += new System.EventHandler(this.BtnReadStrings_Click);
             // 
-            // RtbStrings
+            // tabPage5
             // 
-            this.RtbStrings.Location = new System.Drawing.Point(6, 35);
-            this.RtbStrings.Name = "RtbStrings";
-            this.RtbStrings.Size = new System.Drawing.Size(740, 685);
-            this.RtbStrings.TabIndex = 56;
-            this.RtbStrings.Text = "";
+            this.tabPage5.Controls.Add(this.LblSelectedPoiThing2);
+            this.tabPage5.Controls.Add(this.label31);
+            this.tabPage5.Controls.Add(this.LblSelectedPoiThing1);
+            this.tabPage5.Controls.Add(this.LblSelectedPoiYaw);
+            this.tabPage5.Controls.Add(this.label34);
+            this.tabPage5.Controls.Add(this.label35);
+            this.tabPage5.Controls.Add(this.label36);
+            this.tabPage5.Controls.Add(this.label37);
+            this.tabPage5.Controls.Add(this.label38);
+            this.tabPage5.Controls.Add(this.LblSelectedPoiZ);
+            this.tabPage5.Controls.Add(this.LblSelectedPoiX);
+            this.tabPage5.Controls.Add(this.LblSelectedPoiThing0);
+            this.tabPage5.Controls.Add(this.LblPoiCount2);
+            this.tabPage5.Controls.Add(this.button1);
+            this.tabPage5.Controls.Add(this.LbxPois);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(752, 726);
+            this.tabPage5.TabIndex = 8;
+            this.tabPage5.Text = "POIs";
+            this.toolTip1.SetToolTip(this.tabPage5, "Points of interest");
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // LblPoiCount2
+            // 
+            this.LblPoiCount2.AutoSize = true;
+            this.LblPoiCount2.Location = new System.Drawing.Point(87, 11);
+            this.LblPoiCount2.Name = "LblPoiCount2";
+            this.LblPoiCount2.Size = new System.Drawing.Size(13, 13);
+            this.LblPoiCount2.TabIndex = 56;
+            this.LblPoiCount2.Text = "0";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 55;
+            this.button1.Text = "Read POIs";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.BtnReadPois_Click);
+            // 
+            // LbxPois
+            // 
+            this.LbxPois.FormattingEnabled = true;
+            this.LbxPois.Location = new System.Drawing.Point(6, 32);
+            this.LbxPois.Name = "LbxPois";
+            this.LbxPois.Size = new System.Drawing.Size(184, 680);
+            this.LbxPois.TabIndex = 0;
+            this.LbxPois.SelectedIndexChanged += new System.EventHandler(this.LbxPois_SelectedIndexChanged);
+            // 
+            // LblSelectedPoiThing2
+            // 
+            this.LblSelectedPoiThing2.AutoSize = true;
+            this.LblSelectedPoiThing2.Location = new System.Drawing.Point(261, 161);
+            this.LblSelectedPoiThing2.Name = "LblSelectedPoiThing2";
+            this.LblSelectedPoiThing2.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedPoiThing2.TabIndex = 68;
+            this.LblSelectedPoiThing2.Text = "<thing2>";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(212, 161);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(43, 13);
+            this.label31.TabIndex = 67;
+            this.label31.Text = "Thing2:";
+            // 
+            // LblSelectedPoiThing1
+            // 
+            this.LblSelectedPoiThing1.AutoSize = true;
+            this.LblSelectedPoiThing1.Location = new System.Drawing.Point(260, 113);
+            this.LblSelectedPoiThing1.Name = "LblSelectedPoiThing1";
+            this.LblSelectedPoiThing1.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedPoiThing1.TabIndex = 66;
+            this.LblSelectedPoiThing1.Text = "<thing1>";
+            // 
+            // LblSelectedPoiYaw
+            // 
+            this.LblSelectedPoiYaw.AutoSize = true;
+            this.LblSelectedPoiYaw.Location = new System.Drawing.Point(261, 137);
+            this.LblSelectedPoiYaw.Name = "LblSelectedPoiYaw";
+            this.LblSelectedPoiYaw.Size = new System.Drawing.Size(38, 13);
+            this.LblSelectedPoiYaw.TabIndex = 65;
+            this.LblSelectedPoiYaw.Text = "<yaw>";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(212, 113);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(43, 13);
+            this.label34.TabIndex = 64;
+            this.label34.Text = "Thing1:";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(212, 137);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(31, 13);
+            this.label35.TabIndex = 63;
+            this.label35.Text = "Yaw:";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(212, 89);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(43, 13);
+            this.label36.TabIndex = 62;
+            this.label36.Text = "Thing0:";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(196, 66);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(98, 13);
+            this.label37.TabIndex = 61;
+            this.label37.Text = "Selected point info:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(196, 32);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(95, 13);
+            this.label38.TabIndex = 57;
+            this.label38.Text = "Selected point XZ:";
+            // 
+            // LblSelectedPoiZ
+            // 
+            this.LblSelectedPoiZ.AutoSize = true;
+            this.LblSelectedPoiZ.Location = new System.Drawing.Point(343, 32);
+            this.LblSelectedPoiZ.Name = "LblSelectedPoiZ";
+            this.LblSelectedPoiZ.Size = new System.Drawing.Size(40, 13);
+            this.LblSelectedPoiZ.TabIndex = 60;
+            this.LblSelectedPoiZ.Text = "678.90";
+            // 
+            // LblSelectedPoiX
+            // 
+            this.LblSelectedPoiX.AutoSize = true;
+            this.LblSelectedPoiX.Location = new System.Drawing.Point(297, 32);
+            this.LblSelectedPoiX.Name = "LblSelectedPoiX";
+            this.LblSelectedPoiX.Size = new System.Drawing.Size(40, 13);
+            this.LblSelectedPoiX.TabIndex = 58;
+            this.LblSelectedPoiX.Text = "123.45";
+            // 
+            // LblSelectedPoiThing0
+            // 
+            this.LblSelectedPoiThing0.AutoSize = true;
+            this.LblSelectedPoiThing0.Location = new System.Drawing.Point(261, 89);
+            this.LblSelectedPoiThing0.Name = "LblSelectedPoiThing0";
+            this.LblSelectedPoiThing0.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedPoiThing0.TabIndex = 59;
+            this.LblSelectedPoiThing0.Text = "<thing0>";
             // 
             // CustomMainForm
             // 
@@ -2244,6 +2424,8 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -2414,10 +2596,26 @@ namespace BizHawk.Client.EmuHawk
 		private ComboBox CmbRenderMode;
 		private Label LblFov;
 		private TrackBar TrkFov;
-		private Label LblPoiCount;
+		private Label LblPoiCount1;
 		private TabPage tabPage4;
 		private Button BtnReadStrings;
 		private Label LblStringCount;
 		private RichTextBox RtbStrings;
+		private TabPage tabPage5;
+		private ListBox LbxPois;
+		private Label LblPoiCount2;
+		private Button button1;
+		private Label LblSelectedPoiThing2;
+		private Label label31;
+		private Label LblSelectedPoiThing1;
+		private Label LblSelectedPoiYaw;
+		private Label label34;
+		private Label label35;
+		private Label label36;
+		private Label label37;
+		private Label label38;
+		private Label LblSelectedPoiZ;
+		private Label LblSelectedPoiX;
+		private Label LblSelectedPoiThing0;
 	}
 }
