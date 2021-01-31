@@ -1,4 +1,5 @@
-﻿using SHME.ExternalTool;
+﻿using BizHawk.Client.Common;
+using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -239,9 +240,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (!CbxEnableOverlay.Checked)
 			{
-				Gui!.DrawNew("emu");
-				Gui!.ClearGraphics();
-				Gui!.DrawFinish();
+				Gui!.WithSurface(DisplaySurfaceID.EmuCore, () => Gui!.ClearGraphics());
 			}
 		}
 
