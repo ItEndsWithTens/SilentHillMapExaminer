@@ -123,7 +123,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			// Can't get an actual stream from ApiHawk, but this'll do nicely.
-			List<byte> remaining = Mem!.ReadByteRange(harryModelAddress, (int)(Mem!.GetMemoryDomainSize() - harryModelAddress));
+			List<byte> remaining = Mem!.ReadByteRange(harryModelAddress, (int)(Mem!.GetMemoryDomainSize("MainRAM") - harryModelAddress));
 
 			Model = new Ilm(header, remaining, TrkModelScale.Value);
 
