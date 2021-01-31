@@ -68,7 +68,7 @@ namespace BizHawk.Client.EmuHawk
 
 		public void UpdateValues(ToolFormUpdateType type)
 		{
-			if (Emu == null || Mem == null || GI?.GetRomName() == "Null")
+			if (Mem == null || Gui == null || Emu == null || GI?.GetRomName() == "Null")
 			{
 				return;
 			}
@@ -90,7 +90,7 @@ namespace BizHawk.Client.EmuHawk
 						ReportOverlayInfo();
 					}
 					//ReportMisc();
-					DrawStuff();
+					Gui.WithSurface(DisplaySurfaceID.EmuCore, DrawStuff);
 					if (CbxStats.Checked)
 					{
 						ReportStats();
@@ -108,7 +108,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void DrawStuff()
 		{
-			if (Gui == null || Mem == null || Emu == null)
+			if (Mem == null || Gui == null || Emu == null)
 			{
 				return;
 			}
@@ -147,8 +147,6 @@ namespace BizHawk.Client.EmuHawk
 			{
 				return;
 			}
-
-			Gui.DrawNew("emu"); // The name 'emu' is apparently required.
 
 			int w = 320;
 			int h = 224;
@@ -272,8 +270,6 @@ namespace BizHawk.Client.EmuHawk
 				Points.Clear();
 				Colors.Clear();
 			}
-
-			Gui.DrawFinish();
 		}
 
 		private float CalculateGameFov()
