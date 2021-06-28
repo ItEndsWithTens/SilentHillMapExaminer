@@ -1,0 +1,11 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--Leaving a blank Directory.Build.props in the lib folder is a simple,
+  stopgap way of preventing SHME's build properties from possibly affecting
+  third party dependency builds in the folders below. MSBuild searches for
+  and stops at the first such file it finds moving upwards through the tree
+  from the project file currently being compiled, so unless this file were to
+  explicitly import other Directory.Build.props files from levels above it,
+  they won't have any impact on projects further down.-->
+
+</Project>
