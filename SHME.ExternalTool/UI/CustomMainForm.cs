@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
 {
@@ -13,7 +12,7 @@ namespace BizHawk.Client.EmuHawk
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
 	[ExternalToolApplicability.RomWhitelist(CoreSystem.Playstation, USRetailConstants.HashBizHawk)]
 
-	public partial class CustomMainForm : Form, IExternalToolForm
+	public partial class CustomMainForm : ToolFormBase, IExternalToolForm
 	{
 		[RequiredApi]
 		public IMemoryApi? Mem { get; set; }
@@ -39,6 +38,8 @@ namespace BizHawk.Client.EmuHawk
 		public const string ToolName = "Silent Hill Map Examiner";
 		public const string ToolDescription = "";
 
+		protected override string WindowTitleStatic => ToolName;
+
 		public Core Core { get; } = new Core();
 
 		public Camera Camera { get; set; } = new Camera() { Fov = 50.0f, CullMode = CullMode.None };
@@ -57,16 +58,7 @@ namespace BizHawk.Client.EmuHawk
 			CmbRenderMode.SelectedIndex = 0;
 		}
 
-		public bool AskSaveChanges()
-		{
-			return true;
-		}
-
-		public void Restart()
-		{
-		}
-
-		public void UpdateValues(ToolFormUpdateType type)
+		public override void UpdateValues(ToolFormUpdateType type)
 		{
 			if (Mem == null || Gui == null || Emu == null || GI?.GetRomName() == "Null")
 			{

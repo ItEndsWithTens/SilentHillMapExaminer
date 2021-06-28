@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <LangVersion>8.0</LangVersion>
@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="all" />
-    
+
     <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)dll/BizHawk.Client.Common.dll" />
     <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(BizHawkOutputDir)EmuHawk.exe" />
     <Reference Include="BizHawk.Common" HintPath="$(BizHawkOutputDir)dll/BizHawk.Common.dll" />
+    <Reference Include="BizHawk.Emulation.Common" HintPath="$(BizHawkOutputDir)dll/BizHawk.Emulation.Common.dll" />
+    <Reference Include="BizHawk.Emulation.Cores" HintPath="$(BizHawkOutputDir)dll/BizHawk.Emulation.Cores.dll" />
+    <Reference Include="BizHawk.Emulation.DiscSystem" HintPath="$(BizHawkOutputDir)dll/BizHawk.Emulation.DiscSystem.dll" />
     <Reference Include="BizHawk.WinForms.Controls" HintPath="$(BizHawkOutputDir)dll/BizHawk.WinForms.Controls.dll" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
