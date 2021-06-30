@@ -10,6 +10,14 @@ namespace BizHawk.Client.EmuHawk
 	{
 		public Dictionary<PointOfInterest, Renderable?> Pois { get; set; } = new Dictionary<PointOfInterest, Renderable?>();
 
+		private void LbxPois_Format(object sender, ListControlConvertEventArgs e)
+		{
+			// The index here could be padded with leading zeroes in principle,
+			// but the result is a bit visually cluttered, and it becomes harder
+			// to tell at a glance where you are in the list.
+			e.Value = $"{LbxPois.Items.IndexOf(e.ListItem)}:    {e.ListItem}";
+		}
+
 		// TODO: Implement ray shooting of some sort for selection by clicking
 		// in the viewport, in addition to this primitive ListBox approach.
 		private void LbxPois_SelectedIndexChanged(object sender, EventArgs e)
