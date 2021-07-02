@@ -116,18 +116,45 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamPositionY = new System.Windows.Forms.Label();
             this.LblOverlayCamPositionX = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.LblSelectedTriggerAddress = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing5 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing4 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing3 = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerPoiIndex = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerStyle = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing2 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing1 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing0 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.LbxPoiAssociatedTriggers = new System.Windows.Forms.ListBox();
+            this.LblSelectedPoiAddress = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.LblSelectedPoiThing0 = new System.Windows.Forms.Label();
+            this.LblSelectedPoiX = new System.Windows.Forms.Label();
+            this.LblSelectedPoiZ = new System.Windows.Forms.Label();
             this.LblSelectedPoiThing2 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
             this.LblSelectedPoiThing1 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
             this.LblSelectedPoiYaw = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.LblSelectedPoiZ = new System.Windows.Forms.Label();
-            this.LblSelectedPoiX = new System.Windows.Forms.Label();
-            this.LblSelectedPoiThing0 = new System.Windows.Forms.Label();
+            this.LblTriggerCount = new System.Windows.Forms.Label();
+            this.BtnReadTriggers = new System.Windows.Forms.Button();
+            this.LbxTriggers = new System.Windows.Forms.ListBox();
             this.LblPoiCount2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.LbxPois = new System.Windows.Forms.ListBox();
@@ -220,6 +247,8 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraYaw)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraPitch)).BeginInit();
             this.tabPage5.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.TbpMap.SuspendLayout();
             this.TbpModel.SuspendLayout();
@@ -1388,18 +1417,11 @@ namespace BizHawk.Client.EmuHawk
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.LblSelectedPoiThing2);
-            this.tabPage5.Controls.Add(this.label31);
-            this.tabPage5.Controls.Add(this.LblSelectedPoiThing1);
-            this.tabPage5.Controls.Add(this.LblSelectedPoiYaw);
-            this.tabPage5.Controls.Add(this.label34);
-            this.tabPage5.Controls.Add(this.label35);
-            this.tabPage5.Controls.Add(this.label36);
-            this.tabPage5.Controls.Add(this.label37);
-            this.tabPage5.Controls.Add(this.label38);
-            this.tabPage5.Controls.Add(this.LblSelectedPoiZ);
-            this.tabPage5.Controls.Add(this.LblSelectedPoiX);
-            this.tabPage5.Controls.Add(this.LblSelectedPoiThing0);
+            this.tabPage5.Controls.Add(this.groupBox2);
+            this.tabPage5.Controls.Add(this.groupBox1);
+            this.tabPage5.Controls.Add(this.LblTriggerCount);
+            this.tabPage5.Controls.Add(this.BtnReadTriggers);
+            this.tabPage5.Controls.Add(this.LbxTriggers);
             this.tabPage5.Controls.Add(this.LblPoiCount2);
             this.tabPage5.Controls.Add(this.button1);
             this.tabPage5.Controls.Add(this.LbxPois);
@@ -1412,37 +1434,353 @@ namespace BizHawk.Client.EmuHawk
             this.toolTip1.SetToolTip(this.tabPage5, "Points of interest");
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.LblSelectedTriggerAddress);
+            this.groupBox2.Controls.Add(this.LblSelectedTriggerThing5);
+            this.groupBox2.Controls.Add(this.label40);
+            this.groupBox2.Controls.Add(this.label51);
+            this.groupBox2.Controls.Add(this.LblSelectedTriggerThing4);
+            this.groupBox2.Controls.Add(this.label49);
+            this.groupBox2.Controls.Add(this.LblSelectedTriggerThing3);
+            this.groupBox2.Controls.Add(this.label47);
+            this.groupBox2.Controls.Add(this.LblSelectedTriggerPoiIndex);
+            this.groupBox2.Controls.Add(this.label45);
+            this.groupBox2.Controls.Add(this.LblSelectedTriggerStyle);
+            this.groupBox2.Controls.Add(this.label43);
+            this.groupBox2.Controls.Add(this.LblSelectedTriggerThing2);
+            this.groupBox2.Controls.Add(this.label41);
+            this.groupBox2.Controls.Add(this.LblSelectedTriggerThing1);
+            this.groupBox2.Controls.Add(this.label39);
+            this.groupBox2.Controls.Add(this.LblSelectedTriggerThing0);
+            this.groupBox2.Controls.Add(this.label32);
+            this.groupBox2.Location = new System.Drawing.Point(386, 492);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(360, 220);
+            this.groupBox2.TabIndex = 73;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Trigger";
+            // 
+            // LblSelectedTriggerAddress
+            // 
+            this.LblSelectedTriggerAddress.AutoSize = true;
+            this.LblSelectedTriggerAddress.Location = new System.Drawing.Point(60, 16);
+            this.LblSelectedTriggerAddress.Name = "LblSelectedTriggerAddress";
+            this.LblSelectedTriggerAddress.Size = new System.Drawing.Size(56, 13);
+            this.LblSelectedTriggerAddress.TabIndex = 72;
+            this.LblSelectedTriggerAddress.Text = "<address>";
+            // 
+            // LblSelectedTriggerThing5
+            // 
+            this.LblSelectedTriggerThing5.AutoSize = true;
+            this.LblSelectedTriggerThing5.Location = new System.Drawing.Point(63, 195);
+            this.LblSelectedTriggerThing5.Name = "LblSelectedTriggerThing5";
+            this.LblSelectedTriggerThing5.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedTriggerThing5.TabIndex = 77;
+            this.LblSelectedTriggerThing5.Text = "<thing5>";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(6, 16);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(48, 13);
+            this.label40.TabIndex = 71;
+            this.label40.Text = "Address:";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(6, 195);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(43, 13);
+            this.label51.TabIndex = 78;
+            this.label51.Text = "Thing5:";
+            // 
+            // LblSelectedTriggerThing4
+            // 
+            this.LblSelectedTriggerThing4.AutoSize = true;
+            this.LblSelectedTriggerThing4.Location = new System.Drawing.Point(63, 174);
+            this.LblSelectedTriggerThing4.Name = "LblSelectedTriggerThing4";
+            this.LblSelectedTriggerThing4.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedTriggerThing4.TabIndex = 75;
+            this.LblSelectedTriggerThing4.Text = "<thing4>";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(6, 174);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(43, 13);
+            this.label49.TabIndex = 76;
+            this.label49.Text = "Thing4:";
+            // 
+            // LblSelectedTriggerThing3
+            // 
+            this.LblSelectedTriggerThing3.AutoSize = true;
+            this.LblSelectedTriggerThing3.Location = new System.Drawing.Point(63, 153);
+            this.LblSelectedTriggerThing3.Name = "LblSelectedTriggerThing3";
+            this.LblSelectedTriggerThing3.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedTriggerThing3.TabIndex = 73;
+            this.LblSelectedTriggerThing3.Text = "<thing3>";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(6, 153);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(43, 13);
+            this.label47.TabIndex = 74;
+            this.label47.Text = "Thing3:";
+            // 
+            // LblSelectedTriggerPoiIndex
+            // 
+            this.LblSelectedTriggerPoiIndex.AutoSize = true;
+            this.LblSelectedTriggerPoiIndex.Location = new System.Drawing.Point(63, 132);
+            this.LblSelectedTriggerPoiIndex.Name = "LblSelectedTriggerPoiIndex";
+            this.LblSelectedTriggerPoiIndex.Size = new System.Drawing.Size(58, 13);
+            this.LblSelectedTriggerPoiIndex.TabIndex = 71;
+            this.LblSelectedTriggerPoiIndex.Text = "<poiindex>";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(6, 132);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(51, 13);
+            this.label45.TabIndex = 72;
+            this.label45.Text = "PoiIndex:";
+            // 
+            // LblSelectedTriggerStyle
+            // 
+            this.LblSelectedTriggerStyle.AutoSize = true;
+            this.LblSelectedTriggerStyle.Location = new System.Drawing.Point(63, 111);
+            this.LblSelectedTriggerStyle.Name = "LblSelectedTriggerStyle";
+            this.LblSelectedTriggerStyle.Size = new System.Drawing.Size(40, 13);
+            this.LblSelectedTriggerStyle.TabIndex = 69;
+            this.LblSelectedTriggerStyle.Text = "<style>";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(6, 111);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(33, 13);
+            this.label43.TabIndex = 70;
+            this.label43.Text = "Style:";
+            // 
+            // LblSelectedTriggerThing2
+            // 
+            this.LblSelectedTriggerThing2.AutoSize = true;
+            this.LblSelectedTriggerThing2.Location = new System.Drawing.Point(63, 90);
+            this.LblSelectedTriggerThing2.Name = "LblSelectedTriggerThing2";
+            this.LblSelectedTriggerThing2.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedTriggerThing2.TabIndex = 67;
+            this.LblSelectedTriggerThing2.Text = "<thing2>";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(6, 90);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(43, 13);
+            this.label41.TabIndex = 68;
+            this.label41.Text = "Thing2:";
+            // 
+            // LblSelectedTriggerThing1
+            // 
+            this.LblSelectedTriggerThing1.AutoSize = true;
+            this.LblSelectedTriggerThing1.Location = new System.Drawing.Point(63, 69);
+            this.LblSelectedTriggerThing1.Name = "LblSelectedTriggerThing1";
+            this.LblSelectedTriggerThing1.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedTriggerThing1.TabIndex = 65;
+            this.LblSelectedTriggerThing1.Text = "<thing1>";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(6, 69);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(43, 13);
+            this.label39.TabIndex = 66;
+            this.label39.Text = "Thing1:";
+            // 
+            // LblSelectedTriggerThing0
+            // 
+            this.LblSelectedTriggerThing0.AutoSize = true;
+            this.LblSelectedTriggerThing0.Location = new System.Drawing.Point(63, 48);
+            this.LblSelectedTriggerThing0.Name = "LblSelectedTriggerThing0";
+            this.LblSelectedTriggerThing0.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedTriggerThing0.TabIndex = 63;
+            this.LblSelectedTriggerThing0.Text = "<thing0>";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(6, 48);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(43, 13);
+            this.label32.TabIndex = 64;
+            this.label32.Text = "Thing0:";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label33);
+            this.groupBox1.Controls.Add(this.LbxPoiAssociatedTriggers);
+            this.groupBox1.Controls.Add(this.LblSelectedPoiAddress);
+            this.groupBox1.Controls.Add(this.label21);
+            this.groupBox1.Controls.Add(this.label38);
+            this.groupBox1.Controls.Add(this.LblSelectedPoiThing0);
+            this.groupBox1.Controls.Add(this.LblSelectedPoiX);
+            this.groupBox1.Controls.Add(this.LblSelectedPoiZ);
+            this.groupBox1.Controls.Add(this.LblSelectedPoiThing2);
+            this.groupBox1.Controls.Add(this.label37);
+            this.groupBox1.Controls.Add(this.label31);
+            this.groupBox1.Controls.Add(this.label36);
+            this.groupBox1.Controls.Add(this.LblSelectedPoiThing1);
+            this.groupBox1.Controls.Add(this.label35);
+            this.groupBox1.Controls.Add(this.LblSelectedPoiYaw);
+            this.groupBox1.Controls.Add(this.label34);
+            this.groupBox1.Location = new System.Drawing.Point(386, 32);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(360, 454);
+            this.groupBox1.TabIndex = 72;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "POI";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(3, 207);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(99, 13);
+            this.label33.TabIndex = 75;
+            this.label33.Text = "Associated triggers:";
+            // 
+            // LbxPoiAssociatedTriggers
+            // 
+            this.LbxPoiAssociatedTriggers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.LbxPoiAssociatedTriggers.FormattingEnabled = true;
+            this.LbxPoiAssociatedTriggers.Location = new System.Drawing.Point(6, 223);
+            this.LbxPoiAssociatedTriggers.Name = "LbxPoiAssociatedTriggers";
+            this.LbxPoiAssociatedTriggers.Size = new System.Drawing.Size(348, 225);
+            this.LbxPoiAssociatedTriggers.TabIndex = 74;
+            this.LbxPoiAssociatedTriggers.SelectedIndexChanged += new System.EventHandler(this.LbxPoiAssociatedTriggers_SelectedIndexChanged);
+            this.LbxPoiAssociatedTriggers.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.LbxTriggers_Format);
+            // 
+            // LblSelectedPoiAddress
+            // 
+            this.LblSelectedPoiAddress.AutoSize = true;
+            this.LblSelectedPoiAddress.Location = new System.Drawing.Point(60, 16);
+            this.LblSelectedPoiAddress.Name = "LblSelectedPoiAddress";
+            this.LblSelectedPoiAddress.Size = new System.Drawing.Size(56, 13);
+            this.LblSelectedPoiAddress.TabIndex = 70;
+            this.LblSelectedPoiAddress.Text = "<address>";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(6, 16);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(48, 13);
+            this.label21.TabIndex = 69;
+            this.label21.Text = "Address:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(6, 48);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(95, 13);
+            this.label38.TabIndex = 57;
+            this.label38.Text = "Selected point XZ:";
+            // 
+            // LblSelectedPoiThing0
+            // 
+            this.LblSelectedPoiThing0.AutoSize = true;
+            this.LblSelectedPoiThing0.Location = new System.Drawing.Point(71, 93);
+            this.LblSelectedPoiThing0.Name = "LblSelectedPoiThing0";
+            this.LblSelectedPoiThing0.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedPoiThing0.TabIndex = 59;
+            this.LblSelectedPoiThing0.Text = "<thing0>";
+            // 
+            // LblSelectedPoiX
+            // 
+            this.LblSelectedPoiX.AutoSize = true;
+            this.LblSelectedPoiX.Location = new System.Drawing.Point(107, 48);
+            this.LblSelectedPoiX.Name = "LblSelectedPoiX";
+            this.LblSelectedPoiX.Size = new System.Drawing.Size(40, 13);
+            this.LblSelectedPoiX.TabIndex = 58;
+            this.LblSelectedPoiX.Text = "123.45";
+            // 
+            // LblSelectedPoiZ
+            // 
+            this.LblSelectedPoiZ.AutoSize = true;
+            this.LblSelectedPoiZ.Location = new System.Drawing.Point(153, 48);
+            this.LblSelectedPoiZ.Name = "LblSelectedPoiZ";
+            this.LblSelectedPoiZ.Size = new System.Drawing.Size(40, 13);
+            this.LblSelectedPoiZ.TabIndex = 60;
+            this.LblSelectedPoiZ.Text = "678.90";
+            // 
             // LblSelectedPoiThing2
             // 
             this.LblSelectedPoiThing2.AutoSize = true;
-            this.LblSelectedPoiThing2.Location = new System.Drawing.Point(261, 161);
+            this.LblSelectedPoiThing2.Location = new System.Drawing.Point(71, 165);
             this.LblSelectedPoiThing2.Name = "LblSelectedPoiThing2";
             this.LblSelectedPoiThing2.Size = new System.Drawing.Size(48, 13);
             this.LblSelectedPoiThing2.TabIndex = 68;
             this.LblSelectedPoiThing2.Text = "<thing2>";
             // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(6, 70);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(98, 13);
+            this.label37.TabIndex = 61;
+            this.label37.Text = "Selected point info:";
+            // 
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(212, 161);
+            this.label31.Location = new System.Drawing.Point(22, 165);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(43, 13);
             this.label31.TabIndex = 67;
             this.label31.Text = "Thing2:";
             // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(22, 93);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(43, 13);
+            this.label36.TabIndex = 62;
+            this.label36.Text = "Thing0:";
+            // 
             // LblSelectedPoiThing1
             // 
             this.LblSelectedPoiThing1.AutoSize = true;
-            this.LblSelectedPoiThing1.Location = new System.Drawing.Point(260, 113);
+            this.LblSelectedPoiThing1.Location = new System.Drawing.Point(70, 117);
             this.LblSelectedPoiThing1.Name = "LblSelectedPoiThing1";
             this.LblSelectedPoiThing1.Size = new System.Drawing.Size(48, 13);
             this.LblSelectedPoiThing1.TabIndex = 66;
             this.LblSelectedPoiThing1.Text = "<thing1>";
             // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(22, 141);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(31, 13);
+            this.label35.TabIndex = 63;
+            this.label35.Text = "Yaw:";
+            // 
             // LblSelectedPoiYaw
             // 
             this.LblSelectedPoiYaw.AutoSize = true;
-            this.LblSelectedPoiYaw.Location = new System.Drawing.Point(261, 137);
+            this.LblSelectedPoiYaw.Location = new System.Drawing.Point(71, 141);
             this.LblSelectedPoiYaw.Name = "LblSelectedPoiYaw";
             this.LblSelectedPoiYaw.Size = new System.Drawing.Size(38, 13);
             this.LblSelectedPoiYaw.TabIndex = 65;
@@ -1451,74 +1789,42 @@ namespace BizHawk.Client.EmuHawk
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(212, 113);
+            this.label34.Location = new System.Drawing.Point(22, 117);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(43, 13);
             this.label34.TabIndex = 64;
             this.label34.Text = "Thing1:";
             // 
-            // label35
+            // LblTriggerCount
             // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(212, 137);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(31, 13);
-            this.label35.TabIndex = 63;
-            this.label35.Text = "Yaw:";
+            this.LblTriggerCount.AutoSize = true;
+            this.LblTriggerCount.Location = new System.Drawing.Point(292, 11);
+            this.LblTriggerCount.Name = "LblTriggerCount";
+            this.LblTriggerCount.Size = new System.Drawing.Size(13, 13);
+            this.LblTriggerCount.TabIndex = 71;
+            this.LblTriggerCount.Text = "0";
             // 
-            // label36
+            // BtnReadTriggers
             // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(212, 89);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(43, 13);
-            this.label36.TabIndex = 62;
-            this.label36.Text = "Thing0:";
+            this.BtnReadTriggers.Location = new System.Drawing.Point(196, 6);
+            this.BtnReadTriggers.Name = "BtnReadTriggers";
+            this.BtnReadTriggers.Size = new System.Drawing.Size(90, 23);
+            this.BtnReadTriggers.TabIndex = 70;
+            this.BtnReadTriggers.Text = "Read triggers";
+            this.BtnReadTriggers.UseVisualStyleBackColor = true;
+            this.BtnReadTriggers.Click += new System.EventHandler(this.BtnReadTriggers_Click);
             // 
-            // label37
+            // LbxTriggers
             // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(196, 66);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(98, 13);
-            this.label37.TabIndex = 61;
-            this.label37.Text = "Selected point info:";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(196, 32);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(95, 13);
-            this.label38.TabIndex = 57;
-            this.label38.Text = "Selected point XZ:";
-            // 
-            // LblSelectedPoiZ
-            // 
-            this.LblSelectedPoiZ.AutoSize = true;
-            this.LblSelectedPoiZ.Location = new System.Drawing.Point(343, 32);
-            this.LblSelectedPoiZ.Name = "LblSelectedPoiZ";
-            this.LblSelectedPoiZ.Size = new System.Drawing.Size(40, 13);
-            this.LblSelectedPoiZ.TabIndex = 60;
-            this.LblSelectedPoiZ.Text = "678.90";
-            // 
-            // LblSelectedPoiX
-            // 
-            this.LblSelectedPoiX.AutoSize = true;
-            this.LblSelectedPoiX.Location = new System.Drawing.Point(297, 32);
-            this.LblSelectedPoiX.Name = "LblSelectedPoiX";
-            this.LblSelectedPoiX.Size = new System.Drawing.Size(40, 13);
-            this.LblSelectedPoiX.TabIndex = 58;
-            this.LblSelectedPoiX.Text = "123.45";
-            // 
-            // LblSelectedPoiThing0
-            // 
-            this.LblSelectedPoiThing0.AutoSize = true;
-            this.LblSelectedPoiThing0.Location = new System.Drawing.Point(261, 89);
-            this.LblSelectedPoiThing0.Name = "LblSelectedPoiThing0";
-            this.LblSelectedPoiThing0.Size = new System.Drawing.Size(48, 13);
-            this.LblSelectedPoiThing0.TabIndex = 59;
-            this.LblSelectedPoiThing0.Text = "<thing0>";
+            this.LbxTriggers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.LbxTriggers.FormattingEnabled = true;
+            this.LbxTriggers.Location = new System.Drawing.Point(196, 32);
+            this.LbxTriggers.Name = "LbxTriggers";
+            this.LbxTriggers.Size = new System.Drawing.Size(184, 680);
+            this.LbxTriggers.TabIndex = 69;
+            this.LbxTriggers.SelectedIndexChanged += new System.EventHandler(this.LbxTriggers_SelectedIndexChanged);
+            this.LbxTriggers.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.LbxTriggers_Format);
             // 
             // LblPoiCount2
             // 
@@ -2410,6 +2716,10 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraPitch)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.TbpMap.ResumeLayout(false);
@@ -2623,5 +2933,32 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblSelectedPoiZ;
 		private Label LblSelectedPoiX;
 		private Label LblSelectedPoiThing0;
+		private Label LblTriggerCount;
+		private Button BtnReadTriggers;
+		private ListBox LbxTriggers;
+		private GroupBox groupBox2;
+		private GroupBox groupBox1;
+		private Label LblSelectedTriggerThing5;
+		private Label label51;
+		private Label LblSelectedTriggerThing4;
+		private Label label49;
+		private Label LblSelectedTriggerThing3;
+		private Label label47;
+		private Label LblSelectedTriggerPoiIndex;
+		private Label label45;
+		private Label LblSelectedTriggerStyle;
+		private Label label43;
+		private Label LblSelectedTriggerThing2;
+		private Label label41;
+		private Label LblSelectedTriggerThing1;
+		private Label label39;
+		private Label LblSelectedTriggerThing0;
+		private Label label32;
+		private Label LblSelectedTriggerAddress;
+		private Label label40;
+		private Label LblSelectedPoiAddress;
+		private Label label21;
+		private Label label33;
+		private ListBox LbxPoiAssociatedTriggers;
 	}
 }

@@ -101,9 +101,7 @@
 				FramebufferHeight = 0xBCCB2,
 				ProjectionPlaneDistanceCurrent = 0xB9D00,
 
-				HarrySpawnX = 0xBCDB0,
-				HarrySpawnInfo = 0xBCDB4,
-				HarrySpawnZ = 0xBCDB8,
+				LastHarrySpawnPoint = 0xBCDB0,
 
 				HarryModelPointer = 0xBE46C,
 
@@ -139,7 +137,7 @@
 				Pointer5 = 0xC9578 + 0x1C,
 				PointerToArrayOfPointsOfInterest = 0xC9578 + 0x20,
 				PointerToArrayOfSomeSortOfFunctionPointers = 0xC9578 + 0x24,
-				PointerToEndOfArrayOfPointersToStrings = 0xC9578 + 0x28,
+				PointerToArrayOfTriggersMaybe = 0xC9578 + 0x28,
 				Pointer9 = 0xC9578 + 0x2C,
 				Pointer10 = 0xC9578 + 0x30,
 				PointerToArrayOfPointersToStrings = 0xC9578 + 0x34,
@@ -153,6 +151,7 @@
 				Value4 = 0xC9578 + 0x54,
 				Pointer18 = 0xC9578 + 0x58,
 				Value5 = 0xC9578 + 0x5C,
+				PointerToUnknownThingAfterArrayOfTriggers = 0xC9578 + 0x188,
 
 				MapTim = 0x1CF600
 			}

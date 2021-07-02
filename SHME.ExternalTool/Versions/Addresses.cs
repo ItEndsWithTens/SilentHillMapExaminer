@@ -82,9 +82,7 @@
 		public long FramebufferHeight { get; set; }
 		public long ProjectionPlaneDistanceCurrent { get; set; }
 
-		public long HarrySpawnX { get; set; }
-		public long HarrySpawnInfo { get; set; }
-		public long HarrySpawnZ { get; set; }
+		public long LastHarrySpawnPoint { get; set; }
 
 		public long HarryModelPointer { get; set; }
 
@@ -119,7 +117,7 @@
 		public long Pointer5 { get; set; }
 		public long PointerToArrayOfPointsOfInterest { get; set; }
 		public long PointerToArrayOfSomeSortOfFunctionPointers { get; set; }
-		public long PointerToEndOfArrayOfPointersToStrings { get; set; }
+		public long PointerToArrayOfTriggersMaybe { get; set; }
 		public long Pointer9 { get; set; }
 		public long Pointer10 { get; set; }
 		public long PointerToArrayOfPointersToStrings { get; set; }
@@ -133,6 +131,7 @@
 		public long Value4 { get; set; }
 		public long Pointer18 { get; set; }
 		public long Value5 { get; set; }
+		public long PointerToUnknownThingAfterArrayOfTriggers { get; set; }
 
 		public long MapTim { get; set; }
 	}

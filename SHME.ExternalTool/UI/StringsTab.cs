@@ -60,7 +60,7 @@ namespace BizHawk.Client.EmuHawk
 			int arrayStart = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
 			arrayStart -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			int arrayEnd = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToEndOfArrayOfPointersToStrings);
+			int arrayEnd = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
 			arrayEnd -= (int)Rom.Addresses.MainRam.BaseAddress;
 
 			int arrayBytes = arrayEnd - arrayStart;
@@ -83,7 +83,7 @@ namespace BizHawk.Client.EmuHawk
 				}
 				while (current != '\0');
 
-				strings.Add(sb.ToString().PrintAsciiControlCharacters());
+				strings.Add($"{i} (0x{i:X}):    {sb.ToString().PrintAsciiControlCharacters()}");
 			}
 
 			RtbStrings.Clear();

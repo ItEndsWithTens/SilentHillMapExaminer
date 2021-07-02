@@ -1,9 +1,13 @@
-﻿using static SHME.ExternalTool.Core;
+﻿using System;
+using System.Collections.Generic;
+using static SHME.ExternalTool.Core;
 
 namespace SHME.ExternalTool
 {
 	public class PointOfInterest
 	{
+		public long Address { get; }
+
 		public float X { get; }
 
 		public byte Thing0 { get; } // TODO: Decipher this
@@ -22,11 +26,25 @@ namespace SHME.ExternalTool
 
 		public float Z { get; }
 
-		public PointOfInterest(int x, uint info, int z) : this(QToFloat(x), info, QToFloat(z))
+		public PointOfInterest(long address, List<byte> bytes) :
+			this(address, bytes.ToArray())
 		{
 		}
-		public PointOfInterest(float x, uint info, float z)
+		public PointOfInterest(long address, byte[] bytes) :
+			this(address,
+				BitConverter.ToInt32(bytes, 0),
+				BitConverter.ToUInt32(bytes, 4),
+				BitConverter.ToInt32(bytes, 8))
 		{
+		}
+		public PointOfInterest(long address, int x, uint info, int z) :
+			this(address, QToFloat(x), info, QToFloat(z))
+		{
+		}
+		public PointOfInterest(long address, float x, uint info, float z)
+		{
+			Address = address;
+
 			X = x;
 
 			uint raw0 = (info & 0b00000000_00000000_00000000_11111111) >> 0;
@@ -44,7 +62,7 @@ namespace SHME.ExternalTool
 
 		public override string ToString()
 		{
-			return $"{X}, {Z}";
+			return $"{X:0.##}, {Z:0.##}";
 		}
 	}
 }

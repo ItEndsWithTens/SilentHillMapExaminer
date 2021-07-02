@@ -117,18 +117,15 @@ namespace BizHawk.Client.EmuHawk
 
 			LblCameraDrawDistance.Text = $"{drawDistance:N3}m";
 
-			int spawnX = Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnX);
-			uint spawnInfo = Mem.ReadU32(Rom.Addresses.MainRam.HarrySpawnInfo);
-			int spawnZ = Mem.ReadS32(Rom.Addresses.MainRam.HarrySpawnZ);
+			long address = Rom.Addresses.MainRam.LastHarrySpawnPoint;
+			var last = new PointOfInterest(address, Mem!.ReadByteRange(address, 12));
 
-			var last = new PointOfInterest(spawnX, spawnInfo, spawnZ);
-
-			LblSpawnX.Text = $"{last.X:N2}";
+			LblSpawnX.Text = $"{last.X:0.##}";
 			LblSpawnThing0.Text = $"0x{last.Thing0:X2}";
 			LblSpawnThing1.Text = $"0x{last.Thing1:X2}";
-			LblSpawnYaw.Text = $"{last.Yaw:N2}";
+			LblSpawnYaw.Text = $"{last.Yaw:0.##}";
 			LblSpawnThing2.Text = $"0x{last.Thing2:X2}";
-			LblSpawnZ.Text = $"{last.Z:N2}";
+			LblSpawnZ.Text = $"{last.Z:0.##}";
 		}
 
 		private void BtnGetPosition_Click(object sender, EventArgs e)
@@ -156,6 +153,7 @@ namespace BizHawk.Client.EmuHawk
 		private void BtnReadPois_Click(object sender, EventArgs e)
 		{
 			Boxes.Clear();
+			Pois.Clear();
 
 			var generator = new BoxGenerator(1.0f, Color.White);
 
@@ -178,11 +176,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				int ofs = poiArrayAddress + (poiBytes * i);
 
-				float x = QToFloat(Mem!.ReadS32(ofs + 0));
-				uint info = Mem!.ReadU32(ofs + 4);
-				float z = QToFloat(Mem!.ReadS32(ofs + 8));
-
-				var poi = new PointOfInterest(x, info, z);
+				var poi = new PointOfInterest(ofs, Mem!.ReadByteRange(ofs, 12));
 
 				Renderable box = generator.Generate().ToWorld();
 				box.Position = new Vector3(poi.X, 0.0f, -poi.Z);
