@@ -169,9 +169,6 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X4}";
 				LblSelectedTriggerThing5.Text = $"0x{t.Thing5:X4}";
 
-				CbxSelectedTriggerIsDoor.Checked = t.IsDoor;
-				NudSelectedTriggerDoorTargetPoi.Value = t.DoorTargetPoi;
-
 				if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
 				{
 					LbxPois.SelectedIndex = t.PoiIndex;
@@ -180,6 +177,17 @@ namespace BizHawk.Client.EmuHawk
 				{
 					LbxPois.SelectedIndex = -1;
 				}
+
+				if (t.TargetIndex >= 0 && t.TargetIndex < LbxPois.Items.Count)
+				{
+					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+				}
+				else
+				{
+					NudSelectedTriggerTargetIndex.Value = -1;
+				}
+
+				CmbSelectedTriggerType.SelectedItem = t.TriggerType;
 			}
 			else
 			{
@@ -193,8 +201,8 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerThing4.Text = $"0x";
 				LblSelectedTriggerTypeInfo.Text = $"0x";
 				LblSelectedTriggerThing5.Text = $"0x";
-				CbxSelectedTriggerIsDoor.Checked = false;
-				NudSelectedTriggerDoorTargetPoi.Value = -1;
+				NudSelectedTriggerTargetIndex.Value = -1;
+				CmbSelectedTriggerType.SelectedIndex = -1;
 			}
 		}
 	}

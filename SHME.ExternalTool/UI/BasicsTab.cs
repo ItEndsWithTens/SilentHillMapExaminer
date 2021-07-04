@@ -187,7 +187,7 @@ namespace BizHawk.Client.EmuHawk
 				LbxPois.Items.Add(poi);
 			}
 
-			NudSelectedTriggerDoorTargetPoi.Maximum = poiCount - 1;
+			NudSelectedTriggerTargetIndex.Maximum = poiCount - 1;
 		}
 
 		private void BtnSetHarryPitch_Click(object sender, EventArgs e)

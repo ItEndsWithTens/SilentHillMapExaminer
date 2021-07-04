@@ -117,9 +117,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamPositionX = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.NudSelectedTriggerDoorTargetPoi = new System.Windows.Forms.NumericUpDown();
+            this.CmbSelectedTriggerType = new System.Windows.Forms.ComboBox();
+            this.NudSelectedTriggerTargetIndex = new System.Windows.Forms.NumericUpDown();
             this.label42 = new System.Windows.Forms.Label();
-            this.CbxSelectedTriggerIsDoor = new System.Windows.Forms.CheckBox();
             this.LblSelectedTriggerThing5 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.LblSelectedTriggerAddress = new System.Windows.Forms.Label();
@@ -235,6 +235,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblStringCount = new System.Windows.Forms.Label();
             this.BtnReadStrings = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label46 = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -254,7 +255,7 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraPitch)).BeginInit();
             this.tabPage5.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerDoorTargetPoi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerTargetIndex)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.TbpMap.SuspendLayout();
@@ -1443,9 +1444,10 @@ namespace BizHawk.Client.EmuHawk
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.NudSelectedTriggerDoorTargetPoi);
+            this.groupBox2.Controls.Add(this.label46);
+            this.groupBox2.Controls.Add(this.CmbSelectedTriggerType);
+            this.groupBox2.Controls.Add(this.NudSelectedTriggerTargetIndex);
             this.groupBox2.Controls.Add(this.label42);
-            this.groupBox2.Controls.Add(this.CbxSelectedTriggerIsDoor);
             this.groupBox2.Controls.Add(this.LblSelectedTriggerThing5);
             this.groupBox2.Controls.Add(this.label44);
             this.groupBox2.Controls.Add(this.LblSelectedTriggerAddress);
@@ -1473,38 +1475,36 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Trigger";
             // 
-            // NudSelectedTriggerDoorTargetPoi
+            // CmbSelectedTriggerType
             // 
-            this.NudSelectedTriggerDoorTargetPoi.Enabled = false;
-            this.NudSelectedTriggerDoorTargetPoi.Location = new System.Drawing.Point(297, 192);
-            this.NudSelectedTriggerDoorTargetPoi.Minimum = new decimal(new int[] {
+            this.CmbSelectedTriggerType.Enabled = false;
+            this.CmbSelectedTriggerType.FormattingEnabled = true;
+            this.CmbSelectedTriggerType.Location = new System.Drawing.Point(262, 165);
+            this.CmbSelectedTriggerType.Name = "CmbSelectedTriggerType";
+            this.CmbSelectedTriggerType.Size = new System.Drawing.Size(92, 21);
+            this.CmbSelectedTriggerType.TabIndex = 84;
+            // 
+            // NudSelectedTriggerTargetIndex
+            // 
+            this.NudSelectedTriggerTargetIndex.Enabled = false;
+            this.NudSelectedTriggerTargetIndex.Location = new System.Drawing.Point(297, 192);
+            this.NudSelectedTriggerTargetIndex.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             -2147483648});
-            this.NudSelectedTriggerDoorTargetPoi.Name = "NudSelectedTriggerDoorTargetPoi";
-            this.NudSelectedTriggerDoorTargetPoi.Size = new System.Drawing.Size(57, 20);
-            this.NudSelectedTriggerDoorTargetPoi.TabIndex = 83;
+            this.NudSelectedTriggerTargetIndex.Name = "NudSelectedTriggerTargetIndex";
+            this.NudSelectedTriggerTargetIndex.Size = new System.Drawing.Size(57, 20);
+            this.NudSelectedTriggerTargetIndex.TabIndex = 83;
             // 
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(207, 194);
+            this.label42.Location = new System.Drawing.Point(222, 195);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(84, 13);
+            this.label42.Size = new System.Drawing.Size(69, 13);
             this.label42.TabIndex = 82;
-            this.label42.Text = "Door target POI:";
-            // 
-            // CbxSelectedTriggerIsDoor
-            // 
-            this.CbxSelectedTriggerIsDoor.AutoSize = true;
-            this.CbxSelectedTriggerIsDoor.Enabled = false;
-            this.CbxSelectedTriggerIsDoor.Location = new System.Drawing.Point(297, 169);
-            this.CbxSelectedTriggerIsDoor.Name = "CbxSelectedTriggerIsDoor";
-            this.CbxSelectedTriggerIsDoor.Size = new System.Drawing.Size(57, 17);
-            this.CbxSelectedTriggerIsDoor.TabIndex = 77;
-            this.CbxSelectedTriggerIsDoor.Text = "IsDoor";
-            this.CbxSelectedTriggerIsDoor.UseVisualStyleBackColor = true;
+            this.label42.Text = "Target index:";
             // 
             // LblSelectedTriggerThing5
             // 
@@ -2762,6 +2762,15 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadStrings.UseVisualStyleBackColor = true;
             this.BtnReadStrings.Click += new System.EventHandler(this.BtnReadStrings_Click);
             // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(222, 168);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(34, 13);
+            this.label46.TabIndex = 85;
+            this.label46.Text = "Type:";
+            // 
             // CustomMainForm
             // 
             this.ClientSize = new System.Drawing.Size(784, 776);
@@ -2792,7 +2801,7 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage5.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerDoorTargetPoi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerTargetIndex)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -3039,7 +3048,8 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblSelectedTriggerThing5;
 		private Label label44;
 		private Label label42;
-		private CheckBox CbxSelectedTriggerIsDoor;
-		private NumericUpDown NudSelectedTriggerDoorTargetPoi;
+		private NumericUpDown NudSelectedTriggerTargetIndex;
+		private ComboBox CmbSelectedTriggerType;
+		private Label label46;
 	}
 }

@@ -56,6 +56,8 @@ namespace BizHawk.Client.EmuHawk
 			TrkFov.Value = (int)Camera.Fov;
 
 			CmbRenderMode.SelectedIndex = 0;
+
+			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
 		}
 
 		public override void UpdateValues(ToolFormUpdateType type)
