@@ -11,6 +11,13 @@ namespace BizHawk.Client.EmuHawk
 	{
 		public Dictionary<PointOfInterest, Renderable?> Pois { get; set; } = new Dictionary<PointOfInterest, Renderable?>();
 
+		private void BtnGoToPoi_Click(object sender, EventArgs e)
+		{
+			var poi = (PointOfInterest)LbxPois.SelectedItem;
+
+			Core.SetHarryPosition(Mem!, poi.X, 0, poi.Z);
+		}
+
 		private void LbxPoiAssociatedTriggers_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (LbxPoiAssociatedTriggers.SelectedItem is Trigger t)
@@ -151,15 +158,19 @@ namespace BizHawk.Client.EmuHawk
 
 			if (lbx.SelectedItem is Trigger t)
 			{
-				LblSelectedTriggerAddress.Text = $"0x{t.Address:X2}";
+				LblSelectedTriggerAddress.Text = $"0x{t.Address:X}";
 				LblSelectedTriggerThing0.Text = $"0x{t.Thing0:X2}";
 				LblSelectedTriggerThing1.Text = $"0x{t.Thing1:X2}";
-				LblSelectedTriggerThing2.Text = $"0x{t.Thing2:X2}";
+				LblSelectedTriggerThing2.Text = $"0x{t.Thing2:X4}";
 				LblSelectedTriggerStyle.Text = $"0x{t.Style:X2}";
 				LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex}";
 				LblSelectedTriggerThing3.Text = $"0x{t.Thing3:X2}";
 				LblSelectedTriggerThing4.Text = $"0x{t.Thing4:X2}";
-				LblSelectedTriggerThing5.Text = $"0x{t.Thing5:X2}";
+				LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X4}";
+				LblSelectedTriggerThing5.Text = $"0x{t.Thing5:X4}";
+
+				CbxSelectedTriggerIsDoor.Checked = t.IsDoor;
+				NudSelectedTriggerDoorTargetPoi.Value = t.DoorTargetPoi;
 
 				if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
 				{
@@ -180,7 +191,10 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerPoiIndex.Text = $"";
 				LblSelectedTriggerThing3.Text = $"0x";
 				LblSelectedTriggerThing4.Text = $"0x";
+				LblSelectedTriggerTypeInfo.Text = $"0x";
 				LblSelectedTriggerThing5.Text = $"0x";
+				CbxSelectedTriggerIsDoor.Checked = false;
+				NudSelectedTriggerDoorTargetPoi.Value = -1;
 			}
 		}
 	}
