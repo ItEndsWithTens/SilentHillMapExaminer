@@ -187,7 +187,14 @@ namespace BizHawk.Client.EmuHawk
 					NudSelectedTriggerTargetIndex.Value = -1;
 				}
 
-				CmbSelectedTriggerType.SelectedItem = t.TriggerType;
+				if (Enum.IsDefined(typeof(TriggerType), t.TriggerType))
+				{
+					CmbSelectedTriggerType.SelectedItem = t.TriggerType;
+				}
+				else
+				{
+					CmbSelectedTriggerType.SelectedIndex = -1;
+				}
 			}
 			else
 			{
