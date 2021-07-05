@@ -166,8 +166,7 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex}";
 				LblSelectedTriggerThing3.Text = $"0x{t.Thing3:X2}";
 				LblSelectedTriggerThing4.Text = $"0x{t.Thing4:X2}";
-				LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X4}";
-				LblSelectedTriggerThing5.Text = $"0x{t.Thing5:X4}";
+				LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X8}";
 
 				if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
 				{
@@ -207,7 +206,6 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerThing3.Text = $"0x";
 				LblSelectedTriggerThing4.Text = $"0x";
 				LblSelectedTriggerTypeInfo.Text = $"0x";
-				LblSelectedTriggerThing5.Text = $"0x";
 				NudSelectedTriggerTargetIndex.Value = -1;
 				CmbSelectedTriggerType.SelectedIndex = -1;
 			}

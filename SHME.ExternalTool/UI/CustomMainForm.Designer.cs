@@ -120,8 +120,6 @@ namespace BizHawk.Client.EmuHawk
             this.CmbSelectedTriggerType = new System.Windows.Forms.ComboBox();
             this.NudSelectedTriggerTargetIndex = new System.Windows.Forms.NumericUpDown();
             this.label42 = new System.Windows.Forms.Label();
-            this.LblSelectedTriggerThing5 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
             this.LblSelectedTriggerAddress = new System.Windows.Forms.Label();
             this.LblSelectedTriggerTypeInfo = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
@@ -1448,8 +1446,6 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox2.Controls.Add(this.CmbSelectedTriggerType);
             this.groupBox2.Controls.Add(this.NudSelectedTriggerTargetIndex);
             this.groupBox2.Controls.Add(this.label42);
-            this.groupBox2.Controls.Add(this.LblSelectedTriggerThing5);
-            this.groupBox2.Controls.Add(this.label44);
             this.groupBox2.Controls.Add(this.LblSelectedTriggerAddress);
             this.groupBox2.Controls.Add(this.LblSelectedTriggerTypeInfo);
             this.groupBox2.Controls.Add(this.label40);
@@ -1505,24 +1501,6 @@ namespace BizHawk.Client.EmuHawk
             this.label42.Size = new System.Drawing.Size(69, 13);
             this.label42.TabIndex = 82;
             this.label42.Text = "Target index:";
-            // 
-            // LblSelectedTriggerThing5
-            // 
-            this.LblSelectedTriggerThing5.AutoSize = true;
-            this.LblSelectedTriggerThing5.Location = new System.Drawing.Point(186, 48);
-            this.LblSelectedTriggerThing5.Name = "LblSelectedTriggerThing5";
-            this.LblSelectedTriggerThing5.Size = new System.Drawing.Size(48, 13);
-            this.LblSelectedTriggerThing5.TabIndex = 79;
-            this.LblSelectedTriggerThing5.Text = "<thing5>";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(137, 48);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(43, 13);
-            this.label44.TabIndex = 80;
-            this.label44.Text = "Thing5:";
             // 
             // LblSelectedTriggerAddress
             // 
@@ -3045,8 +3023,6 @@ namespace BizHawk.Client.EmuHawk
 		private Label label33;
 		private ListBox LbxPoiAssociatedTriggers;
 		private Button BtnGoToPoi;
-		private Label LblSelectedTriggerThing5;
-		private Label label44;
 		private Label label42;
 		private NumericUpDown NudSelectedTriggerTargetIndex;
 		private ComboBox CmbSelectedTriggerType;

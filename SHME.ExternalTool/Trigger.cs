@@ -8,7 +8,8 @@ namespace SHME.ExternalTool
 		Unknown0 = 0x00,
 		Door1 = 0x05,
 		Door2 = 0x06,
-		Text = 0x07
+		Text = 0x07,
+		Item = 0x0A
 	}
 
 	public class Trigger
@@ -47,8 +48,7 @@ namespace SHME.ExternalTool
 		/// Likewise, the same bit shift provides the string array index for
 		/// text triggers.
 		/// </remarks>
-		public short TypeInfo { get; }
-		public short Thing5 { get; }
+		public uint TypeInfo { get; }
 
 		public TriggerType TriggerType { get; }
 		public int TargetIndex { get; }
@@ -67,11 +67,16 @@ namespace SHME.ExternalTool
 			PoiIndex = bytes[5];
 			Thing3 = bytes[6];
 			Thing4 = bytes[7];
-			TypeInfo = BitConverter.ToInt16(bytes, 8);
-			Thing5 = BitConverter.ToInt16(bytes, 10);
+			TypeInfo = BitConverter.ToUInt32(bytes, 8);
 
-			TriggerType = (TriggerType)(TypeInfo & 0x0F);
-			TargetIndex = (byte)((TypeInfo >> 5) & 0xFF);
+			uint raw0 = (TypeInfo & 0b00000000_00000000_00000000_00011111) >> 0;
+			uint raw1 = (TypeInfo & 0b00000000_00000000_00011111_11100000) >> 5;
+			uint raw2 = (TypeInfo & 0b00000000_00000111_11100000_00000000) >> 13;
+			uint raw3 = (TypeInfo & 0b00000001_11111000_00000000_00000000) >> 19;
+			uint raw4 = (TypeInfo & 0b11111110_00000000_00000000_00000000) >> 25;
+
+			TriggerType = (TriggerType)raw0;
+			TargetIndex = (byte)raw1;
 		}
 	}
 }
