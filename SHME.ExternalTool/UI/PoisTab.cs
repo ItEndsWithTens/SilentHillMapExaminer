@@ -15,7 +15,10 @@ namespace BizHawk.Client.EmuHawk
 		{
 			var poi = (PointOfInterest)LbxPois.SelectedItem;
 
-			Core.SetHarryPosition(Mem!, poi.X, 0, poi.Z);
+			if (poi != null)
+			{
+				Core.SetHarryPosition(Mem!, poi.X, 0, poi.Z);
+			}
 		}
 
 		private void LbxPoiAssociatedTriggers_SelectedIndexChanged(object sender, EventArgs e)
@@ -101,6 +104,7 @@ namespace BizHawk.Client.EmuHawk
 		private void BtnReadTriggers_Click(object sender, EventArgs e)
 		{
 			BtnReadPois_Click(this, EventArgs.Empty);
+			BtnReadStrings_Click(this, EventArgs.Empty);
 
 			Triggers.Clear();
 
@@ -177,15 +181,6 @@ namespace BizHawk.Client.EmuHawk
 					LbxPois.SelectedIndex = -1;
 				}
 
-				if (t.TargetIndex >= 0 && t.TargetIndex < LbxPois.Items.Count)
-				{
-					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
-				}
-				else
-				{
-					NudSelectedTriggerTargetIndex.Value = -1;
-				}
-
 				if (Enum.IsDefined(typeof(TriggerType), t.TriggerType))
 				{
 					CmbSelectedTriggerType.SelectedItem = t.TriggerType;
@@ -193,6 +188,29 @@ namespace BizHawk.Client.EmuHawk
 				else
 				{
 					CmbSelectedTriggerType.SelectedIndex = -1;
+				}
+
+				switch (t.TriggerType)
+				{
+
+					case TriggerType.Door1:
+					case TriggerType.Door2:
+						NudSelectedTriggerTargetIndex.Maximum = LbxPois.Items.Count - 1;
+						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+						break;
+					case TriggerType.Text:
+						NudSelectedTriggerTargetIndex.Maximum = Int32.Parse(LblStringCount.Text) - 1;
+						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+						break;
+					case TriggerType.Item:
+						NudSelectedTriggerTargetIndex.Maximum = Int32.MaxValue; // TODO: Find item array in MainRAM.
+						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+						break;
+					case TriggerType.Unknown0:
+					default:
+						NudSelectedTriggerTargetIndex.Maximum = Int32.MaxValue;
+						NudSelectedTriggerTargetIndex.Value = -1;
+						break;
 				}
 			}
 			else
