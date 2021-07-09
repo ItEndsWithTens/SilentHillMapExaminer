@@ -192,7 +192,6 @@ namespace BizHawk.Client.EmuHawk
 
 				switch (t.TriggerType)
 				{
-
 					case TriggerType.Door1:
 					case TriggerType.Door2:
 						NudSelectedTriggerTargetIndex.Maximum = LbxPois.Items.Count - 1;
@@ -202,8 +201,12 @@ namespace BizHawk.Client.EmuHawk
 						NudSelectedTriggerTargetIndex.Maximum = Int32.Parse(LblStringCount.Text) - 1;
 						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
 						break;
-					case TriggerType.Item:
-						NudSelectedTriggerTargetIndex.Maximum = Int32.MaxValue; // TODO: Find item array in MainRAM.
+					case TriggerType.Function1:
+					case TriggerType.Function2:
+						int s = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
+						int f = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
+						long count = (s - f) / 4;
+						NudSelectedTriggerTargetIndex.Maximum = count - 1;
 						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
 						break;
 					case TriggerType.Unknown0:

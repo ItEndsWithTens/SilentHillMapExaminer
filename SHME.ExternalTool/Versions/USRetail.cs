@@ -136,7 +136,7 @@
 				Value2 = 0xC9578 + 0x18,
 				Pointer5 = 0xC9578 + 0x1C,
 				PointerToArrayOfPointsOfInterest = 0xC9578 + 0x20,
-				PointerToArrayOfSomeSortOfFunctionPointers = 0xC9578 + 0x24,
+				PointerToArrayOfPointersToFunctions = 0xC9578 + 0x24,
 				PointerToArrayOfTriggersMaybe = 0xC9578 + 0x28,
 				Pointer9 = 0xC9578 + 0x2C,
 				Pointer10 = 0xC9578 + 0x30,

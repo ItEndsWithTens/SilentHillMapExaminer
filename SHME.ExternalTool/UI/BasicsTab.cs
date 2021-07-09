@@ -168,7 +168,7 @@ namespace BizHawk.Client.EmuHawk
 			int poiArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
 			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			int functionPointersArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfSomeSortOfFunctionPointers);
+			int functionPointersArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
 			functionPointersArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
 			int poiArrayBytes = functionPointersArrayAddress - poiArrayAddress;

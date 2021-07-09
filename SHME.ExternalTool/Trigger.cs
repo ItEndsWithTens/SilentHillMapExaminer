@@ -9,7 +9,8 @@ namespace SHME.ExternalTool
 		Door1 = 0x05,
 		Door2 = 0x06,
 		Text = 0x07,
-		Item = 0x0A
+		Function1 = 0x0A,
+		Function2 = 0x0B
 	}
 
 	public class Trigger
@@ -30,7 +31,7 @@ namespace SHME.ExternalTool
 		/// </remarks>
 		public byte Style { get; }
 		public byte PoiIndex { get; }
-		public byte Thing3 { get; }
+		public byte Thing3 { get; } // Could be string index when door is locked?
 		public byte Thing4 { get; }
 		/// <summary>
 		/// Trigger type info, e.g. whether this is a door, and if so where
@@ -41,6 +42,8 @@ namespace SHME.ExternalTool
 		/// 0x05: Door
 		/// 0x06: Door
 		/// 0x07: Text
+		/// 0x0A: Function
+		/// 0x0B: Function(?)
 		///
 		/// If this is in fact a door trigger, shifting the remainder right by 5
 		/// and taking the low 8 bits of the result gives the target POI index.
