@@ -15,11 +15,10 @@ namespace BizHawk.Client.EmuHawk
 		private readonly System.Timers.Timer _arrayCountdown;
 		private void ArrayCountdown_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
-			// In some cases, e.g. going from an outdoor area to an indoor one,
-			// the various array pointers will be updated before the arrays have
-			// been filled with their contents. Usually the process takes about
-			// 16 or 17 frames, so waiting 20 should cover most situations.
-			if (Emulation!.FrameCount() - _arrayCountdownStartFrameCount < 20)
+			// During some particularly long map loads, various array pointers
+			// will be updated before the arrays have been filled with their
+			// contents. Waiting for a few frames takes care of that.
+			if (Emulation!.FrameCount() - _arrayCountdownStartFrameCount < 45)
 			{
 				return;
 			}
@@ -198,7 +197,7 @@ namespace BizHawk.Client.EmuHawk
 			var t = (Trigger)e.ListItem;
 
 			string poiString;
-			if (t.PoiIndex > Pois.Count)
+			if (t.PoiIndex >= Pois.Count)
 			{
 				poiString = "null";
 			}
