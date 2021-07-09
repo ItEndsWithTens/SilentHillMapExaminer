@@ -11,6 +11,24 @@ namespace BizHawk.Client.EmuHawk
 	{
 		public Dictionary<PointOfInterest, Renderable?> Pois { get; set; } = new Dictionary<PointOfInterest, Renderable?>();
 
+		private long _arrayCountdownStartFrameCount;
+		private readonly System.Timers.Timer _arrayCountdown;
+		private void ArrayCountdown_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+		{
+			// In some cases, e.g. going from an outdoor area to an indoor one,
+			// the various array pointers will be updated before the arrays have
+			// been filled with their contents. Usually the process takes about
+			// 16 or 17 frames, so waiting 20 should cover most situations.
+			if (Emulation!.FrameCount() - _arrayCountdownStartFrameCount < 20)
+			{
+				return;
+			}
+
+			_arrayCountdown.Stop();
+
+			Invoke(new Action(() => { BtnReadTriggers_Click(this, EventArgs.Empty); }));
+		}
+
 		private void BtnGoToPoi_Click(object sender, EventArgs e)
 		{
 			var poi = (PointOfInterest)LbxPois.SelectedItem;
@@ -18,6 +36,48 @@ namespace BizHawk.Client.EmuHawk
 			if (poi != null)
 			{
 				Core.SetHarryPosition(Mem!, poi.X, 0, poi.Z);
+			}
+		}
+
+		private void CbxTriggersAutoUpdate_CheckedChanged(object sender, EventArgs e)
+		{
+			BtnReadPois.Enabled = !CbxTriggersAutoUpdate.Checked;
+			BtnReadPois2.Enabled = !CbxTriggersAutoUpdate.Checked;
+			BtnReadTriggers.Enabled = !CbxTriggersAutoUpdate.Checked;
+		}
+
+		private long _previousPoiArrayAddress;
+		private long _previousFunctionPointerArrayAddress;
+		private long _previousTriggerArrayAddress;
+		private long _previousUnknownThingAddress;
+		private void CheckForUpdatedTriggers()
+		{
+			int poiArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
+			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+
+			int functionPointerArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
+			functionPointerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+
+			int triggerArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
+			triggerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+
+			int unknownThingAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToUnknownThingAfterArrayOfTriggers);
+			unknownThingAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+
+			bool poiArrayLocationChange = poiArrayAddress != _previousPoiArrayAddress;
+			bool poiArrayLengthChange = functionPointerArrayAddress != _previousFunctionPointerArrayAddress;
+			bool triggerArrayLocationChange = triggerArrayAddress != _previousTriggerArrayAddress;
+			bool triggerArrayLengthChange = unknownThingAddress != _previousUnknownThingAddress;
+
+			if (poiArrayLocationChange || poiArrayLengthChange || triggerArrayLocationChange || triggerArrayLengthChange)
+			{
+				_previousPoiArrayAddress = poiArrayAddress;
+				_previousFunctionPointerArrayAddress = functionPointerArrayAddress;
+				_previousTriggerArrayAddress = triggerArrayAddress;
+				_previousUnknownThingAddress = unknownThingAddress;
+
+				_arrayCountdownStartFrameCount = Emulation!.FrameCount();
+				_arrayCountdown.Start();
 			}
 		}
 

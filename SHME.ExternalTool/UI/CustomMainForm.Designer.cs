@@ -116,7 +116,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamPositionY = new System.Windows.Forms.Label();
             this.LblOverlayCamPositionX = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.CbxTriggersAutoUpdate = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label46 = new System.Windows.Forms.Label();
             this.CmbSelectedTriggerType = new System.Windows.Forms.ComboBox();
             this.NudSelectedTriggerTargetIndex = new System.Windows.Forms.NumericUpDown();
             this.label42 = new System.Windows.Forms.Label();
@@ -160,7 +162,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadTriggers = new System.Windows.Forms.Button();
             this.LbxTriggers = new System.Windows.Forms.ListBox();
             this.LblPoiCount2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.BtnReadPois2 = new System.Windows.Forms.Button();
             this.LbxPois = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
@@ -233,7 +235,6 @@ namespace BizHawk.Client.EmuHawk
             this.LblStringCount = new System.Windows.Forms.Label();
             this.BtnReadStrings = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label46 = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -1423,13 +1424,14 @@ namespace BizHawk.Client.EmuHawk
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.CbxTriggersAutoUpdate);
             this.tabPage5.Controls.Add(this.groupBox2);
             this.tabPage5.Controls.Add(this.groupBox1);
             this.tabPage5.Controls.Add(this.LblTriggerCount);
             this.tabPage5.Controls.Add(this.BtnReadTriggers);
             this.tabPage5.Controls.Add(this.LbxTriggers);
             this.tabPage5.Controls.Add(this.LblPoiCount2);
-            this.tabPage5.Controls.Add(this.button1);
+            this.tabPage5.Controls.Add(this.BtnReadPois2);
             this.tabPage5.Controls.Add(this.LbxPois);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
@@ -1439,6 +1441,17 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage5.Text = "POIs";
             this.toolTip1.SetToolTip(this.tabPage5, "Points of interest");
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // CbxTriggersAutoUpdate
+            // 
+            this.CbxTriggersAutoUpdate.AutoSize = true;
+            this.CbxTriggersAutoUpdate.Location = new System.Drawing.Point(332, 10);
+            this.CbxTriggersAutoUpdate.Name = "CbxTriggersAutoUpdate";
+            this.CbxTriggersAutoUpdate.Size = new System.Drawing.Size(48, 17);
+            this.CbxTriggersAutoUpdate.TabIndex = 74;
+            this.CbxTriggersAutoUpdate.Text = "Auto";
+            this.CbxTriggersAutoUpdate.UseVisualStyleBackColor = true;
+            this.CbxTriggersAutoUpdate.CheckedChanged += new System.EventHandler(this.CbxTriggersAutoUpdate_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -1470,6 +1483,15 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox2.TabIndex = 73;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Trigger";
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(222, 168);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(34, 13);
+            this.label46.TabIndex = 85;
+            this.label46.Text = "Type:";
             // 
             // CmbSelectedTriggerType
             // 
@@ -1887,15 +1909,15 @@ namespace BizHawk.Client.EmuHawk
             this.LblPoiCount2.TabIndex = 56;
             this.LblPoiCount2.Text = "0";
             // 
-            // button1
+            // BtnReadPois2
             // 
-            this.button1.Location = new System.Drawing.Point(6, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 55;
-            this.button1.Text = "Read POIs";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.BtnReadPois_Click);
+            this.BtnReadPois2.Location = new System.Drawing.Point(6, 6);
+            this.BtnReadPois2.Name = "BtnReadPois2";
+            this.BtnReadPois2.Size = new System.Drawing.Size(75, 23);
+            this.BtnReadPois2.TabIndex = 55;
+            this.BtnReadPois2.Text = "Read POIs";
+            this.BtnReadPois2.UseVisualStyleBackColor = true;
+            this.BtnReadPois2.Click += new System.EventHandler(this.BtnReadPois_Click);
             // 
             // LbxPois
             // 
@@ -2740,15 +2762,6 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadStrings.UseVisualStyleBackColor = true;
             this.BtnReadStrings.Click += new System.EventHandler(this.BtnReadStrings_Click);
             // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(222, 168);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(34, 13);
-            this.label46.TabIndex = 85;
-            this.label46.Text = "Type:";
-            // 
             // CustomMainForm
             // 
             this.ClientSize = new System.Drawing.Size(784, 776);
@@ -2982,7 +2995,7 @@ namespace BizHawk.Client.EmuHawk
 		private TabPage tabPage5;
 		private ListBox LbxPois;
 		private Label LblPoiCount2;
-		private Button button1;
+		private Button BtnReadPois2;
 		private Label LblSelectedPoiThing2;
 		private Label label31;
 		private Label LblSelectedPoiThing1;
@@ -3027,5 +3040,6 @@ namespace BizHawk.Client.EmuHawk
 		private NumericUpDown NudSelectedTriggerTargetIndex;
 		private ComboBox CmbSelectedTriggerType;
 		private Label label46;
+		private CheckBox CbxTriggersAutoUpdate;
 	}
 }

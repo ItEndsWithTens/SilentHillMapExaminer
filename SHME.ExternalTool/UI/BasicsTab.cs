@@ -96,8 +96,8 @@ namespace BizHawk.Client.EmuHawk
 			LblOverlayCamRoll.Text = $"{Camera.Roll:N2}";
 		}
 
-		private string _lastHarrySpawnPointHash;
-		private PointOfInterest _lastHarrySpawnPoint;
+		private string _lastHarrySpawnPointHash = "";
+		private PointOfInterest? _lastHarrySpawnPoint;
 		private void ReportPosition()
 		{
 			if (Mem == null)
@@ -125,14 +125,13 @@ namespace BizHawk.Client.EmuHawk
 			{
 				_lastHarrySpawnPoint = new PointOfInterest(address, Mem!.ReadByteRange(address, 12));
 				_lastHarrySpawnPointHash = hash;
-				var last = (PointOfInterest)_lastHarrySpawnPoint;
 
-				LblSpawnX.Text = $"{last.X:0.##}";
-				LblSpawnThing0.Text = $"0x{last.Thing0:X2}";
-				LblSpawnThing1.Text = $"0x{last.Thing1:X2}";
-				LblSpawnYaw.Text = $"{last.Yaw:0.##}";
-				LblSpawnThing2.Text = $"0x{last.Thing2:X2}";
-				LblSpawnZ.Text = $"{last.Z:0.##}";
+				LblSpawnX.Text = $"{_lastHarrySpawnPoint.X:0.##}";
+				LblSpawnThing0.Text = $"0x{_lastHarrySpawnPoint.Thing0:X2}";
+				LblSpawnThing1.Text = $"0x{_lastHarrySpawnPoint.Thing1:X2}";
+				LblSpawnYaw.Text = $"{_lastHarrySpawnPoint.Yaw:0.##}";
+				LblSpawnThing2.Text = $"0x{_lastHarrySpawnPoint.Thing2:X2}";
+				LblSpawnZ.Text = $"{_lastHarrySpawnPoint.Z:0.##}";
 			}
 		}
 

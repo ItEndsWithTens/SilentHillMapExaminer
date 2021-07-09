@@ -7,7 +7,7 @@ using System.Numerics;
 
 namespace BizHawk.Client.EmuHawk
 {
-	[ExternalTool(CustomMainForm.ToolName, Description = CustomMainForm.ToolDescription)]
+	[ExternalTool(ToolName, Description = ToolDescription)]
 
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
 	[ExternalToolApplicability.RomWhitelist(CoreSystem.Playstation, USRetailConstants.HashBizHawk)]
@@ -58,6 +58,12 @@ namespace BizHawk.Client.EmuHawk
 			CmbRenderMode.SelectedIndex = 0;
 
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
+
+			_arrayCountdown = new System.Timers.Timer(8)
+			{
+				AutoReset = true
+			};
+			_arrayCountdown.Elapsed += ArrayCountdown_Elapsed;
 		}
 
 		public override void UpdateValues(ToolFormUpdateType type)
@@ -90,6 +96,10 @@ namespace BizHawk.Client.EmuHawk
 						ReportStats();
 					}
 					//GetRegisterTest();
+					if (CbxTriggersAutoUpdate.Checked)
+					{
+						CheckForUpdatedTriggers();
+					}
 					break;
 				default:
 					break;
