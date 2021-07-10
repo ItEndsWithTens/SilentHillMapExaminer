@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>$(DevBuildVersionSuffix)</VersionSuffix>
+    
     <Company>Rob Martens</Company>
     <Copyright>Copyright © $([System.DateTime]::Now.Year)</Copyright>
     <Product>Silent Hill Map Examiner</Product>
