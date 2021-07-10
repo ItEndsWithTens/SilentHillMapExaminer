@@ -1,0 +1,61 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - '*'
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: false
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Get BizHawk submodule SHA
+      run: echo "bizhawk_hash=$(git rev-parse HEAD:lib/BizHawk)" >> $env:GITHUB_ENV
+        
+    - name: Load cached BizHawk binaries
+      id: bizhawk-binaries-cache
+      uses: actions/cache@v2
+      with:
+        path: lib\BizHawk\output
+        key: bizhawk-binaries-${{ env.bizhawk_hash }}
+        
+    - name: Check out BizHawk
+      if: ${{ !steps.bizhawk-binaries-cache.outputs.cache-hit }}
+      run: git submodule update --init
+
+    - name: Build BizHawk
+      if: ${{ !steps.bizhawk-binaries-cache.outputs.cache-hit }}
+      run: QuickTestBuildAndPackage_Release.bat
+      shell: cmd
+      working-directory: lib/BizHawk/Dist
+
+    - name: Set version suffix
+      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+      # The $env:GITHUB_ENV syntax is required for Windows build agents, in
+      # contrast to other platforms: https://stackoverflow.com/questions/66733076/github-actions-set-environment-variable-for-windows-build-with-powershell
+      run: echo "suffix=${{ github.sha }}" >> $env:GITHUB_ENV
+
+    - name: Build external tool
+      run: dotnet build -c:Release -t:CreateZip -p:GitSha=${{ env.suffix }}
+      working-directory: src/SHME.ExternalTool
+
+    - name: Upload .zip
+      uses: actions/upload-artifact@v2
+      with:
+        name: zip
+        path: artifacts/dist/*.zip
