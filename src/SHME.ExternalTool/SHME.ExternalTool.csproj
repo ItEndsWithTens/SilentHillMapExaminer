@@ -19,8 +19,20 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="InstallInEmulator" AfterTargets="PostBuildEvent">
     <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(BizHawkOutputDir)\ExternalTools" />
+  </Target>
+
+  <PropertyGroup>
+    <DistDir>$(ArtifactsDir)\dist\</DistDir>
+    <PrepDir>$(DistDir)\prep\</PrepDir>
+  </PropertyGroup>
+
+  <Target Name="CreateZip" DependsOnTargets="Build">
+    <RemoveDir Directories="$(PrepDir)" />
+    <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(PrepDir)" />
+    <Copy SourceFiles="$(TopLevelDirectory)\README.md" DestinationFiles="$(PrepDir)\$(MSBuildProjectName).txt" />
+    <ZipDirectory SourceDirectory="$(PrepDir)" DestinationFile="$(DistDir)\$(MSBuildProjectName).zip" Overwrite="true"/>
   </Target>
 
 </Project>
