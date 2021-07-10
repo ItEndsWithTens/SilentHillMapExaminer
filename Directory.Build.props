@@ -15,11 +15,11 @@
     <BuildOS Condition="$([MSBuild]::IsOsPlatform(`OSX`)) == true">macOS</BuildOS>
 
     <TopLevelDirectory>$(MSBuildThisFileDirectory)</TopLevelDirectory>
-    <BizHawkOutputDir>$(TopLevelDirectory)lib\BizHawk\output\</BizHawkOutputDir>
+    <BizHawkOutputDir>$(TopLevelDirectory)\lib\BizHawk\output\</BizHawkOutputDir>
 
-    <ArtifactsDir>$(TopLevelDirectory)artifacts\</ArtifactsDir>
-    <BaseIntermediateOutputPath>$(ArtifactsDir)obj\$(BuildOS)\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-    <BaseOutputPath>$(ArtifactsDir)bin\$(MSBuildProjectName)\</BaseOutputPath>
+    <ArtifactsDir>$(TopLevelDirectory)\artifacts\</ArtifactsDir>
+    <BaseIntermediateOutputPath>$(ArtifactsDir)\obj\$(BuildOS)\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(ArtifactsDir)\bin\$(MSBuildProjectName)\</BaseOutputPath>
 
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Deterministic>true</Deterministic>
