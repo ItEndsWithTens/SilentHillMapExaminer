@@ -3,6 +3,7 @@ name: Create release
 on:
   workflow_run:
     branches: [ master ]
+    types: [ completed ]
     workflows: [ build ]
 
 jobs:
