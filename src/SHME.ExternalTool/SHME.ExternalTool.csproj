@@ -26,13 +26,16 @@
   <PropertyGroup>
     <DistDir>$(ArtifactsDir)\dist\</DistDir>
     <PrepDir>$(DistDir)\prep\</PrepDir>
+
+    <ZipName Condition="$(VersionSuffix) == ''">$(MSBuildProjectName)-$(VersionPrefix)</ZipName>
+    <ZipName Condition="$(VersionSuffix) != ''">$(MSBuildProjectName)-$(VersionSuffix)</ZipName>
   </PropertyGroup>
 
   <Target Name="CreateZip" DependsOnTargets="Build">
     <RemoveDir Directories="$(PrepDir)" />
     <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(PrepDir)" />
     <Copy SourceFiles="$(TopLevelDirectory)\README.md" DestinationFiles="$(PrepDir)\$(MSBuildProjectName).txt" />
-    <ZipDirectory SourceDirectory="$(PrepDir)" DestinationFile="$(DistDir)\$(MSBuildProjectName).zip" Overwrite="true"/>
+    <ZipDirectory SourceDirectory="$(PrepDir)" DestinationFile="$(DistDir)\$(ZipName).zip" Overwrite="true"/>
   </Target>
 
 </Project>
