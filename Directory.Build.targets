@@ -11,7 +11,7 @@
     </Exec>
   </Target>
 
-  <Target Name="GitSetVersionFromTags" AfterTargets="GitCheck" Condition="$(GitCheckExitCode) == 0">
+  <Target Name="GitReadCommitInfo" AfterTargets="GitCheck" Condition="$(GitCheckExitCode) == 0">
     <Exec
       Command="git rev-parse HEAD"
       ConsoleToMsBuild="true"
@@ -47,8 +47,7 @@
     </Exec>
   </Target>
 
-  <Target Name="BuildFinalVersionNumber" AfterTargets="GitSetVersionFromTags">
-
+  <Target Name="DecideFinalVersionNumber" AfterTargets="GitReadCommitInfo" BeforeTargets="Build">
     <PropertyGroup>
       <GitFound>false</GitFound>
       <GitFound Condition="$(GitCheckExitCode) == 0">true</GitFound>
