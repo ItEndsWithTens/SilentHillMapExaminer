@@ -5,9 +5,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.1.0</VersionPrefix>
-    <VersionSuffix Condition="$(GitSha) != ''">dev-$(GitSha.Substring(0, 7))</VersionSuffix>
-
     <Company>Rob Martens</Company>
     <Copyright>Copyright © $([System.DateTime]::Now.Year)</Copyright>
     <Product>Silent Hill Map Examiner</Product>

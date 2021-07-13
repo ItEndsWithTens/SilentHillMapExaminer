@@ -1,0 +1,106 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="GitCheck" BeforeTargets="PrepareForBuild">
+    <Exec
+      Command="git --version"
+      ConsoleToMsBuild="true"
+      StandardOutputImportance="low"
+      StandardErrorImportance="low"
+      IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="GitCheckExitCode"/>
+    </Exec>
+  </Target>
+
+  <Target Name="GitSetVersionFromTags" AfterTargets="GitCheck" Condition="$(GitCheckExitCode) == 0">
+    <Exec
+      Command="git rev-parse HEAD"
+      ConsoleToMsBuild="true"
+      StandardOutputImportance="low"
+      StandardErrorImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitCurrentSha" />
+    </Exec>
+
+    <Exec
+      Command="git describe --tags --match v[0-9]*"
+      ConsoleToMsBuild="true"
+      StandardOutputImportance="low"
+      StandardErrorImportance="low"
+      IgnoreExitCode="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitDescribeOutput"/>
+      <Output TaskParameter="ExitCode" PropertyName="GitDescribeExitCode"/>
+    </Exec>
+
+    <Exec
+      Command="git update-index --refresh"
+      ConsoleToMsBuild="true"
+      StandardOutputImportance="low"
+      StandardErrorImportance="low"
+      IgnoreExitCode="true" />
+
+    <Exec
+      Command="git diff-index --quiet HEAD --"
+      ConsoleToMsBuild="true"
+      StandardOutputImportance="low"
+      StandardErrorImportance="low"
+      IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="GitDirtyExitCode"/>
+    </Exec>
+  </Target>
+
+  <Target Name="BuildFinalVersionNumber" AfterTargets="GitSetVersionFromTags">
+
+    <PropertyGroup>
+      <GitFound>false</GitFound>
+      <GitFound Condition="$(GitCheckExitCode) == 0">true</GitFound>
+    </PropertyGroup>
+
+    <Warning
+      Condition="!$(GitFound)"
+      Text="Couldn't run Git! Using dummy version numbers." />
+
+    <PropertyGroup Condition="!$(GitFound)">
+      <VersionPrefix>0.0.0</VersionPrefix>
+      <VersionMetadata>-0-gitnotfound</VersionMetadata>
+    </PropertyGroup>
+
+    <Warning
+      Condition="$(GitFound) And $(GitDescribeExitCode) != 0"
+      Text="Git describe found no tags! Using only current SHA as version metadata." />
+
+    <PropertyGroup Condition="$(GitDescribeExitCode) != 0">
+      <VersionPrefix>0.0.0</VersionPrefix>
+      <VersionMetadata>-0-g$(GitCurrentSha.Substring(0, 7))</VersionMetadata>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(GitDescribeExitCode) == 0">
+      <HyphenIndex>$(GitDescribeOutput.IndexOf('-'))</HyphenIndex>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(GitDescribeExitCode) == 0 And $(HyphenIndex) > -1">
+      <VersionLength>$([MSBuild]::Subtract($(HyphenIndex), 1))</VersionLength>
+      <VersionPrefix>$(GitDescribeOutput.Substring(1, $(VersionLength)))</VersionPrefix>
+      <VersionMetadata>$(GitDescribeOutput.Substring($(HyphenIndex)))</VersionMetadata>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(GitDescribeExitCode) == 0 And $(HyphenIndex) == -1">
+      <VersionPrefix>$(GitDescribeOutput.Substring(1))</VersionPrefix>
+      <VersionMetadata></VersionMetadata>
+    </PropertyGroup>
+
+    <Warning
+      Condition="$(GitDirtyExitCode) != 0"
+      Text="Working tree has uncommitted changes! Adding -dirty to version metadata." />
+
+    <PropertyGroup Condition="$(GitCheckExitCode) == 0">
+      <VersionMetadata Condition="$(GitDirtyExitCode) != 0">$(VersionMetadata)-dirty</VersionMetadata>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <VersionSuffix>$(VersionMetadata)</VersionSuffix>
+      <!--For some reason, when updating the prefix and suffix in a target
+      MSBuild doesn't update Version automatically.-->
+      <Version>$(VersionPrefix)$(VersionSuffix)</Version>
+    </PropertyGroup>
+  </Target>
+
+</Project>

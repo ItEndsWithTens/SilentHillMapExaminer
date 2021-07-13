@@ -44,14 +44,8 @@ jobs:
       shell: cmd
       working-directory: lib/BizHawk/Dist
 
-    - name: Set version suffix
-      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-      # The $env:GITHUB_ENV syntax is required for Windows build agents, in
-      # contrast to other platforms: https://stackoverflow.com/questions/66733076/github-actions-set-environment-variable-for-windows-build-with-powershell
-      run: echo "suffix=${{ github.sha }}" >> $env:GITHUB_ENV
-
     - name: Build external tool
-      run: dotnet build -c:Release -t:CreateZip -p:GitSha=${{ env.suffix }}
+      run: dotnet build -c:Release -t:CreateZip
       working-directory: src/SHME.ExternalTool
 
     - name: Upload .zip
