@@ -58,10 +58,10 @@ namespace SHME.ExternalTool
 				new Vertex(Min.X, Min.Y, Max.Z),
 
 				// Positive Y (top)
-				new Vertex(Max.X, Max.Y, Min.Z, Color.Lime),
-				new Vertex(Min.X, Max.Y, Min.Z, Color.Lime),
-				new Vertex(Min.X, Max.Y, Max.Z, Color.Lime),
-				new Vertex(Max.X, Max.Y, Max.Z, Color.Lime),
+				new Vertex(Max.X, Max.Y, Min.Z),
+				new Vertex(Min.X, Max.Y, Min.Z),
+				new Vertex(Min.X, Max.Y, Max.Z),
+				new Vertex(Max.X, Max.Y, Max.Z),
 
 				// Negative X (left)
 				new Vertex(Min.X, Min.Y, Min.Z),
@@ -70,16 +70,16 @@ namespace SHME.ExternalTool
 				new Vertex(Min.X, Max.Y, Min.Z),
 
 				// Positive X (right)
-				new Vertex(Max.X, Max.Y, Min.Z, Color.Red),
-				new Vertex(Max.X, Max.Y, Max.Z, Color.Red),
-				new Vertex(Max.X, Min.Y, Max.Z, Color.Red),
-				new Vertex(Max.X, Min.Y, Min.Z, Color.Red),
+				new Vertex(Max.X, Max.Y, Min.Z),
+				new Vertex(Max.X, Max.Y, Max.Z),
+				new Vertex(Max.X, Min.Y, Max.Z),
+				new Vertex(Max.X, Min.Y, Min.Z),
 
 				// Positive Z (back)
-				new Vertex(Min.X, Min.Y, Max.Z, Color.Blue),
-				new Vertex(Max.X, Min.Y, Max.Z, Color.Blue),
-				new Vertex(Max.X, Max.Y, Max.Z, Color.Blue),
-				new Vertex(Min.X, Max.Y, Max.Z, Color.Blue),
+				new Vertex(Min.X, Min.Y, Max.Z),
+				new Vertex(Max.X, Min.Y, Max.Z),
+				new Vertex(Max.X, Max.Y, Max.Z),
+				new Vertex(Min.X, Max.Y, Max.Z),
 
 				// Negative Z (front)
 				new Vertex(Max.X, Min.Y, Min.Z),
@@ -95,7 +95,7 @@ namespace SHME.ExternalTool
 
 			for (int i = 0; i < 24; i += 4)
 			{
-				var p = new Polygon();
+				var p = new Polygon(box);
 
 				p.LineLoopIndices.Add(i + 0);
 				p.LineLoopIndices.Add(i + 1);
@@ -185,7 +185,7 @@ namespace SHME.ExternalTool
 
 			for (int i = 0; i < 24; i += 4)
 			{
-				var p = new Polygon();
+				var p = new Polygon(box);
 
 				p.LineLoopIndices.Add(i + 0);
 				p.LineLoopIndices.Add(i + 1);

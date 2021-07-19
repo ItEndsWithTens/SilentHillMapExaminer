@@ -79,7 +79,7 @@ namespace SHME.ExternalTool
 
 			for (int i = 0; i < 24; i += 3)
 			{
-				var p = new Polygon();
+				var p = new Polygon(gem);
 
 				p.Indices.Add(i + 0);
 				p.Indices.Add(i + 1);

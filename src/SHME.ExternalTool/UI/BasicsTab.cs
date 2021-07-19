@@ -3,6 +3,7 @@ using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
@@ -235,7 +236,7 @@ namespace BizHawk.Client.EmuHawk
 			uint distance = (uint)Math.Sqrt(adjacentSquared);
 
 			Mem.WriteU16(Rom.Addresses.MainRam.ProjectionPlaneDistanceCurrent, distance);
-			
+
 			LblFov.Text = TrkFov.Value.ToString();
 		}
 
@@ -336,6 +337,71 @@ namespace BizHawk.Client.EmuHawk
 				TestBox.Position.X,
 				TestBox.Position.Y,
 				-(float)NudOverlayTestBoxZ.Value); // Convert from SH coords
+		}
+
+		private void RdoOverlayAxisColors_CheckedChanged(object sender, EventArgs e)
+		{
+			var east = new Vector3(1.0f, 0.0f, 0.0f);
+			var down = new Vector3(0.0f, -1.0f, 0.0f);
+			var up = new Vector3(0.0f, 1.0f, 0.0f);
+			var south = new Vector3(0.0f, 0.0f, 1.0f);
+			var north = new Vector3(0.0f, 0.0f, -1.0f);
+
+			foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Pois)
+			{
+				if (pair.Value == null)
+				{
+					continue;
+				}
+
+				Renderable r = pair.Value;
+
+				foreach (Polygon p in r.Polygons)
+				{
+					p.Color = Color.White;
+				}
+
+				// Positive X is always pointing east.
+				if (!RdoOverlayAxisColorsOff.Checked)
+				{
+					IEnumerable<Polygon>? easts = r.Polygons.Where((p) => p.Normal == east);
+					foreach (Polygon p in easts)
+					{
+						p.Color = Color.Red;
+					}
+				}
+
+				// Positive Y down, positive Z north
+				if (RdoOverlayAxisColorsGame.Checked)
+				{
+					IEnumerable<Polygon>? downs = r.Polygons.Where((p) => p.Normal == down);
+					foreach (Polygon p in downs)
+					{
+						p.Color = Color.Lime;
+					}
+
+					IEnumerable<Polygon>? norths = r.Polygons.Where((p) => p.Normal == north);
+					foreach (Polygon p in norths)
+					{
+						p.Color = Color.Blue;
+					}
+				}
+				// Positive Y up, positive Z south
+				else if (RdoOverlayAxisColorsOverlay.Checked)
+				{
+					IEnumerable<Polygon>? ups = r.Polygons.Where((p) => p.Normal == up);
+					foreach (Polygon p in ups)
+					{
+						p.Color = Color.Lime;
+					}
+
+					IEnumerable<Polygon>? souths = r.Polygons.Where((p) => p.Normal == south);
+					foreach (Polygon p in souths)
+					{
+						p.Color = Color.Blue;
+					}
+				}
+			}
 		}
 	}
 }

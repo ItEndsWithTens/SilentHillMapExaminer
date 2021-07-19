@@ -160,7 +160,7 @@ namespace BizHawk.Client.EmuHawk
 				w = 320;
 				origin.X = 17;
 			}
-			else if(Emu.BufferWidth() == 800)
+			else if (Emu.BufferWidth() == 800)
 			{
 				w = 640;
 				origin.X = 84;

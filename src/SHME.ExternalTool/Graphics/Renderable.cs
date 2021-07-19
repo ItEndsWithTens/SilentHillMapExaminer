@@ -181,7 +181,13 @@ namespace SHME.ExternalTool
 			Indices = new List<int>(r.Indices);
 			LineLoopIndices = new List<int>(r.LineLoopIndices);
 			ModelMatrix = r.ModelMatrix;
+
 			Polygons = new List<Polygon>(r.Polygons);
+			foreach (Polygon p in Polygons)
+			{
+				p.Renderable = this;
+			}
+
 			_position = r.Position;
 			Translucent = r.Translucent;
 			Vertices = new List<Vertex>(r.Vertices);
@@ -323,12 +329,9 @@ namespace SHME.ExternalTool
 		/// </summary>
 		public void SetColor(Color color)
 		{
-			for (int i = 0; i < Vertices.Count; i++)
+			foreach (Polygon p in Polygons)
 			{
-				Vertex v = Vertices[i];
-				v.Color = color;
-
-				Vertices[i] = v;
+				p.Color = color;
 			}
 
 			OnUpdated();

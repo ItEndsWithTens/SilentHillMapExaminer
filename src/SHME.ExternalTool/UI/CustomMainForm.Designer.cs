@@ -83,6 +83,10 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.RdoOverlayAxisColorsOff = new System.Windows.Forms.RadioButton();
+            this.label44 = new System.Windows.Forms.Label();
+            this.RdoOverlayAxisColorsOverlay = new System.Windows.Forms.RadioButton();
+            this.RdoOverlayAxisColorsGame = new System.Windows.Forms.RadioButton();
             this.LblPoiCount1 = new System.Windows.Forms.Label();
             this.CmbRenderMode = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
@@ -990,6 +994,10 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxOverlay
             // 
+            this.GbxOverlay.Controls.Add(this.RdoOverlayAxisColorsOff);
+            this.GbxOverlay.Controls.Add(this.label44);
+            this.GbxOverlay.Controls.Add(this.RdoOverlayAxisColorsOverlay);
+            this.GbxOverlay.Controls.Add(this.RdoOverlayAxisColorsGame);
             this.GbxOverlay.Controls.Add(this.LblPoiCount1);
             this.GbxOverlay.Controls.Add(this.CmbRenderMode);
             this.GbxOverlay.Controls.Add(this.label28);
@@ -1028,6 +1036,59 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabIndex = 15;
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
+            // 
+            // RdoOverlayAxisColorsOff
+            // 
+            this.RdoOverlayAxisColorsOff.AutoSize = true;
+            this.RdoOverlayAxisColorsOff.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.RdoOverlayAxisColorsOff.Location = new System.Drawing.Point(351, 158);
+            this.RdoOverlayAxisColorsOff.Name = "RdoOverlayAxisColorsOff";
+            this.RdoOverlayAxisColorsOff.Size = new System.Drawing.Size(39, 17);
+            this.RdoOverlayAxisColorsOff.TabIndex = 58;
+            this.RdoOverlayAxisColorsOff.TabStop = true;
+            this.RdoOverlayAxisColorsOff.Text = "Off";
+            this.RdoOverlayAxisColorsOff.UseVisualStyleBackColor = true;
+            this.RdoOverlayAxisColorsOff.CheckedChanged += new System.EventHandler(this.RdoOverlayAxisColors_CheckedChanged);
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(282, 142);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(108, 13);
+            this.label44.TabIndex = 57;
+            this.label44.Text = "Positive axis coloring:";
+            this.toolTip1.SetToolTip(this.label44, "Cardinal directions relative to the top-down map view of Old Silent\r\nHill. The ar" +
+        "ea maps of indoor levels may not match this.");
+            // 
+            // RdoOverlayAxisColorsOverlay
+            // 
+            this.RdoOverlayAxisColorsOverlay.AutoSize = true;
+            this.RdoOverlayAxisColorsOverlay.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.RdoOverlayAxisColorsOverlay.Location = new System.Drawing.Point(284, 158);
+            this.RdoOverlayAxisColorsOverlay.Name = "RdoOverlayAxisColorsOverlay";
+            this.RdoOverlayAxisColorsOverlay.Size = new System.Drawing.Size(61, 17);
+            this.RdoOverlayAxisColorsOverlay.TabIndex = 56;
+            this.RdoOverlayAxisColorsOverlay.TabStop = true;
+            this.RdoOverlayAxisColorsOverlay.Text = "Overlay";
+            this.toolTip1.SetToolTip(this.RdoOverlayAxisColorsOverlay, "X east, Y up, Z south");
+            this.RdoOverlayAxisColorsOverlay.UseVisualStyleBackColor = true;
+            this.RdoOverlayAxisColorsOverlay.CheckedChanged += new System.EventHandler(this.RdoOverlayAxisColors_CheckedChanged);
+            // 
+            // RdoOverlayAxisColorsGame
+            // 
+            this.RdoOverlayAxisColorsGame.AutoSize = true;
+            this.RdoOverlayAxisColorsGame.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.RdoOverlayAxisColorsGame.Checked = true;
+            this.RdoOverlayAxisColorsGame.Location = new System.Drawing.Point(225, 158);
+            this.RdoOverlayAxisColorsGame.Name = "RdoOverlayAxisColorsGame";
+            this.RdoOverlayAxisColorsGame.Size = new System.Drawing.Size(53, 17);
+            this.RdoOverlayAxisColorsGame.TabIndex = 55;
+            this.RdoOverlayAxisColorsGame.TabStop = true;
+            this.RdoOverlayAxisColorsGame.Text = "Game";
+            this.toolTip1.SetToolTip(this.RdoOverlayAxisColorsGame, "X east, Y down, Z north");
+            this.RdoOverlayAxisColorsGame.UseVisualStyleBackColor = true;
+            this.RdoOverlayAxisColorsGame.CheckedChanged += new System.EventHandler(this.RdoOverlayAxisColors_CheckedChanged);
             // 
             // LblPoiCount1
             // 
@@ -3041,5 +3102,9 @@ namespace BizHawk.Client.EmuHawk
 		private ComboBox CmbSelectedTriggerType;
 		private Label label46;
 		private CheckBox CbxTriggersAutoUpdate;
+		private Label label44;
+		private RadioButton RdoOverlayAxisColorsOverlay;
+		private RadioButton RdoOverlayAxisColorsGame;
+		private RadioButton RdoOverlayAxisColorsOff;
 	}
 }

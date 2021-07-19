@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 
 // NOTE: Converted to Y-up, right-handed coordinates only! Convenience functions
@@ -23,10 +24,6 @@ namespace SHME.ExternalTool
 		/// </summary>
 		public string IntendedTextureName { get; set; } = "";
 
-		/// <summary>
-		/// The texture currently applied to this polygon. If the texture named
-		/// by IntendedTexture isn't available, a placeholder will be used.
-		/// </summary>
 		public Vector3 BasisS;
 		public Vector3 BasisT;
 		public Vector2 Offset;
@@ -38,12 +35,36 @@ namespace SHME.ExternalTool
 		public IntPtr IndexOffset;
 		public IntPtr LineLoopIndexOffset { get; set; } = IntPtr.Zero;
 
-		public Polygon()
+		private Color _color = Color.White;
+		public Color Color
 		{
+			get {  return _color; }
+			set
+			{
+				_color = value;
+
+				foreach (int i in Indices)
+				{
+					Vertex v = Renderable.Vertices[i];
+
+					v.Color = _color;
+
+					Renderable.Vertices.RemoveAt(i);
+					Renderable.Vertices.Insert(i, v);
+				}
+			}
+		}
+
+		public Renderable Renderable { get; set; }
+
+		public Polygon(Renderable r)
+		{
+			Renderable = r;
 			Indices = new List<int>();
 		}
 		public Polygon(Polygon p)
 		{
+			Renderable = p.Renderable;
 			Indices = new List<int>(p.Indices);
 			LineLoopIndices = new List<int>(p.LineLoopIndices);
 			IntendedTextureName = p.IntendedTextureName;
@@ -53,6 +74,7 @@ namespace SHME.ExternalTool
 			Rotation = p.Rotation;
 			Scale = new Vector2(p.Scale.X, p.Scale.Y);
 			Normal = new Vector3(p.Normal.X, p.Normal.Y, p.Normal.Z);
+			Color = p.Color;
 		}
 
 		public static Polygon Rotate(Polygon polygon, float pitch, float yaw, float roll)

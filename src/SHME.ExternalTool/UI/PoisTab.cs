@@ -163,6 +163,7 @@ namespace BizHawk.Client.EmuHawk
 		private void BtnReadTriggers_Click(object sender, EventArgs e)
 		{
 			BtnReadPois_Click(this, EventArgs.Empty);
+			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 			BtnReadStrings_Click(this, EventArgs.Empty);
 
 			Triggers.Clear();
