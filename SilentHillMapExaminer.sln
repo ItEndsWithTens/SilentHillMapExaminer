@@ -23,6 +23,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{3022183A-4EF8-49D0-A2BB-99A52B0F8D99}"
 	ProjectSection(SolutionItems) = preProject
 		lib\Directory.Build.props = lib\Directory.Build.props
+		lib\Directory.Build.targets = lib\Directory.Build.targets
 	EndProjectSection
 EndProject
 Global
