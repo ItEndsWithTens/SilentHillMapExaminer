@@ -54,7 +54,12 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnFogColor_Click(object sender, EventArgs e)
 		{
-			var dialog = new ColorDialog();
+			using var dialog = new ColorDialog()
+			{
+				FullOpen = true,
+				Color = Color.FromArgb((int)NudFogR.Value, (int)NudFogG.Value, (int)NudFogB.Value)
+			};
+
 			DialogResult result = dialog.ShowDialog(this);
 
 			if (result == DialogResult.OK)
@@ -91,7 +96,12 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnWorldTintColor_Click(object sender, EventArgs e)
 		{
-			var dialog = new ColorDialog();
+			using var dialog = new ColorDialog()
+			{
+				FullOpen = true,
+				Color = Color.FromArgb((int)NudWorldTintR.Value, (int)NudWorldTintG.Value, (int)NudWorldTintB.Value)
+			};
+
 			DialogResult result = dialog.ShowDialog(this);
 
 			if (result == DialogResult.OK)
@@ -128,6 +138,13 @@ namespace BizHawk.Client.EmuHawk
 			NudWorldTintR.Value = Mem!.ReadByte(Rom.Addresses.MainRam.WorldTintR);
 			NudWorldTintG.Value = Mem!.ReadByte(Rom.Addresses.MainRam.WorldTintG);
 			NudWorldTintB.Value = Mem!.ReadByte(Rom.Addresses.MainRam.WorldTintB);
+		}
+
+		private void BtnFogWorldTintColorSwap_Click(object sender, EventArgs e)
+		{
+			(NudFogR.Value, NudWorldTintR.Value) = (NudWorldTintR.Value, NudFogR.Value);
+			(NudFogG.Value, NudWorldTintG.Value) = (NudWorldTintG.Value, NudFogG.Value);
+			(NudFogB.Value, NudWorldTintB.Value) = (NudWorldTintB.Value, NudFogB.Value);
 		}
 	}
 }
