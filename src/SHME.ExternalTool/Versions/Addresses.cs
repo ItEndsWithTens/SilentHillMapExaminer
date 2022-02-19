@@ -75,8 +75,9 @@
 		public long Inventory { get; set; }
 		public long ItemCount { get; set; }
 
-		public long DistanceRun { get; set; }
-		public long DistanceWalked { get; set; }
+		public long TotalTime { get; set; }
+		public long RunningDistance { get; set; }
+		public long WalkingDistance { get; set; }
 
 		public long FramebufferWidth { get; set; }
 		public long FramebufferHeight { get; set; }

@@ -93,8 +93,9 @@
 				Inventory = 0xBCADC, // Not quite. The most significant byte reflects the number of item slots, but doesn't give you the items.
 				ItemCount = 0xBCC70,
 
-				DistanceRun = 0xBCC88,
-				DistanceWalked = 0xBCC8C,
+				TotalTime = 0xBCC84,
+				RunningDistance = 0xBCC88,
+				WalkingDistance = 0xBCC8C,
 
 				FramebufferWidth = 0xBCCB0,
 				// Keep these two in sync if adjusting by hand! Rendering goes screwy otherwise.
