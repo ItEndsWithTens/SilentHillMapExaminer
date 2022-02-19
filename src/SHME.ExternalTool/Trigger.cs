@@ -19,7 +19,8 @@ namespace SHME.ExternalTool
 
 		public byte Thing0 { get; }
 		public byte Thing1 { get; }
-		public short Thing2 { get; }
+		public byte FiredBitShift { get; }
+		public short SomeIndex { get; }
 		/// <summary>
 		/// How this trigger gets activated.
 		/// </summary>
@@ -65,21 +66,28 @@ namespace SHME.ExternalTool
 
 			Thing0 = bytes[0];
 			Thing1 = bytes[1];
-			Thing2 = BitConverter.ToInt16(bytes, 2);
+
+			short stateRaw = BitConverter.ToInt16(bytes, 2);
+			int raw0 = (stateRaw & 0b00000000_00011111) >> 0;
+			int raw1 = (stateRaw & 0b11111111_11100000) >> 5;
+
+			FiredBitShift = (byte)raw0;
+			SomeIndex = (short)raw1;
+
 			Style = bytes[4];
 			PoiIndex = bytes[5];
 			Thing3 = bytes[6];
 			Thing4 = bytes[7];
 			TypeInfo = BitConverter.ToUInt32(bytes, 8);
 
-			uint raw0 = (TypeInfo & 0b00000000_00000000_00000000_00011111) >> 0;
-			uint raw1 = (TypeInfo & 0b00000000_00000000_00011111_11100000) >> 5;
-			uint raw2 = (TypeInfo & 0b00000000_00000111_11100000_00000000) >> 13;
-			uint raw3 = (TypeInfo & 0b00000001_11111000_00000000_00000000) >> 19;
-			uint raw4 = (TypeInfo & 0b11111110_00000000_00000000_00000000) >> 25;
+			uint raw2 = (TypeInfo & 0b00000000_00000000_00000000_00011111) >> 0;
+			uint raw3 = (TypeInfo & 0b00000000_00000000_00011111_11100000) >> 5;
+			uint raw4 = (TypeInfo & 0b00000000_00000111_11100000_00000000) >> 13;
+			uint raw5 = (TypeInfo & 0b00000001_11111000_00000000_00000000) >> 19;
+			uint raw6 = (TypeInfo & 0b11111110_00000000_00000000_00000000) >> 25;
 
-			TriggerType = (TriggerType)raw0;
-			TargetIndex = (byte)raw1;
+			TriggerType = (TriggerType)raw2;
+			TargetIndex = (byte)raw3;
 		}
 	}
 }

@@ -49,7 +49,7 @@ namespace BizHawk.Client.EmuHawk
 		private long _previousFunctionPointerArrayAddress;
 		private long _previousTriggerArrayAddress;
 		private long _previousUnknownThingAddress;
-		private void CheckForUpdatedTriggers()
+		private void CheckForTriggerArrayUpdate()
 		{
 			int poiArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
 			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
@@ -77,6 +77,51 @@ namespace BizHawk.Client.EmuHawk
 
 				_arrayCountdownStartFrameCount = Emulation!.FrameCount();
 				_arrayCountdown.Start();
+			}
+		}
+
+		private int? _previousSelectedTriggerIndex;
+		private string? _previousTriggerBodyHash;
+		private bool? _previousTriggerFired;
+		private void CheckForSelectedTriggerUpdate()
+		{
+			if (LbxTriggers.SelectedItem == null)
+			{
+				return;
+			}
+
+			var t = (Trigger)LbxTriggers.SelectedItem;
+
+			long address = t.Address + Rom.Addresses.MainRam.BaseAddress;
+
+			string body = Mem!.HashRegion(address, 12);
+
+			long ofs = Rom.Addresses.MainRam.SaveData;
+			int group = Mem!.ReadS32(ofs + (t.SomeIndex * 4) + 0x168);
+			int firedBit = (group >> t.FiredBitShift) & 1;
+			bool fired = firedBit != 0;
+
+			if (LbxTriggers.SelectedIndex != _previousSelectedTriggerIndex)
+			{
+				_previousSelectedTriggerIndex = LbxTriggers.SelectedIndex;
+				_previousTriggerBodyHash = body;
+				_previousTriggerFired = fired;
+
+				return;
+			}
+
+			if (body != _previousTriggerBodyHash || fired != _previousTriggerFired)
+			{
+				List<byte> bytes = Mem!.ReadByteRange(address, 12);
+
+				var updated = new Trigger(t.Address, bytes);
+
+				LbxTriggers.Items[LbxTriggers.SelectedIndex] = updated;
+
+				_previousTriggerBodyHash = body;
+				_previousTriggerFired = fired;
+
+				LbxTriggers_SelectedIndexChanged(LbxTriggers, EventArgs.Empty);
 			}
 		}
 
@@ -225,12 +270,19 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerAddress.Text = $"0x{t.Address:X}";
 				LblSelectedTriggerThing0.Text = $"0x{t.Thing0:X2}";
 				LblSelectedTriggerThing1.Text = $"0x{t.Thing1:X2}";
-				LblSelectedTriggerThing2.Text = $"0x{t.Thing2:X4}";
+				LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex:X}";
 				LblSelectedTriggerStyle.Text = $"0x{t.Style:X2}";
 				LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex}";
 				LblSelectedTriggerThing3.Text = $"0x{t.Thing3:X2}";
 				LblSelectedTriggerThing4.Text = $"0x{t.Thing4:X2}";
 				LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X8}";
+
+				long ofs = Rom.Addresses.MainRam.SaveData;
+				long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
+				int group = Mem!.ReadS32(groupOfs);
+				int firedBit = (group >> t.FiredBitShift) & 1;
+				LblSelectedTriggerFired.Text = $"{firedBit != 0}";
+				LblSelectedTriggerFiredDetails.Text = $"(Group address 0x{groupOfs:X}, bit 0x{1 << t.FiredBitShift:X})";
 
 				if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
 				{
@@ -278,15 +330,17 @@ namespace BizHawk.Client.EmuHawk
 			}
 			else
 			{
-				LblSelectedTriggerAddress.Text = $"0x";
-				LblSelectedTriggerThing0.Text = $"0x";
-				LblSelectedTriggerThing1.Text = $"0x";
-				LblSelectedTriggerThing2.Text = $"0x";
-				LblSelectedTriggerStyle.Text = $"0x";
-				LblSelectedTriggerPoiIndex.Text = $"";
-				LblSelectedTriggerThing3.Text = $"0x";
-				LblSelectedTriggerThing4.Text = $"0x";
-				LblSelectedTriggerTypeInfo.Text = $"0x";
+				LblSelectedTriggerAddress.Text = "0x";
+				LblSelectedTriggerThing0.Text = "0x";
+				LblSelectedTriggerThing1.Text = "0x";
+				LblSelectedTriggerFired.Text = "";
+				LblSelectedTriggerFiredDetails.Text = $"(Group address 0x??, bit 0x??)";
+				LblSelectedTriggerSomeIndex.Text = "0x";
+				LblSelectedTriggerStyle.Text = "0x";
+				LblSelectedTriggerPoiIndex.Text = "";
+				LblSelectedTriggerThing3.Text = "0x";
+				LblSelectedTriggerThing4.Text = "0x";
+				LblSelectedTriggerTypeInfo.Text = "0x";
 				NudSelectedTriggerTargetIndex.Value = -1;
 				CmbSelectedTriggerType.SelectedIndex = -1;
 			}

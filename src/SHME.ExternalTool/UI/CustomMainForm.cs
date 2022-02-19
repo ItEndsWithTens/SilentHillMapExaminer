@@ -98,7 +98,11 @@ namespace BizHawk.Client.EmuHawk
 					//GetRegisterTest();
 					if (CbxTriggersAutoUpdate.Checked)
 					{
-						CheckForUpdatedTriggers();
+						CheckForTriggerArrayUpdate();
+					}
+					if (CbxSelectedTriggerEnableUpdates.Checked)
+					{
+						CheckForSelectedTriggerUpdate();
 					}
 					break;
 				default:

@@ -29,6 +29,8 @@
 				Mat31_32 = 0xC3810,
 				Mat33 = 0xC3814,
 
+				IndexOfMostRecentlyActiveString = 0xA99AC,
+
 				// From the no$psx docs:
 				//
 				// cop2r37 (cnt5) - TRX - Translation vector X (R/W?)
@@ -40,7 +42,17 @@
 				GteTranslationInputY = 0xB0324,
 				GteTranslationInputZ = 0xB0328,
 
+				// Number of saves in current run; changing the latter
+				// address actually changes what the save management
+				// screen shows at the bottom for the "Saves" stat.
+				//0xB2784
+				//0xB278F
+
 				IsCameraUnlocked = 0xB9CD0,
+
+				CameraSpringArmTensionX = 0xAFCD0, // Mirrored at 0xB9D04
+				CameraSpringArmTensionY = 0xAFCD4, // Mirrored at 0xB9D08
+				CameraSpringArmTensionZ = 0xAFCD8, // Mirrored at 0xB9D0C
 
 				// Hmm...could these conceivably be the translation parts of
 				// a full-on projection matrix? Hadn't paid too much attention
@@ -69,6 +81,10 @@
 				CameraIdealYaw = 0xB9D8A,
 				CameraIdealRoll = 0xB9D8C,
 
+				CameraRollThing = 0xB9D98, // Low 12 bits is current camera roll speed(?), split in half: 0x000 through 0x7FF rotates CCW relative to camera (CW in terms of the coordinate system, i.e. when looking against the direction of the camera's front vector), while 0x800 through 0xFFF go the other way.
+				// Well now wait, there's more than that. 0x00 through 0x4F roll left a certain distance and then stop. At 0x50, the camera starts rolling further and then loops around, perpetually. Not sure what's going on.
+				// More details: freezing 0xB9D5E through 0xB9D94, then playing with this value, shows it just does rotation about one world axis. X, I think, and doesn't actually do the perpetual spin thing on its own. I guess this might just be the camera's orientation expressed in world coordinates instead of local coordinates?
+
 				CameraLockedToHead = 0xB9DA8,
 
 				HarryPositionX = 0xBA024,
@@ -89,8 +105,12 @@
 
 				HarryState = 0xBA150,
 
-				InventoryFirst = 0xBCA34,
+				SaveData = 0xBCA34,
+				// 0xBCA35 // Health drink count
+				// 0xBCA39 // First aid kit count
+
 				Inventory = 0xBCADC, // Not quite. The most significant byte reflects the number of item slots, but doesn't give you the items.
+				TriggerState = 0xBCB98,
 				ItemCount = 0xBCC70,
 
 				TotalTime = 0xBCC84,
@@ -123,6 +143,15 @@
 				WorldTintR = 0xC4190,
 				WorldTintG = 0xC4191,
 				WorldTintB = 0xC4192,
+
+				// One byte; which ending is displayed on the stats
+				// screen.
+				// 0x01 - GOOD+
+				// 0x02 - GOOD
+				// 0x04 - BAD+
+				// 0x08 - BAD
+				// 0x10 - UFO
+				// 0xC48B2
 
 				SnowVolumeHeightMaybe = 0xC6FA8,
 

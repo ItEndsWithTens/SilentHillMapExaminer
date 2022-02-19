@@ -25,11 +25,22 @@
 		public long Mat31_32 { get; set; }
 		public long Mat33 { get; set; }
 
+		public long IndexOfMostRecentlyActiveString { get; set; }
+
 		public long GteTranslationInputX { get; set; }
 		public long GteTranslationInputY { get; set; }
 		public long GteTranslationInputZ { get; set; }
 
 		public long IsCameraUnlocked { get; set; }
+
+		// Possibly misnamed? The second one definitely controls vertical
+		// spring tension, but if either the first or last of these is set
+		// to 0, the camera won't move on either axis, regardless of what
+		// the other one is set to. Needs more investigation. Seems to use
+		// the lower of the two X/Z values.
+		public long CameraSpringArmTensionX { get; set; }
+		public long CameraSpringArmTensionY { get; set; }
+		public long CameraSpringArmTensionZ { get; set; }
 
 		public long CameraPositionIdealX { get; set; }
 		public long CameraPositionIdealY { get; set; }
@@ -51,6 +62,8 @@
 		public long CameraIdealYaw { get; set; }
 		public long CameraIdealRoll { get; set; }
 
+		public long CameraRollThing { get; set; }
+
 		public long CameraLockedToHead { get; set; }
 
 		public long HarryPositionX { get; set; }
@@ -71,8 +84,9 @@
 
 		public long HarryState { get; set; }
 
-		public long InventoryFirst { get; set; }
+		public long SaveData { get; set; }
 		public long Inventory { get; set; }
+		public long TriggerState { get; set; }
 		public long ItemCount { get; set; }
 
 		public long TotalTime { get; set; }
