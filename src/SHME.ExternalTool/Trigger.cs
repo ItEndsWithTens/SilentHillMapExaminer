@@ -9,6 +9,8 @@ namespace SHME.ExternalTool
 		Door1 = 0x05,
 		Door2 = 0x06,
 		Text = 0x07,
+		Save0 = 0x08,
+		Save1 = 0x09,
 		Function1 = 0x0A,
 		Function2 = 0x0B
 	}

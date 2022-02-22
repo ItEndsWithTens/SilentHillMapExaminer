@@ -313,6 +313,16 @@ namespace BizHawk.Client.EmuHawk
 						NudSelectedTriggerTargetIndex.Maximum = Int32.Parse(LblStringCount.Text) - 1;
 						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
 						break;
+					case TriggerType.Save0:
+					case TriggerType.Save1:
+						// On using a save trigger, address 0x801E74A8 is loaded
+						// with an array of pointers to save point name strings.
+						// There are only 24 in the entire game, plus "Anywhere"
+						// which I hope suggests a debug function somewhere that
+						// can save wherever you want. Fingers crossed.
+						NudSelectedTriggerTargetIndex.Maximum = 24;
+						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+						break;
 					case TriggerType.Function1:
 					case TriggerType.Function2:
 						int s = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
