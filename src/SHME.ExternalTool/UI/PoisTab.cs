@@ -117,6 +117,7 @@ namespace BizHawk.Client.EmuHawk
 				var updated = new Trigger(t.Address, bytes);
 
 				LbxTriggers.Items[LbxTriggers.SelectedIndex] = updated;
+				LbxPoiAssociatedTriggers.Items[LbxPoiAssociatedTriggers.SelectedIndex] = updated;
 
 				_previousTriggerBodyHash = body;
 				_previousTriggerFired = fired;
@@ -238,6 +239,24 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private void CbxSelectedTriggerEnabled_CheckedChanged(object sender, EventArgs e)
+		{
+			if (LbxTriggers.SelectedItem is Trigger t)
+			{
+				long address = t.Address + Rom.Addresses.MainRam.BaseAddress;
+				uint existing = Mem!.ReadByte(address);
+
+				if (CbxSelectedTriggerDisabled.Checked)
+				{
+					Mem!.WriteByte(address, (byte)(existing | 0b10000000));
+				}
+				else
+				{
+					Mem!.WriteByte(address, (byte)(existing & 0b01111111));
+				}
+			}
+		}
+
 		private void LbxTriggers_Format(object sender, ListControlConvertEventArgs e)
 		{
 			var t = (Trigger)e.ListItem;
@@ -269,6 +288,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				LblSelectedTriggerAddress.Text = $"0x{t.Address:X}";
 				LblSelectedTriggerThing0.Text = $"0x{t.Thing0:X2}";
+				CbxSelectedTriggerDisabled.Checked = t.Disabled;
 				LblSelectedTriggerThing1.Text = $"0x{t.Thing1:X2}";
 				LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex:X}";
 				LblSelectedTriggerStyle.Text = $"0x{t.Style:X2}";
@@ -342,6 +362,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				LblSelectedTriggerAddress.Text = "0x";
 				LblSelectedTriggerThing0.Text = "0x";
+				CbxSelectedTriggerDisabled.Checked = false;
 				LblSelectedTriggerThing1.Text = "0x";
 				LblSelectedTriggerFired.Text = "";
 				LblSelectedTriggerFiredDetails.Text = $"(Group address 0x??, bit 0x??)";

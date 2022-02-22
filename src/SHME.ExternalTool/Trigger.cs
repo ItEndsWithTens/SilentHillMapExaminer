@@ -20,6 +20,7 @@ namespace SHME.ExternalTool
 		public long Address { get; }
 
 		public byte Thing0 { get; }
+		public bool Disabled { get; }
 		public byte Thing1 { get; }
 		public byte FiredBitShift { get; }
 		public short SomeIndex { get; }
@@ -67,6 +68,12 @@ namespace SHME.ExternalTool
 			Address = address;
 
 			Thing0 = bytes[0];
+
+			// Having a property named "Enabled" might be more intuitive, but it
+			// would be less reflective of the Silent Hill engine, which sets
+			// this bit for the disabled state and clears it for enabled.
+			Disabled = ((Thing0 >> 7) & 1) == 1;
+
 			Thing1 = bytes[1];
 
 			short stateRaw = BitConverter.ToInt16(bytes, 2);
