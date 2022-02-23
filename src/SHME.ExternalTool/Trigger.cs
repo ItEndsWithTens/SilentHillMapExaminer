@@ -17,9 +17,19 @@ namespace SHME.ExternalTool
 
 	public class Trigger
 	{
+		public static int SizeInBytes { get; } = 12;
+
 		public long Address { get; }
 
 		public byte Thing0 { get; }
+		/// <summary>
+		/// Whether this trigger is usable or not.
+		/// </summary>
+		/// <remarks>
+		/// A property named "Enabled" might be more intuitive, but it would be
+		/// less reflective of the Silent Hill engine, which sets a bit for the
+		/// disabled state and clears it for enabled.
+		/// </remarks>
 		public bool Disabled { get; }
 		public byte Thing1 { get; }
 		public byte FiredBitShift { get; }
@@ -68,10 +78,6 @@ namespace SHME.ExternalTool
 			Address = address;
 
 			Thing0 = bytes[0];
-
-			// Having a property named "Enabled" might be more intuitive, but it
-			// would be less reflective of the Silent Hill engine, which sets
-			// this bit for the disabled state and clears it for enabled.
 			Disabled = ((Thing0 >> 7) & 1) == 1;
 
 			Thing1 = bytes[1];

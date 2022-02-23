@@ -226,31 +226,24 @@ namespace BizHawk.Client.EmuHawk
 			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 			BtnReadStrings_Click(this, EventArgs.Empty);
 
-			Triggers.Clear();
-
 			int triggerArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
 			triggerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			int unknownThingAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToUnknownThingAfterArrayOfTriggers);
-			unknownThingAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
-
-			int triggerArrayBytes = unknownThingAddress - triggerArrayAddress;
-			int triggerBytes = 12;
-			int triggerCount = triggerArrayBytes / triggerBytes;
-
-			LblTriggerCount.Text = triggerCount.ToString();
-
+			Triggers.Clear();
 			LbxTriggers.Items.Clear();
 
-			for (int i = 0; i < triggerCount; i++)
+			int ofs = triggerArrayAddress;
+			var t = new Trigger(ofs, Mem!.ReadByteRange(ofs, Trigger.SizeInBytes));
+			while (t.Style != 0x0F)
 			{
-				int ofs = triggerArrayAddress + (triggerBytes * i);
+				Triggers.Add(t);
+				LbxTriggers.Items.Add(t);
 
-				var trigger = new Trigger(ofs, Mem!.ReadByteRange(ofs, 12));
-
-				Triggers.Add(trigger);
-				LbxTriggers.Items.Add(trigger);
+				ofs += Trigger.SizeInBytes;
+				t = new Trigger(ofs, Mem!.ReadByteRange(ofs, Trigger.SizeInBytes));
 			}
+
+			LblTriggerCount.Text = $"{Triggers.Count}";
 		}
 
 		private void CbxSelectedTriggerEnabled_CheckedChanged(object sender, EventArgs e)
@@ -303,6 +296,7 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerAddress.Text = $"0x{t.Address:X}";
 				LblSelectedTriggerThing0.Text = $"0x{t.Thing0:X2}";
 				CbxSelectedTriggerDisabled.Checked = t.Disabled;
+				CbxSelectedTriggerDisabled.Enabled = true;
 				LblSelectedTriggerThing1.Text = $"0x{t.Thing1:X2}";
 				LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex:X}";
 				LblSelectedTriggerStyle.Text = $"0x{t.Style:X2}";
@@ -377,6 +371,7 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerAddress.Text = "0x";
 				LblSelectedTriggerThing0.Text = "0x";
 				CbxSelectedTriggerDisabled.Checked = false;
+				CbxSelectedTriggerDisabled.Enabled = false;
 				LblSelectedTriggerThing1.Text = "0x";
 				LblSelectedTriggerFired.Text = "";
 				LblSelectedTriggerFiredDetails.Text = $"(Group address 0x??, bit 0x??)";
