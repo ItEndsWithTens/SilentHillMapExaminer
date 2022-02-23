@@ -117,12 +117,38 @@ namespace BizHawk.Client.EmuHawk
 				var updated = new Trigger(t.Address, bytes);
 
 				LbxTriggers.Items[LbxTriggers.SelectedIndex] = updated;
-				LbxPoiAssociatedTriggers.Items[LbxPoiAssociatedTriggers.SelectedIndex] = updated;
 
 				_previousTriggerBodyHash = body;
 				_previousTriggerFired = fired;
 
 				LbxTriggers_SelectedIndexChanged(LbxTriggers, EventArgs.Empty);
+
+				RefreshLbxPoiAssociatedTriggers();
+			}
+		}
+
+		private void RefreshLbxPoiAssociatedTriggers()
+		{
+			LbxPoiAssociatedTriggers.Items.Clear();
+
+			ListBox lbx = LbxPois;
+
+			IEnumerable<Trigger>? associated = LbxTriggers.Items.OfType<Trigger>().Where(item => item.PoiIndex == lbx.SelectedIndex);
+
+			foreach (Trigger? t in associated)
+			{
+				LbxPoiAssociatedTriggers.Items.Add(t);
+			}
+
+			if (!associated.Any())
+			{
+				LbxTriggers.SelectedIndex = -1;
+			}
+
+			var item = LbxTriggers.SelectedItem as Trigger;
+			if (item != null)
+			{
+				LbxPoiAssociatedTriggers.SelectedItem = item;
 			}
 		}
 
@@ -161,8 +187,6 @@ namespace BizHawk.Client.EmuHawk
 				}
 			}
 
-			LbxPoiAssociatedTriggers.Items.Clear();
-
 			if (lbx.SelectedItem is PointOfInterest poi)
 			{
 				Renderable? r = Pois[poi];
@@ -180,17 +204,7 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedPoiYaw.Text = $"{poi.Yaw:0.##}";
 				LblSelectedPoiThing2.Text = $"0x{poi.Thing2:X2}";
 
-				IEnumerable<Trigger>? associated = LbxTriggers.Items.OfType<Trigger>().Where(item => item.PoiIndex == lbx.SelectedIndex);
-
-				foreach (Trigger? t in associated)
-				{
-					LbxPoiAssociatedTriggers.Items.Add(t);
-				}
-
-				if (!associated.Any())
-				{
-					LbxTriggers.SelectedIndex = -1;
-				}
+				RefreshLbxPoiAssociatedTriggers();
 			}
 			else
 			{
