@@ -66,6 +66,8 @@
 
 		public long CameraLockedToHead { get; set; }
 
+		public long ActiveTriggerType { get; set; }
+
 		public long HarryPositionX { get; set; }
 		public long HarryPositionY { get; set; }
 		public long HarryPositionZ { get; set; }

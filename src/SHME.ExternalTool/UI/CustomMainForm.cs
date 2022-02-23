@@ -59,6 +59,9 @@ namespace BizHawk.Client.EmuHawk
 
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
 
+			CmbSaveButton.DataSource = Enum.GetValues(typeof(ButtonFlags));
+			CmbSaveButton.SelectedItem = ButtonFlags.R3;
+
 			_arrayCountdown = new System.Timers.Timer(8)
 			{
 				AutoReset = true
@@ -84,6 +87,10 @@ namespace BizHawk.Client.EmuHawk
 			{
 				case ToolFormUpdateType.PreFrame:
 					UpdateFog();
+					if (CmbSaveButton.SelectedIndex != 0)
+					{
+						CheckForSaveButtonPress();
+					}
 					break;
 				case ToolFormUpdateType.PostFrame:
 					if (CbxEnableControlsSection.Checked)

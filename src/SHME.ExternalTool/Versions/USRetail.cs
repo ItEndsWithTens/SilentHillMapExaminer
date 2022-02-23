@@ -87,6 +87,8 @@
 
 				CameraLockedToHead = 0xB9DA8,
 
+				ActiveTriggerType = 0xB9FC8,
+
 				HarryPositionX = 0xBA024,
 				HarryPositionY = 0xBA028,
 				HarryPositionZ = 0xBA02C,

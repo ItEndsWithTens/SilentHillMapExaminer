@@ -16,6 +16,7 @@ namespace BizHawk.Client.EmuHawk
 		[Flags]
 		private enum ButtonFlags : ushort
 		{
+			None =     0b00000000_00000000,
 			Select =   0b00000000_00000001,
 			L3 =       0b00000000_00000010,
 			R3 =       0b00000000_00000100,

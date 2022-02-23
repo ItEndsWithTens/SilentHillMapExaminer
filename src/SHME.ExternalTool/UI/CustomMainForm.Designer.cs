@@ -247,6 +247,9 @@ namespace BizHawk.Client.EmuHawk
             this.RtbStrings = new System.Windows.Forms.RichTextBox();
             this.LblStringCount = new System.Windows.Forms.Label();
             this.BtnReadStrings = new System.Windows.Forms.Button();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.CmbSaveButton = new System.Windows.Forms.ComboBox();
+            this.BtnOpenSaveMenu = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -285,6 +288,7 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudFogG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -814,6 +818,7 @@ namespace BizHawk.Client.EmuHawk
             this.tabControl1.Controls.Add(this.TbpInfo);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -2936,6 +2941,37 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadStrings.UseVisualStyleBackColor = true;
             this.BtnReadStrings.Click += new System.EventHandler(this.BtnReadStrings_Click);
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.CmbSaveButton);
+            this.tabPage6.Controls.Add(this.BtnOpenSaveMenu);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(752, 726);
+            this.tabPage6.TabIndex = 9;
+            this.tabPage6.Text = "Save";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // CmbSaveButton
+            // 
+            this.CmbSaveButton.FormattingEnabled = true;
+            this.CmbSaveButton.Location = new System.Drawing.Point(159, 8);
+            this.CmbSaveButton.Name = "CmbSaveButton";
+            this.CmbSaveButton.Size = new System.Drawing.Size(99, 21);
+            this.CmbSaveButton.TabIndex = 20;
+            this.CmbSaveButton.SelectedValueChanged += new System.EventHandler(this.CmbSaveButton_SelectedValueChanged);
+            // 
+            // BtnOpenSaveMenu
+            // 
+            this.BtnOpenSaveMenu.Location = new System.Drawing.Point(6, 6);
+            this.BtnOpenSaveMenu.Name = "BtnOpenSaveMenu";
+            this.BtnOpenSaveMenu.Size = new System.Drawing.Size(147, 23);
+            this.BtnOpenSaveMenu.TabIndex = 19;
+            this.BtnOpenSaveMenu.Text = "Open save menu";
+            this.BtnOpenSaveMenu.UseVisualStyleBackColor = true;
+            this.BtnOpenSaveMenu.Click += new System.EventHandler(this.BtnOpenSaveMenu_Click);
+            // 
             // CustomMainForm
             // 
             this.ClientSize = new System.Drawing.Size(784, 776);
@@ -2991,6 +3027,7 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -3228,5 +3265,8 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblSelectedTriggerFiredDetails;
 		private Button BtnFogWorldTintColorSwap;
 		private CheckBox CbxSelectedTriggerDisabled;
+		private TabPage tabPage6;
+		private ComboBox CmbSaveButton;
+		private Button BtnOpenSaveMenu;
 	}
 }
