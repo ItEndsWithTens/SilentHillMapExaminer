@@ -66,6 +66,13 @@ namespace BizHawk.Client.EmuHawk
 			_arrayCountdown.Elapsed += ArrayCountdown_Elapsed;
 		}
 
+		public override void Restart()
+		{
+			base.Restart();
+
+			Emu!.StateLoaded += Emu_StateLoaded;
+		}
+
 		public override void UpdateValues(ToolFormUpdateType type)
 		{
 			if (Mem == null || Gui == null || Emu == null || GI?.GetRomName() == "Null")

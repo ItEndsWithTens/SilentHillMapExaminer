@@ -42,6 +42,7 @@ namespace SHME.ExternalTool
 		/// 0x01: Proximity Z (maybe)
 		/// 0x02: Radius/close proximity
 		/// 0x23: Button press
+		/// 0x0F: Dummy, marks end of trigger array.
 		/// </remarks>
 		public byte Style { get; }
 		public byte PoiIndex { get; }

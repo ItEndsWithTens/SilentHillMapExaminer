@@ -1,4 +1,5 @@
-﻿using SHME.ExternalTool;
+﻿using BizHawk.Client.Common;
+using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -127,6 +128,36 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private void ClearDisplayedPoiInfo()
+		{
+			LblSelectedPoiAddress.Text = "0x";
+			LblSelectedPoiX.Text = "???.??";
+			LblSelectedPoiZ.Text = "???.??";
+			LblSelectedPoiThing0.Text = "";
+			LblSelectedPoiThing1.Text = "";
+			LblSelectedPoiYaw.Text = "";
+			LblSelectedPoiThing2.Text = "";
+		}
+
+		private void ClearDisplayedTriggerInfo()
+		{
+			LblSelectedTriggerAddress.Text = "0x";
+			LblSelectedTriggerThing0.Text = "0x";
+			CbxSelectedTriggerDisabled.Checked = false;
+			CbxSelectedTriggerDisabled.Enabled = false;
+			LblSelectedTriggerThing1.Text = "0x";
+			LblSelectedTriggerFired.Text = "";
+			LblSelectedTriggerFiredDetails.Text = $"(Group address 0x??, bit 0x??)";
+			LblSelectedTriggerSomeIndex.Text = "0x";
+			LblSelectedTriggerStyle.Text = "0x";
+			LblSelectedTriggerPoiIndex.Text = "";
+			LblSelectedTriggerThing3.Text = "0x";
+			LblSelectedTriggerThing4.Text = "0x";
+			LblSelectedTriggerTypeInfo.Text = "0x";
+			NudSelectedTriggerTargetIndex.Value = -1;
+			CmbSelectedTriggerType.SelectedIndex = -1;
+		}
+
 		private void RefreshLbxPoiAssociatedTriggers()
 		{
 			LbxPoiAssociatedTriggers.Items.Clear();
@@ -208,13 +239,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 			else
 			{
-				LblSelectedPoiAddress.Text = $"0x";
-				LblSelectedPoiX.Text = $"";
-				LblSelectedPoiZ.Text = $"";
-				LblSelectedPoiThing0.Text = $"0x";
-				LblSelectedPoiThing1.Text = $"0x";
-				LblSelectedPoiYaw.Text = $"";
-				LblSelectedPoiThing2.Text = $"0x";
+				ClearDisplayedPoiInfo();
 			}
 		}
 
@@ -263,6 +288,28 @@ namespace BizHawk.Client.EmuHawk
 				}
 			}
 		}
+
+		private void Emu_StateLoaded(object sender, StateLoadedEventArgs e)
+		{
+			Pois.Clear();
+			LbxPois.Items.Clear();
+			LblPoiCount1.Text = "0";
+			LblPoiCount2.Text = "0";
+
+			Triggers.Clear();
+			LbxTriggers.Items.Clear();
+			LblTriggerCount.Text = "0";
+
+			LbxPoiAssociatedTriggers.Items.Clear();
+
+			ClearDisplayedPoiInfo();
+			ClearDisplayedTriggerInfo();
+
+			_previousPoiArrayAddress = 0x0;
+			_previousFunctionPointerArrayAddress = 0x0;
+			_previousTriggerArrayAddress = 0x0;
+			_previousUnknownThingAddress = 0x0;
+	}
 
 		private void LbxTriggers_Format(object sender, ListControlConvertEventArgs e)
 		{
@@ -368,21 +415,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 			else
 			{
-				LblSelectedTriggerAddress.Text = "0x";
-				LblSelectedTriggerThing0.Text = "0x";
-				CbxSelectedTriggerDisabled.Checked = false;
-				CbxSelectedTriggerDisabled.Enabled = false;
-				LblSelectedTriggerThing1.Text = "0x";
-				LblSelectedTriggerFired.Text = "";
-				LblSelectedTriggerFiredDetails.Text = $"(Group address 0x??, bit 0x??)";
-				LblSelectedTriggerSomeIndex.Text = "0x";
-				LblSelectedTriggerStyle.Text = "0x";
-				LblSelectedTriggerPoiIndex.Text = "";
-				LblSelectedTriggerThing3.Text = "0x";
-				LblSelectedTriggerThing4.Text = "0x";
-				LblSelectedTriggerTypeInfo.Text = "0x";
-				NudSelectedTriggerTargetIndex.Value = -1;
-				CmbSelectedTriggerType.SelectedIndex = -1;
+				ClearDisplayedTriggerInfo();
 			}
 		}
 	}
