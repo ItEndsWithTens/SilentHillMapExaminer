@@ -1598,6 +1598,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblSelectedTriggerFiredDetails.Size = new System.Drawing.Size(154, 13);
             this.LblSelectedTriggerFiredDetails.TabIndex = 89;
             this.LblSelectedTriggerFiredDetails.Text = "(Group address 0x?? , bit 0x??)";
+            this.LblSelectedTriggerFiredDetails.Click += new System.EventHandler(this.LblSelectedTriggerFiredDetails_Click);
             // 
             // CbxSelectedTriggerEnableUpdates
             // 
@@ -1678,6 +1679,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblSelectedTriggerAddress.Size = new System.Drawing.Size(56, 13);
             this.LblSelectedTriggerAddress.TabIndex = 72;
             this.LblSelectedTriggerAddress.Text = "<address>";
+            this.LblSelectedTriggerAddress.Click += new System.EventHandler(this.LblSelectedTriggerAddress_Click);
             // 
             // LblSelectedTriggerTypeInfo
             // 
@@ -1897,6 +1899,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblSelectedPoiAddress.Size = new System.Drawing.Size(56, 13);
             this.LblSelectedPoiAddress.TabIndex = 70;
             this.LblSelectedPoiAddress.Text = "<address>";
+            this.LblSelectedPoiAddress.Click += new System.EventHandler(this.LblSelectedPoiAddress_Click);
             // 
             // label21
             // 

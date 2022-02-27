@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
 {
@@ -34,6 +36,9 @@ namespace BizHawk.Client.EmuHawk
 
 		[RequiredApi]
 		public IMemorySaveStateApi? MemSS { get; set; }
+
+		[RequiredApi]
+		public IToolApi? Tool { get; set; }
 
 		public const string ToolName = "Silent Hill Map Examiner";
 		public const string ToolDescription = "";
@@ -74,6 +79,35 @@ namespace BizHawk.Client.EmuHawk
 			base.Restart();
 
 			Emu!.StateLoaded += Emu_StateLoaded;
+
+			Label[] labels =
+			{
+				LblSelectedPoiAddress,
+				LblSelectedTriggerAddress,
+				LblSelectedTriggerFiredDetails
+			};
+
+			MethodInfo? info = typeof(HexEditor).GetMethod("GoToAddress", BindingFlags.NonPublic | BindingFlags.Instance);
+			if (info != null)
+			{
+				_foundHexEditorGoToMethod = true;
+
+				foreach (Label l in labels)
+				{
+					l.BorderStyle = BorderStyle.Fixed3D;
+					l.Cursor = Cursors.Hand;
+				}
+			}
+			else
+			{
+				_foundHexEditorGoToMethod = false;
+
+				foreach (Label l in labels)
+				{
+					l.BorderStyle = BorderStyle.None;
+					l.Cursor = Cursors.Default;
+				}
+			}
 		}
 
 		public override void UpdateValues(ToolFormUpdateType type)

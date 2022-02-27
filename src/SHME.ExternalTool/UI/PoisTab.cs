@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
@@ -180,6 +181,48 @@ namespace BizHawk.Client.EmuHawk
 			if (item != null)
 			{
 				LbxPoiAssociatedTriggers.SelectedItem = item;
+			}
+		}
+
+		private bool _foundHexEditorGoToMethod;
+		private void HexEditorGoToAddress(long address)
+		{
+			if (!_foundHexEditorGoToMethod)
+			{
+				return;
+			}
+
+			MethodInfo? info = typeof(HexEditor).GetMethod("GoToAddress", BindingFlags.NonPublic | BindingFlags.Instance);
+
+			Tool.OpenHexEditor();
+			var tool = (HexEditor)Tool.GetTool("HexEditor");
+			info.Invoke(tool, new object[] { address });
+		}
+
+		private void LblSelectedPoiAddress_Click(object sender, EventArgs e)
+		{
+			if (LbxPois.SelectedItem is PointOfInterest p)
+			{
+				HexEditorGoToAddress(p.Address);
+			}
+		}
+
+		private void LblSelectedTriggerAddress_Click(object sender, EventArgs e)
+		{
+			if (LbxTriggers.SelectedItem is Trigger t)
+			{
+				HexEditorGoToAddress(t.Address);
+			}
+		}
+
+		private void LblSelectedTriggerFiredDetails_Click(object sender, EventArgs e)
+		{
+			if (LbxTriggers.SelectedItem is Trigger t)
+			{
+				long ofs = Rom.Addresses.MainRam.SaveData;
+				long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
+
+				HexEditorGoToAddress(groupOfs);
 			}
 		}
 
