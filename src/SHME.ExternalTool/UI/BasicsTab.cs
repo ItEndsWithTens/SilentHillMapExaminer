@@ -13,6 +13,12 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
+#pragma warning disable IDE0055
+		// IDE0055 covers all code style formatting rules, including the removal
+		// of whitespace some developers use to line up values when assigning
+		// many variables at once. That's usually desirable, but in cases like
+		// this, i.e. bitfields/flags, the alignment helps make it more visually
+		// obvious which bits correspond to which enum members.
 		[Flags]
 		private enum ButtonFlags : ushort
 		{
@@ -34,6 +40,7 @@ namespace BizHawk.Client.EmuHawk
 			X =        0b01000000_00000000,
 			Square =   0b10000000_00000000
 		}
+#pragma warning restore IDE0055
 
 		private void ReportAngles()
 		{
