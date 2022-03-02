@@ -33,7 +33,7 @@ namespace SHME.ExternalTool
 
 		public Vector3 Center { get; private set; }
 
-		public List<Vector3> Points { get; } = new List<Vector3>();
+		public List<Vector3> Points { get; } = new List<Vector3>(8);
 
 		public Aabb()
 		{
@@ -85,8 +85,8 @@ namespace SHME.ExternalTool
 		}
 		private void Init(params Vector3[] points)
 		{
-			Vector3 newMin = points[0];
-			Vector3 newMax = points[0];
+			var newMin = new Vector3();
+			var newMax = new Vector3();
 
 			foreach (Vector3 point in points)
 			{

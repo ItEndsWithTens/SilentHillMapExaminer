@@ -1,26 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Numerics;
 
 namespace SHME.ExternalTool
 {
-	public enum CullMode
+	[Flags]
+	public enum Culling
 	{
-		None,
-		Back
+		None = 0,
+		Near = 1,
+		Far = 2,
+		Left = 4,
+		Right = 8,
+		Top = 16,
+		Bottom = 32,
+		Frustum = Near | Far | Left | Right | Top | Bottom,
+		Backface = 64,
+		All = Frustum | Backface
 	}
 
 	public class Frustum
 	{
-		public Vector3 NearTopLeft { get; set; } = new Vector3();
-		public Vector3 NearTopRight { get; set; } = new Vector3();
-		public Vector3 NearBottomLeft { get; set; } = new Vector3();
-		public Vector3 NearBottomRight { get; set; } = new Vector3();
+		public Vector3 NearTopLeft { get; set; }
+		public Vector3 NearTopRight { get; set; }
+		public Vector3 NearBottomLeft { get; set; }
+		public Vector3 NearBottomRight { get; set; }
 
-		public Vector3 FarTopLeft { get; set; } = new Vector3();
-		public Vector3 FarTopRight { get; set; } = new Vector3();
-		public Vector3 FarBottomLeft { get; set; } = new Vector3();
-		public Vector3 FarBottomRight { get; set; } = new Vector3();
+		public Vector3 FarTopLeft { get; set; }
+		public Vector3 FarTopRight { get; set; }
+		public Vector3 FarBottomLeft { get; set; }
+		public Vector3 FarBottomRight { get; set; }
 
 		public Plane Left { get; private set; } = new Plane();
 		public Plane Right { get; private set; } = new Plane();
@@ -44,31 +54,31 @@ namespace SHME.ExternalTool
 			Update(position, front, right, up, fov, aspect, near, far);
 		}
 
-		public bool Contains(Aabb aabb)
+		public bool TouchedBy(Aabb aabb)
 		{
-			bool contains = true;
+			bool touches = true;
 
-			foreach (Plane p in Planes)
+			foreach (Plane plane in Planes)
 			{
-				bool allPointsInFront = true;
+				bool allPointsBehind = true;
 
-				foreach (Vector3 point in aabb.Points)
-				{	
-					if (Vector3.Dot(p.Normal, point - p.Points[0]) <= 0.0f)
+				foreach (Vector3 p in aabb.Points)
+				{
+					if (Vector3.Dot(p - plane.Points[0], plane.Normal) > 0.0f)
 					{
-						allPointsInFront = false;
+						allPointsBehind = false;
 						break;
 					}
 				}
 
-				if (allPointsInFront)
+				if (allPointsBehind)
 				{
-					contains = false;
+					touches = false;
 					break;
 				}
 			}
 
-			return contains;
+			return touches;
 		}
 
 		public void Update(Vector3 position, Vector3 front, Vector3 right, Vector3 up, float fov, float aspect, float near, float far)
@@ -98,12 +108,12 @@ namespace SHME.ExternalTool
 			FarBottomLeft = (farTarget - farEdgeHorizontal) - farEdgeVertical;
 			FarBottomRight = (farTarget + farEdgeHorizontal) - farEdgeVertical;
 
-			Left = new Plane(NearTopLeft, FarTopLeft, FarBottomLeft, Winding.Ccw);
-			Right = new Plane(NearTopRight, NearBottomRight, FarBottomRight, Winding.Ccw);
-			Top = new Plane(NearTopLeft, NearTopRight, FarTopRight, Winding.Ccw);
-			Bottom = new Plane(NearBottomRight, NearBottomLeft, FarBottomLeft, Winding.Ccw);
-			Near = new Plane(NearTopLeft, NearBottomLeft, NearBottomRight, Winding.Ccw);
-			Far = new Plane(FarBottomRight, FarBottomLeft, FarTopLeft, Winding.Ccw);
+			Left = new Plane(NearTopLeft, NearBottomLeft, FarBottomLeft, Winding.Ccw);
+			Right = new Plane(NearTopRight, FarTopRight, FarBottomRight, Winding.Ccw);
+			Top = new Plane(NearTopLeft, FarTopLeft, FarTopRight, Winding.Ccw);
+			Bottom = new Plane(NearBottomRight, FarBottomRight, FarBottomLeft, Winding.Ccw);
+			Near = new Plane(NearTopLeft, NearTopRight, NearBottomRight, Winding.Ccw);
+			Far = new Plane(FarBottomRight, FarTopRight, FarTopLeft, Winding.Ccw);
 
 			Planes.Clear();
 			Planes.Add(Left);
@@ -256,7 +266,7 @@ namespace SHME.ExternalTool
 			}
 		}
 
-		public CullMode CullMode { get; set; } = CullMode.Back;
+		public Culling Culling { get; set; } = Culling.Backface;
 
 		public Frustum Frustum { get; } = new Frustum();
 
@@ -296,7 +306,14 @@ namespace SHME.ExternalTool
 
 		public bool CanSee(Renderable r)
 		{
-			return Frustum.Contains(r.Aabb);
+			bool canSee = true;
+
+			if (Culling.HasFlag(Culling.Frustum))
+			{
+				canSee = Frustum.TouchedBy(r.Aabb);
+			}
+
+			return canSee;
 		}
 
 		public void LookAt(Vector3 target)
@@ -398,6 +415,8 @@ namespace SHME.ExternalTool
 			Frustum.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
 		}
 
+		private readonly List<Plane> _clippingPlanes = new List<Plane>();
+
 		private readonly List<(Polygon, Renderable)> _visiblePolygons = new List<(Polygon, Renderable)>();
 		public List<(Polygon, Renderable)> GetVisiblePolygons(Renderable renderable)
 		{
@@ -414,17 +433,23 @@ namespace SHME.ExternalTool
 					continue;
 				}
 
-				foreach (Polygon p in r.Polygons)
+				if (Culling.HasFlag(Culling.Backface))
 				{
-					Vector3 point = r.Vertices[p.Indices[0]];
-					Vector3 transformed = Vector3.Transform(point, r.ModelMatrix);
-					Vector3 toPoint = transformed - Position;
-
-					if (Vector3.Dot(toPoint, p.Normal) < 0.0f)
+					foreach (Polygon p in r.Polygons)
 					{
-						_visiblePolygons.Add((p, r));
+						Vector3 point = r.Vertices[p.Indices[0]];
+						Vector3 transformed = Vector3.Transform(point, r.ModelMatrix);
+						Vector3 toPoint = transformed - Position;
+
+						if (Vector3.Dot(toPoint, p.Normal) <= 0.0f)
+						{
+							_visiblePolygons.Add((p, r));
+						}
 					}
-					else if (CullMode == CullMode.None)
+				}
+				else
+				{
+					foreach (Polygon p in r.Polygons)
 					{
 						// Keeping backfaces at the start of the list makes sure
 						// they're drawn first, and won't overdraw any colored
@@ -437,9 +462,91 @@ namespace SHME.ExternalTool
 			return _visiblePolygons;
 		}
 
+		private readonly Collection<Line> _visibleLines = new Collection<Line>();
+		public Collection<Line> GetVisibleLines(Line line)
+		{
+			return GetVisibleLines(new Collection<Line>() { line });
+		}
+		public Collection<Line> GetVisibleLines(Collection<Line> lines)
+		{
+			_visibleLines.Clear();
+
+			for (int i = 0; i < lines.Count; i++)
+			{
+				Line l = lines[i];
+
+				if (CanSee(l))
+				{
+					_visibleLines.Add(l);
+				}
+			}
+
+			return _visibleLines;
+		}
+
 		public void Clear()
 		{
 			_visiblePolygons.Clear();
+		}
+
+		public bool ClipLineAgainstFrustum(ref Line line)
+		{
+			return ClipLineAgainstPlanes(ref line, Frustum.Planes);
+		}
+
+		public static bool ClipLineAgainstPlanes(ref Line line, IEnumerable<Plane> planes)
+		{
+			bool visible = true;
+
+			foreach (Plane plane in planes)
+			{
+				visible = ClipLineAgainstPlane(ref line, plane);
+				if (!visible)
+				{
+					break;
+				}
+			}
+
+			return visible;
+		}
+
+		// Credit to Nils Pipenbrinck aka Submissive/Cubic & $eeN for this!
+		// https://www.cubic.org/docs/3dclip.htm
+		public static bool ClipLineAgainstPlane(ref Line line, Plane plane)
+		{
+			Vertex p = plane.Points[0];
+			Vector3 n = plane.Normal;
+
+			float distanceA = Vector3.Dot(line.A - p, n);
+			float distanceB = Vector3.Dot(line.B - p, n);
+
+			bool aBehind = distanceA <= 0.0f;
+			bool bBehind = distanceB <= 0.0f;
+
+			if (aBehind && bBehind)
+			{
+				return false;
+			}
+
+			if (!aBehind && !bBehind)
+			{
+				return true;
+			}
+
+			float factor = distanceA / (distanceA - distanceB);
+
+			Vector3 intersection = line.A + (line.B - line.A) * factor;
+
+			if (aBehind)
+			{
+				line.A = new Vertex(line.A) { Position = intersection };
+				return true;
+			}
+			else
+			{
+				line.B = new Vertex(line.B) { Position = intersection };
+				return true;
+			}
 		}
 	}
 }

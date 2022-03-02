@@ -2,6 +2,7 @@
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
@@ -136,10 +137,7 @@ namespace BizHawk.Client.EmuHawk
 				_lastHarrySpawnPointHash = hash;
 
 				LblSpawnX.Text = $"{_lastHarrySpawnPoint.X:0.##}";
-				LblSpawnThing0.Text = $"0x{_lastHarrySpawnPoint.Thing0:X2}";
-				LblSpawnThing1.Text = $"0x{_lastHarrySpawnPoint.Thing1:X2}";
-				LblSpawnYaw.Text = $"{_lastHarrySpawnPoint.Yaw:0.##}";
-				LblSpawnThing2.Text = $"0x{_lastHarrySpawnPoint.Thing2:X2}";
+				LblSpawnGeometry.Text = $"0x{_lastHarrySpawnPoint.Geometry:X2}";
 				LblSpawnZ.Text = $"{_lastHarrySpawnPoint.Z:0.##}";
 			}
 		}
@@ -183,8 +181,7 @@ namespace BizHawk.Client.EmuHawk
 			int poiBytes = 12;
 			int poiCount = poiArrayBytes / poiBytes;
 
-			LblPoiCount1.Text = poiCount.ToString();
-			LblPoiCount2.Text = poiCount.ToString();
+			LblPoiCount.Text = poiCount.ToString();
 
 			LbxPois.Items.Clear();
 
@@ -204,6 +201,8 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			NudSelectedTriggerTargetIndex.Maximum = poiCount - 1;
+
+			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 		}
 
 		private void BtnSetHarryPitch_Click(object sender, EventArgs e)
@@ -322,7 +321,14 @@ namespace BizHawk.Client.EmuHawk
 				(float)NudOverlayCameraZ.Value);
 		}
 
-		private Renderable TestBox { get; } = new BoxGenerator(1.0f, Color.White).GenerateRainbowBox().ToWorld();
+		private Renderable TestBox { get; set; } = new BoxGenerator(1.0f, Color.White).GenerateRainbowBox().ToWorld();
+		private Collection<Line> TestLines { get; } = new Collection<Line>()
+		{
+			new Line(
+				new Vertex(0.0f, 1.0f, 0.0f, Color.Red),
+				new Vertex(1.0f, 1.0f, 0.0f, Color.Lime))
+		};
+
 		private void NudOverlayTestBoxX_ValueChanged(object sender, EventArgs e)
 		{
 			TestBox.Position = new Vector3(
@@ -345,6 +351,45 @@ namespace BizHawk.Client.EmuHawk
 				TestBox.Position.X,
 				TestBox.Position.Y,
 				-(float)NudOverlayTestBoxZ.Value); // Convert from SH coords
+		}
+
+		private void NudOverlayTestBoxSizeX_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable rainbow = new BoxGenerator(
+				(float)NudOverlayTestBoxSizeX.Value,
+				Math.Abs(TestBox.Aabb.Max.Y - TestBox.Aabb.Min.Y),
+				Math.Abs(TestBox.Aabb.Max.Z - TestBox.Aabb.Min.Z),
+				Color.White).GenerateRainbowBox();
+
+			rainbow.Position = TestBox.Position;
+
+			TestBox = rainbow.ToWorld();
+		}
+
+		private void NudOverlayTestBoxSizeY_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable rainbow = new BoxGenerator(
+				Math.Abs(TestBox.Aabb.Max.X - TestBox.Aabb.Min.X),
+				(float)NudOverlayTestBoxSizeY.Value,
+				Math.Abs(TestBox.Aabb.Max.Z - TestBox.Aabb.Min.Z),
+				Color.White).GenerateRainbowBox();
+
+			rainbow.Position = TestBox.Position;
+
+			TestBox = rainbow.ToWorld();
+		}
+
+		private void NudOverlayTestBoxSizeZ_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable rainbow = new BoxGenerator(
+				Math.Abs(TestBox.Aabb.Max.X - TestBox.Aabb.Min.X),
+				Math.Abs(TestBox.Aabb.Max.Y - TestBox.Aabb.Min.Y),
+				(float)NudOverlayTestBoxSizeZ.Value,
+				Color.White).GenerateRainbowBox();
+
+			rainbow.Position = TestBox.Position;
+
+			TestBox = rainbow.ToWorld();
 		}
 
 		private void RdoOverlayAxisColors_CheckedChanged(object sender, EventArgs e)
@@ -410,6 +455,96 @@ namespace BizHawk.Client.EmuHawk
 					}
 				}
 			}
+		}
+
+		private void NudOverlayTestLineAX_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].A;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					(float)NudOverlayTestLineAX.Value,
+					v.Position.Y,
+					v.Position.Z)
+			};
+
+			TestLines[0].A = v;
+		}
+
+		private void NudOverlayTestLineAY_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].A;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					v.Position.X,
+					-(float)NudOverlayTestLineAY.Value, // Convert from SH coords
+					v.Position.Z)
+			};
+
+			TestLines[0].A = v;
+		}
+
+		private void NudOverlayTestLineAZ_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].A;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					v.Position.X,
+					v.Position.Y,
+					-(float)NudOverlayTestLineAZ.Value) // Convert from SH coords
+			};
+
+			TestLines[0].A = v;
+		}
+
+		private void NudOverlayTestLineBX_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].B;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					(float)NudOverlayTestLineBX.Value,
+					v.Position.Y,
+					v.Position.Z)
+			};
+
+			TestLines[0].B = v;
+		}
+
+		private void NudOverlayTestLineBY_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].B;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					v.Position.X,
+					-(float)NudOverlayTestLineBY.Value, // Convert from SH coords
+					v.Position.Z)
+			};
+
+			TestLines[0].B = v;
+		}
+
+		private void NudOverlayTestLineBZ_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].B;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					v.Position.X,
+					v.Position.Y,
+					-(float)NudOverlayTestLineBZ.Value) // Convert from SH coords
+			};
+
+			TestLines[0].B = v;
 		}
 	}
 }

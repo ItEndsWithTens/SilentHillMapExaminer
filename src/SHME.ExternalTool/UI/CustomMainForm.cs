@@ -3,6 +3,7 @@ using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
@@ -47,12 +48,14 @@ namespace BizHawk.Client.EmuHawk
 
 		public Core Core { get; } = new Core();
 
-		public Camera Camera { get; set; } = new Camera() { Fov = 50.0f, CullMode = CullMode.None };
+		public Camera Camera { get; set; } = new Camera() { Fov = 50.0f, Culling = Culling.None };
 
 		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
 		public List<Renderable> TestBoxes { get; set; } = new List<Renderable>();
 
 		public Rom Rom => Core.Rom;
+
+		private Viewport Viewport { get; } = new Viewport();
 
 		public CustomMainForm()
 		{
@@ -61,6 +64,10 @@ namespace BizHawk.Client.EmuHawk
 			TrkFov.Value = (int)Camera.Fov;
 
 			CmbRenderMode.SelectedIndex = 0;
+
+			// TODO: Switch this to 0 once trigger volume shapes have been fully
+			// deciphered. Right now they're iffy at best.
+			CmbRenderShape.SelectedIndex = 1;
 
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
 
@@ -79,6 +86,28 @@ namespace BizHawk.Client.EmuHawk
 			base.Restart();
 
 			Emu!.StateLoaded += Emu_StateLoaded;
+
+			if (Emu.BufferWidth() == 350)
+			{
+				Viewport.Width = 320;
+				Viewport.TopLeft = new Point(17, Viewport.Top);
+			}
+			else if (Emu.BufferWidth() == 800)
+			{
+				Viewport.Width = 640;
+				Viewport.TopLeft = new Point(84, Viewport.Top);
+			}
+
+			if (Emu.BufferHeight() == 240)
+			{
+				Viewport.Height = 224;
+				Viewport.TopLeft = new Point(Viewport.Left, 8);
+			}
+			else if (Emu.BufferHeight() == 480)
+			{
+				Viewport.Height = 448;
+				Viewport.TopLeft = new Point(Viewport.Left, 16);
+			}
 
 			Label[] labels =
 			{
@@ -158,9 +187,9 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private List<Point> Points { get; } = new List<Point>();
-		private List<Color> Colors { get; } = new List<Color>();
+		private List<(Line line, Color color, bool visible, bool aClipped, bool bClipped)> ScreenSpaceLines { get; } = new List<(Line line, Color color, bool visible, bool aClipped, bool bClipped)>();
 		private List<(Polygon, Renderable)> VisiblePolygons { get; } = new List<(Polygon, Renderable)>();
+		private List<Line> VisibleLines { get; } = new List<Line>();
 
 		private void DrawStuff()
 		{
@@ -204,34 +233,9 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			int w = 320;
-			int h = 224;
-			var origin = new Point(0, 0);
-			if (Emu.BufferWidth() == 350)
-			{
-				w = 320;
-				origin.X = 17;
-			}
-			else if (Emu.BufferWidth() == 800)
-			{
-				w = 640;
-				origin.X = 84;
-			}
-
-			if (Emu.BufferHeight() == 240)
-			{
-				h = 224;
-				origin.Y = 8;
-			}
-			else if (Emu.BufferHeight() == 480)
-			{
-				h = 448;
-				origin.Y = 16;
-			}
-
-			Gui.DrawBox(origin.X, origin.Y, w + (origin.X - 1), h + (origin.Y - 1));
-			Gui.DrawLine(origin.X, origin.Y + h / 2, origin.X + w - 1, origin.Y + h / 2);
-			Gui.DrawLine(origin.X + w / 2, origin.Y, origin.X + w / 2, origin.Y + h - 1);
+			Gui.DrawBox(Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom);
+			Gui.DrawLine(Viewport.Left, Viewport.Center.Y, Viewport.Right, Viewport.Center.Y);
+			Gui.DrawLine(Viewport.Center.X, Viewport.Top, Viewport.Center.X, Viewport.Bottom);
 
 			// Remember that the projection, view, model order from OpenGL
 			// shaders is reversed in C#, to account for System.Numeric's row
@@ -240,11 +244,11 @@ namespace BizHawk.Client.EmuHawk
 
 			if (CmbRenderMode.SelectedIndex == 1)
 			{
-				Camera.CullMode = CullMode.Back;
+				Camera.Culling = Culling.All;
 			}
 			else
 			{
-				Camera.CullMode = CullMode.None;
+				Camera.Culling = Culling.Frustum;
 			}
 
 			VisiblePolygons.Clear();
@@ -261,70 +265,171 @@ namespace BizHawk.Client.EmuHawk
 				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(TestBox));
 			}
 
+			VisibleLines.Clear();
+			if (CbxOverlayTestLine.Checked)
+			{
+				VisibleLines.AddRange(Camera.GetVisibleLines(TestLines));
+			}
+
+			DrawPolygons(matrix);
+			DrawLines(matrix);
+		}
+
+		public void DrawLines(Matrix4x4 matrix)
+		{
+			ScreenSpaceLines.Clear();
+
+			foreach (Line line in VisibleLines)
+			{
+				var clipped = new Line(line);
+
+				bool visible = Camera.ClipLineAgainstFrustum(ref clipped);
+
+				bool aClipped = line.A.Position != clipped.A.Position;
+				bool bClipped = line.B.Position != clipped.B.Position;
+
+				clipped.A = clipped.A.WorldToScreen(matrix, Viewport, true);
+				clipped.B = clipped.B.WorldToScreen(matrix, Viewport, true);
+
+				ScreenSpaceLines.Add((
+					clipped,
+					clipped.Tint != null ? (Color)clipped.Tint : clipped.A.Color,
+					visible,
+					aClipped,
+					bClipped));
+			}
+
+			foreach ((Line line, Color color, bool visible, bool aClipped, bool bClipped) b in ScreenSpaceLines)
+			{
+				switch (CmbRenderMode.SelectedIndex)
+				{
+					case 2:
+						IEnumerable<Vertex> unclippedAs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.aClipped).Select(ssl => ssl.line.A);
+						IEnumerable<Vertex> unclippedBs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.bClipped).Select(ssl => ssl.line.B);
+
+						foreach (Vertex v in unclippedAs.Concat(unclippedBs))
+						{
+							int x = (int)v.Position.X;
+							int y = (int)v.Position.Y;
+
+							Gui.DrawEllipse(x - 2, y - 2, 4, 4, v.Color, v.Color);
+						}
+						break;
+					default:
+						foreach ((Line line, Color color, bool visible, _, _) in ScreenSpaceLines)
+						{
+							if (visible)
+							{
+								Gui.DrawLine(
+									(int)line.A.Position.X,
+									(int)line.A.Position.Y,
+									(int)line.B.Position.X,
+									(int)line.B.Position.Y,
+									color);
+							}
+						}
+						break;
+				}
+			}
+		}
+
+		public void DrawPolygons(Matrix4x4 matrix)
+		{
 			foreach ((Polygon p, Renderable r) in VisiblePolygons)
 			{
 				matrix = r.ModelMatrix * matrix;
 
-				foreach (int i in p.LineLoopIndices)
+				ScreenSpaceLines.Clear();
+
+				for (int i = 0; i < p.LineLoopIndices.Count; i++)
 				{
-					Vertex v = r.Vertices[i];
+					int wrappedA = (i + 0) % p.LineLoopIndices.Count;
+					int wrappedB = (i + 1) % p.LineLoopIndices.Count;
 
-					Vector4 clip = Vector4.Transform(v.Position, matrix);
+					int indexA = p.LineLoopIndices[wrappedA];
+					int indexB = p.LineLoopIndices[wrappedB];
 
-					Vector4 divided = clip / clip.W;
+					var line = new Line(r.Vertices[indexA], r.Vertices[indexB]);
+					var clipped = new Line(line);
 
-					var ndc = new Vector3(divided.X, divided.Y, divided.Z);
+					bool visible = Camera.ClipLineAgainstFrustum(ref clipped);
 
-					// The above code to calculate normalized device coordinates
-					// treats the vertical axis as increasing upwards, but RGB
-					// rendering, and subsequently BizHawk's drawing API, treat
-					// the axis as increasing downwards. Flipping the sign of
-					// the Y component puts the point where it should be.
-					var screen = new Point(
-						(int)((ndc.X + 1) * (w / 2) + origin.X),
-						(int)((-ndc.Y + 1) * (h / 2) + origin.Y));
+					bool aClipped = line.A.Position != clipped.A.Position;
+					bool bClipped = line.B.Position != clipped.B.Position;
 
-					Points.Add(screen);
-					if (r.Tint != null)
-					{
-						Colors.Add((Color)r.Tint);
-					}
-					else
-					{
-						Colors.Add(v.Color);
-					}
+					clipped.A = clipped.A.WorldToScreen(matrix, Viewport, true);
+					clipped.B = clipped.B.WorldToScreen(matrix, Viewport, true);
+
+					ScreenSpaceLines.Add((
+						clipped,
+						r.Tint ?? clipped.A.Color,
+						visible,
+						aClipped,
+						bClipped));
 				}
 
-				int argb;
-				if (r.Tint != null)
+				switch (CmbRenderMode.SelectedIndex)
 				{
-					argb = ((Color)r.Tint).ToArgb();
-				}
-				else
-				{
-					argb = r.Vertices[p.LineLoopIndices[0]].Color.ToArgb();
-				}
+					case 1:
+						// TODO: Figure out how to handle the corner of the screen
+						// causing a diagonal to form even when the near clip plane
+						// isn't cutting through the object. The vertex mode, case 2,
+						// and the wireframe, case 0/default, don't do this because
+						// they don't need to connect vertices at the screen edge. The
+						// filled poly mode, however, does, and needs new verts added
+						// somewhere, based on some criteria I haven't figured out yet.
+						var visibleVertices = new List<Point>();
+						foreach ((Line line, _, bool visible, bool aClipped, bool bClipped) in ScreenSpaceLines)
+						{
+							if (!visible)
+							{
+								continue;
+							}
 
-				if (CmbRenderMode.SelectedIndex == 0)
-				{
-					Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb));
-				}
-				else if (CmbRenderMode.SelectedIndex == 1)
-				{
-					Gui.DrawPolygon(Points.ToArray(), Color.FromArgb(argb), Color.FromArgb(argb));
-				}
-				else if (CmbRenderMode.SelectedIndex == 2)
-				{
-					for (int i = 0; i < Points.Count; i++)
-					{
-						Point point = Points[i];
+							var a = new Point((int)line.A.Position.X, (int)line.A.Position.Y);
+							var b = new Point((int)line.B.Position.X, (int)line.B.Position.Y);
 
-						Gui.DrawEllipse(point.X, point.Y, 4, 4, Colors[i], Colors[i]);
-					}
-				}
+							if (!visibleVertices.Contains(a))
+							{
+								visibleVertices.Add(a);
+							}
 
-				Points.Clear();
-				Colors.Clear();
+							if (!visibleVertices.Contains(b))
+							{
+								visibleVertices.Add(b);
+							}
+						}
+
+						Color c = r.Tint ?? ScreenSpaceLines[0].line.A.Color;
+						Gui.DrawPolygon(visibleVertices.ToArray(), c, c);
+						break;
+					case 2:
+						IEnumerable<Vertex> unclippedAs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.aClipped).Select(ssl => ssl.line.A);
+						IEnumerable<Vertex> unclippedBs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.bClipped).Select(ssl => ssl.line.B);
+
+						foreach (Vertex v in unclippedAs.Concat(unclippedBs))
+						{
+							int x = (int)v.Position.X;
+							int y = (int)v.Position.Y;
+
+							Gui.DrawEllipse(x - 2, y - 2, 4, 4, v.Color, v.Color);
+						}
+						break;
+					default:
+						foreach ((Line line, Color color, bool visible, _, _) in ScreenSpaceLines)
+						{
+							if (visible)
+							{
+								Gui.DrawLine(
+									(int)line.A.Position.X,
+									(int)line.A.Position.Y,
+									(int)line.B.Position.X,
+									(int)line.B.Position.Y,
+									color);
+							}
+						}
+						break;
+				}
 			}
 		}
 
@@ -354,6 +459,20 @@ namespace BizHawk.Client.EmuHawk
 			float halfAngle = (float)Math.Asin(opposite / h);
 
 			return MathUtilities.RadiansToDegrees(halfAngle * 2.0f);
+		}
+
+		private void Selectable_Enter(object sender, EventArgs e)
+		{
+			if (sender is NumericUpDown nud)
+			{
+				int length = nud.Value.ToString().Length;
+
+				nud.Select(0, length);
+			}
+			else if (sender is TextBox tbx)
+			{
+				tbx.SelectAll();
+			}
 		}
 	}
 }

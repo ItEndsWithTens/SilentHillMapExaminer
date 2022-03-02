@@ -15,6 +15,39 @@ namespace SHME.ExternalTool
 		Function2 = 0x0B
 	}
 
+	public enum TriggerStyle
+	{
+		/// <summary>
+		/// ?
+		/// </summary>
+		Unknown0 = 0x00,
+
+		/// <summary>
+		/// Activated by touch.
+		/// </summary>
+		Touch0 = 0x01, // Proximity Z (maybe).
+
+		/// <summary>
+		/// Activated by touch.
+		/// </summary>
+		Touch1 = 0x02, // Radius/close proximity (maybe).
+
+		/// <summary>
+		/// ?
+		/// </summary>
+		Unknown1 = 0x14,
+
+		/// <summary>
+		/// Activated with the action button, e.g. doors, flavor text.
+		/// </summary>
+		Button = 0x23,
+
+		/// <summary>
+		/// Marks the end of the trigger array in game memory.
+		/// </summary>
+		Dummy = 0x0F
+	}
+
 	public class Trigger
 	{
 		public static int SizeInBytes { get; } = 12;
@@ -37,14 +70,7 @@ namespace SHME.ExternalTool
 		/// <summary>
 		/// How this trigger gets activated.
 		/// </summary>
-		/// <remarks>
-		/// 0x00:
-		/// 0x01: Proximity Z (maybe)
-		/// 0x02: Radius/close proximity
-		/// 0x23: Button press
-		/// 0x0F: Dummy, marks end of trigger array.
-		/// </remarks>
-		public byte Style { get; }
+		public TriggerStyle Style { get; }
 		public byte PoiIndex { get; }
 		public byte Thing3 { get; } // Could be string index when door is locked?
 		public byte Thing4 { get; }
@@ -90,7 +116,7 @@ namespace SHME.ExternalTool
 			FiredBitShift = (byte)raw0;
 			SomeIndex = (short)raw1;
 
-			Style = bytes[4];
+			Style = (TriggerStyle)bytes[4];
 			PoiIndex = bytes[5];
 			Thing3 = bytes[6];
 			Thing4 = bytes[7];

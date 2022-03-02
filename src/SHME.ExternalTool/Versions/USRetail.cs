@@ -48,6 +48,14 @@
 				//0xB2784
 				//0xB278F
 
+				// Currently loaded save data? Saves are apparently
+				// 0x280 (640) bytes long, so this goes up through
+				// 0x0xB5C18 (i.e. up to but excluding 0xB5C1C).
+				// Hmm, doesn't seem to change anything.
+				// This might simply reflect the most recently
+				// saved game?
+				// 0xB599C
+
 				IsCameraUnlocked = 0xB9CD0,
 
 				CameraSpringArmTensionX = 0xAFCD0, // Mirrored at 0xB9D04

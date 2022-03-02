@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -43,6 +44,41 @@ namespace SHME.ExternalTool
 			return ConvertCoordinateSpace(v, inverted);
 		}
 
+		public static Vertex WorldToScreen(this Vertex v, Matrix4x4 mvpMatrix, Viewport viewport, bool flip)
+		{
+			Vector4 clip = Vector4.Transform(v.Position, mvpMatrix);
+
+			Vector4 div = clip;
+			if (clip.W != 0)
+			{
+				div /= clip.W;
+			}
+
+			var ndc = new Vector3(div.X, div.Y, div.Z);
+
+			// The neutral device coordinates are good to go as-is, except in
+			// cases where the Y axis increases downwards instead of upwards.
+			if (flip)
+			{
+				ndc.Y = -ndc.Y;
+			}
+
+			var screen = new Point(
+				(int)(viewport.Center.X + (ndc.X * viewport.Width / 2)),
+				(int)(viewport.Center.Y + (ndc.Y * viewport.Height / 2)));
+
+			// This is a dirty, underhanded trick to "clip" the coordinates in
+			// question to the bounds of the viewport without actually doing any
+			// clipping. It only works when the 3D points are just barely beyond
+			// the edge of the view frustum.
+			Utility.ClampToMinMax(ref screen, viewport.TopLeft, viewport.BottomRight);
+
+			return new Vertex(v)
+			{
+				Position = new Vector3(screen.X, screen.Y, v.Position.Z)
+			};
+		}
+
 		public static Vertex ConvertCoordinateSpace(Vertex v, Matrix4x4 matrix)
 		{
 			Vector3 converted = Vector3.Transform(v, matrix);
@@ -51,7 +87,7 @@ namespace SHME.ExternalTool
 		}
 	}
 
-	public struct Vertex
+	public struct Vertex : IEquatable<Vertex>
 	{
 		public static int MemorySize { get; } = Marshal.SizeOf(typeof(Vertex));
 
@@ -143,9 +179,43 @@ namespace SHME.ExternalTool
 			return ToVector3(vertex);
 		}
 
+		public static bool operator ==(Vertex left, Vertex right)
+		{
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(Vertex left, Vertex right)
+		{
+			return !(left == right);
+		}
+
 		public override string ToString()
 		{
 			return Position.ToString();
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is Vertex vertex && Equals(vertex);
+		}
+
+		public bool Equals(Vertex other)
+		{
+			return
+				Position.Equals(other.Position) &&
+				Normal.Equals(other.Normal) &&
+				EqualityComparer<Color>.Default.Equals(Color, other.Color) &&
+				TexCoords.Equals(other.TexCoords);
+		}
+
+		public override int GetHashCode()
+		{
+			int hashCode = 252586052;
+			hashCode = hashCode * -1521134295 + Position.GetHashCode();
+			hashCode = hashCode * -1521134295 + Normal.GetHashCode();
+			hashCode = hashCode * -1521134295 + Color.GetHashCode();
+			hashCode = hashCode * -1521134295 + TexCoords.GetHashCode();
+			return hashCode;
 		}
 	}
 }

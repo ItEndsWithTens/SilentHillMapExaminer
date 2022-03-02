@@ -30,6 +30,17 @@ namespace BizHawk.Client.EmuHawk
 			Invoke(new Action(() => { BtnReadTriggers_Click(this, EventArgs.Empty); }));
 		}
 
+		private void BtnClearPoisTriggers_Click(object sender, EventArgs e)
+		{
+			ClearDisplayedPoiInfo();
+			ClearDisplayedTriggerInfo();
+			LbxPois.Items.Clear();
+			LbxTriggers.Items.Clear();
+			Pois.Clear();
+			Triggers.Clear();
+			Boxes.Clear();
+		}
+
 		private void BtnGoToPoi_Click(object sender, EventArgs e)
 		{
 			var poi = (PointOfInterest)LbxPois.SelectedItem;
@@ -43,7 +54,6 @@ namespace BizHawk.Client.EmuHawk
 		private void CbxTriggersAutoUpdate_CheckedChanged(object sender, EventArgs e)
 		{
 			BtnReadPois.Enabled = !CbxTriggersAutoUpdate.Checked;
-			BtnReadPois2.Enabled = !CbxTriggersAutoUpdate.Checked;
 			BtnReadTriggers.Enabled = !CbxTriggersAutoUpdate.Checked;
 		}
 
@@ -134,10 +144,7 @@ namespace BizHawk.Client.EmuHawk
 			LblSelectedPoiAddress.Text = "0x";
 			LblSelectedPoiX.Text = "???.??";
 			LblSelectedPoiZ.Text = "???.??";
-			LblSelectedPoiThing0.Text = "";
-			LblSelectedPoiThing1.Text = "";
-			LblSelectedPoiYaw.Text = "";
-			LblSelectedPoiThing2.Text = "";
+			LblSelectedPoiGeometry.Text = "0x";
 		}
 
 		private void ClearDisplayedTriggerInfo()
@@ -146,6 +153,7 @@ namespace BizHawk.Client.EmuHawk
 			LblSelectedTriggerThing0.Text = "0x";
 			CbxSelectedTriggerDisabled.Checked = false;
 			CbxSelectedTriggerDisabled.Enabled = false;
+			LblSelectedTriggerPoiGeometry.Text = "";
 			LblSelectedTriggerThing1.Text = "0x";
 			LblSelectedTriggerFired.Text = "";
 			LblSelectedTriggerFiredDetails.Text = $"(Group address 0x??, bit 0x??)";
@@ -197,6 +205,41 @@ namespace BizHawk.Client.EmuHawk
 			Tool.OpenHexEditor();
 			var tool = (HexEditor)Tool.GetTool("HexEditor");
 			info.Invoke(tool, new object[] { address });
+		}
+
+		private string DecodePoiGeometry(Trigger t)
+		{
+			PointOfInterest p = Pois.ElementAt(t.PoiIndex).Key;
+
+			(float? yaw, float? x, float? z) = PointOfInterest.DecodeGeometry(t.Style, p);
+
+			string geometry = "";
+			if (x != null && z != null)
+			{
+				geometry = $"X size: {x} Z size: {z}";
+			}
+			else if (yaw != null)
+			{
+				geometry = $"Yaw: {yaw}";
+			}
+
+			return geometry;
+		}
+
+		private void CmbRenderShape_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (LbxTriggers.Items.Count > 0)
+			{
+				int oldPoiIndex = LbxPois.SelectedIndex;
+				int oldTriggersIndex = LbxTriggers.SelectedIndex;
+				int oldPoiAssociatedTriggerIndex = LbxPoiAssociatedTriggers.SelectedIndex;
+
+				BtnReadTriggers_Click(sender, e);
+
+				LbxPois.SelectedIndex = oldPoiIndex;
+				LbxTriggers.SelectedIndex = oldTriggersIndex;
+				LbxPoiAssociatedTriggers.SelectedIndex = oldPoiAssociatedTriggerIndex;
+			}
 		}
 
 		private void LblSelectedPoiAddress_Click(object sender, EventArgs e)
@@ -273,10 +316,7 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedPoiAddress.Text = $"0x{poi.Address:X2}";
 				LblSelectedPoiX.Text = $"{poi.X:0.##}";
 				LblSelectedPoiZ.Text = $"{poi.Z:0.##}";
-				LblSelectedPoiThing0.Text = $"0x{poi.Thing0:X2}";
-				LblSelectedPoiThing1.Text = $"0x{poi.Thing1:X2}";
-				LblSelectedPoiYaw.Text = $"{poi.Yaw:0.##}";
-				LblSelectedPoiThing2.Text = $"0x{poi.Thing2:X2}";
+				LblSelectedPoiGeometry.Text = $"0x{poi.Geometry:X2}";
 
 				RefreshLbxPoiAssociatedTriggers();
 			}
@@ -291,7 +331,6 @@ namespace BizHawk.Client.EmuHawk
 		private void BtnReadTriggers_Click(object sender, EventArgs e)
 		{
 			BtnReadPois_Click(this, EventArgs.Empty);
-			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 			BtnReadStrings_Click(this, EventArgs.Empty);
 
 			int triggerArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
@@ -302,7 +341,7 @@ namespace BizHawk.Client.EmuHawk
 
 			int ofs = triggerArrayAddress;
 			var t = new Trigger(ofs, Mem!.ReadByteRange(ofs, Trigger.SizeInBytes));
-			while (t.Style != 0x0F)
+			while (t.Style != TriggerStyle.Dummy)
 			{
 				Triggers.Add(t);
 				LbxTriggers.Items.Add(t);
@@ -312,6 +351,43 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			LblTriggerCount.Text = $"{Triggers.Count}";
+
+			foreach (Trigger trigger in Triggers)
+			{
+				if (trigger.Style != TriggerStyle.Button)
+				{
+					KeyValuePair<PointOfInterest, Renderable?> pair = Pois.ElementAt(trigger.PoiIndex);
+					PointOfInterest p = pair.Key;
+
+					float? x = null;
+					float? z = null;
+					if (CmbRenderShape.SelectedIndex == 0)
+					{
+						(_, x, z) = PointOfInterest.DecodeGeometry(trigger.Style, p);
+					}
+
+					Renderable r;
+					if (x != null && z != null)
+					{
+						r = new BoxGenerator((float)x, (float)z, 1.0f, Color.Orange).Generate().ToWorld();
+					}
+					else
+					{
+						r = new BoxGenerator(1.0f, Color.White).Generate().ToWorld();
+					}
+
+					r.Position = pair.Value.Position;
+
+					int index = Boxes.IndexOf(pair.Value);
+					Boxes.RemoveAt(index);
+					Boxes.Insert(index, r);
+
+					Pois.Remove(p);
+					Pois.Add(p, r);
+				}
+			}
+
+			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 		}
 
 		private void CbxSelectedTriggerEnabled_CheckedChanged(object sender, EventArgs e)
@@ -336,8 +412,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Pois.Clear();
 			LbxPois.Items.Clear();
-			LblPoiCount1.Text = "0";
-			LblPoiCount2.Text = "0";
+			LblPoiCount.Text = "0";
 
 			Triggers.Clear();
 			LbxTriggers.Items.Clear();
@@ -389,11 +464,13 @@ namespace BizHawk.Client.EmuHawk
 				CbxSelectedTriggerDisabled.Enabled = true;
 				LblSelectedTriggerThing1.Text = $"0x{t.Thing1:X2}";
 				LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex:X}";
-				LblSelectedTriggerStyle.Text = $"0x{t.Style:X2}";
 				LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex}";
 				LblSelectedTriggerThing3.Text = $"0x{t.Thing3:X2}";
 				LblSelectedTriggerThing4.Text = $"0x{t.Thing4:X2}";
 				LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X8}";
+
+				string? style = Enum.GetName(typeof(TriggerStyle), t.Style);
+				LblSelectedTriggerStyle.Text = $"{style ?? $"0x{t.Style}"}";
 
 				long ofs = Rom.Addresses.MainRam.SaveData;
 				long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
@@ -455,6 +532,8 @@ namespace BizHawk.Client.EmuHawk
 						NudSelectedTriggerTargetIndex.Value = -1;
 						break;
 				}
+
+				LblSelectedTriggerPoiGeometry.Text = DecodePoiGeometry(t);
 			}
 			else
 			{
