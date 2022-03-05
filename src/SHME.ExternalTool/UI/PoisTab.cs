@@ -336,6 +336,11 @@ namespace BizHawk.Client.EmuHawk
 			int triggerArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
 			triggerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
+			if (triggerArrayAddress < Rom.Addresses.MainRam.MapHeader)
+			{
+				return;
+			}
+
 			Triggers.Clear();
 			LbxTriggers.Items.Clear();
 
@@ -534,6 +539,14 @@ namespace BizHawk.Client.EmuHawk
 				}
 
 				LblSelectedTriggerPoiGeometry.Text = DecodePoiGeometry(t);
+
+				object triggersItem = LbxTriggers.SelectedItem;
+				object associatedItem = LbxPoiAssociatedTriggers.SelectedItem;
+				bool contains = LbxPoiAssociatedTriggers.Items.Contains(triggersItem);
+				if (contains && !ReferenceEquals(triggersItem, associatedItem))
+				{
+					LbxPoiAssociatedTriggers.SelectedItem = LbxTriggers.SelectedItem;
+				}
 			}
 			else
 			{
