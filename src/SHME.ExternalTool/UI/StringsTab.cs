@@ -57,10 +57,10 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private void BtnReadStrings_Click(object sender, EventArgs e)
 		{
-			int arrayStart = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
+			int arrayStart = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
 			arrayStart -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			int arrayEnd = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
+			int arrayEnd = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
 			arrayEnd -= (int)Rom.Addresses.MainRam.BaseAddress;
 
 			int arrayBytes = arrayEnd - arrayStart;
@@ -71,14 +71,14 @@ namespace BizHawk.Client.EmuHawk
 			var strings = new List<string>();
 			for (int i = 0; i < stringCount; i++)
 			{
-				int pointer = Mem!.ReadS32(arrayStart + (sizeof(int) * i));
+				int pointer = Mem.ReadS32(arrayStart + (sizeof(int) * i));
 				pointer -= (int)Rom.Addresses.MainRam.BaseAddress;
 
 				var sb = new StringBuilder();
 				char current;
 				do
 				{
-					current = (char)Mem!.ReadByte(pointer++);
+					current = (char)Mem.ReadByte(pointer++);
 					sb.Append(current);
 				}
 				while (current != '\0');

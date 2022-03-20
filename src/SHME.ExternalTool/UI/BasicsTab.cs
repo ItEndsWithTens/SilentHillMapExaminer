@@ -45,11 +45,6 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportAngles()
 		{
-			if (Mem == null)
-			{
-				return;
-			}
-
 			List<float> angles = Core.GetAngles(Mem);
 
 			LblHarryPitch.Text = angles[0].ToString("N2");
@@ -63,11 +58,6 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportControls()
 		{
-			if (Mem == null)
-			{
-				return;
-			}
-
 			var raw = (ButtonFlags)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
 			foreach (ButtonFlags button in Enum.GetValues(typeof(ButtonFlags)))
@@ -110,11 +100,6 @@ namespace BizHawk.Client.EmuHawk
 		private PointOfInterest? _lastHarrySpawnPoint;
 		private void ReportPosition()
 		{
-			if (Mem == null)
-			{
-				return;
-			}
-
 			List<float> position = Core.GetPosition(Mem);
 
 			LblHarryPositionX.Text = position[0].ToString("N2");
@@ -130,10 +115,10 @@ namespace BizHawk.Client.EmuHawk
 			LblCameraDrawDistance.Text = $"{drawDistance:N3}m";
 
 			long address = Rom.Addresses.MainRam.LastHarrySpawnPoint;
-			string hash = Mem!.HashRegion(address, 12);
+			string hash = Mem.HashRegion(address, 12);
 			if (hash != _lastHarrySpawnPointHash)
 			{
-				_lastHarrySpawnPoint = new PointOfInterest(address, Mem!.ReadByteRange(address, 12));
+				_lastHarrySpawnPoint = new PointOfInterest(address, Mem.ReadByteRange(address, 12));
 				_lastHarrySpawnPointHash = hash;
 
 				LblSpawnX.Text = $"{_lastHarrySpawnPoint.X:0.##}";
@@ -151,7 +136,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnSetPosition_Click(object sender, EventArgs e)
 		{
-			Core.SetHarryPosition(Mem!,
+			Core.SetHarryPosition(Mem,
 				Single.Parse(TbxPositionX.Text),
 				Single.Parse(TbxPositionY.Text),
 				Single.Parse(TbxPositionZ.Text));
@@ -171,7 +156,7 @@ namespace BizHawk.Client.EmuHawk
 
 			var generator = new BoxGenerator(1.0f, Color.White);
 
-			int poiArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
+			int poiArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
 			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
 			if (poiArrayAddress < Rom.Addresses.MainRam.MapHeader)
@@ -179,7 +164,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			int functionPointersArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
+			int functionPointersArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
 			functionPointersArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
 			int poiArrayBytes = functionPointersArrayAddress - poiArrayAddress;
@@ -194,7 +179,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				int ofs = poiArrayAddress + (poiBytes * i);
 
-				var poi = new PointOfInterest(ofs, Mem!.ReadByteRange(ofs, 12));
+				var poi = new PointOfInterest(ofs, Mem.ReadByteRange(ofs, 12));
 
 				Renderable box = generator.Generate().ToWorld();
 				box.Position = new Vector3(poi.X, 0.0f, -poi.Z);
@@ -212,22 +197,22 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnSetHarryPitch_Click(object sender, EventArgs e)
 		{
-			Core.SetPitch(Mem!, Single.Parse(TbxHarryPitch.Text));
+			Core.SetPitch(Mem, Single.Parse(TbxHarryPitch.Text));
 		}
 
 		private void BtnSetHarryYaw_Click(object sender, EventArgs e)
 		{
-			Core.SetYaw(Mem!, Single.Parse(TbxHarryYaw.Text));
+			Core.SetYaw(Mem, Single.Parse(TbxHarryYaw.Text));
 		}
 
 		private void BtnSetHarryRoll_Click(object sender, EventArgs e)
 		{
-			Core.SetRoll(Mem!, Single.Parse(TbxHarryRoll.Text));
+			Core.SetRoll(Mem, Single.Parse(TbxHarryRoll.Text));
 		}
 
 		private void BtnSetAngles_Click(object sender, EventArgs e)
 		{
-			Core.SetAngles(Mem!,
+			Core.SetAngles(Mem,
 				Single.Parse(TbxHarryPitch.Text),
 				Single.Parse(TbxHarryYaw.Text),
 				Single.Parse(TbxHarryRoll.Text));
@@ -235,7 +220,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void TrkFov_Scroll(object sender, EventArgs e)
 		{
-			uint height = Mem!.ReadU16(Rom.Addresses.MainRam.FramebufferHeight);
+			uint height = Mem.ReadU16(Rom.Addresses.MainRam.FramebufferHeight);
 
 			float opposite = height / 2.0f;
 
@@ -256,7 +241,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (!CbxEnableOverlay.Checked)
 			{
-				Gui!.WithSurface(DisplaySurfaceID.EmuCore, () => Gui!.ClearGraphics());
+				Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
 			}
 		}
 
@@ -264,11 +249,11 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (CbxCameraFreeze.Checked)
 			{
-				Mem?.WriteByte(Rom.Addresses.MainRam.IsCameraUnlocked, 0x0);
+				Mem.WriteByte(Rom.Addresses.MainRam.IsCameraUnlocked, 0x0);
 			}
 			else
 			{
-				Mem?.WriteByte(Rom.Addresses.MainRam.IsCameraUnlocked, 0x1);
+				Mem.WriteByte(Rom.Addresses.MainRam.IsCameraUnlocked, 0x1);
 			}
 		}
 

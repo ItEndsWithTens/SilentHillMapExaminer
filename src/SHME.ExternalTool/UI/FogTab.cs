@@ -10,21 +10,21 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (!CbxFog.Checked)
 			{
-				Mem?.WriteByte(Rom.Addresses.MainRam.FogEnabled, 0);
+				Mem.WriteByte(Rom.Addresses.MainRam.FogEnabled, 0);
 			}
 
 			if (CbxFogCustom.Checked)
 			{
-				Mem?.WriteByte(Rom.Addresses.MainRam.FogColorR, (byte)NudFogR.Value);
-				Mem?.WriteByte(Rom.Addresses.MainRam.FogColorG, (byte)NudFogG.Value);
-				Mem?.WriteByte(Rom.Addresses.MainRam.FogColorB, (byte)NudFogB.Value);
+				Mem.WriteByte(Rom.Addresses.MainRam.FogColorR, (byte)NudFogR.Value);
+				Mem.WriteByte(Rom.Addresses.MainRam.FogColorG, (byte)NudFogG.Value);
+				Mem.WriteByte(Rom.Addresses.MainRam.FogColorB, (byte)NudFogB.Value);
 			}
 
 			if (CbxCustomWorldTint.Checked)
 			{
-				Mem?.WriteByte(Rom.Addresses.MainRam.WorldTintR, (byte)NudWorldTintR.Value);
-				Mem?.WriteByte(Rom.Addresses.MainRam.WorldTintG, (byte)NudWorldTintG.Value);
-				Mem?.WriteByte(Rom.Addresses.MainRam.WorldTintB, (byte)NudWorldTintB.Value);
+				Mem.WriteByte(Rom.Addresses.MainRam.WorldTintR, (byte)NudWorldTintR.Value);
+				Mem.WriteByte(Rom.Addresses.MainRam.WorldTintG, (byte)NudWorldTintG.Value);
+				Mem.WriteByte(Rom.Addresses.MainRam.WorldTintB, (byte)NudWorldTintB.Value);
 			}
 		}
 
@@ -128,16 +128,16 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnCustomFogCurrent_Click(object sender, EventArgs e)
 		{
-			NudFogR.Value = Mem!.ReadByte(Rom.Addresses.MainRam.FogColorR);
-			NudFogG.Value = Mem!.ReadByte(Rom.Addresses.MainRam.FogColorG);
-			NudFogB.Value = Mem!.ReadByte(Rom.Addresses.MainRam.FogColorB);
+			NudFogR.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorR);
+			NudFogG.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorG);
+			NudFogB.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorB);
 		}
 
 		private void BtnCustomWorldTintCurrent_Click(object sender, EventArgs e)
 		{
-			NudWorldTintR.Value = Mem!.ReadByte(Rom.Addresses.MainRam.WorldTintR);
-			NudWorldTintG.Value = Mem!.ReadByte(Rom.Addresses.MainRam.WorldTintG);
-			NudWorldTintB.Value = Mem!.ReadByte(Rom.Addresses.MainRam.WorldTintB);
+			NudWorldTintR.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintR);
+			NudWorldTintG.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintG);
+			NudWorldTintB.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintB);
 		}
 
 		private void BtnFogWorldTintColorSwap_Click(object sender, EventArgs e)

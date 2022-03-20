@@ -19,32 +19,27 @@ namespace BizHawk.Client.EmuHawk
 
 	public partial class CustomMainForm : ToolFormBase, IExternalToolForm
 	{
-		[RequiredApi]
-		public IMemoryApi? Mem { get; set; }
+		private IMemoryApi Mem => Apis.Memory;
 
-		[RequiredApi]
-		public IGuiApi? Gui { get; set; }
+		private IGuiApi Gui => Apis.Gui;
 
-		[RequiredApi]
-		public IJoypadApi? Joy { get; set; }
+		private IJoypadApi Joy => Apis.Joypad;
 
-		[RequiredApi]
-		public IEmuClientApi? Emu { get; set; }
+		private IEmuClientApi Emu => Apis.EmuClient;
 
-		[RequiredApi]
-		public IEmulationApi? Emulation { get; set; }
+		private IEmulationApi Emulation => Apis.Emulation;
 
-		[RequiredApi]
-		public IGameInfoApi? GI { get; set; }
+		private IGameInfoApi GI => Apis.GameInfo;
 
-		[RequiredApi]
-		public IMemorySaveStateApi? MemSS { get; set; }
+		private IMemorySaveStateApi MemSS => Apis.MemorySaveState;
 
-		[RequiredApi]
-		public IToolApi? Tool { get; set; }
+		private IToolApi Tool => Apis.Tool;
 
-		[RequiredApi]
-		public ISaveStateApi? SaveState { get; set; }
+		private ISaveStateApi SaveState => Apis.SaveState;
+
+		public ApiContainer? ApiContainer { get; set; }
+
+		private ApiContainer Apis => ApiContainer ?? throw new ArgumentNullException();
 
 		[OptionalService]
 		public Octoshock? Octoshock { get; set; }
@@ -93,7 +88,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			base.Restart();
 
-			Emu!.StateLoaded += Emu_StateLoaded;
+			Emu.StateLoaded += Emu_StateLoaded;
 
 			if (Emu.BufferWidth() == 350)
 			{
@@ -149,7 +144,7 @@ namespace BizHawk.Client.EmuHawk
 
 		public override void UpdateValues(ToolFormUpdateType type)
 		{
-			if (Mem == null || Gui == null || Emu == null || GI?.GetRomName() == "Null")
+			if (GI.GetRomName() == "Null")
 			{
 				return;
 			}
@@ -201,11 +196,6 @@ namespace BizHawk.Client.EmuHawk
 
 		private void DrawStuff()
 		{
-			if (Mem == null || Gui == null || Emu == null)
-			{
-				return;
-			}
-
 			List<float> position = Core.GetPosition(Mem);
 			List<float> angles = Core.GetAngles(Mem);
 
@@ -443,11 +433,6 @@ namespace BizHawk.Client.EmuHawk
 
 		private float CalculateGameFov()
 		{
-			if (Mem == null)
-			{
-				return 0.0f;
-			}
-
 			// The idea that the render height and projection plane distance are
 			// meant to be used this way to determine a vertical FOV is hardly
 			// set in stone, but it seems about right when eyeballing things.

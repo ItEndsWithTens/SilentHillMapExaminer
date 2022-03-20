@@ -17,7 +17,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CheckForSaveButtonPress()
 		{
-			var raw = (ButtonFlags)Mem!.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
+			var raw = (ButtonFlags)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
 			if (!raw.HasFlag(_saveButton))
 			{
@@ -472,7 +472,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnOpenSaveMenu_Click(object sender, EventArgs e)
 		{
-			Mem!.WriteByte(Rom.Addresses.MainRam.ActiveTriggerType, (uint)TriggerType.Save0);
+			Mem.WriteByte(Rom.Addresses.MainRam.ActiveTriggerType, (uint)TriggerType.Save0);
 		}
 
 		private void BtnSaveRamExport_Click(object sender, EventArgs e)

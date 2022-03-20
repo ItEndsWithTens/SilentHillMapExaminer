@@ -20,7 +20,7 @@ namespace BizHawk.Client.EmuHawk
 			// During some particularly long map loads, various array pointers
 			// will be updated before the arrays have been filled with their
 			// contents. Waiting for a few frames takes care of that.
-			if (Emulation!.FrameCount() - _arrayCountdownStartFrameCount < 45)
+			if (Emulation.FrameCount() - _arrayCountdownStartFrameCount < 45)
 			{
 				return;
 			}
@@ -47,7 +47,7 @@ namespace BizHawk.Client.EmuHawk
 
 			if (poi != null)
 			{
-				Core.SetHarryPosition(Mem!, poi.X, 0, poi.Z);
+				Core.SetHarryPosition(Mem, poi.X, 0, poi.Z);
 			}
 		}
 
@@ -63,16 +63,16 @@ namespace BizHawk.Client.EmuHawk
 		private long _previousUnknownThingAddress;
 		private void CheckForTriggerArrayUpdate()
 		{
-			int poiArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
+			int poiArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
 			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			int functionPointerArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
+			int functionPointerArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
 			functionPointerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			int triggerArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
+			int triggerArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
 			triggerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			int unknownThingAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToUnknownThingAfterArrayOfTriggers);
+			int unknownThingAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToUnknownThingAfterArrayOfTriggers);
 			unknownThingAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
 			bool poiArrayLocationChange = poiArrayAddress != _previousPoiArrayAddress;
@@ -87,7 +87,7 @@ namespace BizHawk.Client.EmuHawk
 				_previousTriggerArrayAddress = triggerArrayAddress;
 				_previousUnknownThingAddress = unknownThingAddress;
 
-				_arrayCountdownStartFrameCount = Emulation!.FrameCount();
+				_arrayCountdownStartFrameCount = Emulation.FrameCount();
 				_arrayCountdown.Start();
 			}
 		}
@@ -106,10 +106,10 @@ namespace BizHawk.Client.EmuHawk
 
 			long address = t.Address + Rom.Addresses.MainRam.BaseAddress;
 
-			string body = Mem!.HashRegion(address, 12);
+			string body = Mem.HashRegion(address, 12);
 
 			long ofs = Rom.Addresses.MainRam.SaveData;
-			int group = Mem!.ReadS32(ofs + (t.SomeIndex * 4) + 0x168);
+			int group = Mem.ReadS32(ofs + (t.SomeIndex * 4) + 0x168);
 			int firedBit = (group >> t.FiredBitShift) & 1;
 			bool fired = firedBit != 0;
 
@@ -124,7 +124,7 @@ namespace BizHawk.Client.EmuHawk
 
 			if (body != _previousTriggerBodyHash || fired != _previousTriggerFired)
 			{
-				List<byte> bytes = Mem!.ReadByteRange(address, 12);
+				List<byte> bytes = Mem.ReadByteRange(address, 12);
 
 				var updated = new Trigger(t.Address, bytes);
 
@@ -333,7 +333,7 @@ namespace BizHawk.Client.EmuHawk
 			BtnReadPois_Click(this, EventArgs.Empty);
 			BtnReadStrings_Click(this, EventArgs.Empty);
 
-			int triggerArrayAddress = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
+			int triggerArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
 			triggerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
 			if (triggerArrayAddress < Rom.Addresses.MainRam.MapHeader)
@@ -345,14 +345,14 @@ namespace BizHawk.Client.EmuHawk
 			LbxTriggers.Items.Clear();
 
 			int ofs = triggerArrayAddress;
-			var t = new Trigger(ofs, Mem!.ReadByteRange(ofs, Trigger.SizeInBytes));
+			var t = new Trigger(ofs, Mem.ReadByteRange(ofs, Trigger.SizeInBytes));
 			while (t.Style != TriggerStyle.Dummy)
 			{
 				Triggers.Add(t);
 				LbxTriggers.Items.Add(t);
 
 				ofs += Trigger.SizeInBytes;
-				t = new Trigger(ofs, Mem!.ReadByteRange(ofs, Trigger.SizeInBytes));
+				t = new Trigger(ofs, Mem.ReadByteRange(ofs, Trigger.SizeInBytes));
 			}
 
 			LblTriggerCount.Text = $"{Triggers.Count}";
@@ -400,15 +400,15 @@ namespace BizHawk.Client.EmuHawk
 			if (LbxTriggers.SelectedItem is Trigger t)
 			{
 				long address = t.Address + Rom.Addresses.MainRam.BaseAddress;
-				uint existing = Mem!.ReadByte(address);
+				uint existing = Mem.ReadByte(address);
 
 				if (CbxSelectedTriggerDisabled.Checked)
 				{
-					Mem!.WriteByte(address, (byte)(existing | 0b10000000));
+					Mem.WriteByte(address, (byte)(existing | 0b10000000));
 				}
 				else
 				{
-					Mem!.WriteByte(address, (byte)(existing & 0b01111111));
+					Mem.WriteByte(address, (byte)(existing & 0b01111111));
 				}
 			}
 		}
@@ -479,7 +479,7 @@ namespace BizHawk.Client.EmuHawk
 
 				long ofs = Rom.Addresses.MainRam.SaveData;
 				long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
-				int group = Mem!.ReadS32(groupOfs);
+				int group = Mem.ReadS32(groupOfs);
 				int firedBit = (group >> t.FiredBitShift) & 1;
 				LblSelectedTriggerFired.Text = $"{firedBit != 0}";
 				LblSelectedTriggerFiredDetails.Text = $"(Group address 0x{groupOfs:X}, bit 0x{1 << t.FiredBitShift:X})";
@@ -525,8 +525,8 @@ namespace BizHawk.Client.EmuHawk
 						break;
 					case TriggerType.Function1:
 					case TriggerType.Function2:
-						int s = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
-						int f = Mem!.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
+						int s = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
+						int f = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
 						long count = (s - f) / 4;
 						NudSelectedTriggerTargetIndex.Maximum = count - 1;
 						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;

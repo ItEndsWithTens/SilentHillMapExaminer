@@ -6,11 +6,6 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private void ReportStats()
 		{
-			if (Mem == null)
-			{
-				return;
-			}
-
 			LblHarryHealth.Text = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryHealth)).ToString();
 
 			double secondsScaled = Mem.ReadU32(Rom.Addresses.MainRam.TotalTime) / 4096.0;
