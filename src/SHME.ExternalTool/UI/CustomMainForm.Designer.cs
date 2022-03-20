@@ -56,7 +56,7 @@ namespace BizHawk.Client.EmuHawk
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.BtnGrabMapGraphic = new System.Windows.Forms.Button();
             this.PbxMapGraphic = new System.Windows.Forms.PictureBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.TbcMainTabs = new System.Windows.Forms.TabControl();
             this.TbpBasics = new System.Windows.Forms.TabPage();
             this.GbxControls = new System.Windows.Forms.GroupBox();
             this.CbxEnableControlsSection = new System.Windows.Forms.CheckBox();
@@ -254,16 +254,45 @@ namespace BizHawk.Client.EmuHawk
             this.RtbStrings = new System.Windows.Forms.RichTextBox();
             this.LblStringCount = new System.Windows.Forms.Label();
             this.BtnReadStrings = new System.Windows.Forms.Button();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.TbpSave = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.BtnOpenSaveMenu = new System.Windows.Forms.Button();
             this.CmbSaveButton = new System.Windows.Forms.ComboBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.CbxSaveRamDanger = new System.Windows.Forms.CheckBox();
+            this.PbxHazardStripes = new System.Windows.Forms.PictureBox();
+            this.GbxConvertSaveRamToStates = new System.Windows.Forms.GroupBox();
+            this.label57 = new System.Windows.Forms.Label();
+            this.BtnConvertSaveRamToStatesOutputPathBrowse = new System.Windows.Forms.Button();
+            this.TbxConvertSaveRamToStatesOutputPath = new System.Windows.Forms.TextBox();
+            this.BtnConvertSaveRamToStatesRefresh = new System.Windows.Forms.Button();
+            this.label56 = new System.Windows.Forms.Label();
+            this.BtnConvertSaveRamToStatesInputPathBrowse = new System.Windows.Forms.Button();
+            this.TbxConvertSaveRamToStatesInputPath = new System.Windows.Forms.TextBox();
+            this.BtnConvertSaveRamToStatesGo = new System.Windows.Forms.Button();
+            this.LbxConvertSaveRamToStates = new System.Windows.Forms.ListBox();
+            this.GbxConvertStatesToSaveRam = new System.Windows.Forms.GroupBox();
+            this.label58 = new System.Windows.Forms.Label();
+            this.BtnConvertStatesToSaveRamInputPathBrowse = new System.Windows.Forms.Button();
+            this.TbxConvertStatesToSaveRamInputPath = new System.Windows.Forms.TextBox();
+            this.BtnConvertStatesToSaveRamRefresh = new System.Windows.Forms.Button();
+            this.BtnConvertStatesToSaveRamGo = new System.Windows.Forms.Button();
+            this.LbxConvertStatesToSaveRam = new System.Windows.Forms.ListBox();
+            this.label55 = new System.Windows.Forms.Label();
+            this.BtnConvertStatesToSaveRamOutputPathBrowse = new System.Windows.Forms.Button();
+            this.TbxConvertStatesToSaveRamOutputPath = new System.Windows.Forms.TextBox();
+            this.BtnSaveRamImportBrowse = new System.Windows.Forms.Button();
+            this.TbxSaveRamImportPath = new System.Windows.Forms.TextBox();
+            this.BtnSaveRamImport = new System.Windows.Forms.Button();
+            this.BtnSaveRamExportBrowse = new System.Windows.Forms.Button();
+            this.TbxSaveRamExportPath = new System.Windows.Forms.TextBox();
+            this.BtnSaveRamExport = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxMapGraphic)).BeginInit();
-            this.tabControl1.SuspendLayout();
+            this.TbcMainTabs.SuspendLayout();
             this.TbpBasics.SuspendLayout();
             this.GbxControls.SuspendLayout();
             this.GbxOverlay.SuspendLayout();
@@ -305,8 +334,12 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudFogG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).BeginInit();
             this.tabPage4.SuspendLayout();
-            this.tabPage6.SuspendLayout();
+            this.TbpSave.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxHazardStripes)).BeginInit();
+            this.GbxConvertSaveRamToStates.SuspendLayout();
+            this.GbxConvertStatesToSaveRam.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -752,26 +785,26 @@ namespace BizHawk.Client.EmuHawk
             this.PbxMapGraphic.TabIndex = 16;
             this.PbxMapGraphic.TabStop = false;
             // 
-            // tabControl1
+            // TbcMainTabs
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.TbcMainTabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.TbpBasics);
-            this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.TbpMap);
-            this.tabControl1.Controls.Add(this.TbpModel);
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.TbpInfo);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage6);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(760, 752);
-            this.tabControl1.TabIndex = 17;
+            this.TbcMainTabs.Controls.Add(this.TbpBasics);
+            this.TbcMainTabs.Controls.Add(this.tabPage5);
+            this.TbcMainTabs.Controls.Add(this.tabPage2);
+            this.TbcMainTabs.Controls.Add(this.TbpMap);
+            this.TbcMainTabs.Controls.Add(this.TbpModel);
+            this.TbcMainTabs.Controls.Add(this.tabPage1);
+            this.TbcMainTabs.Controls.Add(this.TbpInfo);
+            this.TbcMainTabs.Controls.Add(this.tabPage3);
+            this.TbcMainTabs.Controls.Add(this.tabPage4);
+            this.TbcMainTabs.Controls.Add(this.TbpSave);
+            this.TbcMainTabs.Location = new System.Drawing.Point(12, 12);
+            this.TbcMainTabs.Name = "TbcMainTabs";
+            this.TbcMainTabs.SelectedIndex = 0;
+            this.TbcMainTabs.Size = new System.Drawing.Size(760, 752);
+            this.TbcMainTabs.TabIndex = 17;
             // 
             // TbpBasics
             // 
@@ -3195,24 +3228,27 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadStrings.UseVisualStyleBackColor = true;
             this.BtnReadStrings.Click += new System.EventHandler(this.BtnReadStrings_Click);
             // 
-            // tabPage6
+            // TbpSave
             // 
-            this.tabPage6.Controls.Add(this.groupBox4);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(752, 726);
-            this.tabPage6.TabIndex = 9;
-            this.tabPage6.Text = "Save";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.TbpSave.Controls.Add(this.groupBox4);
+            this.TbpSave.Controls.Add(this.groupBox3);
+            this.TbpSave.Location = new System.Drawing.Point(4, 22);
+            this.TbpSave.Name = "TbpSave";
+            this.TbpSave.Padding = new System.Windows.Forms.Padding(3);
+            this.TbpSave.Size = new System.Drawing.Size(752, 726);
+            this.TbpSave.TabIndex = 9;
+            this.TbpSave.Text = "Save";
+            this.TbpSave.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.BtnOpenSaveMenu);
             this.groupBox4.Controls.Add(this.CmbSaveButton);
             this.groupBox4.Location = new System.Drawing.Point(6, 7);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(740, 713);
+            this.groupBox4.Size = new System.Drawing.Size(740, 56);
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "In-game saves";
@@ -3236,10 +3272,350 @@ namespace BizHawk.Client.EmuHawk
             this.CmbSaveButton.TabIndex = 20;
             this.CmbSaveButton.SelectedValueChanged += new System.EventHandler(this.CmbSaveButton_SelectedValueChanged);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.CbxSaveRamDanger);
+            this.groupBox3.Controls.Add(this.PbxHazardStripes);
+            this.groupBox3.Controls.Add(this.GbxConvertSaveRamToStates);
+            this.groupBox3.Controls.Add(this.GbxConvertStatesToSaveRam);
+            this.groupBox3.Controls.Add(this.BtnSaveRamImportBrowse);
+            this.groupBox3.Controls.Add(this.TbxSaveRamImportPath);
+            this.groupBox3.Controls.Add(this.BtnSaveRamImport);
+            this.groupBox3.Controls.Add(this.BtnSaveRamExportBrowse);
+            this.groupBox3.Controls.Add(this.TbxSaveRamExportPath);
+            this.groupBox3.Controls.Add(this.BtnSaveRamExport);
+            this.groupBox3.Location = new System.Drawing.Point(6, 69);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(740, 651);
+            this.groupBox3.TabIndex = 21;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "SaveRAM";
+            // 
+            // CbxSaveRamDanger
+            // 
+            this.CbxSaveRamDanger.AutoSize = true;
+            this.CbxSaveRamDanger.Location = new System.Drawing.Point(182, 55);
+            this.CbxSaveRamDanger.Name = "CbxSaveRamDanger";
+            this.CbxSaveRamDanger.Size = new System.Drawing.Size(377, 17);
+            this.CbxSaveRamDanger.TabIndex = 0;
+            this.CbxSaveRamDanger.Text = "Acknowledge incredible danger of messing with savestates and SaveRAM";
+            this.CbxSaveRamDanger.UseVisualStyleBackColor = true;
+            this.CbxSaveRamDanger.CheckedChanged += new System.EventHandler(this.CbxSaveRamDanger_CheckedChanged);
+            // 
+            // PbxHazardStripes
+            // 
+            this.PbxHazardStripes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PbxHazardStripes.Location = new System.Drawing.Point(6, 47);
+            this.PbxHazardStripes.Name = "PbxHazardStripes";
+            this.PbxHazardStripes.Size = new System.Drawing.Size(728, 32);
+            this.PbxHazardStripes.TabIndex = 8;
+            this.PbxHazardStripes.TabStop = false;
+            this.PbxHazardStripes.SizeChanged += new System.EventHandler(this.PbxHazardStripes_SizeChanged);
+            this.PbxHazardStripes.VisibleChanged += new System.EventHandler(this.PbxHazardStripes_VisibleChanged);
+            // 
+            // GbxConvertSaveRamToStates
+            // 
+            this.GbxConvertSaveRamToStates.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GbxConvertSaveRamToStates.Controls.Add(this.label57);
+            this.GbxConvertSaveRamToStates.Controls.Add(this.BtnConvertSaveRamToStatesOutputPathBrowse);
+            this.GbxConvertSaveRamToStates.Controls.Add(this.TbxConvertSaveRamToStatesOutputPath);
+            this.GbxConvertSaveRamToStates.Controls.Add(this.BtnConvertSaveRamToStatesRefresh);
+            this.GbxConvertSaveRamToStates.Controls.Add(this.label56);
+            this.GbxConvertSaveRamToStates.Controls.Add(this.BtnConvertSaveRamToStatesInputPathBrowse);
+            this.GbxConvertSaveRamToStates.Controls.Add(this.TbxConvertSaveRamToStatesInputPath);
+            this.GbxConvertSaveRamToStates.Controls.Add(this.BtnConvertSaveRamToStatesGo);
+            this.GbxConvertSaveRamToStates.Controls.Add(this.LbxConvertSaveRamToStates);
+            this.GbxConvertSaveRamToStates.Enabled = false;
+            this.GbxConvertSaveRamToStates.Location = new System.Drawing.Point(6, 365);
+            this.GbxConvertSaveRamToStates.Name = "GbxConvertSaveRamToStates";
+            this.GbxConvertSaveRamToStates.Size = new System.Drawing.Size(728, 280);
+            this.GbxConvertSaveRamToStates.TabIndex = 7;
+            this.GbxConvertSaveRamToStates.TabStop = false;
+            this.GbxConvertSaveRamToStates.Text = "Convert SaveRAM to states";
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.Location = new System.Drawing.Point(4, 256);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(137, 13);
+            this.label57.TabIndex = 22;
+            this.label57.Text = "Save state output directory:";
+            // 
+            // BtnConvertSaveRamToStatesOutputPathBrowse
+            // 
+            this.BtnConvertSaveRamToStatesOutputPathBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConvertSaveRamToStatesOutputPathBrowse.Location = new System.Drawing.Point(566, 251);
+            this.BtnConvertSaveRamToStatesOutputPathBrowse.Name = "BtnConvertSaveRamToStatesOutputPathBrowse";
+            this.BtnConvertSaveRamToStatesOutputPathBrowse.Size = new System.Drawing.Size(75, 23);
+            this.BtnConvertSaveRamToStatesOutputPathBrowse.TabIndex = 21;
+            this.BtnConvertSaveRamToStatesOutputPathBrowse.Text = "...";
+            this.BtnConvertSaveRamToStatesOutputPathBrowse.UseVisualStyleBackColor = true;
+            this.BtnConvertSaveRamToStatesOutputPathBrowse.Click += new System.EventHandler(this.BtnConvertSaveRamToStatesOutputPathBrowse_Click);
+            // 
+            // TbxConvertSaveRamToStatesOutputPath
+            // 
+            this.TbxConvertSaveRamToStatesOutputPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxConvertSaveRamToStatesOutputPath.Location = new System.Drawing.Point(147, 253);
+            this.TbxConvertSaveRamToStatesOutputPath.Name = "TbxConvertSaveRamToStatesOutputPath";
+            this.TbxConvertSaveRamToStatesOutputPath.Size = new System.Drawing.Size(413, 20);
+            this.TbxConvertSaveRamToStatesOutputPath.TabIndex = 20;
+            // 
+            // BtnConvertSaveRamToStatesRefresh
+            // 
+            this.BtnConvertSaveRamToStatesRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConvertSaveRamToStatesRefresh.Location = new System.Drawing.Point(647, 19);
+            this.BtnConvertSaveRamToStatesRefresh.Name = "BtnConvertSaveRamToStatesRefresh";
+            this.BtnConvertSaveRamToStatesRefresh.Size = new System.Drawing.Size(75, 23);
+            this.BtnConvertSaveRamToStatesRefresh.TabIndex = 19;
+            this.BtnConvertSaveRamToStatesRefresh.Text = "Refresh";
+            this.BtnConvertSaveRamToStatesRefresh.UseVisualStyleBackColor = true;
+            this.BtnConvertSaveRamToStatesRefresh.Click += new System.EventHandler(this.BtnConvertSaveRamToStatesRefresh_Click);
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Location = new System.Drawing.Point(13, 24);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(128, 13);
+            this.label56.TabIndex = 18;
+            this.label56.Text = "SaveRAM input directory:";
+            // 
+            // BtnConvertSaveRamToStatesInputPathBrowse
+            // 
+            this.BtnConvertSaveRamToStatesInputPathBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConvertSaveRamToStatesInputPathBrowse.Location = new System.Drawing.Point(566, 19);
+            this.BtnConvertSaveRamToStatesInputPathBrowse.Name = "BtnConvertSaveRamToStatesInputPathBrowse";
+            this.BtnConvertSaveRamToStatesInputPathBrowse.Size = new System.Drawing.Size(75, 23);
+            this.BtnConvertSaveRamToStatesInputPathBrowse.TabIndex = 17;
+            this.BtnConvertSaveRamToStatesInputPathBrowse.Text = "...";
+            this.BtnConvertSaveRamToStatesInputPathBrowse.UseVisualStyleBackColor = true;
+            this.BtnConvertSaveRamToStatesInputPathBrowse.Click += new System.EventHandler(this.BtnConvertSaveRamToStatesInputPathBrowse_Click);
+            // 
+            // TbxConvertSaveRamToStatesInputPath
+            // 
+            this.TbxConvertSaveRamToStatesInputPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxConvertSaveRamToStatesInputPath.Location = new System.Drawing.Point(147, 21);
+            this.TbxConvertSaveRamToStatesInputPath.Name = "TbxConvertSaveRamToStatesInputPath";
+            this.TbxConvertSaveRamToStatesInputPath.Size = new System.Drawing.Size(413, 20);
+            this.TbxConvertSaveRamToStatesInputPath.TabIndex = 16;
+            this.TbxConvertSaveRamToStatesInputPath.TextChanged += new System.EventHandler(this.TbxConvertSaveRamToStatesInputPath_TextChanged);
+            // 
+            // BtnConvertSaveRamToStatesGo
+            // 
+            this.BtnConvertSaveRamToStatesGo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConvertSaveRamToStatesGo.Location = new System.Drawing.Point(647, 251);
+            this.BtnConvertSaveRamToStatesGo.Name = "BtnConvertSaveRamToStatesGo";
+            this.BtnConvertSaveRamToStatesGo.Size = new System.Drawing.Size(75, 23);
+            this.BtnConvertSaveRamToStatesGo.TabIndex = 15;
+            this.BtnConvertSaveRamToStatesGo.Text = "Go";
+            this.BtnConvertSaveRamToStatesGo.UseVisualStyleBackColor = true;
+            this.BtnConvertSaveRamToStatesGo.Click += new System.EventHandler(this.BtnConvertSaveRamToStatesGo_Click);
+            // 
+            // LbxConvertSaveRamToStates
+            // 
+            this.LbxConvertSaveRamToStates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LbxConvertSaveRamToStates.FormattingEnabled = true;
+            this.LbxConvertSaveRamToStates.HorizontalScrollbar = true;
+            this.LbxConvertSaveRamToStates.IntegralHeight = false;
+            this.LbxConvertSaveRamToStates.Location = new System.Drawing.Point(6, 48);
+            this.LbxConvertSaveRamToStates.Name = "LbxConvertSaveRamToStates";
+            this.LbxConvertSaveRamToStates.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.LbxConvertSaveRamToStates.Size = new System.Drawing.Size(716, 197);
+            this.LbxConvertSaveRamToStates.TabIndex = 14;
+            // 
+            // GbxConvertStatesToSaveRam
+            // 
+            this.GbxConvertStatesToSaveRam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GbxConvertStatesToSaveRam.Controls.Add(this.label58);
+            this.GbxConvertStatesToSaveRam.Controls.Add(this.BtnConvertStatesToSaveRamInputPathBrowse);
+            this.GbxConvertStatesToSaveRam.Controls.Add(this.TbxConvertStatesToSaveRamInputPath);
+            this.GbxConvertStatesToSaveRam.Controls.Add(this.BtnConvertStatesToSaveRamRefresh);
+            this.GbxConvertStatesToSaveRam.Controls.Add(this.BtnConvertStatesToSaveRamGo);
+            this.GbxConvertStatesToSaveRam.Controls.Add(this.LbxConvertStatesToSaveRam);
+            this.GbxConvertStatesToSaveRam.Controls.Add(this.label55);
+            this.GbxConvertStatesToSaveRam.Controls.Add(this.BtnConvertStatesToSaveRamOutputPathBrowse);
+            this.GbxConvertStatesToSaveRam.Controls.Add(this.TbxConvertStatesToSaveRamOutputPath);
+            this.GbxConvertStatesToSaveRam.Enabled = false;
+            this.GbxConvertStatesToSaveRam.Location = new System.Drawing.Point(6, 115);
+            this.GbxConvertStatesToSaveRam.Name = "GbxConvertStatesToSaveRam";
+            this.GbxConvertStatesToSaveRam.Size = new System.Drawing.Size(728, 244);
+            this.GbxConvertStatesToSaveRam.TabIndex = 6;
+            this.GbxConvertStatesToSaveRam.TabStop = false;
+            this.GbxConvertStatesToSaveRam.Text = "Convert states to SaveRAM";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.Location = new System.Drawing.Point(11, 24);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(130, 13);
+            this.label58.TabIndex = 21;
+            this.label58.Text = "Save state input directory:";
+            // 
+            // BtnConvertStatesToSaveRamInputPathBrowse
+            // 
+            this.BtnConvertStatesToSaveRamInputPathBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConvertStatesToSaveRamInputPathBrowse.Location = new System.Drawing.Point(566, 19);
+            this.BtnConvertStatesToSaveRamInputPathBrowse.Name = "BtnConvertStatesToSaveRamInputPathBrowse";
+            this.BtnConvertStatesToSaveRamInputPathBrowse.Size = new System.Drawing.Size(75, 23);
+            this.BtnConvertStatesToSaveRamInputPathBrowse.TabIndex = 20;
+            this.BtnConvertStatesToSaveRamInputPathBrowse.Text = "...";
+            this.BtnConvertStatesToSaveRamInputPathBrowse.UseVisualStyleBackColor = true;
+            this.BtnConvertStatesToSaveRamInputPathBrowse.Click += new System.EventHandler(this.BtnConvertStatesToSaveRamInputPathBrowse_Click);
+            // 
+            // TbxConvertStatesToSaveRamInputPath
+            // 
+            this.TbxConvertStatesToSaveRamInputPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxConvertStatesToSaveRamInputPath.Location = new System.Drawing.Point(147, 21);
+            this.TbxConvertStatesToSaveRamInputPath.Name = "TbxConvertStatesToSaveRamInputPath";
+            this.TbxConvertStatesToSaveRamInputPath.Size = new System.Drawing.Size(413, 20);
+            this.TbxConvertStatesToSaveRamInputPath.TabIndex = 19;
+            this.TbxConvertStatesToSaveRamInputPath.TextChanged += new System.EventHandler(this.TbxConvertStatesToSaveRamInputPath_TextChanged);
+            // 
+            // BtnConvertStatesToSaveRamRefresh
+            // 
+            this.BtnConvertStatesToSaveRamRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConvertStatesToSaveRamRefresh.Location = new System.Drawing.Point(647, 19);
+            this.BtnConvertStatesToSaveRamRefresh.Name = "BtnConvertStatesToSaveRamRefresh";
+            this.BtnConvertStatesToSaveRamRefresh.Size = new System.Drawing.Size(75, 23);
+            this.BtnConvertStatesToSaveRamRefresh.TabIndex = 15;
+            this.BtnConvertStatesToSaveRamRefresh.Text = "Refresh";
+            this.BtnConvertStatesToSaveRamRefresh.UseVisualStyleBackColor = true;
+            this.BtnConvertStatesToSaveRamRefresh.Click += new System.EventHandler(this.BtnConvertStatesToSaveRamRefresh_Click);
+            // 
+            // BtnConvertStatesToSaveRamGo
+            // 
+            this.BtnConvertStatesToSaveRamGo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConvertStatesToSaveRamGo.Location = new System.Drawing.Point(647, 215);
+            this.BtnConvertStatesToSaveRamGo.Name = "BtnConvertStatesToSaveRamGo";
+            this.BtnConvertStatesToSaveRamGo.Size = new System.Drawing.Size(75, 23);
+            this.BtnConvertStatesToSaveRamGo.TabIndex = 14;
+            this.BtnConvertStatesToSaveRamGo.Text = "Go";
+            this.BtnConvertStatesToSaveRamGo.UseVisualStyleBackColor = true;
+            this.BtnConvertStatesToSaveRamGo.Click += new System.EventHandler(this.BtnConvertStatesToSaveRamGo_Click);
+            // 
+            // LbxConvertStatesToSaveRam
+            // 
+            this.LbxConvertStatesToSaveRam.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LbxConvertStatesToSaveRam.FormattingEnabled = true;
+            this.LbxConvertStatesToSaveRam.HorizontalScrollbar = true;
+            this.LbxConvertStatesToSaveRam.IntegralHeight = false;
+            this.LbxConvertStatesToSaveRam.Location = new System.Drawing.Point(6, 48);
+            this.LbxConvertStatesToSaveRam.Name = "LbxConvertStatesToSaveRam";
+            this.LbxConvertStatesToSaveRam.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.LbxConvertStatesToSaveRam.Size = new System.Drawing.Size(716, 161);
+            this.LbxConvertStatesToSaveRam.TabIndex = 13;
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Location = new System.Drawing.Point(6, 220);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(135, 13);
+            this.label55.TabIndex = 11;
+            this.label55.Text = "SaveRAM output directory:";
+            // 
+            // BtnConvertStatesToSaveRamOutputPathBrowse
+            // 
+            this.BtnConvertStatesToSaveRamOutputPathBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConvertStatesToSaveRamOutputPathBrowse.Location = new System.Drawing.Point(566, 215);
+            this.BtnConvertStatesToSaveRamOutputPathBrowse.Name = "BtnConvertStatesToSaveRamOutputPathBrowse";
+            this.BtnConvertStatesToSaveRamOutputPathBrowse.Size = new System.Drawing.Size(75, 23);
+            this.BtnConvertStatesToSaveRamOutputPathBrowse.TabIndex = 10;
+            this.BtnConvertStatesToSaveRamOutputPathBrowse.Text = "...";
+            this.BtnConvertStatesToSaveRamOutputPathBrowse.UseVisualStyleBackColor = true;
+            this.BtnConvertStatesToSaveRamOutputPathBrowse.Click += new System.EventHandler(this.BtnConvertStatesToSaveRamOutputPathBrowse_Click);
+            // 
+            // TbxConvertStatesToSaveRamOutputPath
+            // 
+            this.TbxConvertStatesToSaveRamOutputPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxConvertStatesToSaveRamOutputPath.Location = new System.Drawing.Point(147, 217);
+            this.TbxConvertStatesToSaveRamOutputPath.Name = "TbxConvertStatesToSaveRamOutputPath";
+            this.TbxConvertStatesToSaveRamOutputPath.Size = new System.Drawing.Size(413, 20);
+            this.TbxConvertStatesToSaveRamOutputPath.TabIndex = 9;
+            // 
+            // BtnSaveRamImportBrowse
+            // 
+            this.BtnSaveRamImportBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnSaveRamImportBrowse.Enabled = false;
+            this.BtnSaveRamImportBrowse.Location = new System.Drawing.Point(659, 85);
+            this.BtnSaveRamImportBrowse.Name = "BtnSaveRamImportBrowse";
+            this.BtnSaveRamImportBrowse.Size = new System.Drawing.Size(75, 23);
+            this.BtnSaveRamImportBrowse.TabIndex = 5;
+            this.BtnSaveRamImportBrowse.Text = "...";
+            this.BtnSaveRamImportBrowse.UseVisualStyleBackColor = true;
+            this.BtnSaveRamImportBrowse.Click += new System.EventHandler(this.BtnSaveRamImportBrowse_Click);
+            // 
+            // TbxSaveRamImportPath
+            // 
+            this.TbxSaveRamImportPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxSaveRamImportPath.Enabled = false;
+            this.TbxSaveRamImportPath.Location = new System.Drawing.Point(87, 87);
+            this.TbxSaveRamImportPath.Name = "TbxSaveRamImportPath";
+            this.TbxSaveRamImportPath.Size = new System.Drawing.Size(566, 20);
+            this.TbxSaveRamImportPath.TabIndex = 4;
+            // 
+            // BtnSaveRamImport
+            // 
+            this.BtnSaveRamImport.Enabled = false;
+            this.BtnSaveRamImport.Location = new System.Drawing.Point(6, 85);
+            this.BtnSaveRamImport.Name = "BtnSaveRamImport";
+            this.BtnSaveRamImport.Size = new System.Drawing.Size(75, 23);
+            this.BtnSaveRamImport.TabIndex = 3;
+            this.BtnSaveRamImport.Text = "Import";
+            this.BtnSaveRamImport.UseVisualStyleBackColor = true;
+            this.BtnSaveRamImport.Click += new System.EventHandler(this.BtnSaveRamImport_Click);
+            // 
+            // BtnSaveRamExportBrowse
+            // 
+            this.BtnSaveRamExportBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnSaveRamExportBrowse.Location = new System.Drawing.Point(659, 19);
+            this.BtnSaveRamExportBrowse.Name = "BtnSaveRamExportBrowse";
+            this.BtnSaveRamExportBrowse.Size = new System.Drawing.Size(75, 23);
+            this.BtnSaveRamExportBrowse.TabIndex = 2;
+            this.BtnSaveRamExportBrowse.Text = "...";
+            this.BtnSaveRamExportBrowse.UseVisualStyleBackColor = true;
+            this.BtnSaveRamExportBrowse.Click += new System.EventHandler(this.BtnSaveRamExportBrowse_Click);
+            // 
+            // TbxSaveRamExportPath
+            // 
+            this.TbxSaveRamExportPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxSaveRamExportPath.Location = new System.Drawing.Point(87, 21);
+            this.TbxSaveRamExportPath.Name = "TbxSaveRamExportPath";
+            this.TbxSaveRamExportPath.Size = new System.Drawing.Size(566, 20);
+            this.TbxSaveRamExportPath.TabIndex = 1;
+            // 
+            // BtnSaveRamExport
+            // 
+            this.BtnSaveRamExport.Location = new System.Drawing.Point(6, 19);
+            this.BtnSaveRamExport.Name = "BtnSaveRamExport";
+            this.BtnSaveRamExport.Size = new System.Drawing.Size(75, 23);
+            this.BtnSaveRamExport.TabIndex = 0;
+            this.BtnSaveRamExport.Text = "Export";
+            this.BtnSaveRamExport.UseVisualStyleBackColor = true;
+            this.BtnSaveRamExport.Click += new System.EventHandler(this.BtnSaveRamExport_Click);
+            // 
             // CustomMainForm
             // 
             this.ClientSize = new System.Drawing.Size(784, 776);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.TbcMainTabs);
             this.Name = "CustomMainForm";
             this.GbxHarry.ResumeLayout(false);
             this.GbxHarry.PerformLayout();
@@ -3247,7 +3623,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxCamera.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxMapGraphic)).EndInit();
-            this.tabControl1.ResumeLayout(false);
+            this.TbcMainTabs.ResumeLayout(false);
             this.TbpBasics.ResumeLayout(false);
             this.GbxControls.ResumeLayout(false);
             this.GbxControls.PerformLayout();
@@ -3300,8 +3676,15 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
+            this.TbpSave.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxHazardStripes)).EndInit();
+            this.GbxConvertSaveRamToStates.ResumeLayout(false);
+            this.GbxConvertSaveRamToStates.PerformLayout();
+            this.GbxConvertStatesToSaveRam.ResumeLayout(false);
+            this.GbxConvertStatesToSaveRam.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -3332,7 +3715,7 @@ namespace BizHawk.Client.EmuHawk
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 		private Button BtnGrabMapGraphic;
 		private PictureBox PbxMapGraphic;
-		private TabControl tabControl1;
+		private TabControl TbcMainTabs;
 		private TabPage TbpBasics;
 		private TabPage TbpMap;
 		private TabPage TbpModel;
@@ -3523,16 +3906,17 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblSelectedTriggerFiredDetails;
 		private Button BtnFogWorldTintColorSwap;
 		private CheckBox CbxSelectedTriggerDisabled;
-		private TabPage tabPage6;
+		private TabPage TbpSave;
 		private ComboBox CmbSaveButton;
 		private Button BtnOpenSaveMenu;
-		private Button BtnSaveRamSave;
+		private GroupBox groupBox3;
+		private Button BtnSaveRamExport;
 		private GroupBox groupBox4;
-		private Button BtnSaveRamSaveBrowse;
-		private TextBox TbxSaveRamSavePath;
-		private Button BtnSaveRamLoadBrowse;
-		private TextBox TbxSaveRamLoadPath;
-		private Button BtnSaveRamLoad;
+		private Button BtnSaveRamExportBrowse;
+		private TextBox TbxSaveRamExportPath;
+		private Button BtnSaveRamImportBrowse;
+		private TextBox TbxSaveRamImportPath;
+		private Button BtnSaveRamImport;
 		private Label label15;
 		private Label LblSelectedTriggerPoiGeometry;
 		private Label label31;
@@ -3556,5 +3940,27 @@ namespace BizHawk.Client.EmuHawk
 		private NumericUpDown NudOverlayTestBoxSizeX;
 		private ComboBox CmbRenderShape;
 		private Button BtnClearPoisTriggers;
+		private GroupBox GbxConvertSaveRamToStates;
+		private GroupBox GbxConvertStatesToSaveRam;
+		private PictureBox PbxHazardStripes;
+		private CheckBox CbxSaveRamDanger;
+		private Label label55;
+		private Button BtnConvertStatesToSaveRamOutputPathBrowse;
+		private TextBox TbxConvertStatesToSaveRamOutputPath;
+		private Button BtnConvertStatesToSaveRamGo;
+		private ListBox LbxConvertStatesToSaveRam;
+		private Label label56;
+		private Button BtnConvertSaveRamToStatesInputPathBrowse;
+		private TextBox TbxConvertSaveRamToStatesInputPath;
+		private Button BtnConvertSaveRamToStatesGo;
+		private ListBox LbxConvertSaveRamToStates;
+		private Button BtnConvertStatesToSaveRamRefresh;
+		private Button BtnConvertSaveRamToStatesRefresh;
+		private Label label57;
+		private Button BtnConvertSaveRamToStatesOutputPathBrowse;
+		private TextBox TbxConvertSaveRamToStatesOutputPath;
+		private Label label58;
+		private Button BtnConvertStatesToSaveRamInputPathBrowse;
+		private TextBox TbxConvertStatesToSaveRamInputPath;
 	}
 }

@@ -25,6 +25,9 @@
 		public long Mat31_32 { get; set; }
 		public long Mat33 { get; set; }
 
+		public long IndexOfSelectedSaveLoadSlot { get; set; }
+		public long IndexOfSelectedTitleScreenOption { get; set; }
+		public long SaveLoadSlotCount { get; set; }
 		public long IndexOfMostRecentlyActiveString { get; set; }
 
 		public long GteTranslationInputX { get; set; }

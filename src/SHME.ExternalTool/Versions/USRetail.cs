@@ -29,6 +29,10 @@
 				Mat31_32 = 0xC3810,
 				Mat33 = 0xC3814,
 
+				IndexOfSelectedSaveLoadSlot = 0xA97D4,
+				IndexOfSelectedTitleScreenOption = 0xA9A78,
+				SaveLoadSlotCount = 0xBCD28, // Includes "New save". Mirrored at 0xBCD30.
+
 				IndexOfMostRecentlyActiveString = 0xA99AC,
 
 				// From the no$psx docs:

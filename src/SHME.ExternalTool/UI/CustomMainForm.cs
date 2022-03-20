@@ -1,4 +1,6 @@
 ﻿using BizHawk.Client.Common;
+using BizHawk.Emulation.Common;
+using BizHawk.Emulation.Cores.Sony.PSX;
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
@@ -40,6 +42,12 @@ namespace BizHawk.Client.EmuHawk
 
 		[RequiredApi]
 		public IToolApi? Tool { get; set; }
+
+		[RequiredApi]
+		public ISaveStateApi? SaveState { get; set; }
+
+		[OptionalService]
+		public Octoshock? Octoshock { get; set; }
 
 		public const string ToolName = "Silent Hill Map Examiner";
 		public const string ToolDescription = "";
