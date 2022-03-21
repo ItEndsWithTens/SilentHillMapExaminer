@@ -241,7 +241,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (!CbxEnableOverlay.Checked)
 			{
-				Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
+				ClearOverlay();
 			}
 		}
 

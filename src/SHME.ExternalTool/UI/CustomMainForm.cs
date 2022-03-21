@@ -144,8 +144,9 @@ namespace BizHawk.Client.EmuHawk
 
 		public override void UpdateValues(ToolFormUpdateType type)
 		{
-			if (String.IsNullOrEmpty(Game.Name))
+			if (Game.IsNullInstance())
 			{
+				ClearOverlay();
 				return;
 			}
 
@@ -188,6 +189,11 @@ namespace BizHawk.Client.EmuHawk
 				default:
 					break;
 			}
+		}
+
+		private void ClearOverlay()
+		{
+			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
 		}
 
 		private List<(Line line, Color color, bool visible, bool aClipped, bool bClipped)> ScreenSpaceLines { get; } = new List<(Line line, Color color, bool visible, bool aClipped, bool bClipped)>();
