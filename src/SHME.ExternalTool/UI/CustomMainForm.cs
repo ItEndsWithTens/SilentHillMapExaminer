@@ -144,7 +144,7 @@ namespace BizHawk.Client.EmuHawk
 
 		public override void UpdateValues(ToolFormUpdateType type)
 		{
-			if (GI.GetRomName() == "Null")
+			if (String.IsNullOrEmpty(Game.Name))
 			{
 				return;
 			}
