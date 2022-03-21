@@ -1,6 +1,7 @@
 ﻿using BizHawk.Client.Common;
 using BizHawk.Emulation.Common;
 using BizHawk.Emulation.Cores.Sony.PSX;
+using BizHawk.Emulation.Cores.Waterbox;
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,14 @@ namespace BizHawk.Client.EmuHawk
 
 		[OptionalService]
 		public Octoshock? Octoshock { get; set; }
+
+		// The "Nymashock" type doesn't exist in BizHawk < 2.8, so sticking with
+		// its WaterboxCore base type allows this service without crashing. If
+		// the need should ever arise for anything specific to the Nymashock
+		// type, it'll be easy enough to drop support for old BizHawk versions,
+		// but there's no reason to force that before it's necessary.
+		[OptionalService]
+		public WaterboxCore? Nymashock { get; set; }
 
 		public const string ToolName = "Silent Hill Map Examiner";
 		public const string ToolDescription = "";
@@ -90,7 +99,7 @@ namespace BizHawk.Client.EmuHawk
 
 			Emu.StateLoaded += Emu_StateLoaded;
 
-			if (Emu.BufferWidth() == 350)
+			if (Emu.BufferWidth() == 350 || Emu.BufferWidth() == 320)
 			{
 				Viewport.Width = 320;
 				Viewport.TopLeft = new Point(17, Viewport.Top);

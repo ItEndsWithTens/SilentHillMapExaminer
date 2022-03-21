@@ -69,7 +69,7 @@ namespace BizHawk.Client.EmuHawk
 
 			// Select the "Load" menu option and press X.
 			Mem.WriteByte(Rom.Addresses.MainRam.IndexOfSelectedTitleScreenOption, 0);
-			HoldButtonsAndDoFrameAdvance(15, "P1 Cross");
+			HoldButtonsAndDoFrameAdvance(15, Octoshock != null ? "P1 Cross" : "P1 X");
 
 			// Wait for the load screen transition to complete.
 			for (int i = 0; i < 350; i++)
@@ -80,7 +80,7 @@ namespace BizHawk.Client.EmuHawk
 			// Select the newest save slot and load.
 			uint slotCount = Mem.ReadU32(Rom.Addresses.MainRam.SaveLoadSlotCount);
 			Mem.WriteByte(Rom.Addresses.MainRam.IndexOfSelectedSaveLoadSlot, slotCount - 1);
-			HoldButtonsAndDoFrameAdvance(15, "P1 Cross");
+			HoldButtonsAndDoFrameAdvance(15, Octoshock != null ? "P1 Cross" : "P1 X");
 
 			// Wait until the load is complete.
 			for (int i = 0; i < 1000; i++)
@@ -135,7 +135,7 @@ namespace BizHawk.Client.EmuHawk
 			Mem.WriteByte(Rom.Addresses.MainRam.IndexOfSelectedSaveLoadSlot, slotCount - 1);
 
 			// Create new in-game save.
-			HoldButtonsAndDoFrameAdvance(15, "P1 Cross");
+			HoldButtonsAndDoFrameAdvance(15, Octoshock != null ? "P1 Cross" : "P1 X");
 
 			// Wait for save to complete.
 			for (int i = 0; i < 200; i++)
@@ -165,6 +165,10 @@ namespace BizHawk.Client.EmuHawk
 			if (Octoshock != null)
 			{
 				sram = Octoshock.CloneSaveRam();
+			}
+			else if (Nymashock != null)
+			{
+				sram = Nymashock.CloneSaveRam();
 			}
 
 			using var fs = new FileStream(file, FileMode.Create, FileAccess.Write);
@@ -204,9 +208,9 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Octoshock.StoreSaveRam(sram);
 			}
-			else
+			else if (Nymashock != null)
 			{
-				// Nymashock, if >= 2.8.
+				Nymashock.StoreSaveRam(sram);
 			}
 
 			if (!wasPaused)
