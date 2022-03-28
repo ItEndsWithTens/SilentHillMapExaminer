@@ -1,0 +1,51 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "buildExternalTool",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "build",
+                "src/SHME.ExternalTool/SHME.ExternalTool.csproj",
+                // Ask dotnet build to generate full paths for file names.
+                "/property:GenerateFullPaths=true",
+                // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "/consoleloggerparameters:NoSummary"
+
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "cleanExternalTool",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "clean",
+                "src/SHME.ExternalTool/SHME.ExternalTool.csproj"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "rebuildExternalTool",
+            "dependsOn": ["cleanExternalTool", "buildExternalTool"],
+            "dependsOrder": "sequence",
+            "group": "build"
+        },
+        {
+            "label": "setEmuHawkMonoEnv",
+            "type": "shell",
+            "command": "${workspaceFolder}/scripts/set-emuhawkmono-env.sh"
+        }
+    ]
+}

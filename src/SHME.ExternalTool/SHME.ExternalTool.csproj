@@ -21,6 +21,7 @@
 
   <Target Name="InstallInEmulator" AfterTargets="PostBuildEvent">
     <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(BizHawkOutputDir)\ExternalTools" />
+    <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).pdb" DestinationFolder="$(BizHawkOutputDir)\ExternalTools" />
   </Target>
 
   <PropertyGroup>
