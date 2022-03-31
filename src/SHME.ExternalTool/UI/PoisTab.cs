@@ -104,9 +104,7 @@ namespace BizHawk.Client.EmuHawk
 
 			var t = (Trigger)LbxTriggers.SelectedItem;
 
-			long address = t.Address + Rom.Addresses.MainRam.BaseAddress;
-
-			string body = Mem.HashRegion(address, 12);
+			string body = Mem.HashRegion(t.Address, 12);
 
 			long ofs = Rom.Addresses.MainRam.SaveData;
 			int group = Mem.ReadS32(ofs + (t.SomeIndex * 4) + 0x168);
@@ -124,7 +122,7 @@ namespace BizHawk.Client.EmuHawk
 
 			if (body != _previousTriggerBodyHash || fired != _previousTriggerFired)
 			{
-				List<byte> bytes = Mem.ReadByteRange(address, 12);
+				List<byte> bytes = Mem.ReadByteRange(t.Address, 12);
 
 				var updated = new Trigger(t.Address, bytes);
 
@@ -399,16 +397,15 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (LbxTriggers.SelectedItem is Trigger t)
 			{
-				long address = t.Address + Rom.Addresses.MainRam.BaseAddress;
-				uint existing = Mem.ReadByte(address);
+				uint existing = Mem.ReadByte(t.Address);
 
 				if (CbxSelectedTriggerDisabled.Checked)
 				{
-					Mem.WriteByte(address, (byte)(existing | 0b10000000));
+					Mem.WriteByte(t.Address, (byte)(existing | 0b10000000));
 				}
 				else
 				{
-					Mem.WriteByte(address, (byte)(existing & 0b01111111));
+					Mem.WriteByte(t.Address, (byte)(existing & 0b01111111));
 				}
 			}
 		}

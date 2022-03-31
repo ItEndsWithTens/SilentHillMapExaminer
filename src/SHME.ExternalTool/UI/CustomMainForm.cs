@@ -97,6 +97,8 @@ namespace BizHawk.Client.EmuHawk
 		{
 			base.Restart();
 
+			Mem.UseMemoryDomain("MainRAM");
+
 			Emu.StateLoaded += Emu_StateLoaded;
 
 			if (Emu.BufferWidth() == 350 || Emu.BufferWidth() == 320)
