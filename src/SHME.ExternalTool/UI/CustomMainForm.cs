@@ -77,9 +77,7 @@ namespace BizHawk.Client.EmuHawk
 
 			CmbRenderMode.SelectedIndex = 0;
 
-			// TODO: Switch this to 0 once trigger volume shapes have been fully
-			// deciphered. Right now they're iffy at best.
-			CmbRenderShape.SelectedIndex = 1;
+			CmbRenderShape.SelectedIndex = 0;
 
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
 
@@ -308,7 +306,7 @@ namespace BizHawk.Client.EmuHawk
 
 				ScreenSpaceLines.Add((
 					clipped,
-					clipped.Tint != null ? (Color)clipped.Tint : clipped.A.Color,
+					clipped.Tint ?? clipped.A.Color,
 					visible,
 					aClipped,
 					bClipped));

@@ -38,11 +38,14 @@ namespace SHME.ExternalTool
 			}
 			else
 			{
-				// FIXME: Not quite right. Close, but there's more going on here,
-				// namely how to distinguish whether these are really X and Z. Some
-				// seem to be Z and X instead, so maybe there's a yaw somewhere?
-				x = QToFloat((int)((geo >> 5) & 0xFFFFF));
-				z = QToFloat((int)((geo >> 13) & 0x1FFFF));
+				uint rawX = (geo & 0b00000000_11111111_00000000_00000000) >> 16;
+				uint rawZ = (geo & 0b11111111_00000000_00000000_00000000) >> 24;
+
+				float radiusX = QToFloat((int)rawX * 1024);
+				float radiusZ = QToFloat((int)rawZ * 1024);
+
+				x = radiusX * 2.0f;
+				z = radiusZ * 2.0f;
 			}
 
 			return (yaw, x, z);
