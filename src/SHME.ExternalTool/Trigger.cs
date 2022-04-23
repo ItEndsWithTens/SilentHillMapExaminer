@@ -20,27 +20,30 @@ namespace SHME.ExternalTool
 		/// <summary>
 		/// ?
 		/// </summary>
-		Unknown0 = 0x00,
+		Unknown0 = 0x0,
 
 		/// <summary>
-		/// Activated by touch.
+		/// Activated by touching an axis-aligned bounding box, defined by two
+		/// radii and with its origin in the center.
 		/// </summary>
-		Touch0 = 0x01, // Proximity Z (maybe).
+		TouchAabb = 0x1,
 
 		/// <summary>
-		/// Activated by touch.
+		/// Activated by pressing the action button.
 		/// </summary>
-		Touch1 = 0x02, // Radius/close proximity (maybe).
+		Button0 = 0x2,
 
 		/// <summary>
-		/// ?
+		/// Activated by pressing the action button.
 		/// </summary>
-		Unknown1 = 0x14,
+		Button1 = 0x3,
 
 		/// <summary>
-		/// Activated with the action button, e.g. doors, flavor text.
+		/// Activated by touching an oriented bounding box, defined by a width
+		/// and yaw, always 4 units deep and with its origin flush with the back
+		/// face.
 		/// </summary>
-		Button = 0x23,
+		TouchObb = 0x4,
 
 		/// <summary>
 		/// Marks the end of the trigger array in game memory.
@@ -67,10 +70,22 @@ namespace SHME.ExternalTool
 		public byte Thing1 { get; }
 		public byte FiredBitShift { get; }
 		public short SomeIndex { get; }
+
 		/// <summary>
-		/// How this trigger gets activated.
+		/// ?
 		/// </summary>
+		/// <remarks>
+		/// The high nibble of the byte that produces Style.
+		/// </remarks>
+		public byte Thing2 { get; }
+		/// <summary>
+		/// How this trigger is activated.
+		/// </summary>
+		/// <remarks>
+		/// The low nibble of its respective byte.
+		/// </remarks>
 		public TriggerStyle Style { get; }
+
 		public byte PoiIndex { get; }
 		public byte Thing3 { get; } // Could be string index when door is locked?
 		public byte Thing4 { get; }
@@ -116,7 +131,9 @@ namespace SHME.ExternalTool
 			FiredBitShift = (byte)raw0;
 			SomeIndex = (short)raw1;
 
-			Style = (TriggerStyle)bytes[4];
+			Thing2 = (byte)((bytes[4] & 0b11110000) >> 4);
+			Style = (TriggerStyle)(bytes[4] & 0b00001111);
+
 			PoiIndex = bytes[5];
 			Thing3 = bytes[6];
 			Thing4 = bytes[7];

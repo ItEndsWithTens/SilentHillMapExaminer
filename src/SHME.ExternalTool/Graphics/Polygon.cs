@@ -77,7 +77,7 @@ namespace SHME.ExternalTool
 			Color = p.Color;
 		}
 
-		public static Polygon Rotate(Polygon polygon, float pitch, float yaw, float roll)
+		public static Polygon Rotate(Polygon polygon, float pitch, float yaw, float roll, Vector3 origin)
 		{
 			if (pitch < 0.0f)
 			{
@@ -88,9 +88,9 @@ namespace SHME.ExternalTool
 				pitch = 360.0f - pitch;
 			}
 
-			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(pitch));
-			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(yaw));
-			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(roll));
+			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(pitch), origin);
+			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(yaw), origin);
+			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(roll), origin);
 
 			Matrix4x4 rotation = rotZ * rotY * rotX;
 

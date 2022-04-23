@@ -404,10 +404,14 @@ namespace BizHawk.Client.EmuHawk
 					p.Color = Color.White;
 				}
 
+				float tolerance = 0.001f;
+
 				// Positive X is always pointing east.
 				if (!RdoOverlayAxisColorsOff.Checked)
 				{
-					IEnumerable<Polygon>? easts = r.Polygons.Where((p) => p.Normal == east);
+					IEnumerable<Polygon>? easts = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(east, tolerance));
+
 					foreach (Polygon p in easts)
 					{
 						p.Color = Color.Red;
@@ -417,13 +421,17 @@ namespace BizHawk.Client.EmuHawk
 				// Positive Y down, positive Z north
 				if (RdoOverlayAxisColorsGame.Checked)
 				{
-					IEnumerable<Polygon>? downs = r.Polygons.Where((p) => p.Normal == down);
+					IEnumerable<Polygon>? downs = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(down, tolerance));
+
 					foreach (Polygon p in downs)
 					{
 						p.Color = Color.Lime;
 					}
 
-					IEnumerable<Polygon>? norths = r.Polygons.Where((p) => p.Normal == north);
+					IEnumerable<Polygon>? norths = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(north, tolerance));
+
 					foreach (Polygon p in norths)
 					{
 						p.Color = Color.Blue;
@@ -432,13 +440,17 @@ namespace BizHawk.Client.EmuHawk
 				// Positive Y up, positive Z south
 				else if (RdoOverlayAxisColorsOverlay.Checked)
 				{
-					IEnumerable<Polygon>? ups = r.Polygons.Where((p) => p.Normal == up);
+					IEnumerable<Polygon>? ups = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(up, tolerance));
+
 					foreach (Polygon p in ups)
 					{
 						p.Color = Color.Lime;
 					}
 
-					IEnumerable<Polygon>? souths = r.Polygons.Where((p) => p.Normal == south);
+					IEnumerable<Polygon>? souths = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(south, tolerance));
+
 					foreach (Polygon p in souths)
 					{
 						p.Color = Color.Blue;

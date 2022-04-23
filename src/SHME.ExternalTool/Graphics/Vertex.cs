@@ -8,7 +8,7 @@ namespace SHME.ExternalTool
 {
 	public static class VertexExtensions
 	{
-		public static Vector3 Rotate(this Vector3 vector, float pitch, float yaw, float roll)
+		public static Vector3 Rotate(this Vector3 vector, float pitch, float yaw, float roll, Vector3 origin)
 		{
 			if (pitch < 0.0f)
 			{
@@ -21,9 +21,9 @@ namespace SHME.ExternalTool
 
 			// Assumes that objects are pointing toward +X; thereby pitch
 			// represents rotation around Z, yaw around Y, and roll around X.
-			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(pitch));
-			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(yaw));
-			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(roll));
+			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(pitch), origin);
+			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(yaw), origin);
+			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(roll), origin);
 
 			Matrix4x4 rotation = rotZ * rotY * rotX;
 
@@ -129,12 +129,12 @@ namespace SHME.ExternalTool
 			TexCoords = texCoords;
 		}
 
-		public static Vertex Rotate(Vertex vertex, float pitch, float yaw, float roll)
+		public static Vertex Rotate(Vertex vertex, float pitch, float yaw, float roll, Vector3 origin)
 		{
 			return new Vertex(vertex)
 			{
-				Position = vertex.Position.Rotate(pitch, yaw, roll),
-				Normal = vertex.Normal.Rotate(pitch, yaw, roll)
+				Position = vertex.Position.Rotate(pitch, yaw, roll, origin),
+				Normal = vertex.Normal.Rotate(pitch, yaw, roll, origin)
 			};
 		}
 

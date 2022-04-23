@@ -22,33 +22,42 @@ namespace SHME.ExternalTool
 
 		public float Z { get; }
 
-		public static (float?, float?, float?) DecodeGeometry(TriggerStyle s, PointOfInterest p)
+		public static (float?, float?, float?, float?) DecodeGeometry(TriggerStyle s, PointOfInterest p)
 		{
 			float? yaw = null;
 			float? x = null;
 			float? z = null;
+			float? width = null;
 
 			uint geo = p.Geometry;
 
-			if (s == TriggerStyle.Button)
+			if (s == TriggerStyle.Button0 || s == TriggerStyle.Button1)
 			{
 				uint raw = (geo & 0b00000000_11111111_11110000_00000000) >> 12;
 
 				yaw = GameUnitsToDegrees(raw);
 			}
-			else
+			else if (s == TriggerStyle.TouchAabb)
 			{
-				uint rawX = (geo & 0b00000000_11111111_00000000_00000000) >> 16;
-				uint rawZ = (geo & 0b11111111_00000000_00000000_00000000) >> 24;
+				uint rawA = (geo & 0b00000000_11111111_00000000_00000000) >> 16;
+				uint rawB = (geo & 0b11111111_00000000_00000000_00000000) >> 24;
 
-				float radiusX = QToFloat((int)rawX * 1024);
-				float radiusZ = QToFloat((int)rawZ * 1024);
+				float radiusX = QToFloat((int)rawA * 1024);
+				float radiusZ = QToFloat((int)rawB * 1024);
 
 				x = radiusX * 2.0f;
 				z = radiusZ * 2.0f;
 			}
+			else if (s == TriggerStyle.TouchObb)
+			{
+				uint rawA = (geo & 0b00000000_11111111_00000000_00000000) >> 16;
+				uint rawB = (geo & 0b11111111_00000000_00000000_00000000) >> 24;
 
-			return (yaw, x, z);
+				yaw = GameUnitsToDegrees((rawA << 0x14) >> 0x10);
+				width = QToFloat((int)(rawB << 9));
+			}
+
+			return (yaw, x, z, width);
 		}
 
 		public PointOfInterest(long address, List<byte> bytes) :

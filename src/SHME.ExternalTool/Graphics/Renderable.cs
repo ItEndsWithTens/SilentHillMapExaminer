@@ -193,29 +193,29 @@ namespace SHME.ExternalTool
 			Vertices = new List<Vertex>(r.Vertices);
 		}
 
-		protected void Rotate(Vector3 rotation)
+		protected void Rotate(Vector3 rotation, Vector3 origin)
 		{
-			Rotate(rotation.Y, rotation.Z, rotation.X);
+			Rotate(rotation.Y, rotation.Z, rotation.X, origin);
 		}
-		protected void Rotate(float pitch, float yaw, float roll)
+		protected void Rotate(float pitch, float yaw, float roll, Vector3 origin)
 		{
 			if (Transformability.HasFlag(Transformability.Rotate))
 			{
 				for (int i = 0; i < Vertices.Count; i++)
 				{
 					Vertex world = Vertices[i].ModelToWorld(ModelMatrix);
-					var rotated = Vertex.Rotate(world, pitch, yaw, roll);
+					var rotated = Vertex.Rotate(world, pitch, yaw, roll, origin);
 					Vertices[i] = rotated.WorldToModel(ModelMatrix);
 				}
 
 				for (int i = 0; i < Polygons.Count; i++)
 				{
-					Polygons[i] = Polygon.Rotate(Polygons[i], pitch, yaw, roll);
+					Polygons[i] = Polygon.Rotate(Polygons[i], pitch, yaw, roll, origin);
 				}
 			}
 			else if (Transformability.HasFlag(Transformability.Translate))
 			{
-				Position = Position.Rotate(pitch, yaw, roll);
+				Position = Position.Rotate(pitch, yaw, roll, origin);
 			}
 
 			UpdateBounds();
@@ -268,7 +268,7 @@ namespace SHME.ExternalTool
 			}
 		}
 
-		public void Transform(Vector3 translation, Vector3 rotation, Vector3 scale)
+		public void Transform(Vector3 translation, Vector3 rotation, Vector3 scale, Vector3 origin)
 		{
 			if (Transformability.HasFlag(Transformability.Scale) && scale != null)
 			{
@@ -277,7 +277,7 @@ namespace SHME.ExternalTool
 
 			if (rotation != null)
 			{
-				Rotate(rotation);
+				Rotate(rotation, origin);
 			}
 
 			if (Transformability.HasFlag(Transformability.Translate) && translation != null)

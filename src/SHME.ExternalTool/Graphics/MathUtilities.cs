@@ -13,18 +13,19 @@ namespace SHME.ExternalTool
 				Single.IsNaN(vector.Y) ||
 				Single.IsNaN(vector.Z);
 		}
-	}
 
-	public static class MathUtilities
-	{
-		public static bool ApproximatelyEquivalent(Vector3 a, Vector3 b, float tolerance)
+		public static bool ApproximatelyEquivalent(this Vector3 a, Vector3 b, float tolerance)
 		{
 			return
-				ApproximatelyEquivalent(a.X, b.X, tolerance) &&
-				ApproximatelyEquivalent(a.Y, b.Y, tolerance) &&
-				ApproximatelyEquivalent(a.Z, b.Z, tolerance);
+				a.X.ApproximatelyEquivalent(b.X, tolerance) &&
+				a.Y.ApproximatelyEquivalent(b.Y, tolerance) &&
+				a.Z.ApproximatelyEquivalent(b.Z, tolerance);
 		}
-		public static bool ApproximatelyEquivalent(double a, double b, double tolerance)
+		public static bool ApproximatelyEquivalent(this float a, float b, float tolerance)
+		{
+			return ((double)a).ApproximatelyEquivalent((double)b, tolerance);
+		}
+		public static bool ApproximatelyEquivalent(this double a, double b, double tolerance)
 		{
 			if (Math.Abs(b - a) <= tolerance)
 			{
@@ -35,7 +36,10 @@ namespace SHME.ExternalTool
 				return false;
 			}
 		}
+	}
 
+	public static class MathUtilities
+	{
 		/// <summary>
 		/// Get all unique combinations of a set.
 		/// </summary>
@@ -211,7 +215,7 @@ namespace SHME.ExternalTool
 			double result = Double.NaN;
 
 			double angle = SignedAngleBetweenVectors(a, b, normal);
-			if (angle > 0.0 || ApproximatelyEquivalent(angle, -180.0, 0.001))
+			if (angle > 0.0 || angle.ApproximatelyEquivalent(-180.0, 0.001))
 			{
 				result = angle;
 			}

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -156,6 +157,7 @@ namespace BizHawk.Client.EmuHawk
 			LblSelectedTriggerFired.Text = "";
 			LblSelectedTriggerFiredDetails.Text = $"(Group address 0x??, bit 0x??)";
 			LblSelectedTriggerSomeIndex.Text = "0x";
+			LblSelectedTriggerThing2.Text = "0x";
 			LblSelectedTriggerStyle.Text = "0x";
 			LblSelectedTriggerPoiIndex.Text = "";
 			LblSelectedTriggerThing3.Text = "0x";
@@ -209,12 +211,16 @@ namespace BizHawk.Client.EmuHawk
 		{
 			PointOfInterest p = Pois.ElementAt(t.PoiIndex).Key;
 
-			(float? yaw, float? x, float? z) = PointOfInterest.DecodeGeometry(t.Style, p);
+			(float? yaw, float? x, float? z, float? width) = PointOfInterest.DecodeGeometry(t.Style, p);
 
 			string geometry = "";
 			if (x != null && z != null)
 			{
 				geometry = $"X size: {x} Z size: {z}";
+			}
+			else if (yaw != null && width != null)
+			{
+				geometry = $"Width: {width} Yaw: {yaw}";
 			}
 			else if (yaw != null)
 			{
@@ -357,29 +363,51 @@ namespace BizHawk.Client.EmuHawk
 
 			foreach (Trigger trigger in Triggers)
 			{
-				if (trigger.Style != TriggerStyle.Button)
+				if (trigger.Style != TriggerStyle.Button0 && trigger.Style != TriggerStyle.Button1)
 				{
 					KeyValuePair<PointOfInterest, Renderable?> pair = Pois.ElementAt(trigger.PoiIndex);
 					PointOfInterest p = pair.Key;
 
+					float? yaw = null;
 					float? x = null;
 					float? z = null;
+					float? width = null;
 					if (CmbRenderShape.SelectedIndex == 0)
 					{
-						(_, x, z) = PointOfInterest.DecodeGeometry(trigger.Style, p);
+						(yaw, x, z, width) = PointOfInterest.DecodeGeometry(trigger.Style, p);
 					}
 
 					Renderable r;
 					if (x != null && z != null)
 					{
 						r = new BoxGenerator((float)x, (float)z, 1.0f, Color.Orange).Generate().ToWorld();
+						r.Position = pair.Value.Position;
+					}
+					else if (yaw != null && width != null)
+					{
+						float depth = 4.0f;
+						float yawConverted = -(float)yaw;
+
+						r = new BoxGenerator((float)width, depth, 1.0f, Color.Orange).Generate().ToWorld();
+						r.Transformability |= Transformability.Rotate;
+						r.Transform(
+							Vector3.Zero,
+							new Vector3(0.0f, 0.0f, yawConverted),
+							Vector3.Zero,
+							r.Position);
+
+						// OBB triggers' volumes aren't centered on their
+						// positions, instead extending away 4 units in the
+						// direction of their yaw.
+						Vector3 point = new Vector3(0.0f, 0.0f, 1.0f) * (depth / 2.0f);
+						point = point.Rotate(0.0f, yawConverted, 0.0f, Vector3.Zero);
+						r.Position = pair.Value.Position - point;
 					}
 					else
 					{
 						r = new BoxGenerator(1.0f, Color.White).Generate().ToWorld();
+						r.Position = pair.Value.Position;
 					}
-
-					r.Position = pair.Value.Position;
 
 					int index = Boxes.IndexOf(pair.Value);
 					Boxes.RemoveAt(index);
@@ -466,13 +494,14 @@ namespace BizHawk.Client.EmuHawk
 				CbxSelectedTriggerDisabled.Enabled = true;
 				LblSelectedTriggerThing1.Text = $"0x{t.Thing1:X2}";
 				LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex:X}";
+				LblSelectedTriggerThing2.Text = $"0x{t.Thing2:X1}";
 				LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex}";
 				LblSelectedTriggerThing3.Text = $"0x{t.Thing3:X2}";
 				LblSelectedTriggerThing4.Text = $"0x{t.Thing4:X2}";
 				LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X8}";
 
 				string? style = Enum.GetName(typeof(TriggerStyle), t.Style);
-				LblSelectedTriggerStyle.Text = $"{style ?? $"0x{t.Style}"}";
+				LblSelectedTriggerStyle.Text = $"{style ?? $"0x{t.Style:X}"}";
 
 				long ofs = Rom.Addresses.MainRam.SaveData;
 				long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;

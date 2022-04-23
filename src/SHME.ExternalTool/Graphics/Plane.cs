@@ -59,7 +59,7 @@ namespace SHME.ExternalTool
 			float denominator = Vector3.Dot(a.Normal, Vector3.Cross(b.Normal, c.Normal));
 
 			// Planes do not intersect.
-			if (MathUtilities.ApproximatelyEquivalent(denominator, 0.0f, 0.0001f))
+			if (denominator.ApproximatelyEquivalent(0.0f, 0.0001f))
 			{
 				return new Vector3(Single.NaN);
 			}
