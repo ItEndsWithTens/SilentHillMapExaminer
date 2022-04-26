@@ -12,27 +12,10 @@
 		public long VramCroppedWidth { get; set; }
 		public long VramCroppedHeight { get; set; }
 
-		public long ACameraThingFirst { get; set; }
-		public long CameraMatrixTranslationX { get; set; }
-		public long CameraMatrixTranslationY { get; set; }
-		public long CameraMatrixTranslationZ { get; set; }
-		public long Blah1 { get; set; }
-		public long ACameraThingLast { get; set; }
-
-		public long Mat11_12 { get; set; }
-		public long Mat13_21 { get; set; }
-		public long Mat22_23 { get; set; }
-		public long Mat31_32 { get; set; }
-		public long Mat33 { get; set; }
-
 		public long IndexOfSelectedSaveLoadSlot { get; set; }
 		public long IndexOfSelectedTitleScreenOption { get; set; }
 		public long SaveLoadSlotCount { get; set; }
 		public long IndexOfMostRecentlyActiveString { get; set; }
-
-		public long GteTranslationInputX { get; set; }
-		public long GteTranslationInputY { get; set; }
-		public long GteTranslationInputZ { get; set; }
 
 		public long IsCameraUnlocked { get; set; }
 

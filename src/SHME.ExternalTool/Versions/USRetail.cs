@@ -15,36 +15,11 @@
 			{
 				BaseAddress = 0x80000000,
 
-				ACameraThingFirst = 0xC3804,
-				CameraMatrixTranslationX = 0xC3850,
-				CameraMatrixTranslationY = 0xC3854,
-				CameraMatrixTranslationZ = 0xC3858,
-				Blah1 = 0xC3888, // As the camera's ideal yaw reaches 0, this reaches 1.
-				ACameraThingLast = 0xC3898,
-
-				// Just a quick test, assuming this actually is a matrix.
-				Mat11_12 = 0xC3804,
-				Mat13_21 = 0xC3808,
-				Mat22_23 = 0xC380C,
-				Mat31_32 = 0xC3810,
-				Mat33 = 0xC3814,
-
 				IndexOfSelectedSaveLoadSlot = 0xA97D4,
 				IndexOfSelectedTitleScreenOption = 0xA9A78,
 				SaveLoadSlotCount = 0xBCD28, // Includes "New save". Mirrored at 0xBCD30.
 
 				IndexOfMostRecentlyActiveString = 0xA99AC,
-
-				// From the no$psx docs:
-				//
-				// cop2r37 (cnt5) - TRX - Translation vector X (R/W?)
-				// cop2r38 (cnt6) - TRY - Translation vector Y (R/W?)
-				// cop2r39 (cnt7) - TRZ - Translation vector Z (R/W?)
-				// Each element is 32bit (1bit sign, 31bit integer).
-				// Used only for MVMVA, RTPS, RTPT commands.
-				GteTranslationInputX = 0xB0320,
-				GteTranslationInputY = 0xB0324,
-				GteTranslationInputZ = 0xB0328,
 
 				// Number of saves in current run; changing the latter
 				// address actually changes what the save management

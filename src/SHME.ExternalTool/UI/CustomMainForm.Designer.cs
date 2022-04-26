@@ -135,6 +135,8 @@ namespace BizHawk.Client.EmuHawk
             this.CmbRenderShape = new System.Windows.Forms.ComboBox();
             this.CbxTriggersAutoUpdate = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.LblSelectedTriggerThing2 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.LblSelectedTriggerPoiGeometry = new System.Windows.Forms.Label();
             this.CbxSelectedTriggerDisabled = new System.Windows.Forms.CheckBox();
@@ -206,27 +208,6 @@ namespace BizHawk.Client.EmuHawk
             this.BtnModelSetPosition = new System.Windows.Forms.Button();
             this.LblModelX = new System.Windows.Forms.Label();
             this.LblModelY = new System.Windows.Forms.Label();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.LblCalculatedRoll = new System.Windows.Forms.Label();
-            this.LblCalculatedYaw = new System.Windows.Forms.Label();
-            this.LblCalculatedPitch = new System.Windows.Forms.Label();
-            this.LblCalculated = new System.Windows.Forms.Label();
-            this.LblMatrix33 = new System.Windows.Forms.Label();
-            this.LblMatrix32 = new System.Windows.Forms.Label();
-            this.LblMatrix31 = new System.Windows.Forms.Label();
-            this.LblMatrix23 = new System.Windows.Forms.Label();
-            this.LblMatrix22 = new System.Windows.Forms.Label();
-            this.LblMatrix21 = new System.Windows.Forms.Label();
-            this.LblMatrix13 = new System.Windows.Forms.Label();
-            this.LblMatrix12 = new System.Windows.Forms.Label();
-            this.LblMatrix11 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.LblGteZ = new System.Windows.Forms.Label();
-            this.LblGteY = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.LblGteX = new System.Windows.Forms.Label();
-            this.LblRegisterTest = new System.Windows.Forms.Label();
-            this.TbpInfo = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.BtnFogWorldTintColorSwap = new System.Windows.Forms.Button();
             this.BtnCustomWorldTintCurrent = new System.Windows.Forms.Button();
@@ -288,8 +269,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSaveRamExportPath = new System.Windows.Forms.TextBox();
             this.BtnSaveRamExport = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.LblSelectedTriggerThing2 = new System.Windows.Forms.Label();
-            this.label60 = new System.Windows.Forms.Label();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -327,7 +306,6 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudModelZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudModelY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudModelX)).BeginInit();
-            this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintG)).BeginInit();
@@ -797,8 +775,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbcMainTabs.Controls.Add(this.tabPage2);
             this.TbcMainTabs.Controls.Add(this.TbpMap);
             this.TbcMainTabs.Controls.Add(this.TbpModel);
-            this.TbcMainTabs.Controls.Add(this.tabPage1);
-            this.TbcMainTabs.Controls.Add(this.TbpInfo);
             this.TbcMainTabs.Controls.Add(this.tabPage3);
             this.TbcMainTabs.Controls.Add(this.tabPage4);
             this.TbcMainTabs.Controls.Add(this.TbpSave);
@@ -1918,6 +1894,24 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Selected trigger";
             // 
+            // LblSelectedTriggerThing2
+            // 
+            this.LblSelectedTriggerThing2.AutoSize = true;
+            this.LblSelectedTriggerThing2.Location = new System.Drawing.Point(75, 219);
+            this.LblSelectedTriggerThing2.Name = "LblSelectedTriggerThing2";
+            this.LblSelectedTriggerThing2.Size = new System.Drawing.Size(48, 13);
+            this.LblSelectedTriggerThing2.TabIndex = 94;
+            this.LblSelectedTriggerThing2.Text = "<thing2>";
+            // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Location = new System.Drawing.Point(6, 219);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(43, 13);
+            this.label60.TabIndex = 95;
+            this.label60.Text = "Thing2:";
+            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -2686,216 +2680,6 @@ namespace BizHawk.Client.EmuHawk
             this.LblModelY.TabIndex = 25;
             this.LblModelY.Text = "<y>";
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.LblCalculatedRoll);
-            this.tabPage1.Controls.Add(this.LblCalculatedYaw);
-            this.tabPage1.Controls.Add(this.LblCalculatedPitch);
-            this.tabPage1.Controls.Add(this.LblCalculated);
-            this.tabPage1.Controls.Add(this.LblMatrix33);
-            this.tabPage1.Controls.Add(this.LblMatrix32);
-            this.tabPage1.Controls.Add(this.LblMatrix31);
-            this.tabPage1.Controls.Add(this.LblMatrix23);
-            this.tabPage1.Controls.Add(this.LblMatrix22);
-            this.tabPage1.Controls.Add(this.LblMatrix21);
-            this.tabPage1.Controls.Add(this.LblMatrix13);
-            this.tabPage1.Controls.Add(this.LblMatrix12);
-            this.tabPage1.Controls.Add(this.LblMatrix11);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.LblGteZ);
-            this.tabPage1.Controls.Add(this.LblGteY);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.LblGteX);
-            this.tabPage1.Controls.Add(this.LblRegisterTest);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(752, 726);
-            this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "GTE";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // LblCalculatedRoll
-            // 
-            this.LblCalculatedRoll.AutoSize = true;
-            this.LblCalculatedRoll.Location = new System.Drawing.Point(23, 527);
-            this.LblCalculatedRoll.Name = "LblCalculatedRoll";
-            this.LblCalculatedRoll.Size = new System.Drawing.Size(35, 13);
-            this.LblCalculatedRoll.TabIndex = 18;
-            this.LblCalculatedRoll.Text = "label3";
-            // 
-            // LblCalculatedYaw
-            // 
-            this.LblCalculatedYaw.AutoSize = true;
-            this.LblCalculatedYaw.Location = new System.Drawing.Point(23, 505);
-            this.LblCalculatedYaw.Name = "LblCalculatedYaw";
-            this.LblCalculatedYaw.Size = new System.Drawing.Size(35, 13);
-            this.LblCalculatedYaw.TabIndex = 17;
-            this.LblCalculatedYaw.Text = "label3";
-            // 
-            // LblCalculatedPitch
-            // 
-            this.LblCalculatedPitch.AutoSize = true;
-            this.LblCalculatedPitch.Location = new System.Drawing.Point(23, 482);
-            this.LblCalculatedPitch.Name = "LblCalculatedPitch";
-            this.LblCalculatedPitch.Size = new System.Drawing.Size(35, 13);
-            this.LblCalculatedPitch.TabIndex = 16;
-            this.LblCalculatedPitch.Text = "label3";
-            // 
-            // LblCalculated
-            // 
-            this.LblCalculated.AutoSize = true;
-            this.LblCalculated.Location = new System.Drawing.Point(23, 448);
-            this.LblCalculated.Name = "LblCalculated";
-            this.LblCalculated.Size = new System.Drawing.Size(91, 13);
-            this.LblCalculated.TabIndex = 15;
-            this.LblCalculated.Text = "Calculated values";
-            // 
-            // LblMatrix33
-            // 
-            this.LblMatrix33.AutoSize = true;
-            this.LblMatrix33.Location = new System.Drawing.Point(196, 355);
-            this.LblMatrix33.Name = "LblMatrix33";
-            this.LblMatrix33.Size = new System.Drawing.Size(35, 13);
-            this.LblMatrix33.TabIndex = 14;
-            this.LblMatrix33.Text = "label3";
-            // 
-            // LblMatrix32
-            // 
-            this.LblMatrix32.AutoSize = true;
-            this.LblMatrix32.Location = new System.Drawing.Point(196, 333);
-            this.LblMatrix32.Name = "LblMatrix32";
-            this.LblMatrix32.Size = new System.Drawing.Size(35, 13);
-            this.LblMatrix32.TabIndex = 13;
-            this.LblMatrix32.Text = "label3";
-            // 
-            // LblMatrix31
-            // 
-            this.LblMatrix31.AutoSize = true;
-            this.LblMatrix31.Location = new System.Drawing.Point(196, 310);
-            this.LblMatrix31.Name = "LblMatrix31";
-            this.LblMatrix31.Size = new System.Drawing.Size(35, 13);
-            this.LblMatrix31.TabIndex = 12;
-            this.LblMatrix31.Text = "label3";
-            // 
-            // LblMatrix23
-            // 
-            this.LblMatrix23.AutoSize = true;
-            this.LblMatrix23.Location = new System.Drawing.Point(106, 355);
-            this.LblMatrix23.Name = "LblMatrix23";
-            this.LblMatrix23.Size = new System.Drawing.Size(35, 13);
-            this.LblMatrix23.TabIndex = 11;
-            this.LblMatrix23.Text = "label3";
-            // 
-            // LblMatrix22
-            // 
-            this.LblMatrix22.AutoSize = true;
-            this.LblMatrix22.Location = new System.Drawing.Point(106, 333);
-            this.LblMatrix22.Name = "LblMatrix22";
-            this.LblMatrix22.Size = new System.Drawing.Size(35, 13);
-            this.LblMatrix22.TabIndex = 10;
-            this.LblMatrix22.Text = "label3";
-            // 
-            // LblMatrix21
-            // 
-            this.LblMatrix21.AutoSize = true;
-            this.LblMatrix21.Location = new System.Drawing.Point(106, 310);
-            this.LblMatrix21.Name = "LblMatrix21";
-            this.LblMatrix21.Size = new System.Drawing.Size(35, 13);
-            this.LblMatrix21.TabIndex = 9;
-            this.LblMatrix21.Text = "label3";
-            // 
-            // LblMatrix13
-            // 
-            this.LblMatrix13.AutoSize = true;
-            this.LblMatrix13.Location = new System.Drawing.Point(23, 355);
-            this.LblMatrix13.Name = "LblMatrix13";
-            this.LblMatrix13.Size = new System.Drawing.Size(35, 13);
-            this.LblMatrix13.TabIndex = 8;
-            this.LblMatrix13.Text = "label3";
-            // 
-            // LblMatrix12
-            // 
-            this.LblMatrix12.AutoSize = true;
-            this.LblMatrix12.Location = new System.Drawing.Point(23, 333);
-            this.LblMatrix12.Name = "LblMatrix12";
-            this.LblMatrix12.Size = new System.Drawing.Size(35, 13);
-            this.LblMatrix12.TabIndex = 7;
-            this.LblMatrix12.Text = "label3";
-            // 
-            // LblMatrix11
-            // 
-            this.LblMatrix11.AutoSize = true;
-            this.LblMatrix11.Location = new System.Drawing.Point(23, 310);
-            this.LblMatrix11.Name = "LblMatrix11";
-            this.LblMatrix11.Size = new System.Drawing.Size(35, 13);
-            this.LblMatrix11.TabIndex = 6;
-            this.LblMatrix11.Text = "label3";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(23, 273);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Some matrix";
-            // 
-            // LblGteZ
-            // 
-            this.LblGteZ.AutoSize = true;
-            this.LblGteZ.Location = new System.Drawing.Point(23, 207);
-            this.LblGteZ.Name = "LblGteZ";
-            this.LblGteZ.Size = new System.Drawing.Size(35, 13);
-            this.LblGteZ.TabIndex = 4;
-            this.LblGteZ.Text = "label3";
-            // 
-            // LblGteY
-            // 
-            this.LblGteY.AutoSize = true;
-            this.LblGteY.Location = new System.Drawing.Point(23, 185);
-            this.LblGteY.Name = "LblGteY";
-            this.LblGteY.Size = new System.Drawing.Size(35, 13);
-            this.LblGteY.TabIndex = 3;
-            this.LblGteY.Text = "label3";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(23, 134);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "GTE Translation Vector";
-            // 
-            // LblGteX
-            // 
-            this.LblGteX.AutoSize = true;
-            this.LblGteX.Location = new System.Drawing.Point(23, 162);
-            this.LblGteX.Name = "LblGteX";
-            this.LblGteX.Size = new System.Drawing.Size(35, 13);
-            this.LblGteX.TabIndex = 1;
-            this.LblGteX.Text = "label3";
-            // 
-            // LblRegisterTest
-            // 
-            this.LblRegisterTest.AutoSize = true;
-            this.LblRegisterTest.Location = new System.Drawing.Point(23, 24);
-            this.LblRegisterTest.Name = "LblRegisterTest";
-            this.LblRegisterTest.Size = new System.Drawing.Size(35, 13);
-            this.LblRegisterTest.TabIndex = 0;
-            this.LblRegisterTest.Text = "label3";
-            // 
-            // TbpInfo
-            // 
-            this.TbpInfo.Location = new System.Drawing.Point(4, 22);
-            this.TbpInfo.Name = "TbpInfo";
-            this.TbpInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.TbpInfo.Size = new System.Drawing.Size(752, 726);
-            this.TbpInfo.TabIndex = 4;
-            this.TbpInfo.Text = "Info";
-            this.TbpInfo.UseVisualStyleBackColor = true;
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.BtnFogWorldTintColorSwap);
@@ -3616,24 +3400,6 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSaveRamExport.UseVisualStyleBackColor = true;
             this.BtnSaveRamExport.Click += new System.EventHandler(this.BtnSaveRamExport_Click);
             // 
-            // LblSelectedTriggerThing2
-            // 
-            this.LblSelectedTriggerThing2.AutoSize = true;
-            this.LblSelectedTriggerThing2.Location = new System.Drawing.Point(75, 219);
-            this.LblSelectedTriggerThing2.Name = "LblSelectedTriggerThing2";
-            this.LblSelectedTriggerThing2.Size = new System.Drawing.Size(48, 13);
-            this.LblSelectedTriggerThing2.TabIndex = 94;
-            this.LblSelectedTriggerThing2.Text = "<thing2>";
-            // 
-            // label60
-            // 
-            this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(6, 219);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(43, 13);
-            this.label60.TabIndex = 95;
-            this.label60.Text = "Thing2:";
-            // 
             // CustomMainForm
             // 
             this.ClientSize = new System.Drawing.Size(784, 776);
@@ -3686,8 +3452,6 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudModelZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudModelY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudModelX)).EndInit();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintB)).EndInit();
@@ -3779,28 +3543,7 @@ namespace BizHawk.Client.EmuHawk
 		private CheckBox CbxEnableHarrySection;
 		private CheckBox CbxEnableCameraSection;
 		private CheckBox CbxEnableControlsSection;
-		private TabPage tabPage1;
-		private Label LblRegisterTest;
-		private Label LblGteZ;
-		private Label LblGteY;
-		private Label label3;
-		private Label LblGteX;
-		private Label LblMatrix33;
-		private Label LblMatrix32;
-		private Label LblMatrix31;
-		private Label LblMatrix23;
-		private Label LblMatrix22;
-		private Label LblMatrix21;
-		private Label LblMatrix13;
-		private Label LblMatrix12;
-		private Label LblMatrix11;
-		private Label label4;
-		private Label LblCalculatedRoll;
-		private Label LblCalculatedYaw;
-		private Label LblCalculatedPitch;
-		private Label LblCalculated;
 		private CheckBox CbxEnableOverlay;
-		private TabPage TbpInfo;
 		private CheckBox CbxCameraFreeze;
 		private TabPage tabPage2;
 		private Label label8;
