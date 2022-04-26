@@ -12,7 +12,11 @@ namespace SHME.ExternalTool
 		Save0 = 0x08,
 		Save1 = 0x09,
 		Function1 = 0x0A,
-		Function2 = 0x0B
+
+		/// <summary>
+		/// A trigger that updates the area map with red marker scribbles.
+		/// </summary>
+		MapScribble = 0x0B
 	}
 
 	public enum TriggerStyle
@@ -29,14 +33,16 @@ namespace SHME.ExternalTool
 		TouchAabb = 0x1,
 
 		/// <summary>
-		/// Activated by pressing the action button.
+		/// Activated by pressing the action button when in range of the
+		/// trigger's POI, regardless of yaw.
 		/// </summary>
-		Button0 = 0x2,
+		ButtonOmni = 0x2,
 
 		/// <summary>
-		/// Activated by pressing the action button.
+		/// Activated by pressing the action button when in range of and aimed
+		/// toward the trigger's POI.
 		/// </summary>
-		Button1 = 0x3,
+		ButtonYaw = 0x3,
 
 		/// <summary>
 		/// Activated by touching an oriented bounding box, defined by a width

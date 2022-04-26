@@ -31,7 +31,7 @@ namespace SHME.ExternalTool
 
 			uint geo = p.Geometry;
 
-			if (s == TriggerStyle.Button0 || s == TriggerStyle.Button1)
+			if (s == TriggerStyle.ButtonOmni || s == TriggerStyle.ButtonYaw)
 			{
 				uint raw = (geo & 0b00000000_11111111_11110000_00000000) >> 12;
 

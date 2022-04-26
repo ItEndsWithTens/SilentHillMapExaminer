@@ -363,7 +363,7 @@ namespace BizHawk.Client.EmuHawk
 
 			foreach (Trigger trigger in Triggers)
 			{
-				if (trigger.Style != TriggerStyle.Button0 && trigger.Style != TriggerStyle.Button1)
+				if (trigger.Style != TriggerStyle.ButtonOmni && trigger.Style != TriggerStyle.ButtonYaw)
 				{
 					KeyValuePair<PointOfInterest, Renderable?> pair = Pois.ElementAt(trigger.PoiIndex);
 					PointOfInterest p = pair.Key;
@@ -550,7 +550,7 @@ namespace BizHawk.Client.EmuHawk
 						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
 						break;
 					case TriggerType.Function1:
-					case TriggerType.Function2:
+					case TriggerType.MapScribble:
 						int s = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
 						int f = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
 						long count = (s - f) / 4;
