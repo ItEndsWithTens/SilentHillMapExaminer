@@ -33,7 +33,7 @@
     <RemoveDir Directories="$(PrepDir)" />
     <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(PrepDir)" />
     <Copy SourceFiles="$(TopLevelDirectory)\README.md" DestinationFiles="$(PrepDir)\$(MSBuildProjectName).txt" />
-    <ZipDirectory SourceDirectory="$(PrepDir)" DestinationFile="$(DistDir)\$(MSBuildProjectName)-$(Version).zip" Overwrite="true"/>
+    <ZipDirectory SourceDirectory="$(PrepDir)" DestinationFile="$(DistDir)\$(MSBuildProjectName)-$(Version).zip" Overwrite="true" />
   </Target>
 
 </Project>

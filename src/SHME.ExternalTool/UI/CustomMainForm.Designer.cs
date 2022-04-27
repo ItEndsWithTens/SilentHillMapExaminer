@@ -39,6 +39,13 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryYaw = new System.Windows.Forms.Label();
             this.LblHarryPitch = new System.Windows.Forms.Label();
             this.GbxCamera = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.TbxCameraFlySensitivity = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TbxCameraFlySpeed = new System.Windows.Forms.TextBox();
+            this.CbxCameraFlyInvert = new System.Windows.Forms.CheckBox();
+            this.CbxCameraDetach = new System.Windows.Forms.CheckBox();
+            this.BtnCameraFly = new System.Windows.Forms.Button();
             this.label48 = new System.Windows.Forms.Label();
             this.LblFov = new System.Windows.Forms.Label();
             this.TrkFov = new System.Windows.Forms.TrackBar();
@@ -582,6 +589,13 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxCamera
             // 
+            this.GbxCamera.Controls.Add(this.label4);
+            this.GbxCamera.Controls.Add(this.TbxCameraFlySensitivity);
+            this.GbxCamera.Controls.Add(this.label3);
+            this.GbxCamera.Controls.Add(this.TbxCameraFlySpeed);
+            this.GbxCamera.Controls.Add(this.CbxCameraFlyInvert);
+            this.GbxCamera.Controls.Add(this.CbxCameraDetach);
+            this.GbxCamera.Controls.Add(this.BtnCameraFly);
             this.GbxCamera.Controls.Add(this.label48);
             this.GbxCamera.Controls.Add(this.LblFov);
             this.GbxCamera.Controls.Add(this.TrkFov);
@@ -602,6 +616,81 @@ namespace BizHawk.Client.EmuHawk
             this.GbxCamera.TabIndex = 14;
             this.GbxCamera.TabStop = false;
             this.GbxCamera.Text = "Game camera";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(162, 287);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 13);
+            this.label4.TabIndex = 28;
+            this.label4.Text = "Sensitivity:";
+            this.toolTip1.SetToolTip(this.label4, "Arbitrary multiplier");
+            // 
+            // TbxCameraFlySensitivity
+            // 
+            this.TbxCameraFlySensitivity.Location = new System.Drawing.Point(225, 284);
+            this.TbxCameraFlySensitivity.Name = "TbxCameraFlySensitivity";
+            this.TbxCameraFlySensitivity.Size = new System.Drawing.Size(33, 20);
+            this.TbxCameraFlySensitivity.TabIndex = 27;
+            this.TbxCameraFlySensitivity.Text = "0.25";
+            this.toolTip1.SetToolTip(this.TbxCameraFlySensitivity, "Arbitrary multiplier");
+            this.TbxCameraFlySensitivity.TextChanged += new System.EventHandler(this.TbxCameraFlySensitivity_TextChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(178, 310);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "Speed:";
+            this.toolTip1.SetToolTip(this.label3, "Units per frame");
+            // 
+            // TbxCameraFlySpeed
+            // 
+            this.TbxCameraFlySpeed.Location = new System.Drawing.Point(225, 306);
+            this.TbxCameraFlySpeed.Name = "TbxCameraFlySpeed";
+            this.TbxCameraFlySpeed.Size = new System.Drawing.Size(33, 20);
+            this.TbxCameraFlySpeed.TabIndex = 25;
+            this.TbxCameraFlySpeed.Text = "0.125";
+            this.toolTip1.SetToolTip(this.TbxCameraFlySpeed, "Units per frame");
+            this.TbxCameraFlySpeed.TextChanged += new System.EventHandler(this.TbxCameraFlySpeed_TextChanged);
+            // 
+            // CbxCameraFlyInvert
+            // 
+            this.CbxCameraFlyInvert.AutoSize = true;
+            this.CbxCameraFlyInvert.Location = new System.Drawing.Point(87, 309);
+            this.CbxCameraFlyInvert.Name = "CbxCameraFlyInvert";
+            this.CbxCameraFlyInvert.Size = new System.Drawing.Size(53, 17);
+            this.CbxCameraFlyInvert.TabIndex = 24;
+            this.CbxCameraFlyInvert.Text = "Invert";
+            this.CbxCameraFlyInvert.UseVisualStyleBackColor = true;
+            // 
+            // CbxCameraDetach
+            // 
+            this.CbxCameraDetach.AutoSize = true;
+            this.CbxCameraDetach.Location = new System.Drawing.Point(87, 286);
+            this.CbxCameraDetach.Name = "CbxCameraDetach";
+            this.CbxCameraDetach.Size = new System.Drawing.Size(61, 17);
+            this.CbxCameraDetach.TabIndex = 23;
+            this.CbxCameraDetach.Text = "Detach";
+            this.CbxCameraDetach.UseVisualStyleBackColor = true;
+            this.CbxCameraDetach.CheckedChanged += new System.EventHandler(this.CbxCameraDetach_CheckedChanged);
+            // 
+            // BtnCameraFly
+            // 
+            this.BtnCameraFly.Location = new System.Drawing.Point(6, 283);
+            this.BtnCameraFly.Name = "BtnCameraFly";
+            this.BtnCameraFly.Size = new System.Drawing.Size(75, 43);
+            this.BtnCameraFly.TabIndex = 22;
+            this.BtnCameraFly.Text = "Fly";
+            this.toolTip1.SetToolTip(this.BtnCameraFly, "Enter WASDEQ fly mode");
+            this.BtnCameraFly.UseVisualStyleBackColor = true;
+            this.BtnCameraFly.Click += new System.EventHandler(this.BtnCameraFly_ClickFirst);
+            this.BtnCameraFly.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyDown);
+            this.BtnCameraFly.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyUp);
+            this.BtnCameraFly.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BtnCameraFly_MouseMove);
             // 
             // label48
             // 
@@ -3729,5 +3818,12 @@ namespace BizHawk.Client.EmuHawk
 		private TextBox TbxConvertStatesToSaveRamInputPath;
 		private Label LblSelectedTriggerThing2;
 		private Label label60;
+		private Button BtnCameraFly;
+		private CheckBox CbxCameraDetach;
+		private CheckBox CbxCameraFlyInvert;
+		private Label label3;
+		private TextBox TbxCameraFlySpeed;
+		private Label label4;
+		private TextBox TbxCameraFlySensitivity;
 	}
 }

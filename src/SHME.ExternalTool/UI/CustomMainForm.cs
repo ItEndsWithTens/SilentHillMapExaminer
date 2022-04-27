@@ -89,6 +89,8 @@ namespace BizHawk.Client.EmuHawk
 				AutoReset = true
 			};
 			_arrayCountdown.Elapsed += ArrayCountdown_Elapsed;
+
+			BtnCameraFly.MouseMove += BtnCameraFly_MouseMove;
 		}
 
 		public override void Restart()
@@ -167,6 +169,14 @@ namespace BizHawk.Client.EmuHawk
 					{
 						CheckForSaveButtonPress();
 					}
+					if (CbxCameraDetach.Checked)
+					{
+						HoldCamera();
+					}
+					if (_flyEnabled)
+					{
+						MoveCamera();
+					}
 					break;
 				case ToolFormUpdateType.PostFrame:
 					if (CbxEnableControlsSection.Checked)
@@ -179,13 +189,11 @@ namespace BizHawk.Client.EmuHawk
 					{
 						ReportOverlayInfo();
 					}
-					//ReportMisc();
 					Gui.WithSurface(DisplaySurfaceID.EmuCore, DrawStuff);
 					if (CbxStats.Checked)
 					{
 						ReportStats();
 					}
-					//GetRegisterTest();
 					if (CbxTriggersAutoUpdate.Checked)
 					{
 						CheckForTriggerArrayUpdate();

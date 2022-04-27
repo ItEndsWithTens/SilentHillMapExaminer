@@ -18,15 +18,12 @@
 		public long IndexOfMostRecentlyActiveString { get; set; }
 
 		public long IsCameraUnlocked { get; set; }
+		public long CameraState { get; set; }
 
-		// Possibly misnamed? The second one definitely controls vertical
-		// spring tension, but if either the first or last of these is set
-		// to 0, the camera won't move on either axis, regardless of what
-		// the other one is set to. Needs more investigation. Seems to use
-		// the lower of the two X/Z values.
-		public long CameraSpringArmTensionX { get; set; }
-		public long CameraSpringArmTensionY { get; set; }
-		public long CameraSpringArmTensionZ { get; set; }
+		public long CameraSpringArmTensionH0 { get; set; }
+		public long CameraSpringArmTensionV0 { get; set; }
+		public long CameraSpringArmTensionH1 { get; set; }
+		public long CameraSpringArmTensionV1 { get; set; }
 
 		public long CameraPositionIdealX { get; set; }
 		public long CameraPositionIdealY { get; set; }

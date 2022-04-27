@@ -37,15 +37,13 @@
 
 				IsCameraUnlocked = 0xB9CD0,
 
-				CameraSpringArmTensionX = 0xAFCD0, // Mirrored at 0xB9D04
-				CameraSpringArmTensionY = 0xAFCD4, // Mirrored at 0xB9D08
-				CameraSpringArmTensionZ = 0xAFCD8, // Mirrored at 0xB9D0C
+				CameraState = 0xB9CD8,
 
-				// Hmm...could these conceivably be the translation parts of
-				// a full-on projection matrix? Hadn't paid too much attention
-				// to the stuff surrounding them, but it's plausible. If I can
-				// interpret the whole thing I can determine the FOV, aspect
-				// ratio, the whole deal. Just need to figure it all out.
+				CameraSpringArmTensionH0 = 0xB9D04, // Mirrored at 0xAFCD0
+				CameraSpringArmTensionV0 = 0xB9D08, // Mirrored at 0xAFCD4
+				CameraSpringArmTensionH1 = 0xB9D0C, // Mirrored at 0xAFCD8
+				CameraSpringArmTensionV1 = 0xB9D10, // Mirrored at 0xAFCDC
+
 				CameraPositionIdealX = 0xB9D14,
 				CameraPositionIdealY = 0xB9D18,
 				CameraPositionIdealZ = 0xB9D1C,
