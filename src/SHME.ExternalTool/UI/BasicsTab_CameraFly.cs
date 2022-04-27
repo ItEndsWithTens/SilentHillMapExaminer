@@ -15,6 +15,33 @@ namespace BizHawk.Client.EmuHawk
 			BtnCameraFly_ClickSecond(this, EventArgs.Empty);
 		}
 
+		// Cursor visibility in Winforms stacks up, i.e. calling Cursor.Show on
+		// a visible cursor isn't a no-op, and would afterward require two calls
+		// to Hide before it disappeared.
+		private bool _cursorVisible = true;
+		private bool CursorVisible
+		{
+			get => _cursorVisible;
+			set
+			{
+				if (value == _cursorVisible)
+				{
+					return;
+				}
+
+				if (value)
+				{
+					Cursor.Show();
+				}
+				else
+				{
+					Cursor.Hide();
+				}
+
+				_cursorVisible = value;
+			}
+		}
+
 		private bool _flyEnabled;
 		private bool FlyEnabled
 		{
@@ -25,7 +52,7 @@ namespace BizHawk.Client.EmuHawk
 
 				if (value)
 				{
-					Cursor.Hide();
+					CursorVisible = false;
 
 					Button btn = BtnCameraFly;
 
@@ -50,7 +77,7 @@ namespace BizHawk.Client.EmuHawk
 
 					Cursor.Clip = new Rectangle();
 
-					Cursor.Show();
+					CursorVisible = true;
 				}
 			}
 		}
