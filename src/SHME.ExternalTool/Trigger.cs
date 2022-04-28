@@ -33,14 +33,14 @@ namespace SHME.ExternalTool
 		TouchAabb = 0x1,
 
 		/// <summary>
-		/// Activated by pressing the action button when in range of the
-		/// trigger's POI, regardless of yaw.
+		/// Activated by pressing the action button when in range of and aimed
+		/// toward the trigger's POI.
 		/// </summary>
 		ButtonOmni = 0x2,
 
 		/// <summary>
 		/// Activated by pressing the action button when in range of and aimed
-		/// toward the trigger's POI.
+		/// toward the trigger's POI, while also aimed opposite that POI's yaw.
 		/// </summary>
 		ButtonYaw = 0x3,
 
@@ -78,19 +78,19 @@ namespace SHME.ExternalTool
 		public short SomeIndex { get; }
 
 		/// <summary>
-		/// ?
-		/// </summary>
-		/// <remarks>
-		/// The high nibble of the byte that produces Style.
-		/// </remarks>
-		public byte Thing2 { get; }
-		/// <summary>
 		/// How this trigger is activated.
 		/// </summary>
 		/// <remarks>
 		/// The low nibble of its respective byte.
 		/// </remarks>
 		public TriggerStyle Style { get; }
+		/// <summary>
+		/// ?
+		/// </summary>
+		/// <remarks>
+		/// The high nibble of the byte that produces Style.
+		/// </remarks>
+		public byte Thing2 { get; }
 
 		public byte PoiIndex { get; }
 		public byte Thing3 { get; } // Could be string index when door is locked?
@@ -125,34 +125,36 @@ namespace SHME.ExternalTool
 		{
 			Address = address;
 
-			Thing0 = bytes[0];
-			Disabled = ((Thing0 >> 7) & 1) == 1;
+			int raw0 = (bytes[0] & 0b01111111) >> 0;
+			int raw1 = (bytes[0] & 0b10000000) >> 7;
+			Thing0 = (byte)raw0;
+			Disabled = raw1 == 1;
 
 			Thing1 = bytes[1];
 
 			short stateRaw = BitConverter.ToInt16(bytes, 2);
-			int raw0 = (stateRaw & 0b00000000_00011111) >> 0;
-			int raw1 = (stateRaw & 0b11111111_11100000) >> 5;
+			int raw2 = (stateRaw & 0b00000000_00011111) >> 0;
+			int raw3 = (stateRaw & 0b11111111_11100000) >> 5;
+			FiredBitShift = (byte)raw2;
+			SomeIndex = (short)raw3;
 
-			FiredBitShift = (byte)raw0;
-			SomeIndex = (short)raw1;
-
-			Thing2 = (byte)((bytes[4] & 0b11110000) >> 4);
-			Style = (TriggerStyle)(bytes[4] & 0b00001111);
+			int raw4 = (bytes[4] & 0b00001111) >> 0;
+			int raw5 = (bytes[4] & 0b11110000) >> 4;
+			Style = (TriggerStyle)raw4;
+			Thing2 = (byte)raw5;
 
 			PoiIndex = bytes[5];
 			Thing3 = bytes[6];
 			Thing4 = bytes[7];
 			TypeInfo = BitConverter.ToUInt32(bytes, 8);
 
-			uint raw2 = (TypeInfo & 0b00000000_00000000_00000000_00011111) >> 0;
-			uint raw3 = (TypeInfo & 0b00000000_00000000_00011111_11100000) >> 5;
-			uint raw4 = (TypeInfo & 0b00000000_00000111_11100000_00000000) >> 13;
-			uint raw5 = (TypeInfo & 0b00000001_11111000_00000000_00000000) >> 19;
-			uint raw6 = (TypeInfo & 0b11111110_00000000_00000000_00000000) >> 25;
-
-			TriggerType = (TriggerType)raw2;
-			TargetIndex = (byte)raw3;
+			uint raw6 = (TypeInfo & 0b00000000_00000000_00000000_00011111) >> 0;
+			uint raw7 = (TypeInfo & 0b00000000_00000000_00011111_11100000) >> 5;
+			uint raw8 = (TypeInfo & 0b00000000_00000111_11100000_00000000) >> 13;
+			uint raw9 = (TypeInfo & 0b00000001_11111000_00000000_00000000) >> 19;
+			uint rawA = (TypeInfo & 0b11111110_00000000_00000000_00000000) >> 25;
+			TriggerType = (TriggerType)raw6;
+			TargetIndex = (byte)raw7;
 		}
 	}
 }
