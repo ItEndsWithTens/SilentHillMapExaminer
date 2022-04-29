@@ -155,7 +155,7 @@ namespace BizHawk.Client.EmuHawk
 			LblSelectedTriggerPoiGeometry.Text = "";
 			LblSelectedTriggerThing1.Text = "0x";
 			LblSelectedTriggerFired.Text = "";
-			LblSelectedTriggerFiredDetails.Text = $"(Group address 0x??, bit 0x??)";
+			LblSelectedTriggerFiredDetails.Text = $"(Group 0xDEADBEEF, bit 0xCAFEBABE)";
 			LblSelectedTriggerSomeIndex.Text = "0x";
 			LblSelectedTriggerThing2.Text = "0x";
 			LblSelectedTriggerStyle.Text = "0x";
@@ -577,6 +577,83 @@ namespace BizHawk.Client.EmuHawk
 			else
 			{
 				ClearDisplayedTriggerInfo();
+			}
+		}
+
+		private void RdoOverlayAxisColors_CheckedChanged(object sender, EventArgs e)
+		{
+			var east = new Vector3(1.0f, 0.0f, 0.0f);
+			var down = new Vector3(0.0f, -1.0f, 0.0f);
+			var up = new Vector3(0.0f, 1.0f, 0.0f);
+			var south = new Vector3(0.0f, 0.0f, 1.0f);
+			var north = new Vector3(0.0f, 0.0f, -1.0f);
+
+			foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Pois)
+			{
+				if (pair.Value == null)
+				{
+					continue;
+				}
+
+				Renderable r = pair.Value;
+
+				foreach (Polygon p in r.Polygons)
+				{
+					p.Color = Color.White;
+				}
+
+				float tolerance = 0.001f;
+
+				// Positive X is always pointing east.
+				if (!RdoOverlayAxisColorsOff.Checked)
+				{
+					IEnumerable<Polygon>? easts = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(east, tolerance));
+
+					foreach (Polygon p in easts)
+					{
+						p.Color = Color.Red;
+					}
+				}
+
+				// Positive Y down, positive Z north
+				if (RdoOverlayAxisColorsGame.Checked)
+				{
+					IEnumerable<Polygon>? downs = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(down, tolerance));
+
+					foreach (Polygon p in downs)
+					{
+						p.Color = Color.Lime;
+					}
+
+					IEnumerable<Polygon>? norths = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(north, tolerance));
+
+					foreach (Polygon p in norths)
+					{
+						p.Color = Color.Blue;
+					}
+				}
+				// Positive Y up, positive Z south
+				else if (RdoOverlayAxisColorsOverlay.Checked)
+				{
+					IEnumerable<Polygon>? ups = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(up, tolerance));
+
+					foreach (Polygon p in ups)
+					{
+						p.Color = Color.Lime;
+					}
+
+					IEnumerable<Polygon>? souths = r.Polygons
+						.Where((p) => p.Normal.ApproximatelyEquivalent(south, tolerance));
+
+					foreach (Polygon p in souths)
+					{
+						p.Color = Color.Blue;
+					}
+				}
 			}
 		}
 	}

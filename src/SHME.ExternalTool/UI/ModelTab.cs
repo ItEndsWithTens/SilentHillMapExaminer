@@ -2,6 +2,7 @@
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Numerics;
 
@@ -99,6 +100,167 @@ namespace BizHawk.Client.EmuHawk
 			{
 				box.Position += diff;
 			}
+		}
+
+		private Renderable TestBox { get; set; } = new BoxGenerator(1.0f, Color.White).GenerateRainbowBox().ToWorld();
+		private Collection<Line> TestLines { get; } = new Collection<Line>()
+		{
+			new Line(
+				new Vertex(0.0f, 1.0f, 0.0f, Color.Red),
+				new Vertex(1.0f, 1.0f, 0.0f, Color.Lime))
+		};
+
+		private void NudOverlayTestBoxX_ValueChanged(object sender, EventArgs e)
+		{
+			TestBox.Position = new Vector3(
+				(float)NudOverlayTestBoxX.Value,
+				TestBox.Position.Y,
+				TestBox.Position.Z);
+		}
+
+		private void NudOverlayTestBoxY_ValueChanged(object sender, EventArgs e)
+		{
+			TestBox.Position = new Vector3(
+				TestBox.Position.X,
+				-(float)NudOverlayTestBoxY.Value, // Convert from SH coords
+				TestBox.Position.Z);
+		}
+
+		private void NudOverlayTestBoxZ_ValueChanged(object sender, EventArgs e)
+		{
+			TestBox.Position = new Vector3(
+				TestBox.Position.X,
+				TestBox.Position.Y,
+				-(float)NudOverlayTestBoxZ.Value); // Convert from SH coords
+		}
+
+		private void NudOverlayTestBoxSizeX_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable rainbow = new BoxGenerator(
+				(float)NudOverlayTestBoxSizeX.Value,
+				Math.Abs(TestBox.Aabb.Max.Y - TestBox.Aabb.Min.Y),
+				Math.Abs(TestBox.Aabb.Max.Z - TestBox.Aabb.Min.Z),
+				Color.White).GenerateRainbowBox();
+
+			rainbow.Position = TestBox.Position;
+
+			TestBox = rainbow.ToWorld();
+		}
+
+		private void NudOverlayTestBoxSizeY_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable rainbow = new BoxGenerator(
+				Math.Abs(TestBox.Aabb.Max.X - TestBox.Aabb.Min.X),
+				(float)NudOverlayTestBoxSizeY.Value,
+				Math.Abs(TestBox.Aabb.Max.Z - TestBox.Aabb.Min.Z),
+				Color.White).GenerateRainbowBox();
+
+			rainbow.Position = TestBox.Position;
+
+			TestBox = rainbow.ToWorld();
+		}
+
+		private void NudOverlayTestBoxSizeZ_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable rainbow = new BoxGenerator(
+				Math.Abs(TestBox.Aabb.Max.X - TestBox.Aabb.Min.X),
+				Math.Abs(TestBox.Aabb.Max.Y - TestBox.Aabb.Min.Y),
+				(float)NudOverlayTestBoxSizeZ.Value,
+				Color.White).GenerateRainbowBox();
+
+			rainbow.Position = TestBox.Position;
+
+			TestBox = rainbow.ToWorld();
+		}
+
+		private void NudOverlayTestLineAX_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].A;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					(float)NudOverlayTestLineAX.Value,
+					v.Position.Y,
+					v.Position.Z)
+			};
+
+			TestLines[0].A = v;
+		}
+
+		private void NudOverlayTestLineAY_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].A;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					v.Position.X,
+					-(float)NudOverlayTestLineAY.Value, // Convert from SH coords
+					v.Position.Z)
+			};
+
+			TestLines[0].A = v;
+		}
+
+		private void NudOverlayTestLineAZ_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].A;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					v.Position.X,
+					v.Position.Y,
+					-(float)NudOverlayTestLineAZ.Value) // Convert from SH coords
+			};
+
+			TestLines[0].A = v;
+		}
+
+		private void NudOverlayTestLineBX_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].B;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					(float)NudOverlayTestLineBX.Value,
+					v.Position.Y,
+					v.Position.Z)
+			};
+
+			TestLines[0].B = v;
+		}
+
+		private void NudOverlayTestLineBY_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].B;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					v.Position.X,
+					-(float)NudOverlayTestLineBY.Value, // Convert from SH coords
+					v.Position.Z)
+			};
+
+			TestLines[0].B = v;
+		}
+
+		private void NudOverlayTestLineBZ_ValueChanged(object sender, EventArgs e)
+		{
+			Vertex v = TestLines[0].B;
+
+			v = new Vertex(v)
+			{
+				Position = new Vector3(
+					v.Position.X,
+					v.Position.Y,
+					-(float)NudOverlayTestLineBZ.Value) // Convert from SH coords
+			};
+
+			TestLines[0].B = v;
 		}
 
 		private Ilm? Model { get; set; }
