@@ -73,6 +73,18 @@ namespace BizHawk.Client.EmuHawk
 		{
 			InitializeComponent();
 
+			// Set initial size, but let users manually resize the form as they
+			// see fit, e.g. for very low res screens. The AutoScroll property
+			// will then give scroll bars that can show all content, which the
+			// AutoSize options in WinForms don't seem to permit.
+			int border = 12;
+			AutoScrollMargin = new Size(border, border);
+			TbcMainTabs.Location = new Point(border, border);
+			ClientSize = new Size(
+				border + TbcMainTabs.Width + border,
+				border + TbcMainTabs.Height + border);
+			MaximumSize = Size;
+
 			TrkFov.Value = (int)Camera.Fov;
 
 			CmbRenderMode.SelectedIndex = 0;

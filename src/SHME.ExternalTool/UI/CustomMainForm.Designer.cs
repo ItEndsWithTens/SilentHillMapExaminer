@@ -981,7 +981,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbcMainTabs.Controls.Add(this.tabPage4);
             this.TbcMainTabs.Controls.Add(this.TbpSave);
             this.TbcMainTabs.Controls.Add(this.TbpTest);
-            this.TbcMainTabs.Location = new System.Drawing.Point(12, 12);
+            this.TbcMainTabs.Location = new System.Drawing.Point(0, 0);
             this.TbcMainTabs.Margin = new System.Windows.Forms.Padding(0);
             this.TbcMainTabs.Name = "TbcMainTabs";
             this.TbcMainTabs.SelectedIndex = 0;
@@ -3688,14 +3688,10 @@ namespace BizHawk.Client.EmuHawk
             // 
             // CustomMainForm
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(749, 847);
             this.Controls.Add(this.TbcMainTabs);
             this.Name = "CustomMainForm";
-            this.Padding = new System.Windows.Forms.Padding(12);
             this.GbxHarry.ResumeLayout(false);
             this.GbxHarry.PerformLayout();
             this.GbxCamera.ResumeLayout(false);
