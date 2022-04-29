@@ -508,7 +508,7 @@ namespace BizHawk.Client.EmuHawk
 				int group = Mem.ReadS32(groupOfs);
 				int firedBit = (group >> t.FiredBitShift) & 1;
 				LblSelectedTriggerFired.Text = $"{firedBit != 0}";
-				LblSelectedTriggerFiredDetails.Text = $"(Group address 0x{groupOfs:X}, bit 0x{1 << t.FiredBitShift:X})";
+				LblSelectedTriggerFiredDetails.Text = $"(Group 0x{groupOfs:X}, bit 0x{1 << t.FiredBitShift:X})";
 
 				if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
 				{
