@@ -923,7 +923,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionZ
             // 
             this.LblCameraPositionZ.AutoSize = true;
-            this.LblCameraPositionZ.Location = new System.Drawing.Point(29, 47);
+            this.LblCameraPositionZ.Location = new System.Drawing.Point(29, 83);
             this.LblCameraPositionZ.Name = "LblCameraPositionZ";
             this.LblCameraPositionZ.Size = new System.Drawing.Size(91, 13);
             this.LblCameraPositionZ.TabIndex = 2;
@@ -933,7 +933,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionY
             // 
             this.LblCameraPositionY.AutoSize = true;
-            this.LblCameraPositionY.Location = new System.Drawing.Point(29, 83);
+            this.LblCameraPositionY.Location = new System.Drawing.Point(29, 65);
             this.LblCameraPositionY.Name = "LblCameraPositionY";
             this.LblCameraPositionY.Size = new System.Drawing.Size(91, 13);
             this.LblCameraPositionY.TabIndex = 1;
@@ -943,7 +943,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionX
             // 
             this.LblCameraPositionX.AutoSize = true;
-            this.LblCameraPositionX.Location = new System.Drawing.Point(29, 65);
+            this.LblCameraPositionX.Location = new System.Drawing.Point(29, 47);
             this.LblCameraPositionX.Name = "LblCameraPositionX";
             this.LblCameraPositionX.Size = new System.Drawing.Size(91, 13);
             this.LblCameraPositionX.TabIndex = 0;
