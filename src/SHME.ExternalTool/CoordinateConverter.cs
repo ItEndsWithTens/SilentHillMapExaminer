@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
 
 namespace SHME.ExternalTool
@@ -12,19 +11,6 @@ namespace SHME.ExternalTool
 
 	public static class CoordinateConverter
 	{
-		public static Vector3 Convert(List<float> coordinates, CoordinateType from, CoordinateType to)
-		{
-			if (coordinates.Count > 3)
-			{
-				throw new ArgumentException("Too many coordinates!");
-			}
-			else if (coordinates.Count < 3)
-			{
-				throw new ArgumentException("Too few coordinates!");
-			}
-
-			return Convert(new Vector3(coordinates[0], coordinates[1], coordinates[2]), from, to);
-		}
 		public static Vector3 Convert(Vector3 coordinates, CoordinateType from, CoordinateType to)
 		{
 			Vector3 converted;

@@ -230,11 +230,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void DrawStuff()
 		{
-			List<float> position = Core.GetPosition(Mem);
-			List<float> angles = Core.GetAngles(Mem);
+			(_, Vector3 position) = GetPosition();
+			(_, Vector3 angles) = GetAngles();
 
-			Vector3 convertedPosition = CoordinateConverter.Convert(position.GetRange(3, 3), CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
-			Vector3 convertedAngles = AngleConverter.Convert(angles.GetRange(3, 3), CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
+			Vector3 convertedPosition = CoordinateConverter.Convert(position, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
+			Vector3 convertedAngles = AngleConverter.Convert(angles, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 
 			if (CbxOverlayCameraMatchGame.Checked)
 			{

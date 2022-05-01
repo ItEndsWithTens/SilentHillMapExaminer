@@ -12,11 +12,11 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private void BtnModelGetHarryPosition_Click(object sender, EventArgs e)
 		{
-			List<float> position = Core.GetPosition(Mem);
+			(Vector3 harry, _) = GetPosition();
 
-			NudModelX.Text = position[0].ToString("N2");
-			NudModelY.Text = position[1].ToString("N2");
-			NudModelZ.Text = position[2].ToString("N2");
+			NudModelX.Text = harry.X.ToString("N2");
+			NudModelY.Text = harry.Y.ToString("N2");
+			NudModelZ.Text = harry.Z.ToString("N2");
 		}
 
 		private void BtnModelSetModelPosition_Click(object sender, EventArgs e)

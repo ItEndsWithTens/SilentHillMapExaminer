@@ -1,10 +1,6 @@
-﻿using BizHawk.Client.Common;
-using SHME.ExternalTool;
+﻿using SHME.ExternalTool;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
@@ -45,15 +41,15 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportAngles()
 		{
-			List<float> angles = Core.GetAngles(Mem);
+			(Vector3 harry, Vector3 camera) = GetAngles();
 
-			LblHarryPitch.Text = angles[0].ToString("N2");
-			LblHarryYaw.Text = angles[1].ToString("N2");
-			LblHarryRoll.Text = angles[2].ToString("N2");
+			LblHarryPitch.Text = harry.X.ToString("N2");
+			LblHarryYaw.Text = harry.Y.ToString("N2");
+			LblHarryRoll.Text = harry.Z.ToString("N2");
 
-			LblCameraPitch.Text = angles[3].ToString("N2");
-			LblCameraYaw.Text = angles[4].ToString("N2");
-			LblCameraRoll.Text = angles[5].ToString("N2");
+			LblCameraPitch.Text = camera.X.ToString("N2");
+			LblCameraYaw.Text = camera.Y.ToString("N2");
+			LblCameraRoll.Text = camera.Z.ToString("N2");
 		}
 
 		private void ReportControls()
@@ -100,15 +96,15 @@ namespace BizHawk.Client.EmuHawk
 		private PointOfInterest? _lastHarrySpawnPoint;
 		private void ReportPosition()
 		{
-			List<float> position = Core.GetPosition(Mem);
+			(Vector3 harry, Vector3 camera) = GetPosition();
 
-			LblHarryPositionX.Text = position[0].ToString("N2");
-			LblHarryPositionY.Text = position[1].ToString("N2");
-			LblHarryPositionZ.Text = position[2].ToString("N2");
+			LblHarryPositionX.Text = harry.X.ToString("N2");
+			LblHarryPositionY.Text = harry.Y.ToString("N2");
+			LblHarryPositionZ.Text = harry.Z.ToString("N2");
 
-			LblCameraPositionX.Text = position[3].ToString("N2");
-			LblCameraPositionY.Text = position[4].ToString("N2");
-			LblCameraPositionZ.Text = position[5].ToString("N2");
+			LblCameraPositionX.Text = camera.X.ToString("N2");
+			LblCameraPositionY.Text = camera.Y.ToString("N2");
+			LblCameraPositionZ.Text = camera.Z.ToString("N2");
 
 			float drawDistance = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DrawDistance), 8);
 
@@ -127,6 +123,49 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		public (Vector3 harry, Vector3 camera) GetAngles()
+		{
+			Vector3 harry;
+			harry.X = GameUnitsToDegrees(Mem.ReadU16(Rom.Addresses.MainRam.HarryPitch));
+			harry.Y = GameUnitsToDegrees(Mem.ReadU16(Rom.Addresses.MainRam.HarryYaw));
+			harry.Z = GameUnitsToDegrees(Mem.ReadU16(Rom.Addresses.MainRam.HarryRoll));
+
+			Vector3 camera;
+			camera.X = GameUnitsToDegrees(Mem.ReadU16(Rom.Addresses.MainRam.CameraActualPitch));
+			camera.Y = GameUnitsToDegrees(Mem.ReadU16(Rom.Addresses.MainRam.CameraActualYaw));
+			camera.Z = GameUnitsToDegrees(Mem.ReadU16(Rom.Addresses.MainRam.CameraActualRoll));
+
+			return (harry, camera);
+		}
+		public void SetHarryAngles(float pitch, float yaw, float roll)
+		{
+			Mem.WriteU16(Rom.Addresses.MainRam.HarryPitch, DegreesToGameUnits(pitch));
+			Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, DegreesToGameUnits(yaw));
+			Mem.WriteU16(Rom.Addresses.MainRam.HarryRoll, DegreesToGameUnits(roll));
+		}
+
+		public (Vector3 harry, Vector3 camera) GetPosition()
+		{
+			Vector3 harry;
+			harry.X = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionX));
+			harry.Y = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionY));
+			harry.Z = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionZ));
+
+			Vector3 camera;
+			camera.X = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualX));
+			camera.Y = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualY));
+			camera.Z = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualZ));
+
+			return (harry, camera);
+		}
+
+		public void SetHarryPosition(float x, float y, float z)
+		{
+			Mem.WriteS32(Rom.Addresses.MainRam.HarryPositionX, FloatToQ(x));
+			Mem.WriteS32(Rom.Addresses.MainRam.HarryPositionY, FloatToQ(y));
+			Mem.WriteS32(Rom.Addresses.MainRam.HarryPositionZ, FloatToQ(z));
+		}
+
 		private void BtnGetPosition_Click(object sender, EventArgs e)
 		{
 			TbxPositionX.Text = LblHarryPositionX.Text;
@@ -136,10 +175,27 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnSetPosition_Click(object sender, EventArgs e)
 		{
-			Core.SetHarryPosition(Mem,
-				Single.Parse(TbxPositionX.Text),
-				Single.Parse(TbxPositionY.Text),
-				Single.Parse(TbxPositionZ.Text));
+			bool success;
+
+			success = Single.TryParse(TbxPositionX.Text, out float x);
+			if (!success)
+			{
+				x = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionX));
+			}
+
+			success = Single.TryParse(TbxPositionY.Text, out float y);
+			if (!success)
+			{
+				y = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionY));
+			}
+
+			success = Single.TryParse(TbxPositionZ.Text, out float z);
+			if (!success)
+			{
+				z = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionZ));
+			}
+
+			SetHarryPosition(x, y, z);
 		}
 
 		private void BtnGetAngles_Click(object sender, EventArgs e)
@@ -149,92 +205,31 @@ namespace BizHawk.Client.EmuHawk
 			TbxHarryRoll.Text = LblHarryRoll.Text;
 		}
 
-		private void BtnReadPois_Click(object sender, EventArgs e)
-		{
-			Boxes.Clear();
-			Pois.Clear();
-
-			var generator = new BoxGenerator(1.0f, Color.White);
-
-			int poiArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
-			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
-
-			if (poiArrayAddress < Rom.Addresses.MainRam.MapHeader)
-			{
-				return;
-			}
-
-			int functionPointersArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
-			functionPointersArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
-
-			int poiArrayBytes = functionPointersArrayAddress - poiArrayAddress;
-			int poiBytes = 12;
-			int poiCount = poiArrayBytes / poiBytes;
-
-			LblPoiCount.Text = poiCount.ToString();
-
-			LbxPois.Items.Clear();
-
-			for (int i = 0; i < poiCount; i++)
-			{
-				int ofs = poiArrayAddress + (poiBytes * i);
-
-				var poi = new PointOfInterest(ofs, Mem.ReadByteRange(ofs, 12));
-
-				Renderable box = generator.Generate().ToWorld();
-				box.Position = new Vector3(poi.X, 0.0f, -poi.Z);
-
-				Boxes.Add(box);
-
-				Pois.Add(poi, box);
-				LbxPois.Items.Add(poi);
-			}
-
-			NudSelectedTriggerTargetIndex.Maximum = poiCount - 1;
-
-			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
-		}
-
-		private void BtnSetHarryPitch_Click(object sender, EventArgs e)
-		{
-			Core.SetPitch(Mem, Single.Parse(TbxHarryPitch.Text));
-		}
-
-		private void BtnSetHarryYaw_Click(object sender, EventArgs e)
-		{
-			Core.SetYaw(Mem, Single.Parse(TbxHarryYaw.Text));
-		}
-
-		private void BtnSetHarryRoll_Click(object sender, EventArgs e)
-		{
-			Core.SetRoll(Mem, Single.Parse(TbxHarryRoll.Text));
-		}
-
 		private void BtnSetAngles_Click(object sender, EventArgs e)
 		{
-			Core.SetAngles(Mem,
-				Single.Parse(TbxHarryPitch.Text),
-				Single.Parse(TbxHarryYaw.Text),
-				Single.Parse(TbxHarryRoll.Text));
-		}
+			bool success;
 
-		private void TrkFov_Scroll(object sender, EventArgs e)
-		{
-			uint height = Mem.ReadU16(Rom.Addresses.MainRam.FramebufferHeight);
+			(Vector3 harry, _) = GetAngles();
 
-			float opposite = height / 2.0f;
+			success = Single.TryParse(TbxHarryPitch.Text, out float pitch);
+			if (!success)
+			{
+				pitch = harry.X;
+			}
 
-			float halfAngle = TrkFov.Value / 2.0f;
+			success = Single.TryParse(TbxHarryYaw.Text, out float yaw);
+			if (!success)
+			{
+				yaw = harry.Y;
+			}
 
-			float h = (float)(opposite / Math.Sin(MathUtilities.DegreesToRadians(halfAngle)));
+			success = Single.TryParse(TbxHarryRoll.Text, out float roll);
+			if (!success)
+			{
+				roll = harry.Z;
+			}
 
-			float adjacentSquared = (float)(Math.Pow(h, 2.0f) - Math.Pow(opposite, 2.0f));
-
-			uint distance = (uint)Math.Sqrt(adjacentSquared);
-
-			Mem.WriteU16(Rom.Addresses.MainRam.ProjectionPlaneDistanceCurrent, distance);
-
-			LblFov.Text = TrkFov.Value.ToString();
+			SetHarryAngles(pitch, yaw, roll);
 		}
 
 		private void CbxEnableTriggerDisplay_CheckedChanged(object sender, EventArgs e)
@@ -309,6 +304,45 @@ namespace BizHawk.Client.EmuHawk
 				Camera.Position.X,
 				Camera.Position.Y,
 				(float)NudOverlayCameraZ.Value);
+		}
+
+		private void TbxAngles_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				BtnSetAngles_Click(sender, EventArgs.Empty);
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+		}
+
+		private void TbxPosition_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				BtnSetPosition_Click(sender, EventArgs.Empty);
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+		}
+
+		private void TrkFov_Scroll(object sender, EventArgs e)
+		{
+			uint height = Mem.ReadU16(Rom.Addresses.MainRam.FramebufferHeight);
+
+			float opposite = height / 2.0f;
+
+			float halfAngle = TrkFov.Value / 2.0f;
+
+			float h = (float)(opposite / Math.Sin(MathUtilities.DegreesToRadians(halfAngle)));
+
+			float adjacentSquared = (float)(Math.Pow(h, 2.0f) - Math.Pow(opposite, 2.0f));
+
+			uint distance = (uint)Math.Sqrt(adjacentSquared);
+
+			Mem.WriteU16(Rom.Addresses.MainRam.ProjectionPlaneDistanceCurrent, distance);
+
+			LblFov.Text = TrkFov.Value.ToString();
 		}
 	}
 }

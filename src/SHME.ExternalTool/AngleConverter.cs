@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
 
 namespace SHME.ExternalTool
@@ -12,19 +11,6 @@ namespace SHME.ExternalTool
 
 	public class AngleConverter
 	{
-		public static Vector3 Convert(List<float> angles, CoordinateType from, CoordinateType to)
-		{
-			if (angles.Count > 3)
-			{
-				throw new ArgumentException("Too many angles!");
-			}
-			else if (angles.Count < 3)
-			{
-				throw new ArgumentException("Too few coordinates!");
-			}
-
-			return Convert(new Vector3(angles[0], angles[1], angles[2]), from, to);
-		}
 		public static Vector3 Convert(Vector3 angles, CoordinateType from, CoordinateType to)
 		{
 			Vector3 converted;

@@ -18,9 +18,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbxPositionY = new System.Windows.Forms.TextBox();
             this.LblHarryPositionX = new System.Windows.Forms.Label();
             this.LblHarryPositionY = new System.Windows.Forms.Label();
-            this.BtnSetHarryPitch = new System.Windows.Forms.Button();
-            this.BtnSetHarryYaw = new System.Windows.Forms.Button();
-            this.BtnSetHarryRoll = new System.Windows.Forms.Button();
             this.TbxHarryPitch = new System.Windows.Forms.TextBox();
             this.TbxHarryYaw = new System.Windows.Forms.TextBox();
             this.TbxHarryRoll = new System.Windows.Forms.TextBox();
@@ -370,6 +367,9 @@ namespace BizHawk.Client.EmuHawk
             this.TbxPositionX.Name = "TbxPositionX";
             this.TbxPositionX.Size = new System.Drawing.Size(50, 20);
             this.TbxPositionX.TabIndex = 1;
+            this.TbxPositionX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxPositionX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxPositionX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxPosition_KeyDown);
             // 
             // TbxPositionY
             // 
@@ -377,6 +377,9 @@ namespace BizHawk.Client.EmuHawk
             this.TbxPositionY.Name = "TbxPositionY";
             this.TbxPositionY.Size = new System.Drawing.Size(50, 20);
             this.TbxPositionY.TabIndex = 2;
+            this.TbxPositionY.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxPositionY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxPositionY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxPosition_KeyDown);
             // 
             // LblHarryPositionX
             // 
@@ -396,42 +399,15 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryPositionY.TabIndex = 5;
             this.LblHarryPositionY.Text = "<y>";
             // 
-            // BtnSetHarryPitch
-            // 
-            this.BtnSetHarryPitch.Location = new System.Drawing.Point(87, 125);
-            this.BtnSetHarryPitch.Name = "BtnSetHarryPitch";
-            this.BtnSetHarryPitch.Size = new System.Drawing.Size(50, 23);
-            this.BtnSetHarryPitch.TabIndex = 7;
-            this.BtnSetHarryPitch.Text = "Set";
-            this.BtnSetHarryPitch.UseVisualStyleBackColor = true;
-            this.BtnSetHarryPitch.Click += new System.EventHandler(this.BtnSetHarryPitch_Click);
-            // 
-            // BtnSetHarryYaw
-            // 
-            this.BtnSetHarryYaw.Location = new System.Drawing.Point(143, 125);
-            this.BtnSetHarryYaw.Name = "BtnSetHarryYaw";
-            this.BtnSetHarryYaw.Size = new System.Drawing.Size(50, 23);
-            this.BtnSetHarryYaw.TabIndex = 9;
-            this.BtnSetHarryYaw.Text = "Set";
-            this.BtnSetHarryYaw.UseVisualStyleBackColor = true;
-            this.BtnSetHarryYaw.Click += new System.EventHandler(this.BtnSetHarryYaw_Click);
-            // 
-            // BtnSetHarryRoll
-            // 
-            this.BtnSetHarryRoll.Location = new System.Drawing.Point(199, 126);
-            this.BtnSetHarryRoll.Name = "BtnSetHarryRoll";
-            this.BtnSetHarryRoll.Size = new System.Drawing.Size(50, 23);
-            this.BtnSetHarryRoll.TabIndex = 11;
-            this.BtnSetHarryRoll.Text = "Set";
-            this.BtnSetHarryRoll.UseVisualStyleBackColor = true;
-            this.BtnSetHarryRoll.Click += new System.EventHandler(this.BtnSetHarryRoll_Click);
-            // 
             // TbxHarryPitch
             // 
             this.TbxHarryPitch.Location = new System.Drawing.Point(87, 99);
             this.TbxHarryPitch.Name = "TbxHarryPitch";
             this.TbxHarryPitch.Size = new System.Drawing.Size(50, 20);
             this.TbxHarryPitch.TabIndex = 6;
+            this.TbxHarryPitch.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxHarryPitch.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxHarryPitch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxAngles_KeyDown);
             // 
             // TbxHarryYaw
             // 
@@ -439,6 +415,9 @@ namespace BizHawk.Client.EmuHawk
             this.TbxHarryYaw.Name = "TbxHarryYaw";
             this.TbxHarryYaw.Size = new System.Drawing.Size(50, 20);
             this.TbxHarryYaw.TabIndex = 8;
+            this.TbxHarryYaw.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxHarryYaw.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxHarryYaw.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxAngles_KeyDown);
             // 
             // TbxHarryRoll
             // 
@@ -446,6 +425,9 @@ namespace BizHawk.Client.EmuHawk
             this.TbxHarryRoll.Name = "TbxHarryRoll";
             this.TbxHarryRoll.Size = new System.Drawing.Size(50, 20);
             this.TbxHarryRoll.TabIndex = 10;
+            this.TbxHarryRoll.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxHarryRoll.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxHarryRoll.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxAngles_KeyDown);
             // 
             // BtnGetAngles
             // 
@@ -481,11 +463,8 @@ namespace BizHawk.Client.EmuHawk
             this.GbxHarry.Controls.Add(this.TbxPositionX);
             this.GbxHarry.Controls.Add(this.TbxHarryPitch);
             this.GbxHarry.Controls.Add(this.TbxPositionY);
-            this.GbxHarry.Controls.Add(this.BtnSetHarryRoll);
             this.GbxHarry.Controls.Add(this.LblHarryPositionX);
-            this.GbxHarry.Controls.Add(this.BtnSetHarryYaw);
             this.GbxHarry.Controls.Add(this.LblHarryPositionY);
-            this.GbxHarry.Controls.Add(this.BtnSetHarryPitch);
             this.GbxHarry.Location = new System.Drawing.Point(6, 6);
             this.GbxHarry.Name = "GbxHarry";
             this.GbxHarry.Size = new System.Drawing.Size(338, 269);
@@ -590,6 +569,9 @@ namespace BizHawk.Client.EmuHawk
             this.TbxPositionZ.Name = "TbxPositionZ";
             this.TbxPositionZ.Size = new System.Drawing.Size(50, 20);
             this.TbxPositionZ.TabIndex = 3;
+            this.TbxPositionZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxPositionZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxPositionZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxPosition_KeyDown);
             // 
             // BtnSetAngles
             // 
@@ -3767,9 +3749,6 @@ namespace BizHawk.Client.EmuHawk
 
 		private Label LblHarryPositionX;
 		private Label LblHarryPositionY;
-		private Button BtnSetHarryPitch;
-		private Button BtnSetHarryYaw;
-		private Button BtnSetHarryRoll;
 		private TextBox TbxHarryPitch;
 		private TextBox TbxHarryYaw;
 		private TextBox TbxHarryRoll;

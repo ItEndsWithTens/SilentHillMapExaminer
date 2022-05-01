@@ -48,7 +48,7 @@ namespace BizHawk.Client.EmuHawk
 
 			if (poi != null)
 			{
-				Core.SetHarryPosition(Mem, poi.X, 0, poi.Z);
+				SetHarryPosition(poi.X, 0, poi.Z);
 			}
 		}
 
@@ -228,6 +228,52 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			return geometry;
+		}
+
+		private void BtnReadPois_Click(object sender, EventArgs e)
+		{
+			Boxes.Clear();
+			Pois.Clear();
+
+			var generator = new BoxGenerator(1.0f, Color.White);
+
+			int poiArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
+			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+
+			if (poiArrayAddress < Rom.Addresses.MainRam.MapHeader)
+			{
+				return;
+			}
+
+			int functionPointersArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
+			functionPointersArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+
+			int poiArrayBytes = functionPointersArrayAddress - poiArrayAddress;
+			int poiBytes = 12;
+			int poiCount = poiArrayBytes / poiBytes;
+
+			LblPoiCount.Text = poiCount.ToString();
+
+			LbxPois.Items.Clear();
+
+			for (int i = 0; i < poiCount; i++)
+			{
+				int ofs = poiArrayAddress + (poiBytes * i);
+
+				var poi = new PointOfInterest(ofs, Mem.ReadByteRange(ofs, 12));
+
+				Renderable box = generator.Generate().ToWorld();
+				box.Position = new Vector3(poi.X, 0.0f, -poi.Z);
+
+				Boxes.Add(box);
+
+				Pois.Add(poi, box);
+				LbxPois.Items.Add(poi);
+			}
+
+			NudSelectedTriggerTargetIndex.Maximum = poiCount - 1;
+
+			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 		}
 
 		private void CmbRenderShape_SelectedIndexChanged(object sender, EventArgs e)
