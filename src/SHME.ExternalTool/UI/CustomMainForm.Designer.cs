@@ -799,7 +799,6 @@ namespace BizHawk.Client.EmuHawk
             this.BtnCameraFly.Click += new System.EventHandler(this.BtnCameraFly_ClickFirst);
             this.BtnCameraFly.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyDown);
             this.BtnCameraFly.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyUp);
-            this.BtnCameraFly.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BtnCameraFly_MouseMove);
             // 
             // label48
             // 

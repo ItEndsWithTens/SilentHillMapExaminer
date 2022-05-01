@@ -29,6 +29,8 @@ namespace BizHawk.Client.EmuHawk
 					return;
 				}
 
+				// Won't work under Mono in Linux:
+				// https://github.com/mono/mono/blob/3d11ccdce6df39bb63c783af28ec9756d1b32db1/mcs/class/System.Windows.Forms/System.Windows.Forms.X11Internal/X11Display.cs#L476
 				if (value)
 				{
 					Cursor.Show();
@@ -52,19 +54,23 @@ namespace BizHawk.Client.EmuHawk
 
 				if (value)
 				{
-					CursorVisible = false;
-
 					Button btn = BtnCameraFly;
+
+					btn.Capture = true;
+
+					CursorVisible = false;
 
 					Rectangle bounds = btn.Parent.RectangleToScreen(btn.Bounds);
 
-					center.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
-					center.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
+					_flyCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
+					_flyCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
 
-					center = btn.Parent.PointToScreen(center);
+					_flyCenter = btn.Parent.PointToScreen(_flyCenter);
 
-					Cursor.Position = center;
+					Cursor.Position = _flyCenter;
 
+					// Doesn't work in Mono yet, as seen here:
+					// https://github.com/mono/mono/blob/3d11ccdce6df39bb63c783af28ec9756d1b32db1/mcs/class/System.Windows.Forms/System.Windows.Forms/Cursor.cs#L198
 					Cursor.Clip = bounds;
 
 					CbxCameraDetach.Checked = true;
@@ -75,9 +81,11 @@ namespace BizHawk.Client.EmuHawk
 					// where it is to examine something, but do stop moving.
 					_forward = _backward = _left = _right = _up = _down = false;
 
-					Cursor.Clip = new Rectangle();
+					Cursor.Clip = Rectangle.Empty;
 
 					CursorVisible = true;
+
+					BtnCameraFly.Capture = false;
 				}
 			}
 		}
@@ -119,6 +127,7 @@ namespace BizHawk.Client.EmuHawk
 			_holdCameraYaw = Mem.ReadU32(Rom.Addresses.MainRam.CameraActualYaw);
 			_holdCameraRoll = Mem.ReadU32(Rom.Addresses.MainRam.CameraActualRoll);
 		}
+
 		private void HoldCamera()
 		{
 			Mem.WriteU16(Rom.Addresses.MainRam.CameraIdealPitch, _holdCameraPitch);
@@ -250,6 +259,50 @@ namespace BizHawk.Client.EmuHawk
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtY, qLookY);
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtZ, qLookZ);
 		}
+
+		private float _sensitivity = 0.25f;
+		private Point _flyCenter;
+		private void AimCamera()
+		{
+			Button btn = BtnCameraFly;
+
+			_flyCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
+			_flyCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
+			_flyCenter = btn.Parent.PointToScreen(_flyCenter);
+
+			// Ideally one would use the Input API, but the values it returns
+			// are in an unrecognizable coordinate space. This'll do for now.
+			(Point screen, _, _, _, _, _, _) = InputManager.GetMainFormMouseInfo();
+
+			float deltaX = (screen.X - _flyCenter.X) * _sensitivity;
+			float deltaY = (screen.Y - _flyCenter.Y) * _sensitivity;
+
+			uint pitch = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealPitch);
+			uint yaw = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealYaw);
+
+			float pitchDegrees = Core.GameUnitsToDegrees(pitch);
+			float yawDegrees = Core.GameUnitsToDegrees(yaw);
+
+			if (CbxCameraFlyInvert.Checked)
+			{
+				pitchDegrees += deltaY;
+			}
+			else
+			{
+				pitchDegrees -= deltaY;
+			}
+			yawDegrees += deltaX;
+
+			float pitchCircle = MathUtilities.ModAngleToCircleUnsigned(pitchDegrees);
+			float yawCircle = MathUtilities.ModAngleToCircleUnsigned(yawDegrees);
+
+			_holdCameraPitch = Core.DegreesToGameUnits(pitchCircle);
+			_holdCameraYaw = Core.DegreesToGameUnits(yawCircle);
+			_holdCameraRoll = 0;
+
+			Cursor.Position = _flyCenter;
+		}
+
 		private void AttachCamera()
 		{
 			FlyEnabled = false;
@@ -316,56 +369,6 @@ namespace BizHawk.Client.EmuHawk
 				default:
 					break;
 			}
-		}
-
-		private float _sensitivity = 0.25f;
-		Point center;
-		private void BtnCameraFly_MouseMove(object sender, MouseEventArgs e)
-		{
-			if (!FlyEnabled)
-			{
-				return;
-			}
-
-			Button btn = BtnCameraFly;
-
-			center.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
-			center.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
-
-			center = btn.Parent.PointToScreen(center);
-
-			Point screen = btn.PointToScreen(e.Location);
-
-			float deltaX = screen.X - center.X;
-			float deltaY = screen.Y - center.Y;
-
-			deltaX *= _sensitivity;
-			deltaY *= _sensitivity;
-
-			uint pitch = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealPitch);
-			uint yaw = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealYaw);
-
-			float pitchDegrees = Core.GameUnitsToDegrees(pitch);
-			float yawDegrees = Core.GameUnitsToDegrees(yaw);
-
-			if (CbxCameraFlyInvert.Checked)
-			{
-				pitchDegrees += deltaY;
-			}
-			else
-			{
-				pitchDegrees -= deltaY;
-			}
-			yawDegrees += deltaX;
-
-			float pitchCircle = MathUtilities.ModAngleToCircleUnsigned(pitchDegrees);
-			float yawCircle = MathUtilities.ModAngleToCircleUnsigned(yawDegrees);
-
-			_holdCameraPitch = Core.DegreesToGameUnits(pitchCircle);
-			_holdCameraYaw = Core.DegreesToGameUnits(yawCircle);
-			_holdCameraRoll = 0;
-
-			Cursor.Position = center;
 		}
 
 		private void TbxCameraFlySensitivity_TextChanged(object sender, EventArgs e)

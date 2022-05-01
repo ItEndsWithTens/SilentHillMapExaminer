@@ -46,15 +46,11 @@ namespace SHME.ExternalTool
 
 		public static Vertex WorldToScreen(this Vertex v, Matrix4x4 mvpMatrix, Viewport viewport, bool flip)
 		{
-			Vector4 clip = Vector4.Transform(v.Position, mvpMatrix);
-
-			Vector4 div = clip;
-			if (clip.W != 0)
+			Vector4 ndc = Vector4.Transform(v.Position, mvpMatrix);
+			if (ndc.W != 0)
 			{
-				div /= clip.W;
+				ndc /= ndc.W;
 			}
-
-			var ndc = new Vector3(div.X, div.Y, div.Z);
 
 			// The neutral device coordinates are good to go as-is, except in
 			// cases where the Y axis increases downwards instead of upwards.

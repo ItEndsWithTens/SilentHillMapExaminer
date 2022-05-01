@@ -101,8 +101,6 @@ namespace BizHawk.Client.EmuHawk
 				AutoReset = true
 			};
 			_arrayCountdown.Elapsed += ArrayCountdown_Elapsed;
-
-			BtnCameraFly.MouseMove += BtnCameraFly_MouseMove;
 		}
 
 		public override void Restart()
@@ -188,6 +186,7 @@ namespace BizHawk.Client.EmuHawk
 					if (_flyEnabled)
 					{
 						MoveCamera();
+						AimCamera();
 					}
 					break;
 				case ToolFormUpdateType.PostFrame:
