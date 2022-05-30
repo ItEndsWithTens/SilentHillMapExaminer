@@ -192,19 +192,20 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private bool _foundHexEditorGoToMethod;
+		private MethodInfo? _infoHexSetDomain;
+		private MethodInfo? _infoHexGoTo;
 		private void HexEditorGoToAddress(long address)
 		{
-			if (!_foundHexEditorGoToMethod)
+			if (_infoHexSetDomain == null || _infoHexGoTo == null)
 			{
 				return;
 			}
 
-			MethodInfo? info = typeof(HexEditor).GetMethod("GoToAddress", BindingFlags.NonPublic | BindingFlags.Instance);
-
 			Tool.OpenHexEditor();
 			var tool = (HexEditor)Tool.GetTool("HexEditor");
-			info.Invoke(tool, new object[] { address });
+
+			_infoHexSetDomain.Invoke(tool, new object[] { "MainRAM" });
+			_infoHexGoTo.Invoke(tool, new object[] { address });
 		}
 
 		private string DecodePoiGeometry(Trigger t)

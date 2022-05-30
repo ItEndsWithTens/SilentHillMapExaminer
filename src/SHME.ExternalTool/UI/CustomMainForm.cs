@@ -140,11 +140,11 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerFiredDetails
 			};
 
-			MethodInfo? info = typeof(HexEditor).GetMethod("GoToAddress", BindingFlags.NonPublic | BindingFlags.Instance);
-			if (info != null)
-			{
-				_foundHexEditorGoToMethod = true;
+			_infoHexSetDomain = typeof(HexEditor).GetMethod("SetMemoryDomain", BindingFlags.NonPublic | BindingFlags.Instance);
+			_infoHexGoTo = typeof(HexEditor).GetMethod("GoToAddress", BindingFlags.NonPublic | BindingFlags.Instance);
 
+			if (_infoHexSetDomain != null && _infoHexGoTo != null)
+			{
 				foreach (Label l in labels)
 				{
 					l.BorderStyle = BorderStyle.Fixed3D;
@@ -153,8 +153,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 			else
 			{
-				_foundHexEditorGoToMethod = false;
-
 				foreach (Label l in labels)
 				{
 					l.BorderStyle = BorderStyle.None;
