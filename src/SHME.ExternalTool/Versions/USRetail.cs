@@ -9,11 +9,19 @@
 		public override string HashMd5 => USRetailConstants.HashMd5;
 		public override string HashSha1 => USRetailConstants.HashSha1;
 
+		public override int BaseLba => 0;
+
 		public override Addresses Addresses { get; } = new Addresses()
 		{
 			MainRam = new MainRamAddresses()
 			{
 				BaseAddress = 0x80000000,
+
+				ExeDataSection = 0x1B11C,
+
+				ArrayOfFileRecords = 0x1B11C,
+				ArrayOfDirectoryNames = 0x21254,
+				ArrayOfFileExtensions = 0x21280,
 
 				IndexOfSelectedSaveLoadSlot = 0xA97D4,
 				IndexOfSelectedTitleScreenOption = 0xA9A78,

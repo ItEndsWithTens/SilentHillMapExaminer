@@ -284,7 +284,15 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayTestBoxX = new System.Windows.Forms.NumericUpDown();
             this.CbxOverlayTestBox = new System.Windows.Forms.CheckBox();
             this.CbxEnableModelDisplay = new System.Windows.Forms.CheckBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.LbxFilesFiles = new System.Windows.Forms.ListBox();
+            this.LbxFilesDirectories = new System.Windows.Forms.ListBox();
+            this.BtnReadFiles = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.CmsFilesDirectories = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.extractSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CmsFilesFiles = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.extractSelectedFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -338,6 +346,9 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxX)).BeginInit();
+            this.tabPage1.SuspendLayout();
+            this.CmsFilesDirectories.SuspendLayout();
+            this.CmsFilesFiles.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -962,6 +973,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbcMainTabs.Controls.Add(this.tabPage4);
             this.TbcMainTabs.Controls.Add(this.TbpSave);
             this.TbcMainTabs.Controls.Add(this.TbpTest);
+            this.TbcMainTabs.Controls.Add(this.tabPage1);
             this.TbcMainTabs.Location = new System.Drawing.Point(0, 0);
             this.TbcMainTabs.Margin = new System.Windows.Forms.Padding(0);
             this.TbcMainTabs.Name = "TbcMainTabs";
@@ -2717,7 +2729,7 @@ namespace BizHawk.Client.EmuHawk
             // CbxSaveRamDanger
             // 
             this.CbxSaveRamDanger.AutoSize = true;
-            this.CbxSaveRamDanger.Location = new System.Drawing.Point(182, 55);
+            this.CbxSaveRamDanger.Location = new System.Drawing.Point(150, 55);
             this.CbxSaveRamDanger.Name = "CbxSaveRamDanger";
             this.CbxSaveRamDanger.Size = new System.Drawing.Size(377, 17);
             this.CbxSaveRamDanger.TabIndex = 0;
@@ -3667,6 +3679,80 @@ namespace BizHawk.Client.EmuHawk
             this.CbxEnableModelDisplay.UseVisualStyleBackColor = true;
             this.CbxEnableModelDisplay.CheckedChanged += new System.EventHandler(this.CbxEnableModelDisplay_CheckedChanged);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.LbxFilesFiles);
+            this.tabPage1.Controls.Add(this.LbxFilesDirectories);
+            this.tabPage1.Controls.Add(this.BtnReadFiles);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(688, 618);
+            this.tabPage1.TabIndex = 10;
+            this.tabPage1.Text = "Files";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // LbxFilesFiles
+            // 
+            this.LbxFilesFiles.ContextMenuStrip = this.CmsFilesFiles;
+            this.LbxFilesFiles.FormattingEnabled = true;
+            this.LbxFilesFiles.IntegralHeight = false;
+            this.LbxFilesFiles.Location = new System.Drawing.Point(129, 35);
+            this.LbxFilesFiles.Name = "LbxFilesFiles";
+            this.LbxFilesFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.LbxFilesFiles.Size = new System.Drawing.Size(553, 577);
+            this.LbxFilesFiles.TabIndex = 8;
+            // 
+            // LbxFilesDirectories
+            // 
+            this.LbxFilesDirectories.ContextMenuStrip = this.CmsFilesDirectories;
+            this.LbxFilesDirectories.FormattingEnabled = true;
+            this.LbxFilesDirectories.IntegralHeight = false;
+            this.LbxFilesDirectories.Location = new System.Drawing.Point(6, 35);
+            this.LbxFilesDirectories.Name = "LbxFilesDirectories";
+            this.LbxFilesDirectories.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.LbxFilesDirectories.Size = new System.Drawing.Size(117, 577);
+            this.LbxFilesDirectories.TabIndex = 7;
+            this.LbxFilesDirectories.SelectedIndexChanged += new System.EventHandler(this.LbxFilesDirectories_SelectedIndexChanged);
+            // 
+            // BtnReadFiles
+            // 
+            this.BtnReadFiles.Location = new System.Drawing.Point(6, 6);
+            this.BtnReadFiles.Name = "BtnReadFiles";
+            this.BtnReadFiles.Size = new System.Drawing.Size(117, 23);
+            this.BtnReadFiles.TabIndex = 2;
+            this.BtnReadFiles.Text = "Read file records";
+            this.BtnReadFiles.UseVisualStyleBackColor = true;
+            this.BtnReadFiles.Click += new System.EventHandler(this.BtnReadFiles_Click);
+            // 
+            // CmsFilesDirectories
+            // 
+            this.CmsFilesDirectories.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.extractSelectedToolStripMenuItem});
+            this.CmsFilesDirectories.Name = "CmsFilesDirectories";
+            this.CmsFilesDirectories.Size = new System.Drawing.Size(215, 26);
+            // 
+            // extractSelectedToolStripMenuItem
+            // 
+            this.extractSelectedToolStripMenuItem.Name = "extractSelectedToolStripMenuItem";
+            this.extractSelectedToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.extractSelectedToolStripMenuItem.Text = "Extract selected directories";
+            this.extractSelectedToolStripMenuItem.Click += new System.EventHandler(this.ExtractSelectedDirectoriesToolStripMenuItem_Click);
+            // 
+            // CmsFilesFiles
+            // 
+            this.CmsFilesFiles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.extractSelectedFilesToolStripMenuItem});
+            this.CmsFilesFiles.Name = "CmsFilesFiles";
+            this.CmsFilesFiles.Size = new System.Drawing.Size(181, 48);
+            // 
+            // extractSelectedFilesToolStripMenuItem
+            // 
+            this.extractSelectedFilesToolStripMenuItem.Name = "extractSelectedFilesToolStripMenuItem";
+            this.extractSelectedFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.extractSelectedFilesToolStripMenuItem.Text = "Extract selected files";
+            this.extractSelectedFilesToolStripMenuItem.Click += new System.EventHandler(this.ExtractSelectedFilesToolStripMenuItem_Click);
+            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -3743,6 +3829,9 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxX)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            this.CmsFilesDirectories.ResumeLayout(false);
+            this.CmsFilesFiles.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -4017,5 +4106,13 @@ namespace BizHawk.Client.EmuHawk
 		private Button BtnModelSetPosition;
 		private Label LblModelX;
 		private Label LblModelY;
+		private TabPage tabPage1;
+		private Button BtnReadFiles;
+		private ListBox LbxFilesDirectories;
+		private ListBox LbxFilesFiles;
+		private ContextMenuStrip CmsFilesDirectories;
+		private ToolStripMenuItem extractSelectedToolStripMenuItem;
+		private ContextMenuStrip CmsFilesFiles;
+		private ToolStripMenuItem extractSelectedFilesToolStripMenuItem;
 	}
 }

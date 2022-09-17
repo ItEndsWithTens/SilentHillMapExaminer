@@ -9,6 +9,12 @@
 	{
 		public long BaseAddress { get; set; }
 
+		public long ExeDataSection { get; set; }
+
+		public long ArrayOfFileRecords { get; set; }
+		public long ArrayOfDirectoryNames { get; set; }
+		public long ArrayOfFileExtensions { get; set; }
+
 		public long VramCroppedWidth { get; set; }
 		public long VramCroppedHeight { get; set; }
 
