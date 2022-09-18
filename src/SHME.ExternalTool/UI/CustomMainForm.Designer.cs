@@ -259,7 +259,6 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label37 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
-            this.CbxEnableModelDisplay = new System.Windows.Forms.CheckBox();
             this.label54 = new System.Windows.Forms.Label();
             this.NudOverlayTestBoxSizeZ = new System.Windows.Forms.NumericUpDown();
             this.NudOverlayTestBoxSizeY = new System.Windows.Forms.NumericUpDown();
@@ -293,6 +292,7 @@ namespace BizHawk.Client.EmuHawk
             this.extractSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnReadFiles = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.CbxEnableModelDisplay = new System.Windows.Forms.CheckBox();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -3068,6 +3068,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.CbxEnableModelDisplay);
             this.groupBox6.Controls.Add(this.CmbModelSubmeshName);
             this.groupBox6.Controls.Add(this.LblModelScale);
             this.groupBox6.Controls.Add(this.TrkModelScale);
@@ -3277,7 +3278,6 @@ namespace BizHawk.Client.EmuHawk
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.label37);
             this.groupBox5.Controls.Add(this.label53);
-            this.groupBox5.Controls.Add(this.CbxEnableModelDisplay);
             this.groupBox5.Controls.Add(this.label54);
             this.groupBox5.Controls.Add(this.NudOverlayTestBoxSizeZ);
             this.groupBox5.Controls.Add(this.NudOverlayTestBoxSizeY);
@@ -3326,18 +3326,6 @@ namespace BizHawk.Client.EmuHawk
             this.label53.Size = new System.Drawing.Size(40, 13);
             this.label53.TabIndex = 103;
             this.label53.Text = "Size Y:";
-            // 
-            // CbxEnableModelDisplay
-            // 
-            this.CbxEnableModelDisplay.AutoSize = true;
-            this.CbxEnableModelDisplay.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxEnableModelDisplay.Location = new System.Drawing.Point(611, 381);
-            this.CbxEnableModelDisplay.Name = "CbxEnableModelDisplay";
-            this.CbxEnableModelDisplay.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableModelDisplay.TabIndex = 35;
-            this.CbxEnableModelDisplay.Text = "Enable";
-            this.CbxEnableModelDisplay.UseVisualStyleBackColor = true;
-            this.CbxEnableModelDisplay.CheckedChanged += new System.EventHandler(this.CbxEnableModelDisplay_CheckedChanged);
             // 
             // label54
             // 
@@ -3805,6 +3793,17 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadFiles.UseVisualStyleBackColor = true;
             this.BtnReadFiles.Click += new System.EventHandler(this.BtnReadFiles_Click);
             // 
+            // CbxEnableModelDisplay
+            // 
+            this.CbxEnableModelDisplay.AutoSize = true;
+            this.CbxEnableModelDisplay.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxEnableModelDisplay.Location = new System.Drawing.Point(610, 173);
+            this.CbxEnableModelDisplay.Name = "CbxEnableModelDisplay";
+            this.CbxEnableModelDisplay.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableModelDisplay.TabIndex = 47;
+            this.CbxEnableModelDisplay.Text = "Enable";
+            this.CbxEnableModelDisplay.UseVisualStyleBackColor = true;
+            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -3962,7 +3961,6 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblHarryHealth;
 		private ToolTip toolTip1;
 		private System.ComponentModel.IContainer components;
-		private CheckBox CbxEnableModelDisplay;
 		private NumericUpDown NudOverlayCameraRoll;
 		private NumericUpDown NudOverlayCameraYaw;
 		private NumericUpDown NudOverlayCameraPitch;
@@ -4165,5 +4163,6 @@ namespace BizHawk.Client.EmuHawk
 		private ToolStripMenuItem extractSelectedToolStripMenuItem;
 		private ContextMenuStrip CmsFilesFiles;
 		private ToolStripMenuItem extractSelectedFilesToolStripMenuItem;
+		private CheckBox CbxEnableModelDisplay;
 	}
 }
