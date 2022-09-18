@@ -85,8 +85,13 @@ namespace SHME.ExternalTool
 		}
 		private void Init(params Vector3[] points)
 		{
-			var newMin = new Vector3();
-			var newMax = new Vector3();
+			if (points.Length == 0)
+			{
+				return;
+			}
+
+			Vector3 newMin = points[0];
+			Vector3 newMax = points[0];
 
 			foreach (Vector3 point in points)
 			{

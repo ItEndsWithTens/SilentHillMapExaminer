@@ -74,7 +74,10 @@ namespace SHME.ExternalTool
 			Rotation = p.Rotation;
 			Scale = new Vector2(p.Scale.X, p.Scale.Y);
 			Normal = new Vector3(p.Normal.X, p.Normal.Y, p.Normal.Z);
-			Color = p.Color;
+
+			// Avoid replacing any existing vertex colors, as otherwise happens
+			// in the Color set method.
+			_color = p.Color;
 		}
 
 		public static Polygon Rotate(Polygon polygon, float pitch, float yaw, float roll, Vector3 origin)

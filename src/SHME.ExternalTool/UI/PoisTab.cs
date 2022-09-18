@@ -427,7 +427,7 @@ namespace BizHawk.Client.EmuHawk
 					Renderable r;
 					if (x != null && z != null)
 					{
-						r = new BoxGenerator((float)x, (float)z, 1.0f, Color.Orange).Generate().ToWorld();
+						r = new BoxGenerator((float)x, 1.0f, (float)z, Color.Orange).Generate().ToWorld();
 						r.Position = pair.Value.Position;
 					}
 					else if (yaw != null && width != null)
@@ -435,7 +435,7 @@ namespace BizHawk.Client.EmuHawk
 						float depth = 4.0f;
 						float yawConverted = -(float)yaw;
 
-						r = new BoxGenerator((float)width, depth, 1.0f, Color.Orange).Generate().ToWorld();
+						r = new BoxGenerator((float)width, 1.0f, depth, Color.Orange).Generate().ToWorld();
 						r.Transformability |= Transformability.Rotate;
 						r.Transform(
 							Vector3.Zero,

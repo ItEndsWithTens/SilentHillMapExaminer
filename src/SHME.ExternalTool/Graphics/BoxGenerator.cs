@@ -18,18 +18,14 @@ namespace SHME.ExternalTool
 		public BoxGenerator(float size, Color color) : this(size, size, size, color)
 		{
 		}
-		public BoxGenerator(float width, float depth, float height, Color color) : base()
+		public BoxGenerator(float sizeX, float sizeY, float sizeZ, Color color) : base()
 		{
-			float Width = width;
-			float Depth = depth;
-			float Height = height;
+			float halfSizeX = sizeX / 2.0f;
+			float halfSizeY = sizeY / 2.0f;
+			float halfSizeZ = sizeZ / 2.0f;
 
-			float halfWidth = Width / 2.0f;
-			float halfDepth = Depth / 2.0f;
-			float halfHeight = Height / 2.0f;
-
-			Min = new Vector3(-halfWidth, -halfHeight, -halfDepth);
-			Max = new Vector3(halfWidth, halfHeight, halfDepth);
+			Min = new Vector3(-halfSizeX, -halfSizeY, -halfSizeZ);
+			Max = new Vector3(halfSizeX, halfSizeY, halfSizeZ);
 
 			Color = color;
 		}

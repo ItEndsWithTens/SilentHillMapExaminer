@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Numerics;
+using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
 {
@@ -14,9 +15,9 @@ namespace BizHawk.Client.EmuHawk
 		{
 			(Vector3 harry, _) = GetPosition();
 
-			NudModelX.Text = harry.X.ToString("N2");
-			NudModelY.Text = harry.Y.ToString("N2");
-			NudModelZ.Text = harry.Z.ToString("N2");
+			NudModelX.Value = (int)harry.X;
+			NudModelY.Value = (int)harry.Y;
+			NudModelZ.Value = (int)harry.Z;
 		}
 
 		private void BtnModelSetModelPosition_Click(object sender, EventArgs e)
@@ -36,72 +37,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private void NudModelX_ValueChanged(object sender, EventArgs e)
-		{
-			if (ModelBoxes.Count == 0)
-			{
-				return;
-			}
-
-			var aabb = new Aabb(ModelBoxes);
-
-			var target = new Vector3(
-					(float)NudModelX.Value,
-					aabb.Center.Y,
-					aabb.Center.Z);
-
-			Vector3 diff = target - aabb.Center;
-
-			foreach (Renderable box in ModelBoxes)
-			{
-				box.Position += diff;
-			}
-		}
-
-		private void NudModelY_ValueChanged(object sender, EventArgs e)
-		{
-			if (ModelBoxes.Count == 0)
-			{
-				return;
-			}
-
-			var aabb = new Aabb(ModelBoxes);
-
-			var target = new Vector3(
-					aabb.Center.X,
-					-(float)NudModelY.Value, // Convert to SH coordinate space
-					aabb.Center.Z);
-
-			Vector3 diff = target - aabb.Center;
-
-			foreach (Renderable box in ModelBoxes)
-			{
-				box.Position += diff;
-			}
-		}
-
-		private void NudModelZ_ValueChanged(object sender, EventArgs e)
-		{
-			if (ModelBoxes.Count == 0)
-			{
-				return;
-			}
-
-			var aabb = new Aabb(ModelBoxes);
-
-			var target = new Vector3(
-					aabb.Center.X,
-					aabb.Center.Y,
-					-(float)NudModelZ.Value);
-
-			Vector3 diff = target - aabb.Center;
-
-			foreach (Renderable box in ModelBoxes)
-			{
-				box.Position += diff;
-			}
-		}
-
 		private Renderable TestBox { get; set; } = new BoxGenerator(1.0f, Color.White).GenerateRainbowBox().ToWorld();
 		private Collection<Line> TestLines { get; } = new Collection<Line>()
 		{
@@ -109,6 +44,16 @@ namespace BizHawk.Client.EmuHawk
 				new Vertex(0.0f, 1.0f, 0.0f, Color.Red),
 				new Vertex(1.0f, 1.0f, 0.0f, Color.Lime))
 		};
+
+		private void NudModel_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				BtnModelSetModelPosition_Click(sender, EventArgs.Empty);
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+		}
 
 		private void NudOverlayTestBoxX_ValueChanged(object sender, EventArgs e)
 		{
@@ -314,6 +259,8 @@ namespace BizHawk.Client.EmuHawk
 					break;
 				}
 			}
+
+			BtnModelSetModelPosition_Click(this, EventArgs.Empty);
 		}
 
 		private void CbxEnableModelDisplay_CheckedChanged(object sender, EventArgs e)
