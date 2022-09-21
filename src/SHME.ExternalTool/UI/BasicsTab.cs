@@ -161,9 +161,26 @@ namespace BizHawk.Client.EmuHawk
 
 		public void SetHarryPosition(float x, float y, float z)
 		{
-			Mem.WriteS32(Rom.Addresses.MainRam.HarryPositionX, FloatToQ(x));
-			Mem.WriteS32(Rom.Addresses.MainRam.HarryPositionY, FloatToQ(y));
-			Mem.WriteS32(Rom.Addresses.MainRam.HarryPositionZ, FloatToQ(z));
+			MainRamAddresses ram = Rom.Addresses.MainRam;
+
+			Mem.WriteS32(ram.HarryPositionX, FloatToQ(x));
+			Mem.WriteS32(ram.HarryPositionY, FloatToQ(y));
+			Mem.WriteS32(ram.HarryPositionZ, FloatToQ(z));
+
+			if (CbxHarrySetPositionMoveCamera.Checked)
+			{
+				Mem.WriteS32(ram.CameraPositionActualX, FloatToQ(x));
+				Mem.WriteS32(ram.CameraPositionActualY, FloatToQ(y - 3.0f));
+				Mem.WriteS32(ram.CameraPositionActualZ, FloatToQ(z));
+
+				Mem.WriteS32(ram.CameraPositionIdealX, FloatToQ(x));
+				Mem.WriteS32(ram.CameraPositionIdealY, FloatToQ(y - 3.0f));
+				Mem.WriteS32(ram.CameraPositionIdealZ, FloatToQ(z));
+
+				Mem.WriteS32(ram.CameraLookAtX, FloatToQ(x));
+				Mem.WriteS32(ram.CameraLookAtY, FloatToQ(y));
+				Mem.WriteS32(ram.CameraLookAtZ, FloatToQ(z));
+			}
 		}
 
 		private void BtnGetPosition_Click(object sender, EventArgs e)

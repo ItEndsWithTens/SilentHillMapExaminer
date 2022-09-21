@@ -244,6 +244,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSaveRamExport = new System.Windows.Forms.Button();
             this.TbpTest = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.CbxEnableModelDisplay = new System.Windows.Forms.CheckBox();
             this.CmbModelSubmeshName = new System.Windows.Forms.ComboBox();
             this.LblModelScale = new System.Windows.Forms.Label();
             this.TrkModelScale = new System.Windows.Forms.TrackBar();
@@ -292,7 +293,7 @@ namespace BizHawk.Client.EmuHawk
             this.extractSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnReadFiles = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.CbxEnableModelDisplay = new System.Windows.Forms.CheckBox();
+            this.CbxHarrySetPositionMoveCamera = new System.Windows.Forms.CheckBox();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -412,7 +413,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // TbxHarryPitch
             // 
-            this.TbxHarryPitch.Location = new System.Drawing.Point(87, 99);
+            this.TbxHarryPitch.Location = new System.Drawing.Point(87, 112);
             this.TbxHarryPitch.Name = "TbxHarryPitch";
             this.TbxHarryPitch.Size = new System.Drawing.Size(50, 20);
             this.TbxHarryPitch.TabIndex = 6;
@@ -422,7 +423,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // TbxHarryYaw
             // 
-            this.TbxHarryYaw.Location = new System.Drawing.Point(143, 99);
+            this.TbxHarryYaw.Location = new System.Drawing.Point(143, 112);
             this.TbxHarryYaw.Name = "TbxHarryYaw";
             this.TbxHarryYaw.Size = new System.Drawing.Size(50, 20);
             this.TbxHarryYaw.TabIndex = 8;
@@ -432,7 +433,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // TbxHarryRoll
             // 
-            this.TbxHarryRoll.Location = new System.Drawing.Point(199, 99);
+            this.TbxHarryRoll.Location = new System.Drawing.Point(199, 112);
             this.TbxHarryRoll.Name = "TbxHarryRoll";
             this.TbxHarryRoll.Size = new System.Drawing.Size(50, 20);
             this.TbxHarryRoll.TabIndex = 10;
@@ -442,7 +443,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // BtnGetAngles
             // 
-            this.BtnGetAngles.Location = new System.Drawing.Point(6, 97);
+            this.BtnGetAngles.Location = new System.Drawing.Point(6, 110);
             this.BtnGetAngles.Name = "BtnGetAngles";
             this.BtnGetAngles.Size = new System.Drawing.Size(75, 23);
             this.BtnGetAngles.TabIndex = 5;
@@ -452,6 +453,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxHarry
             // 
+            this.GbxHarry.Controls.Add(this.CbxHarrySetPositionMoveCamera);
             this.GbxHarry.Controls.Add(this.label19);
             this.GbxHarry.Controls.Add(this.label18);
             this.GbxHarry.Controls.Add(this.LblSpawnZ);
@@ -536,7 +538,7 @@ namespace BizHawk.Client.EmuHawk
             // label61
             // 
             this.label61.AutoSize = true;
-            this.label61.Location = new System.Drawing.Point(24, 81);
+            this.label61.Location = new System.Drawing.Point(24, 94);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(39, 13);
             this.label61.TabIndex = 24;
@@ -587,7 +589,7 @@ namespace BizHawk.Client.EmuHawk
             // BtnSetAngles
             // 
             this.BtnSetAngles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnSetAngles.Location = new System.Drawing.Point(255, 97);
+            this.BtnSetAngles.Location = new System.Drawing.Point(255, 110);
             this.BtnSetAngles.Name = "BtnSetAngles";
             this.BtnSetAngles.Size = new System.Drawing.Size(75, 23);
             this.BtnSetAngles.TabIndex = 12;
@@ -598,7 +600,7 @@ namespace BizHawk.Client.EmuHawk
             // LblHarryRoll
             // 
             this.LblHarryRoll.AutoSize = true;
-            this.LblHarryRoll.Location = new System.Drawing.Point(196, 83);
+            this.LblHarryRoll.Location = new System.Drawing.Point(196, 96);
             this.LblHarryRoll.Name = "LblHarryRoll";
             this.LblHarryRoll.Size = new System.Drawing.Size(32, 13);
             this.LblHarryRoll.TabIndex = 15;
@@ -607,7 +609,7 @@ namespace BizHawk.Client.EmuHawk
             // LblHarryYaw
             // 
             this.LblHarryYaw.AutoSize = true;
-            this.LblHarryYaw.Location = new System.Drawing.Point(140, 83);
+            this.LblHarryYaw.Location = new System.Drawing.Point(140, 96);
             this.LblHarryYaw.Name = "LblHarryYaw";
             this.LblHarryYaw.Size = new System.Drawing.Size(38, 13);
             this.LblHarryYaw.TabIndex = 14;
@@ -616,7 +618,7 @@ namespace BizHawk.Client.EmuHawk
             // LblHarryPitch
             // 
             this.LblHarryPitch.AutoSize = true;
-            this.LblHarryPitch.Location = new System.Drawing.Point(84, 83);
+            this.LblHarryPitch.Location = new System.Drawing.Point(84, 96);
             this.LblHarryPitch.Name = "LblHarryPitch";
             this.LblHarryPitch.Size = new System.Drawing.Size(42, 13);
             this.LblHarryPitch.TabIndex = 13;
@@ -3088,6 +3090,17 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Model";
             // 
+            // CbxEnableModelDisplay
+            // 
+            this.CbxEnableModelDisplay.AutoSize = true;
+            this.CbxEnableModelDisplay.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxEnableModelDisplay.Location = new System.Drawing.Point(610, 173);
+            this.CbxEnableModelDisplay.Name = "CbxEnableModelDisplay";
+            this.CbxEnableModelDisplay.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableModelDisplay.TabIndex = 47;
+            this.CbxEnableModelDisplay.Text = "Enable";
+            this.CbxEnableModelDisplay.UseVisualStyleBackColor = true;
+            // 
             // CmbModelSubmeshName
             // 
             this.CmbModelSubmeshName.FormattingEnabled = true;
@@ -3793,16 +3806,18 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadFiles.UseVisualStyleBackColor = true;
             this.BtnReadFiles.Click += new System.EventHandler(this.BtnReadFiles_Click);
             // 
-            // CbxEnableModelDisplay
+            // CbxHarrySetPositionMoveCamera
             // 
-            this.CbxEnableModelDisplay.AutoSize = true;
-            this.CbxEnableModelDisplay.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxEnableModelDisplay.Location = new System.Drawing.Point(610, 173);
-            this.CbxEnableModelDisplay.Name = "CbxEnableModelDisplay";
-            this.CbxEnableModelDisplay.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableModelDisplay.TabIndex = 47;
-            this.CbxEnableModelDisplay.Text = "Enable";
-            this.CbxEnableModelDisplay.UseVisualStyleBackColor = true;
+            this.CbxHarrySetPositionMoveCamera.AutoSize = true;
+            this.CbxHarrySetPositionMoveCamera.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxHarrySetPositionMoveCamera.Checked = true;
+            this.CbxHarrySetPositionMoveCamera.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxHarrySetPositionMoveCamera.Location = new System.Drawing.Point(239, 71);
+            this.CbxHarrySetPositionMoveCamera.Name = "CbxHarrySetPositionMoveCamera";
+            this.CbxHarrySetPositionMoveCamera.Size = new System.Drawing.Size(91, 17);
+            this.CbxHarrySetPositionMoveCamera.TabIndex = 30;
+            this.CbxHarrySetPositionMoveCamera.Text = "Move camera";
+            this.CbxHarrySetPositionMoveCamera.UseVisualStyleBackColor = true;
             // 
             // CustomMainForm
             // 
@@ -4164,5 +4179,6 @@ namespace BizHawk.Client.EmuHawk
 		private ContextMenuStrip CmsFilesFiles;
 		private ToolStripMenuItem extractSelectedFilesToolStripMenuItem;
 		private CheckBox CbxEnableModelDisplay;
-	}
+        private CheckBox CbxHarrySetPositionMoveCamera;
+    }
 }
