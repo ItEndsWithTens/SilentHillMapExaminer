@@ -23,6 +23,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxHarryRoll = new System.Windows.Forms.TextBox();
             this.BtnGetAngles = new System.Windows.Forms.Button();
             this.GbxHarry = new System.Windows.Forms.GroupBox();
+            this.CbxHarrySetPositionMoveCamera = new System.Windows.Forms.CheckBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.LblSpawnZ = new System.Windows.Forms.Label();
@@ -292,8 +293,19 @@ namespace BizHawk.Client.EmuHawk
             this.CmsFilesDirectories = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.extractSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnReadFiles = new System.Windows.Forms.Button();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.CmbFramebufferZoom = new System.Windows.Forms.ComboBox();
+            this.BtnFramebufferZoomOut = new System.Windows.Forms.Button();
+            this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
+            this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
+            this.NudFramebufferH = new System.Windows.Forms.NumericUpDown();
+            this.NudFramebufferW = new System.Windows.Forms.NumericUpDown();
+            this.NudFramebufferOfsY = new System.Windows.Forms.NumericUpDown();
+            this.NudFramebufferOfsX = new System.Windows.Forms.NumericUpDown();
+            this.BtnFramebufferGrab = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.CbxHarrySetPositionMoveCamera = new System.Windows.Forms.CheckBox();
+            this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -350,6 +362,13 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage1.SuspendLayout();
             this.CmsFilesFiles.SuspendLayout();
             this.CmsFilesDirectories.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            this.ScrFramebuffer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsX)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -484,6 +503,19 @@ namespace BizHawk.Client.EmuHawk
             this.GbxHarry.TabIndex = 13;
             this.GbxHarry.TabStop = false;
             this.GbxHarry.Text = "Harry";
+            // 
+            // CbxHarrySetPositionMoveCamera
+            // 
+            this.CbxHarrySetPositionMoveCamera.AutoSize = true;
+            this.CbxHarrySetPositionMoveCamera.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxHarrySetPositionMoveCamera.Checked = true;
+            this.CbxHarrySetPositionMoveCamera.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxHarrySetPositionMoveCamera.Location = new System.Drawing.Point(239, 71);
+            this.CbxHarrySetPositionMoveCamera.Name = "CbxHarrySetPositionMoveCamera";
+            this.CbxHarrySetPositionMoveCamera.Size = new System.Drawing.Size(91, 17);
+            this.CbxHarrySetPositionMoveCamera.TabIndex = 30;
+            this.CbxHarrySetPositionMoveCamera.Text = "Move camera";
+            this.CbxHarrySetPositionMoveCamera.UseVisualStyleBackColor = true;
             // 
             // label19
             // 
@@ -976,6 +1008,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbcMainTabs.Controls.Add(this.TbpSave);
             this.TbcMainTabs.Controls.Add(this.TbpTest);
             this.TbcMainTabs.Controls.Add(this.tabPage1);
+            this.TbcMainTabs.Controls.Add(this.tabPage6);
             this.TbcMainTabs.Location = new System.Drawing.Point(0, 0);
             this.TbcMainTabs.Margin = new System.Windows.Forms.Padding(0);
             this.TbcMainTabs.Name = "TbcMainTabs";
@@ -3806,18 +3839,191 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadFiles.UseVisualStyleBackColor = true;
             this.BtnReadFiles.Click += new System.EventHandler(this.BtnReadFiles_Click);
             // 
-            // CbxHarrySetPositionMoveCamera
+            // tabPage6
             // 
-            this.CbxHarrySetPositionMoveCamera.AutoSize = true;
-            this.CbxHarrySetPositionMoveCamera.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxHarrySetPositionMoveCamera.Checked = true;
-            this.CbxHarrySetPositionMoveCamera.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxHarrySetPositionMoveCamera.Location = new System.Drawing.Point(239, 71);
-            this.CbxHarrySetPositionMoveCamera.Name = "CbxHarrySetPositionMoveCamera";
-            this.CbxHarrySetPositionMoveCamera.Size = new System.Drawing.Size(91, 17);
-            this.CbxHarrySetPositionMoveCamera.TabIndex = 30;
-            this.CbxHarrySetPositionMoveCamera.Text = "Move camera";
-            this.CbxHarrySetPositionMoveCamera.UseVisualStyleBackColor = true;
+            this.tabPage6.Controls.Add(this.BtnFramebufferSave);
+            this.tabPage6.Controls.Add(this.CmbFramebufferZoom);
+            this.tabPage6.Controls.Add(this.BtnFramebufferZoomOut);
+            this.tabPage6.Controls.Add(this.ScrFramebuffer);
+            this.tabPage6.Controls.Add(this.BtnFramebufferZoomIn);
+            this.tabPage6.Controls.Add(this.NudFramebufferH);
+            this.tabPage6.Controls.Add(this.NudFramebufferW);
+            this.tabPage6.Controls.Add(this.NudFramebufferOfsY);
+            this.tabPage6.Controls.Add(this.NudFramebufferOfsX);
+            this.tabPage6.Controls.Add(this.BtnFramebufferGrab);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(688, 618);
+            this.tabPage6.TabIndex = 11;
+            this.tabPage6.Text = "Framebuffer";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // CmbFramebufferZoom
+            // 
+            this.CmbFramebufferZoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbFramebufferZoom.FormattingEnabled = true;
+            this.CmbFramebufferZoom.Location = new System.Drawing.Point(301, 21);
+            this.CmbFramebufferZoom.Name = "CmbFramebufferZoom";
+            this.CmbFramebufferZoom.Size = new System.Drawing.Size(60, 21);
+            this.CmbFramebufferZoom.TabIndex = 11;
+            this.CmbFramebufferZoom.SelectedIndexChanged += new System.EventHandler(this.CmbFramebufferZoom_SelectedIndexChanged);
+            // 
+            // BtnFramebufferZoomOut
+            // 
+            this.BtnFramebufferZoomOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFramebufferZoomOut.Location = new System.Drawing.Point(367, 6);
+            this.BtnFramebufferZoomOut.Name = "BtnFramebufferZoomOut";
+            this.BtnFramebufferZoomOut.Size = new System.Drawing.Size(49, 49);
+            this.BtnFramebufferZoomOut.TabIndex = 9;
+            this.BtnFramebufferZoomOut.Text = "-";
+            this.BtnFramebufferZoomOut.UseVisualStyleBackColor = true;
+            this.BtnFramebufferZoomOut.Click += new System.EventHandler(this.BtnFramebufferZoomOut_Click);
+            // 
+            // ScrFramebuffer
+            // 
+            this.ScrFramebuffer.AutoScroll = true;
+            this.ScrFramebuffer.Controls.Add(this.BpbFramebuffer);
+            this.ScrFramebuffer.Location = new System.Drawing.Point(6, 61);
+            this.ScrFramebuffer.Name = "ScrFramebuffer";
+            this.ScrFramebuffer.Size = new System.Drawing.Size(676, 551);
+            this.ScrFramebuffer.TabIndex = 8;
+            this.ScrFramebuffer.Text = "scrollableControl1";
+            // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 545);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
+            // 
+            // BtnFramebufferZoomIn
+            // 
+            this.BtnFramebufferZoomIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFramebufferZoomIn.Location = new System.Drawing.Point(422, 6);
+            this.BtnFramebufferZoomIn.Name = "BtnFramebufferZoomIn";
+            this.BtnFramebufferZoomIn.Size = new System.Drawing.Size(49, 49);
+            this.BtnFramebufferZoomIn.TabIndex = 7;
+            this.BtnFramebufferZoomIn.Text = "+";
+            this.BtnFramebufferZoomIn.UseVisualStyleBackColor = true;
+            this.BtnFramebufferZoomIn.Click += new System.EventHandler(this.BtnFramebufferZoomIn_Click);
+            // 
+            // NudFramebufferH
+            // 
+            this.NudFramebufferH.Location = new System.Drawing.Point(165, 35);
+            this.NudFramebufferH.Maximum = new decimal(new int[] {
+            512,
+            0,
+            0,
+            0});
+            this.NudFramebufferH.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NudFramebufferH.Name = "NudFramebufferH";
+            this.NudFramebufferH.Size = new System.Drawing.Size(55, 20);
+            this.NudFramebufferH.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.NudFramebufferH, "Height");
+            this.NudFramebufferH.Value = new decimal(new int[] {
+            224,
+            0,
+            0,
+            0});
+            this.NudFramebufferH.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
+            this.NudFramebufferH.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudFramebufferH.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudFramebufferH.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
+            // 
+            // NudFramebufferW
+            // 
+            this.NudFramebufferW.Location = new System.Drawing.Point(165, 9);
+            this.NudFramebufferW.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.NudFramebufferW.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NudFramebufferW.Name = "NudFramebufferW";
+            this.NudFramebufferW.Size = new System.Drawing.Size(55, 20);
+            this.NudFramebufferW.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.NudFramebufferW, "Width");
+            this.NudFramebufferW.Value = new decimal(new int[] {
+            320,
+            0,
+            0,
+            0});
+            this.NudFramebufferW.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
+            this.NudFramebufferW.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudFramebufferW.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudFramebufferW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
+            // 
+            // NudFramebufferOfsY
+            // 
+            this.NudFramebufferOfsY.Location = new System.Drawing.Point(87, 35);
+            this.NudFramebufferOfsY.Maximum = new decimal(new int[] {
+            511,
+            0,
+            0,
+            0});
+            this.NudFramebufferOfsY.Name = "NudFramebufferOfsY";
+            this.NudFramebufferOfsY.Size = new System.Drawing.Size(55, 20);
+            this.NudFramebufferOfsY.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.NudFramebufferOfsY, "Y offset");
+            this.NudFramebufferOfsY.Value = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.NudFramebufferOfsY.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
+            this.NudFramebufferOfsY.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudFramebufferOfsY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudFramebufferOfsY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
+            // 
+            // NudFramebufferOfsX
+            // 
+            this.NudFramebufferOfsX.Location = new System.Drawing.Point(87, 9);
+            this.NudFramebufferOfsX.Maximum = new decimal(new int[] {
+            1023,
+            0,
+            0,
+            0});
+            this.NudFramebufferOfsX.Name = "NudFramebufferOfsX";
+            this.NudFramebufferOfsX.Size = new System.Drawing.Size(55, 20);
+            this.NudFramebufferOfsX.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.NudFramebufferOfsX, "X offset");
+            this.NudFramebufferOfsX.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
+            this.NudFramebufferOfsX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudFramebufferOfsX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudFramebufferOfsX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
+            // 
+            // BtnFramebufferGrab
+            // 
+            this.BtnFramebufferGrab.Location = new System.Drawing.Point(6, 6);
+            this.BtnFramebufferGrab.Name = "BtnFramebufferGrab";
+            this.BtnFramebufferGrab.Size = new System.Drawing.Size(75, 49);
+            this.BtnFramebufferGrab.TabIndex = 1;
+            this.BtnFramebufferGrab.Text = "Grab";
+            this.BtnFramebufferGrab.UseVisualStyleBackColor = true;
+            this.BtnFramebufferGrab.Click += new System.EventHandler(this.BtnFramebufferGrab_Click);
+            // 
+            // BtnFramebufferSave
+            // 
+            this.BtnFramebufferSave.Location = new System.Drawing.Point(607, 6);
+            this.BtnFramebufferSave.Name = "BtnFramebufferSave";
+            this.BtnFramebufferSave.Size = new System.Drawing.Size(75, 49);
+            this.BtnFramebufferSave.TabIndex = 12;
+            this.BtnFramebufferSave.Text = "Save";
+            this.BtnFramebufferSave.UseVisualStyleBackColor = true;
+            this.BtnFramebufferSave.Click += new System.EventHandler(this.BtnFramebufferSave_Click);
             // 
             // CustomMainForm
             // 
@@ -3897,6 +4103,13 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage1.ResumeLayout(false);
             this.CmsFilesFiles.ResumeLayout(false);
             this.CmsFilesDirectories.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            this.ScrFramebuffer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsX)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -4180,5 +4393,17 @@ namespace BizHawk.Client.EmuHawk
 		private ToolStripMenuItem extractSelectedFilesToolStripMenuItem;
 		private CheckBox CbxEnableModelDisplay;
         private CheckBox CbxHarrySetPositionMoveCamera;
-    }
+        private TabPage tabPage6;
+        private NumericUpDown NudFramebufferH;
+        private NumericUpDown NudFramebufferW;
+        private NumericUpDown NudFramebufferOfsY;
+        private NumericUpDown NudFramebufferOfsX;
+        private Button BtnFramebufferGrab;
+        private Button BtnFramebufferZoomIn;
+        private ScrollableControl ScrFramebuffer;
+        private SHME.ExternalTool.BetterPictureBox BpbFramebuffer;
+        private Button BtnFramebufferZoomOut;
+        private ComboBox CmbFramebufferZoom;
+		private Button BtnFramebufferSave;
+	}
 }

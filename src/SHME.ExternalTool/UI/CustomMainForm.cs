@@ -101,6 +101,8 @@ namespace BizHawk.Client.EmuHawk
 				AutoReset = true
 			};
 			_arrayCountdown.Elapsed += ArrayCountdown_Elapsed;
+
+			InitializeFramebufferTab();
 		}
 
 		public override void Restart()
