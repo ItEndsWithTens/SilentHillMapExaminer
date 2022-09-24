@@ -15,7 +15,21 @@ namespace BizHawk.Client.EmuHawk
 		public Dictionary<PointOfInterest, Renderable?> Pois { get; set; } = new Dictionary<PointOfInterest, Renderable?>();
 
 		private long _arrayCountdownStartFrameCount;
-		private readonly System.Timers.Timer _arrayCountdown;
+		private System.Timers.Timer _arrayCountdown;
+
+		private void InitializePoisTab()
+		{
+			CmbRenderShape.SelectedIndex = 0;
+
+			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
+
+			_arrayCountdown = new System.Timers.Timer(8)
+			{
+				AutoReset = true
+			};
+			_arrayCountdown.Elapsed += ArrayCountdown_Elapsed;
+		}
+
 		private void ArrayCountdown_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
 			// During some particularly long map loads, various array pointers

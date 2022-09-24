@@ -15,6 +15,12 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private ButtonFlags _saveButton = ButtonFlags.None;
 
+		private void InitializeSaveTab()
+		{
+			CmbSaveButton.DataSource = Enum.GetValues(typeof(ButtonFlags));
+			CmbSaveButton.SelectedItem = ButtonFlags.R3;
+		}
+
 		private void CheckForSaveButtonPress()
 		{
 			var raw = (ButtonFlags)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);

@@ -39,6 +39,13 @@ namespace BizHawk.Client.EmuHawk
 		}
 #pragma warning restore IDE0055
 
+		private void InitializeBasicsTab()
+		{
+			TrkFov.Value = (int)Camera.Fov;
+
+			CmbRenderMode.SelectedIndex = 0;
+		}
+
 		private void ReportAngles()
 		{
 			(Vector3 harry, Vector3 camera) = GetAngles();

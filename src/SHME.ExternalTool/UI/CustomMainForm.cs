@@ -85,23 +85,9 @@ namespace BizHawk.Client.EmuHawk
 				border + TbcMainTabs.Height + border);
 			MaximumSize = Size;
 
-			TrkFov.Value = (int)Camera.Fov;
-
-			CmbRenderMode.SelectedIndex = 0;
-
-			CmbRenderShape.SelectedIndex = 0;
-
-			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
-
-			CmbSaveButton.DataSource = Enum.GetValues(typeof(ButtonFlags));
-			CmbSaveButton.SelectedItem = ButtonFlags.R3;
-
-			_arrayCountdown = new System.Timers.Timer(8)
-			{
-				AutoReset = true
-			};
-			_arrayCountdown.Elapsed += ArrayCountdown_Elapsed;
-
+			InitializeBasicsTab();
+			InitializePoisTab();
+			InitializeSaveTab();
 			InitializeFramebufferTab();
 		}
 
