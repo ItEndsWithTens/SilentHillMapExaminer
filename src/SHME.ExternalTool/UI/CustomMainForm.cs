@@ -6,6 +6,7 @@ using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -65,9 +66,18 @@ namespace BizHawk.Client.EmuHawk
 		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
 		public List<Renderable> TestBoxes { get; set; } = new List<Renderable>();
 
+		public Bitmap Reticle { get; set; } = new Bitmap(1, 1);
+
 		public Rom Rom => Core.Rom;
 
 		private Viewport Viewport { get; } = new Viewport();
+
+		// TODO: Try to eliminate need for this; maybe better Viewport class,
+		// or a Vertex WorldToScreen method that doesn't need this?
+		private Viewport _dummyViewport = new Viewport();
+
+		private Pen _pen = new Pen(Brushes.White);
+		private Bitmap _overlay = new Bitmap(1, 1);
 
 		public CustomMainForm()
 		{
@@ -95,31 +105,34 @@ namespace BizHawk.Client.EmuHawk
 		{
 			base.Restart();
 
+			Boxes.Clear();
+			TestBoxes.Clear();
+			TestLines.Clear();
+			ModelBoxes.Clear();
+
 			Mem.UseMemoryDomain("MainRAM");
 
 			Emu.StateLoaded += Emu_StateLoaded;
 
-			if (Emu.BufferWidth() == 350 || Emu.BufferWidth() == 320)
-			{
-				Viewport.Width = 320;
-				Viewport.TopLeft = new Point(17, Viewport.Top);
-			}
-			else if (Emu.BufferWidth() == 800)
+			Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
+			if (mode == Octoshock.eResolutionMode.PixelPro)
 			{
 				Viewport.Width = 640;
-				Viewport.TopLeft = new Point(84, Viewport.Top);
+				Viewport.Height = 448;
+				Viewport.TopLeft = new Point(84, 16);
+			}
+			else
+			{
+				Viewport.Width = 320;
+				Viewport.Height = 224;
+				Viewport.TopLeft = new Point(17, 8);
 			}
 
-			if (Emu.BufferHeight() == 240)
-			{
-				Viewport.Height = 224;
-				Viewport.TopLeft = new Point(Viewport.Left, 8);
-			}
-			else if (Emu.BufferHeight() == 480)
-			{
-				Viewport.Height = 448;
-				Viewport.TopLeft = new Point(Viewport.Left, 16);
-			}
+			_dummyViewport = new Viewport(0, 0, Viewport.Width, Viewport.Height);
+			_overlay = new Bitmap(Viewport.Width, Viewport.Height);
+
+			_pen.Color = Color.White;
+			Reticle = GenerateReticle(_pen, Viewport.Width, Viewport.Height);
 
 			Label[] labels =
 			{
@@ -147,6 +160,22 @@ namespace BizHawk.Client.EmuHawk
 					l.Cursor = Cursors.Default;
 				}
 			}
+		}
+
+		static public Bitmap GenerateReticle(Pen pen, int width, int height)
+		{
+			var bmp = new Bitmap(width, height);
+
+			var g = Graphics.FromImage(bmp);
+			g.InterpolationMode = InterpolationMode.NearestNeighbor;
+			g.PixelOffsetMode = PixelOffsetMode.None;
+
+			g.Clear(Color.FromArgb(0, 0, 0, 0));
+			g.DrawRectangle(pen, 0, 0, width - 1, height - 1);
+			g.DrawLine(pen, 0, height / 2, width, height / 2);
+			g.DrawLine(pen, width / 2, 0, width / 2, height - 1);
+
+			return bmp;
 		}
 
 		public override void UpdateValues(ToolFormUpdateType type)
@@ -214,6 +243,8 @@ namespace BizHawk.Client.EmuHawk
 		private List<(Polygon, Renderable)> VisiblePolygons { get; } = new List<(Polygon, Renderable)>();
 		private List<Line> VisibleLines { get; } = new List<Line>();
 
+		private int _previousFrameFinished;
+
 		private void DrawStuff()
 		{
 			(_, Vector3 position) = GetPosition();
@@ -222,38 +253,24 @@ namespace BizHawk.Client.EmuHawk
 			Vector3 convertedPosition = CoordinateConverter.Convert(position, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 			Vector3 convertedAngles = AngleConverter.Convert(angles, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 
-			if (CbxOverlayCameraMatchGame.Checked)
-			{
-				Camera.Position = convertedPosition;
-
-				Camera.Pitch = convertedAngles.X;
-				Camera.Yaw = convertedAngles.Y;
-				Camera.Roll = convertedAngles.Z;
-
-				Camera.Fov = CalculateGameFov();
-
-				Camera.UpdateProjectionMatrix();
-
-				if (CbxEnableOverlayCameraReporting.Checked)
-				{
-					NudOverlayCameraX.Text = $"{Camera.Position.X:N0}";
-					NudOverlayCameraY.Text = $"{Camera.Position.Y:N0}";
-					NudOverlayCameraZ.Text = $"{Camera.Position.Z:N0}";
-
-					NudOverlayCameraPitch.Text = $"{Camera.Pitch:N0}";
-					NudOverlayCameraYaw.Text = $"{Camera.Yaw:N0}";
-					NudOverlayCameraRoll.Text = $"{Camera.Roll:N0}";
-				}
-			}
-
 			if (!CbxEnableOverlay.Checked && !CbxEnableModelDisplay.Checked)
 			{
 				return;
 			}
 
-			Gui.DrawBox(Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom);
-			Gui.DrawLine(Viewport.Left, Viewport.Center.Y, Viewport.Right, Viewport.Center.Y);
-			Gui.DrawLine(Viewport.Center.X, Viewport.Top, Viewport.Center.X, Viewport.Bottom);
+			Gui.DrawImage(_overlay, Viewport.Left, Viewport.Top);
+
+			if (CbxOverlaySync.Checked)
+			{
+				// Only update the overlay buffer contents if a new frame has
+				// actually finished rendering.
+				int lastFinished = (int)Mem.ReadByte(Rom.Addresses.MainRam.LastDrawFinishID);
+				if (lastFinished == _previousFrameFinished)
+				{
+					return;
+				}
+				_previousFrameFinished = lastFinished;
+			}
 
 			// Remember that the projection, view, model order from OpenGL
 			// shaders is reversed in C#, to account for System.Numeric's row
@@ -289,11 +306,39 @@ namespace BizHawk.Client.EmuHawk
 				VisibleLines.AddRange(Camera.GetVisibleLines(TestLines));
 			}
 
-			DrawPolygons(matrix);
-			DrawLines(matrix);
+			var g = Graphics.FromImage(_overlay);
+
+			g.Clear(Color.FromArgb(0, 0, 0, 0));
+			DrawPolygons(matrix, g);
+			DrawLines(matrix, g);
+			g.DrawImage(Reticle, 0, 0);
+
+			if (CbxOverlayCameraMatchGame.Checked)
+			{
+				Camera.Position = convertedPosition;
+
+				Camera.Pitch = convertedAngles.X;
+				Camera.Yaw = convertedAngles.Y;
+				Camera.Roll = convertedAngles.Z;
+
+				Camera.Fov = CalculateGameFov();
+
+				Camera.UpdateProjectionMatrix();
+
+				if (CbxEnableOverlayCameraReporting.Checked)
+				{
+					NudOverlayCameraX.Text = $"{Camera.Position.X:N0}";
+					NudOverlayCameraY.Text = $"{Camera.Position.Y:N0}";
+					NudOverlayCameraZ.Text = $"{Camera.Position.Z:N0}";
+
+					NudOverlayCameraPitch.Text = $"{Camera.Pitch:N0}";
+					NudOverlayCameraYaw.Text = $"{Camera.Yaw:N0}";
+					NudOverlayCameraRoll.Text = $"{Camera.Roll:N0}";
+				}
+			}
 		}
 
-		public void DrawLines(Matrix4x4 matrix)
+		public void DrawLines(Matrix4x4 matrix, Graphics g)
 		{
 			ScreenSpaceLines.Clear();
 
@@ -306,8 +351,8 @@ namespace BizHawk.Client.EmuHawk
 				bool aClipped = line.A.Position != clipped.A.Position;
 				bool bClipped = line.B.Position != clipped.B.Position;
 
-				clipped.A = clipped.A.WorldToScreen(matrix, Viewport, true);
-				clipped.B = clipped.B.WorldToScreen(matrix, Viewport, true);
+				clipped.A = clipped.A.WorldToScreen(matrix, _dummyViewport, true);
+				clipped.B = clipped.B.WorldToScreen(matrix, _dummyViewport, true);
 
 				ScreenSpaceLines.Add((
 					clipped,
@@ -330,7 +375,8 @@ namespace BizHawk.Client.EmuHawk
 							int x = (int)v.Position.X;
 							int y = (int)v.Position.Y;
 
-							Gui.DrawEllipse(x - 2, y - 2, 4, 4, v.Color, v.Color);
+							_pen.Color = v.Color;
+							g.FillEllipse(_pen.Brush, x - 2, y - 2, 4, 4);
 						}
 						break;
 					default:
@@ -338,12 +384,13 @@ namespace BizHawk.Client.EmuHawk
 						{
 							if (visible)
 							{
-								Gui.DrawLine(
-									(int)line.A.Position.X,
-									(int)line.A.Position.Y,
-									(int)line.B.Position.X,
-									(int)line.B.Position.Y,
-									color);
+								_pen.Color = color;
+								g.DrawLine(
+									_pen,
+									line.A.Position.X,
+									line.A.Position.Y,
+									line.B.Position.X,
+									line.B.Position.Y);
 							}
 						}
 						break;
@@ -351,7 +398,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		public void DrawPolygons(Matrix4x4 matrix)
+		public void DrawPolygons(Matrix4x4 matrix, Graphics g)
 		{
 			foreach ((Polygon p, Renderable r) in VisiblePolygons)
 			{
@@ -375,8 +422,8 @@ namespace BizHawk.Client.EmuHawk
 					bool aClipped = line.A.Position != clipped.A.Position;
 					bool bClipped = line.B.Position != clipped.B.Position;
 
-					clipped.A = clipped.A.WorldToScreen(matrix, Viewport, true);
-					clipped.B = clipped.B.WorldToScreen(matrix, Viewport, true);
+					clipped.A = clipped.A.WorldToScreen(matrix, _dummyViewport, true);
+					clipped.B = clipped.B.WorldToScreen(matrix, _dummyViewport, true);
 
 					ScreenSpaceLines.Add((
 						clipped,
@@ -418,8 +465,13 @@ namespace BizHawk.Client.EmuHawk
 							}
 						}
 
-						Color c = r.Tint ?? ScreenSpaceLines[0].line.A.Color;
-						Gui.DrawPolygon(visibleVertices.ToArray(), c, c);
+						if (visibleVertices.Count == 0)
+						{
+							break;
+						}
+
+						_pen.Color = r.Tint ?? ScreenSpaceLines[0].line.A.Color;
+						g.FillPolygon(_pen.Brush, visibleVertices.ToArray());
 						break;
 					case 2:
 						IEnumerable<Vertex> unclippedAs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.aClipped).Select(ssl => ssl.line.A);
@@ -430,7 +482,8 @@ namespace BizHawk.Client.EmuHawk
 							int x = (int)v.Position.X;
 							int y = (int)v.Position.Y;
 
-							Gui.DrawEllipse(x - 2, y - 2, 4, 4, v.Color, v.Color);
+							_pen.Color = v.Color;
+							g.FillEllipse(_pen.Brush, x - 2, y - 2, 4, 4);
 						}
 						break;
 					default:
@@ -438,12 +491,13 @@ namespace BizHawk.Client.EmuHawk
 						{
 							if (visible)
 							{
-								Gui.DrawLine(
-									(int)line.A.Position.X,
-									(int)line.A.Position.Y,
-									(int)line.B.Position.X,
-									(int)line.B.Position.Y,
-									color);
+								_pen.Color = color;
+								g.DrawLine(
+									_pen,
+									line.A.Position.X,
+									line.A.Position.Y,
+									line.B.Position.X,
+									line.B.Position.Y);
 							}
 						}
 						break;

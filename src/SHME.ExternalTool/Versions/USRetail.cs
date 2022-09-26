@@ -23,11 +23,26 @@
 				ArrayOfDirectoryNames = 0x21254,
 				ArrayOfFileExtensions = 0x21280,
 
+				LastDrawStartID = 0x22B88,
+				LastDrawFinishID = 0x22B8C,
+
+				// 0xA902C // Something about whether to show a background image?
+				// D // Horizontal BG shift, coarse?
+				// E // Horizontal BG shift, fine?
+				// F // Vertical BG shift, fine?
+
+				// 0xA9030 // All of these four also affect BG rendering; something with the palette?
+				// 31
+				// 32
+				// 33
+
 				IndexOfSelectedSaveLoadSlot = 0xA97D4,
 				IndexOfSelectedTitleScreenOption = 0xA9A78,
 				SaveLoadSlotCount = 0xBCD28, // Includes "New save". Mirrored at 0xBCD30.
 
 				IndexOfMostRecentlyActiveString = 0xA99AC,
+
+				// 0xA99B5 // One byte, dictates which map file gets loaded when pressing triangle.
 
 				// Number of saves in current run; changing the latter
 				// address actually changes what the save management
@@ -104,6 +119,14 @@
 				// 0xBCA35 // Health drink count
 				// 0xBCA39 // First aid kit count
 
+				// Current map; relative to file record 1995, MAP0_S00.BIN.
+				// More like what map to load when loading the save, I guess;
+				// immediately plays the cinematic that starts an area, for maps
+				// with them. Harry's position isn't necessarily correct, but if
+				// you manually plop him where he should be, the geometry's all
+				// there.
+				// 0xBCAD8
+
 				Inventory = 0xBCADC, // Not quite. The most significant byte reflects the number of item slots, but doesn't give you the items.
 				TriggerState = 0xBCB98,
 				ItemCount = 0xBCC70,
@@ -147,6 +170,8 @@
 				// 0x08 - BAD
 				// 0x10 - UFO
 				// 0xC48B2
+
+				IndexOfCurrentBackBuffer = 0xC6EA4,
 
 				SnowVolumeHeightMaybe = 0xC6FA8,
 

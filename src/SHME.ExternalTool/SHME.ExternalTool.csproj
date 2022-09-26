@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="all" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
 
     <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Client.Common.dll" />
     <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(BizHawkOutputDir)\EmuHawk.exe" />

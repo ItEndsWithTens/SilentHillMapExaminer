@@ -15,7 +15,7 @@ namespace SHME.ExternalTool
 			{
 				_topLeft = value;
 				Center = new Point(Left + Width / 2, Top + Height / 2);
-				BottomRight = new Point(Left + Width - 1, Top + Height - 1);
+				_bottomRight = new Point(Left + Width - 1, Top + Height - 1);
 			}
 		}
 
@@ -26,7 +26,8 @@ namespace SHME.ExternalTool
 			set
 			{
 				_width = value;
-				BottomRight = new Point(Left + value - 1, Bottom);
+				Center = new Point(Left + Width / 2, Top + Height / 2);
+				_bottomRight = new Point(Left + value - 1, Bottom);
 			}
 		}
 
@@ -37,11 +38,23 @@ namespace SHME.ExternalTool
 			set
 			{
 				_height = value;
-				BottomRight = new Point(Right, Top + value - 1);
+				Center = new Point(Left + Width / 2, Top + Height / 2);
+				_bottomRight = new Point(Right, Top + value - 1);
 			}
 		}
 
-		public Point BottomRight { get; private set; } = new Point(320, 224);
+		private Point _bottomRight = new Point(319, 223);
+		public Point BottomRight
+		{
+			get => _bottomRight;
+			private set
+			{
+				_bottomRight = value;
+				Center = new Point(Left + Width / 2, Top + Height / 2);
+				_width = value.X + 1 - _topLeft.X;
+				_height = value.Y + 1 - _topLeft.Y;
+			}
+		}
 
 		public int Left => TopLeft.X;
 		public int Top => TopLeft.Y;
@@ -55,11 +68,15 @@ namespace SHME.ExternalTool
 		}
 		public Viewport(Point topLeft, Point bottomRight)
 		{
+			Width = bottomRight.X + 1 - topLeft.X;
+			Height = bottomRight.Y + 1 - topLeft.Y;
 			TopLeft = topLeft;
 			BottomRight = bottomRight;
 		}
 		public Viewport(int left, int top, int width, int height)
 		{
+			Width = width;
+			Height = height;
 			TopLeft = new Point(left, top);
 			BottomRight = new Point(left + width - 1, top + height - 1);
 		}

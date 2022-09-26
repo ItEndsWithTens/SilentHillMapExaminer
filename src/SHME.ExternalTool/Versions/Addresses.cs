@@ -15,6 +15,17 @@
 		public long ArrayOfDirectoryNames { get; set; }
 		public long ArrayOfFileExtensions { get; set; }
 
+		/// <summary>
+		/// An ID in the range [0x00, 0x3F] representing the frame render most
+		/// recently started.
+		/// </summary>
+		public long LastDrawStartID { get; set; }
+		/// <summary>
+		/// An ID in the range [0x00, 0x3F] representing the frame render most
+		/// recently finished.
+		/// </summary>
+		public long LastDrawFinishID { get; set; }
+
 		public long VramCroppedWidth { get; set; }
 		public long VramCroppedHeight { get; set; }
 
@@ -108,6 +119,13 @@
 		public long WorldTintR { get; set; }
 		public long WorldTintG { get; set; }
 		public long WorldTintB { get; set; }
+
+		/// <summary>
+		/// Silent Hill is double buffered, and this value is the index of which
+		/// buffer, 0 or 1, is currently being used for drawing, while the other
+		/// is being used for display.
+		/// </summary>
+		public long IndexOfCurrentBackBuffer { get; set; }
 
 		public long SnowVolumeHeightMaybe { get; set; }
 

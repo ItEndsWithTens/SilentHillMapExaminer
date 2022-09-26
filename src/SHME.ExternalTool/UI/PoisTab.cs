@@ -15,7 +15,7 @@ namespace BizHawk.Client.EmuHawk
 		public Dictionary<PointOfInterest, Renderable?> Pois { get; set; } = new Dictionary<PointOfInterest, Renderable?>();
 
 		private long _arrayCountdownStartFrameCount;
-		private System.Timers.Timer _arrayCountdown;
+		private System.Timers.Timer? _arrayCountdown;
 
 		private void InitializePoisTab()
 		{

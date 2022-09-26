@@ -90,6 +90,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.CbxOverlaySync = new System.Windows.Forms.CheckBox();
             this.label69 = new System.Windows.Forms.Label();
             this.CmbRenderMode = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
@@ -294,6 +295,7 @@ namespace BizHawk.Client.EmuHawk
             this.extractSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnReadFiles = new System.Windows.Forms.Button();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.CmbFramebufferZoom = new System.Windows.Forms.ComboBox();
             this.BtnFramebufferZoomOut = new System.Windows.Forms.Button();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
@@ -305,7 +307,6 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferOfsX = new System.Windows.Forms.NumericUpDown();
             this.BtnFramebufferGrab = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -1230,6 +1231,7 @@ namespace BizHawk.Client.EmuHawk
             // GbxOverlay
             // 
             this.GbxOverlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.GbxOverlay.Controls.Add(this.CbxOverlaySync);
             this.GbxOverlay.Controls.Add(this.label69);
             this.GbxOverlay.Controls.Add(this.CmbRenderMode);
             this.GbxOverlay.Controls.Add(this.label25);
@@ -1260,6 +1262,19 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabIndex = 15;
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
+            // 
+            // CbxOverlaySync
+            // 
+            this.CbxOverlaySync.AutoSize = true;
+            this.CbxOverlaySync.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxOverlaySync.Checked = true;
+            this.CbxOverlaySync.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxOverlaySync.Location = new System.Drawing.Point(235, 285);
+            this.CbxOverlaySync.Name = "CbxOverlaySync";
+            this.CbxOverlaySync.Size = new System.Drawing.Size(91, 17);
+            this.CbxOverlaySync.TabIndex = 91;
+            this.CbxOverlaySync.Text = "Sync to game";
+            this.CbxOverlaySync.UseVisualStyleBackColor = true;
             // 
             // label69
             // 
@@ -3859,6 +3874,16 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage6.Text = "Framebuffer";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // BtnFramebufferSave
+            // 
+            this.BtnFramebufferSave.Location = new System.Drawing.Point(607, 6);
+            this.BtnFramebufferSave.Name = "BtnFramebufferSave";
+            this.BtnFramebufferSave.Size = new System.Drawing.Size(75, 49);
+            this.BtnFramebufferSave.TabIndex = 12;
+            this.BtnFramebufferSave.Text = "Save";
+            this.BtnFramebufferSave.UseVisualStyleBackColor = true;
+            this.BtnFramebufferSave.Click += new System.EventHandler(this.BtnFramebufferSave_Click);
+            // 
             // CmbFramebufferZoom
             // 
             this.CmbFramebufferZoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -4014,16 +4039,6 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFramebufferGrab.Text = "Grab";
             this.BtnFramebufferGrab.UseVisualStyleBackColor = true;
             this.BtnFramebufferGrab.Click += new System.EventHandler(this.BtnFramebufferGrab_Click);
-            // 
-            // BtnFramebufferSave
-            // 
-            this.BtnFramebufferSave.Location = new System.Drawing.Point(607, 6);
-            this.BtnFramebufferSave.Name = "BtnFramebufferSave";
-            this.BtnFramebufferSave.Size = new System.Drawing.Size(75, 49);
-            this.BtnFramebufferSave.TabIndex = 12;
-            this.BtnFramebufferSave.Text = "Save";
-            this.BtnFramebufferSave.UseVisualStyleBackColor = true;
-            this.BtnFramebufferSave.Click += new System.EventHandler(this.BtnFramebufferSave_Click);
             // 
             // CustomMainForm
             // 
@@ -4405,5 +4420,6 @@ namespace BizHawk.Client.EmuHawk
         private Button BtnFramebufferZoomOut;
         private ComboBox CmbFramebufferZoom;
 		private Button BtnFramebufferSave;
-	}
+        private CheckBox CbxOverlaySync;
+    }
 }
