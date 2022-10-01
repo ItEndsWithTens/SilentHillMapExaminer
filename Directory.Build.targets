@@ -47,7 +47,7 @@
     </Exec>
   </Target>
 
-  <Target Name="DecideFinalVersionNumber" AfterTargets="GitReadCommitInfo" BeforeTargets="Build">
+  <Target Name="DecideFinalVersionNumber" AfterTargets="GitReadCommitInfo">
     <PropertyGroup>
       <GitFound>false</GitFound>
       <GitFound Condition="$(GitCheckExitCode) == 0">true</GitFound>
