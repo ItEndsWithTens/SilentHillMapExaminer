@@ -3955,7 +3955,7 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferH.TabIndex = 5;
             this.toolTip1.SetToolTip(this.NudFramebufferH, "Height");
             this.NudFramebufferH.Value = new decimal(new int[] {
-            224,
+            448,
             0,
             0,
             0});
