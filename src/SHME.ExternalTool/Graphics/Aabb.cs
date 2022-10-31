@@ -78,6 +78,11 @@ namespace SHME.ExternalTool
 			Min = new Vector3(aabb.Min.X, aabb.Min.Y, aabb.Min.Z);
 			Max = new Vector3(aabb.Max.X, aabb.Max.Y, aabb.Max.Z);
 		}
+		public Aabb(Vector3 min, Vector3 max)
+		{
+			Min = min;
+			Max = max;
+		}
 
 		private void Init(List<Vector3> points)
 		{

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SilentHillMapExaminer.Mac",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SilentHillMapExaminer.Wpf", "src\SilentHillMapExaminer\SilentHillMapExaminer.Wpf\SilentHillMapExaminer.Wpf.csproj", "{A2DA2334-078C-43A7-85A1-60F4EDB908BA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5BAA19A5-C284-4540-9024-D609CE689CAA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{5BAA19A5-C284-4540-9024-D609CE689CAA}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
@@ -25,6 +25,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{3022183A-4EF
 		lib\Directory.Build.props = lib\Directory.Build.props
 		lib\Directory.Build.targets = lib\Directory.Build.targets
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "standalone", "standalone", "{C3E10F25-B9A6-44BA-97EC-342CFE171955}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugin", "plugin", "{EF45E51E-80A8-43B2-A2C5-8860BC5D4A59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "test\Benchmark\Benchmark.csproj", "{44884830-99FF-4FCF-95CA-CC74A8986EFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E071A977-EBEF-4742-A119-C149D25FF858}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,12 +60,22 @@ Global
 		{373628BB-EFDF-4043-8B1E-91135BBA216B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{373628BB-EFDF-4043-8B1E-91135BBA216B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{373628BB-EFDF-4043-8B1E-91135BBA216B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44884830-99FF-4FCF-95CA-CC74A8986EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44884830-99FF-4FCF-95CA-CC74A8986EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44884830-99FF-4FCF-95CA-CC74A8986EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44884830-99FF-4FCF-95CA-CC74A8986EFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{EA5EF392-6CD4-4133-8993-1FD05B81FDDA} = {C3E10F25-B9A6-44BA-97EC-342CFE171955}
+		{03FF9F3D-A054-48C0-8C96-E3FEBE23E0ED} = {C3E10F25-B9A6-44BA-97EC-342CFE171955}
+		{AFBF0E6E-2712-4D70-A1FB-F32C9397F9A4} = {C3E10F25-B9A6-44BA-97EC-342CFE171955}
+		{A2DA2334-078C-43A7-85A1-60F4EDB908BA} = {C3E10F25-B9A6-44BA-97EC-342CFE171955}
+		{373628BB-EFDF-4043-8B1E-91135BBA216B} = {EF45E51E-80A8-43B2-A2C5-8860BC5D4A59}
 		{3022183A-4EF8-49D0-A2BB-99A52B0F8D99} = {5BAA19A5-C284-4540-9024-D609CE689CAA}
+		{44884830-99FF-4FCF-95CA-CC74A8986EFC} = {E071A977-EBEF-4742-A119-C149D25FF858}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FBAF1CA-0999-4AA0-A932-125771E0D8D0}
