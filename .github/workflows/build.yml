@@ -49,8 +49,10 @@ jobs:
       working-directory: src/SHME.ExternalTool
       
     - name: Run benchmarks
-      run: dotnet run --project ../../test/Benchmark/Benchmark.csproj -c Release -- -f * -e json
-      working-directory: artifacts/test    
+      run: |
+        mkdir artifacts/test
+        cd artifacts/test
+        dotnet run --project ../../test/Benchmark/Benchmark.csproj -c Release -- -f * -e json
 
     - name: Upload benchmark results
       if: ${{ github.event_name != 'pull_request' }}
