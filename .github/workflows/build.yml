@@ -11,7 +11,7 @@ on:
 jobs:
   build-bizhawk:
 
-    if: ${{ !steps.bizhawk-binaries-cache.outputs.cache-hit }}
+    if: ${{ !jobs.build-bizhawk.steps.bizhawk-binaries-cache.outputs.cache-hit }}
 
     runs-on: windows-2022
 
