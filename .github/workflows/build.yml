@@ -47,6 +47,22 @@ jobs:
     - name: Build external tool
       run: dotnet build -c:Release -t:CreateZip
       working-directory: src/SHME.ExternalTool
+      
+    - name: Run benchmarks
+      run: dotnet run --project ../../test/Benchmark/Benchmark.csproj -c Release -- -f * -e json
+      working-directory: artifacts/test    
+
+    - name: Upload benchmark results
+      if: ${{ github.event_name != 'pull_request' }}
+      uses: benchmark-action/github-action-benchmark@v1.14.0
+      with:
+        name: SHME BenchmarkDotNet results
+        tool: 'benchmarkdotnet'
+        output-file-path: artifacts/test/BenchmarkDotNet.Artifacts/results/BenchmarkRun*.json
+        gh-repository: github.com/ItEndsWithTens/PerfTrendsWithTens
+        benchmark-data-dir-path: SHME/bench
+        github-token: ${{ secrets.PERF_REPO_WRITE_TOKEN }}
+        auto-push: true
 
     - name: Upload .zip
       uses: actions/upload-artifact@v2
