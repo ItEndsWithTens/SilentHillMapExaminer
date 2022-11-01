@@ -49,10 +49,8 @@ jobs:
       working-directory: src/SHME.ExternalTool
       
     - name: Run benchmarks
-      run: |
-        mkdir artifacts/test
-        cd artifacts/test
-        dotnet run --project ../../test/Benchmark/Benchmark.csproj -c Release -- -f * -e json
+      run: dotnet run -c Release -- -f * -e json -a ../../artifacts/test/benchmark
+      working-directory: test/Benchmark
 
     - name: Upload benchmark results
       if: ${{ github.event_name != 'pull_request' }}
@@ -60,7 +58,7 @@ jobs:
       with:
         name: SHME BenchmarkDotNet results
         tool: 'benchmarkdotnet'
-        output-file-path: artifacts/test/BenchmarkDotNet.Artifacts/results/BenchmarkRun*.json
+        output-file-path: artifacts/test/benchmark/results/BenchmarkRun*.json
         gh-repository: github.com/ItEndsWithTens/PerfTrendsWithTens
         benchmark-data-dir-path: SHME/bench
         github-token: ${{ secrets.PERF_REPO_WRITE_TOKEN }}
