@@ -9,7 +9,42 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build-bizhawk:
+
+    if: ${{ !build-bizhawk.outputs.cache-hit }}
+
+    runs-on: windows-2022
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+        
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Get BizHawk submodule SHA
+      run: echo "bizhawk_hash=$(git rev-parse HEAD:lib/BizHawk)" >> $env:GITHUB_ENV
+
+    - name: Build BizHawk
+      run: QuickTestBuildAndPackage_Release.bat
+      shell: cmd
+      working-directory: lib/BizHawk/Dist
+
+    - name: Cache BizHawk binaries
+      id: bizhawk-binaries-cache
+      uses: actions/cache@v3
+      with:
+        path: lib\BizHawk\output
+        key: bizhawk-binaries-${{ env.bizhawk_hash }}
+    
+  build-external-tool:
+  
+    if: ${{ always() }}
+    needs: build-bizhawk
 
     runs-on: windows-2022
 
@@ -20,56 +55,45 @@ jobs:
         submodules: false
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-        
+
     - name: Get BizHawk submodule SHA
       run: echo "bizhawk_hash=$(git rev-parse HEAD:lib/BizHawk)" >> $env:GITHUB_ENV
-        
+
     - name: Load cached BizHawk binaries
-      id: bizhawk-binaries-cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: lib\BizHawk\output
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
-        
-    - name: Check out BizHawk
-      if: ${{ !steps.bizhawk-binaries-cache.outputs.cache-hit }}
-      run: git submodule update --init
-
-    - name: Build BizHawk
-      if: ${{ !steps.bizhawk-binaries-cache.outputs.cache-hit }}
-      run: QuickTestBuildAndPackage_Release.bat
-      shell: cmd
-      working-directory: lib/BizHawk/Dist
 
     - name: Build external tool
       run: dotnet build -c:Release -t:CreateZip
       working-directory: src/SHME.ExternalTool
       
-    - name: Run benchmarks
-      run: dotnet run -c Release -- -f * -e json -a ../../artifacts/test/benchmark
-      working-directory: test/Benchmark
+    #- name: Run benchmarks
+    #  run: dotnet run -c Release -- -f * -e json -a ../../artifacts/test/benchmark
+    #  working-directory: test/Benchmark
       
-    - name: Rename benchmark results
-      run: rename BenchmarkRun*.json benchmark-results.json
-      working-directory: artifacts/test/benchmark
+    #- name: Rename benchmark results
+    #  run: rename BenchmarkRun*.json benchmark-results.json
+    #  working-directory: artifacts/test/benchmark
 
-    - name: Upload benchmark results
-      if: ${{ github.event_name != 'pull_request' }}
-      uses: benchmark-action/github-action-benchmark@v1.14.0
-      with:
-        name: SHME BenchmarkDotNet results
-        tool: 'benchmarkdotnet'
-        output-file-path: artifacts/test/benchmark/results/benchmark-results.json
-        gh-repository: github.com/ItEndsWithTens/PerfTrendsWithTens
-        benchmark-data-dir-path: SHME/bench
-        github-token: ${{ secrets.PERF_REPO_WRITE_TOKEN }}
-        auto-push: true
+    #- name: Upload benchmark results
+    #  if: ${{ github.event_name != 'pull_request' }}
+    #  uses: benchmark-action/github-action-benchmark@v1.14.0
+    #  with:
+    #    name: SHME BenchmarkDotNet results
+    #    tool: 'benchmarkdotnet'
+    #    output-file-path: artifacts/test/benchmark/results/benchmark-results.json
+    #    gh-repository: github.com/ItEndsWithTens/PerfTrendsWithTens
+    #    benchmark-data-dir-path: SHME/bench
+    #    github-token: ${{ secrets.PERF_REPO_WRITE_TOKEN }}
+    #    auto-push: true
 
     - name: Upload .zip
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: zip
         path: artifacts/dist/*.zip
@@ -77,7 +101,7 @@ jobs:
 
 
   create-release:
-    needs: build
+    needs: build-external-tool
     
     if: ${{ github.event_name != 'pull_request' }}
     
