@@ -60,11 +60,7 @@ jobs:
       working-directory: test/Benchmark
       
     - name: Diagnose path problems
-      run: |
-        pwd
-        dir
-        echo $env:GITHUB_WORKSPACE
-        dir $env:GITHUB_WORKSPACE/artifacts/test/benchmark
+      run: dir $env:GITHUB_WORKSPACE/artifacts/test/benchmark/results
       
     #- name: Rename benchmark results
     #  run: Rename-Item -Path BenchmarkRun*.json -NewName benchmark-results.json
