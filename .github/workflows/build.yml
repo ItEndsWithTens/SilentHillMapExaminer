@@ -9,42 +9,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build-bizhawk:
-
-    if: ${{ !jobs.build-bizhawk.outputs.cache-hit }}
-
-    runs-on: windows-2022
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        submodules: true
-        
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-        
-    - name: Get BizHawk submodule SHA
-      run: echo "bizhawk_hash=$(git rev-parse HEAD:lib/BizHawk)" >> $env:GITHUB_ENV
-
-    - name: Build BizHawk
-      run: QuickTestBuildAndPackage_Release.bat
-      shell: cmd
-      working-directory: lib/BizHawk/Dist
-
-    - name: Cache BizHawk binaries
-      id: bizhawk-binaries-cache
-      uses: actions/cache@v3
-      with:
-        path: lib\BizHawk\output
-        key: bizhawk-binaries-${{ env.bizhawk_hash }}
-    
-  build-external-tool:
-  
-    if: ${{ always() }}
-    needs: build-bizhawk
+  build:
 
     runs-on: windows-2022
 
@@ -55,18 +20,36 @@ jobs:
         submodules: false
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-
+        
     - name: Get BizHawk submodule SHA
       run: echo "bizhawk_hash=$(git rev-parse HEAD:lib/BizHawk)" >> $env:GITHUB_ENV
-
-    - name: Load cached BizHawk binaries
-      uses: actions/cache@v3
+        
+    - name: Restore BizHawk binaries from cache
+      id: bizhawk-binaries-cache-restore
+      uses: martijnhols/actions-cache/restore@v3
       with:
         path: lib\BizHawk\output
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
+        
+    - name: Check out BizHawk
+      if: ${{ !steps.bizhawk-binaries-cache-restore.outputs.cache-hit }}
+      run: git submodule update --init
+
+    - name: Build BizHawk
+      if: ${{ !steps.bizhawk-binaries-cache-restore.outputs.cache-hit }}
+      run: QuickTestBuildAndPackage_Release.bat
+      shell: cmd
+      working-directory: lib/BizHawk/Dist
+    
+    - name: Save BizHawk binaries to cache
+      if: ${{ !steps.bizhawk-binaries-cache-restore.outputs.cache-hit }}
+      uses: martijnhols/actions-cache/save@v3
+      with:
+        path: lib\BizHawk\output
+        key: ${{ steps.bizhawk-binaries-cache-restore.outputs.primary-key }}
 
     - name: Build external tool
       run: dotnet build -c:Release -t:CreateZip
@@ -93,7 +76,7 @@ jobs:
     #    auto-push: true
 
     - name: Upload .zip
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2
       with:
         name: zip
         path: artifacts/dist/*.zip
@@ -101,7 +84,7 @@ jobs:
 
 
   create-release:
-    needs: build-external-tool
+    needs: build
     
     if: ${{ github.event_name != 'pull_request' }}
     
