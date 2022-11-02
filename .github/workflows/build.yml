@@ -64,7 +64,7 @@ jobs:
         pwd
         dir
         echo $env:GITHUB_WORKSPACE
-        #dir $env:GITHUB_WORKSPACE/artifacts/test/results
+        dir $env:GITHUB_WORKSPACE/artifacts/test/benchmark
       
     #- name: Rename benchmark results
     #  run: Rename-Item -Path BenchmarkRun*.json -NewName benchmark-results.json
