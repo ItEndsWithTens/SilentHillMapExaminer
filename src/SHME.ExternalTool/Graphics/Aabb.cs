@@ -9,24 +9,24 @@ namespace SHME.ExternalTool
 	/// </summary>
 	public class Aabb : IEquatable<Aabb>
 	{
-		private Vector3 min;
+		private Vector3 _min;
 		public Vector3 Min
 		{
-			get { return min; }
+			get => _min;
 			set
 			{
-				min = value;
+				_min = value;
 				Update();
 			}
 		}
 
-		private Vector3 max;
+		private Vector3 _max;
 		public Vector3 Max
 		{
-			get { return max; }
+			get => _max;
 			set
 			{
-				max = value;
+				_max = value;
 				Update();
 			}
 		}
@@ -37,8 +37,9 @@ namespace SHME.ExternalTool
 
 		public Aabb()
 		{
-			Min = new Vector3();
-			Max = new Vector3();
+			_min = new Vector3();
+			_max = new Vector3();
+			Update();
 		}
 		public Aabb(List<Renderable> renderables) : base()
 		{
@@ -75,13 +76,15 @@ namespace SHME.ExternalTool
 		}
 		public Aabb(Aabb aabb)
 		{
-			Min = new Vector3(aabb.Min.X, aabb.Min.Y, aabb.Min.Z);
-			Max = new Vector3(aabb.Max.X, aabb.Max.Y, aabb.Max.Z);
+			_min = new Vector3(aabb.Min.X, aabb.Min.Y, aabb.Min.Z);
+			_max = new Vector3(aabb.Max.X, aabb.Max.Y, aabb.Max.Z);
+			Update();
 		}
 		public Aabb(Vector3 min, Vector3 max)
 		{
-			Min = min;
-			Max = max;
+			_min = min;
+			_max = max;
+			Update();
 		}
 
 		private void Init(List<Vector3> points)
@@ -128,8 +131,9 @@ namespace SHME.ExternalTool
 				}
 			}
 
-			Min = newMin;
-			Max = newMax;
+			_min = newMin;
+			_max = newMax;
+			Update();
 		}
 
 		private void Update()
@@ -188,11 +192,7 @@ namespace SHME.ExternalTool
 				newMin.Z = rhs.Min.Z;
 			}
 
-			return new Aabb()
-			{
-				Min = newMin,
-				Max = newMax
-			};
+			return new Aabb(newMin, newMax);
 		}
 		public static Aabb operator +(Aabb lhs, Aabb rhs)
 		{
@@ -207,11 +207,7 @@ namespace SHME.ExternalTool
 		/// <returns>A new AABB, offset by the specified amounts.</returns>
 		public static Aabb Add(Aabb lhs, Vector3 rhs)
 		{
-			return new Aabb
-			{
-				Min = lhs.Min + rhs,
-				Max = lhs.Max + rhs
-			};
+			return new Aabb(lhs.Min + rhs, lhs.Max + rhs);
 		}
 		public static Aabb operator +(Aabb lhs, Vector3 rhs)
 		{
@@ -226,11 +222,7 @@ namespace SHME.ExternalTool
 		/// <returns>A new AABB, offset by the specified amounts.</returns>
 		public static Aabb Subtract(Aabb lhs, Vector3 rhs)
 		{
-			return new Aabb
-			{
-				Min = lhs.Min - rhs,
-				Max = lhs.Max - rhs
-			};
+			return new Aabb(lhs.Min - rhs, lhs.Max - rhs);
 		}
 		public static Aabb operator -(Aabb lhs, Vector3 rhs)
 		{
