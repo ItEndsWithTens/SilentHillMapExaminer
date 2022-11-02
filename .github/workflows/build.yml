@@ -35,17 +35,17 @@ jobs:
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
         
     - name: Check out BizHawk
-      if: ${{ !steps.bizhawk-binaries-cache-restore.outputs.cache-hit }}
+      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
       run: git submodule update --init
 
     - name: Build BizHawk
-      if: ${{ !steps.bizhawk-binaries-cache-restore.outputs.cache-hit }}
+      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
       run: QuickTestBuildAndPackage_Release.bat
       shell: cmd
       working-directory: lib/BizHawk/Dist
     
     - name: Save BizHawk binaries to cache
-      if: ${{ !steps.bizhawk-binaries-cache-restore.outputs.cache-hit }}
+      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
       uses: martijnhols/actions-cache/save@v3
       with:
         path: lib\BizHawk\output
