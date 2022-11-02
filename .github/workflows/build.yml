@@ -27,46 +27,53 @@ jobs:
     - name: Get BizHawk submodule SHA
       run: echo "bizhawk_hash=$(git rev-parse HEAD:lib/BizHawk)" >> $env:GITHUB_ENV
         
-    - name: Load cached BizHawk binaries
-      id: bizhawk-binaries-cache
-      uses: actions/cache@v2
+    - name: Restore BizHawk binaries from cache
+      id: bizhawk-binaries-cache-restore
+      uses: martijnhols/actions-cache/restore@v3
       with:
         path: lib\BizHawk\output
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
         
     - name: Check out BizHawk
-      if: ${{ !steps.bizhawk-binaries-cache.outputs.cache-hit }}
+      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
       run: git submodule update --init
 
     - name: Build BizHawk
-      if: ${{ !steps.bizhawk-binaries-cache.outputs.cache-hit }}
+      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
       run: QuickTestBuildAndPackage_Release.bat
       shell: cmd
       working-directory: lib/BizHawk/Dist
+    
+    - name: Save BizHawk binaries to cache
+      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
+      uses: martijnhols/actions-cache/save@v3
+      with:
+        path: lib\BizHawk\output
+        key: ${{ steps.bizhawk-binaries-cache-restore.outputs.primary-key }}
 
     - name: Build external tool
       run: dotnet build -c:Release -t:CreateZip
       working-directory: src/SHME.ExternalTool
       
-    - name: Run benchmarks
-      run: dotnet run -c Release -- -f * -e json -a ../../artifacts/test/benchmark
-      working-directory: test/Benchmark
+    #- name: Run benchmarks
+    #  run: dotnet run -c Release -- -f * -e json -a ../../artifacts/test/benchmark
+    #  working-directory: test/Benchmark
       
-    - name: Rename benchmark results
-      run: rename BenchmarkRun*.json benchmark-results.json
-      working-directory: artifacts/test/benchmark
+    #- name: Rename benchmark results
+    #  run: rename BenchmarkRun*.json benchmark-results.json
+    #  working-directory: artifacts/test/benchmark
 
-    - name: Upload benchmark results
-      if: ${{ github.event_name != 'pull_request' }}
-      uses: benchmark-action/github-action-benchmark@v1.14.0
-      with:
-        name: SHME BenchmarkDotNet results
-        tool: 'benchmarkdotnet'
-        output-file-path: artifacts/test/benchmark/results/benchmark-results.json
-        gh-repository: github.com/ItEndsWithTens/PerfTrendsWithTens
-        benchmark-data-dir-path: SHME/bench
-        github-token: ${{ secrets.PERF_REPO_WRITE_TOKEN }}
-        auto-push: true
+    #- name: Upload benchmark results
+    #  if: ${{ github.event_name != 'pull_request' }}
+    #  uses: benchmark-action/github-action-benchmark@v1.14.0
+    #  with:
+    #    name: SHME BenchmarkDotNet results
+    #    tool: 'benchmarkdotnet'
+    #    output-file-path: artifacts/test/benchmark/results/benchmark-results.json
+    #    gh-repository: github.com/ItEndsWithTens/PerfTrendsWithTens
+    #    benchmark-data-dir-path: SHME/bench
+    #    github-token: ${{ secrets.PERF_REPO_WRITE_TOKEN }}
+    #    auto-push: true
 
     - name: Upload .zip
       uses: actions/upload-artifact@v2
