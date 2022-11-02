@@ -59,12 +59,9 @@ jobs:
       run: dotnet run -c Release -- -f * -e json -a ../../artifacts/test/benchmark
       working-directory: test/Benchmark
       
-    #- name: Diagnose path problems
-    #  run: dir $env:GITHUB_WORKSPACE/artifacts/test/benchmark/results
-      
-    #- name: Rename benchmark results
-    #  run: Rename-Item -Path BenchmarkRun*.json -NewName benchmark-results.json
-    #  working-directory: artifacts/test/benchmark
+    - name: Rename benchmark results
+      run: Rename-Item -Path BenchmarkRun*.json -NewName benchmark-results.json
+      working-directory: artifacts/test/benchmark/results
 
     - name: Upload benchmark results
       if: ${{ github.event_name != 'pull_request' }}
@@ -72,7 +69,7 @@ jobs:
       with:
         name: SHME BenchmarkDotNet results
         tool: 'benchmarkdotnet'
-        output-file-path: ${{ env.GITHUB_WORKSPACE }}/artifacts/test/benchmark/results/BenchmarkRun*.json
+        output-file-path: artifacts/test/benchmark/results/benchmark-results.json
         gh-repository: github.com/ItEndsWithTens/PerfTrendsWithTens
         benchmark-data-dir-path: SHME/bench
         github-token: ${{ secrets.PERF_REPO_WRITE_TOKEN }}
