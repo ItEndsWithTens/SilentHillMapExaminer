@@ -15,12 +15,12 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         submodules: false
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
         
@@ -65,7 +65,7 @@ jobs:
 
     - name: Upload benchmark results
       if: ${{ github.event_name != 'pull_request' }}
-      uses: benchmark-action/github-action-benchmark@v1.14.0
+      uses: benchmark-action/github-action-benchmark@v1
       with:
         name: SHME BenchmarkDotNet results
         tool: 'benchmarkdotnet'
@@ -76,7 +76,7 @@ jobs:
         auto-push: true
 
     - name: Upload .zip
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: zip
         path: artifacts/dist/*.zip
@@ -92,13 +92,13 @@ jobs:
 
     steps:
     - name: Download zip file
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: zip
 
     - name: Release latest dev build
       if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-      uses: marvinpinto/action-automatic-releases@latest
+      uses: marvinpinto/action-automatic-releases@v1
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: 'latest'
@@ -109,7 +109,7 @@ jobs:
 
     - name: Prepare draft release of tag
       if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-      uses: marvinpinto/action-automatic-releases@latest
+      uses: marvinpinto/action-automatic-releases@v1
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         draft: true
