@@ -64,7 +64,7 @@ namespace SHME.ExternalTool
 
 				foreach (Vector3 p in aabb.Points)
 				{
-					if (Vector3.Dot(p - plane.Points[0], plane.Normal) > 0.0f)
+					if (Vector3.Dot(p - plane.A, plane.Normal) > 0.0f)
 					{
 						allPointsBehind = false;
 						break;
@@ -514,7 +514,7 @@ namespace SHME.ExternalTool
 		// https://www.cubic.org/docs/3dclip.htm
 		public static bool ClipLineAgainstPlane(ref Line line, Plane plane)
 		{
-			Vertex p = plane.Points[0];
+			Vector3 p = plane.A;
 			Vector3 n = plane.Normal;
 
 			float distanceA = Vector3.Dot(line.A - p, n);

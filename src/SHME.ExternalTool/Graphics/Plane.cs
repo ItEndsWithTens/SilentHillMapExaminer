@@ -1,59 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 
 namespace SHME.ExternalTool
 {
 	public class Plane
 	{
-		public readonly List<Vertex> Points;
+		public Vector3 A { get; } = new Vector3(0.0f, 0.0f, 0.0f);
+		public Vector3 B { get; } = new Vector3(0.0f, 0.0f, 1.0f);
+		public Vector3 C { get; } = new Vector3(1.0f, 0.0f, 0.0f);
 
-		public readonly Vector3 Normal;
+		public Vector3 Normal { get; } = new Vector3(0.0f, 1.0f, 0.0f);
 
-		public readonly float DistanceFromOrigin;
+		public float DistanceFromOrigin { get; }
 
-		public readonly Winding Winding;
+		public Winding Winding { get; } = Winding.Ccw;
 
-		public Plane() : this(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 0.0f, 1.0f), new Vector3(1.0f, 0.0f, 0.0f), Winding.Ccw)
+		public Plane()
 		{
 		}
-		public Plane(Vector3 _a, Vector3 _b, Vector3 _c, Winding _winding) : this(new Vertex(_a), new Vertex(_b), new Vertex(_c), _winding)
+		public Plane(Vector3 a, Vector3 b, Vector3 c, Winding w)
 		{
-		}
-		public Plane(Vertex _a, Vertex _b, Vertex _c, Winding _winding) : this(new List<Vertex>() { _a, _b, _c }, _winding)
-		{
-		}
-		public Plane(List<Vertex> _points, Winding _winding)
-		{
-			Winding = _winding;
+			A = a;
+			B = b;
+			C = c;
+			Winding = w;
 
-			Points = _points;
-
-			Vector3 a = Points[2] - Points[0];
-			Vector3 b = Points[1] - Points[0];
+			Vector3 one = C - A;
+			Vector3 two = B - A;
 
 			if (Winding == Winding.Ccw)
 			{
-				Vector3 c = a;
-				a = b;
-				b = c;
+				(one, two) = (two, one);
 			}
 
-			Normal = Vector3.Normalize(Vector3.Cross(a, b));
+			Normal = Vector3.Normalize(Vector3.Cross(one, two));
 
-			DistanceFromOrigin = Vector3.Dot(Points[0].Position, Normal);
+			DistanceFromOrigin = Vector3.Dot(A, Normal);
 		}
 
-		public static Vector3 Intersect(IEnumerable<Plane> planes)
-		{
-			if (planes.Count() != 3)
-			{
-				throw new ArgumentException("Can only intersect 3 planes at once!");
-			}
-
-			return Intersect(planes.ElementAt(0), planes.ElementAt(1), planes.ElementAt(2));
-		}
 		public static Vector3 Intersect(Plane a, Plane b, Plane c)
 		{
 			float denominator = Vector3.Dot(a.Normal, Vector3.Cross(b.Normal, c.Normal));
