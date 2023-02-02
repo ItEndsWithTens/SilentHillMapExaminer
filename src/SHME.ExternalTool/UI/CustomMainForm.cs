@@ -315,15 +315,11 @@ namespace BizHawk.Client.EmuHawk
 
 			if (CbxOverlayCameraMatchGame.Checked)
 			{
-				Camera.Position = convertedPosition;
-
-				Camera.Pitch = convertedAngles.X;
-				Camera.Yaw = convertedAngles.Y;
-				Camera.Roll = convertedAngles.Z;
-
-				Camera.Fov = CalculateGameFov();
-
-				Camera.UpdateProjectionMatrix();
+				Camera.UpdateAll(
+					convertedPosition,
+					convertedAngles.X, convertedAngles.Y, convertedAngles.Z,
+					null, CalculateGameFov(),
+					null, null);
 
 				if (CbxEnableOverlayCameraReporting.Checked)
 				{

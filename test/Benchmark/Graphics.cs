@@ -81,9 +81,11 @@ namespace SHME.Benchmarks.Graphics
 		[Benchmark]
 		public Camera SetAngles()
 		{
-			camera.Pitch = 45.0f;
-			camera.Yaw = 45.0f;
-			camera.Roll = 45.0f;
+			camera.UpdateAll(
+				null,
+				45.0f, 45.0f, 45.0f,
+				null, null,
+				null, null);
 
 			return camera;
 		}

@@ -139,12 +139,12 @@ namespace SHME.ExternalTool
 		private float _aspectRatio;
 		public float AspectRatio
 		{
-			get { return _aspectRatio; }
+			get => _aspectRatio;
 			set
 			{
 				_aspectRatio = value;
 
-				UpdateProjectionMatrix();
+				UpdateAllInternal();
 			}
 		}
 
@@ -154,7 +154,7 @@ namespace SHME.ExternalTool
 		/// </summary>
 		public float Fov
 		{
-			get { return _fov; }
+			get => _fov;
 			set
 			{
 				if (value > 120.0f)
@@ -165,7 +165,7 @@ namespace SHME.ExternalTool
 				{
 					_fov = value;
 
-					UpdateProjectionMatrix();
+					UpdateAllInternal();
 				}
 			}
 		}
@@ -173,37 +173,37 @@ namespace SHME.ExternalTool
 		private float _maxPitch = 360.0f;
 		public float MaxPitch
 		{
-			get { return _maxPitch; }
-			set { _maxPitch = MathUtilities.ModAngleToCircleSigned(value); }
+			get => _maxPitch;
+			set => _maxPitch = MathUtilities.ModAngleToCircleSigned(value);
 		}
 
 		private float _minPitch = -360.0f;
 		public float MinPitch
 		{
-			get { return _minPitch; }
-			set { _minPitch = MathUtilities.ModAngleToCircleSigned(value); }
+			get => _minPitch;
+			set => _minPitch = MathUtilities.ModAngleToCircleSigned(value);
 		}
 
 		private float _nearClip;
 		public float NearClip
 		{
-			get { return _nearClip; }
+			get => _nearClip;
 			set
 			{
 				_nearClip = value;
 
-				UpdateProjectionMatrix();
+				UpdateAllInternal();
 			}
 		}
 		private float _farClip;
 		public float FarClip
 		{
-			get { return _farClip; }
+			get => _farClip;
 			set
 			{
 				_farClip = value;
 
-				UpdateProjectionMatrix();
+				UpdateAllInternal();
 			}
 		}
 
@@ -213,18 +213,19 @@ namespace SHME.ExternalTool
 		/// </summary>
 		public Vector3 Position
 		{
-			get { return _position; }
+			get => _position;
 			set
 			{
 				_position = value;
-				Rotate();
+
+				UpdateAllInternal();
 			}
 		}
 
 		private float _pitch;
 		public float Pitch
 		{
-			get { return _pitch; }
+			get => _pitch;
 			set
 			{
 				_pitch = MathUtilities.ModAngleToCircleSigned(value);
@@ -238,31 +239,31 @@ namespace SHME.ExternalTool
 					_pitch = MinPitch;
 				}
 
-				Rotate();
+				UpdateAllInternal();
 			}
 		}
 
 		private float _yaw;
 		public float Yaw
 		{
-			get { return _yaw; }
+			get => _yaw;
 			set
 			{
 				_yaw = MathUtilities.ModAngleToCircleUnsigned(value);
 
-				Rotate();
+				UpdateAllInternal();
 			}
 		}
 
 		private float _roll;
 		public float Roll
 		{
-			get { return _roll; }
+			get => _roll;
 			set
 			{
 				_roll = MathUtilities.ModAngleToCircleSigned(value);
 
-				Rotate();
+				UpdateAllInternal();
 			}
 		}
 
@@ -301,7 +302,7 @@ namespace SHME.ExternalTool
 			Yaw = 0.0f;
 			Roll = 0.0f;
 
-			UpdateProjectionMatrix();
+			UpdateAllInternal();
 		}
 
 		public bool CanSee(Renderable r)
@@ -321,9 +322,14 @@ namespace SHME.ExternalTool
 			ViewMatrix = Matrix4x4.CreateLookAt(Position, target, Up);
 
 			UpdateProjectionMatrix();
+			Frustum.Update(
+				Position,
+				Front, Right, Up,
+				Fov, AspectRatio,
+				NearClip, FarClip);
 		}
 
-		public void Rotate()
+		public void UpdateViewMatrix()
 		{
 			float yawRad = MathUtilities.DegreesToRadians(Yaw);
 			float pitchRad = MathUtilities.DegreesToRadians(Pitch);
@@ -373,8 +379,6 @@ namespace SHME.ExternalTool
 			Up = Vector3.Normalize(Vector3.Cross(Right, Front));
 
 			ViewMatrix = Matrix4x4.CreateLookAt(Position, Position + Front, Up);
-
-			Frustum.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
 		}
 
 		public void TranslateRelative(bool forward, bool backward, bool left, bool right, bool up, bool down, float distance)
@@ -408,11 +412,39 @@ namespace SHME.ExternalTool
 			}
 		}
 
+		public void UpdateAll(
+			Vector3? position,
+			float? pitch, float? yaw, float? roll,
+			float? aspect, float? fov,
+			float? nearClip, float? farClip)
+		{
+			_position = position ?? _position;
+			_pitch = pitch ?? _pitch;
+			_yaw = yaw ?? _yaw;
+			_roll = roll ?? _roll;
+			_aspectRatio = aspect ?? _aspectRatio;
+			_fov = fov ?? _fov;
+			_nearClip = nearClip ?? _nearClip;
+			_farClip = farClip ?? _farClip;
+
+			UpdateAllInternal();
+		}
+		private void UpdateAllInternal()
+		{
+			UpdateViewMatrix();
+			UpdateProjectionMatrix();
+			Frustum.Update(
+				Position,
+				Front, Right, Up,
+				Fov, AspectRatio,
+				NearClip, FarClip);
+		}
+
 		public void UpdateProjectionMatrix()
 		{
-			ProjectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(MathUtilities.DegreesToRadians(Fov), AspectRatio, NearClip, FarClip);
-
-			Frustum.Update(Position, Front, Right, Up, Fov, AspectRatio, NearClip, FarClip);
+			ProjectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
+				MathUtilities.DegreesToRadians(Fov), AspectRatio,
+				NearClip, FarClip);
 		}
 
 		private readonly List<Plane> _clippingPlanes = new List<Plane>();
