@@ -101,6 +101,17 @@ namespace BizHawk.Client.EmuHawk
 			InitializeFramebufferTab();
 		}
 
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			ClearOverlay();
+
+			Reticle.Dispose();
+			_pen.Dispose();
+			_overlay.Dispose();
+
+			base.OnClosing(e);
+		}
+
 		public override void Restart()
 		{
 			base.Restart();
