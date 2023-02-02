@@ -256,11 +256,15 @@ namespace BizHawk.Client.EmuHawk
 			SetHarryAngles(pitch, yaw, roll);
 		}
 
-		private void CbxEnableTriggerDisplay_CheckedChanged(object sender, EventArgs e)
+		private void CbxEnableOverlay_CheckedChanged(object sender, EventArgs e)
 		{
 			if (!CbxEnableOverlay.Checked)
 			{
 				ClearOverlay();
+			}
+			else
+			{
+				CbxOverlayRenderToFramebuffer_CheckedChanged(this, EventArgs.Empty);
 			}
 		}
 
@@ -288,6 +292,20 @@ namespace BizHawk.Client.EmuHawk
 				Camera.Pitch = (float)NudOverlayCameraPitch.Value;
 				Camera.Yaw = (float)NudOverlayCameraYaw.Value;
 				Camera.Roll = (float)NudOverlayCameraRoll.Value;
+			}
+		}
+
+		private void CbxOverlayRenderToFramebuffer_CheckedChanged(object sender, EventArgs e)
+		{
+			ClearOverlay();
+			InitializeOverlay();
+
+			if (CbxOverlayRenderToFramebuffer.Checked)
+			{
+				long a = Rom.Addresses.MainRam.IndexOfDrawRegion;
+				a += Rom.Addresses.MainRam.BaseAddress;
+
+				Apis.MemoryEvents.AddWriteCallback(IndexOfDrawRegion_ValueChanging, (uint)a, "System Bus");
 			}
 		}
 

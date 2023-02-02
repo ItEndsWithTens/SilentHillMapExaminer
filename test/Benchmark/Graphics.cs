@@ -77,7 +77,8 @@ namespace SHME.Benchmarks.Graphics
 			return camera.ClipLineAgainstFrustum(ref line);
 		}
 
-		// Calls the Camera.Rotate method and Frustum.Update.
+		// Calls Camera.UpdateViewMatrix, Camera.UpdateProjectionMatrix, and
+		// Frustum.Update.
 		[Benchmark]
 		public Camera SetAngles()
 		{

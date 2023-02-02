@@ -23,8 +23,8 @@
 				ArrayOfDirectoryNames = 0x21254,
 				ArrayOfFileExtensions = 0x21280,
 
-				LastDrawStartID = 0x22B88,
-				LastDrawFinishID = 0x22B8C,
+				Last3DDrawStartID = 0x22B88,
+				Last3DDrawFinishID = 0x22B8C,
 
 				// 0xA902C // Something about whether to show a background image?
 				// D // Horizontal BG shift, coarse?
@@ -171,7 +171,7 @@
 				// 0x10 - UFO
 				// 0xC48B2
 
-				IndexOfCurrentBackBuffer = 0xC6EA4,
+				IndexOfDrawRegion = 0xC6EA4,
 
 				SnowVolumeHeightMaybe = 0xC6FA8,
 

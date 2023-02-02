@@ -90,7 +90,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
-            this.CbxOverlaySync = new System.Windows.Forms.CheckBox();
+            this.CbxOverlayRenderToFramebuffer = new System.Windows.Forms.CheckBox();
             this.label69 = new System.Windows.Forms.Label();
             this.CmbRenderMode = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
@@ -1231,7 +1231,7 @@ namespace BizHawk.Client.EmuHawk
             // GbxOverlay
             // 
             this.GbxOverlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GbxOverlay.Controls.Add(this.CbxOverlaySync);
+            this.GbxOverlay.Controls.Add(this.CbxOverlayRenderToFramebuffer);
             this.GbxOverlay.Controls.Add(this.label69);
             this.GbxOverlay.Controls.Add(this.CmbRenderMode);
             this.GbxOverlay.Controls.Add(this.label25);
@@ -1263,18 +1263,19 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
             // 
-            // CbxOverlaySync
+            // CbxOverlayRenderToFramebuffer
             // 
-            this.CbxOverlaySync.AutoSize = true;
-            this.CbxOverlaySync.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxOverlaySync.Checked = true;
-            this.CbxOverlaySync.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxOverlaySync.Location = new System.Drawing.Point(235, 285);
-            this.CbxOverlaySync.Name = "CbxOverlaySync";
-            this.CbxOverlaySync.Size = new System.Drawing.Size(91, 17);
-            this.CbxOverlaySync.TabIndex = 91;
-            this.CbxOverlaySync.Text = "Sync to game";
-            this.CbxOverlaySync.UseVisualStyleBackColor = true;
+            this.CbxOverlayRenderToFramebuffer.AutoSize = true;
+            this.CbxOverlayRenderToFramebuffer.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxOverlayRenderToFramebuffer.Location = new System.Drawing.Point(197, 285);
+            this.CbxOverlayRenderToFramebuffer.Name = "CbxOverlayRenderToFramebuffer";
+            this.CbxOverlayRenderToFramebuffer.Size = new System.Drawing.Size(129, 17);
+            this.CbxOverlayRenderToFramebuffer.TabIndex = 92;
+            this.CbxOverlayRenderToFramebuffer.Text = "Render to framebuffer";
+            this.toolTip1.SetToolTip(this.CbxOverlayRenderToFramebuffer, "Whether to draw directly on the game\'s framebuffer instead of BizHawk\'s GUI. Curr" +
+        "ently available only in the Octoshock core.");
+            this.CbxOverlayRenderToFramebuffer.UseVisualStyleBackColor = true;
+            this.CbxOverlayRenderToFramebuffer.CheckedChanged += new System.EventHandler(this.CbxOverlayRenderToFramebuffer_CheckedChanged);
             // 
             // label69
             // 
@@ -1514,7 +1515,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxEnableOverlay.TabIndex = 15;
             this.CbxEnableOverlay.Text = "Enable";
             this.CbxEnableOverlay.UseVisualStyleBackColor = true;
-            this.CbxEnableOverlay.CheckedChanged += new System.EventHandler(this.CbxEnableTriggerDisplay_CheckedChanged);
+            this.CbxEnableOverlay.CheckedChanged += new System.EventHandler(this.CbxEnableOverlay_CheckedChanged);
             // 
             // CbxEnableOverlayCameraReporting
             // 
@@ -4420,6 +4421,6 @@ namespace BizHawk.Client.EmuHawk
         private Button BtnFramebufferZoomOut;
         private ComboBox CmbFramebufferZoom;
 		private Button BtnFramebufferSave;
-        private CheckBox CbxOverlaySync;
-    }
+		private CheckBox CbxOverlayRenderToFramebuffer;
+	}
 }

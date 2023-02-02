@@ -260,6 +260,9 @@ namespace BizHawk.Client.EmuHawk
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtZ, qLookZ);
 		}
 
+		// TODO: Make aim and move speeds the same whether rendering to the
+		// framebuffer or not; look up what I believe is called the "delta time"
+		// approach real games use for consistent input with varying framerate.
 		private float _sensitivity = 0.25f;
 		private Point _flyCenter;
 		private void AimCamera()

@@ -5,11 +5,14 @@ using BizHawk.Emulation.Cores.Waterbox;
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
@@ -66,7 +69,7 @@ namespace BizHawk.Client.EmuHawk
 		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
 		public List<Renderable> TestBoxes { get; set; } = new List<Renderable>();
 
-		public Bitmap Reticle { get; set; } = new Bitmap(1, 1);
+		public Bitmap Reticle { get; set; } = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
 		public Rom Rom => Core.Rom;
 
@@ -75,9 +78,10 @@ namespace BizHawk.Client.EmuHawk
 		// TODO: Try to eliminate need for this; maybe better Viewport class,
 		// or a Vertex WorldToScreen method that doesn't need this?
 		private Viewport _dummyViewport = new Viewport();
+		private Rectangle _drawRegionRect;
 
 		private Pen _pen = new Pen(Brushes.White);
-		private Bitmap _overlay = new Bitmap(1, 1);
+		private Bitmap _overlay = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
 		public CustomMainForm()
 		{
@@ -125,25 +129,7 @@ namespace BizHawk.Client.EmuHawk
 
 			Emu.StateLoaded += Emu_StateLoaded;
 
-			Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
-			if (mode == Octoshock.eResolutionMode.PixelPro)
-			{
-				Viewport.Width = 640;
-				Viewport.Height = 448;
-				Viewport.TopLeft = new Point(84, 16);
-			}
-			else
-			{
-				Viewport.Width = 320;
-				Viewport.Height = 224;
-				Viewport.TopLeft = new Point(17, 8);
-			}
-
-			_dummyViewport = new Viewport(0, 0, Viewport.Width, Viewport.Height);
-			_overlay = new Bitmap(Viewport.Width, Viewport.Height);
-
-			_pen.Color = Color.White;
-			Reticle = GenerateReticle(_pen, Viewport.Width, Viewport.Height);
+			CbxOverlayRenderToFramebuffer_CheckedChanged(this, EventArgs.Empty);
 
 			Label[] labels =
 			{
@@ -205,14 +191,17 @@ namespace BizHawk.Client.EmuHawk
 					{
 						CheckForSaveButtonPress();
 					}
-					if (CbxCameraDetach.Checked)
+					if (!CbxOverlayRenderToFramebuffer.Checked)
 					{
-						HoldCamera();
-					}
-					if (_flyEnabled)
-					{
-						MoveCamera();
-						AimCamera();
+						if (CbxCameraDetach.Checked)
+						{
+							HoldCamera();
+						}
+						if (_flyEnabled)
+						{
+							MoveCamera();
+							AimCamera();
+						}
 					}
 					break;
 				case ToolFormUpdateType.PostFrame:
@@ -226,7 +215,11 @@ namespace BizHawk.Client.EmuHawk
 					{
 						ReportOverlayInfo();
 					}
-					Gui.WithSurface(DisplaySurfaceID.EmuCore, DrawStuff);
+					if (CbxEnableOverlay.Checked && !CbxOverlayRenderToFramebuffer.Checked)
+					{
+						UpdateOverlay();
+						ApplyOverlayToGui();
+					}
 					if (CbxStats.Checked)
 					{
 						ReportStats();
@@ -247,6 +240,10 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ClearOverlay()
 		{
+			if (Apis.Libraries.ContainsKey(typeof(IMemoryEventsApi)))
+			{
+				Apis.MemoryEvents.RemoveMemoryCallback(IndexOfDrawRegion_ValueChanging);
+			}
 			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
 		}
 
@@ -254,9 +251,7 @@ namespace BizHawk.Client.EmuHawk
 		private List<(Polygon, Renderable)> VisiblePolygons { get; } = new List<(Polygon, Renderable)>();
 		private List<Line> VisibleLines { get; } = new List<Line>();
 
-		private int _previousFrameFinished;
-
-		private void DrawStuff()
+		private void UpdateOverlay()
 		{
 			(_, Vector3 position) = GetPosition();
 			(_, Vector3 angles) = GetAngles();
@@ -267,20 +262,6 @@ namespace BizHawk.Client.EmuHawk
 			if (!CbxEnableOverlay.Checked && !CbxEnableModelDisplay.Checked)
 			{
 				return;
-			}
-
-			Gui.DrawImage(_overlay, Viewport.Left, Viewport.Top);
-
-			if (CbxOverlaySync.Checked)
-			{
-				// Only update the overlay buffer contents if a new frame has
-				// actually finished rendering.
-				int lastFinished = (int)Mem.ReadByte(Rom.Addresses.MainRam.LastDrawFinishID);
-				if (lastFinished == _previousFrameFinished)
-				{
-					return;
-				}
-				_previousFrameFinished = lastFinished;
 			}
 
 			// Remember that the projection, view, model order from OpenGL
@@ -546,6 +527,127 @@ namespace BizHawk.Client.EmuHawk
 			else if (sender is TextBox tbx)
 			{
 				tbx.SelectAll();
+			}
+		}
+
+		private void InitializeOverlay()
+		{
+			if (Octoshock == null)
+			{
+				CbxOverlayRenderToFramebuffer.Enabled = false;
+				CbxOverlayRenderToFramebuffer.Checked = false;
+			}
+			else
+			{
+				CbxOverlayRenderToFramebuffer.Enabled = true;
+			}
+
+			if (CbxOverlayRenderToFramebuffer.Checked)
+			{
+				Viewport.Width = 320;
+				Viewport.Height = 224;
+				Viewport.TopLeft = new Point(0, 0);
+			}
+			else
+			{
+				Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
+				if (mode == Octoshock.eResolutionMode.PixelPro)
+				{
+					Viewport.Width = 640;
+					Viewport.Height = 448;
+					Viewport.TopLeft = new Point(84, 16);
+				}
+				else
+				{
+					Viewport.Width = 320;
+					Viewport.Height = 224;
+					Viewport.TopLeft = new Point(17, 8);
+				}
+			}
+
+			_dummyViewport = new Viewport(0, 0, Viewport.Width, Viewport.Height);
+
+			_overlay.Dispose();
+			Reticle.Dispose();
+
+			_pen.Color = Color.White;
+			_overlay = new Bitmap(Viewport.Width, Viewport.Height, PixelFormat.Format32bppArgb);
+			Reticle = GenerateReticle(_pen, Viewport.Width, Viewport.Height);
+
+			_drawRegionRect = new Rectangle(0, 0, Viewport.Width, Viewport.Height);
+		}
+		private void ApplyOverlayToFramebuffer(uint index)
+		{
+			BitmapData data = _overlay.LockBits(
+				_drawRegionRect,
+				ImageLockMode.ReadOnly,
+				PixelFormat.Format32bppArgb);
+
+			int gpuramBytesPerPixel = 2;
+			int gpuramStride = 1024 * gpuramBytesPerPixel;
+
+			long bufferRegionStart = 32 * gpuramStride;
+			long start = bufferRegionStart + (224 * gpuramStride * index);
+
+			string previousDomain = Mem.GetCurrentMemoryDomain();
+			Mem.UseMemoryDomain("GPURAM");
+			for (int y = 0; y < _overlay.Height; y++)
+			{
+				for (int x = 0; x < _overlay.Width; x++)
+				{
+					int ofs = (y * data.Stride) + (x * 4);
+					int pixel = Marshal.ReadInt32(data.Scan0, ofs);
+
+					// Any pixels in the overlay Bitmap that aren't opaque are
+					// assumed to be transparent background, and safe to skip.
+					uint a = (uint)pixel & 0xFF000000;
+					if (a != 0xFF000000)
+					{
+						continue;
+					}
+
+					// Selecting the high 5 bits of each component with an AND
+					// and then shifting them into their final positions is an
+					// efficient equivalent of unpacking the 32bpp ARGB pixels,
+					// dividing each component by 8, then repacking them into
+					// the 16bpp SBGR format of the PSX framebuffer. The 'S', or
+					// semi-transparent bit, remains 0 to overwrite the screen.
+					int r = (pixel & 0x00F80000) >> 19;
+					int g = (pixel & 0x0000F800) >> 6;
+					int b = (pixel & 0x000000F8) << 7;
+
+					Mem.WriteS16(start + (gpuramBytesPerPixel * x), b | g | r);
+				}
+
+				start += gpuramStride;
+			}
+			Mem.UseMemoryDomain(previousDomain);
+
+			_overlay.UnlockBits(data);
+		}
+		private void ApplyOverlayToGui()
+		{
+			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.DrawImage(_overlay, Viewport.Left, Viewport.Top));
+		}
+
+		private void IndexOfDrawRegion_ValueChanging(uint address, uint value, uint flags)
+		{
+			UpdateOverlay();
+
+			// IndexOfDrawRegion_ValueChanging is attached as a write callback,
+			// which means it's called just before the write is performed. The
+			// value passed in is what's about to be written, so the current
+			// back buffer index is its opposite, either 0 or 1, hence the XOR.
+			ApplyOverlayToFramebuffer(value ^ 1);
+
+			if (CbxCameraDetach.Checked)
+			{
+				HoldCamera();
+			}
+			if (_flyEnabled)
+			{
+				MoveCamera();
+				AimCamera();
 			}
 		}
 	}
