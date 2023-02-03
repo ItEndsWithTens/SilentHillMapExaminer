@@ -34,8 +34,6 @@ namespace BizHawk.Client.EmuHawk
 
 		private IEmulationApi Emulation => Apis.Emulation;
 
-		private IGameInfoApi GI => Apis.GameInfo;
-
 		private IMemorySaveStateApi MemSS => Apis.MemorySaveState;
 
 		private IToolApi Tool => Apis.Tool;

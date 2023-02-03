@@ -137,7 +137,7 @@ namespace BizHawk.Client.EmuHawk
 
 			if (body != _previousTriggerBodyHash || fired != _previousTriggerFired)
 			{
-				List<byte> bytes = Mem.ReadByteRange(t.Address, 12);
+				IReadOnlyList<byte> bytes = Mem.ReadByteRange(t.Address, 12);
 
 				var updated = new Trigger(t.Address, bytes);
 

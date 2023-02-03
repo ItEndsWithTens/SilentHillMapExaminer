@@ -217,7 +217,7 @@ namespace BizHawk.Client.EmuHawk
 
 			int harryModelAddress = harryModelAddressRaw - (int)Rom.Addresses.MainRam.BaseAddress;
 
-			List<byte> headerBytes = Mem.ReadByteRange(harryModelAddress, IlmHeader.Length);
+			IReadOnlyList<byte> headerBytes = Mem.ReadByteRange(harryModelAddress, IlmHeader.Length);
 
 			IlmHeader header;
 			try
@@ -230,7 +230,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			// Can't get an actual stream from ApiHawk, but this'll do nicely.
-			List<byte> remaining = Mem.ReadByteRange(harryModelAddress, (int)(Mem.GetMemoryDomainSize("MainRAM") - harryModelAddress));
+			IReadOnlyList<byte> remaining = Mem.ReadByteRange(harryModelAddress, (int)(Mem.GetMemoryDomainSize("MainRAM") - harryModelAddress));
 
 			Model = new Ilm(header, remaining, TrkModelScale.Value);
 

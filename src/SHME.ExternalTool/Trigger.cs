@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SHME.ExternalTool
 {
@@ -118,7 +119,7 @@ namespace SHME.ExternalTool
 		public TriggerType TriggerType { get; }
 		public int TargetIndex { get; }
 
-		public Trigger(long address, List<byte> bytes) : this(address, bytes.ToArray())
+		public Trigger(long address, IReadOnlyList<byte> bytes) : this(address, bytes.ToArray())
 		{
 		}
 		public Trigger(long address, byte[] bytes)
@@ -146,13 +147,20 @@ namespace SHME.ExternalTool
 			PoiIndex = bytes[5];
 			Thing3 = bytes[6];
 			Thing4 = bytes[7];
-			TypeInfo = BitConverter.ToUInt32(bytes, 8);
 
+			TypeInfo = BitConverter.ToUInt32(bytes, 8);
 			uint raw6 = (TypeInfo & 0b00000000_00000000_00000000_00011111) >> 0;
 			uint raw7 = (TypeInfo & 0b00000000_00000000_00011111_11100000) >> 5;
 			uint raw8 = (TypeInfo & 0b00000000_00000111_11100000_00000000) >> 13;
 			uint raw9 = (TypeInfo & 0b00000001_11111000_00000000_00000000) >> 19;
-			uint rawA = (TypeInfo & 0b11111110_00000000_00000000_00000000) >> 25;
+
+			// rawA is what map to load for Door1 types, i.e. changelevel
+			// triggers. Zero-based offset, relative to 1995, the file record
+			// index corresponding to MAP0_S00.BIN. Not sure if this is used
+			// for anything else yet.
+			uint rawA = (TypeInfo & 0b01111110_00000000_00000000_00000000) >> 25;
+
+			uint rawB = (TypeInfo & 0b10000000_00000000_00000000_00000000) >> 31;
 			TriggerType = (TriggerType)raw6;
 			TargetIndex = (byte)raw7;
 		}

@@ -142,7 +142,7 @@ namespace SHME.ExternalTool
 
 		public long MeshDataPointer { get; }
 
-		public IlmHeader(List<byte> headerBytes, long baseAddress) : this(headerBytes.ToArray(), baseAddress)
+		public IlmHeader(IReadOnlyList<byte> headerBytes, long baseAddress) : this(headerBytes.ToArray(), baseAddress)
 		{
 		}
 		public IlmHeader(byte[] headerBytes, long baseAddress)
@@ -181,10 +181,10 @@ namespace SHME.ExternalTool
 
 		public float Scale { get; set; } = 1.0f;
 
-		public Ilm(IlmHeader h, List<byte> bytes) : this(h, bytes.ToArray())
+		public Ilm(IlmHeader h, IReadOnlyList<byte> bytes) : this(h, bytes.ToArray())
 		{
 		}
-		public Ilm(IlmHeader h, List<byte> bytes, float scale) : this(h, bytes.ToArray(), scale)
+		public Ilm(IlmHeader h, IReadOnlyList<byte> bytes, float scale) : this(h, bytes.ToArray(), scale)
 		{
 		}
 		public Ilm(IlmHeader h, byte[] bytes) : this(h, bytes.ToArray(), 1.0f)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using static SHME.ExternalTool.Core;
 
 namespace SHME.ExternalTool
@@ -60,7 +61,7 @@ namespace SHME.ExternalTool
 			return (yaw, x, z, width);
 		}
 
-		public PointOfInterest(long address, List<byte> bytes) :
+		public PointOfInterest(long address, IReadOnlyList<byte> bytes) :
 			this(address, bytes.ToArray())
 		{
 		}
