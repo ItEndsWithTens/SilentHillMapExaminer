@@ -109,7 +109,7 @@ namespace SHME.ExternalTool
 		}
 	}
 
-	public class Tim
+	public sealed class Tim : IDisposable
 	{
 		public TimHeader Header { get; }
 
@@ -244,6 +244,11 @@ namespace SHME.ExternalTool
 					}
 				}
 			}
+		}
+
+		public void Dispose()
+		{
+			Bitmap.Dispose();
 		}
 	}
 }

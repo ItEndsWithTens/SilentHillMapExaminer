@@ -67,7 +67,9 @@ namespace BizHawk.Client.EmuHawk
 		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
 		public List<Renderable> TestBoxes { get; set; } = new List<Renderable>();
 
+		public Pen Pen { get; set; } = new Pen(Brushes.White);
 		public Bitmap Reticle { get; set; } = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+		public Bitmap Overlay { get; set; } = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
 		public Rom Rom => Core.Rom;
 
@@ -77,9 +79,6 @@ namespace BizHawk.Client.EmuHawk
 		// or a Vertex WorldToScreen method that doesn't need this?
 		private Viewport _dummyViewport = new Viewport();
 		private Rectangle _drawRegionRect;
-
-		private Pen _pen = new Pen(Brushes.White);
-		private Bitmap _overlay = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
 
 		public CustomMainForm()
 		{
@@ -103,13 +102,22 @@ namespace BizHawk.Client.EmuHawk
 			InitializeFramebufferTab();
 		}
 
+		protected override void Dispose(bool disposing)
+		{
+			if (!IsDisposed)
+			{
+				if (disposing)
+				{
+					CleanUpDisposables();
+				}
+			}
+
+			base.Dispose(disposing);
+		}
+
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			ClearOverlay();
-
-			Reticle.Dispose();
-			_pen.Dispose();
-			_overlay.Dispose();
 
 			base.OnClosing(e);
 		}
@@ -296,7 +304,7 @@ namespace BizHawk.Client.EmuHawk
 				VisibleLines.AddRange(Camera.GetVisibleLines(TestLines));
 			}
 
-			var g = Graphics.FromImage(_overlay);
+			var g = Graphics.FromImage(Overlay);
 
 			g.Clear(Color.FromArgb(0, 0, 0, 0));
 			DrawPolygons(matrix, g);
@@ -361,8 +369,8 @@ namespace BizHawk.Client.EmuHawk
 							int x = (int)v.Position.X;
 							int y = (int)v.Position.Y;
 
-							_pen.Color = v.Color;
-							g.FillEllipse(_pen.Brush, x - 2, y - 2, 4, 4);
+							Pen.Color = v.Color;
+							g.FillEllipse(Pen.Brush, x - 2, y - 2, 4, 4);
 						}
 						break;
 					default:
@@ -370,9 +378,9 @@ namespace BizHawk.Client.EmuHawk
 						{
 							if (visible)
 							{
-								_pen.Color = color;
+								Pen.Color = color;
 								g.DrawLine(
-									_pen,
+									Pen,
 									line.A.Position.X,
 									line.A.Position.Y,
 									line.B.Position.X,
@@ -456,8 +464,8 @@ namespace BizHawk.Client.EmuHawk
 							break;
 						}
 
-						_pen.Color = r.Tint ?? ScreenSpaceLines[0].line.A.Color;
-						g.FillPolygon(_pen.Brush, visibleVertices.ToArray());
+						Pen.Color = r.Tint ?? ScreenSpaceLines[0].line.A.Color;
+						g.FillPolygon(Pen.Brush, visibleVertices.ToArray());
 						break;
 					case 2:
 						IEnumerable<Vertex> unclippedAs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.aClipped).Select(ssl => ssl.line.A);
@@ -468,8 +476,8 @@ namespace BizHawk.Client.EmuHawk
 							int x = (int)v.Position.X;
 							int y = (int)v.Position.Y;
 
-							_pen.Color = v.Color;
-							g.FillEllipse(_pen.Brush, x - 2, y - 2, 4, 4);
+							Pen.Color = v.Color;
+							g.FillEllipse(Pen.Brush, x - 2, y - 2, 4, 4);
 						}
 						break;
 					default:
@@ -477,9 +485,9 @@ namespace BizHawk.Client.EmuHawk
 						{
 							if (visible)
 							{
-								_pen.Color = color;
+								Pen.Color = color;
 								g.DrawLine(
-									_pen,
+									Pen,
 									line.A.Position.X,
 									line.A.Position.Y,
 									line.B.Position.X,
@@ -512,6 +520,16 @@ namespace BizHawk.Client.EmuHawk
 			float halfAngle = (float)Math.Asin(opposite / h);
 
 			return MathUtilities.RadiansToDegrees(halfAngle * 2.0f);
+		}
+
+		private void CleanUpDisposables()
+		{
+			Pen?.Dispose();
+			Reticle?.Dispose();
+			Overlay?.Dispose();
+
+			_mapGraphic?.Dispose();
+			PbxHazardStripes.Image?.Dispose();
 		}
 
 		private void Selectable_Enter(object sender, EventArgs e)
@@ -565,18 +583,17 @@ namespace BizHawk.Client.EmuHawk
 
 			_dummyViewport = new Viewport(0, 0, Viewport.Width, Viewport.Height);
 
-			_overlay.Dispose();
-			Reticle.Dispose();
+			CleanUpDisposables();
 
-			_pen.Color = Color.White;
-			_overlay = new Bitmap(Viewport.Width, Viewport.Height, PixelFormat.Format32bppArgb);
-			Reticle = GenerateReticle(_pen, Viewport.Width, Viewport.Height);
+			Pen = new Pen(Brushes.White);
+			Reticle = GenerateReticle(Pen, Viewport.Width, Viewport.Height);
+			Overlay = new Bitmap(Viewport.Width, Viewport.Height, PixelFormat.Format32bppArgb);
 
 			_drawRegionRect = new Rectangle(0, 0, Viewport.Width, Viewport.Height);
 		}
 		private void ApplyOverlayToFramebuffer(uint index)
 		{
-			BitmapData data = _overlay.LockBits(
+			BitmapData data = Overlay.LockBits(
 				_drawRegionRect,
 				ImageLockMode.ReadOnly,
 				PixelFormat.Format32bppArgb);
@@ -589,9 +606,9 @@ namespace BizHawk.Client.EmuHawk
 
 			string previousDomain = Mem.GetCurrentMemoryDomain();
 			Mem.UseMemoryDomain("GPURAM");
-			for (int y = 0; y < _overlay.Height; y++)
+			for (int y = 0; y < Overlay.Height; y++)
 			{
-				for (int x = 0; x < _overlay.Width; x++)
+				for (int x = 0; x < Overlay.Width; x++)
 				{
 					int ofs = (y * data.Stride) + (x * 4);
 					int pixel = Marshal.ReadInt32(data.Scan0, ofs);
@@ -621,11 +638,11 @@ namespace BizHawk.Client.EmuHawk
 			}
 			Mem.UseMemoryDomain(previousDomain);
 
-			_overlay.UnlockBits(data);
+			Overlay.UnlockBits(data);
 		}
 		private void ApplyOverlayToGui()
 		{
-			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.DrawImage(_overlay, Viewport.Left, Viewport.Top));
+			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.DrawImage(Overlay, Viewport.Left, Viewport.Top));
 		}
 
 		private void IndexOfDrawRegion_ValueChanging(uint address, uint value, uint flags)

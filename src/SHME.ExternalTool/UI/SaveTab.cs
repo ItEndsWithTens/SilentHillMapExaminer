@@ -269,6 +269,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private void UpdateStripes()
 		{
+			Image old = PbxHazardStripes.Image;
+
 			if (CbxSaveRamDanger.Checked)
 			{
 				PbxHazardStripes.Image = GenerateHazardStripes(Color.LightGray, Color.Black);
@@ -277,6 +279,8 @@ namespace BizHawk.Client.EmuHawk
 			{
 				PbxHazardStripes.Image = GenerateHazardStripes(Color.Yellow, Color.Black);
 			}
+
+			old?.Dispose();
 		}
 
 		public Bitmap GenerateHazardStripes(Color colorA, Color colorB, int stripeWidth = 16)
