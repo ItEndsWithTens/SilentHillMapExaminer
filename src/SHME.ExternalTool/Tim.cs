@@ -42,7 +42,7 @@ namespace SHME.ExternalTool
 		/// </remarks>
 		public bool CF { get; private set; }
 
-		public int ClutHeaderOfs;
+		public int ClutHeaderOfs { get; }
 
 		/// <summary>
 		/// Data length of CLUT block (including 4 byte Bnum)
@@ -113,36 +113,40 @@ namespace SHME.ExternalTool
 	{
 		public TimHeader Header { get; }
 
-		public byte[] ClutBytes { get; }
+		public IEnumerable<byte> ClutBytes { get; }
 
-		public byte[] ImageBytes { get; }
+		public IEnumerable<byte> ImageBytes { get; }
 
-		public List<Color> Clut { get; } = new List<Color>();
+		public IList<Color> Clut { get; } = new List<Color>();
 		public Bitmap Bitmap { get; }
 
-		public Tim(TimHeader h, byte[] bytes)
+		public Tim(TimHeader header, byte[] bytes)
 		{
-			Header = h;
+			Header = header ?? throw new ArgumentNullException(nameof(header));
 
 			int clutHeaderLength = 12;
-			ClutBytes = bytes.Skip(h.ClutHeaderOfs + clutHeaderLength).Take(h.ClutBlockLength - clutHeaderLength).ToArray();
+			ClutBytes = bytes
+				.Skip(header.ClutHeaderOfs + clutHeaderLength)
+				.Take(header.ClutBlockLength - clutHeaderLength);
 
 			LoadClut();
 
 			int imageHeaderLength = 12;
-			ImageBytes = bytes.Skip(h.ImageHeaderOfs + imageHeaderLength).Take(h.ImageBlockLength - imageHeaderLength).ToArray();
+			ImageBytes = bytes
+				.Skip(header.ImageHeaderOfs + imageHeaderLength)
+				.Take(header.ImageBlockLength - imageHeaderLength);
 
-			var size = new Size(h.ImageFrameBufferWidth, h.ImageFrameBufferHeight);
+			var size = new Size(header.ImageFrameBufferWidth, header.ImageFrameBufferHeight);
 			if (Header.Pmode == 1)
 			{
-				size.Width = h.ImageFrameBufferWidth * 2;
+				size.Width = header.ImageFrameBufferWidth * 2;
 			}
 			Bitmap = new Bitmap(size.Width, size.Height);
 
 			LoadPixels();
 		}
 
-		private Color InterpretClutColor(short entry)
+		private static Color InterpretClutColor(short entry)
 		{
 			int rBase = (entry & 0b00000000_00011111) >> 0;
 			int gBase = (entry & 0b00000011_11100000) >> 5;
@@ -187,13 +191,15 @@ namespace SHME.ExternalTool
 		{
 			int bytesPerRow = Header.ClutDataWidth * sizeof(short);
 
+			byte[] array = ClutBytes.ToArray();
+
 			for (int y = 0; y < Header.ClutDataHeight; y++)
 			{
 				int row = bytesPerRow * y;
 
 				for (int x = 0; x < bytesPerRow; x += sizeof(int))
 				{
-					int pair = BitConverter.ToInt32(ClutBytes, row + x);
+					int pair = BitConverter.ToInt32(array, row + x);
 
 					short entry0 = (short)((pair & 0b00000000_00000000_11111111_11111111) >> 0);
 					short entry1 = (short)((pair & 0b11111111_11111111_00000000_00000000) >> 16);
@@ -212,13 +218,15 @@ namespace SHME.ExternalTool
 
 				int bytesPerRow = Header.ImageFrameBufferWidth * sizeof(short);
 
+				byte[] array = ImageBytes.ToArray();
+
 				for (int y = 0; y < Header.ImageFrameBufferHeight; y++)
 				{
 					int row = bytesPerRow * y;
 
 					for (int x = 0; x < bytesPerRow; x += sizeof(int))
 					{
-						int group = BitConverter.ToInt32(ImageBytes, row + x);
+						int group = BitConverter.ToInt32(array, row + x);
 
 						short pair0 = (short)((group & 0b00000000_00000000_11111111_11111111) >> 0);
 						short pair1 = (short)((group & 0b11111111_11111111_00000000_00000000) >> 16);
