@@ -129,7 +129,10 @@ namespace SHME.ExternalTool
 				.Skip(header.ClutHeaderOfs + clutHeaderLength)
 				.Take(header.ClutBlockLength - clutHeaderLength);
 
-			LoadClut();
+			// TODO: When it comes time to load TIM format images beside the
+			// area maps, figure out how to determine whether translucency
+			// processing is on, and pass in true here when necessary.
+			LoadClut(false);
 
 			int imageHeaderLength = 12;
 			ImageBytes = bytes
@@ -146,48 +149,34 @@ namespace SHME.ExternalTool
 			LoadPixels();
 		}
 
-		private static Color InterpretClutColor(short entry)
+		private static Color InterpretClutColor(short entry, bool translucency)
 		{
-			int rBase = (entry & 0b00000000_00011111) >> 0;
-			int gBase = (entry & 0b00000011_11100000) >> 5;
-			int bBase = (entry & 0b01111100_00000000) >> 10;
-			int aBase = (entry & 0b10000000_00000000) >> 15;
+			// Right shifts by 0, 5, and 10, respectively, are combined here
+			// with left shifts by 3, in order to scale the 5 bit components
+			// up to their 8 bit equivalents.
+			int r = (entry & 0b00000000_00011111) << 3;
+			int g = (entry & 0b00000011_11100000) >> 2;
+			int b = (entry & 0b01111100_00000000) >> 7;
 
-			int r = (int)Math.Round(Utility.ScaleToRange(rBase, 0, 32, 0, 255));
-			int g = (int)Math.Round(Utility.ScaleToRange(gBase, 0, 32, 0, 255));
-			int b = (int)Math.Round(Utility.ScaleToRange(bBase, 0, 32, 0, 255));
-
-			int a;
-			// Black handling based on table 3-1, in section 3-4, in the
-			// March 2000 revision of File Format 47.pdf, the Sony "File
-			// Formats" manual.
-			if (aBase == 1)
+			// Semi-transparency handling based on table 3-1 in section 3-4 of
+			// the March 2000 revision of Sony's "File Format 47.pdf" manual.
+			int stp = (entry & 0b10000000_00000000) >> 15;
+			int a = (translucency, stp, r, g, b) switch
 			{
-				if (r == 0 && g == 0 && b == 0)
-				{
-					a = 255;
-				}
-				else
-				{
-					a = 127;
-				}
-			}
-			else
-			{
-				if (r == 0 && g == 0 && b == 0)
-				{
-					a = 0;
-				}
-				else
-				{
-					a = 255;
-				}
-			}
+				(true, 0, 0, 0, 0) => 0,
+				(false, 0, 0, 0, 0) => 0,
+				(true, 0, _, _, _) => 255,
+				(false, 0, _, _, _) => 255,
+				(true, 1, 0, 0, 0) => 255,
+				(true, 1, _, _, _) => 127,
+				(false, 1, _, _, _) => 255,
+				(_, _, _, _, _) => 255
+			};
 
 			return Color.FromArgb(a, r, g, b);
 		}
 
-		private void LoadClut()
+		private void LoadClut(bool translucency)
 		{
 			int bytesPerRow = Header.ClutDataWidth * sizeof(short);
 
@@ -204,8 +193,8 @@ namespace SHME.ExternalTool
 					short entry0 = (short)((pair & 0b00000000_00000000_11111111_11111111) >> 0);
 					short entry1 = (short)((pair & 0b11111111_11111111_00000000_00000000) >> 16);
 
-					Clut.Add(InterpretClutColor(entry0));
-					Clut.Add(InterpretClutColor(entry1));
+					Clut.Add(InterpretClutColor(entry0, translucency));
+					Clut.Add(InterpretClutColor(entry1, translucency));
 				}
 			}
 		}
