@@ -206,20 +206,14 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private MethodInfo? _infoHexSetDomain;
-		private MethodInfo? _infoHexGoTo;
 		private void HexEditorGoToAddress(long address)
 		{
-			if (_infoHexSetDomain == null || _infoHexGoTo == null)
+			if (Domains == null)
 			{
 				return;
 			}
 
-			Tool.OpenHexEditor();
-			var tool = (HexEditor)Tool.GetTool("HexEditor");
-
-			_infoHexSetDomain.Invoke(tool, new object[] { "MainRAM" });
-			_infoHexGoTo.Invoke(tool, new object[] { address });
+			ViewInHexEditor(Domains["MainRAM"], new[] { address }, WatchSize.DWord);
 		}
 
 		private string DecodePoiGeometry(Trigger t)

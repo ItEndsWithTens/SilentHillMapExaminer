@@ -45,6 +45,9 @@ namespace BizHawk.Client.EmuHawk
 
 		private ApiContainer Apis => ApiContainer ?? throw new ArgumentNullException();
 
+		[RequiredService]
+		private IMemoryDomains? Domains { get; set; }
+
 		[OptionalService]
 		public Octoshock? Octoshock { get; set; }
 
@@ -152,10 +155,7 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerFiredDetails
 			};
 
-			_infoHexSetDomain = typeof(HexEditor).GetMethod("SetMemoryDomain", BindingFlags.NonPublic | BindingFlags.Instance);
-			_infoHexGoTo = typeof(HexEditor).GetMethod("GoToAddress", BindingFlags.NonPublic | BindingFlags.Instance);
-
-			if (_infoHexSetDomain != null && _infoHexGoTo != null)
+			if (Domains != null)
 			{
 				foreach (Label l in labels)
 				{
