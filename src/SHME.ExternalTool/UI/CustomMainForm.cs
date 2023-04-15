@@ -1,4 +1,5 @@
 ﻿using BizHawk.Client.Common;
+using BizHawk.Common;
 using BizHawk.Emulation.Common;
 using BizHawk.Emulation.Cores.Sony.PSX;
 using BizHawk.Emulation.Cores.Waterbox;
@@ -120,6 +121,13 @@ namespace BizHawk.Client.EmuHawk
 			ClearOverlay();
 
 			base.OnClosing(e);
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+
+			CheckBizHawkVersion();
 		}
 
 		public override void Restart()
@@ -522,6 +530,35 @@ namespace BizHawk.Client.EmuHawk
 			return MathUtilities.RadiansToDegrees(halfAngle * 2.0f);
 		}
 
+		private void CheckBizHawkVersion()
+		{
+			string v = VersionInfo.MainVersion;
+
+			Assembly e = Assembly.GetExecutingAssembly();
+			var a = (AssemblyTitleAttribute)e.GetCustomAttribute(typeof(AssemblyTitleAttribute));
+
+			string raw = a.Title.Trim();
+			string b = raw.Substring(raw.LastIndexOf(' ') + 1);
+
+			if (b == v)
+			{
+				return;
+			}
+
+			DialogResult result = MessageBox.Show(
+				$"You're using BizHawk version {v}, but SHME was built for " +
+				$"version {b}, and might crash or work incorrectly. Do you " +
+				"want to try loading it anyway?",
+				"SHME: Mismatched BizHawk version!",
+				MessageBoxButtons.YesNo,
+				MessageBoxIcon.Warning);
+
+			if (result != DialogResult.Yes)
+			{
+				Close();
+			}
+		}
+
 		private void CleanUpDisposables()
 		{
 			Pen?.Dispose();
@@ -529,7 +566,7 @@ namespace BizHawk.Client.EmuHawk
 			Overlay?.Dispose();
 
 			_mapGraphic?.Dispose();
-			PbxHazardStripes.Image?.Dispose();
+			PbxHazardStripes?.Image?.Dispose();
 		}
 
 		private void Selectable_Enter(object sender, EventArgs e)

@@ -102,4 +102,33 @@
     </PropertyGroup>
   </Target>
 
+  <UsingTask
+    TaskName="ReadBizHawkVersion"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+    <ParameterGroup>
+      <BHV ParameterType="System.String" Output="true"/>
+    </ParameterGroup>
+
+    <Task>
+      <Reference Include="$(BizHawkOutputDir)\dll\BizHawk.Common.dll" />
+      <Using Namespace="BizHawk.Common" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          BHV = VersionInfo.MainVersion;
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="SetAssemblyTitle" AfterTargets="DecideFinalVersionNumber">
+    <ReadBizHawkVersion>
+      <Output PropertyName="BizHawkVersion" TaskParameter="BHV" />
+    </ReadBizHawkVersion>
+
+    <PropertyGroup>
+      <AssemblyTitle>Silent Hill Map Examiner for BizHawk $(BizHawkVersion)</AssemblyTitle>
+    </PropertyGroup>
+  </Target>
+
 </Project>
