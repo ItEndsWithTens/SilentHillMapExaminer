@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="GitCheck" BeforeTargets="PrepareForBuild">
+  <Target Name="GitCheck" AfterTargets="ResolveProjectReferences">
     <Exec
       Command="git --version"
       ConsoleToMsBuild="true"
@@ -110,7 +110,7 @@
   <UsingTask
     TaskName="CustomBuildTasks.ReadBizHawkVersion"
     TaskFactory="TaskHostFactory"
-    AssemblyFile="$(ArtifactsDir)/bin/CustomBuildTasks/$(Configuration)/$(TargetFramework)/CustomBuildTasks.dll">
+    AssemblyFile="$(ArtifactsDir)/bin/CustomBuildTasks/$(Configuration)/netstandard2.0/CustomBuildTasks.dll">
   </UsingTask>
 
   <Target Name="SetAssemblyTitle" AfterTargets="DecideFinalVersionNumber">
