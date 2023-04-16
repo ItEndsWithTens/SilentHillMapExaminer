@@ -1,0 +1,5 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--Dummy to avoid polluting this project with the .targets file above.-->
+
+</Project>

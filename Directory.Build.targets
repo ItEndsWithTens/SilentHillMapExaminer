@@ -102,29 +102,21 @@
     </PropertyGroup>
   </Target>
 
+  <!--Node reuse by MSBuild means that after a build, an inline task using the
+  BizHawk.Common assembly would keep that .dll open, preventing it from being
+  replaced when attempting to e.g. recompile BizHawk at a different commit. This
+  approach, using TaskHostFactory, forces the task to run in its own isolated
+  process, freeing resources (a file handle, in this case) afterwards.-->
   <UsingTask
-    TaskName="ReadBizHawkVersion"
-    TaskFactory="RoslynCodeTaskFactory"
-    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
-    <ParameterGroup>
-      <BHV ParameterType="System.String" Output="true"/>
-    </ParameterGroup>
-
-    <Task>
-      <Reference Include="$(BizHawkOutputDir)\dll\BizHawk.Common.dll" />
-      <Using Namespace="BizHawk.Common" />
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
-          BHV = VersionInfo.MainVersion;
-        ]]>
-      </Code>
-    </Task>
+    TaskName="CustomBuildTasks.ReadBizHawkVersion"
+    TaskFactory="TaskHostFactory"
+    AssemblyFile="$(ArtifactsDir)/bin/CustomBuildTasks/$(Configuration)/$(TargetFramework)/CustomBuildTasks.dll">
   </UsingTask>
 
   <Target Name="SetAssemblyTitle" AfterTargets="DecideFinalVersionNumber">
-    <ReadBizHawkVersion>
+    <CustomBuildTasks.ReadBizHawkVersion>
       <Output PropertyName="BizHawkVersion" TaskParameter="BHV" />
-    </ReadBizHawkVersion>
+    </CustomBuildTasks.ReadBizHawkVersion>
 
     <PropertyGroup>
       <AssemblyTitle>Silent Hill Map Examiner for BizHawk $(BizHawkVersion)</AssemblyTitle>

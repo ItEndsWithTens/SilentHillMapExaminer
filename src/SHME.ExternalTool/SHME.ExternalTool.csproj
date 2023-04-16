@@ -18,6 +18,8 @@
     <Reference Include="BizHawk.Emulation.DiscSystem" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.DiscSystem.dll" />
     <Reference Include="BizHawk.WinForms.Controls" HintPath="$(BizHawkOutputDir)\dll\BizHawk.WinForms.Controls.dll" />
     <Reference Include="System.Windows.Forms" />
+
+    <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj" />
   </ItemGroup>
 
   <Target Name="InstallInEmulator" AfterTargets="PostBuildEvent">
