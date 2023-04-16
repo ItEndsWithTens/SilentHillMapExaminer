@@ -21,7 +21,7 @@ namespace BizHawk.Client.EmuHawk
 	[ExternalTool(ToolName, Description = ToolDescription)]
 
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
-	[ExternalToolApplicability.RomWhitelist(CoreSystem.Playstation, USRetailConstants.HashBizHawk)]
+	[ExternalToolApplicability.RomList(VSystemID.Raw.PSX, USRetailConstants.HashBizHawk)]
 
 	public partial class CustomMainForm : ToolFormBase, IExternalToolForm
 	{
@@ -51,13 +51,8 @@ namespace BizHawk.Client.EmuHawk
 		[OptionalService]
 		public Octoshock? Octoshock { get; set; }
 
-		// The "Nymashock" type doesn't exist in BizHawk < 2.8, so sticking with
-		// its WaterboxCore base type allows this service without crashing. If
-		// the need should ever arise for anything specific to the Nymashock
-		// type, it'll be easy enough to drop support for old BizHawk versions,
-		// but there's no reason to force that before it's necessary.
 		[OptionalService]
-		public WaterboxCore? Nymashock { get; set; }
+		public Nymashock? Nymashock { get; set; }
 
 		public const string ToolName = "Silent Hill Map Examiner";
 		public const string ToolDescription = "";
