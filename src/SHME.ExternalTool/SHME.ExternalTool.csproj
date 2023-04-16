@@ -19,8 +19,31 @@
     <Reference Include="BizHawk.WinForms.Controls" HintPath="$(BizHawkOutputDir)\dll\BizHawk.WinForms.Controls.dll" />
     <Reference Include="System.Windows.Forms" />
 
-    <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj" />
+    <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
+
+  <!--Node reuse by MSBuild means that after a build, an inline task using the
+  BizHawk.Common assembly would keep that .dll open, preventing it from being
+  replaced when attempting to e.g. recompile BizHawk at a different commit. This
+  approach, using TaskHostFactory, forces the task to run in its own isolated
+  process, freeing resources (a file handle, in this case) afterwards.-->
+  <UsingTask
+    TaskName="CustomBuildTasks.ReadBizHawkVersion"
+    TaskFactory="TaskHostFactory"
+    AssemblyFile="$(ArtifactsDir)/bin/CustomBuildTasks/$(Configuration)/netstandard2.0/CustomBuildTasks.dll">
+  </UsingTask>
+
+  <Target Name="SetAssemblyTitle" AfterTargets="DecideFinalVersionNumber">
+    <CustomBuildTasks.ReadBizHawkVersion>
+      <Output PropertyName="BizHawkVersion" TaskParameter="BHV" />
+    </CustomBuildTasks.ReadBizHawkVersion>
+
+    <PropertyGroup>
+      <AssemblyTitle>Silent Hill Map Examiner for BizHawk $(BizHawkVersion)</AssemblyTitle>
+    </PropertyGroup>
+  </Target>
 
   <Target Name="InstallInEmulator" AfterTargets="PostBuildEvent">
     <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(BizHawkOutputDir)\ExternalTools" />
