@@ -185,6 +185,7 @@ namespace BizHawk.Client.EmuHawk
             this.label7 = new System.Windows.Forms.Label();
             this.TbpMap = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.CbxDiscoMode = new System.Windows.Forms.CheckBox();
             this.BtnFogWorldTintColorSwap = new System.Windows.Forms.Button();
             this.BtnCustomWorldTintCurrent = new System.Windows.Forms.Button();
             this.BtnCustomFogCurrent = new System.Windows.Forms.Button();
@@ -198,7 +199,7 @@ namespace BizHawk.Client.EmuHawk
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.BtnWorldTintColor = new System.Windows.Forms.Button();
-            this.CbxFogCustom = new System.Windows.Forms.CheckBox();
+            this.CbxCustomFog = new System.Windows.Forms.CheckBox();
             this.NudFogB = new System.Windows.Forms.NumericUpDown();
             this.NudFogG = new System.Windows.Forms.NumericUpDown();
             this.NudFogR = new System.Windows.Forms.NumericUpDown();
@@ -2374,6 +2375,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.CbxDiscoMode);
             this.tabPage3.Controls.Add(this.BtnFogWorldTintColorSwap);
             this.tabPage3.Controls.Add(this.BtnCustomWorldTintCurrent);
             this.tabPage3.Controls.Add(this.BtnCustomFogCurrent);
@@ -2387,7 +2389,7 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage3.Controls.Add(this.label11);
             this.tabPage3.Controls.Add(this.label12);
             this.tabPage3.Controls.Add(this.BtnWorldTintColor);
-            this.tabPage3.Controls.Add(this.CbxFogCustom);
+            this.tabPage3.Controls.Add(this.CbxCustomFog);
             this.tabPage3.Controls.Add(this.NudFogB);
             this.tabPage3.Controls.Add(this.NudFogG);
             this.tabPage3.Controls.Add(this.NudFogR);
@@ -2403,6 +2405,17 @@ namespace BizHawk.Client.EmuHawk
             this.tabPage3.TabIndex = 6;
             this.tabPage3.Text = "Fog";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // CbxDiscoMode
+            // 
+            this.CbxDiscoMode.AutoSize = true;
+            this.CbxDiscoMode.Location = new System.Drawing.Point(6, 595);
+            this.CbxDiscoMode.Name = "CbxDiscoMode";
+            this.CbxDiscoMode.Size = new System.Drawing.Size(82, 17);
+            this.CbxDiscoMode.TabIndex = 21;
+            this.CbxDiscoMode.Text = "Disco mode";
+            this.CbxDiscoMode.UseVisualStyleBackColor = true;
+            this.CbxDiscoMode.CheckedChanged += new System.EventHandler(this.CbxDiscoMode_CheckedChanged);
             // 
             // BtnFogWorldTintColorSwap
             // 
@@ -2555,15 +2568,15 @@ namespace BizHawk.Client.EmuHawk
             this.BtnWorldTintColor.UseVisualStyleBackColor = false;
             this.BtnWorldTintColor.Click += new System.EventHandler(this.BtnWorldTintColor_Click);
             // 
-            // CbxFogCustom
+            // CbxCustomFog
             // 
-            this.CbxFogCustom.AutoSize = true;
-            this.CbxFogCustom.Location = new System.Drawing.Point(70, 3);
-            this.CbxFogCustom.Name = "CbxFogCustom";
-            this.CbxFogCustom.Size = new System.Drawing.Size(79, 17);
-            this.CbxFogCustom.TabIndex = 8;
-            this.CbxFogCustom.Text = "Custom fog";
-            this.CbxFogCustom.UseVisualStyleBackColor = true;
+            this.CbxCustomFog.AutoSize = true;
+            this.CbxCustomFog.Location = new System.Drawing.Point(70, 3);
+            this.CbxCustomFog.Name = "CbxCustomFog";
+            this.CbxCustomFog.Size = new System.Drawing.Size(79, 17);
+            this.CbxCustomFog.TabIndex = 8;
+            this.CbxCustomFog.Text = "Custom fog";
+            this.CbxCustomFog.UseVisualStyleBackColor = true;
             // 
             // NudFogB
             // 
@@ -4186,7 +4199,7 @@ namespace BizHawk.Client.EmuHawk
 		private NumericUpDown NudFogB;
 		private NumericUpDown NudFogG;
 		private NumericUpDown NudFogR;
-		private CheckBox CbxFogCustom;
+		private CheckBox CbxCustomFog;
 		private CheckBox CbxCustomWorldTint;
 		private NumericUpDown NudWorldTintB;
 		private NumericUpDown NudWorldTintG;
@@ -4422,5 +4435,6 @@ namespace BizHawk.Client.EmuHawk
         private ComboBox CmbFramebufferZoom;
 		private Button BtnFramebufferSave;
 		private CheckBox CbxOverlayRenderToFramebuffer;
+		private CheckBox CbxDiscoMode;
 	}
 }

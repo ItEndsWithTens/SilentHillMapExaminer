@@ -6,25 +6,58 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
+		// Implemented based on https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_RGB_alternative
+		private static Color HsvToRgb(float h, float s, float v)
+		{
+			return Color.FromArgb(
+				ComponentFromWedge(5.0f, h, s, v),
+				ComponentFromWedge(3.0f, h, s, v),
+				ComponentFromWedge(1.0f, h, s, v));
+		}
+
+		private static int ComponentFromWedge(float wedge, float h, float s, float v)
+		{
+			float k = (wedge + (h / 60.0f)) % 6.0f;
+
+			float temp = v - (v * s * Math.Max(0.0f, Math.Min(Math.Min(k, 4.0f - k), 1.0f)));
+
+			return (int)(temp * 255.0f);
+		}
+
 		private void UpdateFog()
 		{
+			var colorF = Color.FromArgb((int)NudFogR.Value, (int)NudFogG.Value, (int)NudFogB.Value);
+			var colorW = Color.FromArgb((int)NudWorldTintR.Value, (int)NudWorldTintG.Value, (int)NudWorldTintB.Value);
+
+			if (CbxDiscoMode.Checked)
+			{
+				uint id = Mem.ReadByte(Rom.Addresses.MainRam.Last3DDrawStartID);
+
+				// The range of 'id' is 0 through 63, so 360 / 64 == 5.625.
+				float hueF = id * 5.625f;
+				float hueW = ((id + 32) % 64) * 5.625f;
+
+				colorF = HsvToRgb(hueF, 1.0f, 1.0f);
+				colorW = HsvToRgb(hueW, 1.0f, 1.0f);
+			}
+
 			if (!CbxFog.Checked)
 			{
 				Mem.WriteByte(Rom.Addresses.MainRam.FogEnabled, 0);
 			}
 
-			if (CbxFogCustom.Checked)
+			if (CbxCustomFog.Checked)
 			{
-				Mem.WriteByte(Rom.Addresses.MainRam.FogColorR, (byte)NudFogR.Value);
-				Mem.WriteByte(Rom.Addresses.MainRam.FogColorG, (byte)NudFogG.Value);
-				Mem.WriteByte(Rom.Addresses.MainRam.FogColorB, (byte)NudFogB.Value);
+				Mem.WriteByte(Rom.Addresses.MainRam.FogColorR, colorF.R);
+				Mem.WriteByte(Rom.Addresses.MainRam.FogColorG, colorF.G);
+				Mem.WriteByte(Rom.Addresses.MainRam.FogColorB, colorF.B);
 			}
 
 			if (CbxCustomWorldTint.Checked)
 			{
-				Mem.WriteByte(Rom.Addresses.MainRam.WorldTintR, (byte)NudWorldTintR.Value);
-				Mem.WriteByte(Rom.Addresses.MainRam.WorldTintG, (byte)NudWorldTintG.Value);
-				Mem.WriteByte(Rom.Addresses.MainRam.WorldTintB, (byte)NudWorldTintB.Value);
+				Mem.WriteByte(Rom.Addresses.MainRam.WorldTintR, colorW.R);
+				Mem.WriteByte(Rom.Addresses.MainRam.WorldTintG, colorW.G);
+				Mem.WriteByte(Rom.Addresses.MainRam.WorldTintB, colorW.B);
 			}
 		}
 
@@ -145,6 +178,15 @@ namespace BizHawk.Client.EmuHawk
 			(NudFogR.Value, NudWorldTintR.Value) = (NudWorldTintR.Value, NudFogR.Value);
 			(NudFogG.Value, NudWorldTintG.Value) = (NudWorldTintG.Value, NudFogG.Value);
 			(NudFogB.Value, NudWorldTintB.Value) = (NudWorldTintB.Value, NudFogB.Value);
+		}
+
+		private void CbxDiscoMode_CheckedChanged(object sender, EventArgs e)
+		{
+			if (CbxDiscoMode.Checked)
+			{
+				CbxCustomFog.Checked = true;
+				CbxCustomWorldTint.Checked = true;
+			}
 		}
 	}
 }
