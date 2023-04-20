@@ -305,7 +305,7 @@ namespace BizHawk.Client.EmuHawk
 				long a = Rom.Addresses.MainRam.IndexOfDrawRegion;
 				a += Rom.Addresses.MainRam.BaseAddress;
 
-				Apis.MemoryEvents.AddWriteCallback(IndexOfDrawRegion_ValueChanging, (uint)a, "System Bus");
+				MemEvents?.AddWriteCallback(IndexOfDrawRegion_ValueChanging, (uint)a, "System Bus");
 			}
 		}
 

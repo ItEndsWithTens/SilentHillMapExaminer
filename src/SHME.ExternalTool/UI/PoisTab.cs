@@ -208,12 +208,12 @@ namespace BizHawk.Client.EmuHawk
 
 		private void HexEditorGoToAddress(long address)
 		{
-			if (Domains == null)
+			if (MemDomains == null)
 			{
 				return;
 			}
 
-			ViewInHexEditor(Domains["MainRAM"], new[] { address }, WatchSize.DWord);
+			ViewInHexEditor(MemDomains["MainRAM"], new[] { address }, WatchSize.DWord);
 		}
 
 		private string DecodePoiGeometry(Trigger t)

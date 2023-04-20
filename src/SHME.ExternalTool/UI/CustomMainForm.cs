@@ -2,7 +2,6 @@
 using BizHawk.Common;
 using BizHawk.Emulation.Common;
 using BizHawk.Emulation.Cores.Sony.PSX;
-using BizHawk.Emulation.Cores.Waterbox;
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
@@ -27,6 +26,8 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private IMemoryApi Mem => Apis.Memory;
 
+		private IMemoryEventsApi? MemEvents => Apis.MemoryEvents;
+
 		private IGuiApi Gui => Apis.Gui;
 
 		private IJoypadApi Joy => Apis.Joypad;
@@ -35,7 +36,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private IEmulationApi Emulation => Apis.Emulation;
 
-		private IMemorySaveStateApi MemSS => Apis.MemorySaveState;
+		private IMemorySaveStateApi? MemSS => Apis.MemorySaveState;
 
 		private IToolApi Tool => Apis.Tool;
 
@@ -46,7 +47,7 @@ namespace BizHawk.Client.EmuHawk
 		private ApiContainer Apis => ApiContainer ?? throw new ArgumentNullException();
 
 		[RequiredService]
-		private IMemoryDomains? Domains { get; set; }
+		private IMemoryDomains? MemDomains { get; set; }
 
 		[OptionalService]
 		public Octoshock? Octoshock { get; set; }
@@ -150,7 +151,7 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedTriggerFiredDetails
 			};
 
-			if (Domains != null)
+			if (MemDomains != null)
 			{
 				foreach (Label l in labels)
 				{
@@ -249,10 +250,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ClearOverlay()
 		{
-			if (Apis.Libraries.ContainsKey(typeof(IMemoryEventsApi)))
-			{
-				Apis.MemoryEvents.RemoveMemoryCallback(IndexOfDrawRegion_ValueChanging);
-			}
+			MemEvents?.RemoveMemoryCallback(IndexOfDrawRegion_ValueChanging);
+
 			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
 		}
 
