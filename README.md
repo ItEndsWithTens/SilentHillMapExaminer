@@ -15,7 +15,7 @@
   Requirements
   ------------
 
-  - [BizHawk 2.6.3 or newer](https://github.com/TASEmulators/BizHawk/releases)
+  - [BizHawk 2.6.3 through 2.8](https://github.com/TASEmulators/BizHawk/releases)
   - [Silent Hill USA Original/Greatest Hits](http://redump.org/disc/137/)
 
 
