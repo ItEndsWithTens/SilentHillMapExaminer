@@ -125,9 +125,10 @@ namespace BizHawk.Client.EmuHawk
 			bool oldThrottle = Config?.ClockThrottle ?? true;
 			Emulation.LimitFramerate(false);
 
+			string dir = Path.GetDirectoryName(path);
 			string name = Path.GetFileNameWithoutExtension(path);
 
-			Emu.LoadState(name);
+			Emu.LoadState(Path.Combine(dir, name));
 
 			BtnOpenSaveMenu_Click(this, EventArgs.Empty);
 

@@ -35,11 +35,29 @@ namespace BizHawk.Client.EmuHawk
 
 		private IEmulationApi Emulation => Apis.Emulation;
 
-		private IMemorySaveStateApi MemSS => Apis.MemorySaveState;
-
 		private IToolApi Tool => Apis.Tool;
 
 		private ISaveStateApi SaveState => Apis.SaveState;
+
+		private IMemoryEventsApi? MemEvents
+		{
+			get
+			{
+				Apis.Libraries.TryGetValue(typeof(IMemoryEventsApi), out IExternalApi api);
+
+				return (IMemoryEventsApi)api;
+			}
+		}
+
+		private IMemorySaveStateApi? MemSS
+		{
+			get
+			{
+				Apis.Libraries.TryGetValue(typeof(IMemorySaveStateApi), out IExternalApi api);
+
+				return (IMemorySaveStateApi)api;
+			}
+		}
 
 		public ApiContainer? ApiContainer { get; set; }
 
