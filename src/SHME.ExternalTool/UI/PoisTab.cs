@@ -48,6 +48,8 @@ namespace BizHawk.Client.EmuHawk
 		{
 			BtnReadPois.Enabled = !CbxTriggersAutoUpdate.Checked;
 			BtnReadTriggers.Enabled = !CbxTriggersAutoUpdate.Checked;
+
+			_triggerArrayNeedsUpdate = true;
 		}
 
 		private bool _triggerArrayNeedsUpdate;
