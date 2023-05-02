@@ -193,6 +193,17 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
+			// This value is always 0xFF during gameplay, and switches to other
+			// values only when a stage is being loaded. Once that's done, the
+			// value goes back to 0xFF, so any other value means we're not in
+			// an actual level yet, and there's no sense continuing.
+			uint stage = Mem.ReadByte(Rom.Addresses.MainRam.IndexOfStageBeingLoaded);
+			if (stage != 0xFF)
+			{
+				_triggerArrayNeedsUpdate = true;
+				return;
+			}
+
 			switch (type)
 			{
 				case ToolFormUpdateType.PreFrame:

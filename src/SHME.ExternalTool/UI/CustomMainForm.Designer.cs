@@ -2200,9 +2200,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblTriggerCount.AutoSize = true;
             this.LblTriggerCount.Location = new System.Drawing.Point(292, 11);
             this.LblTriggerCount.Name = "LblTriggerCount";
-            this.LblTriggerCount.Size = new System.Drawing.Size(13, 13);
+            this.LblTriggerCount.Size = new System.Drawing.Size(10, 13);
             this.LblTriggerCount.TabIndex = 71;
-            this.LblTriggerCount.Text = "0";
+            this.LblTriggerCount.Text = "-";
             // 
             // BtnReadTriggers
             // 
@@ -2230,9 +2230,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblPoiCount.AutoSize = true;
             this.LblPoiCount.Location = new System.Drawing.Point(87, 11);
             this.LblPoiCount.Name = "LblPoiCount";
-            this.LblPoiCount.Size = new System.Drawing.Size(13, 13);
+            this.LblPoiCount.Size = new System.Drawing.Size(10, 13);
             this.LblPoiCount.TabIndex = 56;
-            this.LblPoiCount.Text = "0";
+            this.LblPoiCount.Text = "-";
             // 
             // BtnReadPois
             // 
@@ -2710,9 +2710,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblStringCount.AutoSize = true;
             this.LblStringCount.Location = new System.Drawing.Point(87, 11);
             this.LblStringCount.Name = "LblStringCount";
-            this.LblStringCount.Size = new System.Drawing.Size(13, 13);
+            this.LblStringCount.Size = new System.Drawing.Size(10, 13);
             this.LblStringCount.TabIndex = 55;
-            this.LblStringCount.Text = "0";
+            this.LblStringCount.Text = "-";
             // 
             // BtnReadStrings
             // 

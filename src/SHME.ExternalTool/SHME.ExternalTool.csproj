@@ -42,7 +42,7 @@
     </CustomBuildTasks.ReadBizHawkVersion>
 
     <PropertyGroup>
-      <AssemblyTitle>Silent Hill Map Examiner for BizHawk $(BizHawkVersion)</AssemblyTitle>
+      <AssemblyTitle>$(Product) for BizHawk $(BizHawkVersion)</AssemblyTitle>
     </PropertyGroup>
   </Target>
 

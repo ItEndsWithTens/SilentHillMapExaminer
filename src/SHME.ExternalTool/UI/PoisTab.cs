@@ -14,35 +14,11 @@ namespace BizHawk.Client.EmuHawk
 	{
 		public Dictionary<PointOfInterest, Renderable?> Pois { get; set; } = new Dictionary<PointOfInterest, Renderable?>();
 
-		private long _arrayCountdownStartFrameCount;
-		private System.Timers.Timer? _arrayCountdown;
-
 		private void InitializePoisTab()
 		{
 			CmbRenderShape.SelectedIndex = 0;
 
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
-
-			_arrayCountdown = new System.Timers.Timer(8)
-			{
-				AutoReset = true
-			};
-			_arrayCountdown.Elapsed += ArrayCountdown_Elapsed;
-		}
-
-		private void ArrayCountdown_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-		{
-			// During some particularly long map loads, various array pointers
-			// will be updated before the arrays have been filled with their
-			// contents. Waiting for a few frames takes care of that.
-			if (Emulation.FrameCount() - _arrayCountdownStartFrameCount < 45)
-			{
-				return;
-			}
-
-			_arrayCountdown.Stop();
-
-			Invoke(new Action(() => { BtnReadTriggers_Click(this, EventArgs.Empty); }));
 		}
 
 		private void BtnClearPoisTriggers_Click(object sender, EventArgs e)
@@ -54,6 +30,8 @@ namespace BizHawk.Client.EmuHawk
 			Pois.Clear();
 			Triggers.Clear();
 			Boxes.Clear();
+			LblPoiCount.Text = "-";
+			LblTriggerCount.Text = "-";
 		}
 
 		private void BtnGoToPoi_Click(object sender, EventArgs e)
@@ -72,38 +50,14 @@ namespace BizHawk.Client.EmuHawk
 			BtnReadTriggers.Enabled = !CbxTriggersAutoUpdate.Checked;
 		}
 
-		private long _previousPoiArrayAddress;
-		private long _previousFunctionPointerArrayAddress;
-		private long _previousTriggerArrayAddress;
-		private long _previousUnknownThingAddress;
+		private bool _triggerArrayNeedsUpdate;
 		private void CheckForTriggerArrayUpdate()
 		{
-			int poiArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
-			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
-
-			int functionPointerArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
-			functionPointerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
-
-			int triggerArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
-			triggerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
-
-			int unknownThingAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToUnknownThingAfterArrayOfTriggers);
-			unknownThingAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
-
-			bool poiArrayLocationChange = poiArrayAddress != _previousPoiArrayAddress;
-			bool poiArrayLengthChange = functionPointerArrayAddress != _previousFunctionPointerArrayAddress;
-			bool triggerArrayLocationChange = triggerArrayAddress != _previousTriggerArrayAddress;
-			bool triggerArrayLengthChange = unknownThingAddress != _previousUnknownThingAddress;
-
-			if (poiArrayLocationChange || poiArrayLengthChange || triggerArrayLocationChange || triggerArrayLengthChange)
+			if (_triggerArrayNeedsUpdate)
 			{
-				_previousPoiArrayAddress = poiArrayAddress;
-				_previousFunctionPointerArrayAddress = functionPointerArrayAddress;
-				_previousTriggerArrayAddress = triggerArrayAddress;
-				_previousUnknownThingAddress = unknownThingAddress;
+				Invoke(new Action(() => { BtnReadTriggers_Click(this, EventArgs.Empty); }));
 
-				_arrayCountdownStartFrameCount = Emulation.FrameCount();
-				_arrayCountdown.Start();
+				_triggerArrayNeedsUpdate = false;
 			}
 		}
 
@@ -497,21 +451,18 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Pois.Clear();
 			LbxPois.Items.Clear();
-			LblPoiCount.Text = "0";
+			LblPoiCount.Text = "-";
 
 			Triggers.Clear();
 			LbxTriggers.Items.Clear();
-			LblTriggerCount.Text = "0";
+			LblTriggerCount.Text = "-";
 
 			LbxPoiAssociatedTriggers.Items.Clear();
 
 			ClearDisplayedPoiInfo();
 			ClearDisplayedTriggerInfo();
 
-			_previousPoiArrayAddress = 0x0;
-			_previousFunctionPointerArrayAddress = 0x0;
-			_previousTriggerArrayAddress = 0x0;
-			_previousUnknownThingAddress = 0x0;
+			_triggerArrayNeedsUpdate = true;
 	}
 
 		private void LbxTriggers_Format(object sender, ListControlConvertEventArgs e)

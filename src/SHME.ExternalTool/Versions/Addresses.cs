@@ -87,6 +87,7 @@
 		public long HarryState { get; set; }
 
 		public long SaveData { get; set; }
+		public long IndexOfLoadedStage { get; set; }
 		public long Inventory { get; set; }
 		public long TriggerState { get; set; }
 		public long ItemCount { get; set; }
@@ -97,6 +98,7 @@
 
 		public long FramebufferWidth { get; set; }
 		public long FramebufferHeight { get; set; }
+		public long IndexOfStageBeingLoaded { get; set; }
 		public long ProjectionPlaneDistanceCurrent { get; set; }
 
 		public long LastHarrySpawnPoint { get; set; }

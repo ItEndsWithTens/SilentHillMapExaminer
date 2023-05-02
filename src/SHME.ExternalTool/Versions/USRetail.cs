@@ -125,7 +125,7 @@
 				// with them. Harry's position isn't necessarily correct, but if
 				// you manually plop him where he should be, the geometry's all
 				// there.
-				// 0xBCAD8
+				IndexOfLoadedStage = 0xBCAD8,
 
 				Inventory = 0xBCADC, // Not quite. The most significant byte reflects the number of item slots, but doesn't give you the items.
 				TriggerState = 0xBCB98,
@@ -138,6 +138,7 @@
 				FramebufferWidth = 0xBCCB0,
 				// Keep these two in sync if adjusting by hand! Rendering goes screwy otherwise.
 				FramebufferHeight = 0xBCCB2,
+				IndexOfStageBeingLoaded = 0xBCCD9,
 				ProjectionPlaneDistanceCurrent = 0xB9D00,
 
 				LastHarrySpawnPoint = 0xBCDB0,
