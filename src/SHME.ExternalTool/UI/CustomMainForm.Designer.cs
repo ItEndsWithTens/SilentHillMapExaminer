@@ -90,6 +90,8 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.NudCrosshairLength = new System.Windows.Forms.NumericUpDown();
+            this.label70 = new System.Windows.Forms.Label();
             this.CbxOverlayRenderToFramebuffer = new System.Windows.Forms.CheckBox();
             this.label69 = new System.Windows.Forms.Label();
             this.CmbRenderMode = new System.Windows.Forms.ComboBox();
@@ -300,7 +302,6 @@ namespace BizHawk.Client.EmuHawk
             this.CmbFramebufferZoom = new System.Windows.Forms.ComboBox();
             this.BtnFramebufferZoomOut = new System.Windows.Forms.Button();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
-            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
             this.NudFramebufferH = new System.Windows.Forms.NumericUpDown();
             this.NudFramebufferW = new System.Windows.Forms.NumericUpDown();
@@ -308,6 +309,7 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferOfsX = new System.Windows.Forms.NumericUpDown();
             this.BtnFramebufferGrab = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -316,6 +318,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpBasics.SuspendLayout();
             this.GbxControls.SuspendLayout();
             this.GbxOverlay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCrosshairLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraX)).BeginInit();
@@ -366,11 +369,11 @@ namespace BizHawk.Client.EmuHawk
             this.CmsFilesDirectories.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.ScrFramebuffer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -1232,6 +1235,8 @@ namespace BizHawk.Client.EmuHawk
             // GbxOverlay
             // 
             this.GbxOverlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.GbxOverlay.Controls.Add(this.NudCrosshairLength);
+            this.GbxOverlay.Controls.Add(this.label70);
             this.GbxOverlay.Controls.Add(this.CbxOverlayRenderToFramebuffer);
             this.GbxOverlay.Controls.Add(this.label69);
             this.GbxOverlay.Controls.Add(this.CmbRenderMode);
@@ -1263,6 +1268,38 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabIndex = 15;
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
+            // 
+            // NudCrosshairLength
+            // 
+            this.NudCrosshairLength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.NudCrosshairLength.DecimalPlaces = 1;
+            this.NudCrosshairLength.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.NudCrosshairLength.Location = new System.Drawing.Point(274, 259);
+            this.NudCrosshairLength.Name = "NudCrosshairLength";
+            this.NudCrosshairLength.Size = new System.Drawing.Size(52, 20);
+            this.NudCrosshairLength.TabIndex = 95;
+            this.toolTip1.SetToolTip(this.NudCrosshairLength, "Crosshair length as a percentage of viewport width");
+            this.NudCrosshairLength.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            65536});
+            this.NudCrosshairLength.ValueChanged += new System.EventHandler(this.NudCrosshairLength_ValueChanged);
+            // 
+            // label70
+            // 
+            this.label70.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label70.AutoSize = true;
+            this.label70.Location = new System.Drawing.Point(186, 261);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(82, 13);
+            this.label70.TabIndex = 94;
+            this.label70.Text = "Crosshair length";
+            this.toolTip1.SetToolTip(this.label70, "Crosshair length as a percentage of viewport width");
             // 
             // CbxOverlayRenderToFramebuffer
             // 
@@ -3929,17 +3966,6 @@ namespace BizHawk.Client.EmuHawk
             this.ScrFramebuffer.TabIndex = 8;
             this.ScrFramebuffer.Text = "scrollableControl1";
             // 
-            // BpbFramebuffer
-            // 
-            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
-            this.BpbFramebuffer.Name = "BpbFramebuffer";
-            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 545);
-            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BpbFramebuffer.TabIndex = 7;
-            this.BpbFramebuffer.TabStop = false;
-            // 
             // BtnFramebufferZoomIn
             // 
             this.BtnFramebufferZoomIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -4054,6 +4080,17 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFramebufferGrab.UseVisualStyleBackColor = true;
             this.BtnFramebufferGrab.Click += new System.EventHandler(this.BtnFramebufferGrab_Click);
             // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 545);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
+            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -4072,6 +4109,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxControls.PerformLayout();
             this.GbxOverlay.ResumeLayout(false);
             this.GbxOverlay.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCrosshairLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraX)).EndInit();
@@ -4134,11 +4172,11 @@ namespace BizHawk.Client.EmuHawk
             this.CmsFilesDirectories.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.ScrFramebuffer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -4436,5 +4474,7 @@ namespace BizHawk.Client.EmuHawk
 		private Button BtnFramebufferSave;
 		private CheckBox CbxOverlayRenderToFramebuffer;
 		private CheckBox CbxDiscoMode;
+		private NumericUpDown NudCrosshairLength;
+		private Label label70;
 	}
 }

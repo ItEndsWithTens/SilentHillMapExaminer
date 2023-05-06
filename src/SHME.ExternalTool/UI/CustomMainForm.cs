@@ -169,8 +169,10 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		static public Bitmap GenerateReticle(Pen pen, int width, int height)
+		public static Bitmap GenerateReticle(Pen pen, int width, int height, float percent)
 		{
+			pen.Color = Color.White;
+
 			var bmp = new Bitmap(width, height);
 
 			var g = Graphics.FromImage(bmp);
@@ -179,8 +181,18 @@ namespace BizHawk.Client.EmuHawk
 
 			g.Clear(Color.FromArgb(0, 0, 0, 0));
 			g.DrawRectangle(pen, 0, 0, width - 1, height - 1);
-			g.DrawLine(pen, 0, height / 2, width, height / 2);
-			g.DrawLine(pen, width / 2, 0, width / 2, height - 1);
+
+			int size = (int)Math.Round(height * (percent / 100.0f));
+			int centerW = width / 2;
+			int centerH = height / 2;
+
+			g.DrawLine(pen, 0, centerH, size, centerH);
+			g.DrawLine(pen, centerW - size / 2, centerH, centerW + size / 2, centerH);
+			g.DrawLine(pen, width - 1 - size, centerH, width - 1, centerH);
+
+			g.DrawLine(pen, centerW, 0, centerW, size);
+			g.DrawLine(pen, centerW, centerH - size / 2, centerW, centerH + size / 2);
+			g.DrawLine(pen, centerW, height - 1 - size, centerW, height - 1);
 
 			return bmp;
 		}
@@ -628,7 +640,7 @@ namespace BizHawk.Client.EmuHawk
 			CleanUpDisposables();
 
 			Pen = new Pen(Brushes.White);
-			Reticle = GenerateReticle(Pen, Viewport.Width, Viewport.Height);
+			Reticle = GenerateReticle(Pen, Viewport.Width, Viewport.Height, (float)NudCrosshairLength.Value);
 			Overlay = new Bitmap(Viewport.Width, Viewport.Height, PixelFormat.Format32bppArgb);
 
 			_drawRegionRect = new Rectangle(0, 0, Viewport.Width, Viewport.Height);
