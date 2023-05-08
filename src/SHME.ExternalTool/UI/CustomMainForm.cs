@@ -73,12 +73,15 @@ namespace BizHawk.Client.EmuHawk
 
 		public Rom Rom => Core.Rom;
 
-		private Viewport Viewport { get; } = new Viewport();
+		private Viewport ClickPort { get; set; } = new Viewport();
+		private Viewport RenderPort { get; set; } = new Viewport();
 
 		// TODO: Try to eliminate need for this; maybe better Viewport class,
 		// or a Vertex WorldToScreen method that doesn't need this?
 		private Viewport _dummyViewport = new Viewport();
 		private Rectangle _drawRegionRect;
+
+		private Control? _gameSurface;
 
 		public CustomMainForm()
 		{
@@ -112,11 +115,14 @@ namespace BizHawk.Client.EmuHawk
 				}
 			}
 
+			DetachEventHandlers();
+
 			base.Dispose(disposing);
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
+			DetachEventHandlers();
 			ClearOverlay();
 
 			base.OnClosing(e);
@@ -139,8 +145,6 @@ namespace BizHawk.Client.EmuHawk
 			ModelBoxes.Clear();
 
 			Mem.UseMemoryDomain("MainRAM");
-
-			Emu.StateLoaded += Emu_StateLoaded;
 
 			CbxOverlayRenderToFramebuffer_CheckedChanged(this, EventArgs.Empty);
 
@@ -167,6 +171,9 @@ namespace BizHawk.Client.EmuHawk
 					l.Cursor = Cursors.Default;
 				}
 			}
+
+			DetachEventHandlers();
+			AttachEventHandlers();
 		}
 
 		public static Bitmap GenerateReticle(Pen pen, int width, int height, float percent)
@@ -524,6 +531,40 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private void AttachEventHandlers()
+		{
+			Emu.StateLoaded += Emu_StateLoaded;
+
+			PropertyInfo? pInfo = typeof(DisplayManager).GetProperty("_graphicsControl", BindingFlags.NonPublic | BindingFlags.Instance);
+			if (pInfo != null)
+			{
+				var gc = (GraphicsControl)pInfo.GetValue(DisplayManager);
+
+				FieldInfo? fInfo = typeof(GraphicsControl).GetField("_managed", BindingFlags.NonPublic | BindingFlags.Instance);
+				if (fInfo != null)
+				{
+					_gameSurface = (Control)fInfo.GetValue(gc);
+
+					_gameSurface.MouseDown += _gameSurface_MouseDown;
+					_gameSurface.MouseUp += _gameSurface_MouseUp;
+				}
+			}
+
+			_raycastSelectionTimer.Tick += _raycastSelectionTimer_Tick;
+		}
+		private void DetachEventHandlers()
+		{
+			Emu.StateLoaded -= Emu_StateLoaded;
+
+			if (_gameSurface != null)
+			{
+				_gameSurface.MouseDown -= _gameSurface_MouseDown;
+				_gameSurface.MouseUp -= _gameSurface_MouseUp;
+			}
+
+			_raycastSelectionTimer.Tick -= _raycastSelectionTimer_Tick;
+		}
+
 		private float CalculateGameFov()
 		{
 			// The idea that the render height and projection plane distance are
@@ -584,6 +625,10 @@ namespace BizHawk.Client.EmuHawk
 
 			_mapGraphic?.Dispose();
 			PbxHazardStripes?.Image?.Dispose();
+
+			_raycastSelectionTimer?.Dispose();
+
+			_gameSurface = null;
 		}
 
 		private void Selectable_Enter(object sender, EventArgs e)
@@ -612,38 +657,42 @@ namespace BizHawk.Client.EmuHawk
 				CbxOverlayRenderToFramebuffer.Enabled = true;
 			}
 
-			if (CbxOverlayRenderToFramebuffer.Checked)
+			Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
+			if (mode == Octoshock.eResolutionMode.PixelPro)
 			{
-				Viewport.Width = 320;
-				Viewport.Height = 224;
-				Viewport.TopLeft = new Point(0, 0);
+				ClickPort.Width = 640;
+				ClickPort.Height = 448;
+				ClickPort.TopLeft = new Point(84, 16);
 			}
 			else
 			{
-				Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
-				if (mode == Octoshock.eResolutionMode.PixelPro)
-				{
-					Viewport.Width = 640;
-					Viewport.Height = 448;
-					Viewport.TopLeft = new Point(84, 16);
-				}
-				else
-				{
-					Viewport.Width = 320;
-					Viewport.Height = 224;
-					Viewport.TopLeft = new Point(17, 8);
-				}
+				ClickPort.Width = 320;
+				ClickPort.Height = 224;
+				ClickPort.TopLeft = new Point(17, 8);
 			}
 
-			_dummyViewport = new Viewport(0, 0, Viewport.Width, Viewport.Height);
+			if (CbxOverlayRenderToFramebuffer.Checked)
+			{
+				RenderPort.Width = 320;
+				RenderPort.Height = 224;
+				RenderPort.TopLeft = new Point(0, 0);
+			}
+			else
+			{
+				RenderPort.Width = ClickPort.Width;
+				RenderPort.Height = ClickPort.Height;
+				RenderPort.TopLeft = ClickPort.TopLeft;
+			}
+
+			_dummyViewport = new Viewport(0, 0, RenderPort.Width, RenderPort.Height);
 
 			CleanUpDisposables();
 
 			Pen = new Pen(Brushes.White);
-			Reticle = GenerateReticle(Pen, Viewport.Width, Viewport.Height, (float)NudCrosshairLength.Value);
-			Overlay = new Bitmap(Viewport.Width, Viewport.Height, PixelFormat.Format32bppArgb);
+			Reticle = GenerateReticle(Pen, RenderPort.Width, RenderPort.Height, (float)NudCrosshairLength.Value);
+			Overlay = new Bitmap(RenderPort.Width, RenderPort.Height, PixelFormat.Format32bppArgb);
 
-			_drawRegionRect = new Rectangle(0, 0, Viewport.Width, Viewport.Height);
+			_drawRegionRect = new Rectangle(0, 0, RenderPort.Width, RenderPort.Height);
 		}
 		private void ApplyOverlayToFramebuffer(uint index)
 		{
@@ -696,7 +745,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 		private void ApplyOverlayToGui()
 		{
-			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.DrawImage(Overlay, Viewport.Left, Viewport.Top));
+			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.DrawImage(Overlay, RenderPort.Left, RenderPort.Top));
 		}
 
 		private void IndexOfDrawRegion_ValueChanging(uint address, uint value, uint flags)

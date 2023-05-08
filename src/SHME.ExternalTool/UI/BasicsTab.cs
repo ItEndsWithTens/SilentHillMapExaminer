@@ -311,7 +311,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void NudCrosshairLength_ValueChanged(object sender, EventArgs e)
 		{
-			Bitmap reticle = GenerateReticle(Pen, Viewport.Width, Viewport.Height, (float)NudCrosshairLength.Value);
+			Bitmap reticle = GenerateReticle(Pen, RenderPort.Width, RenderPort.Height, (float)NudCrosshairLength.Value);
 
 			Reticle?.Dispose();
 			Reticle = reticle;
