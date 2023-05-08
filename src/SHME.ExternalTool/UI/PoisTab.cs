@@ -114,6 +114,7 @@ namespace BizHawk.Client.EmuHawk
 			LblSelectedPoiX.Text = "???.??";
 			LblSelectedPoiZ.Text = "???.??";
 			LblSelectedPoiGeometry.Text = "0x";
+			LbxPoiAssociatedTriggers.Items.Clear();
 		}
 
 		private void ClearDisplayedTriggerInfo()
@@ -405,6 +406,15 @@ namespace BizHawk.Client.EmuHawk
 				LblSelectedPoiGeometry.Text = $"0x{poi.Geometry:X2}";
 
 				RefreshLbxPoiAssociatedTriggers();
+
+				IEnumerable<Trigger>? associated = LbxTriggers.Items
+					.OfType<Trigger>()
+					.Where(item => item.PoiIndex == lbx.SelectedIndex);
+
+				if (associated.Any() && !associated.Contains(LbxTriggers.SelectedItem as Trigger))
+				{
+					LbxPoiAssociatedTriggers.SelectedIndex = 0;
+				}
 			}
 			else
 			{
