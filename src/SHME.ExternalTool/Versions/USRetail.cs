@@ -115,6 +115,8 @@
 
 				HarryState = 0xBA150,
 
+				// 0xBC750 // View control normal/reversed
+
 				SaveData = 0xBCA34,
 				// 0xBCA35 // Health drink count
 				// 0xBCA39 // First aid kit count

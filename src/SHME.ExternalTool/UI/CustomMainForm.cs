@@ -231,6 +231,10 @@ namespace BizHawk.Client.EmuHawk
 					{
 						CheckForSaveButtonPress();
 					}
+					if (CbxCameraLockToHead.Checked)
+					{
+						Mem.WriteByte(Rom.Addresses.MainRam.CameraLockedToHead, 0x1);
+					}
 					if (!CbxOverlayRenderToFramebuffer.Checked)
 					{
 						if (CbxCameraDetach.Checked)
