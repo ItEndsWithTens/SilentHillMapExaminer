@@ -199,22 +199,17 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnSetPosition_Click(object sender, EventArgs e)
 		{
-			bool success;
-
-			success = Single.TryParse(TbxPositionX.Text, out float x);
-			if (!success)
+			if (!Single.TryParse(TbxPositionX.Text, out float x))
 			{
 				x = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionX));
 			}
 
-			success = Single.TryParse(TbxPositionY.Text, out float y);
-			if (!success)
+			if (!Single.TryParse(TbxPositionY.Text, out float y))
 			{
 				y = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionY));
 			}
 
-			success = Single.TryParse(TbxPositionZ.Text, out float z);
-			if (!success)
+			if (!Single.TryParse(TbxPositionZ.Text, out float z))
 			{
 				z = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionZ));
 			}
@@ -231,24 +226,19 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnSetAngles_Click(object sender, EventArgs e)
 		{
-			bool success;
-
 			(Vector3 harry, _) = GetAngles();
 
-			success = Single.TryParse(TbxHarryPitch.Text, out float pitch);
-			if (!success)
+			if (Single.TryParse(TbxHarryPitch.Text, out float pitch))
 			{
 				pitch = harry.X;
 			}
 
-			success = Single.TryParse(TbxHarryYaw.Text, out float yaw);
-			if (!success)
+			if (!Single.TryParse(TbxHarryYaw.Text, out float yaw))
 			{
 				yaw = harry.Y;
 			}
 
-			success = Single.TryParse(TbxHarryRoll.Text, out float roll);
-			if (!success)
+			if (!Single.TryParse(TbxHarryRoll.Text, out float roll))
 			{
 				roll = harry.Z;
 			}

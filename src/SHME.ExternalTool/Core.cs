@@ -8,7 +8,9 @@ namespace SHME.ExternalTool
 
 		public static uint DegreesToGameUnits(float degrees)
 		{
-			return (uint)Utility.ScaleToRange(degrees, 0.0, 360.0, 0.0, 4096.0);
+			float mod = MathUtilities.ModAngleToCircleUnsigned(degrees);
+
+			return (uint)Utility.ScaleToRange(mod, 0.0, 360.0, 0.0, 4096.0);
 		}
 		public static float GameUnitsToDegrees(uint gameUnits)
 		{

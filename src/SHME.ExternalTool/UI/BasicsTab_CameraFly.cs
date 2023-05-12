@@ -296,11 +296,9 @@ namespace BizHawk.Client.EmuHawk
 			}
 			yawDegrees += deltaX;
 
-			float pitchCircle = MathUtilities.ModAngleToCircleUnsigned(pitchDegrees);
-			float yawCircle = MathUtilities.ModAngleToCircleUnsigned(yawDegrees);
 
-			_holdCameraPitch = Core.DegreesToGameUnits(pitchCircle);
-			_holdCameraYaw = Core.DegreesToGameUnits(yawCircle);
+			_holdCameraPitch = Core.DegreesToGameUnits(pitchDegrees);
+			_holdCameraYaw = Core.DegreesToGameUnits(yawDegrees);
 			_holdCameraRoll = 0;
 
 			Cursor.Position = _flyCenter;

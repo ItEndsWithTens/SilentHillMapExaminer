@@ -39,6 +39,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryYaw = new System.Windows.Forms.Label();
             this.LblHarryPitch = new System.Windows.Forms.Label();
             this.GbxCamera = new System.Windows.Forms.GroupBox();
+            this.CbxCameraLockToHead = new System.Windows.Forms.CheckBox();
             this.label67 = new System.Windows.Forms.Label();
             this.label66 = new System.Windows.Forms.Label();
             this.label65 = new System.Windows.Forms.Label();
@@ -302,15 +303,31 @@ namespace BizHawk.Client.EmuHawk
             this.CmbFramebufferZoom = new System.Windows.Forms.ComboBox();
             this.BtnFramebufferZoomOut = new System.Windows.Forms.Button();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
             this.NudFramebufferH = new System.Windows.Forms.NumericUpDown();
             this.NudFramebufferW = new System.Windows.Forms.NumericUpDown();
             this.NudFramebufferOfsY = new System.Windows.Forms.NumericUpDown();
             this.NudFramebufferOfsX = new System.Windows.Forms.NumericUpDown();
             this.BtnFramebufferGrab = new System.Windows.Forms.Button();
+            this.TbpUtility = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.LblUtilityAnglesError = new System.Windows.Forms.Label();
+            this.label78 = new System.Windows.Forms.Label();
+            this.TbxUtilityAnglesDegrees = new System.Windows.Forms.TextBox();
+            this.TbxUtilityAnglesGameUnits = new System.Windows.Forms.TextBox();
+            this.label76 = new System.Windows.Forms.Label();
+            this.label75 = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.LblUtilityFixedPointError = new System.Windows.Forms.Label();
+            this.label74 = new System.Windows.Forms.Label();
+            this.label73 = new System.Windows.Forms.Label();
+            this.TbxUtilityFixedPointFloat = new System.Windows.Forms.TextBox();
+            this.label72 = new System.Windows.Forms.Label();
+            this.CmbUtilityFixedPointFormat = new System.Windows.Forms.ComboBox();
+            this.label71 = new System.Windows.Forms.Label();
+            this.TbxUtilityFixedPointQ = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
-            this.CbxCameraLockToHead = new System.Windows.Forms.CheckBox();
             this.GbxHarry.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
@@ -370,11 +387,14 @@ namespace BizHawk.Client.EmuHawk
             this.CmsFilesDirectories.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.ScrFramebuffer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
+            this.TbpUtility.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -699,6 +719,16 @@ namespace BizHawk.Client.EmuHawk
             this.GbxCamera.TabStop = false;
             this.GbxCamera.Text = "Game camera";
             // 
+            // CbxCameraLockToHead
+            // 
+            this.CbxCameraLockToHead.AutoSize = true;
+            this.CbxCameraLockToHead.Location = new System.Drawing.Point(6, 133);
+            this.CbxCameraLockToHead.Name = "CbxCameraLockToHead";
+            this.CbxCameraLockToHead.Size = new System.Drawing.Size(89, 17);
+            this.CbxCameraLockToHead.TabIndex = 35;
+            this.CbxCameraLockToHead.Text = "Lock to head";
+            this.CbxCameraLockToHead.UseVisualStyleBackColor = true;
+            // 
             // label67
             // 
             this.label67.AutoSize = true;
@@ -1016,6 +1046,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbcMainTabs.Controls.Add(this.TbpTest);
             this.TbcMainTabs.Controls.Add(this.tabPage1);
             this.TbcMainTabs.Controls.Add(this.tabPage6);
+            this.TbcMainTabs.Controls.Add(this.TbpUtility);
             this.TbcMainTabs.Location = new System.Drawing.Point(0, 0);
             this.TbcMainTabs.Margin = new System.Windows.Forms.Padding(0);
             this.TbcMainTabs.Name = "TbcMainTabs";
@@ -3968,6 +3999,17 @@ namespace BizHawk.Client.EmuHawk
             this.ScrFramebuffer.TabIndex = 8;
             this.ScrFramebuffer.Text = "scrollableControl1";
             // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 545);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
+            // 
             // BtnFramebufferZoomIn
             // 
             this.BtnFramebufferZoomIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -4082,26 +4124,175 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFramebufferGrab.UseVisualStyleBackColor = true;
             this.BtnFramebufferGrab.Click += new System.EventHandler(this.BtnFramebufferGrab_Click);
             // 
-            // BpbFramebuffer
+            // TbpUtility
             // 
-            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
-            this.BpbFramebuffer.Name = "BpbFramebuffer";
-            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 545);
-            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BpbFramebuffer.TabIndex = 7;
-            this.BpbFramebuffer.TabStop = false;
+            this.TbpUtility.Controls.Add(this.groupBox8);
+            this.TbpUtility.Controls.Add(this.groupBox7);
+            this.TbpUtility.Location = new System.Drawing.Point(4, 22);
+            this.TbpUtility.Name = "TbpUtility";
+            this.TbpUtility.Padding = new System.Windows.Forms.Padding(3);
+            this.TbpUtility.Size = new System.Drawing.Size(688, 618);
+            this.TbpUtility.TabIndex = 12;
+            this.TbpUtility.Text = "Utility";
+            this.TbpUtility.UseVisualStyleBackColor = true;
             // 
-            // CbxCameraLockToHead
+            // groupBox8
             // 
-            this.CbxCameraLockToHead.AutoSize = true;
-            this.CbxCameraLockToHead.Location = new System.Drawing.Point(6, 133);
-            this.CbxCameraLockToHead.Name = "CbxCameraLockToHead";
-            this.CbxCameraLockToHead.Size = new System.Drawing.Size(89, 17);
-            this.CbxCameraLockToHead.TabIndex = 35;
-            this.CbxCameraLockToHead.Text = "Lock to head";
-            this.CbxCameraLockToHead.UseVisualStyleBackColor = true;
+            this.groupBox8.Controls.Add(this.LblUtilityAnglesError);
+            this.groupBox8.Controls.Add(this.label78);
+            this.groupBox8.Controls.Add(this.TbxUtilityAnglesDegrees);
+            this.groupBox8.Controls.Add(this.TbxUtilityAnglesGameUnits);
+            this.groupBox8.Controls.Add(this.label76);
+            this.groupBox8.Controls.Add(this.label75);
+            this.groupBox8.Location = new System.Drawing.Point(6, 312);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(676, 300);
+            this.groupBox8.TabIndex = 9;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Angles";
+            // 
+            // LblUtilityAnglesError
+            // 
+            this.LblUtilityAnglesError.AutoSize = true;
+            this.LblUtilityAnglesError.Location = new System.Drawing.Point(81, 74);
+            this.LblUtilityAnglesError.Name = "LblUtilityAnglesError";
+            this.LblUtilityAnglesError.Size = new System.Drawing.Size(33, 13);
+            this.LblUtilityAnglesError.TabIndex = 25;
+            this.LblUtilityAnglesError.Text = "None";
+            // 
+            // label78
+            // 
+            this.label78.AutoSize = true;
+            this.label78.Location = new System.Drawing.Point(46, 74);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(32, 13);
+            this.label78.TabIndex = 24;
+            this.label78.Text = "Error:";
+            // 
+            // TbxUtilityAnglesDegrees
+            // 
+            this.TbxUtilityAnglesDegrees.Location = new System.Drawing.Point(84, 45);
+            this.TbxUtilityAnglesDegrees.Name = "TbxUtilityAnglesDegrees";
+            this.TbxUtilityAnglesDegrees.Size = new System.Drawing.Size(70, 20);
+            this.TbxUtilityAnglesDegrees.TabIndex = 23;
+            this.TbxUtilityAnglesDegrees.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxUtilityAnglesDegrees_KeyDown);
+            // 
+            // TbxUtilityAnglesGameUnits
+            // 
+            this.TbxUtilityAnglesGameUnits.Location = new System.Drawing.Point(84, 19);
+            this.TbxUtilityAnglesGameUnits.Name = "TbxUtilityAnglesGameUnits";
+            this.TbxUtilityAnglesGameUnits.Size = new System.Drawing.Size(70, 20);
+            this.TbxUtilityAnglesGameUnits.TabIndex = 21;
+            this.TbxUtilityAnglesGameUnits.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxUtilityAnglesGameUnits_KeyDown);
+            // 
+            // label76
+            // 
+            this.label76.AutoSize = true;
+            this.label76.Location = new System.Drawing.Point(28, 48);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(50, 13);
+            this.label76.TabIndex = 22;
+            this.label76.Text = "Degrees:";
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.Location = new System.Drawing.Point(15, 22);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(63, 13);
+            this.label75.TabIndex = 20;
+            this.label75.Text = "Game units:";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.LblUtilityFixedPointError);
+            this.groupBox7.Controls.Add(this.label74);
+            this.groupBox7.Controls.Add(this.label73);
+            this.groupBox7.Controls.Add(this.TbxUtilityFixedPointFloat);
+            this.groupBox7.Controls.Add(this.label72);
+            this.groupBox7.Controls.Add(this.CmbUtilityFixedPointFormat);
+            this.groupBox7.Controls.Add(this.label71);
+            this.groupBox7.Controls.Add(this.TbxUtilityFixedPointQ);
+            this.groupBox7.Location = new System.Drawing.Point(6, 6);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(676, 300);
+            this.groupBox7.TabIndex = 0;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Fixed point";
+            // 
+            // LblUtilityFixedPointError
+            // 
+            this.LblUtilityFixedPointError.AutoSize = true;
+            this.LblUtilityFixedPointError.Location = new System.Drawing.Point(51, 101);
+            this.LblUtilityFixedPointError.Name = "LblUtilityFixedPointError";
+            this.LblUtilityFixedPointError.Size = new System.Drawing.Size(33, 13);
+            this.LblUtilityFixedPointError.TabIndex = 8;
+            this.LblUtilityFixedPointError.Text = "None";
+            // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.Location = new System.Drawing.Point(16, 101);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(32, 13);
+            this.label74.TabIndex = 7;
+            this.label74.Text = "Error:";
+            // 
+            // label73
+            // 
+            this.label73.AutoSize = true;
+            this.label73.Location = new System.Drawing.Point(30, 75);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(18, 13);
+            this.label73.TabIndex = 5;
+            this.label73.Text = "Q:";
+            // 
+            // TbxUtilityFixedPointFloat
+            // 
+            this.TbxUtilityFixedPointFloat.Location = new System.Drawing.Point(54, 46);
+            this.TbxUtilityFixedPointFloat.Name = "TbxUtilityFixedPointFloat";
+            this.TbxUtilityFixedPointFloat.Size = new System.Drawing.Size(100, 20);
+            this.TbxUtilityFixedPointFloat.TabIndex = 4;
+            this.TbxUtilityFixedPointFloat.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxUtilityFixedPointFloat_KeyDown);
+            // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.Location = new System.Drawing.Point(15, 49);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(33, 13);
+            this.label72.TabIndex = 43;
+            this.label72.Text = "Float:";
+            // 
+            // CmbUtilityFixedPointFormat
+            // 
+            this.CmbUtilityFixedPointFormat.FormattingEnabled = true;
+            this.CmbUtilityFixedPointFormat.Items.AddRange(new object[] {
+            "Q20.12",
+            "Q12.4"});
+            this.CmbUtilityFixedPointFormat.Location = new System.Drawing.Point(54, 19);
+            this.CmbUtilityFixedPointFormat.Name = "CmbUtilityFixedPointFormat";
+            this.CmbUtilityFixedPointFormat.Size = new System.Drawing.Size(100, 21);
+            this.CmbUtilityFixedPointFormat.TabIndex = 2;
+            this.CmbUtilityFixedPointFormat.SelectionChangeCommitted += new System.EventHandler(this.CmbUtilityFixedPointFormat_SelectionChangeCommitted);
+            this.CmbUtilityFixedPointFormat.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CmbUtilityFixedPointFormat_KeyDown);
+            // 
+            // label71
+            // 
+            this.label71.AutoSize = true;
+            this.label71.Location = new System.Drawing.Point(6, 22);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(42, 13);
+            this.label71.TabIndex = 1;
+            this.label71.Text = "Format:";
+            // 
+            // TbxUtilityFixedPointQ
+            // 
+            this.TbxUtilityFixedPointQ.Location = new System.Drawing.Point(54, 72);
+            this.TbxUtilityFixedPointQ.Name = "TbxUtilityFixedPointQ";
+            this.TbxUtilityFixedPointQ.Size = new System.Drawing.Size(100, 20);
+            this.TbxUtilityFixedPointQ.TabIndex = 6;
+            this.TbxUtilityFixedPointQ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxUtilityFixedPointQ_KeyDown);
             // 
             // CustomMainForm
             // 
@@ -4184,11 +4375,16 @@ namespace BizHawk.Client.EmuHawk
             this.CmsFilesDirectories.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.ScrFramebuffer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferOfsX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
+            this.TbpUtility.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -4489,5 +4685,22 @@ namespace BizHawk.Client.EmuHawk
 		private NumericUpDown NudCrosshairLength;
 		private Label label70;
 		private CheckBox CbxCameraLockToHead;
+		private TabPage TbpUtility;
+		private GroupBox groupBox7;
+		private GroupBox groupBox8;
+		private ComboBox CmbUtilityFixedPointFormat;
+		private Label label71;
+		private TextBox TbxUtilityFixedPointQ;
+		private Label label73;
+		private TextBox TbxUtilityFixedPointFloat;
+		private Label label72;
+		private Label label74;
+		private Label LblUtilityFixedPointError;
+		private TextBox TbxUtilityAnglesDegrees;
+		private TextBox TbxUtilityAnglesGameUnits;
+		private Label label76;
+		private Label label75;
+		private Label LblUtilityAnglesError;
+		private Label label78;
 	}
 }

@@ -103,6 +103,7 @@ namespace BizHawk.Client.EmuHawk
 			InitializePoisTab();
 			InitializeSaveTab();
 			InitializeFramebufferTab();
+			InitializeUtilityTab();
 		}
 
 		protected override void Dispose(bool disposing)
@@ -631,6 +632,8 @@ namespace BizHawk.Client.EmuHawk
 			PbxHazardStripes?.Image?.Dispose();
 
 			_raycastSelectionTimer?.Dispose();
+			FixedPointErrorClearTimer?.Dispose();
+			AnglesErrorClearTimer?.Dispose();
 
 			_gameSurface = null;
 		}
