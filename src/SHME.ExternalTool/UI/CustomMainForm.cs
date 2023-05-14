@@ -81,8 +81,6 @@ namespace BizHawk.Client.EmuHawk
 		private Viewport _dummyViewport = new Viewport();
 		private Rectangle _drawRegionRect;
 
-		private Control? _gameSurface;
-
 		public CustomMainForm()
 		{
 			InitializeComponent();
@@ -548,26 +546,26 @@ namespace BizHawk.Client.EmuHawk
 				FieldInfo? fInfo = typeof(GraphicsControl).GetField("_managed", BindingFlags.NonPublic | BindingFlags.Instance);
 				if (fInfo != null)
 				{
-					_gameSurface = (Control)fInfo.GetValue(gc);
+					GameSurface = (Control)fInfo.GetValue(gc);
 
-					_gameSurface.MouseDown += _gameSurface_MouseDown;
-					_gameSurface.MouseUp += _gameSurface_MouseUp;
+					GameSurface.MouseDown += GameSurface_MouseDown;
+					GameSurface.MouseUp += GameSurface_MouseUp;
 				}
 			}
 
-			_raycastSelectionTimer.Tick += _raycastSelectionTimer_Tick;
+			RaycastSelectionTimer.Tick += RaycastSelectionTimer_Tick;
 		}
 		private void DetachEventHandlers()
 		{
 			Emu.StateLoaded -= Emu_StateLoaded;
 
-			if (_gameSurface != null)
+			if (GameSurface != null)
 			{
-				_gameSurface.MouseDown -= _gameSurface_MouseDown;
-				_gameSurface.MouseUp -= _gameSurface_MouseUp;
+				GameSurface.MouseDown -= GameSurface_MouseDown;
+				GameSurface.MouseUp -= GameSurface_MouseUp;
 			}
 
-			_raycastSelectionTimer.Tick -= _raycastSelectionTimer_Tick;
+			RaycastSelectionTimer.Tick -= RaycastSelectionTimer_Tick;
 		}
 
 		private float CalculateGameFov()
@@ -631,11 +629,11 @@ namespace BizHawk.Client.EmuHawk
 			_mapGraphic?.Dispose();
 			PbxHazardStripes?.Image?.Dispose();
 
-			_raycastSelectionTimer?.Dispose();
+			RaycastSelectionTimer?.Dispose();
 			FixedPointErrorClearTimer?.Dispose();
 			AnglesErrorClearTimer?.Dispose();
 
-			_gameSurface = null;
+			GameSurface = null;
 		}
 
 		private void Selectable_Enter(object sender, EventArgs e)
