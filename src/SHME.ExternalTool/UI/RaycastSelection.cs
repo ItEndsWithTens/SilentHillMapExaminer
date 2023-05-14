@@ -99,25 +99,27 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			if (sender is Control c && c.Parent is GraphicsControl gc)
+			if (sender is not Control c || c.Parent is not GraphicsControl gc)
 			{
-				bool outside = GetClickedPois(gc.PointToScreen(e.Location), ref _clickedPois);
+				return;
+			}
 
-				if (outside)
-				{
-					return;
-				}
+			bool outside = GetClickedPois(gc.PointToScreen(e.Location), ref _clickedPois);
 
-				if (_clickedPois.Count > 0)
-				{
-					_raycastSelectionIndex = 0;
-					LbxPois.SelectedItem = _clickedPois[_raycastSelectionIndex];
-					RaycastSelectionTimer.Enabled = true;
-				}
-				else
-				{
-					LbxPois.SelectedIndex = -1;
-				}
+			if (outside)
+			{
+				return;
+			}
+
+			if (_clickedPois.Count > 0)
+			{
+				_raycastSelectionIndex = 0;
+				LbxPois.SelectedItem = _clickedPois[_raycastSelectionIndex];
+				RaycastSelectionTimer.Enabled = true;
+			}
+			else
+			{
+				LbxPois.SelectedIndex = -1;
 			}
 		}
 		private void GameSurface_MouseUp(object sender, MouseEventArgs e)

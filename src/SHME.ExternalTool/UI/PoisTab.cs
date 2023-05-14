@@ -5,14 +5,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		public Dictionary<PointOfInterest, Renderable?> Pois { get; set; } = new Dictionary<PointOfInterest, Renderable?>();
+		public Dictionary<PointOfInterest, Renderable?> Pois { get; } = new Dictionary<PointOfInterest, Renderable?>();
 
 		private void InitializePoisTab()
 		{
@@ -36,12 +35,12 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnGoToPoi_Click(object sender, EventArgs e)
 		{
-			var poi = (PointOfInterest)LbxPois.SelectedItem;
-
-			if (poi != null)
+			if (LbxPois.SelectedItem is not PointOfInterest poi)
 			{
-				SetHarryPosition(poi.X, 0, poi.Z);
+				return;
 			}
+
+			SetHarryPosition(poi.X, 0, poi.Z);
 		}
 
 		private void CbxTriggersAutoUpdate_CheckedChanged(object sender, EventArgs e)
@@ -68,12 +67,10 @@ namespace BizHawk.Client.EmuHawk
 		private bool? _previousTriggerFired;
 		private void CheckForSelectedTriggerUpdate()
 		{
-			if (LbxTriggers.SelectedItem == null)
+			if (LbxTriggers.SelectedItem is not Trigger t)
 			{
 				return;
 			}
-
-			var t = (Trigger)LbxTriggers.SelectedItem;
 
 			string body = Mem.HashRegion(t.Address, 12);
 
@@ -260,37 +257,45 @@ namespace BizHawk.Client.EmuHawk
 
 		private void LblSelectedPoiAddress_Click(object sender, EventArgs e)
 		{
-			if (LbxPois.SelectedItem is PointOfInterest p)
+			if (LbxPois.SelectedItem is not PointOfInterest p)
 			{
-				HexEditorGoToAddress(p.Address);
+				return;
 			}
+
+			HexEditorGoToAddress(p.Address);
 		}
 
 		private void LblSelectedTriggerAddress_Click(object sender, EventArgs e)
 		{
-			if (LbxTriggers.SelectedItem is Trigger t)
+			if (LbxTriggers.SelectedItem is not Trigger t)
 			{
-				HexEditorGoToAddress(t.Address);
+				return;
 			}
+
+			HexEditorGoToAddress(t.Address);
 		}
 
 		private void LblSelectedTriggerFiredDetails_Click(object sender, EventArgs e)
 		{
-			if (LbxTriggers.SelectedItem is Trigger t)
+			if (LbxTriggers.SelectedItem is not Trigger t)
 			{
-				long ofs = Rom.Addresses.MainRam.SaveData;
-				long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
-
-				HexEditorGoToAddress(groupOfs);
+				return;
 			}
+
+			long ofs = Rom.Addresses.MainRam.SaveData;
+			long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
+
+			HexEditorGoToAddress(groupOfs);
 		}
 
 		private void LbxPoiAssociatedTriggers_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (LbxPoiAssociatedTriggers.SelectedItem is Trigger t)
+			if (LbxPoiAssociatedTriggers.SelectedItem is not Trigger t)
 			{
-				LbxTriggers.SelectedItem = t;
+				return;
 			}
+
+			LbxTriggers.SelectedItem = t;
 		}
 
 		private void LbxPois_Format(object sender, ListControlConvertEventArgs e)
@@ -303,12 +308,10 @@ namespace BizHawk.Client.EmuHawk
 
 		private void LbxPois_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (!(sender is ListBox))
+			if (sender is not ListBox lbx)
 			{
 				return;
 			}
-
-			var lbx = (ListBox)sender;
 
 			foreach (KeyValuePair<PointOfInterest, Renderable?> item in Pois)
 			{
@@ -318,38 +321,37 @@ namespace BizHawk.Client.EmuHawk
 				}
 			}
 
-			if (lbx.SelectedItem is PointOfInterest poi)
-			{
-				Renderable? r = Pois[poi];
-
-				if (r != null)
-				{
-					r.Tint = Color.Yellow;
-				}
-
-				LblSelectedPoiAddress.Text = $"0x{poi.Address:X2}";
-				LblSelectedPoiX.Text = $"{poi.X:0.##}";
-				LblSelectedPoiZ.Text = $"{poi.Z:0.##}";
-				LblSelectedPoiGeometry.Text = $"0x{poi.Geometry:X2}";
-
-				RefreshLbxPoiAssociatedTriggers();
-
-				IEnumerable<Trigger>? associated = LbxTriggers.Items
-					.OfType<Trigger>()
-					.Where(item => item.PoiIndex == lbx.SelectedIndex);
-
-				if (associated.Any() && !associated.Contains(LbxTriggers.SelectedItem as Trigger))
-				{
-					LbxPoiAssociatedTriggers.SelectedIndex = 0;
-				}
-			}
-			else
+			if (lbx.SelectedItem is not PointOfInterest poi)
 			{
 				ClearDisplayedPoiInfo();
+				return;
+			}
+
+			Renderable? r = Pois[poi];
+
+			if (r != null)
+			{
+				r.Tint = Color.Yellow;
+			}
+
+			LblSelectedPoiAddress.Text = $"0x{poi.Address:X2}";
+			LblSelectedPoiX.Text = $"{poi.X:0.##}";
+			LblSelectedPoiZ.Text = $"{poi.Z:0.##}";
+			LblSelectedPoiGeometry.Text = $"0x{poi.Geometry:X2}";
+
+			RefreshLbxPoiAssociatedTriggers();
+
+			IEnumerable<Trigger>? associated = LbxTriggers.Items
+				.OfType<Trigger>()
+				.Where(item => item.PoiIndex == lbx.SelectedIndex);
+
+			if (associated.Any() && !associated.Contains(LbxTriggers.SelectedItem as Trigger))
+			{
+				LbxPoiAssociatedTriggers.SelectedIndex = 0;
 			}
 		}
 
-		public List<Trigger> Triggers { get; set; } = new List<Trigger>();
+		public IList<Trigger> Triggers { get; } = new List<Trigger>();
 
 		private void BtnReadTriggers_Click(object sender, EventArgs e)
 		{
@@ -442,18 +444,20 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CbxSelectedTriggerEnabled_CheckedChanged(object sender, EventArgs e)
 		{
-			if (LbxTriggers.SelectedItem is Trigger t)
+			if (LbxTriggers.SelectedItem is not Trigger t)
 			{
-				uint existing = Mem.ReadByte(t.Address);
+				return;
+			}
 
-				if (CbxSelectedTriggerDisabled.Checked)
-				{
-					Mem.WriteByte(t.Address, (byte)(existing | 0b10000000));
-				}
-				else
-				{
-					Mem.WriteByte(t.Address, (byte)(existing & 0b01111111));
-				}
+			uint existing = Mem.ReadByte(t.Address);
+
+			if (CbxSelectedTriggerDisabled.Checked)
+			{
+				Mem.WriteByte(t.Address, (byte)(existing | 0b10000000));
+			}
+			else
+			{
+				Mem.WriteByte(t.Address, (byte)(existing & 0b01111111));
 			}
 		}
 
@@ -495,104 +499,101 @@ namespace BizHawk.Client.EmuHawk
 
 		private void LbxTriggers_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (!(sender is ListBox))
+			if (sender is not ListBox lbx)
 			{
 				return;
 			}
 
-			var lbx = (ListBox)sender;
-
-			if (lbx.SelectedItem is Trigger t)
+			if (lbx.SelectedItem is not Trigger t)
 			{
-				LblSelectedTriggerAddress.Text = $"0x{t.Address:X}";
-				LblSelectedTriggerThing0.Text = $"0x{t.Thing0:X2}";
-				CbxSelectedTriggerDisabled.Checked = t.Disabled;
-				CbxSelectedTriggerDisabled.Enabled = true;
-				LblSelectedTriggerThing1.Text = $"0x{t.Thing1:X2}";
-				LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex:X}";
-				LblSelectedTriggerThing2.Text = $"0x{t.Thing2:X1}";
-				LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex}";
-				LblSelectedTriggerThing3.Text = $"0x{t.Thing3:X2}";
-				LblSelectedTriggerThing4.Text = $"0x{t.Thing4:X2}";
-				LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X8}";
+				ClearDisplayedTriggerInfo();
+				return;
+			}
 
-				string? style = Enum.GetName(typeof(TriggerStyle), t.Style);
-				LblSelectedTriggerStyle.Text = $"{style ?? $"0x{t.Style:X}"}";
+			LblSelectedTriggerAddress.Text = $"0x{t.Address:X}";
+			LblSelectedTriggerThing0.Text = $"0x{t.Thing0:X2}";
+			CbxSelectedTriggerDisabled.Checked = t.Disabled;
+			CbxSelectedTriggerDisabled.Enabled = true;
+			LblSelectedTriggerThing1.Text = $"0x{t.Thing1:X2}";
+			LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex:X}";
+			LblSelectedTriggerThing2.Text = $"0x{t.Thing2:X1}";
+			LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex}";
+			LblSelectedTriggerThing3.Text = $"0x{t.Thing3:X2}";
+			LblSelectedTriggerThing4.Text = $"0x{t.Thing4:X2}";
+			LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X8}";
 
-				long ofs = Rom.Addresses.MainRam.SaveData;
-				long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
-				int group = Mem.ReadS32(groupOfs);
-				int firedBit = (group >> t.FiredBitShift) & 1;
-				LblSelectedTriggerFired.Text = $"{firedBit != 0}";
-				LblSelectedTriggerFiredDetails.Text = $"(Group 0x{groupOfs:X}, bit 0x{1 << t.FiredBitShift:X})";
+			string? style = Enum.GetName(typeof(TriggerStyle), t.Style);
+			LblSelectedTriggerStyle.Text = $"{style ?? $"0x{t.Style:X}"}";
 
-				if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
-				{
-					LbxPois.SelectedIndex = t.PoiIndex;
-				}
-				else
-				{
-					LbxPois.SelectedIndex = -1;
-				}
+			long ofs = Rom.Addresses.MainRam.SaveData;
+			long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
+			int group = Mem.ReadS32(groupOfs);
+			int firedBit = (group >> t.FiredBitShift) & 1;
+			LblSelectedTriggerFired.Text = $"{firedBit != 0}";
+			LblSelectedTriggerFiredDetails.Text = $"(Group 0x{groupOfs:X}, bit 0x{1 << t.FiredBitShift:X})";
 
-				if (Enum.IsDefined(typeof(TriggerType), t.TriggerType))
-				{
-					CmbSelectedTriggerType.SelectedItem = t.TriggerType;
-				}
-				else
-				{
-					CmbSelectedTriggerType.SelectedIndex = -1;
-				}
-
-				switch (t.TriggerType)
-				{
-					case TriggerType.Door1:
-					case TriggerType.Door2:
-						NudSelectedTriggerTargetIndex.Maximum = LbxPois.Items.Count - 1;
-						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
-						break;
-					case TriggerType.Text:
-						NudSelectedTriggerTargetIndex.Maximum = Int32.Parse(LblStringCount.Text) - 1;
-						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
-						break;
-					case TriggerType.Save0:
-					case TriggerType.Save1:
-						// On using a save trigger, address 0x801E74A8 is loaded
-						// with an array of pointers to save point name strings.
-						// There are only 24 in the entire game, plus "Anywhere"
-						// which I hope suggests a debug function somewhere that
-						// can save wherever you want. Fingers crossed.
-						NudSelectedTriggerTargetIndex.Maximum = 24;
-						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
-						break;
-					case TriggerType.Function1:
-					case TriggerType.MapScribble:
-						int s = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
-						int f = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
-						long count = (s - f) / 4;
-						NudSelectedTriggerTargetIndex.Maximum = count - 1;
-						NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
-						break;
-					case TriggerType.Unknown0:
-					default:
-						NudSelectedTriggerTargetIndex.Maximum = Int32.MaxValue;
-						NudSelectedTriggerTargetIndex.Value = -1;
-						break;
-				}
-
-				LblSelectedTriggerPoiGeometry.Text = DecodePoiGeometry(t);
-
-				object triggersItem = LbxTriggers.SelectedItem;
-				object associatedItem = LbxPoiAssociatedTriggers.SelectedItem;
-				bool contains = LbxPoiAssociatedTriggers.Items.Contains(triggersItem);
-				if (contains && !ReferenceEquals(triggersItem, associatedItem))
-				{
-					LbxPoiAssociatedTriggers.SelectedItem = LbxTriggers.SelectedItem;
-				}
+			if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
+			{
+				LbxPois.SelectedIndex = t.PoiIndex;
 			}
 			else
 			{
-				ClearDisplayedTriggerInfo();
+				LbxPois.SelectedIndex = -1;
+			}
+
+			if (Enum.IsDefined(typeof(TriggerType), t.TriggerType))
+			{
+				CmbSelectedTriggerType.SelectedItem = t.TriggerType;
+			}
+			else
+			{
+				CmbSelectedTriggerType.SelectedIndex = -1;
+			}
+
+			switch (t.TriggerType)
+			{
+				case TriggerType.Door1:
+				case TriggerType.Door2:
+					NudSelectedTriggerTargetIndex.Maximum = LbxPois.Items.Count - 1;
+					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+					break;
+				case TriggerType.Text:
+					NudSelectedTriggerTargetIndex.Maximum = Int32.Parse(LblStringCount.Text) - 1;
+					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+					break;
+				case TriggerType.Save0:
+				case TriggerType.Save1:
+					// On using a save trigger, address 0x801E74A8 is loaded
+					// with an array of pointers to save point name strings.
+					// There are only 24 in the entire game, plus "Anywhere"
+					// which I hope suggests a debug function somewhere that
+					// can save wherever you want. Fingers crossed.
+					NudSelectedTriggerTargetIndex.Maximum = 24;
+					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+					break;
+				case TriggerType.Function1:
+				case TriggerType.MapScribble:
+					int s = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
+					int f = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
+					long count = (s - f) / 4;
+					NudSelectedTriggerTargetIndex.Maximum = count - 1;
+					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+					break;
+				case TriggerType.Unknown0:
+				default:
+					NudSelectedTriggerTargetIndex.Maximum = Int32.MaxValue;
+					NudSelectedTriggerTargetIndex.Value = -1;
+					break;
+			}
+
+			LblSelectedTriggerPoiGeometry.Text = DecodePoiGeometry(t);
+
+			object triggersItem = LbxTriggers.SelectedItem;
+			object associatedItem = LbxPoiAssociatedTriggers.SelectedItem;
+			bool contains = LbxPoiAssociatedTriggers.Items.Contains(triggersItem);
+			if (contains && !ReferenceEquals(triggersItem, associatedItem))
+			{
+				LbxPoiAssociatedTriggers.SelectedItem = LbxTriggers.SelectedItem;
 			}
 		}
 
