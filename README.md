@@ -1,6 +1,5 @@
 
-  SilentHillMapExaminer
-  =====================
+  # SilentHillMapExaminer
 
   [![Build](https://github.com/ItEndsWithTens/SilentHillMapExaminer/actions/workflows/build.yml/badge.svg)](https://github.com/ItEndsWithTens/SilentHillMapExaminer/actions/workflows/build.yml) [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ItEndsWithTens/SilentHillMapExaminer?include_prereleases)](https://github.com/ItEndsWithTens/SilentHillMapExaminer/releases/tag/latest)
 
@@ -12,16 +11,14 @@
 
 
 
-  Requirements
-  ------------
+  ## Requirements
 
   - [BizHawk 2.9 or newer](https://github.com/TASEmulators/BizHawk/releases)
   - [Silent Hill USA Original/Greatest Hits](http://redump.org/disc/137/)
 
 
 
-  Usage
-  -----
+  ## Usage
 
   TODO: Proper docs for the other tabs.
 
@@ -46,8 +43,15 @@
 
 
 
-  Building
-  --------
+  ## Development
+
+  Be careful using C# features introduced beyond version 7.3!
+  
+  This project uses C# language version 10.0 despite running under .NET Framework 4.8, a combination which is not officially supported. Newer versions of the language introduce some features that require new types and/or an updated runtime, but there are nonetheless many purely syntactical improvements that prove exceptionally useful, and are too good to ignore.
+
+  For more information see [Microsoft's documentation](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version), [StackOverflow](https://stackoverflow.com/questions/56651472/does-c-sharp-8-support-the-net-framework), and [this blog post by Stuart Lang](https://stu.dev/csharp8-doing-unsupported-things/).
+
+  ### Building
 
   1. Check out the repo and clone the BizHawk submodule.
      - `git clone https://github.com/ItEndsWithTens/SilentHillMapExaminer`
@@ -77,8 +81,7 @@
 
 
 
-  Benchmarking
-  ------------
+  ### Benchmarking
 
   To run all included benchmarks:
    - `mkdir artifacts\test`
