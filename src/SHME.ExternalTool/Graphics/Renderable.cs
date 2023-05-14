@@ -189,6 +189,7 @@ namespace SHME.ExternalTool
 			}
 
 			_position = r.Position;
+			Tint = r.Tint;
 			Translucent = r.Translucent;
 			Vertices = new List<Vertex>(r.Vertices);
 		}

@@ -26,10 +26,6 @@
 
 		public Line() : this(new Vertex(), new Vertex())
 		{
-
-		}
-		public Line(Line line) : this(line.A, line.B)
-		{
 		}
 		public Line(Vertex a, Vertex b)
 		{
@@ -37,6 +33,15 @@
 
 			Vertices.Add(a);
 			Vertices.Add(b);
+
+			UpdateBounds();
+		}
+		public Line(Line line) : base(line)
+		{
+			Vertices.Capacity = 2;
+
+			Vertices.Add(line.A);
+			Vertices.Add(line.B);
 
 			UpdateBounds();
 		}
