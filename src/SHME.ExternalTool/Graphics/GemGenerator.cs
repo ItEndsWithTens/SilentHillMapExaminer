@@ -32,44 +32,44 @@ namespace SHME.ExternalTool
 			var modelVerts = new List<Vertex>()
 			{
 				// Top SE
-				new Vertex(halfWidth, 0.0f, 0.0f),
-				new Vertex(0.0f, 0.0f, halfHeight),
-				new Vertex(0.0f, -halfDepth, 0.0f),
+				new Vertex(halfWidth, 0.0f, 0.0f, Color),
+				new Vertex(0.0f, 0.0f, halfHeight, Color),
+				new Vertex(0.0f, -halfDepth, 0.0f, Color),
 
 				// Top NE
-				new Vertex(0.0f, halfDepth, 0.0f),
-				new Vertex(0.0f, 0.0f, halfHeight),
-				new Vertex(halfWidth, 0.0f, 0.0f),
+				new Vertex(0.0f, halfDepth, 0.0f, Color),
+				new Vertex(0.0f, 0.0f, halfHeight, Color),
+				new Vertex(halfWidth, 0.0f, 0.0f, Color),
 
 				// Top NW
-				new Vertex(-halfWidth, 0.0f, 0.0f),
-				new Vertex(0.0f, 0.0f, halfHeight),
-				new Vertex(0.0f, halfDepth, 0.0f),
+				new Vertex(-halfWidth, 0.0f, 0.0f, Color),
+				new Vertex(0.0f, 0.0f, halfHeight, Color),
+				new Vertex(0.0f, halfDepth, 0.0f, Color),
 
 				// Top SW
-				new Vertex(0.0f, -halfDepth, 0.0f),
-				new Vertex(0.0f, 0.0f, halfHeight),
-				new Vertex(-halfWidth, 0.0f, 0.0f),
+				new Vertex(0.0f, -halfDepth, 0.0f, Color),
+				new Vertex(0.0f, 0.0f, halfHeight, Color),
+				new Vertex(-halfWidth, 0.0f, 0.0f, Color),
 
 				// Bottom NW
-				new Vertex(0.0f, halfDepth, 0.0f),
-				new Vertex(0.0f, 0.0f, -halfHeight),
-				new Vertex(-halfWidth, 0.0f, 0.0f),
+				new Vertex(0.0f, halfDepth, 0.0f, Color),
+				new Vertex(0.0f, 0.0f, -halfHeight, Color),
+				new Vertex(-halfWidth, 0.0f, 0.0f, Color),
 
 				// Bottom NE
-				new Vertex(halfWidth, 0.0f, 0.0f),
-				new Vertex(0.0f, 0.0f, -halfHeight),
-				new Vertex(0.0f, halfDepth, 0.0f),
+				new Vertex(halfWidth, 0.0f, 0.0f, Color),
+				new Vertex(0.0f, 0.0f, -halfHeight, Color),
+				new Vertex(0.0f, halfDepth, 0.0f, Color),
 
 				// Bottom SE
-				new Vertex(0.0f, -halfDepth, 0.0f),
-				new Vertex(0.0f, 0.0f, -halfHeight),
-				new Vertex(halfWidth, 0.0f, 0.0f),
+				new Vertex(0.0f, -halfDepth, 0.0f, Color),
+				new Vertex(0.0f, 0.0f, -halfHeight, Color),
+				new Vertex(halfWidth, 0.0f, 0.0f, Color),
 
 				// Bottom SW
-				new Vertex(-halfWidth, 0.0f, 0.0f),
-				new Vertex(0.0f, 0.0f, -halfHeight),
-				new Vertex(0.0f, -halfDepth, 0.0f)
+				new Vertex(-halfWidth, 0.0f, 0.0f, Color),
+				new Vertex(0.0f, 0.0f, -halfHeight, Color),
+				new Vertex(0.0f, -halfDepth, 0.0f, Color)
 			};
 
 			var gem = new Renderable(modelVerts)

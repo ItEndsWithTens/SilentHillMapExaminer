@@ -48,40 +48,40 @@ namespace SHME.ExternalTool
 				// Comments assume Y-up, right-handed coordinates.
 
 				// Negative Y (bottom)
-				new Vertex(Min.X, Min.Y, Min.Z),
-				new Vertex(Max.X, Min.Y, Min.Z),
-				new Vertex(Max.X, Min.Y, Max.Z),
-				new Vertex(Min.X, Min.Y, Max.Z),
+				new Vertex(Min.X, Min.Y, Min.Z, Color),
+				new Vertex(Max.X, Min.Y, Min.Z, Color),
+				new Vertex(Max.X, Min.Y, Max.Z, Color),
+				new Vertex(Min.X, Min.Y, Max.Z, Color),
 
 				// Positive Y (top)
-				new Vertex(Max.X, Max.Y, Min.Z),
-				new Vertex(Min.X, Max.Y, Min.Z),
-				new Vertex(Min.X, Max.Y, Max.Z),
-				new Vertex(Max.X, Max.Y, Max.Z),
+				new Vertex(Max.X, Max.Y, Min.Z, Color),
+				new Vertex(Min.X, Max.Y, Min.Z, Color),
+				new Vertex(Min.X, Max.Y, Max.Z, Color),
+				new Vertex(Max.X, Max.Y, Max.Z, Color),
 
 				// Negative X (left)
-				new Vertex(Min.X, Min.Y, Min.Z),
-				new Vertex(Min.X, Min.Y, Max.Z),
-				new Vertex(Min.X, Max.Y, Max.Z),
-				new Vertex(Min.X, Max.Y, Min.Z),
+				new Vertex(Min.X, Min.Y, Min.Z, Color),
+				new Vertex(Min.X, Min.Y, Max.Z, Color),
+				new Vertex(Min.X, Max.Y, Max.Z, Color),
+				new Vertex(Min.X, Max.Y, Min.Z, Color),
 
 				// Positive X (right)
-				new Vertex(Max.X, Max.Y, Min.Z),
-				new Vertex(Max.X, Max.Y, Max.Z),
-				new Vertex(Max.X, Min.Y, Max.Z),
-				new Vertex(Max.X, Min.Y, Min.Z),
+				new Vertex(Max.X, Max.Y, Min.Z, Color),
+				new Vertex(Max.X, Max.Y, Max.Z, Color),
+				new Vertex(Max.X, Min.Y, Max.Z, Color),
+				new Vertex(Max.X, Min.Y, Min.Z, Color),
 
 				// Positive Z (back)
-				new Vertex(Min.X, Min.Y, Max.Z),
-				new Vertex(Max.X, Min.Y, Max.Z),
-				new Vertex(Max.X, Max.Y, Max.Z),
-				new Vertex(Min.X, Max.Y, Max.Z),
+				new Vertex(Min.X, Min.Y, Max.Z, Color),
+				new Vertex(Max.X, Min.Y, Max.Z, Color),
+				new Vertex(Max.X, Max.Y, Max.Z, Color),
+				new Vertex(Min.X, Max.Y, Max.Z, Color),
 
 				// Negative Z (front)
-				new Vertex(Max.X, Min.Y, Min.Z),
-				new Vertex(Min.X, Min.Y, Min.Z),
-				new Vertex(Min.X, Max.Y, Min.Z),
-				new Vertex(Max.X, Max.Y, Min.Z)
+				new Vertex(Max.X, Min.Y, Min.Z, Color),
+				new Vertex(Min.X, Min.Y, Min.Z, Color),
+				new Vertex(Min.X, Max.Y, Min.Z, Color),
+				new Vertex(Max.X, Max.Y, Min.Z, Color)
 			};
 
 			var box = new Renderable(modelVerts)
