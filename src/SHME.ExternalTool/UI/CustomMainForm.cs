@@ -97,6 +97,12 @@ namespace BizHawk.Client.EmuHawk
 				border + TbcMainTabs.Height + border);
 			MaximumSize = Size;
 
+			UpdateArrays = new Action(() =>
+			{
+				BtnReadTriggers_Click(this, EventArgs.Empty);
+				BtnCameraPathReadArray_Click(this, EventArgs.Empty);
+			});
+
 			InitializeBasicsTab();
 			InitializePoisTab();
 			InitializeSaveTab();
@@ -218,7 +224,7 @@ namespace BizHawk.Client.EmuHawk
 			uint stage = Mem.ReadByte(Rom.Addresses.MainRam.IndexOfStageBeingLoaded);
 			if (stage != 0xFF)
 			{
-				_triggerArrayNeedsUpdate = true;
+				_arraysNeedUpdate = true;
 				return;
 			}
 
@@ -269,7 +275,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxTriggersAutoUpdate.Checked)
 					{
-						CheckForTriggerArrayUpdate();
+						CheckForArrayUpdates();
 					}
 					if (CbxSelectedTriggerEnableUpdates.Checked)
 					{
@@ -618,6 +624,20 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Close();
 			}
+		}
+
+		private bool _arraysNeedUpdate;
+		private Action UpdateArrays { get; }
+		private void CheckForArrayUpdates()
+		{
+			if (!_arraysNeedUpdate)
+			{
+				return;
+			}
+
+			Invoke(UpdateArrays);
+
+			_arraysNeedUpdate = false;
 		}
 
 		private void CleanUpDisposables()

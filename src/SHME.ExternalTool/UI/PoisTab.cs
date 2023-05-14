@@ -48,18 +48,7 @@ namespace BizHawk.Client.EmuHawk
 			BtnReadPois.Enabled = !CbxTriggersAutoUpdate.Checked;
 			BtnReadTriggers.Enabled = !CbxTriggersAutoUpdate.Checked;
 
-			_triggerArrayNeedsUpdate = true;
-		}
-
-		private bool _triggerArrayNeedsUpdate;
-		private void CheckForTriggerArrayUpdate()
-		{
-			if (_triggerArrayNeedsUpdate)
-			{
-				Invoke(new Action(() => { BtnReadTriggers_Click(this, EventArgs.Empty); }));
-
-				_triggerArrayNeedsUpdate = false;
-			}
+			_arraysNeedUpdate = true;
 		}
 
 		private int? _previousSelectedTriggerIndex;
@@ -476,7 +465,7 @@ namespace BizHawk.Client.EmuHawk
 			ClearDisplayedPoiInfo();
 			ClearDisplayedTriggerInfo();
 
-			_triggerArrayNeedsUpdate = true;
+			_arraysNeedUpdate = true;
 		}
 
 		private void LbxTriggers_Format(object sender, ListControlConvertEventArgs e)
