@@ -28,7 +28,7 @@ namespace SHME.ExternalTool
 		}
 		public static int FloatToQ(float f, int fractionalBits)
 		{
-			return (int)(f * Math.Pow(2.0, fractionalBits));
+			return (int)Math.Round(f * Math.Pow(2.0, fractionalBits));
 		}
 		public static float QToFloat(int q)
 		{
@@ -36,7 +36,7 @@ namespace SHME.ExternalTool
 		}
 		public static float QToFloat(int q, int fractionalBits)
 		{
-			return (float)((float)q * Math.Pow(2.0, -fractionalBits));
+			return (float)(q * Math.Pow(2.0, -fractionalBits));
 		}
 	}
 }

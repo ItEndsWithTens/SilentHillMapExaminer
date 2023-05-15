@@ -125,9 +125,9 @@ namespace BizHawk.Client.EmuHawk
 
 			TbxUtilityFixedPointQ.Text = (i + f) switch
 			{
-				8 => $"0x{(byte)q:X}",
-				16 => $"0x{(short)q:X}",
-				_ => $"0x{q:X}"
+				8 => $"0x{(byte)q:X2}",
+				16 => $"0x{(short)q:X4}",
+				_ => $"0x{q:X8}"
 			};
 		}
 
