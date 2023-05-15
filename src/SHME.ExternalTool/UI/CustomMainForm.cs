@@ -62,7 +62,7 @@ namespace BizHawk.Client.EmuHawk
 
 		public Core Core { get; } = new Core();
 
-		public Camera Camera { get; set; } = new Camera() { Fov = 50.0f, Culling = Culling.None };
+		public Camera Camera { get; set; } = new Camera() { Fov = 50.0f };
 
 		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
 		public List<Renderable> TestBoxes { get; set; } = new List<Renderable>();
@@ -273,7 +273,7 @@ namespace BizHawk.Client.EmuHawk
 					{
 						ReportStats();
 					}
-					if (CbxTriggersAutoUpdate.Checked)
+					if (CbxAutoUpdateArrays.Checked)
 					{
 						CheckForArrayUpdates();
 					}
@@ -315,15 +315,6 @@ namespace BizHawk.Client.EmuHawk
 			// shaders is reversed in C#, to account for System.Numeric's row
 			// major matrix layout.
 			Matrix4x4 matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
-
-			if (CmbRenderMode.SelectedIndex == 1)
-			{
-				Camera.Culling = Culling.All;
-			}
-			else
-			{
-				Camera.Culling = Culling.Frustum;
-			}
 
 			VisiblePolygons.Clear();
 			if (CbxEnableOverlay.Checked)

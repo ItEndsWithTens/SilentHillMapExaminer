@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Numerics;
 
 namespace SHME.ExternalTool
@@ -39,19 +38,21 @@ namespace SHME.ExternalTool
 		public Plane Near { get; private set; } = new Plane();
 		public Plane Far { get; private set; } = new Plane();
 
-		public List<Plane> Planes { get; } = new List<Plane>();
+		public IList<Plane> Planes { get; } = new List<Plane>();
 
 		public Frustum()
 		{
 			Update(
 				new Vector3(0.0f), new Vector3(0.0f, 0.0f, -1.0f), new Vector3(1.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f),
-				75.0f, 1.0f, 0.01f, 1.0f);
+				75.0f, 1.0f, 0.01f, 1.0f,
+				Culling.All);
 		}
 		public Frustum(
 			Vector3 position, Vector3 front, Vector3 right, Vector3 up,
-			float fov, float aspect, float near, float far)
+			float fov, float aspect, float near, float far,
+			Culling culling)
 		{
-			Update(position, front, right, up, fov, aspect, near, far);
+			Update(position, front, right, up, fov, aspect, near, far, culling);
 		}
 
 		public bool TouchedBy(Aabb aabb)
@@ -81,7 +82,10 @@ namespace SHME.ExternalTool
 			return touches;
 		}
 
-		public void Update(Vector3 position, Vector3 front, Vector3 right, Vector3 up, float fov, float aspect, float near, float far)
+		public void Update(
+			Vector3 position, Vector3 front, Vector3 right, Vector3 up,
+			float fov, float aspect, float near, float far,
+			Culling culling)
 		{
 			Vector3 nearTarget = position + (front * near);
 			Vector3 farTarget = position + (front * far);
@@ -116,12 +120,31 @@ namespace SHME.ExternalTool
 			Far = new Plane(FarBottomRight, FarTopRight, FarTopLeft, Winding.Ccw);
 
 			Planes.Clear();
-			Planes.Add(Left);
-			Planes.Add(Right);
-			Planes.Add(Top);
-			Planes.Add(Bottom);
-			Planes.Add(Near);
-			Planes.Add(Far);
+
+			if (culling.HasFlag(Culling.Left))
+			{
+				Planes.Add(Left);
+			}
+			if (culling.HasFlag(Culling.Right))
+			{
+				Planes.Add(Right);
+			}
+			if (culling.HasFlag(Culling.Top))
+			{
+				Planes.Add(Top);
+			}
+			if (culling.HasFlag(Culling.Bottom))
+			{
+				Planes.Add(Bottom);
+			}
+			if (culling.HasFlag(Culling.Near))
+			{
+				Planes.Add(Near);
+			}
+			if (culling.HasFlag(Culling.Far))
+			{
+				Planes.Add(Far);
+			}
 		}
 
 		private static float GetHalf(float fov, float distance)
@@ -267,7 +290,17 @@ namespace SHME.ExternalTool
 			}
 		}
 
-		public Culling Culling { get; set; } = Culling.Backface;
+		private Culling _culling;
+		public Culling Culling
+		{
+			get => _culling;
+			set
+			{
+				_culling = value;
+
+				UpdateAllInternal();
+			}
+		}
 
 		public Frustum Frustum { get; } = new Frustum();
 
@@ -281,10 +314,6 @@ namespace SHME.ExternalTool
 
 		public Camera()
 		{
-			// TODO: Fix this! SH has a value in memory that gets read into what
-			// the GTE docs call the "projection plane distance" register, but
-			// it defaults to 0xE0 (224, the framebuffer height). Need to dig
-			// deeper into the code with Ghidra, see how the value is used.
 			_fov = 75.0f;
 
 			// Gameplay in Silent Hill is rendered to a 320x224 framebuffer, as
@@ -302,19 +331,14 @@ namespace SHME.ExternalTool
 			Yaw = 0.0f;
 			Roll = 0.0f;
 
+			_culling = Culling.All;
+
 			UpdateAllInternal();
 		}
 
 		public bool CanSee(Renderable r)
 		{
-			bool canSee = true;
-
-			if (Culling.HasFlag(Culling.Frustum))
-			{
-				canSee = Frustum.TouchedBy(r.Aabb);
-			}
-
-			return canSee;
+			return Frustum.TouchedBy(r.Aabb);
 		}
 
 		public void LookAt(Vector3 target)
@@ -326,7 +350,8 @@ namespace SHME.ExternalTool
 				Position,
 				Front, Right, Up,
 				Fov, AspectRatio,
-				NearClip, FarClip);
+				NearClip, FarClip,
+				Culling);
 		}
 
 		public void UpdateViewMatrix()
@@ -437,7 +462,8 @@ namespace SHME.ExternalTool
 				Position,
 				Front, Right, Up,
 				Fov, AspectRatio,
-				NearClip, FarClip);
+				NearClip, FarClip,
+				Culling);
 		}
 
 		public void UpdateProjectionMatrix()
@@ -447,14 +473,12 @@ namespace SHME.ExternalTool
 				NearClip, FarClip);
 		}
 
-		private readonly List<Plane> _clippingPlanes = new List<Plane>();
-
-		private readonly List<(Polygon, Renderable)> _visiblePolygons = new List<(Polygon, Renderable)>();
-		public List<(Polygon, Renderable)> GetVisiblePolygons(Renderable renderable)
+		private readonly IList<(Polygon, Renderable)> _visiblePolygons = new List<(Polygon, Renderable)>();
+		public IList<(Polygon, Renderable)> GetVisiblePolygons(Renderable renderable)
 		{
 			return GetVisiblePolygons(new List<Renderable>() { renderable });
 		}
-		public List<(Polygon, Renderable)> GetVisiblePolygons(IEnumerable<Renderable> renderables)
+		public IList<(Polygon, Renderable)> GetVisiblePolygons(IEnumerable<Renderable> renderables)
 		{
 			_visiblePolygons.Clear();
 
@@ -494,12 +518,12 @@ namespace SHME.ExternalTool
 			return _visiblePolygons;
 		}
 
-		private readonly Collection<Line> _visibleLines = new Collection<Line>();
-		public Collection<Line> GetVisibleLines(Line line)
+		private readonly IList<Line> _visibleLines = new List<Line>();
+		public IList<Line> GetVisibleLines(Line line)
 		{
-			return GetVisibleLines(new Collection<Line>() { line });
+			return GetVisibleLines(new List<Line>() { line });
 		}
-		public Collection<Line> GetVisibleLines(Collection<Line> lines)
+		public IList<Line> GetVisibleLines(IList<Line> lines)
 		{
 			_visibleLines.Clear();
 

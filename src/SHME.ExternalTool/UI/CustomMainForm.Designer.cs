@@ -91,6 +91,10 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.CbxCullBeyondFarClip = new System.Windows.Forms.CheckBox();
+            this.CbxCullToFrustum = new System.Windows.Forms.CheckBox();
+            this.CbxCullBackfaces = new System.Windows.Forms.CheckBox();
+            this.CbxAutoUpdateArrays = new System.Windows.Forms.CheckBox();
             this.NudCrosshairLength = new System.Windows.Forms.NumericUpDown();
             this.label70 = new System.Windows.Forms.Label();
             this.CbxOverlayRenderToFramebuffer = new System.Windows.Forms.CheckBox();
@@ -126,7 +130,6 @@ namespace BizHawk.Client.EmuHawk
             this.RdoOverlayAxisColorsGame = new System.Windows.Forms.RadioButton();
             this.BtnClearPoisTriggers = new System.Windows.Forms.Button();
             this.CmbRenderShape = new System.Windows.Forms.ComboBox();
-            this.CbxTriggersAutoUpdate = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LblSelectedTriggerThing2 = new System.Windows.Forms.Label();
             this.label60 = new System.Windows.Forms.Label();
@@ -1268,6 +1271,10 @@ namespace BizHawk.Client.EmuHawk
             // GbxOverlay
             // 
             this.GbxOverlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.GbxOverlay.Controls.Add(this.CbxCullBeyondFarClip);
+            this.GbxOverlay.Controls.Add(this.CbxCullToFrustum);
+            this.GbxOverlay.Controls.Add(this.CbxCullBackfaces);
+            this.GbxOverlay.Controls.Add(this.CbxAutoUpdateArrays);
             this.GbxOverlay.Controls.Add(this.NudCrosshairLength);
             this.GbxOverlay.Controls.Add(this.label70);
             this.GbxOverlay.Controls.Add(this.CbxOverlayRenderToFramebuffer);
@@ -1301,6 +1308,59 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabIndex = 15;
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
+            // 
+            // CbxCullBeyondFarClip
+            // 
+            this.CbxCullBeyondFarClip.AutoSize = true;
+            this.CbxCullBeyondFarClip.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxCullBeyondFarClip.Checked = true;
+            this.CbxCullBeyondFarClip.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxCullBeyondFarClip.Location = new System.Drawing.Point(211, 193);
+            this.CbxCullBeyondFarClip.Name = "CbxCullBeyondFarClip";
+            this.CbxCullBeyondFarClip.Size = new System.Drawing.Size(115, 17);
+            this.CbxCullBeyondFarClip.TabIndex = 99;
+            this.CbxCullBeyondFarClip.Text = "Cull beyond far clip";
+            this.CbxCullBeyondFarClip.UseVisualStyleBackColor = true;
+            this.CbxCullBeyondFarClip.CheckedChanged += new System.EventHandler(this.CbxCullBeyondFarClip_CheckedChanged);
+            // 
+            // CbxCullToFrustum
+            // 
+            this.CbxCullToFrustum.AutoSize = true;
+            this.CbxCullToFrustum.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxCullToFrustum.Checked = true;
+            this.CbxCullToFrustum.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxCullToFrustum.Location = new System.Drawing.Point(234, 170);
+            this.CbxCullToFrustum.Name = "CbxCullToFrustum";
+            this.CbxCullToFrustum.Size = new System.Drawing.Size(92, 17);
+            this.CbxCullToFrustum.TabIndex = 98;
+            this.CbxCullToFrustum.Text = "Cull to frustum";
+            this.CbxCullToFrustum.UseVisualStyleBackColor = true;
+            this.CbxCullToFrustum.CheckedChanged += new System.EventHandler(this.CbxCullToFrustum_CheckedChanged);
+            // 
+            // CbxCullBackfaces
+            // 
+            this.CbxCullBackfaces.AutoSize = true;
+            this.CbxCullBackfaces.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxCullBackfaces.Checked = true;
+            this.CbxCullBackfaces.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxCullBackfaces.Location = new System.Drawing.Point(230, 147);
+            this.CbxCullBackfaces.Name = "CbxCullBackfaces";
+            this.CbxCullBackfaces.Size = new System.Drawing.Size(96, 17);
+            this.CbxCullBackfaces.TabIndex = 97;
+            this.CbxCullBackfaces.Text = "Cull backfaces";
+            this.CbxCullBackfaces.UseVisualStyleBackColor = true;
+            this.CbxCullBackfaces.CheckedChanged += new System.EventHandler(this.CbxCullBackfaces_CheckedChanged);
+            // 
+            // CbxAutoUpdateArrays
+            // 
+            this.CbxAutoUpdateArrays.AutoSize = true;
+            this.CbxAutoUpdateArrays.Location = new System.Drawing.Point(11, 193);
+            this.CbxAutoUpdateArrays.Name = "CbxAutoUpdateArrays";
+            this.CbxAutoUpdateArrays.Size = new System.Drawing.Size(115, 17);
+            this.CbxAutoUpdateArrays.TabIndex = 96;
+            this.CbxAutoUpdateArrays.Text = "Auto update arrays";
+            this.CbxAutoUpdateArrays.UseVisualStyleBackColor = true;
+            this.CbxAutoUpdateArrays.CheckedChanged += new System.EventHandler(this.CbxAutoUpdateArrays_CheckedChanged);
             // 
             // NudCrosshairLength
             // 
@@ -1371,6 +1431,7 @@ namespace BizHawk.Client.EmuHawk
             this.CmbRenderMode.Name = "CmbRenderMode";
             this.CmbRenderMode.Size = new System.Drawing.Size(121, 21);
             this.CmbRenderMode.TabIndex = 89;
+            this.CmbRenderMode.SelectedIndexChanged += new System.EventHandler(this.CmbRenderMode_SelectedIndexChanged);
             // 
             // label25
             // 
@@ -1778,17 +1839,6 @@ namespace BizHawk.Client.EmuHawk
             this.CmbRenderShape.Size = new System.Drawing.Size(121, 21);
             this.CmbRenderShape.TabIndex = 80;
             this.CmbRenderShape.SelectedIndexChanged += new System.EventHandler(this.CmbRenderShape_SelectedIndexChanged);
-            // 
-            // CbxTriggersAutoUpdate
-            // 
-            this.CbxTriggersAutoUpdate.AutoSize = true;
-            this.CbxTriggersAutoUpdate.Location = new System.Drawing.Point(332, 10);
-            this.CbxTriggersAutoUpdate.Name = "CbxTriggersAutoUpdate";
-            this.CbxTriggersAutoUpdate.Size = new System.Drawing.Size(48, 17);
-            this.CbxTriggersAutoUpdate.TabIndex = 74;
-            this.CbxTriggersAutoUpdate.Text = "Auto";
-            this.CbxTriggersAutoUpdate.UseVisualStyleBackColor = true;
-            this.CbxTriggersAutoUpdate.CheckedChanged += new System.EventHandler(this.CbxTriggersAutoUpdate_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -4526,7 +4576,6 @@ namespace BizHawk.Client.EmuHawk
 		private NumericUpDown NudSelectedTriggerTargetIndex;
 		private ComboBox CmbSelectedTriggerType;
 		private Label label46;
-		private CheckBox CbxTriggersAutoUpdate;
 		private Label LblSelectedTriggerSomeIndex;
 		private Label label50;
 		private Label LblTotalTime;
@@ -4704,5 +4753,9 @@ namespace BizHawk.Client.EmuHawk
 		private Label label75;
 		private Label LblUtilityAnglesError;
 		private Label label78;
+		private CheckBox CbxAutoUpdateArrays;
+		private CheckBox CbxCullBeyondFarClip;
+		private CheckBox CbxCullToFrustum;
+		private CheckBox CbxCullBackfaces;
 	}
 }

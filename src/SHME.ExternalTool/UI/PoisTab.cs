@@ -43,10 +43,10 @@ namespace BizHawk.Client.EmuHawk
 			SetHarryPosition(poi.X, 0, poi.Z);
 		}
 
-		private void CbxTriggersAutoUpdate_CheckedChanged(object sender, EventArgs e)
+		private void CbxAutoUpdateArrays_CheckedChanged(object sender, EventArgs e)
 		{
-			BtnReadPois.Enabled = !CbxTriggersAutoUpdate.Checked;
-			BtnReadTriggers.Enabled = !CbxTriggersAutoUpdate.Checked;
+			BtnReadPois.Enabled = !CbxAutoUpdateArrays.Checked;
+			BtnReadTriggers.Enabled = !CbxAutoUpdateArrays.Checked;
 
 			_arraysNeedUpdate = true;
 		}

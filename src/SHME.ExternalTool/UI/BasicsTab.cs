@@ -270,6 +270,54 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private void CbxCullBackfaces_CheckedChanged(object sender, EventArgs e)
+		{
+			if (CbxCullBackfaces.Checked)
+			{
+				Camera.Culling |= Culling.Backface;
+			}
+			else
+			{
+				Camera.Culling ^= Culling.Backface;
+			}
+		}
+
+		private void CbxCullToFrustum_CheckedChanged(object sender, EventArgs e)
+		{
+			if (CbxCullToFrustum.CheckState == CheckState.Checked)
+			{
+				Camera.Culling |= Culling.Frustum;
+				CbxCullBeyondFarClip.Checked = true;
+			}
+			else if (CbxCullToFrustum.CheckState == CheckState.Unchecked)
+			{
+				Camera.Culling ^= Culling.Frustum;
+				Camera.Culling |= Culling.Near;
+			}
+		}
+
+		private void CbxCullBeyondFarClip_CheckedChanged(object sender, EventArgs e)
+		{
+			if (CbxCullBeyondFarClip.Checked)
+			{
+				Camera.Culling |= Culling.Far;
+
+				if (CbxCullToFrustum.CheckState == CheckState.Indeterminate)
+				{
+					CbxCullToFrustum.CheckState = CheckState.Checked;
+				}
+			}
+			else
+			{
+				Camera.Culling ^= Culling.Far;
+
+				if (CbxCullToFrustum.CheckState == CheckState.Checked)
+				{
+					CbxCullToFrustum.CheckState = CheckState.Indeterminate;
+				}
+			}
+		}
+
 		private void CbxOverlayCameraMatchGame_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (!CbxOverlayCameraMatchGame.Checked)
@@ -296,6 +344,22 @@ namespace BizHawk.Client.EmuHawk
 				a += Rom.Addresses.MainRam.BaseAddress;
 
 				MemEvents?.AddWriteCallback(IndexOfDrawRegion_ValueChanging, (uint)a, "System Bus");
+			}
+		}
+
+		private void CmbRenderMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (CmbRenderMode.SelectedIndex == 1)
+			{
+				CbxCullBackfaces.Checked = true;
+				CbxCullToFrustum.CheckState = CheckState.Checked;
+				CbxCullBeyondFarClip.Checked = true;
+			}
+			else
+			{
+				CbxCullBackfaces.Checked = false;
+				CbxCullToFrustum.CheckState = CheckState.Checked;
+				CbxCullBeyondFarClip.Checked = true;
 			}
 		}
 
