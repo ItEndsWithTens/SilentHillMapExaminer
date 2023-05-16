@@ -43,14 +43,6 @@ namespace BizHawk.Client.EmuHawk
 			SetHarryPosition(poi.X, 0, poi.Z);
 		}
 
-		private void CbxAutoUpdateArrays_CheckedChanged(object sender, EventArgs e)
-		{
-			BtnReadPois.Enabled = !CbxAutoUpdateArrays.Checked;
-			BtnReadTriggers.Enabled = !CbxAutoUpdateArrays.Checked;
-
-			_arraysNeedUpdate = true;
-		}
-
 		private int? _previousSelectedTriggerIndex;
 		private string? _previousTriggerBodyHash;
 		private bool? _previousTriggerFired;
@@ -448,24 +440,6 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Mem.WriteByte(t.Address, (byte)(existing & 0b01111111));
 			}
-		}
-
-		private void Emu_StateLoaded(object sender, StateLoadedEventArgs e)
-		{
-			Pois.Clear();
-			LbxPois.Items.Clear();
-			LblPoiCount.Text = "-";
-
-			Triggers.Clear();
-			LbxTriggers.Items.Clear();
-			LblTriggerCount.Text = "-";
-
-			LbxPoiAssociatedTriggers.Items.Clear();
-
-			ClearDisplayedPoiInfo();
-			ClearDisplayedTriggerInfo();
-
-			_arraysNeedUpdate = true;
 		}
 
 		private void LbxTriggers_Format(object sender, ListControlConvertEventArgs e)

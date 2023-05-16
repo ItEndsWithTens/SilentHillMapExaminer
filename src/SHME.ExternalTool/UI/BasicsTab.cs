@@ -1,4 +1,5 @@
-﻿using SHME.ExternalTool;
+﻿using BizHawk.Client.Common;
+using SHME.ExternalTool;
 using System;
 using System.Drawing;
 using System.Numerics;
@@ -347,6 +348,15 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private void CbxReadLevelDataOnStageLoad_CheckedChanged(object sender, EventArgs e)
+		{
+			BtnReadPois.Enabled = !CbxReadLevelDataOnStageLoad.Checked;
+			BtnReadTriggers.Enabled = !CbxReadLevelDataOnStageLoad.Checked;
+			BtnCameraPathReadArray.Enabled = !CbxReadLevelDataOnStageLoad.Checked;
+
+			_levelDataNeedsUpdate = true;
+		}
+
 		private void CmbRenderMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (CmbRenderMode.SelectedIndex == 1)
@@ -361,6 +371,24 @@ namespace BizHawk.Client.EmuHawk
 				CbxCullToFrustum.CheckState = CheckState.Checked;
 				CbxCullBeyondFarClip.Checked = true;
 			}
+		}
+
+		private void Emu_StateLoaded(object sender, StateLoadedEventArgs e)
+		{
+			Pois.Clear();
+			LbxPois.Items.Clear();
+			LblPoiCount.Text = "-";
+
+			Triggers.Clear();
+			LbxTriggers.Items.Clear();
+			LblTriggerCount.Text = "-";
+
+			LbxPoiAssociatedTriggers.Items.Clear();
+
+			ClearDisplayedPoiInfo();
+			ClearDisplayedTriggerInfo();
+
+			_levelDataNeedsUpdate = true;
 		}
 
 		private void NudCrosshairLength_ValueChanged(object sender, EventArgs e)

@@ -224,7 +224,7 @@ namespace BizHawk.Client.EmuHawk
 			uint stage = Mem.ReadByte(Rom.Addresses.MainRam.IndexOfStageBeingLoaded);
 			if (stage != 0xFF)
 			{
-				_arraysNeedUpdate = true;
+				_levelDataNeedsUpdate = true;
 				return;
 			}
 
@@ -273,7 +273,7 @@ namespace BizHawk.Client.EmuHawk
 					{
 						ReportStats();
 					}
-					if (CbxAutoUpdateArrays.Checked)
+					if (CbxReadLevelDataOnStageLoad.Checked)
 					{
 						CheckForArrayUpdates();
 					}
@@ -617,18 +617,18 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private bool _arraysNeedUpdate;
+		private bool _levelDataNeedsUpdate;
 		private Action UpdateArrays { get; }
 		private void CheckForArrayUpdates()
 		{
-			if (!_arraysNeedUpdate)
+			if (!_levelDataNeedsUpdate)
 			{
 				return;
 			}
 
 			Invoke(UpdateArrays);
 
-			_arraysNeedUpdate = false;
+			_levelDataNeedsUpdate = false;
 		}
 
 		private void CleanUpDisposables()

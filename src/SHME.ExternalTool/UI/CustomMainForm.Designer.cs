@@ -94,7 +94,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCullBeyondFarClip = new System.Windows.Forms.CheckBox();
             this.CbxCullToFrustum = new System.Windows.Forms.CheckBox();
             this.CbxCullBackfaces = new System.Windows.Forms.CheckBox();
-            this.CbxAutoUpdateArrays = new System.Windows.Forms.CheckBox();
+            this.CbxReadLevelDataOnStageLoad = new System.Windows.Forms.CheckBox();
             this.NudCrosshairLength = new System.Windows.Forms.NumericUpDown();
             this.label70 = new System.Windows.Forms.Label();
             this.CbxOverlayRenderToFramebuffer = new System.Windows.Forms.CheckBox();
@@ -1274,7 +1274,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.Controls.Add(this.CbxCullBeyondFarClip);
             this.GbxOverlay.Controls.Add(this.CbxCullToFrustum);
             this.GbxOverlay.Controls.Add(this.CbxCullBackfaces);
-            this.GbxOverlay.Controls.Add(this.CbxAutoUpdateArrays);
+            this.GbxOverlay.Controls.Add(this.CbxReadLevelDataOnStageLoad);
             this.GbxOverlay.Controls.Add(this.NudCrosshairLength);
             this.GbxOverlay.Controls.Add(this.label70);
             this.GbxOverlay.Controls.Add(this.CbxOverlayRenderToFramebuffer);
@@ -1351,16 +1351,16 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCullBackfaces.UseVisualStyleBackColor = true;
             this.CbxCullBackfaces.CheckedChanged += new System.EventHandler(this.CbxCullBackfaces_CheckedChanged);
             // 
-            // CbxAutoUpdateArrays
+            // CbxReadLevelDataOnStageLoad
             // 
-            this.CbxAutoUpdateArrays.AutoSize = true;
-            this.CbxAutoUpdateArrays.Location = new System.Drawing.Point(11, 193);
-            this.CbxAutoUpdateArrays.Name = "CbxAutoUpdateArrays";
-            this.CbxAutoUpdateArrays.Size = new System.Drawing.Size(115, 17);
-            this.CbxAutoUpdateArrays.TabIndex = 96;
-            this.CbxAutoUpdateArrays.Text = "Auto update arrays";
-            this.CbxAutoUpdateArrays.UseVisualStyleBackColor = true;
-            this.CbxAutoUpdateArrays.CheckedChanged += new System.EventHandler(this.CbxAutoUpdateArrays_CheckedChanged);
+            this.CbxReadLevelDataOnStageLoad.AutoSize = true;
+            this.CbxReadLevelDataOnStageLoad.Location = new System.Drawing.Point(11, 193);
+            this.CbxReadLevelDataOnStageLoad.Name = "CbxReadLevelDataOnStageLoad";
+            this.CbxReadLevelDataOnStageLoad.Size = new System.Drawing.Size(168, 17);
+            this.CbxReadLevelDataOnStageLoad.TabIndex = 96;
+            this.CbxReadLevelDataOnStageLoad.Text = "Read level data on stage load";
+            this.CbxReadLevelDataOnStageLoad.UseVisualStyleBackColor = true;
+            this.CbxReadLevelDataOnStageLoad.CheckedChanged += new System.EventHandler(this.CbxReadLevelDataOnStageLoad_CheckedChanged);
             // 
             // NudCrosshairLength
             // 
@@ -4753,7 +4753,7 @@ namespace BizHawk.Client.EmuHawk
 		private Label label75;
 		private Label LblUtilityAnglesError;
 		private Label label78;
-		private CheckBox CbxAutoUpdateArrays;
+		private CheckBox CbxReadLevelDataOnStageLoad;
 		private CheckBox CbxCullBeyondFarClip;
 		private CheckBox CbxCullToFrustum;
 		private CheckBox CbxCullBackfaces;
