@@ -66,8 +66,7 @@ namespace BizHawk.Client.EmuHawk
 			CameraBoxes.Clear();
 			CameraGems.Clear();
 			CameraLines.Clear();
-			Color color = Color.Orange;
-			var gemGen = new GemGenerator(0.125f, 0.25f, 0.125f, color);
+			var gemGen = new GemGenerator(0.125f, 0.25f, 0.125f, Color.FromArgb(0x25, 0xA5, 0x97));
 			while (true)
 			{
 				IReadOnlyList<byte> bytes = Mem.ReadByteRange(address, SilentHillEntitySizes.CameraPath);
@@ -90,7 +89,7 @@ namespace BizHawk.Client.EmuHawk
 				CameraGems.Add(gemA);
 				CameraGems.Add(gemB);
 
-				var boxGen = new BoxGenerator(gemA.Position, gemB.Position, color);
+				var boxGen = new BoxGenerator(gemA.Position, gemB.Position, Color.Orange);
 				Renderable volume = boxGen.Generate().ToWorld();
 
 				CameraBoxes.Add(volume);
@@ -105,7 +104,7 @@ namespace BizHawk.Client.EmuHawk
 				// a sheet or a box. Damn it.
 				float sizeX = path.AreaMaxX - path.AreaMinX;
 				float sizeZ = path.AreaMaxZ - path.AreaMinZ;
-				var sheetGen = new SheetGenerator(sizeX, sizeZ, color);
+				var sheetGen = new SheetGenerator(sizeX, sizeZ, Color.FromArgb(0x52, 0x3A, 0xB5));
 				Renderable area = sheetGen.Generate().ToWorld();
 				area.Position = new Vector3(
 					path.AreaMinX + sizeX / 2.0f,
