@@ -124,13 +124,10 @@ namespace BizHawk.Client.EmuHawk
 				}
 			}
 
-			// TODO: Invert this branch? Three ors means four tests that have to run
-			// every time, instead of a series of ands that could short-circuit when
-			// possible.
-			bool outside = false;
-			if (p.X < 0 || p.X > ClickPort.Width - 1 || p.Y < 0 || p.Y > ClickPort.Height - 1)
+			bool outside = true;
+			if (p.X >= 0 && p.X < ClickPort.Width && p.Y >= 0 && p.Y < ClickPort.Height)
 			{
-				outside = true;
+				outside = false;
 			}
 
 			return outside;
