@@ -60,6 +60,8 @@
 
 				IsCameraUnlocked = 0xB9CD0,
 
+				PointerToArrayOfCameraPaths = 0xB9CD4,
+				PointerToThingAfterArrayOfCameraPaths = 0xBE9F0,
 				CameraState = 0xB9CD8,
 
 				CameraSpringArmTensionH0 = 0xB9D04, // Mirrored at 0xAFCD0
@@ -205,6 +207,10 @@
 				Pointer18 = 0xC9578 + 0x58,
 				Value5 = 0xC9578 + 0x5C,
 				PointerToUnknownThingAfterArrayOfTriggers = 0xC9578 + 0x188,
+
+				// MapChunkset + 0x3CC, // Start of camera path array. Why Ghidra shows the game's code doing this when the resulting address is already stored elsewhere is beyond me.
+
+				// 0xEE9E0 // Something about the snow; setting to 0 turns it off, but fiddling with the value changes the amount? Not sure what this is.
 
 				MapTim = 0x1CF600
 			}

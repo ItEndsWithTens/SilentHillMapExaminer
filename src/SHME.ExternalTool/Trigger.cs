@@ -58,11 +58,9 @@ namespace SHME.ExternalTool
 		Dummy = 0x0F
 	}
 
-	public class Trigger
+	public class Trigger : SilentHillEntity
 	{
-		public static int SizeInBytes { get; } = 12;
-
-		public long Address { get; }
+		public override int SizeInBytes => SilentHillEntitySizes.Trigger;
 
 		public byte Thing0 { get; }
 		/// <summary>

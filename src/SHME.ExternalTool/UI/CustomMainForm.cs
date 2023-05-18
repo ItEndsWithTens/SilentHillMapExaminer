@@ -64,8 +64,10 @@ namespace BizHawk.Client.EmuHawk
 
 		public Camera Camera { get; set; } = new Camera() { Fov = 50.0f };
 
-		public List<Renderable> Boxes { get; set; } = new List<Renderable>();
-		public List<Renderable> TestBoxes { get; set; } = new List<Renderable>();
+		public IList<Renderable> Boxes { get; } = new List<Renderable>();
+		public IList<Renderable> TestBoxes { get; } = new List<Renderable>();
+		public IList<Renderable> Gems { get; } = new List<Renderable>();
+		public IList<Line> Lines { get; } = new List<Line>();
 
 		public Pen Pen { get; set; } = new Pen(Brushes.White);
 		public Bitmap Reticle { get; set; } = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
@@ -105,6 +107,7 @@ namespace BizHawk.Client.EmuHawk
 
 			InitializeBasicsTab();
 			InitializePoisTab();
+			InitializeCameraTab();
 			InitializeSaveTab();
 			InitializeFramebufferTab();
 			InitializeUtilityTab();
@@ -145,9 +148,15 @@ namespace BizHawk.Client.EmuHawk
 			base.Restart();
 
 			Boxes.Clear();
+			Gems.Clear();
+			Lines.Clear();
 			TestBoxes.Clear();
 			TestLines.Clear();
 			ModelBoxes.Clear();
+
+			CameraBoxes.Clear();
+			CameraGems.Clear();
+			CameraLines.Clear();
 
 			Mem.UseMemoryDomain("MainRAM");
 
@@ -157,7 +166,8 @@ namespace BizHawk.Client.EmuHawk
 			{
 				LblSelectedPoiAddress,
 				LblSelectedTriggerAddress,
-				LblSelectedTriggerFiredDetails
+				LblSelectedTriggerFiredDetails,
+				LblCameraPathAddress
 			};
 
 			if (MemDomains != null)
@@ -320,6 +330,9 @@ namespace BizHawk.Client.EmuHawk
 			if (CbxEnableOverlay.Checked)
 			{
 				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(Boxes));
+				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(Gems));
+				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(CameraBoxes));
+				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(CameraGems));
 			}
 			if (CbxEnableModelDisplay.Checked)
 			{
@@ -331,6 +344,11 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			VisibleLines.Clear();
+			if (CbxEnableOverlay.Checked)
+			{
+				VisibleLines.AddRange(Camera.GetVisibleLines(Lines));
+				VisibleLines.AddRange(Camera.GetVisibleLines(CameraLines));
+			}
 			if (CbxOverlayTestLine.Checked)
 			{
 				VisibleLines.AddRange(Camera.GetVisibleLines(TestLines));

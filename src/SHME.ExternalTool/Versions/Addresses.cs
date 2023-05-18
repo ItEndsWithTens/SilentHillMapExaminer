@@ -35,6 +35,8 @@
 		public long IndexOfMostRecentlyActiveString { get; set; }
 
 		public long IsCameraUnlocked { get; set; }
+		public long PointerToArrayOfCameraPaths { get; set; }
+		public long PointerToThingAfterArrayOfCameraPaths { get; set; }
 		public long CameraState { get; set; }
 
 		public long CameraSpringArmTensionH0 { get; set; }

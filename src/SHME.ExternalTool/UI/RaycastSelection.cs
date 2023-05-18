@@ -12,16 +12,19 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private Control? GameSurface { get; set; }
 
-		private IList<PointOfInterest> _clickedPois = new List<PointOfInterest>();
+		private Dictionary<SilentHillEntity, IList<(ListControl control, int index)>> _clickedThings = new();
 
 		private void ClearListControlSelections()
 		{
 			LbxPois.SelectedIndex = -1;
+			LbxCameraPaths.SelectedIndex = -1;
 		}
 
-		private bool GetClickedPois(Point screen, ref IList<PointOfInterest> pois)
+		private bool GetClickedThings(
+			Point screen,
+			ref Dictionary<SilentHillEntity, IList<(ListControl control, int index)>> clicked)
 		{
-			pois.Clear();
+			clicked.Clear();
 
 			Point p = DisplayManager.UntransformPoint(screen);
 			p.X -= ClickPort.Left;
@@ -69,20 +72,61 @@ namespace BizHawk.Client.EmuHawk
 
 				if (tmin > 0 && tmin <= tmax)
 				{
+					bool hit = false;
+
 					foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Pois)
 					{
 						if (ReferenceEquals(pair.Value, r))
 						{
-							if (!pois.Contains(pair.Key))
+							if (!clicked.ContainsKey(pair.Key))
 							{
-								pois.Add(pair.Key);
+								ListBox lbx = LbxPois;
+								int idx = LbxPois.Items.IndexOf(pair.Key);
+								clicked.Add(pair.Key, new List<(ListControl, int)>() { (lbx, idx) });
 							}
+
+							hit = true;
 							break;
+						}
+					}
+
+					if (!hit)
+					{
+						foreach (KeyValuePair<CameraPath, IList<Renderable?>> pair in CameraPaths)
+						{
+							foreach (Renderable? other in pair.Value)
+							{
+								if (other == null)
+								{
+									continue;
+								}
+
+								if (ReferenceEquals(other, r))
+								{
+									if (!clicked.ContainsKey(pair.Key))
+									{
+										ListBox lbx = LbxCameraPaths;
+										int idx = LbxCameraPaths.Items.IndexOf(pair.Key);
+										clicked.Add(pair.Key, new List<(ListControl, int)>() { (lbx, idx) });
+									}
+
+									hit = true;
+									break;
+								}
+							}
+
+							if (hit)
+							{
+								break;
+							}
 						}
 					}
 				}
 			}
 
+			// TODO: Invert this branch? Three ors means four tests that have to run
+			// every time, instead of a series of ands that could short-circuit when
+			// possible.
 			bool outside = false;
 			if (p.X < 0 || p.X > ClickPort.Width - 1 || p.Y < 0 || p.Y > ClickPort.Height - 1)
 			{
@@ -104,34 +148,51 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			bool outside = GetClickedPois(gc.PointToScreen(e.Location), ref _clickedPois);
-
-			if (outside)
+			if (GetClickedThings(gc.PointToScreen(e.Location), ref _clickedThings))
 			{
 				return;
 			}
 
-			if (_clickedPois.Count > 0)
+			ClearListControlSelections();
+
+			if (_clickedThings.Count > 0)
 			{
 				_raycastSelectionIndex = 0;
-				LbxPois.SelectedItem = _clickedPois[_raycastSelectionIndex];
-				RaycastSelectionTimer.Enabled = true;
-			}
-			else
-			{
-				LbxPois.SelectedIndex = -1;
+
+				KeyValuePair<SilentHillEntity, IList<(ListControl, int)>> first =
+					_clickedThings.ElementAt(_raycastSelectionIndex);
+
+				foreach ((ListControl c, int i) val in first.Value)
+				{
+					val.c.SelectedIndex = val.i;
+				}
+
+				RaycastSelectionTimer.Start();
 			}
 		}
 		private void GameSurface_MouseUp(object sender, MouseEventArgs e)
 		{
-			RaycastSelectionTimer.Enabled = false;
+			RaycastSelectionTimer.Stop();
 		}
 
 		private int _raycastSelectionIndex;
 		private Timer RaycastSelectionTimer { get; } = new Timer() { Interval = 1000 };
 		private void RaycastSelectionTimer_Tick(object sender, EventArgs e)
 		{
-			LbxPois.SelectedItem = _clickedPois[++_raycastSelectionIndex % _clickedPois.Count];
+			if (_clickedThings.Count == 0)
+			{
+				return;
+			}
+
+			ClearListControlSelections();
+
+			KeyValuePair<SilentHillEntity, IList<(ListControl, int)>> thing =
+				_clickedThings.ElementAt(++_raycastSelectionIndex % _clickedThings.Count);
+
+			foreach ((ListControl c, int i) val in thing.Value)
+			{
+				val.c.SelectedIndex = val.i;
+			}
 		}
 	}
 }

@@ -5,9 +5,9 @@ using static SHME.ExternalTool.Core;
 
 namespace SHME.ExternalTool
 {
-	public class PointOfInterest
+	public class PointOfInterest : SilentHillEntity
 	{
-		public long Address { get; }
+		public override int SizeInBytes => SilentHillEntitySizes.PointOfInterest;
 
 		public float X { get; }
 
