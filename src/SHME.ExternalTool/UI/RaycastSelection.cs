@@ -67,7 +67,7 @@ namespace BizHawk.Client.EmuHawk
 				tmax = Math.Min(tmax, Math.Max(min.Y, max.Y));
 				tmax = Math.Min(tmax, Math.Max(min.Z, max.Z));
 
-				if (tmin < tmax)
+				if (tmin > 0 && tmin <= tmax)
 				{
 					foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Pois)
 					{
