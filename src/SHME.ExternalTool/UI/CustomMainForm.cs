@@ -329,10 +329,12 @@ namespace BizHawk.Client.EmuHawk
 			VisiblePolygons.Clear();
 			if (CbxEnableOverlay.Checked)
 			{
-				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(Boxes));
-				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(Gems));
-				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(CameraBoxes));
-				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(CameraGems));
+				VisiblePolygons.AddRange(
+					Camera.GetVisiblePolygons(
+						Boxes
+						.Concat(Gems)
+						.Concat(CameraBoxes)
+						.Concat(CameraGems)));
 			}
 			if (CbxEnableModelDisplay.Checked)
 			{
@@ -346,8 +348,11 @@ namespace BizHawk.Client.EmuHawk
 			VisibleLines.Clear();
 			if (CbxEnableOverlay.Checked)
 			{
-				VisibleLines.AddRange(Camera.GetVisibleLines(Lines));
-				VisibleLines.AddRange(Camera.GetVisibleLines(CameraLines));
+				VisibleLines.AddRange(
+					Camera.GetVisibleLines(
+						Lines
+						.Concat(CameraLines)
+						.ToList()));
 			}
 			if (CbxOverlayTestLine.Checked)
 			{

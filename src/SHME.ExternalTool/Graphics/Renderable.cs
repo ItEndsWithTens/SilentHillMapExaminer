@@ -377,7 +377,7 @@ namespace SHME.ExternalTool
 
 		protected virtual void OnUpdated()
 		{
-			OnUpdated(new EventArgs());
+			OnUpdated(EventArgs.Empty);
 		}
 		protected virtual void OnUpdated(EventArgs e)
 		{

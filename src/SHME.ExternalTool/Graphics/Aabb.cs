@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace SHME.ExternalTool
@@ -33,7 +34,7 @@ namespace SHME.ExternalTool
 
 		public Vector3 Center { get; private set; }
 
-		public List<Vector3> Points { get; } = new List<Vector3>(8);
+		public IList<Vector3> Points { get; } = new List<Vector3>(8);
 
 		public Aabb()
 		{
@@ -41,7 +42,7 @@ namespace SHME.ExternalTool
 			_max = new Vector3();
 			Update();
 		}
-		public Aabb(List<Renderable> renderables) : base()
+		public Aabb(IEnumerable<Renderable> renderables) : base()
 		{
 			var points = new List<Vector3>();
 
@@ -53,9 +54,9 @@ namespace SHME.ExternalTool
 				}
 			}
 
-			Init(points);
+			Init(points.ToArray());
 		}
-		public Aabb(List<Vertex> vertices) : base()
+		public Aabb(IEnumerable<Vertex> vertices) : base()
 		{
 			var points = new List<Vector3>();
 
@@ -64,13 +65,13 @@ namespace SHME.ExternalTool
 				points.Add(vertex.Position);
 			}
 
-			Init(points);
+			Init(points.ToArray());
 		}
-		public Aabb(List<Vector3> points) : base()
+		public Aabb(IEnumerable<Vector3> points) : base()
 		{
-			Init(points);
+			Init(points.ToArray());
 		}
-		public Aabb(params Vector3[] points)
+		public Aabb(Vector3[] points)
 		{
 			Init(points);
 		}
@@ -87,27 +88,20 @@ namespace SHME.ExternalTool
 			Update();
 		}
 
-		private void Init(List<Vector3> points)
+		private void Init(Vector3[] points)
 		{
-			Init(points.ToArray());
-		}
-		private void Init(params Vector3[] points)
-		{
-			if (points.Length == 0)
-			{
-				return;
-			}
-
 			Vector3 newMin = points[0];
 			Vector3 newMax = points[0];
 
-			foreach (Vector3 point in points)
+			for (int i = 0; i < points.Length; i++)
 			{
+				Vector3 point = points[i];
+
 				if (point.X < newMin.X)
 				{
 					newMin.X = point.X;
 				}
-				if (point.X > newMax.X)
+				else if (point.X > newMax.X)
 				{
 					newMax.X = point.X;
 				}
@@ -116,7 +110,7 @@ namespace SHME.ExternalTool
 				{
 					newMin.Y = point.Y;
 				}
-				if (point.Y > newMax.Y)
+				else if (point.Y > newMax.Y)
 				{
 					newMax.Y = point.Y;
 				}
@@ -125,7 +119,7 @@ namespace SHME.ExternalTool
 				{
 					newMin.Z = point.Z;
 				}
-				if (point.Z > newMax.Z)
+				else if (point.Z > newMax.Z)
 				{
 					newMax.Z = point.Z;
 				}
@@ -162,21 +156,6 @@ namespace SHME.ExternalTool
 			Vector3 newMin = lhs.Min;
 			Vector3 newMax = lhs.Max;
 
-			if (rhs.Max.X > newMax.X)
-			{
-				newMax.X = rhs.Max.X;
-			}
-
-			if (rhs.Max.Y > newMax.Y)
-			{
-				newMax.Y = rhs.Max.Y;
-			}
-
-			if (rhs.Max.Z > newMax.Z)
-			{
-				newMax.Z = rhs.Max.Z;
-			}
-
 			if (rhs.Min.X < newMin.X)
 			{
 				newMin.X = rhs.Min.X;
@@ -190,6 +169,21 @@ namespace SHME.ExternalTool
 			if (rhs.Min.Z < newMin.Z)
 			{
 				newMin.Z = rhs.Min.Z;
+			}
+
+			if (rhs.Max.X > newMax.X)
+			{
+				newMax.X = rhs.Max.X;
+			}
+
+			if (rhs.Max.Y > newMax.Y)
+			{
+				newMax.Y = rhs.Max.Y;
+			}
+
+			if (rhs.Max.Z > newMax.Z)
+			{
+				newMax.Z = rhs.Max.Z;
 			}
 
 			return new Aabb(newMin, newMax);
