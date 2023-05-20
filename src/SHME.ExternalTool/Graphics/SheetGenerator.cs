@@ -59,36 +59,25 @@ namespace SHME.ExternalTool
 				new Vertex(Max.X, 0.0f, Max.Y, Color)
 			};
 
-			var box = new Renderable(modelVerts)
-			{
-				CoordinateSpace = CoordinateSpace.Model
-			};
+			var box = new Renderable() { CoordinateSpace = CoordinateSpace.Model };
 
 			for (int i = 0; i < 8; i += 4)
 			{
 				var p = new Polygon(box);
 
-				p.LineLoopIndices.Add(i + 0);
-				p.LineLoopIndices.Add(i + 1);
-				p.LineLoopIndices.Add(i + 2);
-				p.LineLoopIndices.Add(i + 3);
+				Vertex a = modelVerts[i + 0];
+				Vertex b = modelVerts[i + 1];
+				Vertex c = modelVerts[i + 2];
+				Vertex d = modelVerts[i + 3];
 
-				p.Indices.Add(i + 0);
-				p.Indices.Add(i + 1);
-				p.Indices.Add(i + 2);
+				p.Vertices.Add(a);
+				p.Vertices.Add(b);
+				p.Vertices.Add(c);
+				p.Vertices.Add(d);
 
-				p.Indices.Add(i + 0);
-				p.Indices.Add(i + 2);
-				p.Indices.Add(i + 3);
-
-				Vector3 a = modelVerts[p.Indices[1]] - modelVerts[p.Indices[0]];
-				Vector3 b = modelVerts[p.Indices[2]] - modelVerts[p.Indices[0]];
-				p.Normal = Vector3.Cross(a, b);
-				p.Normal = Vector3.Normalize(p.Normal);
+				p.Normal = Vector3.Normalize(Vector3.Cross(b - a, c - a));
 
 				box.Polygons.Add(p);
-				box.Indices.AddRange(p.Indices);
-				box.LineLoopIndices.AddRange(p.LineLoopIndices);
 			}
 
 			box.Transformability = Transformability.Translate;

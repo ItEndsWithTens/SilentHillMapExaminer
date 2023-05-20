@@ -48,7 +48,7 @@ namespace SHME.ExternalTool
 
 			foreach (Renderable r in renderables)
 			{
-				foreach (Vertex v in r.Vertices)
+				foreach (Vertex v in r.Polygons.SelectMany((p) => p.Vertices))
 				{
 					points.Add(v.Position);
 				}

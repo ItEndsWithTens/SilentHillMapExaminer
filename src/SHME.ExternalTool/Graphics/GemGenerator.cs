@@ -72,31 +72,23 @@ namespace SHME.ExternalTool
 				new Vertex(0.0f, -halfDepth, 0.0f, Color)
 			};
 
-			var gem = new Renderable(modelVerts)
-			{
-				CoordinateSpace = CoordinateSpace.Model
-			};
+			var gem = new Renderable() { CoordinateSpace = CoordinateSpace.Model };
 
 			for (int i = 0; i < 24; i += 3)
 			{
 				var p = new Polygon(gem);
 
-				p.Indices.Add(i + 0);
-				p.Indices.Add(i + 1);
-				p.Indices.Add(i + 2);
+				Vertex a = modelVerts[i + 0];
+				Vertex b = modelVerts[i + 1];
+				Vertex c = modelVerts[i + 2];
 
-				// Since gems are composed only of triangles, their line loop
-				// indices serve as the triangle indices too.
-				p.LineLoopIndices.AddRange(p.Indices);
+				p.Vertices.Add(a);
+				p.Vertices.Add(b);
+				p.Vertices.Add(c);
 
-				Vector3 a = modelVerts[p.Indices[1]] - modelVerts[p.Indices[0]];
-				Vector3 b = modelVerts[p.Indices[2]] - modelVerts[p.Indices[0]];
-				p.Normal = Vector3.Cross(a, b);
-				p.Normal = Vector3.Normalize(p.Normal);
+				p.Normal = Vector3.Normalize(Vector3.Cross(b - a, c - a));
 
 				gem.Polygons.Add(p);
-				gem.Indices.AddRange(p.Indices);
-				gem.LineLoopIndices.AddRange(p.LineLoopIndices);
 			}
 
 			gem.Transformability = Transformability;

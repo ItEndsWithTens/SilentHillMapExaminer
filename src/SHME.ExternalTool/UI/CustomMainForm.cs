@@ -455,15 +455,12 @@ namespace BizHawk.Client.EmuHawk
 
 				ScreenSpaceLines.Clear();
 
-				for (int i = 0; i < p.LineLoopIndices.Count; i++)
+				for (int i = 0; i < p.Vertices.Count; i++)
 				{
-					int wrappedA = (i + 0) % p.LineLoopIndices.Count;
-					int wrappedB = (i + 1) % p.LineLoopIndices.Count;
+					int wrappedA = (i + 0) % p.Vertices.Count;
+					int wrappedB = (i + 1) % p.Vertices.Count;
 
-					int indexA = p.LineLoopIndices[wrappedA];
-					int indexB = p.LineLoopIndices[wrappedB];
-
-					var line = new Line(r.Vertices[indexA], r.Vertices[indexB]);
+					var line = new Line(p.Vertices[wrappedA], p.Vertices[wrappedB]);
 					var clipped = new Line(line);
 
 					bool visible = Camera.ClipLineAgainstFrustum(ref clipped);

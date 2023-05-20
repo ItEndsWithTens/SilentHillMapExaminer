@@ -4,10 +4,10 @@
 	{
 		public Vertex A
 		{
-			get => Vertices[0];
+			get => Polygons[0].Vertices[0];
 			set
 			{
-				Vertices[0] = value;
+				Polygons[0].Vertices[0] = value;
 
 				UpdateBounds();
 			}
@@ -15,10 +15,10 @@
 
 		public Vertex B
 		{
-			get => Vertices[1];
+			get => Polygons[0].Vertices[1];
 			set
 			{
-				Vertices[1] = value;
+				Polygons[0].Vertices[1] = value;
 
 				UpdateBounds();
 			}
@@ -29,19 +29,20 @@
 		}
 		public Line(Vertex a, Vertex b)
 		{
-			Vertices.Capacity = 2;
+			Polygons.Add(new Polygon(this));
 
-			Vertices.Add(a);
-			Vertices.Add(b);
+			Polygons[0].Vertices.Add(a);
+			Polygons[0].Vertices.Add(b);
 
 			UpdateBounds();
 		}
 		public Line(Line line) : base(line)
 		{
-			Vertices.Capacity = 2;
+			Polygons.Clear();
+			Polygons.Add(line.Polygons[0]);
 
-			Vertices.Add(line.A);
-			Vertices.Add(line.B);
+			Polygons[0].Vertices.Add(line.A);
+			Polygons[0].Vertices.Add(line.B);
 
 			UpdateBounds();
 		}

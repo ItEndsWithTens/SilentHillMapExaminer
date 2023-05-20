@@ -1,6 +1,8 @@
-﻿using System;
+﻿using BizHawk.Common.CollectionExtensions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 
 namespace SHME.ExternalTool
@@ -21,18 +23,25 @@ namespace SHME.ExternalTool
 
 			if (world.CoordinateSpace != CoordinateSpace.World)
 			{
-				var worldVerts = new List<Vertex>();
-				foreach (Vertex vertex in world.Vertices)
+				foreach (Polygon polygon in world.Polygons)
 				{
-					worldVerts.Add(
-						vertex.ModelToWorld(
-							Matrix4x4.CreateTranslation(world.Position)));
-				}
+					var worldVerts = new List<Vertex>();
 
-				world.Vertices = worldVerts;
+					foreach (Vertex vertex in polygon.Vertices)
+					{
+						worldVerts.Add(
+							vertex.ModelToWorld(
+								Matrix4x4.CreateTranslation(world.Position)));
+					}
+
+					polygon.Vertices.Clear();
+					polygon.Vertices.AddRange(worldVerts);
+				}
 
 				world.CoordinateSpace = CoordinateSpace.World;
 				world.ModelMatrix = Matrix4x4.Identity;
+
+				world.UpdateBounds();
 			}
 
 			return world;
@@ -52,6 +61,7 @@ namespace SHME.ExternalTool
 	/// How a Renderable should be transformed when transforming the MapObject
 	/// it belongs to.
 	/// </summary>
+	[Flags]
 	public enum Transformability
 	{
 		None = 0x0,
@@ -69,19 +79,13 @@ namespace SHME.ExternalTool
 	/// </remarks>
 	public class Renderable : IUpdateBackEnd
 	{
-		public Aabb Aabb { get; protected set; }
+		public Aabb Aabb { get; protected set; } = new Aabb();
 
 		/// <summary>
 		/// The coordinate space in which this Renderable's vertices are stored.
 		/// </summary>
 		/// <remarks>Used to set the ModelMatrix for this Renderable.</remarks>
-		public CoordinateSpace CoordinateSpace { get; set; }
-
-		/// <summary>
-		/// The vertex indices of this object, relative to the Vertices list.
-		/// </summary>
-		public List<int> Indices;
-		public List<int> LineLoopIndices { get; } = new List<int>();
+		public CoordinateSpace CoordinateSpace { get; set; } = CoordinateSpace.World;
 
 		/// <summary>
 		/// The transformation matrix used to bring this Renderable's vertices
@@ -92,14 +96,14 @@ namespace SHME.ExternalTool
 		/// be drawn with minimal effort, as well as UI elements associated with
 		/// said objects, or placeholder meshes, etc. Set the CoordinateSpace
 		/// field to switch the matrix used for this Renderable.</remarks>
-		public Matrix4x4 ModelMatrix { get; set; }
+		public Matrix4x4 ModelMatrix { get; set; } = Matrix4x4.Identity;
 
-		public List<Polygon> Polygons { get; } = new List<Polygon>();
+		public IList<Polygon> Polygons { get; } = new List<Polygon>();
 
 		protected Vector3 _position;
 		public Vector3 Position
 		{
-			get { return _position; }
+			get => _position;
 			set
 			{
 				TranslateRelative(value - _position);
@@ -107,79 +111,38 @@ namespace SHME.ExternalTool
 			}
 		}
 
-		public bool Selected { get; set; } = false;
+		public bool Selected { get; set; }
 
 		/// <summary>
 		/// What transformations this Renderable supports.
 		/// </summary>
-		public Transformability Transformability { get; set; }
+		public Transformability Transformability { get; set; } = Transformability.All;
 
-		public bool Translucent;
-
-		/// <summary>
-		/// Vertices of this object.
-		/// </summary>
-		public List<Vertex> Vertices;
-
-		// TODO: Hoist these up into the backend? Make a dictionary, keyed by a Renderable
-		// instance with a value of a tuple, (VertexOffset, IndexOffset). In principle, things
-		// to be rendered shouldn't need to carry around information about their place in the
-		// backend's buffers, right? Even though this doesn't involve any OpenTK/OpenGL-specific
-		// stuff, it's still ugly, and I think unnecessary.
-		/// <summary>
-		/// The starting offset in bytes of this renderable's vertices, relative
-		/// to the back end buffer they're stored in.
-		/// </summary>
-		public IntPtr VertexOffset { get; set; } = IntPtr.Zero;
-		/// <summary>
-		/// The starting offset in bytes of this renderable's vertex indices,
-		/// relative to the back end buffer they're stored in.
-		/// </summary>
-		public IntPtr IndexOffset { get; set; } = IntPtr.Zero;
-
-		public IntPtr LineLoopIndexOffset { get; set; } = IntPtr.Zero;
+		public bool Translucent { get; set; }
 
 		/// <summary>
 		/// If defined, this color will replace this Renderable's deselected color.
 		/// </summary>
-		public Color? Tint { get; set; } = null;
+		public Color? Tint { get; set; }
 
 		public event EventHandler? Updated;
 
 		public Renderable()
 		{
-			Aabb = new Aabb();
-			CoordinateSpace = CoordinateSpace.World;
-			Indices = new List<int>();
-			ModelMatrix = Matrix4x4.Identity;
-			Transformability = Transformability.All;
-			Translucent = false;
-			Vertices = new List<Vertex>();
 		}
-		public Renderable(List<Vector3> points) : this()
+		public Renderable(IEnumerable<Polygon> polygons) : this()
 		{
-			foreach (Vector3 point in points)
+			foreach (Polygon p in polygons)
 			{
-				Vertices.Add(new Vertex(point.X, point.Y, point.Z));
+				Polygons.Add(p);
 			}
 
-			Aabb = new Aabb(Vertices);
-		}
-		public Renderable(List<Vertex> vertices) : this()
-		{
-			foreach (Vertex vertex in vertices)
-			{
-				Vertices.Add(vertex);
-			}
-
-			Aabb = new Aabb(Vertices);
+			Aabb = new Aabb(polygons.SelectMany((p) => p.Vertices));
 		}
 		public Renderable(Renderable r)
 		{
 			Aabb = new Aabb(r.Aabb);
 			CoordinateSpace = r.CoordinateSpace;
-			Indices = new List<int>(r.Indices);
-			LineLoopIndices = new List<int>(r.LineLoopIndices);
 			ModelMatrix = r.ModelMatrix;
 
 			Polygons = new List<Polygon>(r.Polygons);
@@ -191,7 +154,6 @@ namespace SHME.ExternalTool
 			_position = r.Position;
 			Tint = r.Tint;
 			Translucent = r.Translucent;
-			Vertices = new List<Vertex>(r.Vertices);
 		}
 
 		protected void Rotate(Vector3 rotation, Vector3 origin)
@@ -202,16 +164,9 @@ namespace SHME.ExternalTool
 		{
 			if (Transformability.HasFlag(Transformability.Rotate))
 			{
-				for (int i = 0; i < Vertices.Count; i++)
-				{
-					Vertex world = Vertices[i].ModelToWorld(ModelMatrix);
-					var rotated = Vertex.Rotate(world, pitch, yaw, roll, origin);
-					Vertices[i] = rotated.WorldToModel(ModelMatrix);
-				}
-
 				for (int i = 0; i < Polygons.Count; i++)
 				{
-					Polygons[i] = Polygon.Rotate(Polygons[i], pitch, yaw, roll, origin);
+					Polygons[i] = Polygons[i].Rotate(pitch, yaw, roll, origin);
 				}
 			}
 			else if (Transformability.HasFlag(Transformability.Translate))
@@ -228,44 +183,9 @@ namespace SHME.ExternalTool
 		}
 		protected void Scale(float x, float y, float z)
 		{
-			for (int i = 0; i < Vertices.Count; i++)
-			{
-				Vertex scaled = Vertices[i];
-
-				scaled.Position = new Vector3
-				{
-					X = scaled.Position.X * x,
-					Y = scaled.Position.Y * y,
-					Z = scaled.Position.Z * z
-				};
-
-				Vertices[i] = scaled;
-			}
-
 			for (int i = 0; i < Polygons.Count; i++)
 			{
-				Polygon scaled = Polygons[i];
-
-				// TODO: Understand, and explain in a comment, why the basis
-				// vectors need to be divided by the scale instead of multiplied
-				// like the vertex positions. I figured this out by observation,
-				// and honestly have no idea why it works.
-
-				scaled.BasisS = new Vector3
-				{
-					X = scaled.BasisS.X / x,
-					Y = scaled.BasisS.Y / y,
-					Z = scaled.BasisS.Z / z
-				};
-
-				scaled.BasisT = new Vector3
-				{
-					X = scaled.BasisT.X / x,
-					Y = scaled.BasisT.Y / y,
-					Z = scaled.BasisT.Z / z
-				};
-
-				Polygons[i] = scaled;
+				Polygons[i] = Polygons[i].Scale(x, y, z);
 			}
 		}
 
@@ -293,22 +213,19 @@ namespace SHME.ExternalTool
 
 		protected void TranslateRelative(Vector3 diff)
 		{
-			if (CoordinateSpace == CoordinateSpace.World)
+			switch (CoordinateSpace)
 			{
-				for (int i = 0; i < Vertices.Count; i++)
-				{
-					Vertices[i] = Vertex.TranslateRelative(Vertices[i], diff);
-				}
-			}
-
-			for (int i = 0; i < Polygons.Count; i++)
-			{
-				Polygons[i] = Polygon.TranslateRelative(Polygons[i], diff);
-			}
-
-			if (CoordinateSpace == CoordinateSpace.Model)
-			{
-				ModelMatrix *= Matrix4x4.CreateTranslation(diff);
+				case CoordinateSpace.World:
+					for (int i = 0; i < Polygons.Count; i++)
+					{
+						Polygons[i] = Polygons[i].TranslateRelative(diff);
+					}
+					break;
+				case CoordinateSpace.Model:
+					ModelMatrix *= Matrix4x4.CreateTranslation(diff);
+					break;
+				default:
+					break;
 			}
 
 			Aabb += diff;
@@ -340,15 +257,7 @@ namespace SHME.ExternalTool
 
 		public Aabb UpdateBounds()
 		{
-			var worldVerts = new List<Vector3>();
-			foreach (Vertex v in Vertices)
-			{
-				Vector3 world = Vector3.Transform(v.Position, ModelMatrix);
-
-				worldVerts.Add(world);
-			}
-
-			Aabb = new Aabb(worldVerts);
+			Aabb = new Aabb(Polygons.SelectMany((p) => p.Vertices));
 
 			return Aabb;
 		}

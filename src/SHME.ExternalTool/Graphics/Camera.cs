@@ -493,7 +493,7 @@ namespace SHME.ExternalTool
 				{
 					foreach (Polygon p in r.Polygons)
 					{
-						Vector3 point = r.Vertices[p.Indices[0]];
+						Vector3 point = p.Vertices[0];
 						Vector3 transformed = Vector3.Transform(point, r.ModelMatrix);
 						Vector3 toPoint = transformed - Position;
 
