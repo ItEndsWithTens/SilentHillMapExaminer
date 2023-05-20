@@ -2,12 +2,98 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 
 namespace SHME.ExternalTool
 {
 	public static class PolygonExtensions
 	{
+		public static Polygon ClipAgainstPlane(this Polygon p, Plane plane)
+		{
+			if (p.Vertices.Count == 0)
+			{
+				return p;
+			}
+
+			var clipped = new Polygon(p);
+			clipped.Vertices.Clear();
+			clipped.Edges.Clear();
+
+			var points = new List<Vertex>();
+
+			for (int i = 0; i < p.Vertices.Count; i++)
+			{
+				int wrappedA = (i + 0) % p.Vertices.Count;
+				int wrappedB = (i + 1) % p.Vertices.Count;
+
+				Vertex a = p.Vertices[wrappedA];
+				Vertex b = p.Vertices[wrappedB];
+
+				Vertex clippedA;
+				Vertex clippedB;
+				bool visible;
+				(clippedA, clippedB, visible) = (a, b)
+					.ClipVertexPairAgainstPlane(plane);
+
+				if (!visible)
+				{
+					continue;
+				}
+
+				points.Add(clippedA);
+				points.Add(clippedB);
+			}
+
+			clipped.Vertices.AddRange(points.Distinct());
+			for (int i = 0; i < clipped.Vertices.Count; i++)
+			{
+				clipped.Edges.Add((
+					i,
+					(i + 1) % clipped.Vertices.Count,
+					true));
+			}
+
+			return clipped;
+		}
+
+		public static (Vertex, Vertex, bool) ClipVertexPairAgainstPlane(this (Vertex a, Vertex b) pair, Plane plane)
+		{
+			Vector3 p = plane.A;
+			Vector3 n = plane.Normal;
+
+			float distanceA = Vector3.Dot(pair.a.Position - p, n);
+			float distanceB = Vector3.Dot(pair.b.Position - p, n);
+
+			bool aBehind = distanceA <= 0.0f;
+			bool bBehind = distanceB <= 0.0f;
+
+			if (aBehind && bBehind)
+			{
+				return (pair.a, pair.b, false);
+			}
+
+			if (!aBehind && !bBehind)
+			{
+				return (pair.a, pair.b, true);
+			}
+
+			float factor = distanceA / (distanceA - distanceB);
+
+			Vector3 intersection = pair.a.Position + (pair.b.Position - pair.a.Position) * factor;
+
+			if (aBehind)
+			{
+				var clipped = new Vertex(pair.a) { Position = intersection };
+				return (clipped, pair.b, true);
+			}
+			else
+			{
+				var clipped = new Vertex(pair.b) { Position = intersection };
+				return (pair.a, clipped, true);
+			}
+		}
+
 		public static Polygon Rotate(this Polygon polygon, float pitch, float yaw, float roll, Vector3 origin)
 		{
 			if (pitch < 0.0f)
@@ -30,12 +116,11 @@ namespace SHME.ExternalTool
 			p.BasisT = Vector3.Transform(p.BasisT, rotation);
 			p.Normal = Vector3.Transform(p.Normal, rotation);
 
-			for (int i = 0; i < polygon.Vertices.Count; i++)
+			for (int i = 0; i < p.Vertices.Count; i++)
 			{
-				//Vertex world = polygon.Vertices[i].ModelToWorld(ModelMatrix);
-				Vertex world = polygon.Vertices[i].ModelToWorld(rotation);
+				Vertex world = p.Vertices[i].ModelToWorld(p.Renderable.ModelMatrix);
 				var rotated = Vertex.Rotate(world, pitch, yaw, roll, origin);
-				polygon.Vertices[i] = rotated.WorldToModel(rotation);
+				p.Vertices[i] = rotated.WorldToModel(p.Renderable.ModelMatrix);
 			}
 
 			return p;
@@ -108,6 +193,8 @@ namespace SHME.ExternalTool
 	{
 		public IList<Vertex> Vertices { get; } = new List<Vertex>();
 
+		public IList<(int, int, bool)> Edges { get; } = new List<(int, int, bool)>();
+
 		/// <summary>
 		/// The name of the texture meant to be applied to this polygon; if said
 		/// texture isn't loaded, a placeholder will be used for CurrentTexture.
@@ -163,6 +250,9 @@ namespace SHME.ExternalTool
 			// Avoid replacing any existing vertex colors, as otherwise happens
 			// in the Color set method.
 			_color = p.Color;
+
+			Edges.Clear();
+			Edges.AddRange(p.Edges);
 		}
 	}
 }

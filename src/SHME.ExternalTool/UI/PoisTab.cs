@@ -395,7 +395,7 @@ namespace BizHawk.Client.EmuHawk
 						r.Transform(
 							Vector3.Zero,
 							new Vector3(0.0f, 0.0f, yawConverted),
-							Vector3.Zero,
+							Vector3.One,
 							r.Position);
 
 						// OBB triggers' volumes aren't centered on their

@@ -283,39 +283,15 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private void CbxCullToFrustum_CheckedChanged(object sender, EventArgs e)
-		{
-			if (CbxCullToFrustum.CheckState == CheckState.Checked)
-			{
-				Camera.Culling |= Culling.Frustum;
-				CbxCullBeyondFarClip.Checked = true;
-			}
-			else if (CbxCullToFrustum.CheckState == CheckState.Unchecked)
-			{
-				Camera.Culling ^= Culling.Frustum;
-				Camera.Culling |= Culling.Near;
-			}
-		}
-
 		private void CbxCullBeyondFarClip_CheckedChanged(object sender, EventArgs e)
 		{
 			if (CbxCullBeyondFarClip.Checked)
 			{
 				Camera.Culling |= Culling.Far;
-
-				if (CbxCullToFrustum.CheckState == CheckState.Indeterminate)
-				{
-					CbxCullToFrustum.CheckState = CheckState.Checked;
-				}
 			}
 			else
 			{
 				Camera.Culling ^= Culling.Far;
-
-				if (CbxCullToFrustum.CheckState == CheckState.Checked)
-				{
-					CbxCullToFrustum.CheckState = CheckState.Indeterminate;
-				}
 			}
 		}
 
@@ -359,17 +335,16 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CmbRenderMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (CmbRenderMode.SelectedIndex == 1)
+			switch (CmbRenderMode.SelectedIndex)
 			{
-				CbxCullBackfaces.Checked = true;
-				CbxCullToFrustum.CheckState = CheckState.Checked;
-				CbxCullBeyondFarClip.Checked = true;
-			}
-			else
-			{
-				CbxCullBackfaces.Checked = false;
-				CbxCullToFrustum.CheckState = CheckState.Checked;
-				CbxCullBeyondFarClip.Checked = true;
+				case 1:
+					CbxCullBackfaces.Checked = true;
+					CbxCullBeyondFarClip.Checked = true;
+					break;
+				default:
+					CbxCullBackfaces.Checked = false;
+					CbxCullBeyondFarClip.Checked = true;
+					break;
 			}
 		}
 

@@ -344,6 +344,10 @@ namespace BizHawk.Client.EmuHawk
 			{
 				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(TestBox));
 			}
+			if (CbxOverlayTestSheet.Checked)
+			{
+				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(TestSheet));
+			}
 
 			VisibleLines.Clear();
 			if (CbxEnableOverlay.Checked)
@@ -455,60 +459,39 @@ namespace BizHawk.Client.EmuHawk
 
 				ScreenSpaceLines.Clear();
 
-				for (int i = 0; i < p.Vertices.Count; i++)
+				Polygon clipped = Camera.ClipPolygonAgainstFrustum(p);
+
+				for (int i = 0; i < clipped.Edges.Count; i++)
 				{
-					int wrappedA = (i + 0) % p.Vertices.Count;
-					int wrappedB = (i + 1) % p.Vertices.Count;
+					(int idxA, int idxB, bool visible) = clipped.Edges[i];
 
-					var line = new Line(p.Vertices[wrappedA], p.Vertices[wrappedB]);
-					var clipped = new Line(line);
+					Vertex a = clipped.Vertices[idxA];
+					Vertex b = clipped.Vertices[idxB];
 
-					bool visible = Camera.ClipLineAgainstFrustum(ref clipped);
+					var line = new Line(a, b);
 
-					bool aClipped = line.A.Position != clipped.A.Position;
-					bool bClipped = line.B.Position != clipped.B.Position;
-
-					clipped.A = clipped.A.WorldToScreen(matrix, _dummyViewport, true);
-					clipped.B = clipped.B.WorldToScreen(matrix, _dummyViewport, true);
+					line.A = line.A.WorldToScreen(matrix, _dummyViewport, true);
+					line.B = line.B.WorldToScreen(matrix, _dummyViewport, true);
 
 					ScreenSpaceLines.Add((
-						clipped,
-						r.Tint ?? clipped.A.Color,
+						line,
+						r.Tint ?? line.A.Color,
 						visible,
-						aClipped,
-						bClipped));
+						false,
+						false));
 				}
 
 				switch (CmbRenderMode.SelectedIndex)
 				{
 					case 1:
-						// TODO: Figure out how to handle the corner of the screen
-						// causing a diagonal to form even when the near clip plane
-						// isn't cutting through the object. The vertex mode, case 2,
-						// and the wireframe, case 0/default, don't do this because
-						// they don't need to connect vertices at the screen edge. The
-						// filled poly mode, however, does, and needs new verts added
-						// somewhere, based on some criteria I haven't figured out yet.
 						var visibleVertices = new List<Point>();
-						foreach ((Line line, _, bool visible, bool aClipped, bool bClipped) in ScreenSpaceLines)
+						foreach ((Line line, _, _, _, _) in ScreenSpaceLines)
 						{
-							if (!visible)
-							{
-								continue;
-							}
-
 							var a = new Point((int)line.A.Position.X, (int)line.A.Position.Y);
 							var b = new Point((int)line.B.Position.X, (int)line.B.Position.Y);
 
-							if (!visibleVertices.Contains(a))
-							{
-								visibleVertices.Add(a);
-							}
-
-							if (!visibleVertices.Contains(b))
-							{
-								visibleVertices.Add(b);
-							}
+							visibleVertices.Add(a);
+							visibleVertices.Add(b);
 						}
 
 						if (visibleVertices.Count == 0)

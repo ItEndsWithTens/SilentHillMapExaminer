@@ -60,14 +60,8 @@ namespace SHME.ExternalTool
 			}
 
 			var screen = new Point(
-				(int)(viewport.Center.X + (ndc.X * viewport.Width / 2)),
-				(int)(viewport.Center.Y + (ndc.Y * viewport.Height / 2)));
-
-			// This is a dirty, underhanded trick to "clip" the coordinates in
-			// question to the bounds of the viewport without actually doing any
-			// clipping. It only works when the 3D points are just barely beyond
-			// the edge of the view frustum.
-			Utility.ClampToMinMax(ref screen, viewport.TopLeft, viewport.BottomRight);
+				(int)Math.Round(viewport.Center.X + (ndc.X * viewport.Width / 2)),
+				(int)Math.Round(viewport.Center.Y + (ndc.Y * viewport.Height / 2)));
 
 			return new Vertex(v)
 			{

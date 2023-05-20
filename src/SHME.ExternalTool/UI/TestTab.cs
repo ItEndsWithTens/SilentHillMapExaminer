@@ -44,6 +44,7 @@ namespace BizHawk.Client.EmuHawk
 				new Vertex(0.0f, 1.0f, 0.0f, Color.Red),
 				new Vertex(1.0f, 1.0f, 0.0f, Color.Lime))
 		};
+		private Renderable TestSheet { get; set; } = new SheetGenerator(1.0f, Color.White).Generate().ToWorld();
 
 		private void NudModel_KeyDown(object sender, KeyEventArgs e)
 		{
@@ -206,6 +207,54 @@ namespace BizHawk.Client.EmuHawk
 			};
 
 			TestLines[0].B = v;
+		}
+
+		private void NudOverlayTestSheetX_ValueChanged(object sender, EventArgs e)
+		{
+			TestSheet.Position = new Vector3(
+				(float)NudOverlayTestSheetX.Value,
+				TestSheet.Position.Y,
+				TestSheet.Position.Z);
+		}
+
+		private void NudOverlayTestSheetY_ValueChanged(object sender, EventArgs e)
+		{
+			TestSheet.Position = new Vector3(
+				TestSheet.Position.X,
+				-(float)NudOverlayTestSheetY.Value, // Convert from SH coords
+				TestSheet.Position.Z);
+		}
+
+		private void NudOverlayTestSheetZ_ValueChanged(object sender, EventArgs e)
+		{
+			TestSheet.Position = new Vector3(
+				TestSheet.Position.X,
+				TestSheet.Position.Y,
+				-(float)NudOverlayTestSheetZ.Value); // Convert from SH coords
+		}
+
+		private void NudOverlayTestSheetSizeX_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable sheet = new SheetGenerator(
+				(float)NudOverlayTestSheetSizeX.Value,
+				Math.Abs(TestSheet.Aabb.Max.Z - TestSheet.Aabb.Min.Z),
+				Color.White).Generate();
+
+			sheet.Position = TestSheet.Position;
+
+			TestSheet = sheet.ToWorld();
+		}
+
+		private void NudOverlayTestSheetSizeZ_ValueChanged(object sender, EventArgs e)
+		{
+			Renderable sheet = new SheetGenerator(
+				Math.Abs(TestSheet.Aabb.Max.X - TestSheet.Aabb.Min.X),
+				(float)NudOverlayTestSheetSizeZ.Value,
+				Color.White).Generate();
+
+			sheet.Position = TestSheet.Position;
+
+			TestSheet = sheet.ToWorld();
 		}
 
 		private Ilm? Model { get; set; }

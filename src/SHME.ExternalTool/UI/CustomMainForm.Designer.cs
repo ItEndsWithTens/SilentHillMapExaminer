@@ -92,7 +92,6 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
             this.CbxCullBeyondFarClip = new System.Windows.Forms.CheckBox();
-            this.CbxCullToFrustum = new System.Windows.Forms.CheckBox();
             this.CbxCullBackfaces = new System.Windows.Forms.CheckBox();
             this.CbxReadLevelDataOnStageLoad = new System.Windows.Forms.CheckBox();
             this.NudCrosshairLength = new System.Windows.Forms.NumericUpDown();
@@ -295,6 +294,17 @@ namespace BizHawk.Client.EmuHawk
             this.LblModelX = new System.Windows.Forms.Label();
             this.LblModelY = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label79 = new System.Windows.Forms.Label();
+            this.label85 = new System.Windows.Forms.Label();
+            this.NudOverlayTestSheetSizeZ = new System.Windows.Forms.NumericUpDown();
+            this.NudOverlayTestSheetSizeX = new System.Windows.Forms.NumericUpDown();
+            this.label86 = new System.Windows.Forms.Label();
+            this.label87 = new System.Windows.Forms.Label();
+            this.label88 = new System.Windows.Forms.Label();
+            this.NudOverlayTestSheetZ = new System.Windows.Forms.NumericUpDown();
+            this.NudOverlayTestSheetY = new System.Windows.Forms.NumericUpDown();
+            this.NudOverlayTestSheetX = new System.Windows.Forms.NumericUpDown();
+            this.CbxOverlayTestSheet = new System.Windows.Forms.CheckBox();
             this.label37 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
@@ -403,6 +413,11 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudModelY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudModelX)).BeginInit();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetSizeZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetSizeX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeX)).BeginInit();
@@ -1303,7 +1318,6 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.GbxOverlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.GbxOverlay.Controls.Add(this.CbxCullBeyondFarClip);
-            this.GbxOverlay.Controls.Add(this.CbxCullToFrustum);
             this.GbxOverlay.Controls.Add(this.CbxCullBackfaces);
             this.GbxOverlay.Controls.Add(this.CbxReadLevelDataOnStageLoad);
             this.GbxOverlay.Controls.Add(this.NudCrosshairLength);
@@ -1346,27 +1360,13 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCullBeyondFarClip.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CbxCullBeyondFarClip.Checked = true;
             this.CbxCullBeyondFarClip.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxCullBeyondFarClip.Location = new System.Drawing.Point(211, 193);
+            this.CbxCullBeyondFarClip.Location = new System.Drawing.Point(246, 193);
             this.CbxCullBeyondFarClip.Name = "CbxCullBeyondFarClip";
-            this.CbxCullBeyondFarClip.Size = new System.Drawing.Size(115, 17);
+            this.CbxCullBeyondFarClip.Size = new System.Drawing.Size(80, 17);
             this.CbxCullBeyondFarClip.TabIndex = 99;
-            this.CbxCullBeyondFarClip.Text = "Cull beyond far clip";
+            this.CbxCullBeyondFarClip.Text = "Far clipping";
             this.CbxCullBeyondFarClip.UseVisualStyleBackColor = true;
             this.CbxCullBeyondFarClip.CheckedChanged += new System.EventHandler(this.CbxCullBeyondFarClip_CheckedChanged);
-            // 
-            // CbxCullToFrustum
-            // 
-            this.CbxCullToFrustum.AutoSize = true;
-            this.CbxCullToFrustum.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxCullToFrustum.Checked = true;
-            this.CbxCullToFrustum.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxCullToFrustum.Location = new System.Drawing.Point(234, 170);
-            this.CbxCullToFrustum.Name = "CbxCullToFrustum";
-            this.CbxCullToFrustum.Size = new System.Drawing.Size(92, 17);
-            this.CbxCullToFrustum.TabIndex = 98;
-            this.CbxCullToFrustum.Text = "Cull to frustum";
-            this.CbxCullToFrustum.UseVisualStyleBackColor = true;
-            this.CbxCullToFrustum.CheckedChanged += new System.EventHandler(this.CbxCullToFrustum_CheckedChanged);
             // 
             // CbxCullBackfaces
             // 
@@ -1374,11 +1374,11 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCullBackfaces.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CbxCullBackfaces.Checked = true;
             this.CbxCullBackfaces.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxCullBackfaces.Location = new System.Drawing.Point(230, 147);
+            this.CbxCullBackfaces.Location = new System.Drawing.Point(221, 170);
             this.CbxCullBackfaces.Name = "CbxCullBackfaces";
-            this.CbxCullBackfaces.Size = new System.Drawing.Size(96, 17);
+            this.CbxCullBackfaces.Size = new System.Drawing.Size(105, 17);
             this.CbxCullBackfaces.TabIndex = 97;
-            this.CbxCullBackfaces.Text = "Cull backfaces";
+            this.CbxCullBackfaces.Text = "Backface culling";
             this.CbxCullBackfaces.UseVisualStyleBackColor = true;
             this.CbxCullBackfaces.CheckedChanged += new System.EventHandler(this.CbxCullBackfaces_CheckedChanged);
             // 
@@ -3806,6 +3806,17 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.label79);
+            this.groupBox5.Controls.Add(this.label85);
+            this.groupBox5.Controls.Add(this.NudOverlayTestSheetSizeZ);
+            this.groupBox5.Controls.Add(this.NudOverlayTestSheetSizeX);
+            this.groupBox5.Controls.Add(this.label86);
+            this.groupBox5.Controls.Add(this.label87);
+            this.groupBox5.Controls.Add(this.label88);
+            this.groupBox5.Controls.Add(this.NudOverlayTestSheetZ);
+            this.groupBox5.Controls.Add(this.NudOverlayTestSheetY);
+            this.groupBox5.Controls.Add(this.NudOverlayTestSheetX);
+            this.groupBox5.Controls.Add(this.CbxOverlayTestSheet);
             this.groupBox5.Controls.Add(this.label37);
             this.groupBox5.Controls.Add(this.label53);
             this.groupBox5.Controls.Add(this.label54);
@@ -3838,6 +3849,176 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox5.TabIndex = 36;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Boxes";
+            // 
+            // label79
+            // 
+            this.label79.AutoSize = true;
+            this.label79.Location = new System.Drawing.Point(510, 96);
+            this.label79.Name = "label79";
+            this.label79.Size = new System.Drawing.Size(40, 13);
+            this.label79.TabIndex = 117;
+            this.label79.Text = "Size Z:";
+            // 
+            // label85
+            // 
+            this.label85.AutoSize = true;
+            this.label85.Location = new System.Drawing.Point(510, 44);
+            this.label85.Name = "label85";
+            this.label85.Size = new System.Drawing.Size(40, 13);
+            this.label85.TabIndex = 115;
+            this.label85.Text = "Size X:";
+            // 
+            // NudOverlayTestSheetSizeZ
+            // 
+            this.NudOverlayTestSheetSizeZ.Location = new System.Drawing.Point(556, 94);
+            this.NudOverlayTestSheetSizeZ.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.NudOverlayTestSheetSizeZ.Minimum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            -2147483648});
+            this.NudOverlayTestSheetSizeZ.Name = "NudOverlayTestSheetSizeZ";
+            this.NudOverlayTestSheetSizeZ.Size = new System.Drawing.Size(54, 20);
+            this.NudOverlayTestSheetSizeZ.TabIndex = 114;
+            this.toolTip1.SetToolTip(this.NudOverlayTestSheetSizeZ, "The test box\'s position in SH coordinates");
+            this.NudOverlayTestSheetSizeZ.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NudOverlayTestSheetSizeZ.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetSizeZ_ValueChanged);
+            this.NudOverlayTestSheetSizeZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudOverlayTestSheetSizeZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            // 
+            // NudOverlayTestSheetSizeX
+            // 
+            this.NudOverlayTestSheetSizeX.Location = new System.Drawing.Point(556, 42);
+            this.NudOverlayTestSheetSizeX.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.NudOverlayTestSheetSizeX.Minimum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            -2147483648});
+            this.NudOverlayTestSheetSizeX.Name = "NudOverlayTestSheetSizeX";
+            this.NudOverlayTestSheetSizeX.Size = new System.Drawing.Size(54, 20);
+            this.NudOverlayTestSheetSizeX.TabIndex = 112;
+            this.toolTip1.SetToolTip(this.NudOverlayTestSheetSizeX, "The test box\'s position in SH coordinates");
+            this.NudOverlayTestSheetSizeX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NudOverlayTestSheetSizeX.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetSizeX_ValueChanged);
+            this.NudOverlayTestSheetSizeX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudOverlayTestSheetSizeX.Enter += new System.EventHandler(this.Selectable_Enter);
+            // 
+            // label86
+            // 
+            this.label86.AutoSize = true;
+            this.label86.Location = new System.Drawing.Point(427, 96);
+            this.label86.Name = "label86";
+            this.label86.Size = new System.Drawing.Size(17, 13);
+            this.label86.TabIndex = 111;
+            this.label86.Text = "Z:";
+            // 
+            // label87
+            // 
+            this.label87.AutoSize = true;
+            this.label87.Location = new System.Drawing.Point(427, 70);
+            this.label87.Name = "label87";
+            this.label87.Size = new System.Drawing.Size(17, 13);
+            this.label87.TabIndex = 110;
+            this.label87.Text = "Y:";
+            // 
+            // label88
+            // 
+            this.label88.AutoSize = true;
+            this.label88.Location = new System.Drawing.Point(427, 44);
+            this.label88.Name = "label88";
+            this.label88.Size = new System.Drawing.Size(17, 13);
+            this.label88.TabIndex = 109;
+            this.label88.Text = "X:";
+            // 
+            // NudOverlayTestSheetZ
+            // 
+            this.NudOverlayTestSheetZ.Location = new System.Drawing.Point(450, 94);
+            this.NudOverlayTestSheetZ.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.NudOverlayTestSheetZ.Minimum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            -2147483648});
+            this.NudOverlayTestSheetZ.Name = "NudOverlayTestSheetZ";
+            this.NudOverlayTestSheetZ.Size = new System.Drawing.Size(54, 20);
+            this.NudOverlayTestSheetZ.TabIndex = 108;
+            this.toolTip1.SetToolTip(this.NudOverlayTestSheetZ, "The test box\'s position in SH coordinates");
+            this.NudOverlayTestSheetZ.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetZ_ValueChanged);
+            this.NudOverlayTestSheetZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudOverlayTestSheetZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            // 
+            // NudOverlayTestSheetY
+            // 
+            this.NudOverlayTestSheetY.Location = new System.Drawing.Point(450, 68);
+            this.NudOverlayTestSheetY.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.NudOverlayTestSheetY.Minimum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            -2147483648});
+            this.NudOverlayTestSheetY.Name = "NudOverlayTestSheetY";
+            this.NudOverlayTestSheetY.Size = new System.Drawing.Size(54, 20);
+            this.NudOverlayTestSheetY.TabIndex = 107;
+            this.toolTip1.SetToolTip(this.NudOverlayTestSheetY, "The test box\'s position in SH coordinates");
+            this.NudOverlayTestSheetY.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetY_ValueChanged);
+            this.NudOverlayTestSheetY.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudOverlayTestSheetY.Enter += new System.EventHandler(this.Selectable_Enter);
+            // 
+            // NudOverlayTestSheetX
+            // 
+            this.NudOverlayTestSheetX.Location = new System.Drawing.Point(450, 42);
+            this.NudOverlayTestSheetX.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.NudOverlayTestSheetX.Minimum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            -2147483648});
+            this.NudOverlayTestSheetX.Name = "NudOverlayTestSheetX";
+            this.NudOverlayTestSheetX.Size = new System.Drawing.Size(54, 20);
+            this.NudOverlayTestSheetX.TabIndex = 106;
+            this.toolTip1.SetToolTip(this.NudOverlayTestSheetX, "The test box\'s position in SH coordinates");
+            this.NudOverlayTestSheetX.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetX_ValueChanged);
+            this.NudOverlayTestSheetX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudOverlayTestSheetX.Enter += new System.EventHandler(this.Selectable_Enter);
+            // 
+            // CbxOverlayTestSheet
+            // 
+            this.CbxOverlayTestSheet.AutoSize = true;
+            this.CbxOverlayTestSheet.Location = new System.Drawing.Point(430, 19);
+            this.CbxOverlayTestSheet.Name = "CbxOverlayTestSheet";
+            this.CbxOverlayTestSheet.Size = new System.Drawing.Size(76, 17);
+            this.CbxOverlayTestSheet.TabIndex = 105;
+            this.CbxOverlayTestSheet.Text = "Test sheet";
+            this.CbxOverlayTestSheet.UseVisualStyleBackColor = true;
             // 
             // label37
             // 
@@ -4749,6 +4930,11 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudModelX)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetSizeZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetSizeX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeX)).EndInit();
@@ -5121,8 +5307,18 @@ namespace BizHawk.Client.EmuHawk
 		private Label label77;
 		private CheckBox CbxReadLevelDataOnStageLoad;
 		private CheckBox CbxCullBeyondFarClip;
-		private CheckBox CbxCullToFrustum;
 		private CheckBox CbxCullBackfaces;
 		private CheckBox CbxSelectedCameraPathDisabled;
+		private Label label79;
+		private Label label85;
+		private NumericUpDown NudOverlayTestSheetSizeZ;
+		private NumericUpDown NudOverlayTestSheetSizeX;
+		private Label label86;
+		private Label label87;
+		private Label label88;
+		private NumericUpDown NudOverlayTestSheetZ;
+		private NumericUpDown NudOverlayTestSheetY;
+		private NumericUpDown NudOverlayTestSheetX;
+		private CheckBox CbxOverlayTestSheet;
 	}
 }

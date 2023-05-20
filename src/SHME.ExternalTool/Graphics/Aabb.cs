@@ -46,15 +46,11 @@ namespace SHME.ExternalTool
 		{
 			var points = new List<Vector3>();
 
-			foreach (Renderable r in renderables)
-			{
-				foreach (Vertex v in r.Polygons.SelectMany((p) => p.Vertices))
-				{
-					points.Add(v.Position);
-				}
-			}
-
-			Init(points.ToArray());
+			Init(renderables
+				.SelectMany((r) => r.Polygons)
+				.SelectMany((p) => p.Vertices)
+				.Select((v) => v.Position)
+				.ToArray());
 		}
 		public Aabb(IEnumerable<Vertex> vertices) : base()
 		{

@@ -489,6 +489,9 @@ namespace SHME.ExternalTool
 					continue;
 				}
 
+				// TODO: Replace HasFlag with my own version! The Enum method is
+				// apparently slower than molasses on account of some safety checks
+				// that aren't necessary in my case.
 				if (Culling.HasFlag(Culling.Backface))
 				{
 					foreach (Polygon p in r.Polygons)
@@ -548,6 +551,57 @@ namespace SHME.ExternalTool
 		public bool ClipLineAgainstFrustum(ref Line line)
 		{
 			return ClipLineAgainstPlanes(ref line, Frustum.Planes);
+		}
+
+		public Polygon ClipPolygonAgainstFrustum(Polygon polygon)
+		{
+			return ClipPolygonAgainstPlanes(polygon, Frustum.Planes);
+		}
+		public static Polygon ClipPolygonAgainstPlanes(Polygon polygon, IEnumerable<Plane> planes)
+		{
+			var p = new Polygon(polygon);
+
+			foreach (Plane plane in planes)
+			{
+				p = p.ClipAgainstPlane(plane);
+			}
+
+			// Just a quick and dirty hack job to mark edges that should be
+			// invisible, namely those that lie exactly on a plane. Without
+			// this, polygons clipped to the view frustum would have their
+			// line loops closed inappropriately, giving the impression of
+			// edges where there are no edges.
+			for (int i = 0; i < p.Edges.Count; i++)
+			{
+				(int idxA, int idxB, bool _) = p.Edges[i];
+
+				Vertex a = p.Vertices[idxA];
+				Vertex b = p.Vertices[idxB];
+
+				bool visible = true;
+				foreach (Plane plane in planes)
+				{
+					Vector3 point = plane.A;
+					Vector3 n = plane.Normal;
+
+					float distanceA = Vector3.Dot(a.Position - point, n);
+					float distanceB = Vector3.Dot(b.Position - point, n);
+
+					float epsilon = 0.0001f;
+					bool aBehind = distanceA <= 0.0f + epsilon;
+					bool bBehind = distanceB <= 0.0f + epsilon;
+
+					if (aBehind && bBehind)
+					{
+						visible = false;
+						break;
+					}
+				}
+
+				p.Edges[i] = (idxA, idxB, visible);
+			}
+
+			return p;
 		}
 
 		public static bool ClipLineAgainstPlanes(ref Line line, IEnumerable<Plane> planes)

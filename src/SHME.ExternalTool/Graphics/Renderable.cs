@@ -17,6 +17,18 @@ namespace SHME.ExternalTool
 
 	public static class RenderableExtensions
 	{
+		public static Renderable ClipAgainstPlane(this Renderable r, Plane plane)
+		{
+			var clipped = new Renderable(r);
+
+			for (int i = 0; i < clipped.Polygons.Count; i++)
+			{
+				clipped.Polygons[i] = clipped.Polygons[i].ClipAgainstPlane(plane);
+			}
+
+			return clipped;
+		}
+
 		public static Renderable ToWorld(this Renderable renderable)
 		{
 			var world = new Renderable(renderable);
@@ -211,6 +223,10 @@ namespace SHME.ExternalTool
 			_position = Aabb.Center;
 		}
 
+		// TODO: Reverse the overload of this! Stop creating a new
+		// Vector3 every time somebody calls TranslateRelative with
+		// three floats, especially since Matrix4x4.CreateTranslation
+		// has its own overload that takes floats.
 		protected void TranslateRelative(Vector3 diff)
 		{
 			switch (CoordinateSpace)
