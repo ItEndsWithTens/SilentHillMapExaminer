@@ -1368,7 +1368,6 @@ namespace BizHawk.Client.EmuHawk
             this.label84.Size = new System.Drawing.Size(71, 13);
             this.label84.TabIndex = 101;
             this.label84.Text = "Filled opacity:";
-            this.toolTip1.SetToolTip(this.label84, "Crosshair length as a percentage of viewport height");
             // 
             // NudOverlayRenderableOpacity
             // 
@@ -1388,7 +1387,6 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayRenderableOpacity.Name = "NudOverlayRenderableOpacity";
             this.NudOverlayRenderableOpacity.Size = new System.Drawing.Size(52, 20);
             this.NudOverlayRenderableOpacity.TabIndex = 100;
-            this.toolTip1.SetToolTip(this.NudOverlayRenderableOpacity, "Crosshair length as a percentage of viewport height");
             this.NudOverlayRenderableOpacity.Value = new decimal(new int[] {
             30,
             0,
@@ -1413,8 +1411,6 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.CbxCullBackfaces.AutoSize = true;
             this.CbxCullBackfaces.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxCullBackfaces.Checked = true;
-            this.CbxCullBackfaces.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CbxCullBackfaces.Location = new System.Drawing.Point(221, 144);
             this.CbxCullBackfaces.Name = "CbxCullBackfaces";
             this.CbxCullBackfaces.Size = new System.Drawing.Size(105, 17);

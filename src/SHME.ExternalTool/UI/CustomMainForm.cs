@@ -62,7 +62,11 @@ namespace BizHawk.Client.EmuHawk
 
 		public Core Core { get; } = new Core();
 
-		public Camera Camera { get; set; } = new Camera() { Fov = 50.0f };
+		public Camera Camera { get; set; } = new Camera()
+		{
+			Culling = Culling.Frustum,
+			Fov = 50.0f
+		};
 
 		public IList<Renderable> Boxes { get; } = new List<Renderable>();
 		public IList<Renderable> TestBoxes { get; } = new List<Renderable>();
