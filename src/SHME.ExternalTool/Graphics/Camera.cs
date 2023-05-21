@@ -448,7 +448,14 @@ namespace SHME.ExternalTool
 			_yaw = yaw ?? _yaw;
 			_roll = roll ?? _roll;
 			_aspectRatio = aspect ?? _aspectRatio;
-			_fov = fov ?? _fov;
+
+			_fov = fov switch
+			{
+				null => _fov,
+				< 120.0f => (float)fov,
+				_ => 120.0f
+			};
+
 			_nearClip = nearClip ?? _nearClip;
 			_farClip = farClip ?? _farClip;
 
