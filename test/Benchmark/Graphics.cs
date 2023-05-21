@@ -33,10 +33,15 @@ namespace SHME.Benchmarks.Graphics
 		readonly BoxGenerator boxGenerator = new BoxGenerator(1.0f, Color.White);
 		readonly Renderable box;
 
+		readonly SheetGenerator sheetGenerator = new(4096.0f, Color.White);
+		readonly Renderable sheet;
+
 		public CameraBenchmarks()
 		{
 			box = boxGenerator.Generate();
 			box.Position = new Vector3(2048.0f);
+
+			sheet = sheetGenerator.Generate();
 		}
 
 		// Covers checking the Camera's culling flags as well as calling
@@ -75,6 +80,12 @@ namespace SHME.Benchmarks.Graphics
 			line.B = b;
 
 			return camera.ClipLineAgainstFrustum(ref line);
+		}
+
+		[Benchmark]
+		public Polygon ClipPolygonAgainstFrustum()
+		{
+			return camera.ClipPolygonAgainstFrustum(sheet.Polygons[0]);
 		}
 
 		// Calls Camera.UpdateViewMatrix, Camera.UpdateProjectionMatrix, and
