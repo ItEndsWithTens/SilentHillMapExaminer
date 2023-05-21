@@ -1,5 +1,4 @@
-﻿using BizHawk.Common.CollectionExtensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -24,28 +23,32 @@ namespace SHME.ExternalTool
 
 			for (int i = 0; i < p.Vertices.Count; i++)
 			{
-				int wrappedA = (i + 0) % p.Vertices.Count;
-				int wrappedB = (i + 1) % p.Vertices.Count;
+				int idxA = i;
+				int idxB = (i + 1) % p.Vertices.Count;
 
-				Vertex a = p.Vertices[wrappedA];
-				Vertex b = p.Vertices[wrappedB];
+				Vertex a = p.Vertices[idxA];
+				Vertex b = p.Vertices[idxB];
 
-				Vertex clippedA;
-				Vertex clippedB;
-				bool visible;
-				(clippedA, clippedB, visible) = (a, b)
-					.ClipVertexPairAgainstPlane(plane);
+				(a, b, bool visible) = (a, b).ClipVertexPairAgainstPlane(plane);
 
 				if (!visible)
 				{
 					continue;
 				}
 
-				points.Add(clippedA);
-				points.Add(clippedB);
+				points.Add(a);
+				points.Add(b);
 			}
 
-			clipped.Vertices.AddRange(points.Distinct());
+			for (int i = 0; i < points.Count; i++)
+			{
+				Vertex point = points[i];
+				if (!clipped.Vertices.Contains(point))
+				{
+					clipped.Vertices.Add(point);
+				}
+			}
+
 			for (int i = 0; i < clipped.Vertices.Count; i++)
 			{
 				clipped.Edges.Add((
@@ -245,14 +248,20 @@ namespace SHME.ExternalTool
 			Normal = new Vector3(p.Normal.X, p.Normal.Y, p.Normal.Z);
 
 			Vertices.Clear();
-			Vertices.AddRange(p.Vertices);
+			for (int i = 0; i < p.Vertices.Count; i++)
+			{
+				Vertices.Add(p.Vertices[i]);
+			}
 
 			// Avoid replacing any existing vertex colors, as otherwise happens
 			// in the Color set method.
 			_color = p.Color;
 
 			Edges.Clear();
-			Edges.AddRange(p.Edges);
+			for (int i = 0; i < p.Edges.Count; i++)
+			{
+				Edges.Add(p.Edges[i]);
+			}
 		}
 	}
 }
