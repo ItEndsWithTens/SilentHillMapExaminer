@@ -89,7 +89,10 @@ namespace BizHawk.Client.EmuHawk
 				CameraGems.Add(gemA);
 				CameraGems.Add(gemB);
 
-				var boxGen = new BoxGenerator(gemA.Position, gemB.Position, Color.Orange);
+				// Since Silent Hill's Y and Z axes use opposite signs relative
+				// to the overlay camera's coordinate system, this box has to be
+				// created using the path's "max" position as the box's minimum.
+				var boxGen = new BoxGenerator(gemB.Position, gemA.Position, Color.Orange);
 				Renderable volume = boxGen.Generate().ToWorld();
 
 				CameraBoxes.Add(volume);
