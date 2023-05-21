@@ -89,22 +89,40 @@ namespace BizHawk.Client.EmuHawk
 				CameraGems.Add(gemA);
 				CameraGems.Add(gemB);
 
-				// Since Silent Hill's Y and Z axes use opposite signs relative
-				// to the overlay camera's coordinate system, this box has to be
-				// created using the path's "max" position as the box's minimum.
-				var boxGen = new BoxGenerator(gemB.Position, gemA.Position, Color.Orange);
+				Vector3 volumeMin;
+				volumeMin.X = Math.Min(gemA.Position.X, gemB.Position.X);
+				volumeMin.Y = Math.Min(gemA.Position.Y, gemB.Position.Y);
+				volumeMin.Z = Math.Min(gemA.Position.Z, gemB.Position.Z);
+
+				Vector3 volumeMax;
+				volumeMax.X = Math.Max(gemA.Position.X, gemB.Position.X);
+				volumeMax.Y = Math.Max(gemA.Position.Y, gemB.Position.Y);
+				volumeMax.Z = Math.Max(gemA.Position.Z, gemB.Position.Z);
+
+				bool equalX = gemA.Position.X == gemB.Position.X;
+				bool equalY = gemA.Position.Y == gemB.Position.Y;
+				bool equalZ = gemA.Position.Z == gemB.Position.Z;
+				if ((equalX && equalY) || (equalY && equalZ) || (equalZ && equalX))
+				{
+					// To ensure that a one-dimensional camera path can be
+					// clicked in the viewport, and that it will be drawn on
+					// screen in filled render mode, nudge the ends a bit.
+					float cheat = 0.0125f;
+
+					volumeMin.X -= cheat;
+					volumeMin.Y -= cheat;
+					volumeMin.Z -= cheat;
+
+					volumeMax.X += cheat;
+					volumeMax.Y += cheat;
+					volumeMax.Z += cheat;
+				}
+
+				var boxGen = new BoxGenerator(volumeMin, volumeMax, Color.Orange);
 				Renderable volume = boxGen.Generate().ToWorld();
 
 				CameraBoxes.Add(volume);
 
-				// TODO: Optimize this by connecting the gems with a line if
-				// they're exactly on a world axis, a sheet if they're on the
-				// same plane, and a box only if they're off on both axes. Fewer
-				// sides means fewer polys/tris.
-				//
-				// Oh, but then if users can ever make changes on the fly, the
-				// object would have to be recreated to change from a line to
-				// a sheet or a box. Damn it.
 				float sizeX = path.AreaMaxX - path.AreaMinX;
 				float sizeZ = path.AreaMaxZ - path.AreaMinZ;
 				var sheetGen = new SheetGenerator(sizeX, sizeZ, Color.FromArgb(0x52, 0x3A, 0xB5));
