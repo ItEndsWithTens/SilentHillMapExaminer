@@ -155,7 +155,6 @@ namespace BizHawk.Client.EmuHawk
 			Gems.Clear();
 			Lines.Clear();
 			TestBoxes.Clear();
-			TestLines.Clear();
 			ModelBoxes.Clear();
 
 			CameraBoxes.Clear();
@@ -401,22 +400,23 @@ namespace BizHawk.Client.EmuHawk
 
 			foreach (Line line in VisibleLines)
 			{
-				var clipped = new Line(line);
+				Polygon clipped = Camera.ClipPolygonAgainstFrustum(line.Polygons[0]);
 
-				bool visible = Camera.ClipLineAgainstFrustum(ref clipped);
+				for (int i = 0; i < clipped.Edges.Count; i++)
+				{
+					(int idxA, int idxB, bool visible) = clipped.Edges[i];
 
-				bool aClipped = line.A.Position != clipped.A.Position;
-				bool bClipped = line.B.Position != clipped.B.Position;
+					var final = new Line(
+						clipped.Vertices[idxA].WorldToScreen(matrix, _dummyViewport, true),
+						clipped.Vertices[idxB].WorldToScreen(matrix, _dummyViewport, true));
 
-				clipped.A = clipped.A.WorldToScreen(matrix, _dummyViewport, true);
-				clipped.B = clipped.B.WorldToScreen(matrix, _dummyViewport, true);
-
-				ScreenSpaceLines.Add((
-					clipped,
-					clipped.Tint ?? clipped.A.Color,
-					visible,
-					aClipped,
-					bClipped));
+					ScreenSpaceLines.Add((
+						final,
+						line.Tint ?? clipped.Color,
+						visible,
+						false,
+						false));
+				}
 			}
 
 			foreach ((Line line, Color color, bool visible, bool aClipped, bool bClipped) b in ScreenSpaceLines)
