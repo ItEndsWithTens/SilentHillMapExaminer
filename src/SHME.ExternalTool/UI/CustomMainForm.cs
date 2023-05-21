@@ -739,27 +739,52 @@ namespace BizHawk.Client.EmuHawk
 				for (int x = 0; x < Overlay.Width; x++)
 				{
 					int ofs = (y * data.Stride) + (x * 4);
-					int pixel = Marshal.ReadInt32(data.Scan0, ofs);
+					int overlayPixel = Marshal.ReadInt32(data.Scan0, ofs);
 
-					// Any pixels in the overlay Bitmap that aren't opaque are
-					// assumed to be transparent background, and safe to skip.
-					uint a = (uint)pixel & 0xFF000000;
-					if (a != 0xFF000000)
+					int a = (int)((overlayPixel & 0xFF000000) >> 24);
+					if (a == 0x00)
 					{
 						continue;
 					}
 
-					// Selecting the high 5 bits of each component with an AND
-					// and then shifting them into their final positions is an
-					// efficient equivalent of unpacking the 32bpp ARGB pixels,
-					// dividing each component by 8, then repacking them into
-					// the 16bpp SBGR format of the PSX framebuffer. The 'S', or
-					// semi-transparent bit, remains 0 to overwrite the screen.
-					int r = (pixel & 0x00F80000) >> 19;
-					int g = (pixel & 0x0000F800) >> 6;
-					int b = (pixel & 0x000000F8) << 7;
+					long framebufferOffset = start + (gpuramBytesPerPixel * x);
 
-					Mem.WriteS16(start + (gpuramBytesPerPixel * x), b | g | r);
+					int r, g, b;
+					if (a != 0xFF)
+					{
+						int gamePixel = Mem.ReadS16(framebufferOffset);
+
+						int rGame = (gamePixel & 0b00000000_00011111) << 3;
+						int gGame = (gamePixel & 0b00000011_11100000) >> 2;
+						int bGame = (gamePixel & 0b01111100_00000000) >> 7;
+
+						int rOverlay = (overlayPixel & 0xFF0000) >> 16;
+						int gOverlay = (overlayPixel & 0x00FF00) >> 8;
+						int bOverlay = (overlayPixel & 0x0000FF) >> 0;
+
+						r = (rOverlay * a + rGame * (255 - a)) / 255;
+						g = (gOverlay * a + gGame * (255 - a)) / 255;
+						b = (bOverlay * a + bGame * (255 - a)) / 255;
+
+						r = (r & 0xF8) >> 3;
+						g = (g & 0xF8) << 2;
+						b = (b & 0xF8) << 7;
+					}
+					else
+					{
+						// Selecting the high 5 bits of each component with AND
+						// and then shifting them into their final positions is
+						// an efficient equivalent of unpacking the 32bpp ARGB
+						// pixels, dividing each component by 8, then repacking
+						// them into the 16bpp SBGR format of the Playstation's
+						// framebuffer. The high order "semi-transparent" bit
+						// remains 0 to overwrite the screen with the overlay.
+						r = (overlayPixel & 0x00F80000) >> 19;
+						g = (overlayPixel & 0x0000F800) >> 6;
+						b = (overlayPixel & 0x000000F8) << 7;
+					}
+
+					Mem.WriteS16(framebufferOffset, b | g | r);
 				}
 
 				start += gpuramStride;
