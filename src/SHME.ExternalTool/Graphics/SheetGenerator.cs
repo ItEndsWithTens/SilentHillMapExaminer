@@ -59,11 +59,11 @@ namespace SHME.ExternalTool
 				new Vertex(Max.X, 0.0f, Max.Y, Color)
 			};
 
-			var box = new Renderable() { CoordinateSpace = CoordinateSpace.Model };
+			var sheet = new Renderable() { CoordinateSpace = CoordinateSpace.Model };
 
 			for (int i = 0; i < 8; i += 4)
 			{
-				var p = new Polygon(box);
+				var p = new Polygon(sheet) { Color = Color };
 
 				Vertex a = modelVerts[i + 0];
 				Vertex b = modelVerts[i + 1];
@@ -82,12 +82,12 @@ namespace SHME.ExternalTool
 
 				p.Normal = Vector3.Normalize(Vector3.Cross(b - a, c - a));
 
-				box.Polygons.Add(p);
+				sheet.Polygons.Add(p);
 			}
 
-			box.Transformability = Transformability.Translate;
+			sheet.Transformability = Transformability.Translate;
 
-			return box;
+			return sheet;
 		}
 	}
 }

@@ -76,7 +76,7 @@ namespace SHME.ExternalTool
 
 			for (int i = 0; i < 24; i += 3)
 			{
-				var p = new Polygon(gem);
+				var p = new Polygon(gem) { Color = Color };
 
 				Vertex a = modelVerts[i + 0];
 				Vertex b = modelVerts[i + 1];

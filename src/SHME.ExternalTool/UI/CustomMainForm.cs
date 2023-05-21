@@ -475,7 +475,7 @@ namespace BizHawk.Client.EmuHawk
 
 					ScreenSpaceLines.Add((
 						line,
-						r.Tint ?? line.A.Color,
+						r.Tint ?? clipped.Color,
 						visible,
 						false,
 						false));
@@ -499,7 +499,9 @@ namespace BizHawk.Client.EmuHawk
 							break;
 						}
 
-						Pen.Color = r.Tint ?? ScreenSpaceLines[0].line.A.Color;
+						float opacity = (float)NudOverlayRenderableOpacity.Value / 100.0f;
+						int alpha = (int)Math.Round(opacity * 255);
+						Pen.Color = Color.FromArgb(alpha, r.Tint ?? ScreenSpaceLines[0].color);
 						g.FillPolygon(Pen.Brush, visibleVertices.ToArray());
 						break;
 					case 2:

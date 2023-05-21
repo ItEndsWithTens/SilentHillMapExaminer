@@ -91,6 +91,8 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonStart = new System.Windows.Forms.Label();
             this.LblButtonSelect = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
+            this.label84 = new System.Windows.Forms.Label();
+            this.NudOverlayRenderableOpacity = new System.Windows.Forms.NumericUpDown();
             this.CbxCullBeyondFarClip = new System.Windows.Forms.CheckBox();
             this.CbxCullBackfaces = new System.Windows.Forms.CheckBox();
             this.CbxReadLevelDataOnStageLoad = new System.Windows.Forms.CheckBox();
@@ -377,6 +379,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpBasics.SuspendLayout();
             this.GbxControls.SuspendLayout();
             this.GbxOverlay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayRenderableOpacity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudCrosshairLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraY)).BeginInit();
@@ -1317,6 +1320,8 @@ namespace BizHawk.Client.EmuHawk
             // GbxOverlay
             // 
             this.GbxOverlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.GbxOverlay.Controls.Add(this.label84);
+            this.GbxOverlay.Controls.Add(this.NudOverlayRenderableOpacity);
             this.GbxOverlay.Controls.Add(this.CbxCullBeyondFarClip);
             this.GbxOverlay.Controls.Add(this.CbxCullBackfaces);
             this.GbxOverlay.Controls.Add(this.CbxReadLevelDataOnStageLoad);
@@ -1354,13 +1359,49 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlay.TabStop = false;
             this.GbxOverlay.Text = "Overlay camera";
             // 
+            // label84
+            // 
+            this.label84.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label84.AutoSize = true;
+            this.label84.Location = new System.Drawing.Point(197, 194);
+            this.label84.Name = "label84";
+            this.label84.Size = new System.Drawing.Size(71, 13);
+            this.label84.TabIndex = 101;
+            this.label84.Text = "Filled opacity:";
+            this.toolTip1.SetToolTip(this.label84, "Crosshair length as a percentage of viewport height");
+            // 
+            // NudOverlayRenderableOpacity
+            // 
+            this.NudOverlayRenderableOpacity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.NudOverlayRenderableOpacity.DecimalPlaces = 1;
+            this.NudOverlayRenderableOpacity.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.NudOverlayRenderableOpacity.Location = new System.Drawing.Point(274, 192);
+            this.NudOverlayRenderableOpacity.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.NudOverlayRenderableOpacity.Name = "NudOverlayRenderableOpacity";
+            this.NudOverlayRenderableOpacity.Size = new System.Drawing.Size(52, 20);
+            this.NudOverlayRenderableOpacity.TabIndex = 100;
+            this.toolTip1.SetToolTip(this.NudOverlayRenderableOpacity, "Crosshair length as a percentage of viewport height");
+            this.NudOverlayRenderableOpacity.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            // 
             // CbxCullBeyondFarClip
             // 
             this.CbxCullBeyondFarClip.AutoSize = true;
             this.CbxCullBeyondFarClip.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CbxCullBeyondFarClip.Checked = true;
             this.CbxCullBeyondFarClip.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxCullBeyondFarClip.Location = new System.Drawing.Point(246, 193);
+            this.CbxCullBeyondFarClip.Location = new System.Drawing.Point(246, 167);
             this.CbxCullBeyondFarClip.Name = "CbxCullBeyondFarClip";
             this.CbxCullBeyondFarClip.Size = new System.Drawing.Size(80, 17);
             this.CbxCullBeyondFarClip.TabIndex = 99;
@@ -1374,7 +1415,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCullBackfaces.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CbxCullBackfaces.Checked = true;
             this.CbxCullBackfaces.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxCullBackfaces.Location = new System.Drawing.Point(221, 170);
+            this.CbxCullBackfaces.Location = new System.Drawing.Point(221, 144);
             this.CbxCullBackfaces.Name = "CbxCullBackfaces";
             this.CbxCullBackfaces.Size = new System.Drawing.Size(105, 17);
             this.CbxCullBackfaces.TabIndex = 97;
@@ -1456,7 +1497,7 @@ namespace BizHawk.Client.EmuHawk
             this.CmbRenderMode.FormattingEnabled = true;
             this.CmbRenderMode.Items.AddRange(new object[] {
             "Wireframe",
-            "Solid",
+            "Filled",
             "Points"});
             this.CmbRenderMode.Location = new System.Drawing.Point(6, 304);
             this.CmbRenderMode.Name = "CmbRenderMode";
@@ -4880,6 +4921,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxControls.PerformLayout();
             this.GbxOverlay.ResumeLayout(false);
             this.GbxOverlay.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayRenderableOpacity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudCrosshairLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraY)).EndInit();
@@ -5320,5 +5362,7 @@ namespace BizHawk.Client.EmuHawk
 		private NumericUpDown NudOverlayTestSheetY;
 		private NumericUpDown NudOverlayTestSheetX;
 		private CheckBox CbxOverlayTestSheet;
+		private Label label84;
+		private NumericUpDown NudOverlayRenderableOpacity;
 	}
 }
