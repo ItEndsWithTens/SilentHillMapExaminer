@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
 
 namespace SHME.ExternalTool
@@ -149,7 +148,7 @@ namespace SHME.ExternalTool
 				Polygons.Add(p);
 			}
 
-			Aabb = new Aabb(polygons.SelectMany((p) => p.Vertices));
+			UpdateBounds();
 		}
 		public Renderable(Renderable r)
 		{
@@ -259,7 +258,47 @@ namespace SHME.ExternalTool
 
 		public Aabb UpdateBounds()
 		{
-			Aabb = new Aabb(Polygons.SelectMany((p) => p.Vertices));
+			Vector3 min = Polygons[0].Vertices[0];
+			Vector3 max = Polygons[0].Vertices[0];
+
+			for (int i = 0; i < Polygons.Count; i++)
+			{
+				Polygon p = Polygons[i];
+
+				for (int j = 0; j < p.Vertices.Count; j++)
+				{
+					Vertex v = p.Vertices[j];
+
+					if (v.Position.X < min.X)
+					{
+						min.X = v.Position.X;
+					}
+					else if (v.Position.X > max.X)
+					{
+						max.X = v.Position.X;
+					}
+
+					if (v.Position.Y < min.Y)
+					{
+						min.Y = v.Position.Y;
+					}
+					else if (v.Position.Y > max.Y)
+					{
+						max.Y = v.Position.Y;
+					}
+
+					if (v.Position.Z < min.Z)
+					{
+						min.Z = v.Position.Z;
+					}
+					else if (v.Position.Z > max.Z)
+					{
+						max.Z = v.Position.Z;
+					}
+				}
+			}
+
+			Aabb.Update(min, max);
 
 			return Aabb;
 		}

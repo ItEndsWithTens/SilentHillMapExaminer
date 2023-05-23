@@ -62,8 +62,6 @@ namespace SHME.ExternalTool
 
 		public Aabb()
 		{
-			_min = new Vector3();
-			_max = new Vector3();
 			Update();
 		}
 		public Aabb(IList<Renderable> renderables)
@@ -173,6 +171,13 @@ namespace SHME.ExternalTool
 			Update();
 		}
 
+		public void Update(Vector3 min, Vector3 max)
+		{
+			_min = min;
+			_max = max;
+
+			Update();
+		}
 		private void Update()
 		{
 			Center = Min + ((Max - Min) / 2.0f);
