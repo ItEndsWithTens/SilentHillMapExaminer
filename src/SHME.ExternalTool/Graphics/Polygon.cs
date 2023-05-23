@@ -148,9 +148,7 @@ namespace SHME.ExternalTool
 
 			for (int i = 0; i < Vertices.Count; i++)
 			{
-				Vertex v = Vertices[i].ModelToWorld(Renderable.ModelMatrix);
-				v.Rotate(rotation, origin);
-				Vertices[i] = v.WorldToModel(Renderable.ModelMatrix);
+				Vertices[i] = Vertices[i].Rotate(rotation, origin);
 			}
 
 			return this;
