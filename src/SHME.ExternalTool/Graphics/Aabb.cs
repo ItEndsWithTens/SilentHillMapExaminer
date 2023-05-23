@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 
 namespace SHME.ExternalTool
@@ -34,7 +33,32 @@ namespace SHME.ExternalTool
 
 		public Vector3 Center { get; private set; }
 
-		public IList<Vector3> Points { get; } = new List<Vector3>(8);
+		private readonly Vector3[] _points = new Vector3[8]
+		{
+			Vector3.Zero,
+			Vector3.Zero,
+			Vector3.Zero,
+			Vector3.Zero,
+			Vector3.Zero,
+			Vector3.Zero,
+			Vector3.Zero,
+			Vector3.Zero
+		};
+
+		public IEnumerable<Vector3> Points
+		{
+			get
+			{
+				yield return _points[0];
+				yield return _points[1];
+				yield return _points[2];
+				yield return _points[3];
+				yield return _points[4];
+				yield return _points[5];
+				yield return _points[6];
+				yield return _points[7];
+			}
+		}
 
 		public Aabb()
 		{
@@ -42,17 +66,28 @@ namespace SHME.ExternalTool
 			_max = new Vector3();
 			Update();
 		}
-		public Aabb(IEnumerable<Renderable> renderables) : base()
+		public Aabb(IList<Renderable> renderables)
 		{
 			var points = new List<Vector3>();
 
-			Init(renderables
-				.SelectMany((r) => r.Polygons)
-				.SelectMany((p) => p.Vertices)
-				.Select((v) => v.Position)
-				.ToArray());
+			for (int i = 0; i < renderables.Count; i++)
+			{
+				Renderable r = renderables[i];
+
+				for (int j = 0; j < r.Polygons.Count; j++)
+				{
+					Polygon p = r.Polygons[j];
+
+					for (int k = 0; k < p.Vertices.Count; k++)
+					{
+						points.Add(p.Vertices[k].Position);
+					}
+				}
+			}
+
+			Init(points.ToArray());
 		}
-		public Aabb(IEnumerable<Vertex> vertices) : base()
+		public Aabb(IEnumerable<Vertex> vertices)
 		{
 			var points = new List<Vector3>();
 
@@ -63,8 +98,15 @@ namespace SHME.ExternalTool
 
 			Init(points.ToArray());
 		}
-		public Aabb(IEnumerable<Vector3> points) : base()
+		public Aabb(IEnumerable<Vector3> vectors)
 		{
+			var points = new List<Vector3>();
+
+			foreach (Vector3 vector in vectors)
+			{
+				points.Add(vector);
+			}
+
 			Init(points.ToArray());
 		}
 		public Aabb(Vector3[] points)
@@ -73,8 +115,8 @@ namespace SHME.ExternalTool
 		}
 		public Aabb(Aabb aabb)
 		{
-			_min = new Vector3(aabb.Min.X, aabb.Min.Y, aabb.Min.Z);
-			_max = new Vector3(aabb.Max.X, aabb.Max.Y, aabb.Max.Z);
+			_min = aabb.Min;
+			_max = aabb.Max;
 			Update();
 		}
 		public Aabb(Vector3 min, Vector3 max)
@@ -86,6 +128,11 @@ namespace SHME.ExternalTool
 
 		private void Init(Vector3[] points)
 		{
+			if (points.Length == 0)
+			{
+				return;
+			}
+
 			Vector3 newMin = points[0];
 			Vector3 newMax = points[0];
 
@@ -130,23 +177,45 @@ namespace SHME.ExternalTool
 		{
 			Center = Min + ((Max - Min) / 2.0f);
 
-			Points.Clear();
-			Points.Add(Min);
-			Points.Add(new Vector3(Max.X, Min.Y, Min.Z));
-			Points.Add(new Vector3(Max.X, Min.Y, Max.Z));
-			Points.Add(new Vector3(Min.X, Min.Y, Max.Z));
-			Points.Add(new Vector3(Max.X, Max.Y, Min.Z));
-			Points.Add(new Vector3(Min.X, Max.Y, Min.Z));
-			Points.Add(new Vector3(Min.X, Max.Y, Max.Z));
-			Points.Add(Max);
+			_points[0].X = Min.X;
+			_points[0].Y = Min.Y;
+			_points[0].Z = Min.Z;
+
+			_points[1].X = Max.X;
+			_points[1].Y = Min.Y;
+			_points[1].Z = Min.Z;
+
+			_points[2].X = Max.X;
+			_points[2].Y = Min.Y;
+			_points[2].Z = Max.Z;
+
+			_points[3].X = Min.X;
+			_points[3].Y = Min.Y;
+			_points[3].Z = Max.Z;
+
+			_points[4].X = Max.X;
+			_points[4].Y = Max.Y;
+			_points[4].Z = Min.Z;
+
+			_points[5].X = Min.X;
+			_points[5].Y = Max.Y;
+			_points[5].Z = Min.Z;
+
+			_points[6].X = Min.X;
+			_points[6].Y = Max.Y;
+			_points[6].Z = Max.Z;
+
+			_points[7].X = Max.X;
+			_points[7].Y = Max.Y;
+			_points[7].Z = Max.Z;
 		}
 
 		/// <summary>
-		/// Combine two AABBs to produce a new AABB that covers them both.
+		/// Combine two Aabbs to produce a new one that covers them both.
 		/// </summary>
-		/// <param name="lhs">The first AABB to combine.</param>
-		/// <param name="rhs">The second AABB to combine.</param>
-		/// <returns>A new AABB representing the total AABB of the two inputs.</returns>
+		/// <param name="lhs">The first Aabb to combine.</param>
+		/// <param name="rhs">The second Aabb to combine.</param>
+		/// <returns>A new Aabb representing the total of the two inputs.</returns>
 		public static Aabb Add(Aabb lhs, Aabb rhs)
 		{
 			Vector3 newMin = lhs.Min;
@@ -190,11 +259,11 @@ namespace SHME.ExternalTool
 		}
 
 		/// <summary>
-		/// Offset an AABB in 3D.
+		/// Offset an Aabb in 3D.
 		/// </summary>
-		/// <param name="lhs">The AABB to offset.</param>
-		/// <param name="rhs">The distance to offset.</param>
-		/// <returns>A new AABB, offset by the specified amounts.</returns>
+		/// <param name="lhs">The Aabb to offset.</param>
+		/// <param name="rhs">The distance by which to offset.</param>
+		/// <returns>A new Aabb, offset by the specified amounts.</returns>
 		public static Aabb Add(Aabb lhs, Vector3 rhs)
 		{
 			return new Aabb(lhs.Min + rhs, lhs.Max + rhs);
@@ -205,11 +274,11 @@ namespace SHME.ExternalTool
 		}
 
 		/// <summary>
-		/// Offset an AABB in 3D.
+		/// Offset an Aabb in 3D.
 		/// </summary>
-		/// <param name="lhs">The AABB to offset.</param>
-		/// <param name="rhs">The distance to offset.</param>
-		/// <returns>A new AABB, offset by the specified amounts.</returns>
+		/// <param name="lhs">The Aabb to offset.</param>
+		/// <param name="rhs">The distance by which to offset.</param>
+		/// <returns>A new Aabb, offset by the specified amounts.</returns>
 		public static Aabb Subtract(Aabb lhs, Vector3 rhs)
 		{
 			return new Aabb(lhs.Min - rhs, lhs.Max - rhs);

@@ -480,12 +480,12 @@ namespace SHME.ExternalTool
 				NearClip, FarClip);
 		}
 
-		private readonly IList<(Polygon, Renderable)> _visiblePolygons = new List<(Polygon, Renderable)>();
-		public IList<(Polygon, Renderable)> GetVisiblePolygons(Renderable renderable)
+		private readonly IList<Polygon> _visiblePolygons = new List<Polygon>();
+		public IList<Polygon> GetVisiblePolygons(Renderable renderable)
 		{
 			return GetVisiblePolygons(new List<Renderable>() { renderable });
 		}
-		public IList<(Polygon, Renderable)> GetVisiblePolygons(IEnumerable<Renderable> renderables)
+		public IList<Polygon> GetVisiblePolygons(IEnumerable<Renderable> renderables)
 		{
 			_visiblePolygons.Clear();
 
@@ -509,7 +509,7 @@ namespace SHME.ExternalTool
 
 						if (Vector3.Dot(toPoint, p.Normal) <= 0.0f)
 						{
-							_visiblePolygons.Add((p, r));
+							_visiblePolygons.Add(p);
 						}
 					}
 				}
@@ -520,7 +520,7 @@ namespace SHME.ExternalTool
 						// Keeping backfaces at the start of the list makes sure
 						// they're drawn first, and won't overdraw any colored
 						// edges when rendering as wireframes.
-						_visiblePolygons.Insert(0, (p, r));
+						_visiblePolygons.Insert(0, p);
 					}
 				}
 			}
@@ -570,7 +570,12 @@ namespace SHME.ExternalTool
 
 			foreach (Plane plane in planes)
 			{
-				p = p.ClipAgainstPlane(plane);
+				p.ClipAgainstPlane(plane);
+
+				if (p.Vertices.Count == 0)
+				{
+					break;
+				}
 			}
 
 			// Just a quick and dirty hack job to mark edges that should be

@@ -392,9 +392,11 @@ namespace BizHawk.Client.EmuHawk
 
 						r = new BoxGenerator((float)width, 1.0f, depth, Color.Orange).Generate().ToWorld();
 						r.Transformability |= Transformability.Rotate;
+
+						var rotation = new Vector3(0.0f, yawConverted, 0.0f);
 						r.Transform(
 							Vector3.Zero,
-							new Vector3(0.0f, 0.0f, yawConverted),
+							rotation,
 							Vector3.One,
 							r.Position);
 
@@ -402,7 +404,7 @@ namespace BizHawk.Client.EmuHawk
 						// positions, instead extending away 4 units in the
 						// direction of their yaw.
 						Vector3 point = new Vector3(0.0f, 0.0f, 1.0f) * (depth / 2.0f);
-						point = point.Rotate(0.0f, yawConverted, 0.0f, Vector3.Zero);
+						point = point.Rotate(rotation, Vector3.Zero);
 						r.Position = pair.Value.Position - point;
 					}
 					else

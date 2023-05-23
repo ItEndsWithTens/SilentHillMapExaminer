@@ -23,7 +23,7 @@ namespace SHME.ExternalTool
 
 			for (int i = 0; i < clipped.Polygons.Count; i++)
 			{
-				clipped.Polygons[i] = clipped.Polygons[i].ClipAgainstPlane(plane);
+				clipped.Polygons[i].ClipAgainstPlane(plane);
 			}
 
 			return clipped;
@@ -110,7 +110,7 @@ namespace SHME.ExternalTool
 		/// field to switch the matrix used for this Renderable.</remarks>
 		public Matrix4x4 ModelMatrix { get; set; } = Matrix4x4.Identity;
 
-		public IList<Polygon> Polygons { get; } = new List<Polygon>();
+		public IList<Polygon> Polygons { get; } = new List<Polygon>(6);
 
 		protected Vector3 _position;
 		public Vector3 Position
@@ -170,20 +170,16 @@ namespace SHME.ExternalTool
 
 		protected void Rotate(Vector3 rotation, Vector3 origin)
 		{
-			Rotate(rotation.Y, rotation.Z, rotation.X, origin);
-		}
-		protected void Rotate(float pitch, float yaw, float roll, Vector3 origin)
-		{
 			if (Transformability.HasFlag(Transformability.Rotate))
 			{
 				for (int i = 0; i < Polygons.Count; i++)
 				{
-					Polygons[i] = Polygons[i].Rotate(pitch, yaw, roll, origin);
+					Polygons[i].Rotate(rotation, origin);
 				}
 			}
 			else if (Transformability.HasFlag(Transformability.Translate))
 			{
-				Position = Position.Rotate(pitch, yaw, roll, origin);
+				Position = Position.Rotate(rotation, origin);
 			}
 
 			UpdateBounds();
@@ -191,13 +187,9 @@ namespace SHME.ExternalTool
 
 		protected void Scale(Vector3 scale)
 		{
-			Scale(scale.X, scale.Y, scale.Z);
-		}
-		protected void Scale(float x, float y, float z)
-		{
 			for (int i = 0; i < Polygons.Count; i++)
 			{
-				Polygons[i] = Polygons[i].Scale(x, y, z);
+				Polygons[i].Scale(scale);
 			}
 		}
 
@@ -234,7 +226,7 @@ namespace SHME.ExternalTool
 				case CoordinateSpace.World:
 					for (int i = 0; i < Polygons.Count; i++)
 					{
-						Polygons[i] = Polygons[i].TranslateRelative(diff);
+						Polygons[i].TranslateRelative(diff);
 					}
 					break;
 				case CoordinateSpace.Model:

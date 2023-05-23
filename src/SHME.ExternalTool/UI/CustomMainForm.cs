@@ -308,7 +308,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private List<(Line line, Color color, bool visible, bool aClipped, bool bClipped)> ScreenSpaceLines { get; } = new List<(Line line, Color color, bool visible, bool aClipped, bool bClipped)>();
-		private List<(Polygon, Renderable)> VisiblePolygons { get; } = new List<(Polygon, Renderable)>();
+		private List<Polygon> VisiblePolygons { get; } = new List<Polygon>();
 		private List<Line> VisibleLines { get; } = new List<Line>();
 
 		private void UpdateOverlay()
@@ -457,8 +457,10 @@ namespace BizHawk.Client.EmuHawk
 
 		public void DrawPolygons(Matrix4x4 matrix, Graphics g)
 		{
-			foreach ((Polygon p, Renderable r) in VisiblePolygons)
+			foreach (Polygon p in VisiblePolygons)
 			{
+				Renderable r = p.Renderable;
+
 				matrix = r.ModelMatrix * matrix;
 
 				ScreenSpaceLines.Clear();

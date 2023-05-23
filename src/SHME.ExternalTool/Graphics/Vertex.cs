@@ -6,42 +6,82 @@ using System.Runtime.InteropServices;
 
 namespace SHME.ExternalTool
 {
-	public static class VertexExtensions
+	public static class Vector3Extensions
 	{
-		public static Vector3 Rotate(this Vector3 vector, float pitch, float yaw, float roll, Vector3 origin)
+		public static Vector3 Rotate(this Vector3 vector, Vector3 rotation, Vector3 origin)
 		{
-			if (pitch < 0.0f)
+			if (rotation.Z < 0.0f)
 			{
-				pitch = Math.Abs(pitch);
+				rotation.Z = Math.Abs(rotation.Z);
 			}
 			else
 			{
-				pitch = 360.0f - pitch;
+				rotation.Z = 360.0f - rotation.Z;
 			}
 
 			// Assumes that objects are pointing toward +X; thereby pitch
 			// represents rotation around Z, yaw around Y, and roll around X.
-			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(pitch), origin);
-			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(yaw), origin);
-			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(roll), origin);
+			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(rotation.Z), origin);
+			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(rotation.Y), origin);
+			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(rotation.X), origin);
 
-			Matrix4x4 rotation = rotZ * rotY * rotX;
+			Matrix4x4 matrix = rotZ * rotY * rotX;
 
-			Vector3 rotated = Vector3.Transform(vector, rotation);
+			Vector3 rotated = Vector3.Transform(vector, matrix);
 
 			return rotated;
+		}
+	}
+
+	public static class VertexExtensions
+	{
+		public static (Vertex, Vertex, bool) ClipPairAgainstPlane(this (Vertex a, Vertex b) pair, Plane plane)
+		{
+			Vector3 p = plane.A;
+			Vector3 n = plane.Normal;
+
+			float distanceA = Vector3.Dot(pair.a.Position - p, n);
+			float distanceB = Vector3.Dot(pair.b.Position - p, n);
+
+			bool aBehind = distanceA <= 0.0f;
+			bool bBehind = distanceB <= 0.0f;
+
+			if (aBehind && bBehind)
+			{
+				return (pair.a, pair.b, false);
+			}
+
+			if (!aBehind && !bBehind)
+			{
+				return (pair.a, pair.b, true);
+			}
+
+			float factor = distanceA / (distanceA - distanceB);
+
+			Vector3 intersection = pair.a.Position + (pair.b.Position - pair.a.Position) * factor;
+
+			if (aBehind)
+			{
+				var clipped = new Vertex(pair.a) { Position = intersection };
+				return (clipped, pair.b, true);
+			}
+			else
+			{
+				var clipped = new Vertex(pair.b) { Position = intersection };
+				return (pair.a, clipped, true);
+			}
 		}
 
 		public static Vertex ModelToWorld(this Vertex v, Matrix4x4 modelMatrix)
 		{
-			return ConvertCoordinateSpace(v, modelMatrix);
+			return v.ConvertCoordinateSpace(modelMatrix);
 		}
 
 		public static Vertex WorldToModel(this Vertex v, Matrix4x4 modelMatrix)
 		{
 			Matrix4x4.Invert(modelMatrix, out Matrix4x4 inverted);
 
-			return ConvertCoordinateSpace(v, inverted);
+			return v.ConvertCoordinateSpace(inverted);
 		}
 
 		public static Vertex WorldToScreen(this Vertex v, Matrix4x4 mvpMatrix, Viewport viewport, bool flip)
@@ -59,21 +99,13 @@ namespace SHME.ExternalTool
 				ndc.Y = -ndc.Y;
 			}
 
-			var screen = new Point(
-				(int)Math.Round(viewport.Center.X + (ndc.X * viewport.Width / 2)),
-				(int)Math.Round(viewport.Center.Y + (ndc.Y * viewport.Height / 2)));
+			Vector3 position = v.Position;
+			position.X = (int)Math.Round(viewport.Center.X + (ndc.X * viewport.Width / 2));
+			position.Y = (int)Math.Round(viewport.Center.Y + (ndc.Y * viewport.Height / 2));
 
-			return new Vertex(v)
-			{
-				Position = new Vector3(screen.X, screen.Y, v.Position.Z)
-			};
-		}
+			v.Position = position;
 
-		public static Vertex ConvertCoordinateSpace(Vertex v, Matrix4x4 matrix)
-		{
-			Vector3 converted = Vector3.Transform(v, matrix);
-
-			return new Vertex(v) { Position = converted };
+			return v;
 		}
 	}
 
@@ -119,29 +151,6 @@ namespace SHME.ExternalTool
 			TexCoords = texCoords;
 		}
 
-		public static Vertex Rotate(Vertex vertex, float pitch, float yaw, float roll, Vector3 origin)
-		{
-			return new Vertex(vertex)
-			{
-				Position = vertex.Position.Rotate(pitch, yaw, roll, origin),
-				Normal = vertex.Normal.Rotate(pitch, yaw, roll, origin)
-			};
-		}
-
-		public static Vertex TranslateRelative(Vertex v, Vector3 diff)
-		{
-			Vector3 translated = v.Position + diff;
-
-			return new Vertex(v)
-			{
-				Position = new Vector3(translated.X, translated.Y, translated.Z)
-			};
-		}
-		public static Vertex TranslateRelative(Vertex v, float diffX, float diffY, float diffZ)
-		{
-			return TranslateRelative(v, new Vector3(diffX, diffY, diffZ));
-		}
-
 		public static Vector3 Add(Vertex lhs, Vertex rhs)
 		{
 			return lhs.Position + rhs.Position;
@@ -173,7 +182,6 @@ namespace SHME.ExternalTool
 		{
 			return left.Equals(right);
 		}
-
 		public static bool operator !=(Vertex left, Vertex right)
 		{
 			return !(left == right);
@@ -188,7 +196,6 @@ namespace SHME.ExternalTool
 		{
 			return obj is Vertex vertex && Equals(vertex);
 		}
-
 		public bool Equals(Vertex other)
 		{
 			return
@@ -206,6 +213,31 @@ namespace SHME.ExternalTool
 			hashCode = hashCode * -1521134295 + Color.GetHashCode();
 			hashCode = hashCode * -1521134295 + TexCoords.GetHashCode();
 			return hashCode;
+		}
+
+		public Vertex ConvertCoordinateSpace(Matrix4x4 matrix)
+		{
+			Vector3.Transform(Position, matrix);
+
+			return this;
+		}
+
+		public Vertex Rotate(Vector3 rotation, Vector3 origin)
+		{
+			Position = Position.Rotate(rotation, origin);
+			Normal = Normal.Rotate(rotation, origin);
+
+			return this;
+		}
+
+		public Vertex TranslateRelative(Vector3 diff)
+		{
+			Position += diff;
+			return this;
+		}
+		public Vertex TranslateRelative(float diffX, float diffY, float diffZ)
+		{
+			return TranslateRelative(new Vector3(diffX, diffY, diffZ));
 		}
 	}
 }

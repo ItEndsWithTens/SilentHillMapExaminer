@@ -5,11 +5,11 @@ namespace SHME.ExternalTool
 {
 	public class Plane
 	{
-		public Vector3 A { get; } = new Vector3(0.0f, 0.0f, 0.0f);
-		public Vector3 B { get; } = new Vector3(0.0f, 0.0f, 1.0f);
-		public Vector3 C { get; } = new Vector3(1.0f, 0.0f, 0.0f);
+		public Vector3 A { get; } = Vector3.Zero;
+		public Vector3 B { get; } = Vector3.UnitZ;
+		public Vector3 C { get; } = Vector3.UnitX;
 
-		public Vector3 Normal { get; } = new Vector3(0.0f, 1.0f, 0.0f);
+		public Vector3 Normal { get; } = Vector3.UnitY;
 
 		public float DistanceFromOrigin { get; }
 

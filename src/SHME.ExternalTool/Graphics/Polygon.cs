@@ -6,197 +6,11 @@ using System.Numerics;
 
 namespace SHME.ExternalTool
 {
-	public static class PolygonExtensions
-	{
-		public static Polygon ClipAgainstPlane(this Polygon p, Plane plane)
-		{
-			if (p.Vertices.Count == 0)
-			{
-				return p;
-			}
-
-			var clipped = new Polygon(p);
-			clipped.Vertices.Clear();
-			clipped.Edges.Clear();
-
-			var points = new List<Vertex>();
-
-			for (int i = 0; i < p.Vertices.Count; i++)
-			{
-				int idxA = i;
-				int idxB = (i + 1) % p.Vertices.Count;
-
-				Vertex a = p.Vertices[idxA];
-				Vertex b = p.Vertices[idxB];
-
-				(a, b, bool visible) = (a, b).ClipVertexPairAgainstPlane(plane);
-
-				if (!visible)
-				{
-					continue;
-				}
-
-				points.Add(a);
-				points.Add(b);
-			}
-
-			for (int i = 0; i < points.Count; i++)
-			{
-				Vertex point = points[i];
-				if (!clipped.Vertices.Contains(point))
-				{
-					clipped.Vertices.Add(point);
-				}
-			}
-
-			for (int i = 0; i < clipped.Vertices.Count; i++)
-			{
-				clipped.Edges.Add((
-					i,
-					(i + 1) % clipped.Vertices.Count,
-					true));
-			}
-
-			return clipped;
-		}
-
-		public static (Vertex, Vertex, bool) ClipVertexPairAgainstPlane(this (Vertex a, Vertex b) pair, Plane plane)
-		{
-			Vector3 p = plane.A;
-			Vector3 n = plane.Normal;
-
-			float distanceA = Vector3.Dot(pair.a.Position - p, n);
-			float distanceB = Vector3.Dot(pair.b.Position - p, n);
-
-			bool aBehind = distanceA <= 0.0f;
-			bool bBehind = distanceB <= 0.0f;
-
-			if (aBehind && bBehind)
-			{
-				return (pair.a, pair.b, false);
-			}
-
-			if (!aBehind && !bBehind)
-			{
-				return (pair.a, pair.b, true);
-			}
-
-			float factor = distanceA / (distanceA - distanceB);
-
-			Vector3 intersection = pair.a.Position + (pair.b.Position - pair.a.Position) * factor;
-
-			if (aBehind)
-			{
-				var clipped = new Vertex(pair.a) { Position = intersection };
-				return (clipped, pair.b, true);
-			}
-			else
-			{
-				var clipped = new Vertex(pair.b) { Position = intersection };
-				return (pair.a, clipped, true);
-			}
-		}
-
-		public static Polygon Rotate(this Polygon polygon, float pitch, float yaw, float roll, Vector3 origin)
-		{
-			if (pitch < 0.0f)
-			{
-				pitch = Math.Abs(pitch);
-			}
-			else
-			{
-				pitch = 360.0f - pitch;
-			}
-
-			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(pitch), origin);
-			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(yaw), origin);
-			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(roll), origin);
-
-			Matrix4x4 rotation = rotZ * rotY * rotX;
-
-			var p = new Polygon(polygon);
-			p.BasisS = Vector3.Transform(p.BasisS, rotation);
-			p.BasisT = Vector3.Transform(p.BasisT, rotation);
-			p.Normal = Vector3.Transform(p.Normal, rotation);
-
-			for (int i = 0; i < p.Vertices.Count; i++)
-			{
-				Vertex world = p.Vertices[i].ModelToWorld(p.Renderable.ModelMatrix);
-				var rotated = Vertex.Rotate(world, pitch, yaw, roll, origin);
-				p.Vertices[i] = rotated.WorldToModel(p.Renderable.ModelMatrix);
-			}
-
-			return p;
-		}
-
-		public static Polygon Scale(this Polygon polygon, float x, float y, float z)
-		{
-			var scaled = new Polygon(polygon);
-
-			for (int i = 0; i < scaled.Vertices.Count; i++)
-			{
-				Vertex v = scaled.Vertices[i];
-
-				v.Position = new Vector3
-				{
-					X = v.Position.X * x,
-					Y = v.Position.Y * y,
-					Z = v.Position.Z * z
-				};
-
-				scaled.Vertices[i] = v;
-			}
-
-			// TODO: Understand, and explain in a comment, why the basis
-			// vectors need to be divided by the scale instead of multiplied
-			// like the vertex positions. I figured this out by observation,
-			// and honestly have no idea why it works.
-
-			scaled.BasisS = new Vector3
-			{
-				X = scaled.BasisS.X / x,
-				Y = scaled.BasisS.Y / y,
-				Z = scaled.BasisS.Z / z
-			};
-
-			scaled.BasisT = new Vector3
-			{
-				X = scaled.BasisT.X / x,
-				Y = scaled.BasisT.Y / y,
-				Z = scaled.BasisT.Z / z
-			};
-
-			return scaled;
-		}
-
-		public static Polygon TranslateRelative(this Polygon polygon, Vector3 diff)
-		{
-			var p = new Polygon(polygon);
-
-			for (int i = 0; i < p.Vertices.Count; i++)
-			{
-				p.Vertices[i] = Vertex.TranslateRelative(p.Vertices[i], diff);
-			}
-
-			// The dot product projects one vector onto another, in essence
-			// describing how far along one of them the other is. That gives the
-			// relative offset on the respective basis vector, though v.
-			p.Offset.X -= Vector3.Dot(diff, p.BasisS) / p.Scale.X;
-			p.Offset.Y -= Vector3.Dot(diff, p.BasisT) / p.Scale.Y;
-
-			return p;
-		}
-		public static Polygon TranslateRelative(this Polygon polygon, float diffX, float diffY, float diffZ)
-		{
-			return TranslateRelative(polygon, new Vector3(diffX, diffY, diffZ));
-		}
-	}
-
 	public class Polygon
 	{
-		public IList<Vertex> Vertices { get; } = new List<Vertex>();
+		public IList<Vertex> Vertices { get; } = new List<Vertex>(4);
 
-		public IList<(int, int, bool)> Edges { get; } = new List<(int, int, bool)>();
+		public IList<(int, int, bool)> Edges { get; } = new List<(int, int, bool)>(4);
 
 		/// <summary>
 		/// The name of the texture meant to be applied to this polygon; if said
@@ -204,11 +18,11 @@ namespace SHME.ExternalTool
 		/// </summary>
 		public string IntendedTextureName { get; set; } = String.Empty;
 
-		public Vector3 BasisS;
-		public Vector3 BasisT;
-		public Vector2 Offset;
-		public float Rotation;
-		public Vector2 Scale;
+		public Vector3 TextureBasisS;
+		public Vector3 TextureBasisT;
+		public Vector2 TextureOffset;
+		public float TextureRotation;
+		public Vector2 TextureScale;
 
 		public Vector3 Normal;
 
@@ -240,12 +54,12 @@ namespace SHME.ExternalTool
 		{
 			Renderable = p.Renderable;
 			IntendedTextureName = p.IntendedTextureName;
-			BasisS = new Vector3(p.BasisS.X, p.BasisS.Y, p.BasisS.Z);
-			BasisT = new Vector3(p.BasisT.X, p.BasisT.Y, p.BasisT.Z);
-			Offset = new Vector2(p.Offset.X, p.Offset.Y);
-			Rotation = p.Rotation;
-			Scale = new Vector2(p.Scale.X, p.Scale.Y);
-			Normal = new Vector3(p.Normal.X, p.Normal.Y, p.Normal.Z);
+			TextureBasisS = p.TextureBasisS;
+			TextureBasisT = p.TextureBasisT;
+			TextureOffset = p.TextureOffset;
+			TextureRotation = p.TextureRotation;
+			TextureScale = p.TextureScale;
+			Normal = p.Normal;
 
 			Vertices.Clear();
 			for (int i = 0; i < p.Vertices.Count; i++)
@@ -262,6 +76,123 @@ namespace SHME.ExternalTool
 			{
 				Edges.Add(p.Edges[i]);
 			}
+		}
+
+		private void MakeEdges()
+		{
+			Edges.Clear();
+			for (int i = 0; i < Vertices.Count; i++)
+			{
+				Edges.Add((i, (i + 1) % Vertices.Count, true));
+			}
+		}
+
+		public Polygon ClipAgainstPlane(Plane plane)
+		{
+			var points = new List<Vertex>();
+
+			for (int i = 0; i < Vertices.Count; i++)
+			{
+				int idxA = i;
+				int idxB = (i + 1) % Vertices.Count;
+
+				Vertex a = Vertices[idxA];
+				Vertex b = Vertices[idxB];
+
+				(a, b, bool visible) = (a, b).ClipPairAgainstPlane(plane);
+
+				if (!visible)
+				{
+					continue;
+				}
+
+				points.Add(a);
+				points.Add(b);
+			}
+
+			Vertices.Clear();
+			for (int i = 0; i < points.Count; i++)
+			{
+				Vertex point = points[i];
+				if (!Vertices.Contains(point))
+				{
+					Vertices.Add(point);
+				}
+			}
+
+			MakeEdges();
+
+			return this;
+		}
+
+		public Polygon Rotate(Vector3 rotation, Vector3 origin)
+		{
+			if (rotation.Z < 0.0f)
+			{
+				rotation.Z = Math.Abs(rotation.Z);
+			}
+			else
+			{
+				rotation.Z = 360.0f - rotation.Z;
+			}
+
+			Matrix4x4 rotZ = Matrix4x4.CreateRotationZ(MathUtilities.DegreesToRadians(rotation.Z), origin);
+			Matrix4x4 rotY = Matrix4x4.CreateRotationY(MathUtilities.DegreesToRadians(rotation.Y), origin);
+			Matrix4x4 rotX = Matrix4x4.CreateRotationX(MathUtilities.DegreesToRadians(rotation.X), origin);
+
+			Matrix4x4 matrix = rotZ * rotY * rotX;
+
+			TextureBasisS = Vector3.Transform(TextureBasisS, matrix);
+			TextureBasisT = Vector3.Transform(TextureBasisT, matrix);
+			Normal = Vector3.Transform(Normal, matrix);
+
+			for (int i = 0; i < Vertices.Count; i++)
+			{
+				Vertex v = Vertices[i].ModelToWorld(Renderable.ModelMatrix);
+				v.Rotate(rotation, origin);
+				Vertices[i] = v.WorldToModel(Renderable.ModelMatrix);
+			}
+
+			return this;
+		}
+
+		public Polygon Scale(Vector3 scale)
+		{
+			for (int i = 0; i < Vertices.Count; i++)
+			{
+				Vertex v = Vertices[i];
+
+				v.Position *= scale;
+
+				Vertices[i] = v;
+			}
+
+			// TODO: Understand, and explain in a comment, why the basis
+			// vectors need to be divided by the scale instead of multiplied
+			// like the vertex positions. I figured this out by observation,
+			// and honestly have no idea why it works.
+
+			TextureBasisS /= scale;
+			TextureBasisT /= scale;
+
+			return this;
+		}
+
+		public Polygon TranslateRelative(Vector3 diff)
+		{
+			for (int i = 0; i < Vertices.Count; i++)
+			{
+				Vertex v = Vertices[i];
+				Vertices[i] = v.TranslateRelative(diff);
+			}
+
+			// The dot product projects one vector onto another, in essence
+			// describing how far along one of them the other is. That gives the
+			// relative offset on the respective basis vector, though v.
+			TextureOffset.X -= Vector3.Dot(diff, TextureBasisS) / TextureScale.X;
+			TextureOffset.Y -= Vector3.Dot(diff, TextureBasisT) / TextureScale.Y;
+
+			return this;
 		}
 	}
 }

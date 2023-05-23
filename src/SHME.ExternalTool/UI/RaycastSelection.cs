@@ -55,8 +55,10 @@ namespace BizHawk.Client.EmuHawk
 			// https://github.com/tavianator/ray_box
 			var inv = new Vector3(1.0f / n.X, 1.0f / n.Y, 1.0f / n.Z);
 
-			foreach ((Polygon _, Renderable r) in VisiblePolygons)
+			foreach (Polygon polygon in VisiblePolygons)
 			{
+				Renderable r = polygon.Renderable;
+
 				Vector3 min = (r.Aabb.Min - Camera.Position) * inv;
 				Vector3 max = (r.Aabb.Max - Camera.Position) * inv;
 
