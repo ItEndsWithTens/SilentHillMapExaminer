@@ -29,7 +29,7 @@
 		}
 		public Line(Vertex a, Vertex b)
 		{
-			Polygons.Add(new Polygon(this));
+			Polygons.Add(new Polygon());
 
 			Polygons[0].Vertices.Add(a);
 			Polygons[0].Vertices.Add(b);

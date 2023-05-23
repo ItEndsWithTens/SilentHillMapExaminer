@@ -44,15 +44,11 @@ namespace SHME.ExternalTool
 			}
 		}
 
-		public Renderable Renderable { get; set; }
-
-		public Polygon(Renderable r)
+		public Polygon()
 		{
-			Renderable = r;
 		}
 		public Polygon(Polygon p)
 		{
-			Renderable = p.Renderable;
 			IntendedTextureName = p.IntendedTextureName;
 			TextureBasisS = p.TextureBasisS;
 			TextureBasisT = p.TextureBasisT;
@@ -75,6 +71,21 @@ namespace SHME.ExternalTool
 			for (int i = 0; i < p.Edges.Count; i++)
 			{
 				Edges.Add(p.Edges[i]);
+			}
+		}
+
+		public bool IsBackface(Camera camera)
+		{
+			Vector3 point = Vertices[0];
+			Vector3 toPoint = point - camera.Position;
+
+			if (Vector3.Dot(toPoint, Normal) > 0.0f)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
 

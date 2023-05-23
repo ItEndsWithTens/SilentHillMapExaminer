@@ -480,15 +480,16 @@ namespace SHME.ExternalTool
 				NearClip, FarClip);
 		}
 
-		private readonly IList<Polygon> _visiblePolygons = new List<Polygon>();
-		public IList<Polygon> GetVisiblePolygons(Renderable renderable)
+		public void GetVisibleRenderables(
+			ref IDictionary<Renderable, bool> visible,
+			Renderable renderable)
 		{
-			return GetVisiblePolygons(new List<Renderable>() { renderable });
+			GetVisibleRenderables(ref visible, new List<Renderable>() { renderable });
 		}
-		public IList<Polygon> GetVisiblePolygons(IEnumerable<Renderable> renderables)
+		public void GetVisibleRenderables(
+			ref IDictionary<Renderable, bool> visible,
+			IEnumerable<Renderable> renderables)
 		{
-			_visiblePolygons.Clear();
-
 			foreach (Renderable r in renderables)
 			{
 				if (!CanSee(r))
@@ -496,63 +497,37 @@ namespace SHME.ExternalTool
 					continue;
 				}
 
-				// TODO: Replace HasFlag with my own version! The Enum method is
-				// apparently slower than molasses on account of some safety checks
-				// that aren't necessary in my case.
-				if (Culling.HasFlag(Culling.Backface))
-				{
-					foreach (Polygon p in r.Polygons)
-					{
-						Vector3 point = p.Vertices[0];
-						Vector3 transformed = Vector3.Transform(point, r.ModelMatrix);
-						Vector3 toPoint = transformed - Position;
+				bool partial = false;
 
-						if (Vector3.Dot(toPoint, p.Normal) <= 0.0f)
+				foreach (Plane plane in Frustum.Planes)
+				{
+					bool anyPointsBehind = false;
+
+					foreach (Vector3 p in r.Aabb.Points)
+					{
+						if (Vector3.Dot(p - plane.A, plane.Normal) <= 0.0f)
 						{
-							_visiblePolygons.Add(p);
+							anyPointsBehind = true;
+							break;
 						}
 					}
+
+					if (anyPointsBehind)
+					{
+						partial = true;
+						break;
+					}
+				}
+
+				if (partial)
+				{
+					visible.Add(r, true);
 				}
 				else
 				{
-					foreach (Polygon p in r.Polygons)
-					{
-						// Keeping backfaces at the start of the list makes sure
-						// they're drawn first, and won't overdraw any colored
-						// edges when rendering as wireframes.
-						_visiblePolygons.Insert(0, p);
-					}
+					visible.Add(r, false);
 				}
 			}
-
-			return _visiblePolygons;
-		}
-
-		private readonly IList<Line> _visibleLines = new List<Line>();
-		public IList<Line> GetVisibleLines(Line line)
-		{
-			return GetVisibleLines(new List<Line>() { line });
-		}
-		public IList<Line> GetVisibleLines(IList<Line> lines)
-		{
-			_visibleLines.Clear();
-
-			for (int i = 0; i < lines.Count; i++)
-			{
-				Line l = lines[i];
-
-				if (CanSee(l))
-				{
-					_visibleLines.Add(l);
-				}
-			}
-
-			return _visibleLines;
-		}
-
-		public void Clear()
-		{
-			_visiblePolygons.Clear();
 		}
 
 		public bool ClipLineAgainstFrustum(ref Line line)

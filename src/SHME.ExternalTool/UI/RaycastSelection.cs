@@ -55,71 +55,74 @@ namespace BizHawk.Client.EmuHawk
 			// https://github.com/tavianator/ray_box
 			var inv = new Vector3(1.0f / n.X, 1.0f / n.Y, 1.0f / n.Z);
 
-			foreach (Polygon polygon in VisiblePolygons)
+			foreach (KeyValuePair<Renderable, bool> item in VisibleRenderables)
 			{
-				Renderable r = polygon.Renderable;
+				Renderable r = item.Key;
 
-				Vector3 min = (r.Aabb.Min - Camera.Position) * inv;
-				Vector3 max = (r.Aabb.Max - Camera.Position) * inv;
-
-				float tmin = 0.0f;
-				tmin = Math.Max(tmin, Math.Min(min.X, max.X));
-				tmin = Math.Max(tmin, Math.Min(min.Y, max.Y));
-				tmin = Math.Max(tmin, Math.Min(min.Z, max.Z));
-
-				float tmax = Single.PositiveInfinity;
-				tmax = Math.Min(tmax, Math.Max(min.X, max.X));
-				tmax = Math.Min(tmax, Math.Max(min.Y, max.Y));
-				tmax = Math.Min(tmax, Math.Max(min.Z, max.Z));
-
-				if (tmin > 0 && tmin <= tmax)
+				foreach (Polygon polygon in r.Polygons)
 				{
-					bool hit = false;
+					Vector3 min = (r.Aabb.Min - Camera.Position) * inv;
+					Vector3 max = (r.Aabb.Max - Camera.Position) * inv;
 
-					foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Pois)
+					float tmin = 0.0f;
+					tmin = Math.Max(tmin, Math.Min(min.X, max.X));
+					tmin = Math.Max(tmin, Math.Min(min.Y, max.Y));
+					tmin = Math.Max(tmin, Math.Min(min.Z, max.Z));
+
+					float tmax = Single.PositiveInfinity;
+					tmax = Math.Min(tmax, Math.Max(min.X, max.X));
+					tmax = Math.Min(tmax, Math.Max(min.Y, max.Y));
+					tmax = Math.Min(tmax, Math.Max(min.Z, max.Z));
+
+					if (tmin > 0 && tmin <= tmax)
 					{
-						if (ReferenceEquals(pair.Value, r))
-						{
-							if (!clicked.ContainsKey(pair.Key))
-							{
-								ListBox lbx = LbxPois;
-								int idx = LbxPois.Items.IndexOf(pair.Key);
-								clicked.Add(pair.Key, new List<(ListControl, int)>() { (lbx, idx) });
-							}
+						bool hit = false;
 
-							hit = true;
-							break;
-						}
-					}
-
-					if (!hit)
-					{
-						foreach (KeyValuePair<CameraPath, IList<Renderable?>> pair in CameraPaths)
+						foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Pois)
 						{
-							foreach (Renderable? other in pair.Value)
+							if (ReferenceEquals(pair.Value, r))
 							{
-								if (other == null)
+								if (!clicked.ContainsKey(pair.Key))
 								{
-									continue;
+									ListBox lbx = LbxPois;
+									int idx = LbxPois.Items.IndexOf(pair.Key);
+									clicked.Add(pair.Key, new List<(ListControl, int)>() { (lbx, idx) });
 								}
 
-								if (ReferenceEquals(other, r))
+								hit = true;
+								break;
+							}
+						}
+
+						if (!hit)
+						{
+							foreach (KeyValuePair<CameraPath, IList<Renderable?>> pair in CameraPaths)
+							{
+								foreach (Renderable? other in pair.Value)
 								{
-									if (!clicked.ContainsKey(pair.Key))
+									if (other == null)
 									{
-										ListBox lbx = LbxCameraPaths;
-										int idx = LbxCameraPaths.Items.IndexOf(pair.Key);
-										clicked.Add(pair.Key, new List<(ListControl, int)>() { (lbx, idx) });
+										continue;
 									}
 
-									hit = true;
+									if (ReferenceEquals(other, r))
+									{
+										if (!clicked.ContainsKey(pair.Key))
+										{
+											ListBox lbx = LbxCameraPaths;
+											int idx = LbxCameraPaths.Items.IndexOf(pair.Key);
+											clicked.Add(pair.Key, new List<(ListControl, int)>() { (lbx, idx) });
+										}
+
+										hit = true;
+										break;
+									}
+								}
+
+								if (hit)
+								{
 									break;
 								}
-							}
-
-							if (hit)
-							{
-								break;
 							}
 						}
 					}

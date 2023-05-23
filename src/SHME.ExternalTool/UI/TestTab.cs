@@ -86,11 +86,11 @@ namespace BizHawk.Client.EmuHawk
 				(float)NudOverlayTestBoxSizeX.Value,
 				Math.Abs(TestBox.Aabb.Max.Y - TestBox.Aabb.Min.Y),
 				Math.Abs(TestBox.Aabb.Max.Z - TestBox.Aabb.Min.Z),
-				Color.White).GenerateRainbowBox();
+				Color.White).GenerateRainbowBox().ToWorld();
 
 			rainbow.Position = TestBox.Position;
 
-			TestBox = rainbow.ToWorld();
+			TestBox = rainbow;
 		}
 
 		private void NudOverlayTestBoxSizeY_ValueChanged(object sender, EventArgs e)
@@ -99,11 +99,11 @@ namespace BizHawk.Client.EmuHawk
 				Math.Abs(TestBox.Aabb.Max.X - TestBox.Aabb.Min.X),
 				(float)NudOverlayTestBoxSizeY.Value,
 				Math.Abs(TestBox.Aabb.Max.Z - TestBox.Aabb.Min.Z),
-				Color.White).GenerateRainbowBox();
+				Color.White).GenerateRainbowBox().ToWorld();
 
 			rainbow.Position = TestBox.Position;
 
-			TestBox = rainbow.ToWorld();
+			TestBox = rainbow;
 		}
 
 		private void NudOverlayTestBoxSizeZ_ValueChanged(object sender, EventArgs e)
@@ -112,11 +112,11 @@ namespace BizHawk.Client.EmuHawk
 				Math.Abs(TestBox.Aabb.Max.X - TestBox.Aabb.Min.X),
 				Math.Abs(TestBox.Aabb.Max.Y - TestBox.Aabb.Min.Y),
 				(float)NudOverlayTestBoxSizeZ.Value,
-				Color.White).GenerateRainbowBox();
+				Color.White).GenerateRainbowBox().ToWorld();
 
 			rainbow.Position = TestBox.Position;
 
-			TestBox = rainbow.ToWorld();
+			TestBox = rainbow;
 		}
 
 		private void NudOverlayTestLineAX_ValueChanged(object sender, EventArgs e)
@@ -238,11 +238,11 @@ namespace BizHawk.Client.EmuHawk
 			Renderable sheet = new SheetGenerator(
 				(float)NudOverlayTestSheetSizeX.Value,
 				Math.Abs(TestSheet.Aabb.Max.Z - TestSheet.Aabb.Min.Z),
-				Color.White).Generate();
+				Color.White).Generate().ToWorld();
 
 			sheet.Position = TestSheet.Position;
 
-			TestSheet = sheet.ToWorld();
+			TestSheet = sheet;
 		}
 
 		private void NudOverlayTestSheetSizeZ_ValueChanged(object sender, EventArgs e)
@@ -250,11 +250,11 @@ namespace BizHawk.Client.EmuHawk
 			Renderable sheet = new SheetGenerator(
 				Math.Abs(TestSheet.Aabb.Max.X - TestSheet.Aabb.Min.X),
 				(float)NudOverlayTestSheetSizeZ.Value,
-				Color.White).Generate();
+				Color.White).Generate().ToWorld();
 
 			sheet.Position = TestSheet.Position;
 
-			TestSheet = sheet.ToWorld();
+			TestSheet = sheet;
 		}
 
 		private Ilm? Model { get; set; }

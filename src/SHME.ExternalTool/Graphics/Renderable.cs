@@ -156,13 +156,7 @@ namespace SHME.ExternalTool
 			Aabb = new Aabb(r.Aabb);
 			CoordinateSpace = r.CoordinateSpace;
 			ModelMatrix = r.ModelMatrix;
-
 			Polygons = new List<Polygon>(r.Polygons);
-			foreach (Polygon p in Polygons)
-			{
-				p.Renderable = this;
-			}
-
 			_position = r.Position;
 			Tint = r.Tint;
 			Translucent = r.Translucent;

@@ -76,7 +76,7 @@ namespace SHME.ExternalTool
 
 			for (int i = 0; i < 24; i += 3)
 			{
-				var p = new Polygon(gem) { Color = Color };
+				var p = new Polygon() { Color = Color };
 
 				Vertex a = modelVerts[i + 0];
 				Vertex b = modelVerts[i + 1];
@@ -85,6 +85,10 @@ namespace SHME.ExternalTool
 				p.Vertices.Add(a);
 				p.Vertices.Add(b);
 				p.Vertices.Add(c);
+
+				p.Edges.Add((0, 1, true));
+				p.Edges.Add((1, 2, true));
+				p.Edges.Add((2, 0, true));
 
 				p.Normal = Vector3.Normalize(Vector3.Cross(b - a, c - a));
 

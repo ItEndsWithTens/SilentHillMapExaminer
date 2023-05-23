@@ -307,9 +307,8 @@ namespace BizHawk.Client.EmuHawk
 			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
 		}
 
-		private List<(Line line, Color color, bool visible, bool aClipped, bool bClipped)> ScreenSpaceLines { get; } = new List<(Line line, Color color, bool visible, bool aClipped, bool bClipped)>();
-		private List<Polygon> VisiblePolygons { get; } = new List<Polygon>();
-		private List<Line> VisibleLines { get; } = new List<Line>();
+		private List<(Line line, Color color, bool visible)> ScreenSpaceLines { get; } = new List<(Line line, Color color, bool visible)>();
+		private IDictionary<Renderable, bool> VisibleRenderables = new Dictionary<Renderable, bool>();
 
 		private void UpdateOverlay()
 		{
@@ -329,48 +328,52 @@ namespace BizHawk.Client.EmuHawk
 			// major matrix layout.
 			Matrix4x4 matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
 
-			VisiblePolygons.Clear();
+			VisibleRenderables.Clear();
 			if (CbxEnableOverlay.Checked)
 			{
-				VisiblePolygons.AddRange(
-					Camera.GetVisiblePolygons(
-						Boxes
-						.Concat(Gems)
-						.Concat(CameraBoxes)
-						.Concat(CameraGems)));
+				Camera.GetVisibleRenderables(
+					ref VisibleRenderables,
+					Boxes
+					.Concat(Gems)
+					.Concat(CameraBoxes)
+					.Concat(CameraGems));
 			}
 			if (CbxEnableModelDisplay.Checked)
 			{
-				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(ModelBoxes));
+				Camera.GetVisibleRenderables(
+					ref VisibleRenderables,
+					ModelBoxes);
 			}
 			if (CbxOverlayTestBox.Checked)
 			{
-				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(TestBox));
+				Camera.GetVisibleRenderables(
+					ref VisibleRenderables,
+					TestBox);
 			}
 			if (CbxOverlayTestSheet.Checked)
 			{
-				VisiblePolygons.AddRange(Camera.GetVisiblePolygons(TestSheet));
+				Camera.GetVisibleRenderables(
+					ref VisibleRenderables,
+					TestSheet);
 			}
-
-			VisibleLines.Clear();
 			if (CbxEnableOverlay.Checked)
 			{
-				VisibleLines.AddRange(
-					Camera.GetVisibleLines(
-						Lines
-						.Concat(CameraLines)
-						.ToList()));
+				Camera.GetVisibleRenderables(
+					ref VisibleRenderables,
+					Lines
+					.Concat(CameraLines));
 			}
 			if (CbxOverlayTestLine.Checked)
 			{
-				VisibleLines.AddRange(Camera.GetVisibleLines(TestLines));
+				Camera.GetVisibleRenderables(
+					ref VisibleRenderables,
+					TestLines);
 			}
 
 			var g = Graphics.FromImage(Overlay);
 
 			g.Clear(Color.FromArgb(0, 0, 0, 0));
 			DrawPolygons(matrix, g);
-			DrawLines(matrix, g);
 			g.DrawImage(Reticle, 0, 0);
 
 			if (CbxOverlayCameraMatchGame.Checked)
@@ -394,150 +397,96 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		public void DrawLines(Matrix4x4 matrix, Graphics g)
-		{
-			ScreenSpaceLines.Clear();
-
-			foreach (Line line in VisibleLines)
-			{
-				Polygon clipped = Camera.ClipPolygonAgainstFrustum(line.Polygons[0]);
-
-				for (int i = 0; i < clipped.Edges.Count; i++)
-				{
-					(int idxA, int idxB, bool visible) = clipped.Edges[i];
-
-					var final = new Line(
-						clipped.Vertices[idxA].WorldToScreen(matrix, _dummyViewport, true),
-						clipped.Vertices[idxB].WorldToScreen(matrix, _dummyViewport, true));
-
-					ScreenSpaceLines.Add((
-						final,
-						line.Tint ?? clipped.Color,
-						visible,
-						false,
-						false));
-				}
-			}
-
-			foreach ((Line line, Color color, bool visible, bool aClipped, bool bClipped) b in ScreenSpaceLines)
-			{
-				switch (CmbRenderMode.SelectedIndex)
-				{
-					case 2:
-						IEnumerable<Vertex> unclippedAs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.aClipped).Select(ssl => ssl.line.A);
-						IEnumerable<Vertex> unclippedBs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.bClipped).Select(ssl => ssl.line.B);
-
-						foreach (Vertex v in unclippedAs.Concat(unclippedBs))
-						{
-							int x = (int)v.Position.X;
-							int y = (int)v.Position.Y;
-
-							Pen.Color = v.Color;
-							g.FillEllipse(Pen.Brush, x - 2, y - 2, 4, 4);
-						}
-						break;
-					default:
-						foreach ((Line line, Color color, bool visible, _, _) in ScreenSpaceLines)
-						{
-							if (visible)
-							{
-								Pen.Color = color;
-								g.DrawLine(
-									Pen,
-									line.A.Position.X,
-									line.A.Position.Y,
-									line.B.Position.X,
-									line.B.Position.Y);
-							}
-						}
-						break;
-				}
-			}
-		}
-
 		public void DrawPolygons(Matrix4x4 matrix, Graphics g)
 		{
-			foreach (Polygon p in VisiblePolygons)
+			foreach (KeyValuePair<Renderable, bool> pair in VisibleRenderables)
 			{
-				Renderable r = p.Renderable;
+				Renderable r = pair.Key;
+				bool partial = pair.Value;
 
 				matrix = r.ModelMatrix * matrix;
 
-				ScreenSpaceLines.Clear();
-
-				Polygon clipped = Camera.ClipPolygonAgainstFrustum(p);
-
-				for (int i = 0; i < clipped.Edges.Count; i++)
+				foreach (Polygon p in r.Polygons)
 				{
-					(int idxA, int idxB, bool visible) = clipped.Edges[i];
+					// TODO: Replace HasFlag with my own version! The Enum
+					// method is apparently slower than molasses on account of
+					// some safety checks that aren't necessary in my case.
+					if (Camera.Culling.HasFlag(Culling.Backface) && p.IsBackface(Camera))
+					{
+						continue;
+					}
 
-					Vertex a = clipped.Vertices[idxA];
-					Vertex b = clipped.Vertices[idxB];
+					ScreenSpaceLines.Clear();
 
-					var line = new Line(a, b);
+					Polygon clipped = partial ? Camera.ClipPolygonAgainstFrustum(p) : p;
 
-					line.A = line.A.WorldToScreen(matrix, _dummyViewport, true);
-					line.B = line.B.WorldToScreen(matrix, _dummyViewport, true);
+					for (int i = 0; i < clipped.Edges.Count; i++)
+					{
+						(int idxA, int idxB, bool visible) = clipped.Edges[i];
 
-					ScreenSpaceLines.Add((
-						line,
-						r.Tint ?? clipped.Color,
-						visible,
-						false,
-						false));
-				}
+						Vertex a = clipped.Vertices[idxA];
+						Vertex b = clipped.Vertices[idxB];
 
-				switch (CmbRenderMode.SelectedIndex)
-				{
-					case 1:
-						var visibleVertices = new List<Point>();
-						foreach ((Line line, _, _, _, _) in ScreenSpaceLines)
-						{
-							var a = new Point((int)line.A.Position.X, (int)line.A.Position.Y);
-							var b = new Point((int)line.B.Position.X, (int)line.B.Position.Y);
+						var line = new Line(a, b);
 
-							visibleVertices.Add(a);
-							visibleVertices.Add(b);
-						}
+						line.A = line.A.WorldToScreen(matrix, _dummyViewport, true);
+						line.B = line.B.WorldToScreen(matrix, _dummyViewport, true);
 
-						if (visibleVertices.Count == 0)
-						{
-							break;
-						}
+						ScreenSpaceLines.Add((
+							line,
+							r.Tint ?? clipped.Color,
+							visible));
+					}
 
-						float opacity = (float)NudOverlayRenderableOpacity.Value / 100.0f;
-						int alpha = (int)Math.Round(opacity * 255);
-						Pen.Color = Color.FromArgb(alpha, r.Tint ?? ScreenSpaceLines[0].color);
-						g.FillPolygon(Pen.Brush, visibleVertices.ToArray());
-						break;
-					case 2:
-						IEnumerable<Vertex> unclippedAs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.aClipped).Select(ssl => ssl.line.A);
-						IEnumerable<Vertex> unclippedBs = ScreenSpaceLines.Where(ssl => ssl.visible && !ssl.bClipped).Select(ssl => ssl.line.B);
-
-						foreach (Vertex v in unclippedAs.Concat(unclippedBs))
-						{
-							int x = (int)v.Position.X;
-							int y = (int)v.Position.Y;
-
-							Pen.Color = v.Color;
-							g.FillEllipse(Pen.Brush, x - 2, y - 2, 4, 4);
-						}
-						break;
-					default:
-						foreach ((Line line, Color color, bool visible, _, _) in ScreenSpaceLines)
-						{
-							if (visible)
+					switch (CmbRenderMode.SelectedIndex)
+					{
+						case 1:
+							var visibleVertices = new List<Point>();
+							foreach ((Line line, _, _) in ScreenSpaceLines)
 							{
-								Pen.Color = color;
-								g.DrawLine(
-									Pen,
-									line.A.Position.X,
-									line.A.Position.Y,
-									line.B.Position.X,
-									line.B.Position.Y);
+								var a = new Point((int)line.A.Position.X, (int)line.A.Position.Y);
+								var b = new Point((int)line.B.Position.X, (int)line.B.Position.Y);
+
+								visibleVertices.Add(a);
+								visibleVertices.Add(b);
 							}
-						}
-						break;
+
+							if (visibleVertices.Count == 0)
+							{
+								break;
+							}
+
+							float opacity = (float)NudOverlayRenderableOpacity.Value / 100.0f;
+							int alpha = (int)Math.Round(opacity * 255);
+							Pen.Color = Color.FromArgb(alpha, r.Tint ?? ScreenSpaceLines[0].color);
+							g.FillPolygon(Pen.Brush, visibleVertices.ToArray());
+							break;
+						case 2:
+							foreach ((Line line, Color color, bool visible) in ScreenSpaceLines)
+							{
+								int x = (int)line.A.Position.X;
+								int y = (int)line.B.Position.Y;
+
+								Pen.Color = color;
+								g.FillEllipse(Pen.Brush, x - 2, y - 2, 4, 4);
+							}
+							break;
+						default:
+							foreach ((Line line, Color color, bool visible) in ScreenSpaceLines)
+							{
+								if (visible)
+								{
+									Pen.Color = color;
+									g.DrawLine(
+										Pen,
+										line.A.Position.X,
+										line.A.Position.Y,
+										line.B.Position.X,
+										line.B.Position.Y);
+								}
+							}
+							break;
+					}
 				}
 			}
 		}
