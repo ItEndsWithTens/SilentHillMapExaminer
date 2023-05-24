@@ -29,10 +29,11 @@
 		}
 		public Line(Vertex a, Vertex b)
 		{
-			Polygons.Add(new Polygon());
-
-			Polygons[0].Vertices.Add(a);
-			Polygons[0].Vertices.Add(b);
+			Polygons.Add(new Polygon()
+			{
+				Edges = { (0, 1, true) },
+				Vertices = { a, b }
+			});
 
 			UpdateBounds();
 		}
@@ -40,9 +41,6 @@
 		{
 			Polygons.Clear();
 			Polygons.Add(line.Polygons[0]);
-
-			Polygons[0].Vertices.Add(line.A);
-			Polygons[0].Vertices.Add(line.B);
 
 			UpdateBounds();
 		}
