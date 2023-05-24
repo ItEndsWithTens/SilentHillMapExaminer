@@ -121,27 +121,27 @@ namespace SHME.ExternalTool
 
 			Planes.Clear();
 
-			if (culling.HasFlag(Culling.Left))
+			if (culling.FasterHasFlag(Culling.Left))
 			{
 				Planes.Add(Left);
 			}
-			if (culling.HasFlag(Culling.Right))
+			if (culling.FasterHasFlag(Culling.Right))
 			{
 				Planes.Add(Right);
 			}
-			if (culling.HasFlag(Culling.Top))
+			if (culling.FasterHasFlag(Culling.Top))
 			{
 				Planes.Add(Top);
 			}
-			if (culling.HasFlag(Culling.Bottom))
+			if (culling.FasterHasFlag(Culling.Bottom))
 			{
 				Planes.Add(Bottom);
 			}
-			if (culling.HasFlag(Culling.Near))
+			if (culling.FasterHasFlag(Culling.Near))
 			{
 				Planes.Add(Near);
 			}
-			if (culling.HasFlag(Culling.Far))
+			if (culling.FasterHasFlag(Culling.Far))
 			{
 				Planes.Add(Far);
 			}

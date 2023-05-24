@@ -9,37 +9,37 @@ using static SHME.ExternalTool.Core;
 
 namespace BizHawk.Client.EmuHawk
 {
-	public partial class CustomMainForm
-	{
 #pragma warning disable IDE0055
-		// IDE0055 covers all code style formatting rules, including the removal
-		// of whitespace some developers use to line up values when assigning
-		// many variables at once. That's usually desirable, but in cases like
-		// this, i.e. bitfields/flags, the alignment helps make it more visually
-		// obvious which bits correspond to which enum members.
-		[Flags]
-		private enum ButtonFlags : ushort
-		{
-			None =     0b00000000_00000000,
-			Select =   0b00000000_00000001,
-			L3 =       0b00000000_00000010,
-			R3 =       0b00000000_00000100,
-			Start =    0b00000000_00001000,
-			Up =       0b00000000_00010000,
-			Right =    0b00000000_00100000,
-			Down =     0b00000000_01000000,
-			Left =     0b00000000_10000000,
-			L2 =       0b00000001_00000000,
-			R2 =       0b00000010_00000000,
-			L1 =       0b00000100_00000000,
-			R1 =       0b00001000_00000000,
-			Triangle = 0b00010000_00000000,
-			Circle =   0b00100000_00000000,
-			X =        0b01000000_00000000,
-			Square =   0b10000000_00000000
-		}
+	// IDE0055 covers all code style formatting rules, including the removal of
+	// whitespace some developers use to line up values when assigning many
+	// variables at once. That's usually desirable, but in cases like this, i.e.
+	// bitfields/flags, the alignment helps make it more visually obvious which
+	// bits correspond to which enum members.
+	[Flags]
+	public enum ButtonFlags : ushort
+	{
+		None =     0b00000000_00000000,
+		Select =   0b00000000_00000001,
+		L3 =       0b00000000_00000010,
+		R3 =       0b00000000_00000100,
+		Start =    0b00000000_00001000,
+		Up =       0b00000000_00010000,
+		Right =    0b00000000_00100000,
+		Down =     0b00000000_01000000,
+		Left =     0b00000000_10000000,
+		L2 =       0b00000001_00000000,
+		R2 =       0b00000010_00000000,
+		L1 =       0b00000100_00000000,
+		R1 =       0b00001000_00000000,
+		Triangle = 0b00010000_00000000,
+		Circle =   0b00100000_00000000,
+		X =        0b01000000_00000000,
+		Square =   0b10000000_00000000
+	}
 #pragma warning restore IDE0055
 
+	public partial class CustomMainForm
+	{
 		private void InitializeBasicsTab()
 		{
 			TrkFov.Value = (int)Camera.Fov;
@@ -77,7 +77,7 @@ namespace BizHawk.Client.EmuHawk
 
 					// For whatever reason, Silent Hill uses 0 for
 					// button pressed and 1 for released.
-					if (!raw.HasFlag(button))
+					if (!raw.FasterHasFlag(button))
 					{
 						label.ForeColor = Color.Lime;
 					}

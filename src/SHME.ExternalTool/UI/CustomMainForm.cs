@@ -399,19 +399,20 @@ namespace BizHawk.Client.EmuHawk
 
 		public void DrawPolygons(Matrix4x4 matrix, Graphics g)
 		{
-			foreach (KeyValuePair<Renderable, bool> pair in VisibleRenderables)
+			for (int i = 0; i < VisibleRenderables.Count; i++)
 			{
+				KeyValuePair<Renderable, bool> pair = VisibleRenderables.ElementAt(i);
+
 				Renderable r = pair.Key;
 				bool partial = pair.Value;
 
 				matrix = r.ModelMatrix * matrix;
 
-				foreach (Polygon p in r.Polygons)
+				for (int j = 0; j < r.Polygons.Count; j++)
 				{
-					// TODO: Replace HasFlag with my own version! The Enum
-					// method is apparently slower than molasses on account of
-					// some safety checks that aren't necessary in my case.
-					if (Camera.Culling.HasFlag(Culling.Backface) && p.IsBackface(Camera))
+					Polygon p = r.Polygons[j];
+
+					if (Camera.Culling.FasterHasFlag(Culling.Backface) && p.IsBackface(Camera))
 					{
 						continue;
 					}
@@ -420,9 +421,9 @@ namespace BizHawk.Client.EmuHawk
 
 					Polygon clipped = partial ? Camera.ClipPolygonAgainstFrustum(p) : p;
 
-					for (int i = 0; i < clipped.Edges.Count; i++)
+					for (int k = 0; k < clipped.Edges.Count; k++)
 					{
-						(int idxA, int idxB, bool visible) = clipped.Edges[i];
+						(int idxA, int idxB, bool visible) = clipped.Edges[k];
 
 						Vertex a = clipped.Vertices[idxA];
 						Vertex b = clipped.Vertices[idxB];
@@ -437,8 +438,11 @@ namespace BizHawk.Client.EmuHawk
 					{
 						case 1:
 							var visibleVertices = new List<Point>();
-							foreach (((Vertex a, Vertex b), _, _) in ScreenSpaceLines)
+
+							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
+								((Vertex a, Vertex b), _, _) = ScreenSpaceLines[k];
+
 								var p1 = new Point((int)a.Position.X, (int)a.Position.Y);
 								var p2 = new Point((int)b.Position.X, (int)b.Position.Y);
 
@@ -457,8 +461,10 @@ namespace BizHawk.Client.EmuHawk
 							g.FillPolygon(Pen.Brush, visibleVertices.ToArray());
 							break;
 						case 2:
-							foreach (((Vertex a, Vertex b), Color color, bool visible) in ScreenSpaceLines)
+							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
+								((Vertex a, Vertex b), Color color, bool visible) = ScreenSpaceLines[k];
+
 								int x = (int)a.Position.X;
 								int y = (int)b.Position.Y;
 
@@ -467,8 +473,10 @@ namespace BizHawk.Client.EmuHawk
 							}
 							break;
 						default:
-							foreach (((Vertex a, Vertex b), Color color, bool visible) in ScreenSpaceLines)
+							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
+								((Vertex a, Vertex b), Color color, bool visible) = ScreenSpaceLines[k];
+
 								if (visible)
 								{
 									Pen.Color = color;

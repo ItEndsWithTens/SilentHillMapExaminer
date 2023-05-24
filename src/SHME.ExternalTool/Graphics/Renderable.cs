@@ -163,14 +163,14 @@ namespace SHME.ExternalTool
 
 		protected void Rotate(Vector3 rotation, Vector3 origin)
 		{
-			if (Transformability.HasFlag(Transformability.Rotate))
+			if (Transformability.FasterHasFlag(Transformability.Rotate))
 			{
 				for (int i = 0; i < Polygons.Count; i++)
 				{
 					Polygons[i].Rotate(rotation, origin);
 				}
 			}
-			else if (Transformability.HasFlag(Transformability.Translate))
+			else if (Transformability.FasterHasFlag(Transformability.Translate))
 			{
 				Position = Position.Rotate(rotation, origin);
 			}
@@ -188,7 +188,7 @@ namespace SHME.ExternalTool
 
 		public void Transform(Vector3 translation, Vector3 rotation, Vector3 scale, Vector3 origin)
 		{
-			if (Transformability.HasFlag(Transformability.Scale) && scale != null)
+			if (Transformability.FasterHasFlag(Transformability.Scale) && scale != null)
 			{
 				Scale(scale);
 			}
@@ -198,7 +198,7 @@ namespace SHME.ExternalTool
 				Rotate(rotation, origin);
 			}
 
-			if (Transformability.HasFlag(Transformability.Translate) && translation != null)
+			if (Transformability.FasterHasFlag(Transformability.Translate) && translation != null)
 			{
 				TranslateRelative(translation);
 			}

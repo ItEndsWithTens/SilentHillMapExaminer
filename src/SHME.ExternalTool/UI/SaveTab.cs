@@ -25,7 +25,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			var raw = (ButtonFlags)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
-			if (!raw.HasFlag(_saveButton))
+			if (!raw.FasterHasFlag(_saveButton))
 			{
 				BtnOpenSaveMenu_Click(BtnOpenSaveMenu, EventArgs.Empty);
 			}
