@@ -307,7 +307,7 @@ namespace BizHawk.Client.EmuHawk
 			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
 		}
 
-		private List<(Line line, Color color, bool visible)> ScreenSpaceLines { get; } = new List<(Line line, Color color, bool visible)>();
+		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = new();
 		private IDictionary<Renderable, bool> VisibleRenderables = new Dictionary<Renderable, bool>();
 
 		private void UpdateOverlay()
@@ -427,28 +427,23 @@ namespace BizHawk.Client.EmuHawk
 						Vertex a = clipped.Vertices[idxA];
 						Vertex b = clipped.Vertices[idxB];
 
-						var line = new Line(a, b);
+						a = a.WorldToScreen(matrix, _dummyViewport, true);
+						b = b.WorldToScreen(matrix, _dummyViewport, true);
 
-						line.A = line.A.WorldToScreen(matrix, _dummyViewport, true);
-						line.B = line.B.WorldToScreen(matrix, _dummyViewport, true);
-
-						ScreenSpaceLines.Add((
-							line,
-							r.Tint ?? clipped.Color,
-							visible));
+						ScreenSpaceLines.Add(((a, b), r.Tint ?? clipped.Color, visible));
 					}
 
 					switch (CmbRenderMode.SelectedIndex)
 					{
 						case 1:
 							var visibleVertices = new List<Point>();
-							foreach ((Line line, _, _) in ScreenSpaceLines)
+							foreach (((Vertex a, Vertex b), _, _) in ScreenSpaceLines)
 							{
-								var a = new Point((int)line.A.Position.X, (int)line.A.Position.Y);
-								var b = new Point((int)line.B.Position.X, (int)line.B.Position.Y);
+								var p1 = new Point((int)a.Position.X, (int)a.Position.Y);
+								var p2 = new Point((int)b.Position.X, (int)b.Position.Y);
 
-								visibleVertices.Add(a);
-								visibleVertices.Add(b);
+								visibleVertices.Add(p1);
+								visibleVertices.Add(p2);
 							}
 
 							if (visibleVertices.Count == 0)
@@ -462,27 +457,27 @@ namespace BizHawk.Client.EmuHawk
 							g.FillPolygon(Pen.Brush, visibleVertices.ToArray());
 							break;
 						case 2:
-							foreach ((Line line, Color color, bool visible) in ScreenSpaceLines)
+							foreach (((Vertex a, Vertex b), Color color, bool visible) in ScreenSpaceLines)
 							{
-								int x = (int)line.A.Position.X;
-								int y = (int)line.B.Position.Y;
+								int x = (int)a.Position.X;
+								int y = (int)b.Position.Y;
 
 								Pen.Color = color;
 								g.FillEllipse(Pen.Brush, x - 2, y - 2, 4, 4);
 							}
 							break;
 						default:
-							foreach ((Line line, Color color, bool visible) in ScreenSpaceLines)
+							foreach (((Vertex a, Vertex b), Color color, bool visible) in ScreenSpaceLines)
 							{
 								if (visible)
 								{
 									Pen.Color = color;
 									g.DrawLine(
 										Pen,
-										line.A.Position.X,
-										line.A.Position.Y,
-										line.B.Position.X,
-										line.B.Position.Y);
+										a.Position.X,
+										a.Position.Y,
+										b.Position.X,
+										b.Position.Y);
 								}
 							}
 							break;
