@@ -118,8 +118,10 @@ namespace BizHawk.Client.EmuHawk
 					volumeMax.Z += cheat;
 				}
 
-				var boxGen = new BoxGenerator(volumeMin, volumeMax, Color.Orange);
+				Vector3 size = volumeMax - volumeMin;
+				var boxGen = new BoxGenerator(size, Color.Orange);
 				Renderable volume = boxGen.Generate().ToWorld();
+				volume.Position = volumeMin + (size / 2.0f);
 
 				CameraBoxes.Add(volume);
 
@@ -134,7 +136,7 @@ namespace BizHawk.Client.EmuHawk
 
 				CameraBoxes.Add(area);
 
-				CameraPaths.Add(path, new[] { area, gemA, volume, gemB});
+				CameraPaths.Add(path, new[] { area, gemA, volume, gemB });
 
 				address += SilentHillEntitySizes.CameraPath;
 			}

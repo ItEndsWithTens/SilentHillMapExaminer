@@ -28,15 +28,26 @@ namespace SHME.ExternalTool
 
 			Color = color;
 		}
-		public SheetGenerator(Vector2 min, Vector2 max)
+		/// <summary>
+		/// Make a SheetGenerator from a minimum and maximum point in model space.
+		/// </summary>
+		/// <param name="min">The minimum corner of the sheet, in model space.</param>
+		/// <param name="max">The maximum corner of the sheet, in model space.</param>
+		public SheetGenerator(Vector2 min, Vector2 max) : this(min, max, Color.White)
+		{
+		}
+		/// <summary>
+		/// Make a SheetGenerator from a minimum and maximum point in model space,
+		/// and a color.
+		/// </summary>
+		/// <param name="min">The minimum corner of the sheet, in model space.</param>
+		/// <param name="max">The maximum corner of the sheet, in model space.</param>
+		/// <param name="color">The color of the sheet.</param>
+		public SheetGenerator(Vector2 min, Vector2 max, Color color)
 		{
 			Min = min;
 			Max = max;
 
-			Color = Color.White;
-		}
-		public SheetGenerator(Vector2 min, Vector2 max, Color color) : this(min, max)
-		{
 			Color = color;
 		}
 

@@ -18,6 +18,9 @@ namespace SHME.ExternalTool
 		public BoxGenerator(float size, Color color) : this(size, size, size, color)
 		{
 		}
+		public BoxGenerator(Vector3 size, Color color) : this(size.X, size.Y, size.Z, color)
+		{
+		}
 		public BoxGenerator(float sizeX, float sizeY, float sizeZ, Color color) : base()
 		{
 			float halfSizeX = sizeX / 2.0f;
@@ -29,15 +32,26 @@ namespace SHME.ExternalTool
 
 			Color = color;
 		}
-		public BoxGenerator(Vector3 min, Vector3 max)
+		/// <summary>
+		/// Make a BoxGenerator from a minimum and maximum point in model space.
+		/// </summary>
+		/// <param name="min">The minimum corner of the box, in model space.</param>
+		/// <param name="max">The maximum corner of the box, in model space.</param>
+		public BoxGenerator(Vector3 min, Vector3 max) : this(min, max, Color.White)
+		{
+		}
+		/// <summary>
+		/// Make a BoxGenerator from a minimum and maximum point in model space,
+		/// and a color.
+		/// </summary>
+		/// <param name="min">The minimum corner of the box, in model space.</param>
+		/// <param name="max">The maximum corner of the box, in model space.</param>
+		/// <param name="color">The color of the box.</param>
+		public BoxGenerator(Vector3 min, Vector3 max, Color color)
 		{
 			Min = min;
 			Max = max;
 
-			Color = Color.White;
-		}
-		public BoxGenerator(Vector3 min, Vector3 max, Color color) : this(min, max)
-		{
 			Color = color;
 		}
 
