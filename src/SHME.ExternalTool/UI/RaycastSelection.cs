@@ -55,10 +55,8 @@ namespace BizHawk.Client.EmuHawk
 			// https://github.com/tavianator/ray_box
 			var inv = new Vector3(1.0f / n.X, 1.0f / n.Y, 1.0f / n.Z);
 
-			foreach (KeyValuePair<Renderable, bool> item in VisibleRenderables)
+			foreach ((Renderable r, bool _) in VisibleRenderables)
 			{
-				Renderable r = item.Key;
-
 				foreach (Polygon polygon in r.Polygons)
 				{
 					Vector3 min = (r.Aabb.Min - Camera.Position) * inv;

@@ -2,7 +2,6 @@
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Numerics;
 using System.Windows.Forms;
@@ -38,7 +37,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private Renderable TestBox { get; set; } = new BoxGenerator(1.0f, Color.White).GenerateRainbowBox().ToWorld();
-		private Collection<Line> TestLines { get; } = new Collection<Line>()
+		private IList<Renderable> TestLines { get; } = new List<Renderable>()
 		{
 			new Line(
 				new Vertex(0.0f, 1.0f, 0.0f, Color.Red),
@@ -121,7 +120,12 @@ namespace BizHawk.Client.EmuHawk
 
 		private void NudOverlayTestLineAX_ValueChanged(object sender, EventArgs e)
 		{
-			Vertex v = TestLines[0].A;
+			if (TestLines[0] is not Line line)
+			{
+				return;
+			}
+
+			Vertex v = line.A;
 
 			v = new Vertex(v)
 			{
@@ -131,12 +135,19 @@ namespace BizHawk.Client.EmuHawk
 					v.Position.Z)
 			};
 
-			TestLines[0].A = v;
+			line.A = v;
+
+			TestLines[0] = line;
 		}
 
 		private void NudOverlayTestLineAY_ValueChanged(object sender, EventArgs e)
 		{
-			Vertex v = TestLines[0].A;
+			if (TestLines[0] is not Line line)
+			{
+				return;
+			}
+
+			Vertex v = line.A;
 
 			v = new Vertex(v)
 			{
@@ -146,12 +157,19 @@ namespace BizHawk.Client.EmuHawk
 					v.Position.Z)
 			};
 
-			TestLines[0].A = v;
+			line.A = v;
+
+			TestLines[0] = line;
 		}
 
 		private void NudOverlayTestLineAZ_ValueChanged(object sender, EventArgs e)
 		{
-			Vertex v = TestLines[0].A;
+			if (TestLines[0] is not Line line)
+			{
+				return;
+			}
+
+			Vertex v = line.A;
 
 			v = new Vertex(v)
 			{
@@ -161,12 +179,19 @@ namespace BizHawk.Client.EmuHawk
 					-(float)NudOverlayTestLineAZ.Value) // Convert from SH coords
 			};
 
-			TestLines[0].A = v;
+			line.A = v;
+
+			TestLines[0] = line;
 		}
 
 		private void NudOverlayTestLineBX_ValueChanged(object sender, EventArgs e)
 		{
-			Vertex v = TestLines[0].B;
+			if (TestLines[0] is not Line line)
+			{
+				return;
+			}
+
+			Vertex v = line.B;
 
 			v = new Vertex(v)
 			{
@@ -176,12 +201,19 @@ namespace BizHawk.Client.EmuHawk
 					v.Position.Z)
 			};
 
-			TestLines[0].B = v;
+			line.B = v;
+
+			TestLines[0] = line;
 		}
 
 		private void NudOverlayTestLineBY_ValueChanged(object sender, EventArgs e)
 		{
-			Vertex v = TestLines[0].B;
+			if (TestLines[0] is not Line line)
+			{
+				return;
+			}
+
+			Vertex v = line.B;
 
 			v = new Vertex(v)
 			{
@@ -191,12 +223,19 @@ namespace BizHawk.Client.EmuHawk
 					v.Position.Z)
 			};
 
-			TestLines[0].B = v;
+			line.B = v;
+
+			TestLines[0] = line;
 		}
 
 		private void NudOverlayTestLineBZ_ValueChanged(object sender, EventArgs e)
 		{
-			Vertex v = TestLines[0].B;
+			if (TestLines[0] is not Line line)
+			{
+				return;
+			}
+
+			Vertex v = line.B;
 
 			v = new Vertex(v)
 			{
@@ -206,7 +245,9 @@ namespace BizHawk.Client.EmuHawk
 					-(float)NudOverlayTestLineBZ.Value) // Convert from SH coords
 			};
 
-			TestLines[0].B = v;
+			line.B = v;
+
+			TestLines[0] = line;
 		}
 
 		private void NudOverlayTestSheetX_ValueChanged(object sender, EventArgs e)

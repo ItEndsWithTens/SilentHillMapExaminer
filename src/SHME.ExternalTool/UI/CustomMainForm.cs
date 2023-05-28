@@ -71,7 +71,7 @@ namespace BizHawk.Client.EmuHawk
 		public IList<Renderable> Boxes { get; } = new List<Renderable>();
 		public IList<Renderable> TestBoxes { get; } = new List<Renderable>();
 		public IList<Renderable> Gems { get; } = new List<Renderable>();
-		public IList<Line> Lines { get; } = new List<Line>();
+		public IList<Renderable> Lines { get; } = new List<Renderable>();
 
 		public Pen Pen { get; set; } = new Pen(Brushes.White);
 		public Bitmap Reticle { get; set; } = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
@@ -308,7 +308,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = new();
-		private IDictionary<Renderable, bool> VisibleRenderables = new Dictionary<Renderable, bool>();
+		private IList<(Renderable, bool)> VisibleRenderables = new List<(Renderable, bool)>();
 
 		private void UpdateOverlay()
 		{
@@ -336,7 +336,8 @@ namespace BizHawk.Client.EmuHawk
 					Boxes
 					.Concat(Gems)
 					.Concat(CameraBoxes)
-					.Concat(CameraGems));
+					.Concat(CameraGems)
+					.ToList());
 			}
 			if (CbxEnableModelDisplay.Checked)
 			{
@@ -361,7 +362,8 @@ namespace BizHawk.Client.EmuHawk
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					Lines
-					.Concat(CameraLines));
+					.Concat(CameraLines)
+					.ToList());
 			}
 			if (CbxOverlayTestLine.Checked)
 			{
@@ -401,10 +403,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			for (int i = 0; i < VisibleRenderables.Count; i++)
 			{
-				KeyValuePair<Renderable, bool> pair = VisibleRenderables.ElementAt(i);
-
-				Renderable r = pair.Key;
-				bool partial = pair.Value;
+				(Renderable r, bool partial) = VisibleRenderables[i];
 
 				matrix = r.ModelMatrix * matrix;
 
@@ -463,7 +462,7 @@ namespace BizHawk.Client.EmuHawk
 						case 2:
 							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
-								((Vertex a, Vertex b), Color color, bool visible) = ScreenSpaceLines[k];
+								((Vertex a, Vertex b), Color color, _) = ScreenSpaceLines[k];
 
 								int x = (int)a.Position.X;
 								int y = (int)b.Position.Y;

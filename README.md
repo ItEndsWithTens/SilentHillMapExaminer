@@ -83,7 +83,9 @@
 
   ### Benchmarking
 
-  To run all included benchmarks:
+  Accumulated benchmark results can be viewed [here](https://itendswithtens.github.io/PerfTrendsWithTens/SHME/bench/), with the caveat that by running on CI servers with unpredictable performance characteristics, said benchmarks are useful only as an extremely high level overview of long term trends.
+
+  To run all included benchmarks locally:
    - `mkdir artifacts\test`
    - `cd artifacts\test`
    - `dotnet run --project ..\..\test\Benchmark\Benchmark.csproj -c Release -- -f *`

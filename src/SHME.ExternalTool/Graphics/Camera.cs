@@ -481,17 +481,19 @@ namespace SHME.ExternalTool
 		}
 
 		public void GetVisibleRenderables(
-			ref IDictionary<Renderable, bool> visible,
+			ref IList<(Renderable, bool)> visible,
 			Renderable renderable)
 		{
 			GetVisibleRenderables(ref visible, new List<Renderable>() { renderable });
 		}
 		public void GetVisibleRenderables(
-			ref IDictionary<Renderable, bool> visible,
-			IEnumerable<Renderable> renderables)
+			ref IList<(Renderable, bool)> visible,
+			IList<Renderable> renderables)
 		{
-			foreach (Renderable r in renderables)
+			for (int i = 0; i < renderables.Count; i++)
 			{
+				Renderable r = renderables[i];
+
 				if (!CanSee(r))
 				{
 					continue;
@@ -499,12 +501,16 @@ namespace SHME.ExternalTool
 
 				bool partial = false;
 
-				foreach (Plane plane in Frustum.Planes)
+				for (int j = 0; j < Frustum.Planes.Count; j++)
 				{
+					Plane plane = Frustum.Planes[j];
+
 					bool anyPointsBehind = false;
 
-					foreach (Vector3 p in r.Aabb.Points)
+					for (int k = 0; k < r.Aabb.Points.Count; k++)
 					{
+						Vector3 p = r.Aabb.Points[k];
+
 						if (Vector3.Dot(p - plane.A, plane.Normal) <= 0.0f)
 						{
 							anyPointsBehind = true;
@@ -521,11 +527,11 @@ namespace SHME.ExternalTool
 
 				if (partial)
 				{
-					visible.Add(r, true);
+					visible.Add((r, true));
 				}
 				else
 				{
-					visible.Add(r, false);
+					visible.Add((r, false));
 				}
 			}
 		}
@@ -539,13 +545,13 @@ namespace SHME.ExternalTool
 		{
 			return ClipPolygonAgainstPlanes(polygon, Frustum.Planes);
 		}
-		public static Polygon ClipPolygonAgainstPlanes(Polygon polygon, IEnumerable<Plane> planes)
+		public static Polygon ClipPolygonAgainstPlanes(Polygon polygon, IList<Plane> planes)
 		{
 			var p = new Polygon(polygon);
 
-			foreach (Plane plane in planes)
+			for (int i = 0; i < planes.Count; i++)
 			{
-				p.ClipAgainstPlane(plane);
+				p.ClipAgainstPlane(planes[i]);
 
 				if (p.Vertices.Count == 0)
 				{
@@ -566,8 +572,10 @@ namespace SHME.ExternalTool
 				Vertex b = p.Vertices[idxB];
 
 				bool visible = true;
-				foreach (Plane plane in planes)
+				for (int j = 0; j < planes.Count; j++)
 				{
+					Plane plane = planes[j];
+
 					Vector3 point = plane.A;
 					Vector3 n = plane.Normal;
 
@@ -591,13 +599,13 @@ namespace SHME.ExternalTool
 			return p;
 		}
 
-		public static bool ClipLineAgainstPlanes(ref Line line, IEnumerable<Plane> planes)
+		public static bool ClipLineAgainstPlanes(ref Line line, IList<Plane> planes)
 		{
 			bool visible = true;
 
-			foreach (Plane plane in planes)
+			for (int i = 0; i < planes.Count; i++)
 			{
-				visible = ClipLineAgainstPlane(ref line, plane);
+				visible = ClipLineAgainstPlane(ref line, planes[i]);
 				if (!visible)
 				{
 					break;

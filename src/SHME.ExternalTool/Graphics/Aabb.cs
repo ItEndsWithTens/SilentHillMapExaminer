@@ -45,20 +45,7 @@ namespace SHME.ExternalTool
 			Vector3.Zero
 		};
 
-		public IEnumerable<Vector3> Points
-		{
-			get
-			{
-				yield return _points[0];
-				yield return _points[1];
-				yield return _points[2];
-				yield return _points[3];
-				yield return _points[4];
-				yield return _points[5];
-				yield return _points[6];
-				yield return _points[7];
-			}
-		}
+		public IList<Vector3> Points => _points;
 
 		public Aabb()
 		{
@@ -180,7 +167,7 @@ namespace SHME.ExternalTool
 		}
 		private void Update()
 		{
-			Center = Min + ((Max - Min) / 2.0f);
+			Center = _min + ((_max - _min) / 2.0f);
 
 			_points[0].X = Min.X;
 			_points[0].Y = Min.Y;

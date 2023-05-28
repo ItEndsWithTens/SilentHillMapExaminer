@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
 
 namespace SHME.ExternalTool
@@ -100,7 +99,7 @@ namespace SHME.ExternalTool
 
 		public Polygon ClipAgainstPlane(Plane plane)
 		{
-			var points = new List<Vertex>();
+			var points = new List<Vertex>(16);
 
 			for (int i = 0; i < Vertices.Count; i++)
 			{
