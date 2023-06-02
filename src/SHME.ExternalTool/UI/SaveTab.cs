@@ -582,8 +582,7 @@ namespace BizHawk.Client.EmuHawk
 				TbxSaveRamImportPath.Enabled = true;
 				BtnSaveRamImportBrowse.Enabled = true;
 
-				GbxConvertStatesToSaveRam.Enabled = true;
-				GbxConvertSaveRamToStates.Enabled = true;
+				GbxConvertStatesOrSaveRam.Enabled = true;
 			}
 			else
 			{
@@ -591,8 +590,7 @@ namespace BizHawk.Client.EmuHawk
 				TbxSaveRamImportPath.Enabled = false;
 				BtnSaveRamImportBrowse.Enabled = false;
 
-				GbxConvertStatesToSaveRam.Enabled = false;
-				GbxConvertSaveRamToStates.Enabled = false;
+				GbxConvertStatesOrSaveRam.Enabled = false;
 			}
 		}
 
