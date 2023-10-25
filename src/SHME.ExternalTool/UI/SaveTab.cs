@@ -576,22 +576,11 @@ namespace BizHawk.Client.EmuHawk
 
 			UpdateStripes();
 
-			if (CbxSaveRamDanger.Checked)
-			{
-				BtnSaveRamImport.Enabled = true;
-				TbxSaveRamImportPath.Enabled = true;
-				BtnSaveRamImportBrowse.Enabled = true;
+			BtnSaveRamImport.Enabled = CbxSaveRamDanger.Checked;
+			TbxSaveRamImportPath.Enabled = CbxSaveRamDanger.Checked;
+			BtnSaveRamImportBrowse.Enabled = CbxSaveRamDanger.Checked;
 
-				GbxConvertStatesOrSaveRam.Enabled = true;
-			}
-			else
-			{
-				BtnSaveRamImport.Enabled = false;
-				TbxSaveRamImportPath.Enabled = false;
-				BtnSaveRamImportBrowse.Enabled = false;
-
-				GbxConvertStatesOrSaveRam.Enabled = false;
-			}
+			GbxConvertStatesOrSaveRam.Enabled = CbxSaveRamDanger.Checked;
 		}
 
 		private void PbxHazardStripes_SizeChanged(object sender, EventArgs e)

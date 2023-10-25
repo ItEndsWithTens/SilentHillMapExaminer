@@ -229,7 +229,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			(Vector3 harry, _) = GetAngles();
 
-			if (Single.TryParse(TbxHarryPitch.Text, out float pitch))
+			if (!Single.TryParse(TbxHarryPitch.Text, out float pitch))
 			{
 				pitch = harry.X;
 			}

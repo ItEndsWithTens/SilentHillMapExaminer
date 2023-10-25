@@ -78,14 +78,7 @@ namespace SHME.ExternalTool
 			Vector3 point = Vertices[0];
 			Vector3 toPoint = point - camera.Position;
 
-			if (Vector3.Dot(toPoint, Normal) > 0.0f)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return Vector3.Dot(toPoint, Normal) > 0.0f;
 		}
 
 		private void MakeEdges()

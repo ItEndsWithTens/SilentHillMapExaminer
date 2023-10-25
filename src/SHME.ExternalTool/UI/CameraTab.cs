@@ -53,7 +53,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			SetHarryPosition(path.VolumeMin.X, path.VolumeMin.Y, path.VolumeMin.Z);
+			SetHarryPosition(path.VolumeMax.X, path.VolumeMax.Y, path.VolumeMax.Z);
 		}
 
 		private void BtnCameraPathReadArray_Click(object sender, EventArgs e)

@@ -271,8 +271,11 @@ namespace BizHawk.Client.EmuHawk
 					{
 						ReportControls();
 					}
-					ReportAngles();
-					ReportPosition();
+					if (CbxEnableHarrySection.Checked)
+					{
+						ReportAngles();
+						ReportPosition();
+					}
 					if (CbxEnableOverlayCameraReporting.Checked)
 					{
 						ReportOverlayInfo();
@@ -433,20 +436,22 @@ namespace BizHawk.Client.EmuHawk
 						ScreenSpaceLines.Add(((a, b), r.Tint ?? clipped.Color, visible));
 					}
 
+					if (ScreenSpaceLines.Count == 0)
+					{
+						continue;
+					}
+
 					switch (CmbRenderMode.SelectedIndex)
 					{
 						case 1:
-							var visibleVertices = new List<Point>();
+							var visibleVertices = new List<PointF>();
 
 							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
 								((Vertex a, Vertex b), _, _) = ScreenSpaceLines[k];
 
-								var p1 = new Point((int)a.Position.X, (int)a.Position.Y);
-								var p2 = new Point((int)b.Position.X, (int)b.Position.Y);
-
-								visibleVertices.Add(p1);
-								visibleVertices.Add(p2);
+								visibleVertices.Add(new PointF(a.Position.X, a.Position.Y));
+								visibleVertices.Add(new PointF(b.Position.X, b.Position.Y));
 							}
 
 							if (visibleVertices.Count == 0)
@@ -462,23 +467,23 @@ namespace BizHawk.Client.EmuHawk
 						case 2:
 							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
-								((Vertex a, Vertex b), Color color, _) = ScreenSpaceLines[k];
+								((Vertex a, Vertex b), Pen.Color, _) = ScreenSpaceLines[k];
 
-								int x = (int)a.Position.X;
-								int y = (int)b.Position.Y;
-
-								Pen.Color = color;
-								g.FillEllipse(Pen.Brush, x - 2, y - 2, 4, 4);
+								g.FillEllipse(
+									Pen.Brush,
+									a.Position.X - 2.0f,
+									b.Position.Y - 2.0f,
+									4.0f,
+									4.0f);
 							}
 							break;
 						default:
 							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
-								((Vertex a, Vertex b), Color color, bool visible) = ScreenSpaceLines[k];
+								((Vertex a, Vertex b), Pen.Color, bool visible) = ScreenSpaceLines[k];
 
 								if (visible)
 								{
-									Pen.Color = color;
 									g.DrawLine(
 										Pen,
 										a.Position.X,

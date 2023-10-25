@@ -104,7 +104,7 @@ namespace BizHawk.Client.EmuHawk
 			LblSelectedTriggerPoiGeometry.Text = "";
 			LblSelectedTriggerThing1.Text = "0x";
 			LblSelectedTriggerFired.Text = "";
-			LblSelectedTriggerFiredDetails.Text = $"(Group 0xDEADBEEF, bit 0xCAFEBABE)";
+			LblSelectedTriggerFiredDetails.Text = $"Group 0x, bit 0x";
 			LblSelectedTriggerSomeIndex.Text = "0x";
 			LblSelectedTriggerThing2.Text = "0x";
 			LblSelectedTriggerStyle.Text = "0x";
@@ -495,7 +495,7 @@ namespace BizHawk.Client.EmuHawk
 			int group = Mem.ReadS32(groupOfs);
 			int firedBit = (group >> t.FiredBitShift) & 1;
 			LblSelectedTriggerFired.Text = $"{firedBit != 0}";
-			LblSelectedTriggerFiredDetails.Text = $"(Group 0x{groupOfs:X}, bit 0x{1 << t.FiredBitShift:X})";
+			LblSelectedTriggerFiredDetails.Text = $"Group 0x{groupOfs:X}, bit 0x{1 << t.FiredBitShift:X}";
 
 			if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
 			{

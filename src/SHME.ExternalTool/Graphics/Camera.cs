@@ -525,14 +525,7 @@ namespace SHME.ExternalTool
 					}
 				}
 
-				if (partial)
-				{
-					visible.Add((r, true));
-				}
-				else
-				{
-					visible.Add((r, false));
-				}
+				visible.Add((r, partial));
 			}
 		}
 
