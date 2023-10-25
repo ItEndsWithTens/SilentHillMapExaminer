@@ -385,6 +385,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer = new System.Windows.Forms.TabPage();
             this.TlpFramebufferTab = new System.Windows.Forms.TableLayoutPanel();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
@@ -419,7 +420,6 @@ namespace BizHawk.Client.EmuHawk
             this.CmbUtilityFixedPointFormat = new System.Windows.Forms.ComboBox();
             this.label73 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -539,6 +539,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer.SuspendLayout();
             this.TlpFramebufferTab.SuspendLayout();
             this.ScrFramebuffer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
@@ -549,7 +550,6 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -4013,19 +4013,16 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.AutoSize = true;
             this.groupBox3.Controls.Add(this.tableLayoutPanel17);
             this.groupBox3.Location = new System.Drawing.Point(6, 74);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(676, 551);
+            this.groupBox3.Size = new System.Drawing.Size(676, 538);
             this.groupBox3.TabIndex = 21;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "SaveRAM";
             // 
             // tableLayoutPanel17
             // 
-            this.tableLayoutPanel17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel17.ColumnCount = 3;
             this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -4034,12 +4031,13 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel17.Controls.Add(this.BtnSaveRamExport, 0, 0);
             this.tableLayoutPanel17.Controls.Add(this.TbxSaveRamExportPath, 1, 0);
             this.tableLayoutPanel17.Controls.Add(this.BtnSaveRamExportBrowse, 2, 0);
-            this.tableLayoutPanel17.Location = new System.Drawing.Point(6, 19);
+            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel17.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 2;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(664, 513);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(670, 519);
             this.tableLayoutPanel17.TabIndex = 9;
             // 
             // PnlSaveRamDangerArea
@@ -4050,7 +4048,7 @@ namespace BizHawk.Client.EmuHawk
             this.PnlSaveRamDangerArea.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlSaveRamDangerArea.Location = new System.Drawing.Point(3, 34);
             this.PnlSaveRamDangerArea.Name = "PnlSaveRamDangerArea";
-            this.PnlSaveRamDangerArea.Size = new System.Drawing.Size(658, 481);
+            this.PnlSaveRamDangerArea.Size = new System.Drawing.Size(664, 482);
             this.PnlSaveRamDangerArea.TabIndex = 10;
             // 
             // tableLayoutPanel18
@@ -4065,7 +4063,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel18.Controls.Add(this.TbxSaveRamImportPath, 1, 1);
             this.tableLayoutPanel18.Controls.Add(this.BtnSaveRamImport, 0, 1);
             this.tableLayoutPanel18.Controls.Add(this.GbxConvertStatesOrSaveRam, 0, 2);
-            this.tableLayoutPanel18.Location = new System.Drawing.Point(15, 15);
+            this.tableLayoutPanel18.Location = new System.Drawing.Point(18, 16);
             this.tableLayoutPanel18.Margin = new System.Windows.Forms.Padding(15);
             this.tableLayoutPanel18.Name = "tableLayoutPanel18";
             this.tableLayoutPanel18.RowCount = 3;
@@ -4422,7 +4420,7 @@ namespace BizHawk.Client.EmuHawk
             this.PbxHazardStripes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PbxHazardStripes.Location = new System.Drawing.Point(0, 0);
             this.PbxHazardStripes.Name = "PbxHazardStripes";
-            this.PbxHazardStripes.Size = new System.Drawing.Size(658, 481);
+            this.PbxHazardStripes.Size = new System.Drawing.Size(664, 482);
             this.PbxHazardStripes.TabIndex = 8;
             this.PbxHazardStripes.TabStop = false;
             this.PbxHazardStripes.SizeChanged += new System.EventHandler(this.PbxHazardStripes_SizeChanged);
@@ -4445,14 +4443,14 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSaveRamExportPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TbxSaveRamExportPath.Location = new System.Drawing.Point(84, 5);
             this.TbxSaveRamExportPath.Name = "TbxSaveRamExportPath";
-            this.TbxSaveRamExportPath.Size = new System.Drawing.Size(496, 20);
+            this.TbxSaveRamExportPath.Size = new System.Drawing.Size(502, 20);
             this.TbxSaveRamExportPath.TabIndex = 1;
             // 
             // BtnSaveRamExportBrowse
             // 
             this.BtnSaveRamExportBrowse.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BtnSaveRamExportBrowse.AutoSize = true;
-            this.BtnSaveRamExportBrowse.Location = new System.Drawing.Point(586, 3);
+            this.BtnSaveRamExportBrowse.Location = new System.Drawing.Point(592, 3);
             this.BtnSaveRamExportBrowse.Name = "BtnSaveRamExportBrowse";
             this.BtnSaveRamExportBrowse.Size = new System.Drawing.Size(75, 25);
             this.BtnSaveRamExportBrowse.TabIndex = 2;
@@ -5682,6 +5680,17 @@ namespace BizHawk.Client.EmuHawk
             this.ScrFramebuffer.TabIndex = 8;
             this.ScrFramebuffer.Text = "scrollableControl1";
             // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
+            // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.AutoSize = true;
@@ -6147,17 +6156,6 @@ namespace BizHawk.Client.EmuHawk
             this.label73.TabIndex = 5;
             this.label73.Text = "Hex:";
             // 
-            // BpbFramebuffer
-            // 
-            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
-            this.BpbFramebuffer.Name = "BpbFramebuffer";
-            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
-            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BpbFramebuffer.TabIndex = 7;
-            this.BpbFramebuffer.TabStop = false;
-            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -6332,6 +6330,7 @@ namespace BizHawk.Client.EmuHawk
             this.TlpFramebufferTab.ResumeLayout(false);
             this.TlpFramebufferTab.PerformLayout();
             this.ScrFramebuffer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
@@ -6348,7 +6347,6 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox7.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.ResumeLayout(false);
 
 		}
