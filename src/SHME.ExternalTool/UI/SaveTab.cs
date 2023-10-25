@@ -272,14 +272,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Image old = PbxHazardStripes.Image;
 
-			if (CbxSaveRamDanger.Checked)
-			{
-				PbxHazardStripes.Image = GenerateHazardStripes(Color.LightGray, Color.Black);
-			}
-			else
-			{
-				PbxHazardStripes.Image = GenerateHazardStripes(Color.Yellow, Color.Black);
-			}
+			PbxHazardStripes.Image = GenerateHazardStripes(Color.Yellow, Color.Black);
 
 			old?.Dispose();
 		}
@@ -573,8 +566,6 @@ namespace BizHawk.Client.EmuHawk
 					return;
 				}
 			}
-
-			UpdateStripes();
 
 			BtnSaveRamImport.Enabled = CbxSaveRamDanger.Checked;
 			TbxSaveRamImportPath.Enabled = CbxSaveRamDanger.Checked;
