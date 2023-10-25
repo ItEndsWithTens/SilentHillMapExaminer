@@ -1145,10 +1145,9 @@ namespace BizHawk.Client.EmuHawk
             // 
             // LblCameraDrawDistance
             // 
-            this.LblCameraDrawDistance.AutoSize = true;
             this.LblCameraDrawDistance.Location = new System.Drawing.Point(276, 0);
             this.LblCameraDrawDistance.Name = "LblCameraDrawDistance";
-            this.LblCameraDrawDistance.Size = new System.Drawing.Size(50, 13);
+            this.LblCameraDrawDistance.Size = new System.Drawing.Size(50, 15);
             this.LblCameraDrawDistance.TabIndex = 17;
             this.LblCameraDrawDistance.Text = "<meters>";
             // 
