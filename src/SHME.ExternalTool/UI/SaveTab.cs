@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -295,6 +296,11 @@ namespace BizHawk.Client.EmuHawk
 
 			int firstStripeWidth = stripeWidth;
 
+			BitmapData data = image.LockBits(
+				new Rectangle(0, 0, image.Width, image.Height),
+				ImageLockMode.WriteOnly,
+				PixelFormat.Format32bppArgb);
+
 			for (int y = 0; y < image.Height; y++)
 			{
 				int stripeCount = y % stripeWidth;
@@ -310,7 +316,8 @@ namespace BizHawk.Client.EmuHawk
 						stripeCount = 0;
 					}
 
-					image.SetPixel(x, y, current);
+					int ofs = (y * data.Stride) + (x * 4);
+					Marshal.WriteInt32(data.Scan0 + ofs, current.ToArgb());
 
 					stripeCount++;
 				}
@@ -323,6 +330,8 @@ namespace BizHawk.Client.EmuHawk
 					firstStripeWidth = stripeWidth;
 				}
 			}
+
+			image.UnlockBits(data);
 
 			return image;
 		}
