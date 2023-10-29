@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
@@ -56,26 +57,40 @@ namespace BizHawk.Client.EmuHawk
 
 			int start = ((int)NudFramebufferOfsY.Value * pitch) + ((int)NudFramebufferOfsX.Value * bytesPerPixel);
 
+			BitmapData data = bmp.LockBits(
+				new Rectangle(0, 0, bmp.Width, bmp.Height),
+				ImageLockMode.WriteOnly,
+				PixelFormat.Format32bppArgb);
+
+			string previousDomain = Mem.GetCurrentMemoryDomain();
+			Mem.UseMemoryDomain("GPURAM");
 			for (int y = 0; y < height; y++)
 			{
 				for (int x = 0; x < width; x++)
 				{
-					int pixel = Mem.ReadS16(start + (bytesPerPixel * x), "GPURAM");
+					int pixel = Mem.ReadS16(start + (bytesPerPixel * x));
 
-					int r = (pixel & 0b00000000_00011111) >> 0;
-					int g = (pixel & 0b00000011_11100000) >> 5;
-					int b = (pixel & 0b01111100_00000000) >> 10;
+					// This is the inverse of code in ApplyOverlayToFramebuffer,
+					// going in the other direction. The first shift scales the
+					// component to an 8-bit value, and the second packs said
+					// value into the final ARGB pixel.
+					//
+					// r = (original << 3) << 16
+					// g = (original >> 2) << 8
+					// b = (original >> 7)
+					int r = (pixel & 0b00000000_00011111) << 19;
+					int g = (pixel & 0b00000011_11100000) << 6;
+					int b = (pixel & 0b01111100_00000000) >> 7;
 
-					r = (int)Utility.ScaleToRange(r, 0, 31, 0, 255);
-					g = (int)Utility.ScaleToRange(g, 0, 31, 0, 255);
-					b = (int)Utility.ScaleToRange(b, 0, 31, 0, 255);
-
-					// TODO: Use LockBits and set a pixel format to go faster?
-					bmp.SetPixel(x, y, Color.FromArgb(r, g, b));
+					int ofs = (y * data.Stride) + (x * 4);
+					Marshal.WriteInt32(data.Scan0 + ofs, 255 << 24 | r | g | b);
 				}
 
 				start += pitch;
 			}
+			Mem.UseMemoryDomain(previousDomain);
+
+			bmp.UnlockBits(data);
 
 			BpbFramebuffer.Image = bmp;
 
