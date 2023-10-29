@@ -694,6 +694,8 @@ namespace BizHawk.Client.EmuHawk
 			Mem.UseMemoryDomain("GPURAM");
 			for (int y = 0; y < Overlay.Height; y++)
 			{
+				byte[] gameScanline = Mem.ReadByteRange(start, gpuramBytesPerPixel * Overlay.Width).ToArray();
+
 				for (int x = 0; x < Overlay.Width; x++)
 				{
 					int ofs = (y * data.Stride) + (x * 4);
@@ -705,12 +707,13 @@ namespace BizHawk.Client.EmuHawk
 						continue;
 					}
 
-					long framebufferOffset = start + (gpuramBytesPerPixel * x);
+					int gameOfs = x * 2;
 
+					int gamePixel;
 					int r, g, b;
 					if (a != 0xFF)
 					{
-						int gamePixel = Mem.ReadS16(framebufferOffset);
+						gamePixel = BitConverter.ToInt16(gameScanline, gameOfs);
 
 						int rGame = (gamePixel & 0b00000000_00011111) << 3;
 						int gGame = (gamePixel & 0b00000011_11100000) >> 2;
@@ -742,8 +745,12 @@ namespace BizHawk.Client.EmuHawk
 						b = (overlayPixel & 0x000000F8) << 7;
 					}
 
-					Mem.WriteS16(framebufferOffset, b | g | r);
+					gamePixel = b | g | r;
+					gameScanline[gameOfs + 0] = (byte)((gamePixel & 0x00FF) >> 0);
+					gameScanline[gameOfs + 1] = (byte)((gamePixel & 0xFF00) >> 8);
 				}
+
+				Mem.WriteByteRange(start, gameScanline);
 
 				start += gpuramStride;
 			}

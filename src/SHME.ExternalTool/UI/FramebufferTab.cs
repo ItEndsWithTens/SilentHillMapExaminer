@@ -1,9 +1,9 @@
-﻿using SHME.ExternalTool;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -66,9 +66,11 @@ namespace BizHawk.Client.EmuHawk
 			Mem.UseMemoryDomain("GPURAM");
 			for (int y = 0; y < height; y++)
 			{
+				byte[] scanline = Mem.ReadByteRange(start, bytesPerPixel * width).ToArray();
+
 				for (int x = 0; x < width; x++)
 				{
-					int pixel = Mem.ReadS16(start + (bytesPerPixel * x));
+					int pixel = BitConverter.ToInt16(scanline, x * 2);
 
 					// This is the inverse of code in ApplyOverlayToFramebuffer,
 					// going in the other direction. The first shift scales the
