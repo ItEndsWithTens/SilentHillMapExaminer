@@ -3,6 +3,7 @@ using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
@@ -157,18 +158,20 @@ namespace BizHawk.Client.EmuHawk
 
 			(float? yaw, float? x, float? z, float? width) = PointOfInterest.DecodeGeometry(t.Style, p);
 
+			CultureInfo c = CultureInfo.CurrentCulture;
+
 			string geometry = "";
 			if (x != null && z != null)
 			{
-				geometry = $"X size: {x} Z size: {z}";
+				geometry = $"X size: {x.Value.ToString(c)} Z size: {z.Value.ToString(c)}";
 			}
 			else if (yaw != null && width != null)
 			{
-				geometry = $"Width: {width} Yaw: {yaw}";
+				geometry = $"Width: {width.Value.ToString(c)} Yaw: {yaw.Value.ToString(c)}";
 			}
 			else if (yaw != null)
 			{
-				geometry = $"Yaw: {yaw}";
+				geometry = $"Yaw: {yaw.Value.ToString(c)}";
 			}
 
 			return geometry;
@@ -284,7 +287,9 @@ namespace BizHawk.Client.EmuHawk
 			// The index here could be padded with leading zeroes in principle,
 			// but the result is a bit visually cluttered, and it becomes harder
 			// to tell at a glance where you are in the list.
-			e.Value = $"{LbxPois.Items.IndexOf(e.ListItem)}:    {e.ListItem}";
+			int idx = LbxPois.Items.IndexOf(e.ListItem);
+			CultureInfo c = CultureInfo.CurrentCulture;
+			e.Value = $"{idx.ToString(c)}:    {e.ListItem}";
 		}
 
 		private void LbxPois_SelectedIndexChanged(object sender, EventArgs e)
@@ -315,10 +320,12 @@ namespace BizHawk.Client.EmuHawk
 				r.Tint = Color.Yellow;
 			}
 
-			LblSelectedPoiAddress.Text = $"0x{poi.Address:X2}";
-			LblSelectedPoiX.Text = $"{poi.X:0.##}";
-			LblSelectedPoiZ.Text = $"{poi.Z:0.##}";
-			LblSelectedPoiGeometry.Text = $"0x{poi.Geometry:X2}";
+			CultureInfo c = CultureInfo.CurrentCulture;
+
+			LblSelectedPoiAddress.Text = $"0x{poi.Address.ToString("X2", c)}";
+			LblSelectedPoiX.Text = $"{poi.X.ToString("0.##", c)}";
+			LblSelectedPoiZ.Text = $"{poi.Z.ToString("0.##", c)}";
+			LblSelectedPoiGeometry.Text = $"0x{poi.Geometry.ToString("X2", c)}";
 
 			RefreshLbxPoiAssociatedTriggers();
 
@@ -361,7 +368,7 @@ namespace BizHawk.Client.EmuHawk
 				t = new Trigger(ofs, Mem.ReadByteRange(ofs, SilentHillEntitySizes.Trigger));
 			}
 
-			LblTriggerCount.Text = $"{Triggers.Count}";
+			LblTriggerCount.Text = Triggers.Count.ToString(CultureInfo.CurrentCulture);
 
 			foreach (Trigger trigger in Triggers)
 			{
@@ -448,6 +455,8 @@ namespace BizHawk.Client.EmuHawk
 		{
 			var t = (Trigger)e.ListItem;
 
+			CultureInfo c = CultureInfo.CurrentCulture;
+
 			string poiString;
 			if (t.PoiIndex >= Pois.Count)
 			{
@@ -456,10 +465,11 @@ namespace BizHawk.Client.EmuHawk
 			else
 			{
 				var poi = (PointOfInterest)LbxPois.Items[t.PoiIndex];
-				poiString = $"{t.PoiIndex} ({poi})";
+				poiString = $"{t.PoiIndex.ToString(c)} ({poi})";
 			}
 
-			e.Value = $"{LbxTriggers.Items.IndexOf(t)}: POI {poiString}";
+			int idx = LbxTriggers.Items.IndexOf(t);
+			e.Value = $"{idx.ToString(c)}: POI {poiString}";
 		}
 
 		private void LbxTriggers_SelectedIndexChanged(object sender, EventArgs e)
@@ -475,17 +485,19 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			LblSelectedTriggerAddress.Text = $"0x{t.Address:X}";
-			LblSelectedTriggerThing0.Text = $"0x{t.Thing0:X2}";
+			CultureInfo c = CultureInfo.CurrentCulture;
+
+			LblSelectedTriggerAddress.Text = $"0x{t.Address.ToString("X", c)}";
+			LblSelectedTriggerThing0.Text = $"0x{t.Thing0.ToString("X2", c)}";
 			CbxSelectedTriggerDisabled.Checked = t.Disabled;
 			CbxSelectedTriggerDisabled.Enabled = true;
-			LblSelectedTriggerThing1.Text = $"0x{t.Thing1:X2}";
-			LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex:X}";
-			LblSelectedTriggerThing2.Text = $"0x{t.Thing2:X1}";
-			LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex}";
-			LblSelectedTriggerThing3.Text = $"0x{t.Thing3:X2}";
-			LblSelectedTriggerThing4.Text = $"0x{t.Thing4:X2}";
-			LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo:X8}";
+			LblSelectedTriggerThing1.Text = $"0x{t.Thing1.ToString("X2", c)}";
+			LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex.ToString("X", c)}";
+			LblSelectedTriggerThing2.Text = $"0x{t.Thing2.ToString("X1", c)}";
+			LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex.ToString(c)}";
+			LblSelectedTriggerThing3.Text = $"0x{t.Thing3.ToString("X2", c)}";
+			LblSelectedTriggerThing4.Text = $"0x{t.Thing4.ToString("X2", c)}";
+			LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo.ToString("X8", c)}";
 
 			string? style = Enum.GetName(typeof(TriggerStyle), t.Style);
 			LblSelectedTriggerStyle.Text = $"{style ?? $"0x{t.Style:X}"}";
@@ -494,8 +506,10 @@ namespace BizHawk.Client.EmuHawk
 			long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
 			int group = Mem.ReadS32(groupOfs);
 			int firedBit = (group >> t.FiredBitShift) & 1;
-			LblSelectedTriggerFired.Text = $"{firedBit != 0}";
-			LblSelectedTriggerFiredDetails.Text = $"Group 0x{groupOfs:X}, bit 0x{1 << t.FiredBitShift:X}";
+			LblSelectedTriggerFired.Text = $"{(firedBit != 0).ToString(c)}";
+			LblSelectedTriggerFiredDetails.Text =
+				$"Group 0x{groupOfs.ToString("X", c)}, " +
+				$"bit 0x{(1 << t.FiredBitShift).ToString("X", c)}";
 
 			if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
 			{

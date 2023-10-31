@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -391,13 +392,16 @@ namespace BizHawk.Client.EmuHawk
 
 				if (CbxEnableOverlayCameraReporting.Checked)
 				{
-					NudOverlayCameraX.Text = $"{Camera.Position.X:N0}";
-					NudOverlayCameraY.Text = $"{Camera.Position.Y:N0}";
-					NudOverlayCameraZ.Text = $"{Camera.Position.Z:N0}";
+					string f = "N0";
+					CultureInfo c = CultureInfo.CurrentCulture;
 
-					NudOverlayCameraPitch.Text = $"{Camera.Pitch:N0}";
-					NudOverlayCameraYaw.Text = $"{Camera.Yaw:N0}";
-					NudOverlayCameraRoll.Text = $"{Camera.Roll:N0}";
+					NudOverlayCameraX.Text = Camera.Position.X.ToString(f, c);
+					NudOverlayCameraY.Text = Camera.Position.Y.ToString(f, c);
+					NudOverlayCameraZ.Text = Camera.Position.Z.ToString(f, c);
+
+					NudOverlayCameraPitch.Text = Camera.Pitch.ToString(f, c);
+					NudOverlayCameraYaw.Text = Camera.Yaw.ToString(f, c);
+					NudOverlayCameraRoll.Text = Camera.Roll.ToString(f, c);
 				}
 			}
 		}

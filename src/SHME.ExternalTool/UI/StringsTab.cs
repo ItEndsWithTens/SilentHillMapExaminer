@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -66,7 +67,9 @@ namespace BizHawk.Client.EmuHawk
 			int arrayBytes = arrayEnd - arrayStart;
 			int stringCount = arrayBytes / sizeof(int);
 
-			LblStringCount.Text = stringCount.ToString();
+			CultureInfo c = CultureInfo.CurrentCulture;
+
+			LblStringCount.Text = stringCount.ToString(c);
 
 			var strings = new List<string>();
 			for (int i = 0; i < stringCount; i++)
@@ -83,7 +86,7 @@ namespace BizHawk.Client.EmuHawk
 				}
 				while (current != '\0');
 
-				strings.Add($"{i} (0x{i:X}):    {sb.ToString().PrintAsciiControlCharacters()}");
+				strings.Add($"{i.ToString(c)} (0x{i.ToString("X", c)}):    {sb.ToString().PrintAsciiControlCharacters()}");
 			}
 
 			RtbStrings.Clear();

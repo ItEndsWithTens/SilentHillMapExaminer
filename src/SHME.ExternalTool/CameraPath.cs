@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Numerics;
 
 namespace SHME.ExternalTool
@@ -72,7 +73,12 @@ namespace SHME.ExternalTool
 
 		public override string ToString()
 		{
-			return $"Area: {AreaMinX:0.##},{AreaMinZ:0.##}  |  {AreaMaxX:0.##},{AreaMaxZ:0.##}";
+			CultureInfo c = CultureInfo.CurrentCulture;
+
+			return
+				$"Area: {AreaMinX.ToString("0.##", c)},{AreaMinZ.ToString("0.##", c)}" +
+				"  |  " +
+				$"{AreaMaxX.ToString("0.##", c)},{AreaMaxZ.ToString("0.##", c)}";
 		}
 	}
 }

@@ -123,11 +123,13 @@ namespace BizHawk.Client.EmuHawk
 
 			int q = Core.FloatToQ(num, f);
 
+			CultureInfo c = CultureInfo.CurrentCulture;
+
 			TbxUtilityFixedPointQ.Text = (i + f) switch
 			{
-				8 => $"0x{(byte)q:X2}",
-				16 => $"0x{(short)q:X4}",
-				_ => $"0x{q:X8}"
+				8 => $"0x{((byte)q).ToString("X2", c)}",
+				16 => $"0x{((short)q).ToString("X4", c)}",
+				_ => $"0x{q.ToString("X8", c)}"
 			};
 		}
 
@@ -151,16 +153,16 @@ namespace BizHawk.Client.EmuHawk
 				.Replace("0X", "");
 
 			NumberStyles style = NumberStyles.HexNumber;
-			IFormatProvider p = CultureInfo.CurrentCulture;
+			CultureInfo c = CultureInfo.CurrentCulture;
 
 			int q;
 			try
 			{
 				q = (i + f) switch
 				{
-					8 => Byte.Parse(text, style, p),
-					16 => Int16.Parse(text, style, p),
-					_ => Int32.Parse(text, style, p)
+					8 => Byte.Parse(text, style, c),
+					16 => Int16.Parse(text, style, c),
+					_ => Int32.Parse(text, style, c)
 				};
 			}
 			catch (Exception err) when (
@@ -182,7 +184,7 @@ namespace BizHawk.Client.EmuHawk
 
 			float num = Core.QToFloat(q, f);
 
-			TbxUtilityFixedPointFloat.Text = num.ToString();
+			TbxUtilityFixedPointFloat.Text = num.ToString(c);
 		}
 
 		private void TbxUtilityAnglesGameUnits_KeyDown(object sender, KeyEventArgs e)
@@ -205,12 +207,12 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			NumberStyles style = NumberStyles.HexNumber;
-			IFormatProvider p = CultureInfo.CurrentCulture;
+			CultureInfo c = CultureInfo.CurrentCulture;
 
 			ushort hex;
 			try
 			{
-				hex = UInt16.Parse(text, style, p);
+				hex = UInt16.Parse(text, style, c);
 			}
 			catch (Exception err) when (
 				err is ArgumentException ||
@@ -224,7 +226,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			TbxUtilityAnglesDegrees.Text = Core.GameUnitsToDegrees(hex).ToString();
+			TbxUtilityAnglesDegrees.Text = Core.GameUnitsToDegrees(hex).ToString(c);
 			LblUtilityAnglesError.Text = "None";
 			AnglesErrorClearTimer.Stop();
 			AnglesErrorClearTimer.Start();
@@ -247,12 +249,12 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			NumberStyles style = NumberStyles.Number;
-			IFormatProvider p = CultureInfo.CurrentCulture;
+			CultureInfo c = CultureInfo.CurrentCulture;
 
 			float num;
 			try
 			{
-				num = Single.Parse(text, style, p);
+				num = Single.Parse(text, style, c);
 			}
 			catch (Exception err) when (
 				err is ArgumentException ||
@@ -267,7 +269,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			uint u = Core.DegreesToGameUnits(num);
-			TbxUtilityAnglesGameUnits.Text = $"0x{u:X}";
+			TbxUtilityAnglesGameUnits.Text = $"0x{u.ToString("X", c)}";
 			LblUtilityAnglesError.Text = "None";
 			AnglesErrorClearTimer.Stop();
 			AnglesErrorClearTimer.Start();

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
@@ -141,7 +142,7 @@ namespace BizHawk.Client.EmuHawk
 				address += SilentHillEntitySizes.CameraPath;
 			}
 
-			LblCameraPathCount.Text = $"{CameraPaths.Count}";
+			LblCameraPathCount.Text = CameraPaths.Count.ToString(CultureInfo.CurrentCulture);
 		}
 
 		private void CbxSelectedCameraPathEnabled_CheckedChanged(object sender, EventArgs e)
@@ -185,7 +186,9 @@ namespace BizHawk.Client.EmuHawk
 
 		private void LbxCameraPaths_Format(object sender, ListControlConvertEventArgs e)
 		{
-			e.Value = $"{LbxCameraPaths.Items.IndexOf(e.ListItem)}:    {e.ListItem}";
+			int idx = LbxCameraPaths.Items.IndexOf(e.ListItem);
+			CultureInfo c = CultureInfo.CurrentCulture;
+			e.Value = $"{idx.ToString(c)}:    {e.ListItem}";
 		}
 
 		private void LbxCameraPaths_SelectedIndexChanged(object sender, EventArgs e)
@@ -220,19 +223,21 @@ namespace BizHawk.Client.EmuHawk
 				}
 			}
 
+			CultureInfo c = CultureInfo.CurrentCulture;
+
 			SuspendLayout();
-			LblCameraPathAddress.Text = $"0x{path.Address:X}";
+			LblCameraPathAddress.Text = $"0x{path.Address.ToString("X", c)}";
 			CbxSelectedCameraPathDisabled.Enabled = true;
 			CbxSelectedCameraPathDisabled.Checked = path.Disabled;
-			LblCameraPathVolumeMin.Text = $"{path.VolumeMin}";
-			LblCameraPathVolumeMax.Text = $"{path.VolumeMax}";
-			LblCameraPathAreaMin.Text = $"<{path.AreaMinX}, {path.AreaMinZ}>";
-			LblCameraPathAreaMax.Text = $"<{path.AreaMaxX}, {path.AreaMaxZ}>";
-			LblCameraPathThing4.Text = $"0x{path.Thing4:X2}";
-			LblCameraPathThing5.Text = $"0x{path.Thing5:X2}";
-			LblCameraPathThing6.Text = $"0x{path.Thing6:X4}";
-			LblCameraPathPitch.Text = $"{path.Pitch}";
-			LblCameraPathYaw.Text = $"{path.Yaw}";
+			LblCameraPathVolumeMin.Text = $"{path.VolumeMin.ToString(String.Empty, c)}";
+			LblCameraPathVolumeMax.Text = $"{path.VolumeMax.ToString(String.Empty, c)}";
+			LblCameraPathAreaMin.Text = $"<{path.AreaMinX.ToString(c)}, {path.AreaMinZ.ToString(c)}>";
+			LblCameraPathAreaMax.Text = $"<{path.AreaMaxX.ToString(c)}, {path.AreaMaxZ.ToString(c)}>";
+			LblCameraPathThing4.Text = $"0x{path.Thing4.ToString("X2", c)}";
+			LblCameraPathThing5.Text = $"0x{path.Thing5.ToString("X2", c)}";
+			LblCameraPathThing6.Text = $"0x{path.Thing6.ToString("X4", c)}";
+			LblCameraPathPitch.Text = $"{path.Pitch.ToString(c)}";
+			LblCameraPathYaw.Text = $"{path.Yaw.ToString(c)}";
 			ResumeLayout();
 		}
 	}

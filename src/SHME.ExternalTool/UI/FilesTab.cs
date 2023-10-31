@@ -2,6 +2,7 @@
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -48,7 +49,7 @@ namespace BizHawk.Client.EmuHawk
 
 		public override string ToString()
 		{
-			return $"{Index}: {Filename}";
+			return $"{Index.ToString(CultureInfo.CurrentCulture)}: {Filename}";
 		}
 	}
 

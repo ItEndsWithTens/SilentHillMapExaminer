@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using static SHME.ExternalTool.Core;
 
@@ -87,7 +88,9 @@ namespace SHME.ExternalTool
 
 		public override string ToString()
 		{
-			return $"{X:0.##}, {Z:0.##}";
+			CultureInfo c = CultureInfo.CurrentCulture;
+
+			return $"{X.ToString("0.##", c)}, {Z.ToString("0.##", c)}";
 		}
 	}
 }

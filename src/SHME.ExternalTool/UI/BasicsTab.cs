@@ -2,6 +2,7 @@
 using SHME.ExternalTool;
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
@@ -51,13 +52,16 @@ namespace BizHawk.Client.EmuHawk
 		{
 			(Vector3 harry, Vector3 camera) = GetAngles();
 
-			LblHarryPitch.Text = harry.X.ToString("N2");
-			LblHarryYaw.Text = harry.Y.ToString("N2");
-			LblHarryRoll.Text = harry.Z.ToString("N2");
+			string f = "N2";
+			CultureInfo c = CultureInfo.CurrentCulture;
 
-			LblCameraPitch.Text = camera.X.ToString("N2");
-			LblCameraYaw.Text = camera.Y.ToString("N2");
-			LblCameraRoll.Text = camera.Z.ToString("N2");
+			LblHarryPitch.Text = harry.X.ToString(f, c);
+			LblHarryYaw.Text = harry.Y.ToString(f, c);
+			LblHarryRoll.Text = harry.Z.ToString(f, c);
+
+			LblCameraPitch.Text = camera.X.ToString(f, c);
+			LblCameraYaw.Text = camera.Y.ToString(f, c);
+			LblCameraRoll.Text = camera.Z.ToString(f, c);
 		}
 
 		private void ReportControls()
@@ -91,13 +95,16 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportOverlayInfo()
 		{
-			LblOverlayCamPositionX.Text = $"{Camera.Position.X:N2}";
-			LblOverlayCamPositionY.Text = $"{Camera.Position.Y:N2}";
-			LblOverlayCamPositionZ.Text = $"{Camera.Position.Z:N2}";
+			string f = "N2";
+			CultureInfo c = CultureInfo.CurrentCulture;
 
-			LblOverlayCamPitch.Text = $"{Camera.Pitch:N2}";
-			LblOverlayCamYaw.Text = $"{Camera.Yaw:N2}";
-			LblOverlayCamRoll.Text = $"{Camera.Roll:N2}";
+			LblOverlayCamPositionX.Text = Camera.Position.X.ToString(f, c);
+			LblOverlayCamPositionY.Text = Camera.Position.Y.ToString(f, c);
+			LblOverlayCamPositionZ.Text = Camera.Position.Z.ToString(f, c);
+
+			LblOverlayCamPitch.Text = Camera.Pitch.ToString(f, c);
+			LblOverlayCamYaw.Text = Camera.Yaw.ToString(f, c);
+			LblOverlayCamRoll.Text = Camera.Roll.ToString(f, c);
 		}
 
 		private string _lastHarrySpawnPointHash = "";
@@ -106,17 +113,20 @@ namespace BizHawk.Client.EmuHawk
 		{
 			(Vector3 harry, Vector3 camera) = GetPosition();
 
-			LblHarryPositionX.Text = harry.X.ToString("N2");
-			LblHarryPositionY.Text = harry.Y.ToString("N2");
-			LblHarryPositionZ.Text = harry.Z.ToString("N2");
+			string f = "N2";
+			CultureInfo c = CultureInfo.CurrentCulture;
 
-			LblCameraPositionX.Text = camera.X.ToString("N2");
-			LblCameraPositionY.Text = camera.Y.ToString("N2");
-			LblCameraPositionZ.Text = camera.Z.ToString("N2");
+			LblHarryPositionX.Text = harry.X.ToString(f, c);
+			LblHarryPositionY.Text = harry.Y.ToString(f, c);
+			LblHarryPositionZ.Text = harry.Z.ToString(f, c);
+
+			LblCameraPositionX.Text = camera.X.ToString(f, c);
+			LblCameraPositionY.Text = camera.Y.ToString(f, c);
+			LblCameraPositionZ.Text = camera.Z.ToString(f, c);
 
 			float drawDistance = QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.DrawDistance), 8);
 
-			LblCameraDrawDistance.Text = $"{drawDistance:N3}m";
+			LblCameraDrawDistance.Text = $"{drawDistance.ToString("N3", c)}m";
 
 			long address = Rom.Addresses.MainRam.LastHarrySpawnPoint;
 			string hash = Mem.HashRegion(address, 12);
@@ -125,9 +135,9 @@ namespace BizHawk.Client.EmuHawk
 				_lastHarrySpawnPoint = new PointOfInterest(address, Mem.ReadByteRange(address, 12));
 				_lastHarrySpawnPointHash = hash;
 
-				LblSpawnX.Text = $"{_lastHarrySpawnPoint.X:0.##}";
-				LblSpawnGeometry.Text = $"0x{_lastHarrySpawnPoint.Geometry:X2}";
-				LblSpawnZ.Text = $"{_lastHarrySpawnPoint.Z:0.##}";
+				LblSpawnX.Text = $"{_lastHarrySpawnPoint.X.ToString("0.##", c)}";
+				LblSpawnGeometry.Text = $"0x{_lastHarrySpawnPoint.Geometry.ToString("X2", c)}";
+				LblSpawnZ.Text = $"{_lastHarrySpawnPoint.Z.ToString("0.##", c)}";
 			}
 		}
 
