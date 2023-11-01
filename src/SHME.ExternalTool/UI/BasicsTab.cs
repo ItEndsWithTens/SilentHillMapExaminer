@@ -135,9 +135,12 @@ namespace BizHawk.Client.EmuHawk
 				_lastHarrySpawnPoint = new PointOfInterest(address, Mem.ReadByteRange(address, 12));
 				_lastHarrySpawnPointHash = hash;
 
-				LblSpawnX.Text = $"{_lastHarrySpawnPoint.X.ToString("0.##", c)}";
+				string sep = c.NumberFormat.NumberGroupSeparator;
+
+				float x = _lastHarrySpawnPoint.X;
+				float z = _lastHarrySpawnPoint.Z;
+				LblSpawnXZ.Text = $"<{x.ToString("0.##", c)}{sep} {z.ToString("0.##", c)}>";
 				LblSpawnGeometry.Text = $"0x{_lastHarrySpawnPoint.Geometry.ToString("X2", c)}";
-				LblSpawnZ.Text = $"{_lastHarrySpawnPoint.Z.ToString("0.##", c)}";
 			}
 		}
 

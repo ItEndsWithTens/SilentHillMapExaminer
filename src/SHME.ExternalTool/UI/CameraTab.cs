@@ -23,13 +23,15 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ClearDisplayedCameraPathInfo()
 		{
+			string sep = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
+
 			LblCameraPathAddress.Text = "0x";
 			CbxSelectedCameraPathDisabled.Enabled = false;
 			CbxSelectedCameraPathDisabled.Checked = false;
-			LblCameraPathVolumeMin.Text = "<x, y, z>";
-			LblCameraPathVolumeMax.Text = "<x, y, z>";
-			LblCameraPathAreaMin.Text = "<x, z>";
-			LblCameraPathAreaMax.Text = "<x, z>";
+			LblCameraPathVolumeMin.Text = $"<x{sep} y{sep} z>";
+			LblCameraPathVolumeMax.Text = $"<x{sep} y{sep} z>";
+			LblCameraPathAreaMin.Text = $"<x{sep} z>";
+			LblCameraPathAreaMax.Text = $"<x{sep} z>";
 			LblCameraPathThing4.Text = "0x";
 			LblCameraPathThing5.Text = "0x";
 			LblCameraPathThing6.Text = "0x";
@@ -188,7 +190,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			int idx = LbxCameraPaths.Items.IndexOf(e.ListItem);
 			CultureInfo c = CultureInfo.CurrentCulture;
-			e.Value = $"{idx.ToString(c)}:    {e.ListItem}";
+			e.Value = $"{idx.ToString(c)}: {e.ListItem}";
 		}
 
 		private void LbxCameraPaths_SelectedIndexChanged(object sender, EventArgs e)

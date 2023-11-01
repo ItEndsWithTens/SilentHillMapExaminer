@@ -152,6 +152,8 @@ namespace BizHawk.Client.EmuHawk
 		{
 			base.Restart();
 
+			SetPlaceholderText();
+
 			Boxes.Clear();
 			Gems.Clear();
 			Lines.Clear();
@@ -616,6 +618,19 @@ namespace BizHawk.Client.EmuHawk
 			AnglesErrorClearTimer?.Dispose();
 
 			GameSurface = null;
+		}
+
+		private void SetPlaceholderText()
+		{
+			NumberFormatInfo f = CultureInfo.CurrentCulture.NumberFormat;
+			string sep = f.NumberGroupSeparator;
+
+			LblSpawnXZ.Text = $"<x{sep} z>";
+			LblSelectedPoiXZ.Text = $"<x{sep} z>";
+			LblCameraPathVolumeMin.Text = $"<x{sep} y{sep} z>";
+			LblCameraPathVolumeMax.Text = $"<x{sep} y{sep} z>";
+			LblCameraPathAreaMin.Text = $"<x{sep} z>";
+			LblCameraPathAreaMax.Text = $"<x{sep} z>";
 		}
 
 		private void Selectable_Enter(object sender, EventArgs e)

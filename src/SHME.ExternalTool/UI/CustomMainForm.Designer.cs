@@ -31,12 +31,11 @@ namespace BizHawk.Client.EmuHawk
             this.label61 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.LblSpawnZ = new System.Windows.Forms.Label();
             this.LblSpawnGeometry = new System.Windows.Forms.Label();
             this.LblHarryRoll = new System.Windows.Forms.Label();
             this.BtnSetAngles = new System.Windows.Forms.Button();
             this.LblHarryYaw = new System.Windows.Forms.Label();
-            this.LblSpawnX = new System.Windows.Forms.Label();
+            this.LblSpawnXZ = new System.Windows.Forms.Label();
             this.LblHarryPitch = new System.Windows.Forms.Label();
             this.CbxHarrySetPositionMoveCamera = new System.Windows.Forms.CheckBox();
             this.GbxCamera = new System.Windows.Forms.GroupBox();
@@ -192,9 +191,8 @@ namespace BizHawk.Client.EmuHawk
             this.BtnGoToPoi = new System.Windows.Forms.Button();
             this.label38 = new System.Windows.Forms.Label();
             this.LblSelectedPoiAddress = new System.Windows.Forms.Label();
-            this.LblSelectedPoiX = new System.Windows.Forms.Label();
+            this.LblSelectedPoiXZ = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.LblSelectedPoiZ = new System.Windows.Forms.Label();
             this.LblSelectedPoiGeometry = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.TbpCamera = new System.Windows.Forms.TabPage();
@@ -694,12 +692,11 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel24.Controls.Add(this.label19, 0, 8);
             this.tableLayoutPanel24.Controls.Add(this.LblHarryPositionY, 2, 0);
             this.tableLayoutPanel24.Controls.Add(this.LblHarryPositionX, 1, 0);
-            this.tableLayoutPanel24.Controls.Add(this.LblSpawnZ, 3, 7);
             this.tableLayoutPanel24.Controls.Add(this.LblSpawnGeometry, 2, 8);
             this.tableLayoutPanel24.Controls.Add(this.LblHarryRoll, 3, 3);
             this.tableLayoutPanel24.Controls.Add(this.BtnSetAngles, 4, 4);
             this.tableLayoutPanel24.Controls.Add(this.LblHarryYaw, 2, 3);
-            this.tableLayoutPanel24.Controls.Add(this.LblSpawnX, 2, 7);
+            this.tableLayoutPanel24.Controls.Add(this.LblSpawnXZ, 2, 7);
             this.tableLayoutPanel24.Controls.Add(this.LblHarryPitch, 1, 3);
             this.tableLayoutPanel24.Controls.Add(this.BtnGetAngles, 0, 4);
             this.tableLayoutPanel24.Controls.Add(this.TbxHarryYaw, 2, 4);
@@ -801,15 +798,6 @@ namespace BizHawk.Client.EmuHawk
             this.label19.TabIndex = 29;
             this.label19.Text = "Last spawn geometry:";
             // 
-            // LblSpawnZ
-            // 
-            this.LblSpawnZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblSpawnZ.Location = new System.Drawing.Point(194, 225);
-            this.LblSpawnZ.Name = "LblSpawnZ";
-            this.LblSpawnZ.Size = new System.Drawing.Size(45, 15);
-            this.LblSpawnZ.TabIndex = 28;
-            this.LblSpawnZ.Text = "???.??";
-            // 
             // LblSpawnGeometry
             // 
             this.LblSpawnGeometry.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -853,14 +841,16 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryYaw.Text = "<yaw>";
             this.LblHarryYaw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // LblSpawnX
+            // LblSpawnXZ
             // 
-            this.LblSpawnX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblSpawnX.Location = new System.Drawing.Point(139, 225);
-            this.LblSpawnX.Name = "LblSpawnX";
-            this.LblSpawnX.Size = new System.Drawing.Size(45, 15);
-            this.LblSpawnX.TabIndex = 26;
-            this.LblSpawnX.Text = "???.??";
+            this.LblSpawnXZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.LblSpawnXZ.AutoSize = true;
+            this.tableLayoutPanel24.SetColumnSpan(this.LblSpawnXZ, 3);
+            this.LblSpawnXZ.Location = new System.Drawing.Point(139, 226);
+            this.LblSpawnXZ.Name = "LblSpawnXZ";
+            this.LblSpawnXZ.Size = new System.Drawing.Size(117, 13);
+            this.LblSpawnXZ.TabIndex = 26;
+            this.LblSpawnXZ.Text = "PLACEHOLDER TEXT";
             // 
             // LblHarryPitch
             // 
@@ -2878,9 +2868,8 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel36.Controls.Add(this.BtnGoToPoi, 3, 1);
             this.tableLayoutPanel36.Controls.Add(this.label38, 0, 1);
             this.tableLayoutPanel36.Controls.Add(this.LblSelectedPoiAddress, 1, 0);
-            this.tableLayoutPanel36.Controls.Add(this.LblSelectedPoiX, 1, 1);
+            this.tableLayoutPanel36.Controls.Add(this.LblSelectedPoiXZ, 1, 1);
             this.tableLayoutPanel36.Controls.Add(this.label21, 0, 0);
-            this.tableLayoutPanel36.Controls.Add(this.LblSelectedPoiZ, 2, 1);
             this.tableLayoutPanel36.Controls.Add(this.LblSelectedPoiGeometry, 1, 2);
             this.tableLayoutPanel36.Controls.Add(this.label35, 0, 2);
             this.tableLayoutPanel36.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2953,15 +2942,16 @@ namespace BizHawk.Client.EmuHawk
             this.LblSelectedPoiAddress.Text = "<address>";
             this.LblSelectedPoiAddress.Click += new System.EventHandler(this.LblSelectedPoiAddress_Click);
             // 
-            // LblSelectedPoiX
+            // LblSelectedPoiXZ
             // 
-            this.LblSelectedPoiX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblSelectedPoiX.AutoSize = true;
-            this.LblSelectedPoiX.Location = new System.Drawing.Point(82, 35);
-            this.LblSelectedPoiX.Name = "LblSelectedPoiX";
-            this.LblSelectedPoiX.Size = new System.Drawing.Size(40, 13);
-            this.LblSelectedPoiX.TabIndex = 58;
-            this.LblSelectedPoiX.Text = "???.??";
+            this.LblSelectedPoiXZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.LblSelectedPoiXZ.AutoSize = true;
+            this.tableLayoutPanel36.SetColumnSpan(this.LblSelectedPoiXZ, 2);
+            this.LblSelectedPoiXZ.Location = new System.Drawing.Point(82, 35);
+            this.LblSelectedPoiXZ.Name = "LblSelectedPoiXZ";
+            this.LblSelectedPoiXZ.Size = new System.Drawing.Size(117, 13);
+            this.LblSelectedPoiXZ.TabIndex = 58;
+            this.LblSelectedPoiXZ.Text = "PLACEHOLDER TEXT";
             // 
             // label21
             // 
@@ -2972,16 +2962,6 @@ namespace BizHawk.Client.EmuHawk
             this.label21.Size = new System.Drawing.Size(48, 13);
             this.label21.TabIndex = 69;
             this.label21.Text = "Address:";
-            // 
-            // LblSelectedPoiZ
-            // 
-            this.LblSelectedPoiZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblSelectedPoiZ.AutoSize = true;
-            this.LblSelectedPoiZ.Location = new System.Drawing.Point(161, 35);
-            this.LblSelectedPoiZ.Name = "LblSelectedPoiZ";
-            this.LblSelectedPoiZ.Size = new System.Drawing.Size(40, 13);
-            this.LblSelectedPoiZ.TabIndex = 60;
-            this.LblSelectedPoiZ.Text = "???.??";
             // 
             // LblSelectedPoiGeometry
             // 
@@ -3242,9 +3222,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathVolumeMin.AutoSize = true;
             this.LblCameraPathVolumeMin.Location = new System.Drawing.Point(100, 123);
             this.LblCameraPathVolumeMin.Name = "LblCameraPathVolumeMin";
-            this.LblCameraPathVolumeMin.Size = new System.Drawing.Size(118, 13);
+            this.LblCameraPathVolumeMin.Size = new System.Drawing.Size(117, 13);
             this.LblCameraPathVolumeMin.TabIndex = 58;
-            this.LblCameraPathVolumeMin.Text = "???.??, ???.??, ???.??";
+            this.LblCameraPathVolumeMin.Text = "PLACEHOLDER TEXT";
             // 
             // BtnCameraPathGoToVolumeMin
             // 
@@ -3286,9 +3266,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathVolumeMax.AutoSize = true;
             this.LblCameraPathVolumeMax.Location = new System.Drawing.Point(100, 160);
             this.LblCameraPathVolumeMax.Name = "LblCameraPathVolumeMax";
-            this.LblCameraPathVolumeMax.Size = new System.Drawing.Size(118, 13);
+            this.LblCameraPathVolumeMax.Size = new System.Drawing.Size(117, 13);
             this.LblCameraPathVolumeMax.TabIndex = 109;
-            this.LblCameraPathVolumeMax.Text = "???.??, ???.??, ???.??";
+            this.LblCameraPathVolumeMax.Text = "PLACEHOLDER TEXT";
             // 
             // LblCameraPathThing4
             // 
@@ -3326,9 +3306,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathAreaMin.AutoSize = true;
             this.LblCameraPathAreaMin.Location = new System.Drawing.Point(100, 234);
             this.LblCameraPathAreaMin.Name = "LblCameraPathAreaMin";
-            this.LblCameraPathAreaMin.Size = new System.Drawing.Size(43, 13);
+            this.LblCameraPathAreaMin.Size = new System.Drawing.Size(117, 13);
             this.LblCameraPathAreaMin.TabIndex = 96;
-            this.LblCameraPathAreaMin.Text = "<min x>";
+            this.LblCameraPathAreaMin.Text = "PLACEHOLDER TEXT";
             // 
             // LblCameraPathAreaMax
             // 
@@ -3336,9 +3316,9 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathAreaMax.AutoSize = true;
             this.LblCameraPathAreaMax.Location = new System.Drawing.Point(100, 271);
             this.LblCameraPathAreaMax.Name = "LblCameraPathAreaMax";
-            this.LblCameraPathAreaMax.Size = new System.Drawing.Size(46, 13);
+            this.LblCameraPathAreaMax.Size = new System.Drawing.Size(117, 13);
             this.LblCameraPathAreaMax.TabIndex = 98;
-            this.LblCameraPathAreaMax.Text = "<max x>";
+            this.LblCameraPathAreaMax.Text = "PLACEHOLDER TEXT";
             // 
             // label102
             // 
@@ -6450,8 +6430,7 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblSelectedPoiGeometry;
 		private Label label35;
 		private Label label38;
-		private Label LblSelectedPoiZ;
-		private Label LblSelectedPoiX;
+		private Label LblSelectedPoiXZ;
 		private Label LblTriggerCount;
 		private Button BtnReadTriggers;
 		private ListBox LbxTriggers;
@@ -6521,8 +6500,7 @@ namespace BizHawk.Client.EmuHawk
 		private Label label61;
 		private Label label19;
 		private Label label18;
-		private Label LblSpawnZ;
-		private Label LblSpawnX;
+		private Label LblSpawnXZ;
 		private Label LblSpawnGeometry;
 		private Label label67;
 		private Label label66;

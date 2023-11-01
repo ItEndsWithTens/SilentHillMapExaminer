@@ -89,9 +89,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ClearDisplayedPoiInfo()
 		{
+			CultureInfo c = CultureInfo.CurrentCulture;
+			string sep = c.NumberFormat.NumberGroupSeparator;
+
 			LblSelectedPoiAddress.Text = "0x";
-			LblSelectedPoiX.Text = "???.??";
-			LblSelectedPoiZ.Text = "???.??";
+			LblSelectedPoiXZ.Text = $"<x{sep} z>";
 			LblSelectedPoiGeometry.Text = "0x";
 			LbxPoiAssociatedTriggers.Items.Clear();
 		}
@@ -289,7 +291,7 @@ namespace BizHawk.Client.EmuHawk
 			// to tell at a glance where you are in the list.
 			int idx = LbxPois.Items.IndexOf(e.ListItem);
 			CultureInfo c = CultureInfo.CurrentCulture;
-			e.Value = $"{idx.ToString(c)}:    {e.ListItem}";
+			e.Value = $"{idx.ToString(c)}: {e.ListItem}";
 		}
 
 		private void LbxPois_SelectedIndexChanged(object sender, EventArgs e)
@@ -321,10 +323,10 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			CultureInfo c = CultureInfo.CurrentCulture;
+			string sep = c.NumberFormat.NumberGroupSeparator;
 
 			LblSelectedPoiAddress.Text = $"0x{poi.Address.ToString("X2", c)}";
-			LblSelectedPoiX.Text = $"{poi.X.ToString("0.##", c)}";
-			LblSelectedPoiZ.Text = $"{poi.Z.ToString("0.##", c)}";
+			LblSelectedPoiXZ.Text = $"<{poi.X.ToString("0.##", c)}{sep} {poi.Z.ToString("0.##", c)}>";
 			LblSelectedPoiGeometry.Text = $"0x{poi.Geometry.ToString("X2", c)}";
 
 			RefreshLbxPoiAssociatedTriggers();
@@ -465,7 +467,7 @@ namespace BizHawk.Client.EmuHawk
 			else
 			{
 				var poi = (PointOfInterest)LbxPois.Items[t.PoiIndex];
-				poiString = $"{t.PoiIndex.ToString(c)} ({poi})";
+				poiString = $"{t.PoiIndex.ToString(c)} {poi}";
 			}
 
 			int idx = LbxTriggers.Items.IndexOf(t);

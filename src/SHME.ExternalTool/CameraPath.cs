@@ -74,11 +74,12 @@ namespace SHME.ExternalTool
 		public override string ToString()
 		{
 			CultureInfo c = CultureInfo.CurrentCulture;
+			string sep = c.NumberFormat.NumberGroupSeparator;
 
 			return
-				$"Area: {AreaMinX.ToString("0.##", c)},{AreaMinZ.ToString("0.##", c)}" +
+				$"<{AreaMinX.ToString("0.##", c)}{sep} {AreaMinZ.ToString("0.##", c)}>" +
 				"  |  " +
-				$"{AreaMaxX.ToString("0.##", c)},{AreaMaxZ.ToString("0.##", c)}";
+				$"<{AreaMaxX.ToString("0.##", c)}{sep} {AreaMaxZ.ToString("0.##", c)}>";
 		}
 	}
 }

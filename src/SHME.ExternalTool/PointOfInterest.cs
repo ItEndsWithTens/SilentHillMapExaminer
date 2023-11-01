@@ -89,8 +89,9 @@ namespace SHME.ExternalTool
 		public override string ToString()
 		{
 			CultureInfo c = CultureInfo.CurrentCulture;
+			string sep = c.NumberFormat.NumberGroupSeparator;
 
-			return $"{X.ToString("0.##", c)}, {Z.ToString("0.##", c)}";
+			return $"<{X.ToString("0.##", c)}{sep} {Z.ToString("0.##", c)}>";
 		}
 	}
 }
