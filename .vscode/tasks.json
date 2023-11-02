@@ -43,10 +43,74 @@
             "group": "build"
         },
         {
-            "label": "setEmuHawkMonoEnv",
+            "label": "launchEmuHawkWithMonoDebugOptions",
             "dependsOn": "buildExternalTool",
-            "type": "shell",
-            "command": "${workspaceFolder}/scripts/set-emuhawkmono-env.sh"
+            "type": "process",
+
+            // Required in order to let the problemMatcher's background watch
+            // keep an eye on terminal output.
+            "isBackground": true,
+
+            "command": "./EmuHawkMono.sh",
+            "args": [
+                "${input:DiscImagePath}",
+                "--open-ext-tool-dll=SHME.ExternalTool",
+                "${input:SaveStateSlot}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/lib/BizHawk/output",
+                "env": {
+                    "MONO_ENV_OPTIONS": "--debug --debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:55555"
+                }
+            },
+            "problemMatcher": {
+                // An empty pattern is necessary to make this problem matcher
+                // work at all, for whatever reason.
+                "pattern": {
+                    "regexp": ""
+                },
+                "background": {
+                    "activeOnStart": true,
+
+                    // Like "pattern" above, this isn't important, but VS Code
+                    // requires it to create a problemMatcher background watch.
+                    "beginsPattern": ".",
+
+                    // Watch the terminal output for this text to indicate the
+                    // task is done, and allow moving on to the next step, in
+                    // this case letting the launch config attach to Mono. The
+                    // EmuHawkMono script shipped with BizHawk doesn't exit
+                    // until the emulator shuts down.
+                    "endsPattern": "^\\(output captured.*$"
+                }
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "DiscImagePath",
+            "type": "promptString",
+            "description": "Path to a Silent Hill disc image.",
+            "default": "../../../scratch/DiscImages/CloneCD/SilentHill.ccd"
+        },
+        {
+            "id": "SaveStateSlot",
+            "type": "pickString",
+            "description": "Which save state to load, if any.",
+            "default": "",
+            "options": [
+                "",
+                "--load-slot=1",
+                "--load-slot=2",
+                "--load-slot=3",
+                "--load-slot=4",
+                "--load-slot=5",
+                "--load-slot=6",
+                "--load-slot=7",
+                "--load-slot=8",
+                "--load-slot=9",
+                "--load-slot=0",
+            ]
         }
     ]
 }

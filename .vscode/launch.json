@@ -7,41 +7,10 @@
         {
             "name": "EmuHawkMono",
             "type": "mono",
-            "preLaunchTask": "setEmuHawkMonoEnv",
-            "request": "launch",
-            "program": "${workspaceFolder}/lib/BizHawk/output/EmuHawk.exe",
-            "args": [
-                "${input:DiscImagePath}",
-                "--open-ext-tool-dll=SHME.ExternalTool",
-                "${input:SaveStateSlot}"
-            ]
-        }
-    ],
-    "inputs": [
-        {
-            "id": "DiscImagePath",
-            "type": "promptString",
-            "description": "Path to a Silent Hill disc image.",
-            "default": "../../../scratch/DiscImages/CloneCD/SilentHill.ccd"
-        },
-        {
-            "id": "SaveStateSlot",
-            "type": "pickString",
-            "description": "Which save state to load, if any.",
-            "default": "",
-            "options": [
-                "",
-                "--load-slot=1",
-                "--load-slot=2",
-                "--load-slot=3",
-                "--load-slot=4",
-                "--load-slot=5",
-                "--load-slot=6",
-                "--load-slot=7",
-                "--load-slot=8",
-                "--load-slot=9",
-                "--load-slot=0",
-            ]
+            "request": "attach",
+            "preLaunchTask": "launchEmuHawkWithMonoDebugOptions",
+            "address": "localhost",
+            "port": 55555
         }
     ]
 }
