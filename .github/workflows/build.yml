@@ -32,7 +32,9 @@ jobs:
       id: bizhawk-binaries-cache-restore
       uses: martijnhols/actions-cache/restore@v3
       with:
-        path: lib\BizHawk\output
+        path: |
+          lib/BizHawk/output/dll/BizHawk.*.dll
+          lib/BizHawk/output/EmuHawk.exe
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
         
     - name: Check out BizHawk
@@ -49,7 +51,9 @@ jobs:
       if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
       uses: martijnhols/actions-cache/save@v3
       with:
-        path: lib\BizHawk\output
+        path: |
+          lib/BizHawk/output/dll/BizHawk.*.dll
+          lib/BizHawk/output/EmuHawk.exe
         key: ${{ steps.bizhawk-binaries-cache-restore.outputs.primary-key }}
 
     - name: Build external tool
