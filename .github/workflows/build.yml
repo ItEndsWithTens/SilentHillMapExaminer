@@ -15,15 +15,15 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
         submodules: false
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
         
     - name: Get BizHawk submodule SHA
       run: echo "bizhawk_hash=$(git rev-parse HEAD:lib/BizHawk)" >> $env:GITHUB_ENV
@@ -32,7 +32,9 @@ jobs:
       id: bizhawk-binaries-cache-restore
       uses: martijnhols/actions-cache/restore@v3
       with:
-        path: lib\BizHawk\output
+        path: |
+          lib/BizHawk/output/dll/BizHawk.*.dll
+          lib/BizHawk/output/EmuHawk.exe
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
         
     - name: Check out BizHawk
@@ -49,7 +51,9 @@ jobs:
       if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
       uses: martijnhols/actions-cache/save@v3
       with:
-        path: lib\BizHawk\output
+        path: |
+          lib/BizHawk/output/dll/BizHawk.*.dll
+          lib/BizHawk/output/EmuHawk.exe
         key: ${{ steps.bizhawk-binaries-cache-restore.outputs.primary-key }}
 
     - name: Build external tool
@@ -77,10 +81,11 @@ jobs:
         auto-push: true
 
     - name: Upload .zip
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: zip
         path: artifacts/dist/*.zip
+        compression-level: 0
 
 
 
@@ -93,7 +98,7 @@ jobs:
 
     steps:
     - name: Download zip file
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: zip
 
