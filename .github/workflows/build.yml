@@ -23,7 +23,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
         
     - name: Get BizHawk submodule SHA
       run: echo "bizhawk_hash=$(git rev-parse HEAD:lib/BizHawk)" >> $env:GITHUB_ENV
