@@ -13,6 +13,11 @@ jobs:
 
     runs-on: windows-2022
 
+    env:
+      bizhawk_required_files: |
+        lib/BizHawk/output/dll/BizHawk.*.dll
+        lib/BizHawk/output/EmuHawk.exe
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -32,9 +37,7 @@ jobs:
       id: bizhawk-binaries-cache-restore
       uses: martijnhols/actions-cache/restore@v3
       with:
-        path: |
-          lib/BizHawk/output/dll/BizHawk.*.dll
-          lib/BizHawk/output/EmuHawk.exe
+        path: ${{ env.bizhawk_required_files }}
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
         
     - name: Check out BizHawk
@@ -51,9 +54,7 @@ jobs:
       if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
       uses: martijnhols/actions-cache/save@v3
       with:
-        path: |
-          lib/BizHawk/output/dll/BizHawk.*.dll
-          lib/BizHawk/output/EmuHawk.exe
+        path: ${{ env.bizhawk_required_files }}
         key: ${{ steps.bizhawk-binaries-cache-restore.outputs.primary-key }}
 
     - name: Build external tool
