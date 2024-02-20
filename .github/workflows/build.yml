@@ -41,11 +41,11 @@ jobs:
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
         
     - name: Check out BizHawk
-      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
+      if: ${{ hashFiles(env.bizhawk_required_files) == '' }}
       run: git submodule update --init
 
     - name: Build BizHawk
-      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
+      if: ${{ hashFiles(env.bizhawk_required_files) == '' }}
       run: QuickTestBuildAndPackage_Release.bat
       shell: cmd
       working-directory: lib/BizHawk/Dist
