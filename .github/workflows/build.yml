@@ -13,6 +13,18 @@ jobs:
 
     runs-on: windows-2022
 
+    defaults:
+      run:
+        shell: pwsh
+
+    env:
+      GH_TOKEN: ${{ github.token }}
+      bizhawk_hash: ''
+      bizhawk_required_files: |
+        lib/BizHawk/output/dll/BizHawk.*.dll
+        lib/BizHawk/output/EmuHawk.exe
+      skip_benchmarks: false
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -24,52 +36,88 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-        
+
     - name: Get BizHawk submodule SHA
       run: echo "bizhawk_hash=$(git rev-parse HEAD:lib/BizHawk)" >> $env:GITHUB_ENV
-        
+
     - name: Restore BizHawk binaries from cache
       id: bizhawk-binaries-cache-restore
       uses: martijnhols/actions-cache/restore@v3
       with:
-        path: |
-          lib/BizHawk/output/dll/BizHawk.*.dll
-          lib/BizHawk/output/EmuHawk.exe
+        path: ${{ env.bizhawk_required_files }}
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
-        
-    - name: Check out BizHawk
+
+    - name: Download BizHawk binaries
       if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
-      run: git submodule update --init
+      run: |
+        git submodule update --init --depth 1
+        git -C lib/BizHawk fetch --tags
+        $tag = $(git -C lib/BizHawk tag --points-at HEAD)
+        if ([string]::IsNullOrEmpty($tag))
+        {
+          exit 0
+        }
+        else
+        {
+          gh release download -R TASVideos/BizHawk -p BizHawk*$tag*.zip
+          Expand-Archive -Path ./BizHawk*$tag*.zip -DestinationPath lib/BizHawk/output
+        }
 
     - name: Build BizHawk
-      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
+      if: ${{ hashFiles(env.bizhawk_required_files) == '' }}
       run: QuickTestBuildAndPackage_Release.bat
       shell: cmd
       working-directory: lib/BizHawk/Dist
-    
+
     - name: Save BizHawk binaries to cache
       if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
       uses: martijnhols/actions-cache/save@v3
       with:
-        path: |
-          lib/BizHawk/output/dll/BizHawk.*.dll
-          lib/BizHawk/output/EmuHawk.exe
+        path: ${{ env.bizhawk_required_files }}
         key: ${{ steps.bizhawk-binaries-cache-restore.outputs.primary-key }}
 
     - name: Build external tool
       run: dotnet build -c:Release -t:CreateZip
       working-directory: src/SHME.ExternalTool
-      
+
+    - name: Check for [skip benchmarks]
+      run: |
+        # rev-list is necessary because the HEAD~X syntax doesn't actually go in
+        # order one commit at a time, instead traversing by parent, so merge
+        # commits cause big jumps that throw off one's expectations.
+        foreach ($sha in $(git rev-list HEAD))
+        {
+          $msg = $(git show -s --format=%B $sha)
+
+          # In case of a force push to a pull request, Github will add an
+          # invisible merge commit that doesn't contain the expected newest
+          # commit message. Merge commits should otherwise be rare in a PR,
+          # so simply checking the message for the word "Merge" handles this.
+          $merge = ($msg -split '\n')[0].StartsWith('Merge')
+          if (${{ github.event_name == 'pull_request' }} && $merge)
+          {
+            continue
+          }
+
+          $match = $msg -match '\[skip benchmarks?\]'
+          $skip = ![string]::IsNullOrEmpty($match)
+
+          echo "skip_benchmarks=$skip" >> $env:GITHUB_ENV
+          break
+        }
+
     - name: Run benchmarks
+      if: ${{ env.skip_benchmarks != 'true' }}
       run: dotnet run -c Release -- -f * -e json -a ../../artifacts/test/benchmark
       working-directory: test/Benchmark
-      
+
     - name: Rename benchmark results
+      if: ${{ env.skip_benchmarks != 'true' }}
       run: Rename-Item -Path BenchmarkRun*.json -NewName benchmark-results.json
       working-directory: artifacts/test/benchmark/results
 
     - name: Upload benchmark results
-      if: ${{ github.event_name != 'pull_request' }}
+      if: ${{ github.event_name != 'pull_request' && env.skip_benchmarks != 'true' }}
       uses: benchmark-action/github-action-benchmark@v1
       with:
         name: SHME BenchmarkDotNet results
@@ -91,9 +139,9 @@ jobs:
 
   create-release:
     needs: build
-    
+
     if: ${{ github.event_name != 'pull_request' }}
-    
+
     runs-on: ubuntu-latest
 
     steps:
