@@ -158,7 +158,7 @@ jobs:
         automatic_release_tag: 'latest'
         title: 'Latest dev build'
         prerelease: false
-        generate_release_notes: true
+        generate_notes: true
         files: |
           *.zip
 
@@ -169,6 +169,6 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         draft: true
         prerelease: false
-        generate_release_notes: true
+        generate_notes: true
         files: |
           *.zip
