@@ -18,6 +18,7 @@ jobs:
         shell: pwsh
 
     env:
+      GH_TOKEN: ${{ github.token }}
       bizhawk_hash: ''
       bizhawk_required_files: |
         lib/BizHawk/output/dll/BizHawk.*.dll
@@ -46,9 +47,21 @@ jobs:
         path: ${{ env.bizhawk_required_files }}
         key: bizhawk-binaries-${{ env.bizhawk_hash }}
 
-    - name: Check out BizHawk
-      if: ${{ hashFiles(env.bizhawk_required_files) == '' }}
-      run: git submodule update --init
+    - name: Download BizHawk binaries
+      if: ${{ steps.bizhawk-binaries-cache-restore.outputs.cache-hit != 'true' }}
+      run: |
+        git submodule update --init --depth 1
+        git -C lib/BizHawk fetch --tags
+        $tag = $(git -C lib/BizHawk tag --points-at HEAD)
+        if ([string]::IsNullOrEmpty($tag))
+        {
+          exit 0
+        }
+        else
+        {
+          gh release download -R TASVideos/BizHawk -p BizHawk*$tag*.zip
+          Expand-Archive -Path ./BizHawk*$tag*.zip -DestinationPath lib/BizHawk/output
+        }
 
     - name: Build BizHawk
       if: ${{ hashFiles(env.bizhawk_required_files) == '' }}
@@ -80,15 +93,14 @@ jobs:
           # invisible merge commit that doesn't contain the expected newest
           # commit message. Merge commits should otherwise be rare in a PR,
           # so simply checking the message for the word "Merge" handles this.
-          #
-          # Powershell's StartsWith also returns multiple values, one per line
-          # of the input, so just check element 0 and ignore the rest.
-          if (${{ github.event_name == 'pull_request' }} && $msg[0].StartsWith('Merge'))
+          $merge = ($msg -split '\n')[0].StartsWith('Merge')
+          if (${{ github.event_name == 'pull_request' }} && $merge)
           {
             continue
           }
 
-          $skip = $($msg -match '\[skip benchmarks?\]') -ne ''
+          $match = $msg -match '\[skip benchmarks?\]'
+          $skip = ![string]::IsNullOrEmpty($match)
 
           echo "skip_benchmarks=$skip" >> $env:GITHUB_ENV
           break
