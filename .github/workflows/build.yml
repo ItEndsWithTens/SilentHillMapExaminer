@@ -87,14 +87,14 @@ jobs:
         # commits cause big jumps that throw off one's expectations.
         foreach ($sha in $(git rev-list HEAD))
         {
-          $msg = $(git show -s --format=%B $sha)
+          $msg = $(git show -s --format=%B $sha) | Out-String
 
           # In case of a force push to a pull request, Github will add an
           # invisible merge commit that doesn't contain the expected newest
           # commit message. Merge commits should otherwise be rare in a PR,
           # so simply checking the message for the word "Merge" handles this.
           $pr = "${{ github.event_name == 'pull_request' }}" -eq 'true'
-          $merge = ($msg -split '\n')[0].StartsWith('Merge')
+          $merge = $msg.StartsWith('Merge')
           if ($pr -and $merge)
           {
             continue
