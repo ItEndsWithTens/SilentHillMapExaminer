@@ -94,7 +94,7 @@ jobs:
           # commit message. Merge commits should otherwise be rare in a PR,
           # so simply checking the message for the word "Merge" handles this.
           $merge = ($msg -split '\n')[0].StartsWith('Merge')
-          if (${{ github.event_name == 'pull_request' }} && $merge)
+          if (${{ github.event_name == 'pull_request' }} -and $merge)
           {
             continue
           }
