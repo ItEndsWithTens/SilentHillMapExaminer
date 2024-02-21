@@ -93,8 +93,9 @@ jobs:
           # invisible merge commit that doesn't contain the expected newest
           # commit message. Merge commits should otherwise be rare in a PR,
           # so simply checking the message for the word "Merge" handles this.
+          $pr = "${{ github.event_name == 'pull_request' }}" -eq 'true'
           $merge = ($msg -split '\n')[0].StartsWith('Merge')
-          if (${{ github.event_name == 'pull_request' }} -and $merge)
+          if ($pr -and $merge)
           {
             continue
           }
