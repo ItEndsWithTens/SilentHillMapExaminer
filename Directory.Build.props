@@ -30,8 +30,7 @@
     <DebugType>full</DebugType>
 
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-    <AnalysisLevel>5.0</AnalysisLevel>
+    <AnalysisLevel>latest-AllEnabledByDefault</AnalysisLevel>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
