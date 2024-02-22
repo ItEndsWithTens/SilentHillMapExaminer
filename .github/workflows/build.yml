@@ -18,6 +18,7 @@ jobs:
         shell: pwsh
 
     env:
+      DOTNET_INSTALL_DIR: D:\dotnet
       GH_TOKEN: ${{ github.token }}
       bizhawk_hash: ''
       bizhawk_required_files: |
