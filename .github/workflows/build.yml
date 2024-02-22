@@ -83,25 +83,29 @@ jobs:
 
     - name: Check for [skip benchmarks]
       run: |
+        $pr = "${{ github.event_name == 'pull_request' }}" -eq 'true'
+
         # rev-list is necessary because the HEAD~X syntax doesn't actually go in
         # order one commit at a time, instead traversing by parent, so merge
         # commits cause big jumps that throw off one's expectations.
         foreach ($sha in $(git rev-list HEAD))
         {
+          # Powershell treats command output as a string if it's one line, but as
+          # an array of strings if it's multiline. That then changes the behavior
+          # of things like StartsWith or the -match operator. Piping through this
+          # commandlet concatenates arrays into one big string, avoiding that.
           $msg = $(git show -s --format=%B $sha) | Out-String
+
+          $skip = $msg -match '\[skip benchmarks?\]'
 
           # In case of a force push to a pull request, Github will add an
           # invisible merge commit that doesn't contain the expected newest
           # commit message. Merge commits should otherwise be rare in a PR,
           # so simply checking the message for the word "Merge" handles this.
-          $pr = "${{ github.event_name == 'pull_request' }}" -eq 'true'
-          $merge = $msg.StartsWith('Merge')
-          if ($pr -and $merge)
+          if ((-not $skip) -and $pr -and $msg.StartsWith('Merge'))
           {
             continue
           }
-
-          $skip = $msg -match '\[skip benchmarks?\]'
 
           echo "skip_benchmarks=$skip" >> $env:GITHUB_ENV
           break
