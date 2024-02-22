@@ -46,7 +46,7 @@
   ## Development
 
   Be careful using C# features introduced beyond version 7.3!
-  
+
   This project uses C# language version 10.0 despite running under .NET Framework 4.8, a combination which is not officially supported. Newer versions of the language introduce some features that require new types and/or an updated runtime, but there are nonetheless many purely syntactical improvements that prove exceptionally useful, and are too good to ignore.
 
   For more information see [Microsoft's documentation](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version), [StackOverflow](https://stackoverflow.com/questions/56651472/does-c-sharp-8-support-the-net-framework), and [this blog post by Stuart Lang](https://stu.dev/csharp8-doing-unsupported-things/).
@@ -66,11 +66,11 @@
      - `cd ..\..\..`
      - `dotnet build -c:Release`
 
-  4. Optionally, create the distribution zip file.
+  4. Optionally, create the distribution zip file. Keep in mind that the CreateZip build target strips local file path information out of the embedded debug symbols, so this step is only useful for distributable builds, not local development and debugging.
      - `dotnet build src\SHME.ExternalTool\SHME.ExternalTool.csproj -c:Release -t:CreateZip`
 
   Drill down into the artifacts directory to find the DLL, and copy it into your BizHawk\ExternalTools directory. The tool should then be available in BizHawk, provided you've loaded a disc image of Silent Hill that matches the expected hash.
-  
+
   For easy debugging in Visual Studio, open the external tool project's properties and create a new Executable debug launch profile as follows:
 
    - Executable: `.\EmuHawk.exe`
@@ -78,6 +78,8 @@
    - Working directory: `..\..\lib\BizHawk\output`
 
   You'll be up and running with a single keypress, and working on the plugin should then be vastly more convenient. Have fun!
+
+  In event of any problems, try cleaning the solution and rebuilding just in case, and don't forget about dotnet build's `-bl` option that spits out a binary log. With one in hand, head over to https://msbuildlog.com/ and save yourself a lifetime of build debugging anguish.
 
 
 
