@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
 
     <Reference Include="BizHawk.Bizware.BizwareGL" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Bizware.BizwareGL.dll" />
@@ -48,7 +52,6 @@
 
   <Target Name="InstallInEmulator" AfterTargets="PostBuildEvent">
     <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(BizHawkOutputDir)\ExternalTools" />
-    <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).pdb" DestinationFolder="$(BizHawkOutputDir)\ExternalTools" />
   </Target>
 
   <PropertyGroup>
@@ -56,7 +59,23 @@
     <PrepDir>$(DistDir)\prep\</PrepDir>
   </PropertyGroup>
 
-  <Target Name="CreateZip" DependsOnTargets="Build">
+  <!--When running the CreateZip target to produce the distribution archive,
+  it's only sensible to strip local file path information out of the embedded
+  debug symbols even if the build happens to be running on a developer's local
+  machine. A dedicated target that CreateZip depends on handles that with,
+  admittedly, some fuss.-->
+  <Target Name="SetCIBuild" BeforeTargets="Build">
+    <PropertyGroup>
+      <!--ContinuousIntegrationBuild, when set true as a property directly in a
+      project, sets DeterministicSourcePaths true as well. Unfortunately, for
+      the time being updating the value of the former while in a target fails to
+      also update the value of the latter. Doing it manually seems to work.-->
+      <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+      <DeterministicSourcePaths>true</DeterministicSourcePaths>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="CreateZip" DependsOnTargets="SetCIBuild;Build">
     <RemoveDir Directories="$(PrepDir)" />
     <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(PrepDir)" />
     <Copy SourceFiles="$(TopLevelDirectory)\README.md" DestinationFiles="$(PrepDir)\$(MSBuildProjectName).txt" />
