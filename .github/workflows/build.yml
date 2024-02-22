@@ -20,6 +20,7 @@ jobs:
     env:
       DOTNET_INSTALL_DIR: D:\dotnet
       GH_TOKEN: ${{ github.token }}
+      NUGET_PACKAGES: ${{ github.workspace }}\.nuget\packages
       bizhawk_hash: ''
       bizhawk_required_files: |
         lib/BizHawk/output/dll/BizHawk.*.dll
