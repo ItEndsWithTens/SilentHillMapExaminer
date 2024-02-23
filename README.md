@@ -66,8 +66,8 @@
      - `cd ..\..\..`
      - `dotnet build -c:Release`
 
-  4. Optionally, create the distribution zip file. Keep in mind that the CreateZip build target strips local file path information out of the embedded debug symbols, so this step is only useful for distributable builds, not local development and debugging.
-     - `dotnet build src\SHME.ExternalTool\SHME.ExternalTool.csproj -c:Release -t:CreateZip`
+  4. Optionally, create the distribution zip file. Keep in mind that the ContinuousIntegrationBuild property used here strips local file path information out of the embedded debug symbols, so this step is only useful for distributable builds, not local development and debugging.
+     - `dotnet build src\SHME.ExternalTool\SHME.ExternalTool.csproj -c:Release -t:CreateZip -p:ContinuousIntegrationBuild=true`
 
   Drill down into the artifacts directory to find the DLL, and copy it into your BizHawk\ExternalTools directory. The tool should then be available in BizHawk, provided you've loaded a disc image of Silent Hill that matches the expected hash.
 

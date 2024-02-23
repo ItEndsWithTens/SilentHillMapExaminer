@@ -59,23 +59,24 @@
     <PrepDir>$(DistDir)\prep\</PrepDir>
   </PropertyGroup>
 
-  <!--When running the CreateZip target to produce the distribution archive,
-  it's only sensible to strip local file path information out of the embedded
-  debug symbols even if the build happens to be running on a developer's local
-  machine. A dedicated target that CreateZip depends on handles that with,
-  admittedly, some fuss.-->
-  <Target Name="SetCIBuild" BeforeTargets="Build">
-    <PropertyGroup>
-      <!--ContinuousIntegrationBuild, when set true as a property directly in a
-      project, sets DeterministicSourcePaths true as well. Unfortunately, for
-      the time being updating the value of the former while in a target fails to
-      also update the value of the latter. Doing it manually seems to work.-->
-      <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-      <DeterministicSourcePaths>true</DeterministicSourcePaths>
-    </PropertyGroup>
-  </Target>
+  <Target Name="CreateZip" DependsOnTargets="Build">
+    <!--ContinuousIntegrationBuild is necessary to strip local file paths from
+    the embedded debug information, but it must be defined during the evaluation
+    phase of a build. DeterministicSourcePaths can be modified in a target,
+    during the execution phase, but ContinuousIntegrationBuild presumably has
+    other effects, or the two properties wouldn't be separate.-->
+    <ItemGroup>
+      <Msg Include="Building $(Product) without ContinuousIntegrationBuild=true produces embedded" />
+      <Msg Include="debug information containing local file paths, which doesn't make sense for" />
+      <Msg Include="packaging a distribution. Set that property when running this target, or use" />
+      <Msg Include="SHMEForceNondeterministicPackage=true if you know what you're doing and insist" />
+      <Msg Include="on packaging a nondeterministic build." />
+    </ItemGroup>
 
-  <Target Name="CreateZip" DependsOnTargets="SetCIBuild;Build">
+    <Error
+      Condition="('$(ContinuousIntegrationBuild)' != 'true') And ('$(SHMEForceNondeterministicPackage)' != 'true')"
+      Text="@(Msg, ' ')" />
+
     <RemoveDir Directories="$(PrepDir)" />
     <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(PrepDir)" />
     <Copy SourceFiles="$(TopLevelDirectory)\README.md" DestinationFiles="$(PrepDir)\$(MSBuildProjectName).txt" />

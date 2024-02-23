@@ -27,12 +27,11 @@
 
     <!--Taken together, these properties allow Source Link to provide embedded
     debug information that's tied to public source files hosted on Github,
-    allowing convenient debugging even without local copies of the code. Note
-    that ContinuousIntegrationBuild may be overridden by the SetCIBuild task.-->
+    allowing convenient debugging even without local copies of the code.-->
     <DebugSymbols>true</DebugSymbols>
     <DebugType>embedded</DebugType>
     <Deterministic>true</Deterministic>
-    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'" >true</ContinuousIntegrationBuild>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
 
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest-AllEnabledByDefault</AnalysisLevel>
