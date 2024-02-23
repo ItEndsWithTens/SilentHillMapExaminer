@@ -45,7 +45,7 @@ namespace BizHawk.Client.EmuHawk
 
 		public ApiContainer? ApiContainer { get; set; }
 
-		private ApiContainer Apis => ApiContainer ?? throw new ArgumentNullException();
+		private ApiContainer Apis => ApiContainer ?? throw new ArgumentNullException(nameof(ApiContainer));
 
 		[RequiredService]
 		private IMemoryDomains? MemDomains { get; set; }
