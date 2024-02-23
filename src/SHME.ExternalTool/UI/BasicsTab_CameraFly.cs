@@ -207,7 +207,7 @@ namespace BizHawk.Client.EmuHawk
 				_camPos += _speed * _diff;
 				_camLook += _speed * _diff;
 			}
-			else if (_backward)
+			if (_backward)
 			{
 				_camPos -= _speed * _diff;
 				_camLook -= _speed * _diff;
@@ -220,7 +220,7 @@ namespace BizHawk.Client.EmuHawk
 				_camPos -= _speed * _camRight;
 				_camLook -= _speed * _camRight;
 			}
-			else if (_right)
+			if (_right)
 			{
 				_camPos += _speed * _camRight;
 				_camLook += _speed * _camRight;
@@ -231,7 +231,7 @@ namespace BizHawk.Client.EmuHawk
 				_camPos += _speed * _worldUp;
 				_camLook += _speed * _worldUp;
 			}
-			else if (_down)
+			if (_down)
 			{
 				_camPos -= _speed * _worldUp;
 				_camLook -= _speed * _worldUp;
