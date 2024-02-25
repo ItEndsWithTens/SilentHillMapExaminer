@@ -524,6 +524,8 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			RaycastSelectionTimer.Tick += RaycastSelectionTimer_Tick;
+
+			BtnCameraFly.LostFocus += BtnCameraFly_LostFocus;
 		}
 		private void DetachEventHandlers()
 		{
@@ -536,6 +538,8 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			RaycastSelectionTimer.Tick -= RaycastSelectionTimer_Tick;
+
+			BtnCameraFly.LostFocus -= BtnCameraFly_LostFocus;
 		}
 
 		private float CalculateGameFov()
