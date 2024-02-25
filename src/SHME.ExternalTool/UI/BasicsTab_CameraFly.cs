@@ -8,10 +8,8 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		protected override void OnLostFocus(EventArgs e)
+		private void BtnCameraFly_LostFocus(object sender, EventArgs e)
 		{
-			base.OnLostFocus(e);
-
 			BtnCameraFly_ClickSecond(this, EventArgs.Empty);
 		}
 
@@ -295,7 +293,6 @@ namespace BizHawk.Client.EmuHawk
 				pitchDegrees -= deltaY;
 			}
 			yawDegrees += deltaX;
-
 
 			_holdCameraPitch = Core.DegreesToGameUnits(pitchDegrees);
 			_holdCameraYaw = Core.DegreesToGameUnits(yawDegrees);
