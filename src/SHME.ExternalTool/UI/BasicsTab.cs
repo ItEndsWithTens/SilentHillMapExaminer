@@ -41,6 +41,8 @@ namespace BizHawk.Client.EmuHawk
 
 	public partial class CustomMainForm
 	{
+		private Renderable _gameCameraLookAt;
+
 		private void InitializeBasicsTab()
 		{
 			TrkFov.Value = (int)Camera.Fov;

@@ -40,25 +40,15 @@ namespace BizHawk.Client.EmuHawk
             this.CbxHarrySetPositionMoveCamera = new System.Windows.Forms.CheckBox();
             this.GbxCamera = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel25 = new System.Windows.Forms.TableLayoutPanel();
+            this.CbxCameraDetach = new System.Windows.Forms.CheckBox();
             this.LblCameraPositionZ = new System.Windows.Forms.Label();
             this.label63 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel27 = new System.Windows.Forms.TableLayoutPanel();
-            this.CbxEnableCameraSection = new System.Windows.Forms.CheckBox();
-            this.CbxCameraFlyInvert = new System.Windows.Forms.CheckBox();
-            this.TbxCameraFlySensitivity = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.CbxCameraDetach = new System.Windows.Forms.CheckBox();
-            this.BtnCameraFly = new System.Windows.Forms.Button();
-            this.TbxCameraFlySpeed = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
             this.LblCameraPositionY = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LblCameraPositionX = new System.Windows.Forms.Label();
             this.LblCameraDrawDistance = new System.Windows.Forms.Label();
-            this.CbxCameraLockToHead = new System.Windows.Forms.CheckBox();
-            this.CbxCameraFreeze = new System.Windows.Forms.CheckBox();
             this.label64 = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
             this.label66 = new System.Windows.Forms.Label();
@@ -66,8 +56,11 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPitch = new System.Windows.Forms.Label();
             this.LblCameraYaw = new System.Windows.Forms.Label();
             this.LblCameraRoll = new System.Windows.Forms.Label();
-            this.TrkFov = new System.Windows.Forms.TrackBar();
             this.LblFov = new System.Windows.Forms.Label();
+            this.TrkFov = new System.Windows.Forms.TrackBar();
+            this.CbxCameraLockToHead = new System.Windows.Forms.CheckBox();
+            this.CbxCameraFreeze = new System.Windows.Forms.CheckBox();
+            this.CbxShowLookAt = new System.Windows.Forms.CheckBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.BtnGrabMapGraphic = new System.Windows.Forms.Button();
             this.PbxMapGraphic = new System.Windows.Forms.PictureBox();
@@ -75,28 +68,21 @@ namespace BizHawk.Client.EmuHawk
             this.TbpBasics = new System.Windows.Forms.TabPage();
             this.TlpBasics = new System.Windows.Forms.TableLayoutPanel();
             this.GbxControls = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel28 = new System.Windows.Forms.TableLayoutPanel();
-            this.LblButtonR1 = new System.Windows.Forms.Label();
-            this.LblButtonL1 = new System.Windows.Forms.Label();
-            this.LblButtonR2 = new System.Windows.Forms.Label();
-            this.LblButtonL2 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel31 = new System.Windows.Forms.TableLayoutPanel();
-            this.LblButtonSelect = new System.Windows.Forms.Label();
-            this.LblButtonR3 = new System.Windows.Forms.Label();
-            this.LblButtonStart = new System.Windows.Forms.Label();
-            this.LblButtonL3 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel30 = new System.Windows.Forms.TableLayoutPanel();
-            this.LblButtonTriangle = new System.Windows.Forms.Label();
-            this.LblButtonSquare = new System.Windows.Forms.Label();
-            this.LblButtonCircle = new System.Windows.Forms.Label();
-            this.LblButtonX = new System.Windows.Forms.Label();
-            this.CbxEnableControlsSection = new System.Windows.Forms.CheckBox();
-            this.tableLayoutPanel29 = new System.Windows.Forms.TableLayoutPanel();
-            this.LblButtonUp = new System.Windows.Forms.Label();
-            this.LblButtonLeft = new System.Windows.Forms.Label();
-            this.LblButtonRight = new System.Windows.Forms.Label();
-            this.LblButtonDown = new System.Windows.Forms.Label();
+            this.tableLayoutPanel39 = new System.Windows.Forms.TableLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.TbxCameraFlySensitivity = new System.Windows.Forms.TextBox();
+            this.CbxCameraFlyInvert = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel38 = new System.Windows.Forms.TableLayoutPanel();
+            this.BtnFirstPerson = new System.Windows.Forms.Button();
+            this.NudEyeHeight = new System.Windows.Forms.NumericUpDown();
+            this.label48 = new System.Windows.Forms.Label();
+            this.CbxAlwaysRun = new System.Windows.Forms.CheckBox();
+            this.CbxShowFeet = new System.Windows.Forms.CheckBox();
+            this.CbxHideHarry = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel27 = new System.Windows.Forms.TableLayoutPanel();
+            this.BtnCameraFly = new System.Windows.Forms.Button();
+            this.TbxCameraFlySpeed = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel26 = new System.Windows.Forms.TableLayoutPanel();
             this.CbxOverlayCameraMatchGame = new System.Windows.Forms.CheckBox();
@@ -370,7 +356,7 @@ namespace BizHawk.Client.EmuHawk
             this.label20 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.TbpFiles = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel19 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnReadFiles = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -416,28 +402,46 @@ namespace BizHawk.Client.EmuHawk
             this.label74 = new System.Windows.Forms.Label();
             this.CmbUtilityFixedPointFormat = new System.Windows.Forms.ComboBox();
             this.label73 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.CbxShowFeet = new System.Windows.Forms.CheckBox();
-            this.TbxYawTestThing = new System.Windows.Forms.TextBox();
-            this.BtnFirstPerson = new System.Windows.Forms.Button();
+            this.TbpMisc = new System.Windows.Forms.TabPage();
+            this.GbxController = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel28 = new System.Windows.Forms.TableLayoutPanel();
+            this.LblButtonR1 = new System.Windows.Forms.Label();
+            this.LblButtonL1 = new System.Windows.Forms.Label();
+            this.LblButtonR2 = new System.Windows.Forms.Label();
+            this.LblButtonL2 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel31 = new System.Windows.Forms.TableLayoutPanel();
+            this.LblButtonSelect = new System.Windows.Forms.Label();
+            this.LblButtonR3 = new System.Windows.Forms.Label();
+            this.LblButtonStart = new System.Windows.Forms.Label();
+            this.LblButtonL3 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel30 = new System.Windows.Forms.TableLayoutPanel();
+            this.LblButtonTriangle = new System.Windows.Forms.Label();
+            this.LblButtonSquare = new System.Windows.Forms.Label();
+            this.LblButtonCircle = new System.Windows.Forms.Label();
+            this.LblButtonX = new System.Windows.Forms.Label();
+            this.CbxEnableControlsSection = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel29 = new System.Windows.Forms.TableLayoutPanel();
+            this.LblButtonUp = new System.Windows.Forms.Label();
+            this.LblButtonLeft = new System.Windows.Forms.Label();
+            this.LblButtonRight = new System.Windows.Forms.Label();
+            this.LblButtonDown = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
             this.tableLayoutPanel25.SuspendLayout();
-            this.tableLayoutPanel27.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxMapGraphic)).BeginInit();
             this.TbcMainTabs.SuspendLayout();
             this.TbpBasics.SuspendLayout();
             this.TlpBasics.SuspendLayout();
             this.GbxControls.SuspendLayout();
-            this.tableLayoutPanel23.SuspendLayout();
-            this.tableLayoutPanel28.SuspendLayout();
-            this.tableLayoutPanel31.SuspendLayout();
-            this.tableLayoutPanel30.SuspendLayout();
-            this.tableLayoutPanel29.SuspendLayout();
+            this.tableLayoutPanel39.SuspendLayout();
+            this.tableLayoutPanel38.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudEyeHeight)).BeginInit();
+            this.tableLayoutPanel27.SuspendLayout();
             this.GbxOverlay.SuspendLayout();
             this.tableLayoutPanel26.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraZ)).BeginInit();
@@ -530,7 +534,7 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBZ)).BeginInit();
-            this.tabPage1.SuspendLayout();
+            this.TbpFiles.SuspendLayout();
             this.tableLayoutPanel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -551,7 +555,13 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.TbpMisc.SuspendLayout();
+            this.GbxController.SuspendLayout();
+            this.tableLayoutPanel23.SuspendLayout();
+            this.tableLayoutPanel28.SuspendLayout();
+            this.tableLayoutPanel31.SuspendLayout();
+            this.tableLayoutPanel30.SuspendLayout();
+            this.tableLayoutPanel29.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.SuspendLayout();
             // 
@@ -674,7 +684,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxHarry.Location = new System.Drawing.Point(3, 3);
             this.GbxHarry.Name = "GbxHarry";
             this.GbxHarry.Size = new System.Drawing.Size(335, 300);
-            this.GbxHarry.TabIndex = 13;
+            this.GbxHarry.TabIndex = 0;
             this.GbxHarry.TabStop = false;
             this.GbxHarry.Text = "Harry";
             // 
@@ -890,7 +900,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxCamera.Location = new System.Drawing.Point(344, 3);
             this.GbxCamera.Name = "GbxCamera";
             this.GbxCamera.Size = new System.Drawing.Size(335, 300);
-            this.GbxCamera.TabIndex = 14;
+            this.GbxCamera.TabIndex = 5;
             this.GbxCamera.TabStop = false;
             this.GbxCamera.Text = "Game camera";
             // 
@@ -902,17 +912,15 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel25.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel25.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel25.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel25.Controls.Add(this.CbxCameraDetach, 0, 4);
             this.tableLayoutPanel25.Controls.Add(this.LblCameraPositionZ, 1, 3);
             this.tableLayoutPanel25.Controls.Add(this.label63, 0, 2);
-            this.tableLayoutPanel25.Controls.Add(this.tableLayoutPanel27, 0, 7);
             this.tableLayoutPanel25.Controls.Add(this.label62, 0, 1);
             this.tableLayoutPanel25.Controls.Add(this.LblCameraPositionY, 1, 2);
             this.tableLayoutPanel25.Controls.Add(this.label13, 2, 0);
             this.tableLayoutPanel25.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel25.Controls.Add(this.LblCameraPositionX, 1, 1);
             this.tableLayoutPanel25.Controls.Add(this.LblCameraDrawDistance, 4, 0);
-            this.tableLayoutPanel25.Controls.Add(this.CbxCameraLockToHead, 0, 5);
-            this.tableLayoutPanel25.Controls.Add(this.CbxCameraFreeze, 0, 4);
             this.tableLayoutPanel25.Controls.Add(this.label64, 0, 3);
             this.tableLayoutPanel25.Controls.Add(this.label67, 2, 3);
             this.tableLayoutPanel25.Controls.Add(this.label66, 2, 2);
@@ -920,27 +928,42 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel25.Controls.Add(this.LblCameraPitch, 3, 1);
             this.tableLayoutPanel25.Controls.Add(this.LblCameraYaw, 3, 2);
             this.tableLayoutPanel25.Controls.Add(this.LblCameraRoll, 3, 3);
-            this.tableLayoutPanel25.Controls.Add(this.TrkFov, 0, 6);
             this.tableLayoutPanel25.Controls.Add(this.LblFov, 2, 5);
+            this.tableLayoutPanel25.Controls.Add(this.TrkFov, 0, 7);
+            this.tableLayoutPanel25.Controls.Add(this.CbxCameraLockToHead, 0, 6);
+            this.tableLayoutPanel25.Controls.Add(this.CbxCameraFreeze, 0, 5);
+            this.tableLayoutPanel25.Controls.Add(this.CbxShowLookAt, 3, 4);
             this.tableLayoutPanel25.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel25.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel25.Name = "tableLayoutPanel25";
             this.tableLayoutPanel25.RowCount = 8;
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel25.Size = new System.Drawing.Size(329, 281);
             this.tableLayoutPanel25.TabIndex = 36;
             // 
+            // CbxCameraDetach
+            // 
+            this.CbxCameraDetach.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.CbxCameraDetach.AutoSize = true;
+            this.CbxCameraDetach.Location = new System.Drawing.Point(3, 135);
+            this.CbxCameraDetach.Name = "CbxCameraDetach";
+            this.CbxCameraDetach.Size = new System.Drawing.Size(61, 17);
+            this.CbxCameraDetach.TabIndex = 23;
+            this.CbxCameraDetach.Text = "Detach";
+            this.CbxCameraDetach.UseVisualStyleBackColor = true;
+            this.CbxCameraDetach.CheckedChanged += new System.EventHandler(this.CbxCameraDetach_CheckedChanged);
+            // 
             // LblCameraPositionZ
             // 
             this.LblCameraPositionZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPositionZ.Location = new System.Drawing.Point(67, 90);
+            this.LblCameraPositionZ.Location = new System.Drawing.Point(70, 104);
             this.LblCameraPositionZ.Name = "LblCameraPositionZ";
             this.LblCameraPositionZ.Size = new System.Drawing.Size(45, 15);
             this.LblCameraPositionZ.TabIndex = 2;
@@ -952,142 +975,17 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label63.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(44, 63);
+            this.label63.Location = new System.Drawing.Point(47, 73);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(17, 13);
             this.label63.TabIndex = 30;
             this.label63.Text = "Y:";
             // 
-            // tableLayoutPanel27
-            // 
-            this.tableLayoutPanel27.AutoSize = true;
-            this.tableLayoutPanel27.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel27.ColumnCount = 5;
-            this.tableLayoutPanel25.SetColumnSpan(this.tableLayoutPanel27, 5);
-            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel27.Controls.Add(this.CbxEnableCameraSection, 4, 1);
-            this.tableLayoutPanel27.Controls.Add(this.CbxCameraFlyInvert, 1, 1);
-            this.tableLayoutPanel27.Controls.Add(this.TbxCameraFlySensitivity, 3, 0);
-            this.tableLayoutPanel27.Controls.Add(this.label4, 2, 0);
-            this.tableLayoutPanel27.Controls.Add(this.CbxCameraDetach, 1, 0);
-            this.tableLayoutPanel27.Controls.Add(this.BtnCameraFly, 0, 0);
-            this.tableLayoutPanel27.Controls.Add(this.TbxCameraFlySpeed, 3, 1);
-            this.tableLayoutPanel27.Controls.Add(this.label3, 2, 1);
-            this.tableLayoutPanel27.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel27.Location = new System.Drawing.Point(0, 219);
-            this.tableLayoutPanel27.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel27.Name = "tableLayoutPanel27";
-            this.tableLayoutPanel27.RowCount = 2;
-            this.tableLayoutPanel27.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel27.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel27.Size = new System.Drawing.Size(329, 62);
-            this.tableLayoutPanel27.TabIndex = 25;
-            // 
-            // CbxEnableCameraSection
-            // 
-            this.CbxEnableCameraSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CbxEnableCameraSection.AutoSize = true;
-            this.CbxEnableCameraSection.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxEnableCameraSection.Checked = true;
-            this.CbxEnableCameraSection.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxEnableCameraSection.Location = new System.Drawing.Point(267, 42);
-            this.CbxEnableCameraSection.Name = "CbxEnableCameraSection";
-            this.CbxEnableCameraSection.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableCameraSection.TabIndex = 15;
-            this.CbxEnableCameraSection.Text = "Enable";
-            this.CbxEnableCameraSection.UseVisualStyleBackColor = true;
-            // 
-            // CbxCameraFlyInvert
-            // 
-            this.CbxCameraFlyInvert.AutoSize = true;
-            this.CbxCameraFlyInvert.Location = new System.Drawing.Point(84, 34);
-            this.CbxCameraFlyInvert.Name = "CbxCameraFlyInvert";
-            this.CbxCameraFlyInvert.Size = new System.Drawing.Size(53, 17);
-            this.CbxCameraFlyInvert.TabIndex = 24;
-            this.CbxCameraFlyInvert.Text = "Invert";
-            this.CbxCameraFlyInvert.UseVisualStyleBackColor = true;
-            // 
-            // TbxCameraFlySensitivity
-            // 
-            this.TbxCameraFlySensitivity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TbxCameraFlySensitivity.Location = new System.Drawing.Point(195, 3);
-            this.TbxCameraFlySensitivity.Name = "TbxCameraFlySensitivity";
-            this.TbxCameraFlySensitivity.Size = new System.Drawing.Size(66, 20);
-            this.TbxCameraFlySensitivity.TabIndex = 27;
-            this.TbxCameraFlySensitivity.Text = "0.25";
-            this.toolTip1.SetToolTip(this.TbxCameraFlySensitivity, "Mouse sensitivity, as an arbitrary multiplier");
-            this.TbxCameraFlySensitivity.TextChanged += new System.EventHandler(this.TbxCameraFlySensitivity_TextChanged);
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(155, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(34, 13);
-            this.label4.TabIndex = 28;
-            this.label4.Text = "Sens.";
-            this.toolTip1.SetToolTip(this.label4, "Mouse sensitivity, as an arbitrary multiplier");
-            // 
-            // CbxCameraDetach
-            // 
-            this.CbxCameraDetach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.CbxCameraDetach.AutoSize = true;
-            this.CbxCameraDetach.Location = new System.Drawing.Point(84, 11);
-            this.CbxCameraDetach.Name = "CbxCameraDetach";
-            this.CbxCameraDetach.Size = new System.Drawing.Size(61, 17);
-            this.CbxCameraDetach.TabIndex = 23;
-            this.CbxCameraDetach.Text = "Detach";
-            this.CbxCameraDetach.UseVisualStyleBackColor = true;
-            this.CbxCameraDetach.CheckedChanged += new System.EventHandler(this.CbxCameraDetach_CheckedChanged);
-            // 
-            // BtnCameraFly
-            // 
-            this.BtnCameraFly.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BtnCameraFly.AutoSize = true;
-            this.BtnCameraFly.Location = new System.Drawing.Point(3, 6);
-            this.BtnCameraFly.Name = "BtnCameraFly";
-            this.tableLayoutPanel27.SetRowSpan(this.BtnCameraFly, 2);
-            this.BtnCameraFly.Size = new System.Drawing.Size(75, 50);
-            this.BtnCameraFly.TabIndex = 22;
-            this.BtnCameraFly.Text = "Fly";
-            this.toolTip1.SetToolTip(this.BtnCameraFly, "Enter WASDEQ fly mode");
-            this.BtnCameraFly.UseVisualStyleBackColor = true;
-            this.BtnCameraFly.Click += new System.EventHandler(this.BtnCameraFly_ClickFirst);
-            this.BtnCameraFly.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyDown);
-            this.BtnCameraFly.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyUp);
-            // 
-            // TbxCameraFlySpeed
-            // 
-            this.TbxCameraFlySpeed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TbxCameraFlySpeed.Location = new System.Drawing.Point(195, 34);
-            this.TbxCameraFlySpeed.Name = "TbxCameraFlySpeed";
-            this.TbxCameraFlySpeed.Size = new System.Drawing.Size(66, 20);
-            this.TbxCameraFlySpeed.TabIndex = 25;
-            this.TbxCameraFlySpeed.Text = "0.125";
-            this.toolTip1.SetToolTip(this.TbxCameraFlySpeed, "Movement speed, in units per frame");
-            this.TbxCameraFlySpeed.TextChanged += new System.EventHandler(this.TbxCameraFlySpeed_TextChanged);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(151, 40);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
-            this.label3.TabIndex = 26;
-            this.label3.Text = "Speed";
-            this.toolTip1.SetToolTip(this.label3, "Movement speed, in units per frame");
-            // 
             // label62
             // 
             this.label62.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(44, 35);
+            this.label62.Location = new System.Drawing.Point(47, 41);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(17, 13);
             this.label62.TabIndex = 29;
@@ -1096,7 +994,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionY
             // 
             this.LblCameraPositionY.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPositionY.Location = new System.Drawing.Point(67, 62);
+            this.LblCameraPositionY.Location = new System.Drawing.Point(70, 72);
             this.LblCameraPositionY.Name = "LblCameraPositionY";
             this.LblCameraPositionY.Size = new System.Drawing.Size(45, 15);
             this.LblCameraPositionY.TabIndex = 1;
@@ -1130,7 +1028,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionX
             // 
             this.LblCameraPositionX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPositionX.Location = new System.Drawing.Point(67, 34);
+            this.LblCameraPositionX.Location = new System.Drawing.Point(70, 40);
             this.LblCameraPositionX.Name = "LblCameraPositionX";
             this.LblCameraPositionX.Size = new System.Drawing.Size(45, 15);
             this.LblCameraPositionX.TabIndex = 0;
@@ -1146,35 +1044,11 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraDrawDistance.TabIndex = 17;
             this.LblCameraDrawDistance.Text = "<meters>";
             // 
-            // CbxCameraLockToHead
-            // 
-            this.CbxCameraLockToHead.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CbxCameraLockToHead.AutoSize = true;
-            this.tableLayoutPanel25.SetColumnSpan(this.CbxCameraLockToHead, 2);
-            this.CbxCameraLockToHead.Location = new System.Drawing.Point(3, 145);
-            this.CbxCameraLockToHead.Name = "CbxCameraLockToHead";
-            this.CbxCameraLockToHead.Size = new System.Drawing.Size(89, 17);
-            this.CbxCameraLockToHead.TabIndex = 35;
-            this.CbxCameraLockToHead.Text = "Lock to head";
-            this.CbxCameraLockToHead.UseVisualStyleBackColor = true;
-            // 
-            // CbxCameraFreeze
-            // 
-            this.CbxCameraFreeze.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CbxCameraFreeze.AutoSize = true;
-            this.CbxCameraFreeze.Location = new System.Drawing.Point(3, 117);
-            this.CbxCameraFreeze.Name = "CbxCameraFreeze";
-            this.CbxCameraFreeze.Size = new System.Drawing.Size(58, 17);
-            this.CbxCameraFreeze.TabIndex = 16;
-            this.CbxCameraFreeze.Text = "Freeze";
-            this.CbxCameraFreeze.UseVisualStyleBackColor = true;
-            this.CbxCameraFreeze.CheckedChanged += new System.EventHandler(this.CbxCameraFreeze_CheckedChanged);
-            // 
             // label64
             // 
             this.label64.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(44, 91);
+            this.label64.Location = new System.Drawing.Point(47, 105);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(17, 13);
             this.label64.TabIndex = 31;
@@ -1184,7 +1058,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label67.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(145, 91);
+            this.label67.Location = new System.Drawing.Point(145, 105);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(28, 13);
             this.label67.TabIndex = 34;
@@ -1194,7 +1068,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label66.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label66.AutoSize = true;
-            this.label66.Location = new System.Drawing.Point(142, 63);
+            this.label66.Location = new System.Drawing.Point(142, 73);
             this.label66.Name = "label66";
             this.label66.Size = new System.Drawing.Size(31, 13);
             this.label66.TabIndex = 33;
@@ -1204,7 +1078,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label65.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(139, 35);
+            this.label65.Location = new System.Drawing.Point(139, 41);
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(34, 13);
             this.label65.TabIndex = 32;
@@ -1214,7 +1088,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.LblCameraPitch.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tableLayoutPanel25.SetColumnSpan(this.LblCameraPitch, 2);
-            this.LblCameraPitch.Location = new System.Drawing.Point(179, 34);
+            this.LblCameraPitch.Location = new System.Drawing.Point(179, 40);
             this.LblCameraPitch.Name = "LblCameraPitch";
             this.LblCameraPitch.Size = new System.Drawing.Size(45, 15);
             this.LblCameraPitch.TabIndex = 3;
@@ -1225,7 +1099,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.LblCameraYaw.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tableLayoutPanel25.SetColumnSpan(this.LblCameraYaw, 2);
-            this.LblCameraYaw.Location = new System.Drawing.Point(179, 62);
+            this.LblCameraYaw.Location = new System.Drawing.Point(179, 72);
             this.LblCameraYaw.Name = "LblCameraYaw";
             this.LblCameraYaw.Size = new System.Drawing.Size(45, 15);
             this.LblCameraYaw.TabIndex = 4;
@@ -1236,18 +1110,29 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.LblCameraRoll.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tableLayoutPanel25.SetColumnSpan(this.LblCameraRoll, 2);
-            this.LblCameraRoll.Location = new System.Drawing.Point(179, 90);
+            this.LblCameraRoll.Location = new System.Drawing.Point(179, 104);
             this.LblCameraRoll.Name = "LblCameraRoll";
             this.LblCameraRoll.Size = new System.Drawing.Size(45, 15);
             this.LblCameraRoll.TabIndex = 5;
             this.LblCameraRoll.Text = "<roll>";
             this.LblCameraRoll.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // LblFov
+            // 
+            this.LblFov.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.LblFov.Location = new System.Drawing.Point(128, 177);
+            this.LblFov.Name = "LblFov";
+            this.LblFov.Size = new System.Drawing.Size(45, 15);
+            this.LblFov.TabIndex = 20;
+            this.LblFov.Text = "54";
+            this.LblFov.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip1.SetToolTip(this.LblFov, "Vertical FOV, in degrees");
+            // 
             // TrkFov
             // 
             this.TrkFov.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel25.SetColumnSpan(this.TrkFov, 5);
-            this.TrkFov.Location = new System.Drawing.Point(3, 171);
+            this.TrkFov.Location = new System.Drawing.Point(3, 230);
             this.TrkFov.Maximum = 120;
             this.TrkFov.Minimum = 1;
             this.TrkFov.Name = "TrkFov";
@@ -1257,16 +1142,44 @@ namespace BizHawk.Client.EmuHawk
             this.TrkFov.Value = 54;
             this.TrkFov.Scroll += new System.EventHandler(this.TrkFov_Scroll);
             // 
-            // LblFov
+            // CbxCameraLockToHead
             // 
-            this.LblFov.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.LblFov.Location = new System.Drawing.Point(128, 153);
-            this.LblFov.Name = "LblFov";
-            this.LblFov.Size = new System.Drawing.Size(45, 15);
-            this.LblFov.TabIndex = 20;
-            this.LblFov.Text = "54";
-            this.LblFov.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.toolTip1.SetToolTip(this.LblFov, "Vertical FOV, in degrees");
+            this.CbxCameraLockToHead.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.CbxCameraLockToHead.AutoSize = true;
+            this.tableLayoutPanel25.SetColumnSpan(this.CbxCameraLockToHead, 2);
+            this.CbxCameraLockToHead.Location = new System.Drawing.Point(3, 199);
+            this.CbxCameraLockToHead.Name = "CbxCameraLockToHead";
+            this.CbxCameraLockToHead.Size = new System.Drawing.Size(89, 17);
+            this.CbxCameraLockToHead.TabIndex = 35;
+            this.CbxCameraLockToHead.Text = "Lock to head";
+            this.CbxCameraLockToHead.UseVisualStyleBackColor = true;
+            // 
+            // CbxCameraFreeze
+            // 
+            this.CbxCameraFreeze.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.CbxCameraFreeze.AutoSize = true;
+            this.CbxCameraFreeze.Location = new System.Drawing.Point(3, 167);
+            this.CbxCameraFreeze.Name = "CbxCameraFreeze";
+            this.CbxCameraFreeze.Size = new System.Drawing.Size(58, 17);
+            this.CbxCameraFreeze.TabIndex = 16;
+            this.CbxCameraFreeze.Text = "Freeze";
+            this.CbxCameraFreeze.UseVisualStyleBackColor = true;
+            this.CbxCameraFreeze.CheckedChanged += new System.EventHandler(this.CbxCameraFreeze_CheckedChanged);
+            // 
+            // CbxShowLookAt
+            // 
+            this.CbxShowLookAt.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CbxShowLookAt.AutoSize = true;
+            this.CbxShowLookAt.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel25.SetColumnSpan(this.CbxShowLookAt, 2);
+            this.CbxShowLookAt.Location = new System.Drawing.Point(238, 135);
+            this.CbxShowLookAt.Name = "CbxShowLookAt";
+            this.CbxShowLookAt.Size = new System.Drawing.Size(88, 17);
+            this.CbxShowLookAt.TabIndex = 93;
+            this.CbxShowLookAt.Text = "Show look at";
+            this.toolTip1.SetToolTip(this.CbxShowLookAt, "Whether to draw directly on the game\'s framebuffer instead of BizHawk\'s GUI. Curr" +
+        "ently available only in the Octoshock core.");
+            this.CbxShowLookAt.UseVisualStyleBackColor = true;
             // 
             // BtnGrabMapGraphic
             // 
@@ -1301,10 +1214,10 @@ namespace BizHawk.Client.EmuHawk
             this.TbcMainTabs.Controls.Add(this.TbpStrings);
             this.TbcMainTabs.Controls.Add(this.TbpSave);
             this.TbcMainTabs.Controls.Add(this.TbpTest);
-            this.TbcMainTabs.Controls.Add(this.tabPage1);
+            this.TbcMainTabs.Controls.Add(this.TbpFiles);
             this.TbcMainTabs.Controls.Add(this.TbpFramebuffer);
             this.TbcMainTabs.Controls.Add(this.TbpUtility);
-            this.TbcMainTabs.Controls.Add(this.tabPage2);
+            this.TbcMainTabs.Controls.Add(this.TbpMisc);
             this.TbcMainTabs.Location = new System.Drawing.Point(0, 0);
             this.TbcMainTabs.Margin = new System.Windows.Forms.Padding(0);
             this.TbcMainTabs.Name = "TbcMainTabs";
@@ -1345,295 +1258,249 @@ namespace BizHawk.Client.EmuHawk
             // GbxControls
             // 
             this.GbxControls.AutoSize = true;
-            this.GbxControls.Controls.Add(this.tableLayoutPanel23);
+            this.GbxControls.Controls.Add(this.tableLayoutPanel39);
+            this.GbxControls.Controls.Add(this.tableLayoutPanel38);
+            this.GbxControls.Controls.Add(this.tableLayoutPanel27);
             this.GbxControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GbxControls.Location = new System.Drawing.Point(3, 309);
             this.GbxControls.Name = "GbxControls";
             this.GbxControls.Size = new System.Drawing.Size(335, 300);
-            this.GbxControls.TabIndex = 16;
+            this.GbxControls.TabIndex = 10;
             this.GbxControls.TabStop = false;
             this.GbxControls.Text = "Controls";
             // 
-            // tableLayoutPanel23
+            // tableLayoutPanel39
             // 
-            this.tableLayoutPanel23.AutoSize = true;
-            this.tableLayoutPanel23.ColumnCount = 5;
-            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel28, 0, 0);
-            this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel31, 1, 2);
-            this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel30, 3, 1);
-            this.tableLayoutPanel23.Controls.Add(this.CbxEnableControlsSection, 4, 2);
-            this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel29, 0, 1);
-            this.tableLayoutPanel23.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel23.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel23.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel23.Name = "tableLayoutPanel23";
-            this.tableLayoutPanel23.RowCount = 3;
-            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel23.Size = new System.Drawing.Size(329, 281);
-            this.tableLayoutPanel23.TabIndex = 16;
+            this.tableLayoutPanel39.ColumnCount = 3;
+            this.tableLayoutPanel39.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel39.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel39.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel39.Controls.Add(this.label4, 1, 1);
+            this.tableLayoutPanel39.Controls.Add(this.TbxCameraFlySensitivity, 2, 1);
+            this.tableLayoutPanel39.Controls.Add(this.CbxCameraFlyInvert, 0, 1);
+            this.tableLayoutPanel39.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel39.Location = new System.Drawing.Point(3, 72);
+            this.tableLayoutPanel39.Name = "tableLayoutPanel39";
+            this.tableLayoutPanel39.RowCount = 3;
+            this.tableLayoutPanel39.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel39.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel39.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel39.Size = new System.Drawing.Size(329, 165);
+            this.tableLayoutPanel39.TabIndex = 5;
             // 
-            // tableLayoutPanel28
+            // label4
             // 
-            this.tableLayoutPanel28.ColumnCount = 2;
-            this.tableLayoutPanel23.SetColumnSpan(this.tableLayoutPanel28, 5);
-            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel28.Controls.Add(this.LblButtonR1, 1, 1);
-            this.tableLayoutPanel28.Controls.Add(this.LblButtonL1, 0, 1);
-            this.tableLayoutPanel28.Controls.Add(this.LblButtonR2, 1, 0);
-            this.tableLayoutPanel28.Controls.Add(this.LblButtonL2, 0, 0);
-            this.tableLayoutPanel28.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel28.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel28.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel28.Name = "tableLayoutPanel28";
-            this.tableLayoutPanel28.RowCount = 2;
-            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel28.Size = new System.Drawing.Size(329, 53);
-            this.tableLayoutPanel28.TabIndex = 18;
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(216, 75);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(54, 13);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "Sensitivity";
+            this.toolTip1.SetToolTip(this.label4, "Mouse sensitivity, as an arbitrary multiplier");
             // 
-            // LblButtonR1
+            // TbxCameraFlySensitivity
             // 
-            this.LblButtonR1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.LblButtonR1.AutoSize = true;
-            this.LblButtonR1.Location = new System.Drawing.Point(305, 33);
-            this.LblButtonR1.Name = "LblButtonR1";
-            this.LblButtonR1.Size = new System.Drawing.Size(21, 13);
-            this.LblButtonR1.TabIndex = 12;
-            this.LblButtonR1.Text = "R1";
+            this.TbxCameraFlySensitivity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraFlySensitivity.Location = new System.Drawing.Point(276, 72);
+            this.TbxCameraFlySensitivity.Name = "TbxCameraFlySensitivity";
+            this.TbxCameraFlySensitivity.Size = new System.Drawing.Size(50, 20);
+            this.TbxCameraFlySensitivity.TabIndex = 25;
+            this.TbxCameraFlySensitivity.Text = "0.25";
+            this.toolTip1.SetToolTip(this.TbxCameraFlySensitivity, "Mouse sensitivity, as an arbitrary multiplier");
+            this.TbxCameraFlySensitivity.TextChanged += new System.EventHandler(this.TbxCameraFlySensitivity_TextChanged);
             // 
-            // LblButtonL1
+            // CbxCameraFlyInvert
             // 
-            this.LblButtonL1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblButtonL1.AutoSize = true;
-            this.LblButtonL1.Location = new System.Drawing.Point(3, 33);
-            this.LblButtonL1.Name = "LblButtonL1";
-            this.LblButtonL1.Size = new System.Drawing.Size(19, 13);
-            this.LblButtonL1.TabIndex = 10;
-            this.LblButtonL1.Text = "L1";
+            this.CbxCameraFlyInvert.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.CbxCameraFlyInvert.AutoSize = true;
+            this.CbxCameraFlyInvert.Location = new System.Drawing.Point(3, 73);
+            this.CbxCameraFlyInvert.Name = "CbxCameraFlyInvert";
+            this.CbxCameraFlyInvert.Size = new System.Drawing.Size(53, 17);
+            this.CbxCameraFlyInvert.TabIndex = 15;
+            this.CbxCameraFlyInvert.Text = "Invert";
+            this.CbxCameraFlyInvert.UseVisualStyleBackColor = true;
             // 
-            // LblButtonR2
+            // tableLayoutPanel38
             // 
-            this.LblButtonR2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.LblButtonR2.AutoSize = true;
-            this.LblButtonR2.Location = new System.Drawing.Point(305, 6);
-            this.LblButtonR2.Name = "LblButtonR2";
-            this.LblButtonR2.Size = new System.Drawing.Size(21, 13);
-            this.LblButtonR2.TabIndex = 13;
-            this.LblButtonR2.Text = "R2";
+            this.tableLayoutPanel38.AutoSize = true;
+            this.tableLayoutPanel38.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel38.ColumnCount = 5;
+            this.tableLayoutPanel38.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel38.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel38.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel38.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel38.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel38.Controls.Add(this.BtnFirstPerson, 0, 0);
+            this.tableLayoutPanel38.Controls.Add(this.NudEyeHeight, 4, 0);
+            this.tableLayoutPanel38.Controls.Add(this.label48, 3, 0);
+            this.tableLayoutPanel38.Controls.Add(this.CbxAlwaysRun, 3, 1);
+            this.tableLayoutPanel38.Controls.Add(this.CbxShowFeet, 1, 1);
+            this.tableLayoutPanel38.Controls.Add(this.CbxHideHarry, 1, 0);
+            this.tableLayoutPanel38.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel38.Location = new System.Drawing.Point(3, 237);
+            this.tableLayoutPanel38.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel38.Name = "tableLayoutPanel38";
+            this.tableLayoutPanel38.RowCount = 2;
+            this.tableLayoutPanel38.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel38.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel38.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel38.Size = new System.Drawing.Size(329, 60);
+            this.tableLayoutPanel38.TabIndex = 10;
             // 
-            // LblButtonL2
+            // BtnFirstPerson
             // 
-            this.LblButtonL2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblButtonL2.AutoSize = true;
-            this.LblButtonL2.Location = new System.Drawing.Point(3, 6);
-            this.LblButtonL2.Name = "LblButtonL2";
-            this.LblButtonL2.Size = new System.Drawing.Size(19, 13);
-            this.LblButtonL2.TabIndex = 11;
-            this.LblButtonL2.Text = "L2";
+            this.BtnFirstPerson.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnFirstPerson.AutoSize = true;
+            this.BtnFirstPerson.Location = new System.Drawing.Point(3, 5);
+            this.BtnFirstPerson.Name = "BtnFirstPerson";
+            this.tableLayoutPanel38.SetRowSpan(this.BtnFirstPerson, 2);
+            this.BtnFirstPerson.Size = new System.Drawing.Size(75, 50);
+            this.BtnFirstPerson.TabIndex = 30;
+            this.BtnFirstPerson.Text = "First person";
+            this.toolTip1.SetToolTip(this.BtnFirstPerson, "Enter WASD first person mode");
+            this.BtnFirstPerson.UseVisualStyleBackColor = true;
+            this.BtnFirstPerson.Click += new System.EventHandler(this.BtnFirstPerson_ClickFirst);
+            this.BtnFirstPerson.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnFirstPerson_KeyDown);
+            this.BtnFirstPerson.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnFirstPerson_KeyUp);
+            this.BtnFirstPerson.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnFirstPerson_MouseDown);
+            this.BtnFirstPerson.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnFirstPerson_MouseUp);
             // 
-            // tableLayoutPanel31
+            // NudEyeHeight
             // 
-            this.tableLayoutPanel31.ColumnCount = 2;
-            this.tableLayoutPanel23.SetColumnSpan(this.tableLayoutPanel31, 3);
-            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel31.Controls.Add(this.LblButtonSelect, 0, 0);
-            this.tableLayoutPanel31.Controls.Add(this.LblButtonR3, 1, 1);
-            this.tableLayoutPanel31.Controls.Add(this.LblButtonStart, 1, 0);
-            this.tableLayoutPanel31.Controls.Add(this.LblButtonL3, 0, 1);
-            this.tableLayoutPanel31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel31.Location = new System.Drawing.Point(82, 167);
-            this.tableLayoutPanel31.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel31.Name = "tableLayoutPanel31";
-            this.tableLayoutPanel31.RowCount = 2;
-            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel31.Size = new System.Drawing.Size(165, 114);
-            this.tableLayoutPanel31.TabIndex = 21;
+            this.NudEyeHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.NudEyeHeight.DecimalPlaces = 2;
+            this.NudEyeHeight.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.NudEyeHeight.Location = new System.Drawing.Point(271, 5);
+            this.NudEyeHeight.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.NudEyeHeight.Name = "NudEyeHeight";
+            this.NudEyeHeight.Size = new System.Drawing.Size(55, 20);
+            this.NudEyeHeight.TabIndex = 50;
+            this.toolTip1.SetToolTip(this.NudEyeHeight, "Crosshair length as a percentage of viewport height");
+            this.NudEyeHeight.Value = new decimal(new int[] {
+            16,
+            0,
+            0,
+            -2147418112});
             // 
-            // LblButtonSelect
+            // label48
             // 
-            this.LblButtonSelect.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonSelect.AutoSize = true;
-            this.LblButtonSelect.Location = new System.Drawing.Point(22, 22);
-            this.LblButtonSelect.Name = "LblButtonSelect";
-            this.LblButtonSelect.Size = new System.Drawing.Size(37, 13);
-            this.LblButtonSelect.TabIndex = 0;
-            this.LblButtonSelect.Text = "Select";
+            this.label48.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(208, 8);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(57, 13);
+            this.label48.TabIndex = 45;
+            this.label48.Text = "Eye height";
+            this.toolTip1.SetToolTip(this.label48, "Movement speed, in units per frame");
             // 
-            // LblButtonR3
+            // CbxAlwaysRun
             // 
-            this.LblButtonR3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.LblButtonR3.AutoSize = true;
-            this.LblButtonR3.Location = new System.Drawing.Point(141, 79);
-            this.LblButtonR3.Name = "LblButtonR3";
-            this.LblButtonR3.Size = new System.Drawing.Size(21, 13);
-            this.LblButtonR3.TabIndex = 15;
-            this.LblButtonR3.Text = "R3";
+            this.CbxAlwaysRun.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CbxAlwaysRun.AutoSize = true;
+            this.CbxAlwaysRun.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxAlwaysRun.Checked = true;
+            this.CbxAlwaysRun.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tableLayoutPanel38.SetColumnSpan(this.CbxAlwaysRun, 2);
+            this.CbxAlwaysRun.Location = new System.Drawing.Point(249, 36);
+            this.CbxAlwaysRun.Name = "CbxAlwaysRun";
+            this.CbxAlwaysRun.Size = new System.Drawing.Size(77, 17);
+            this.CbxAlwaysRun.TabIndex = 55;
+            this.CbxAlwaysRun.Text = "Always run";
+            this.CbxAlwaysRun.UseVisualStyleBackColor = true;
+            this.CbxAlwaysRun.CheckedChanged += new System.EventHandler(this.CbxAlwaysRun_CheckedChanged);
             // 
-            // LblButtonStart
+            // CbxShowFeet
             // 
-            this.LblButtonStart.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonStart.AutoSize = true;
-            this.LblButtonStart.Location = new System.Drawing.Point(109, 22);
-            this.LblButtonStart.Name = "LblButtonStart";
-            this.LblButtonStart.Size = new System.Drawing.Size(29, 13);
-            this.LblButtonStart.TabIndex = 1;
-            this.LblButtonStart.Text = "Start";
+            this.CbxShowFeet.AutoSize = true;
+            this.CbxShowFeet.Checked = true;
+            this.CbxShowFeet.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxShowFeet.Location = new System.Drawing.Point(84, 33);
+            this.CbxShowFeet.Name = "CbxShowFeet";
+            this.CbxShowFeet.Size = new System.Drawing.Size(74, 17);
+            this.CbxShowFeet.TabIndex = 40;
+            this.CbxShowFeet.Text = "Show feet";
+            this.CbxShowFeet.UseVisualStyleBackColor = true;
             // 
-            // LblButtonL3
+            // CbxHideHarry
             // 
-            this.LblButtonL3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblButtonL3.AutoSize = true;
-            this.LblButtonL3.Location = new System.Drawing.Point(3, 79);
-            this.LblButtonL3.Name = "LblButtonL3";
-            this.LblButtonL3.Size = new System.Drawing.Size(19, 13);
-            this.LblButtonL3.TabIndex = 14;
-            this.LblButtonL3.Text = "L3";
+            this.CbxHideHarry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CbxHideHarry.AutoSize = true;
+            this.CbxHideHarry.Checked = true;
+            this.CbxHideHarry.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxHideHarry.Location = new System.Drawing.Point(84, 10);
+            this.CbxHideHarry.Name = "CbxHideHarry";
+            this.CbxHideHarry.Size = new System.Drawing.Size(76, 17);
+            this.CbxHideHarry.TabIndex = 35;
+            this.CbxHideHarry.Text = "Hide Harry";
+            this.CbxHideHarry.UseVisualStyleBackColor = true;
+            this.CbxHideHarry.CheckedChanged += new System.EventHandler(this.CbxHideHarry_CheckedChanged);
             // 
-            // tableLayoutPanel30
+            // tableLayoutPanel27
             // 
-            this.tableLayoutPanel30.ColumnCount = 3;
-            this.tableLayoutPanel23.SetColumnSpan(this.tableLayoutPanel30, 2);
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel30.Controls.Add(this.LblButtonTriangle, 1, 0);
-            this.tableLayoutPanel30.Controls.Add(this.LblButtonSquare, 0, 1);
-            this.tableLayoutPanel30.Controls.Add(this.LblButtonCircle, 2, 1);
-            this.tableLayoutPanel30.Controls.Add(this.LblButtonX, 1, 2);
-            this.tableLayoutPanel30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel30.Location = new System.Drawing.Point(165, 53);
-            this.tableLayoutPanel30.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel30.Name = "tableLayoutPanel30";
-            this.tableLayoutPanel30.RowCount = 3;
-            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel30.Size = new System.Drawing.Size(164, 114);
-            this.tableLayoutPanel30.TabIndex = 20;
+            this.tableLayoutPanel27.AutoSize = true;
+            this.tableLayoutPanel27.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel27.ColumnCount = 3;
+            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel27.Controls.Add(this.BtnCameraFly, 0, 0);
+            this.tableLayoutPanel27.Controls.Add(this.TbxCameraFlySpeed, 2, 0);
+            this.tableLayoutPanel27.Controls.Add(this.label3, 1, 0);
+            this.tableLayoutPanel27.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel27.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel27.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel27.Name = "tableLayoutPanel27";
+            this.tableLayoutPanel27.RowCount = 1;
+            this.tableLayoutPanel27.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel27.Size = new System.Drawing.Size(329, 56);
+            this.tableLayoutPanel27.TabIndex = 0;
             // 
-            // LblButtonTriangle
+            // BtnCameraFly
             // 
-            this.LblButtonTriangle.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonTriangle.AutoSize = true;
-            this.LblButtonTriangle.Location = new System.Drawing.Point(58, 12);
-            this.LblButtonTriangle.Name = "LblButtonTriangle";
-            this.LblButtonTriangle.Size = new System.Drawing.Size(45, 13);
-            this.LblButtonTriangle.TabIndex = 6;
-            this.LblButtonTriangle.Text = "Triangle";
+            this.BtnCameraFly.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnCameraFly.AutoSize = true;
+            this.BtnCameraFly.Location = new System.Drawing.Point(3, 3);
+            this.BtnCameraFly.Name = "BtnCameraFly";
+            this.BtnCameraFly.Size = new System.Drawing.Size(75, 50);
+            this.BtnCameraFly.TabIndex = 0;
+            this.BtnCameraFly.Text = "Fly";
+            this.toolTip1.SetToolTip(this.BtnCameraFly, "Enter WASDEQ fly mode");
+            this.BtnCameraFly.UseVisualStyleBackColor = true;
+            this.BtnCameraFly.Click += new System.EventHandler(this.BtnCameraFly_ClickFirst);
+            this.BtnCameraFly.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyDown);
+            this.BtnCameraFly.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyUp);
             // 
-            // LblButtonSquare
+            // TbxCameraFlySpeed
             // 
-            this.LblButtonSquare.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonSquare.AutoSize = true;
-            this.LblButtonSquare.Location = new System.Drawing.Point(6, 49);
-            this.LblButtonSquare.Name = "LblButtonSquare";
-            this.LblButtonSquare.Size = new System.Drawing.Size(41, 13);
-            this.LblButtonSquare.TabIndex = 7;
-            this.LblButtonSquare.Text = "Square";
+            this.TbxCameraFlySpeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraFlySpeed.Location = new System.Drawing.Point(276, 18);
+            this.TbxCameraFlySpeed.Name = "TbxCameraFlySpeed";
+            this.TbxCameraFlySpeed.Size = new System.Drawing.Size(50, 20);
+            this.TbxCameraFlySpeed.TabIndex = 10;
+            this.TbxCameraFlySpeed.Text = "0.125";
+            this.toolTip1.SetToolTip(this.TbxCameraFlySpeed, "Movement speed, in units per frame");
+            this.TbxCameraFlySpeed.TextChanged += new System.EventHandler(this.TbxCameraFlySpeed_TextChanged);
             // 
-            // LblButtonCircle
+            // label3
             // 
-            this.LblButtonCircle.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonCircle.AutoSize = true;
-            this.LblButtonCircle.Location = new System.Drawing.Point(119, 49);
-            this.LblButtonCircle.Name = "LblButtonCircle";
-            this.LblButtonCircle.Size = new System.Drawing.Size(33, 13);
-            this.LblButtonCircle.TabIndex = 8;
-            this.LblButtonCircle.Text = "Circle";
-            // 
-            // LblButtonX
-            // 
-            this.LblButtonX.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonX.AutoSize = true;
-            this.LblButtonX.Location = new System.Drawing.Point(74, 87);
-            this.LblButtonX.Name = "LblButtonX";
-            this.LblButtonX.Size = new System.Drawing.Size(14, 13);
-            this.LblButtonX.TabIndex = 9;
-            this.LblButtonX.Text = "X";
-            // 
-            // CbxEnableControlsSection
-            // 
-            this.CbxEnableControlsSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CbxEnableControlsSection.AutoSize = true;
-            this.CbxEnableControlsSection.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxEnableControlsSection.Location = new System.Drawing.Point(267, 261);
-            this.CbxEnableControlsSection.Name = "CbxEnableControlsSection";
-            this.CbxEnableControlsSection.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableControlsSection.TabIndex = 15;
-            this.CbxEnableControlsSection.Text = "Enable";
-            this.CbxEnableControlsSection.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel29
-            // 
-            this.tableLayoutPanel29.ColumnCount = 3;
-            this.tableLayoutPanel23.SetColumnSpan(this.tableLayoutPanel29, 2);
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel29.Controls.Add(this.LblButtonUp, 1, 0);
-            this.tableLayoutPanel29.Controls.Add(this.LblButtonLeft, 0, 1);
-            this.tableLayoutPanel29.Controls.Add(this.LblButtonRight, 2, 1);
-            this.tableLayoutPanel29.Controls.Add(this.LblButtonDown, 1, 2);
-            this.tableLayoutPanel29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel29.Location = new System.Drawing.Point(0, 53);
-            this.tableLayoutPanel29.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel29.Name = "tableLayoutPanel29";
-            this.tableLayoutPanel29.RowCount = 3;
-            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel29.Size = new System.Drawing.Size(164, 114);
-            this.tableLayoutPanel29.TabIndex = 19;
-            // 
-            // LblButtonUp
-            // 
-            this.LblButtonUp.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonUp.AutoSize = true;
-            this.LblButtonUp.Location = new System.Drawing.Point(70, 12);
-            this.LblButtonUp.Name = "LblButtonUp";
-            this.LblButtonUp.Size = new System.Drawing.Size(21, 13);
-            this.LblButtonUp.TabIndex = 2;
-            this.LblButtonUp.Text = "Up";
-            // 
-            // LblButtonLeft
-            // 
-            this.LblButtonLeft.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonLeft.AutoSize = true;
-            this.LblButtonLeft.Location = new System.Drawing.Point(14, 50);
-            this.LblButtonLeft.Name = "LblButtonLeft";
-            this.LblButtonLeft.Size = new System.Drawing.Size(25, 13);
-            this.LblButtonLeft.TabIndex = 3;
-            this.LblButtonLeft.Text = "Left";
-            // 
-            // LblButtonRight
-            // 
-            this.LblButtonRight.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonRight.AutoSize = true;
-            this.LblButtonRight.Location = new System.Drawing.Point(120, 50);
-            this.LblButtonRight.Name = "LblButtonRight";
-            this.LblButtonRight.Size = new System.Drawing.Size(32, 13);
-            this.LblButtonRight.TabIndex = 4;
-            this.LblButtonRight.Text = "Right";
-            // 
-            // LblButtonDown
-            // 
-            this.LblButtonDown.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblButtonDown.AutoSize = true;
-            this.LblButtonDown.Location = new System.Drawing.Point(63, 88);
-            this.LblButtonDown.Name = "LblButtonDown";
-            this.LblButtonDown.Size = new System.Drawing.Size(35, 13);
-            this.LblButtonDown.TabIndex = 5;
-            this.LblButtonDown.Text = "Down";
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(232, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Speed";
+            this.toolTip1.SetToolTip(this.label3, "Movement speed, in units per frame");
             // 
             // GbxOverlay
             // 
@@ -5517,16 +5384,16 @@ namespace BizHawk.Client.EmuHawk
             this.label16.TabIndex = 92;
             this.label16.Text = "Z:";
             // 
-            // tabPage1
+            // TbpFiles
             // 
-            this.tabPage1.Controls.Add(this.tableLayoutPanel19);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(688, 618);
-            this.tabPage1.TabIndex = 10;
-            this.tabPage1.Text = "Files";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.TbpFiles.Controls.Add(this.tableLayoutPanel19);
+            this.TbpFiles.Location = new System.Drawing.Point(4, 22);
+            this.TbpFiles.Name = "TbpFiles";
+            this.TbpFiles.Padding = new System.Windows.Forms.Padding(3);
+            this.TbpFiles.Size = new System.Drawing.Size(688, 618);
+            this.TbpFiles.TabIndex = 10;
+            this.TbpFiles.Text = "Files";
+            this.TbpFiles.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel19
             // 
@@ -6130,53 +5997,306 @@ namespace BizHawk.Client.EmuHawk
             this.label73.TabIndex = 5;
             this.label73.Text = "Hex:";
             // 
-            // tabPage2
+            // TbpMisc
             // 
-            this.tabPage2.Controls.Add(this.CbxShowFeet);
-            this.tabPage2.Controls.Add(this.TbxYawTestThing);
-            this.tabPage2.Controls.Add(this.BtnFirstPerson);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(688, 618);
-            this.tabPage2.TabIndex = 14;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.TbpMisc.Controls.Add(this.GbxController);
+            this.TbpMisc.Location = new System.Drawing.Point(4, 22);
+            this.TbpMisc.Name = "TbpMisc";
+            this.TbpMisc.Size = new System.Drawing.Size(688, 618);
+            this.TbpMisc.TabIndex = 14;
+            this.TbpMisc.Text = "Misc";
+            this.TbpMisc.UseVisualStyleBackColor = true;
             // 
-            // CbxShowFeet
+            // GbxController
             // 
-            this.CbxShowFeet.AutoSize = true;
-            this.CbxShowFeet.Checked = true;
-            this.CbxShowFeet.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxShowFeet.Location = new System.Drawing.Point(77, 77);
-            this.CbxShowFeet.Name = "CbxShowFeet";
-            this.CbxShowFeet.Size = new System.Drawing.Size(74, 17);
-            this.CbxShowFeet.TabIndex = 25;
-            this.CbxShowFeet.Text = "Show feet";
-            this.CbxShowFeet.UseVisualStyleBackColor = true;
+            this.GbxController.Controls.Add(this.tableLayoutPanel23);
+            this.GbxController.Location = new System.Drawing.Point(3, 3);
+            this.GbxController.Name = "GbxController";
+            this.GbxController.Size = new System.Drawing.Size(374, 317);
+            this.GbxController.TabIndex = 26;
+            this.GbxController.TabStop = false;
+            this.GbxController.Text = "Controller";
             // 
-            // TbxYawTestThing
+            // tableLayoutPanel23
             // 
-            this.TbxYawTestThing.Location = new System.Drawing.Point(154, 32);
-            this.TbxYawTestThing.Name = "TbxYawTestThing";
-            this.TbxYawTestThing.Size = new System.Drawing.Size(100, 20);
-            this.TbxYawTestThing.TabIndex = 24;
+            this.tableLayoutPanel23.AutoSize = true;
+            this.tableLayoutPanel23.ColumnCount = 5;
+            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel28, 0, 0);
+            this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel31, 1, 2);
+            this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel30, 3, 1);
+            this.tableLayoutPanel23.Controls.Add(this.CbxEnableControlsSection, 4, 2);
+            this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel29, 0, 1);
+            this.tableLayoutPanel23.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel23.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel23.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel23.Name = "tableLayoutPanel23";
+            this.tableLayoutPanel23.RowCount = 3;
+            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel23.Size = new System.Drawing.Size(368, 298);
+            this.tableLayoutPanel23.TabIndex = 17;
             // 
-            // BtnFirstPerson
+            // tableLayoutPanel28
             // 
-            this.BtnFirstPerson.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BtnFirstPerson.AutoSize = true;
-            this.BtnFirstPerson.Location = new System.Drawing.Point(3, 3);
-            this.BtnFirstPerson.Name = "BtnFirstPerson";
-            this.BtnFirstPerson.Size = new System.Drawing.Size(75, 50);
-            this.BtnFirstPerson.TabIndex = 23;
-            this.BtnFirstPerson.Text = "First person";
-            this.toolTip1.SetToolTip(this.BtnFirstPerson, "Enter WASD first person mode");
-            this.BtnFirstPerson.UseVisualStyleBackColor = true;
-            this.BtnFirstPerson.Click += new System.EventHandler(this.BtnFirstPerson_ClickFirst);
-            this.BtnFirstPerson.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnFirstPerson_KeyDown);
-            this.BtnFirstPerson.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnFirstPerson_KeyUp);
-            this.BtnFirstPerson.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnFirstPerson_MouseDown);
-            this.BtnFirstPerson.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnFirstPerson_MouseUp);
+            this.tableLayoutPanel28.ColumnCount = 2;
+            this.tableLayoutPanel23.SetColumnSpan(this.tableLayoutPanel28, 5);
+            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel28.Controls.Add(this.LblButtonR1, 1, 1);
+            this.tableLayoutPanel28.Controls.Add(this.LblButtonL1, 0, 1);
+            this.tableLayoutPanel28.Controls.Add(this.LblButtonR2, 1, 0);
+            this.tableLayoutPanel28.Controls.Add(this.LblButtonL2, 0, 0);
+            this.tableLayoutPanel28.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel28.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel28.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel28.Name = "tableLayoutPanel28";
+            this.tableLayoutPanel28.RowCount = 2;
+            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel28.Size = new System.Drawing.Size(368, 53);
+            this.tableLayoutPanel28.TabIndex = 18;
+            // 
+            // LblButtonR1
+            // 
+            this.LblButtonR1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblButtonR1.AutoSize = true;
+            this.LblButtonR1.Location = new System.Drawing.Point(344, 33);
+            this.LblButtonR1.Name = "LblButtonR1";
+            this.LblButtonR1.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonR1.TabIndex = 12;
+            this.LblButtonR1.Text = "R1";
+            // 
+            // LblButtonL1
+            // 
+            this.LblButtonL1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.LblButtonL1.AutoSize = true;
+            this.LblButtonL1.Location = new System.Drawing.Point(3, 33);
+            this.LblButtonL1.Name = "LblButtonL1";
+            this.LblButtonL1.Size = new System.Drawing.Size(19, 13);
+            this.LblButtonL1.TabIndex = 10;
+            this.LblButtonL1.Text = "L1";
+            // 
+            // LblButtonR2
+            // 
+            this.LblButtonR2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblButtonR2.AutoSize = true;
+            this.LblButtonR2.Location = new System.Drawing.Point(344, 6);
+            this.LblButtonR2.Name = "LblButtonR2";
+            this.LblButtonR2.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonR2.TabIndex = 13;
+            this.LblButtonR2.Text = "R2";
+            // 
+            // LblButtonL2
+            // 
+            this.LblButtonL2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.LblButtonL2.AutoSize = true;
+            this.LblButtonL2.Location = new System.Drawing.Point(3, 6);
+            this.LblButtonL2.Name = "LblButtonL2";
+            this.LblButtonL2.Size = new System.Drawing.Size(19, 13);
+            this.LblButtonL2.TabIndex = 11;
+            this.LblButtonL2.Text = "L2";
+            // 
+            // tableLayoutPanel31
+            // 
+            this.tableLayoutPanel31.ColumnCount = 2;
+            this.tableLayoutPanel23.SetColumnSpan(this.tableLayoutPanel31, 3);
+            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel31.Controls.Add(this.LblButtonSelect, 0, 0);
+            this.tableLayoutPanel31.Controls.Add(this.LblButtonR3, 1, 1);
+            this.tableLayoutPanel31.Controls.Add(this.LblButtonStart, 1, 0);
+            this.tableLayoutPanel31.Controls.Add(this.LblButtonL3, 0, 1);
+            this.tableLayoutPanel31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel31.Location = new System.Drawing.Point(91, 175);
+            this.tableLayoutPanel31.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel31.Name = "tableLayoutPanel31";
+            this.tableLayoutPanel31.RowCount = 2;
+            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel31.Size = new System.Drawing.Size(183, 123);
+            this.tableLayoutPanel31.TabIndex = 21;
+            // 
+            // LblButtonSelect
+            // 
+            this.LblButtonSelect.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonSelect.AutoSize = true;
+            this.LblButtonSelect.Location = new System.Drawing.Point(27, 24);
+            this.LblButtonSelect.Name = "LblButtonSelect";
+            this.LblButtonSelect.Size = new System.Drawing.Size(37, 13);
+            this.LblButtonSelect.TabIndex = 0;
+            this.LblButtonSelect.Text = "Select";
+            // 
+            // LblButtonR3
+            // 
+            this.LblButtonR3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblButtonR3.AutoSize = true;
+            this.LblButtonR3.Location = new System.Drawing.Point(159, 85);
+            this.LblButtonR3.Name = "LblButtonR3";
+            this.LblButtonR3.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonR3.TabIndex = 15;
+            this.LblButtonR3.Text = "R3";
+            // 
+            // LblButtonStart
+            // 
+            this.LblButtonStart.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonStart.AutoSize = true;
+            this.LblButtonStart.Location = new System.Drawing.Point(122, 24);
+            this.LblButtonStart.Name = "LblButtonStart";
+            this.LblButtonStart.Size = new System.Drawing.Size(29, 13);
+            this.LblButtonStart.TabIndex = 1;
+            this.LblButtonStart.Text = "Start";
+            // 
+            // LblButtonL3
+            // 
+            this.LblButtonL3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.LblButtonL3.AutoSize = true;
+            this.LblButtonL3.Location = new System.Drawing.Point(3, 85);
+            this.LblButtonL3.Name = "LblButtonL3";
+            this.LblButtonL3.Size = new System.Drawing.Size(19, 13);
+            this.LblButtonL3.TabIndex = 14;
+            this.LblButtonL3.Text = "L3";
+            // 
+            // tableLayoutPanel30
+            // 
+            this.tableLayoutPanel30.ColumnCount = 3;
+            this.tableLayoutPanel23.SetColumnSpan(this.tableLayoutPanel30, 2);
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel30.Controls.Add(this.LblButtonTriangle, 1, 0);
+            this.tableLayoutPanel30.Controls.Add(this.LblButtonSquare, 0, 1);
+            this.tableLayoutPanel30.Controls.Add(this.LblButtonCircle, 2, 1);
+            this.tableLayoutPanel30.Controls.Add(this.LblButtonX, 1, 2);
+            this.tableLayoutPanel30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel30.Location = new System.Drawing.Point(183, 53);
+            this.tableLayoutPanel30.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel30.Name = "tableLayoutPanel30";
+            this.tableLayoutPanel30.RowCount = 3;
+            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel30.Size = new System.Drawing.Size(185, 122);
+            this.tableLayoutPanel30.TabIndex = 20;
+            // 
+            // LblButtonTriangle
+            // 
+            this.LblButtonTriangle.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonTriangle.AutoSize = true;
+            this.LblButtonTriangle.Location = new System.Drawing.Point(69, 13);
+            this.LblButtonTriangle.Name = "LblButtonTriangle";
+            this.LblButtonTriangle.Size = new System.Drawing.Size(45, 13);
+            this.LblButtonTriangle.TabIndex = 6;
+            this.LblButtonTriangle.Text = "Triangle";
+            // 
+            // LblButtonSquare
+            // 
+            this.LblButtonSquare.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonSquare.AutoSize = true;
+            this.LblButtonSquare.Location = new System.Drawing.Point(10, 53);
+            this.LblButtonSquare.Name = "LblButtonSquare";
+            this.LblButtonSquare.Size = new System.Drawing.Size(41, 13);
+            this.LblButtonSquare.TabIndex = 7;
+            this.LblButtonSquare.Text = "Square";
+            // 
+            // LblButtonCircle
+            // 
+            this.LblButtonCircle.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonCircle.AutoSize = true;
+            this.LblButtonCircle.Location = new System.Drawing.Point(137, 53);
+            this.LblButtonCircle.Name = "LblButtonCircle";
+            this.LblButtonCircle.Size = new System.Drawing.Size(33, 13);
+            this.LblButtonCircle.TabIndex = 8;
+            this.LblButtonCircle.Text = "Circle";
+            // 
+            // LblButtonX
+            // 
+            this.LblButtonX.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonX.AutoSize = true;
+            this.LblButtonX.Location = new System.Drawing.Point(84, 94);
+            this.LblButtonX.Name = "LblButtonX";
+            this.LblButtonX.Size = new System.Drawing.Size(14, 13);
+            this.LblButtonX.TabIndex = 9;
+            this.LblButtonX.Text = "X";
+            // 
+            // CbxEnableControlsSection
+            // 
+            this.CbxEnableControlsSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CbxEnableControlsSection.AutoSize = true;
+            this.CbxEnableControlsSection.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxEnableControlsSection.Location = new System.Drawing.Point(306, 278);
+            this.CbxEnableControlsSection.Name = "CbxEnableControlsSection";
+            this.CbxEnableControlsSection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableControlsSection.TabIndex = 15;
+            this.CbxEnableControlsSection.Text = "Enable";
+            this.CbxEnableControlsSection.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel29
+            // 
+            this.tableLayoutPanel29.ColumnCount = 3;
+            this.tableLayoutPanel23.SetColumnSpan(this.tableLayoutPanel29, 2);
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel29.Controls.Add(this.LblButtonUp, 1, 0);
+            this.tableLayoutPanel29.Controls.Add(this.LblButtonLeft, 0, 1);
+            this.tableLayoutPanel29.Controls.Add(this.LblButtonRight, 2, 1);
+            this.tableLayoutPanel29.Controls.Add(this.LblButtonDown, 1, 2);
+            this.tableLayoutPanel29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel29.Location = new System.Drawing.Point(0, 53);
+            this.tableLayoutPanel29.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel29.Name = "tableLayoutPanel29";
+            this.tableLayoutPanel29.RowCount = 3;
+            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel29.Size = new System.Drawing.Size(182, 122);
+            this.tableLayoutPanel29.TabIndex = 19;
+            // 
+            // LblButtonUp
+            // 
+            this.LblButtonUp.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonUp.AutoSize = true;
+            this.LblButtonUp.Location = new System.Drawing.Point(79, 13);
+            this.LblButtonUp.Name = "LblButtonUp";
+            this.LblButtonUp.Size = new System.Drawing.Size(21, 13);
+            this.LblButtonUp.TabIndex = 2;
+            this.LblButtonUp.Text = "Up";
+            // 
+            // LblButtonLeft
+            // 
+            this.LblButtonLeft.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonLeft.AutoSize = true;
+            this.LblButtonLeft.Location = new System.Drawing.Point(17, 53);
+            this.LblButtonLeft.Name = "LblButtonLeft";
+            this.LblButtonLeft.Size = new System.Drawing.Size(25, 13);
+            this.LblButtonLeft.TabIndex = 3;
+            this.LblButtonLeft.Text = "Left";
+            // 
+            // LblButtonRight
+            // 
+            this.LblButtonRight.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonRight.AutoSize = true;
+            this.LblButtonRight.Location = new System.Drawing.Point(135, 53);
+            this.LblButtonRight.Name = "LblButtonRight";
+            this.LblButtonRight.Size = new System.Drawing.Size(32, 13);
+            this.LblButtonRight.TabIndex = 4;
+            this.LblButtonRight.Text = "Right";
+            // 
+            // LblButtonDown
+            // 
+            this.LblButtonDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblButtonDown.AutoSize = true;
+            this.LblButtonDown.Location = new System.Drawing.Point(72, 94);
+            this.LblButtonDown.Name = "LblButtonDown";
+            this.LblButtonDown.Size = new System.Drawing.Size(35, 13);
+            this.LblButtonDown.TabIndex = 5;
+            this.LblButtonDown.Text = "Down";
             // 
             // BpbFramebuffer
             // 
@@ -6201,8 +6321,6 @@ namespace BizHawk.Client.EmuHawk
             this.GbxCamera.ResumeLayout(false);
             this.tableLayoutPanel25.ResumeLayout(false);
             this.tableLayoutPanel25.PerformLayout();
-            this.tableLayoutPanel27.ResumeLayout(false);
-            this.tableLayoutPanel27.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrkFov)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxMapGraphic)).EndInit();
             this.TbcMainTabs.ResumeLayout(false);
@@ -6211,16 +6329,13 @@ namespace BizHawk.Client.EmuHawk
             this.TlpBasics.PerformLayout();
             this.GbxControls.ResumeLayout(false);
             this.GbxControls.PerformLayout();
-            this.tableLayoutPanel23.ResumeLayout(false);
-            this.tableLayoutPanel23.PerformLayout();
-            this.tableLayoutPanel28.ResumeLayout(false);
-            this.tableLayoutPanel28.PerformLayout();
-            this.tableLayoutPanel31.ResumeLayout(false);
-            this.tableLayoutPanel31.PerformLayout();
-            this.tableLayoutPanel30.ResumeLayout(false);
-            this.tableLayoutPanel30.PerformLayout();
-            this.tableLayoutPanel29.ResumeLayout(false);
-            this.tableLayoutPanel29.PerformLayout();
+            this.tableLayoutPanel39.ResumeLayout(false);
+            this.tableLayoutPanel39.PerformLayout();
+            this.tableLayoutPanel38.ResumeLayout(false);
+            this.tableLayoutPanel38.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudEyeHeight)).EndInit();
+            this.tableLayoutPanel27.ResumeLayout(false);
+            this.tableLayoutPanel27.PerformLayout();
             this.GbxOverlay.ResumeLayout(false);
             this.tableLayoutPanel26.ResumeLayout(false);
             this.tableLayoutPanel26.PerformLayout();
@@ -6350,7 +6465,7 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBZ)).EndInit();
-            this.tabPage1.ResumeLayout(false);
+            this.TbpFiles.ResumeLayout(false);
             this.tableLayoutPanel19.ResumeLayout(false);
             this.tableLayoutPanel19.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -6379,8 +6494,19 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox7.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.TbpMisc.ResumeLayout(false);
+            this.GbxController.ResumeLayout(false);
+            this.GbxController.PerformLayout();
+            this.tableLayoutPanel23.ResumeLayout(false);
+            this.tableLayoutPanel23.PerformLayout();
+            this.tableLayoutPanel28.ResumeLayout(false);
+            this.tableLayoutPanel28.PerformLayout();
+            this.tableLayoutPanel31.ResumeLayout(false);
+            this.tableLayoutPanel31.PerformLayout();
+            this.tableLayoutPanel30.ResumeLayout(false);
+            this.tableLayoutPanel30.PerformLayout();
+            this.tableLayoutPanel29.ResumeLayout(false);
+            this.tableLayoutPanel29.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.ResumeLayout(false);
 
@@ -6424,7 +6550,6 @@ namespace BizHawk.Client.EmuHawk
 		private Label label1;
 		private CheckBox CbxEnableOverlayCameraReporting;
 		private CheckBox CbxEnableHarrySection;
-		private CheckBox CbxEnableCameraSection;
 		private CheckBox CbxCameraFreeze;
 		private TabPage TbpStats;
 		private Label label8;
@@ -6545,13 +6670,6 @@ namespace BizHawk.Client.EmuHawk
 		private CheckBox CbxSaveRamDanger;
 		private Label LblSelectedTriggerThing2;
 		private Label label60;
-		private Button BtnCameraFly;
-		private CheckBox CbxCameraDetach;
-		private CheckBox CbxCameraFlyInvert;
-		private Label label3;
-		private TextBox TbxCameraFlySpeed;
-		private Label label4;
-		private TextBox TbxCameraFlySensitivity;
 		private Label label59;
 		private Label label61;
 		private Label label19;
@@ -6565,23 +6683,6 @@ namespace BizHawk.Client.EmuHawk
 		private Label label63;
 		private Label label62;
 		private GroupBox GbxControls;
-		private CheckBox CbxEnableControlsSection;
-		private Label LblButtonR3;
-		private Label LblButtonL3;
-		private Label LblButtonR2;
-		private Label LblButtonR1;
-		private Label LblButtonL2;
-		private Label LblButtonL1;
-		private Label LblButtonX;
-		private Label LblButtonCircle;
-		private Label LblButtonSquare;
-		private Label LblButtonTriangle;
-		private Label LblButtonDown;
-		private Label LblButtonRight;
-		private Label LblButtonLeft;
-		private Label LblButtonUp;
-		private Label LblButtonStart;
-		private Label LblButtonSelect;
 		private GroupBox groupBox5;
 		private Label label37;
 		private Label label53;
@@ -6618,7 +6719,7 @@ namespace BizHawk.Client.EmuHawk
 		private GroupBox groupBox6;
 		private ComboBox CmbModelSubmeshName;
 		private Button BtnReadHarryModel;
-		private TabPage tabPage1;
+		private TabPage TbpFiles;
 		private Button BtnReadFiles;
 		private ListBox LbxFilesDirectories;
 		private ListBox LbxFilesFiles;
@@ -6769,18 +6870,12 @@ namespace BizHawk.Client.EmuHawk
 		private SplitContainer splitContainer2;
 		private TableLayoutPanel tableLayoutPanel21;
 		private TableLayoutPanel tableLayoutPanel22;
-		private TableLayoutPanel tableLayoutPanel23;
 		private TableLayoutPanel tableLayoutPanel24;
 		private TableLayoutPanel tableLayoutPanel25;
 		private TableLayoutPanel tableLayoutPanel26;
 		private TableLayoutPanel TlpBasics;
-		private TableLayoutPanel tableLayoutPanel27;
 		private ComboBox CmbRenderMode;
 		private CheckBox CbxEnableOverlay;
-		private TableLayoutPanel tableLayoutPanel28;
-		private TableLayoutPanel tableLayoutPanel29;
-		private TableLayoutPanel tableLayoutPanel30;
-		private TableLayoutPanel tableLayoutPanel31;
 		private TableLayoutPanel tableLayoutPanel32;
 		private SplitContainer splitContainer3;
 		private TableLayoutPanel tableLayoutPanel33;
@@ -6789,9 +6884,46 @@ namespace BizHawk.Client.EmuHawk
 		private TableLayoutPanel TlpSelectedTriggerLeft;
 		private TableLayoutPanel tableLayoutPanel36;
 		private TableLayoutPanel tableLayoutPanel37;
-		private TabPage tabPage2;
+		private TabPage TbpMisc;
 		private Button BtnFirstPerson;
-		private TextBox TbxYawTestThing;
 		private CheckBox CbxShowFeet;
+		private GroupBox GbxController;
+		private TableLayoutPanel tableLayoutPanel23;
+		private TableLayoutPanel tableLayoutPanel28;
+		private Label LblButtonR1;
+		private Label LblButtonL1;
+		private Label LblButtonR2;
+		private Label LblButtonL2;
+		private TableLayoutPanel tableLayoutPanel31;
+		private Label LblButtonSelect;
+		private Label LblButtonR3;
+		private Label LblButtonStart;
+		private Label LblButtonL3;
+		private TableLayoutPanel tableLayoutPanel30;
+		private Label LblButtonTriangle;
+		private Label LblButtonSquare;
+		private Label LblButtonCircle;
+		private Label LblButtonX;
+		private CheckBox CbxEnableControlsSection;
+		private TableLayoutPanel tableLayoutPanel29;
+		private Label LblButtonUp;
+		private Label LblButtonLeft;
+		private Label LblButtonRight;
+		private Label LblButtonDown;
+		private TableLayoutPanel tableLayoutPanel27;
+		private CheckBox CbxCameraFlyInvert;
+		private TextBox TbxCameraFlySensitivity;
+		private Label label4;
+		private CheckBox CbxCameraDetach;
+		private Button BtnCameraFly;
+		private TextBox TbxCameraFlySpeed;
+		private Label label3;
+		private TableLayoutPanel tableLayoutPanel38;
+		private CheckBox CbxAlwaysRun;
+		private Label label48;
+		private NumericUpDown NudEyeHeight;
+		private CheckBox CbxHideHarry;
+		private TableLayoutPanel tableLayoutPanel39;
+		private CheckBox CbxShowLookAt;
 	}
 }

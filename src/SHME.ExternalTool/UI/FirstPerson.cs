@@ -60,21 +60,26 @@ namespace BizHawk.Client.EmuHawk
 					_holdCameraRoll = 0;
 					HoldCamera();
 
-					IEnumerable<Submesh> submeshes = _harryModel.Submeshes.Where((m) =>
-						!m.Name.EndsWith("FOOT", StringComparison.Ordinal));
-
-					if (!CbxShowFeet.Checked)
+					if (CbxHideHarry.Checked)
 					{
-						submeshes = submeshes.Concat(_harryModel.Submeshes.Where((m) =>
-						m.Name.EndsWith("FOOT", StringComparison.Ordinal)));
-					}
+						IEnumerable<Submesh> submeshes = _harryModel.Submeshes.Where((m) =>
+							!m.Name.EndsWith("FOOT", StringComparison.Ordinal));
 
-					foreach (Submesh s in submeshes)
-					{
-						Mem.WriteByte((int)((s.BaseAddress + 8) - Rom.Addresses.MainRam.BaseAddress), 0);
+						if (!CbxShowFeet.Checked)
+						{
+							submeshes = submeshes.Concat(_harryModel.Submeshes.Where((m) =>
+							m.Name.EndsWith("FOOT", StringComparison.Ordinal)));
+						}
+
+						foreach (Submesh s in submeshes)
+						{
+							Mem.WriteByte((int)((s.BaseAddress + 8) - Rom.Addresses.MainRam.BaseAddress), 0);
+						}
 					}
 
 					CbxCameraDetach.Checked = true;
+
+					_run = CbxAlwaysRun.Checked;
 				}
 				else
 				{
@@ -137,7 +142,7 @@ namespace BizHawk.Client.EmuHawk
 					_light = true;
 					break;
 				case Keys.ShiftKey:
-					_run = true;
+					_run = !CbxAlwaysRun.Checked;
 					break;
 				case Keys.Escape:
 					FirstPersonEnabled = false;
@@ -169,7 +174,7 @@ namespace BizHawk.Client.EmuHawk
 					_light = false;
 					break;
 				case Keys.ShiftKey:
-					_run = false;
+					_run = CbxAlwaysRun.Checked;
 					break;
 				default:
 					break;
@@ -231,12 +236,14 @@ namespace BizHawk.Client.EmuHawk
 			int y = Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionY);
 			int z = Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionZ);
 
+			y += Core.FloatToQ((float)NudEyeHeight.Value);
+
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualX, x);
-			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualY, y + Core.FloatToQ(-1.6f));
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualY, y);
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualZ, z);
 
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealX, x);
-			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealY, y + Core.FloatToQ(-1.6f));
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealY, y);
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealZ, z);
 
 			// For future copy pasting: P1 △
@@ -309,6 +316,21 @@ namespace BizHawk.Client.EmuHawk
 			if (e.Button == MouseButtons.Right)
 			{
 				_aim = false;
+			}
+		}
+
+		private void CbxAlwaysRun_CheckedChanged(object sender, EventArgs e)
+		{
+			_run = CbxAlwaysRun.Checked;
+		}
+
+		private void CbxHideHarry_CheckedChanged(object sender, EventArgs e)
+		{
+			CbxShowFeet.Enabled = CbxHideHarry.Checked;
+
+			if (!CbxHideHarry.Checked)
+			{
+				CbxShowFeet.Checked = true;
 			}
 		}
 	}

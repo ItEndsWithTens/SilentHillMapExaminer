@@ -116,6 +116,8 @@ namespace BizHawk.Client.EmuHawk
 			InitializeSaveTab();
 			InitializeFramebufferTab();
 			InitializeUtilityTab();
+
+			_gameCameraLookAt = new BoxGenerator(0.25f, Color.Purple).Generate().ToWorld();
 		}
 
 		protected override void Dispose(bool disposing)
@@ -167,6 +169,7 @@ namespace BizHawk.Client.EmuHawk
 			Mem.UseMemoryDomain("MainRAM");
 
 			CbxOverlayRenderToFramebuffer_CheckedChanged(this, EventArgs.Empty);
+			CbxAlwaysRun_CheckedChanged(this, EventArgs.Empty);
 
 			Label[] labels =
 			{
@@ -203,11 +206,6 @@ namespace BizHawk.Client.EmuHawk
 
 			IReadOnlyList<byte> remaining = Mem.ReadByteRange(address, (int)(Mem.GetMemoryDomainSize("MainRAM") - address));
 			_harryModel = new Ilm(header, remaining);
-
-
-			Renderable gen = new BoxGenerator(0.25f, Color.Purple).Generate().ToWorld();
-
-			TestBoxes.Add(gen);
 		}
 
 		public static Bitmap GenerateReticle(Pen pen, int width, int height, float percent)
@@ -264,8 +262,6 @@ namespace BizHawk.Client.EmuHawk
 				_holdCameraRoll = 0;
 				HoldCamera();
 
-				TbxYawTestThing.Text = ((float)_forcedCameraYaw).ToString(CultureInfo.CurrentCulture);
-
 				_forcedCameraYaw = null;
 			}
 
@@ -283,7 +279,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (!CbxOverlayRenderToFramebuffer.Checked)
 					{
-						TestBoxes[0].Position = new Vector3
+						_gameCameraLookAt.Position = new Vector3
 						{
 							X = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX)),
 							Y = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY)),
@@ -394,9 +390,6 @@ namespace BizHawk.Client.EmuHawk
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					TestBox);
-				Camera.GetVisibleRenderables(
-					ref VisibleRenderables,
-					TestBoxes);
 			}
 			if (CbxOverlayTestSheet.Checked)
 			{
@@ -417,6 +410,12 @@ namespace BizHawk.Client.EmuHawk
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					TestLines);
+			}
+			if (CbxShowLookAt.Checked)
+			{
+				Camera.GetVisibleRenderables(
+					ref VisibleRenderables,
+					_gameCameraLookAt);
 			}
 
 			var g = Graphics.FromImage(Overlay);
