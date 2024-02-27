@@ -383,7 +383,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer = new System.Windows.Forms.TabPage();
             this.TlpFramebufferTab = new System.Windows.Forms.TableLayoutPanel();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
-            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
@@ -417,7 +416,12 @@ namespace BizHawk.Client.EmuHawk
             this.label74 = new System.Windows.Forms.Label();
             this.CmbUtilityFixedPointFormat = new System.Windows.Forms.ComboBox();
             this.label73 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.CbxShowFeet = new System.Windows.Forms.CheckBox();
+            this.TbxYawTestThing = new System.Windows.Forms.TextBox();
+            this.BtnFirstPerson = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -537,7 +541,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer.SuspendLayout();
             this.TlpFramebufferTab.SuspendLayout();
             this.ScrFramebuffer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
@@ -548,6 +551,8 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -1299,6 +1304,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbcMainTabs.Controls.Add(this.tabPage1);
             this.TbcMainTabs.Controls.Add(this.TbpFramebuffer);
             this.TbcMainTabs.Controls.Add(this.TbpUtility);
+            this.TbcMainTabs.Controls.Add(this.tabPage2);
             this.TbcMainTabs.Location = new System.Drawing.Point(0, 0);
             this.TbcMainTabs.Margin = new System.Windows.Forms.Padding(0);
             this.TbcMainTabs.Name = "TbcMainTabs";
@@ -5659,17 +5665,6 @@ namespace BizHawk.Client.EmuHawk
             this.ScrFramebuffer.TabIndex = 8;
             this.ScrFramebuffer.Text = "scrollableControl1";
             // 
-            // BpbFramebuffer
-            // 
-            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
-            this.BpbFramebuffer.Name = "BpbFramebuffer";
-            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
-            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BpbFramebuffer.TabIndex = 7;
-            this.BpbFramebuffer.TabStop = false;
-            // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.AutoSize = true;
@@ -6135,6 +6130,65 @@ namespace BizHawk.Client.EmuHawk
             this.label73.TabIndex = 5;
             this.label73.Text = "Hex:";
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.CbxShowFeet);
+            this.tabPage2.Controls.Add(this.TbxYawTestThing);
+            this.tabPage2.Controls.Add(this.BtnFirstPerson);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(688, 618);
+            this.tabPage2.TabIndex = 14;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // CbxShowFeet
+            // 
+            this.CbxShowFeet.AutoSize = true;
+            this.CbxShowFeet.Checked = true;
+            this.CbxShowFeet.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxShowFeet.Location = new System.Drawing.Point(77, 77);
+            this.CbxShowFeet.Name = "CbxShowFeet";
+            this.CbxShowFeet.Size = new System.Drawing.Size(74, 17);
+            this.CbxShowFeet.TabIndex = 25;
+            this.CbxShowFeet.Text = "Show feet";
+            this.CbxShowFeet.UseVisualStyleBackColor = true;
+            // 
+            // TbxYawTestThing
+            // 
+            this.TbxYawTestThing.Location = new System.Drawing.Point(154, 32);
+            this.TbxYawTestThing.Name = "TbxYawTestThing";
+            this.TbxYawTestThing.Size = new System.Drawing.Size(100, 20);
+            this.TbxYawTestThing.TabIndex = 24;
+            // 
+            // BtnFirstPerson
+            // 
+            this.BtnFirstPerson.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnFirstPerson.AutoSize = true;
+            this.BtnFirstPerson.Location = new System.Drawing.Point(3, 3);
+            this.BtnFirstPerson.Name = "BtnFirstPerson";
+            this.BtnFirstPerson.Size = new System.Drawing.Size(75, 50);
+            this.BtnFirstPerson.TabIndex = 23;
+            this.BtnFirstPerson.Text = "First person";
+            this.toolTip1.SetToolTip(this.BtnFirstPerson, "Enter WASD first person mode");
+            this.BtnFirstPerson.UseVisualStyleBackColor = true;
+            this.BtnFirstPerson.Click += new System.EventHandler(this.BtnFirstPerson_ClickFirst);
+            this.BtnFirstPerson.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnFirstPerson_KeyDown);
+            this.BtnFirstPerson.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnFirstPerson_KeyUp);
+            this.BtnFirstPerson.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnFirstPerson_MouseDown);
+            this.BtnFirstPerson.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnFirstPerson_MouseUp);
+            // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
+            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -6309,7 +6363,6 @@ namespace BizHawk.Client.EmuHawk
             this.TlpFramebufferTab.ResumeLayout(false);
             this.TlpFramebufferTab.PerformLayout();
             this.ScrFramebuffer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
@@ -6326,6 +6379,9 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox7.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -6733,5 +6789,9 @@ namespace BizHawk.Client.EmuHawk
 		private TableLayoutPanel TlpSelectedTriggerLeft;
 		private TableLayoutPanel tableLayoutPanel36;
 		private TableLayoutPanel tableLayoutPanel37;
+		private TabPage tabPage2;
+		private Button BtnFirstPerson;
+		private TextBox TbxYawTestThing;
+		private CheckBox CbxShowFeet;
 	}
 }

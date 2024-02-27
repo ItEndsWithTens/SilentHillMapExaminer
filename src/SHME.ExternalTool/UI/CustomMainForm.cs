@@ -195,6 +195,19 @@ namespace BizHawk.Client.EmuHawk
 
 			DetachEventHandlers();
 			AttachEventHandlers();
+
+			int raw = Mem.ReadS32(Rom.Addresses.MainRam.HarryModelPointer);
+			int address = raw - (int)Rom.Addresses.MainRam.BaseAddress;
+			IReadOnlyList<byte> headerBytes = Mem.ReadByteRange(address, IlmHeader.Length);
+			var header = new IlmHeader(headerBytes, raw);
+
+			IReadOnlyList<byte> remaining = Mem.ReadByteRange(address, (int)(Mem.GetMemoryDomainSize("MainRAM") - address));
+			_harryModel = new Ilm(header, remaining);
+
+
+			Renderable gen = new BoxGenerator(0.25f, Color.Purple).Generate().ToWorld();
+
+			TestBoxes.Add(gen);
 		}
 
 		public static Bitmap GenerateReticle(Pen pen, int width, int height, float percent)
@@ -244,6 +257,18 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
+			if (_forcedCameraYaw != null)
+			{
+				_holdCameraPitch = 0;
+				_holdCameraYaw = Core.DegreesToGameUnits((float)_forcedCameraYaw);
+				_holdCameraRoll = 0;
+				HoldCamera();
+
+				TbxYawTestThing.Text = ((float)_forcedCameraYaw).ToString(CultureInfo.CurrentCulture);
+
+				_forcedCameraYaw = null;
+			}
+
 			switch (type)
 			{
 				case ToolFormUpdateType.PreFrame:
@@ -258,14 +283,27 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (!CbxOverlayRenderToFramebuffer.Checked)
 					{
+						TestBoxes[0].Position = new Vector3
+						{
+							X = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX)),
+							Y = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY)),
+							Z = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ))
+						};
+
 						if (CbxCameraDetach.Checked)
 						{
 							HoldCamera();
 						}
+
 						if (_flyEnabled)
 						{
 							MoveCamera();
 							AimCamera();
+						}
+						else if (_firstPersonEnabled)
+						{
+							MoveCameraFirstPerson();
+							AimCameraFirstPerson();
 						}
 					}
 					break;
@@ -356,6 +394,9 @@ namespace BizHawk.Client.EmuHawk
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					TestBox);
+				Camera.GetVisibleRenderables(
+					ref VisibleRenderables,
+					TestBoxes);
 			}
 			if (CbxOverlayTestSheet.Checked)
 			{
@@ -526,6 +567,7 @@ namespace BizHawk.Client.EmuHawk
 			RaycastSelectionTimer.Tick += RaycastSelectionTimer_Tick;
 
 			BtnCameraFly.LostFocus += BtnCameraFly_LostFocus;
+			BtnFirstPerson.LostFocus += BtnFirstPerson_LostFocus;
 		}
 		private void DetachEventHandlers()
 		{
@@ -540,6 +582,7 @@ namespace BizHawk.Client.EmuHawk
 			RaycastSelectionTimer.Tick -= RaycastSelectionTimer_Tick;
 
 			BtnCameraFly.LostFocus -= BtnCameraFly_LostFocus;
+			BtnFirstPerson.LostFocus -= BtnFirstPerson_LostFocus;
 		}
 
 		private float CalculateGameFov()

@@ -8,11 +8,6 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private void BtnCameraFly_LostFocus(object sender, EventArgs e)
-		{
-			BtnCameraFly_ClickSecond(this, EventArgs.Empty);
-		}
-
 		// Cursor visibility in Winforms stacks up, i.e. calling Cursor.Show on
 		// a visible cursor isn't a no-op, and would afterward require two calls
 		// to Hide before it disappeared.
@@ -128,6 +123,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private void HoldCamera()
 		{
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraState, 0x3);
+
 			Mem.WriteU16(Rom.Addresses.MainRam.CameraIdealPitch, _holdCameraPitch);
 			Mem.WriteU16(Rom.Addresses.MainRam.CameraIdealYaw, _holdCameraYaw);
 			Mem.WriteU16(Rom.Addresses.MainRam.CameraIdealRoll, _holdCameraRoll);
@@ -164,9 +161,9 @@ namespace BizHawk.Client.EmuHawk
 
 			Vector3 lookAt = Vector3.Transform(new Vector3(0.0f, 0.0f, -1.0f), matrix);
 
-			x += (lookAt.X * 1.0f);
-			y += (lookAt.Y * 1.0f);
-			z += (lookAt.Z * 1.0f);
+			x += lookAt.X;
+			y += lookAt.Y;
+			z += lookAt.Z;
 
 			// Back to SH coordinates.
 			y = -y;
@@ -367,6 +364,11 @@ namespace BizHawk.Client.EmuHawk
 				default:
 					break;
 			}
+		}
+
+		private void BtnCameraFly_LostFocus(object sender, EventArgs e)
+		{
+			BtnCameraFly_ClickSecond(this, EventArgs.Empty);
 		}
 
 		private void TbxCameraFlySensitivity_TextChanged(object sender, EventArgs e)

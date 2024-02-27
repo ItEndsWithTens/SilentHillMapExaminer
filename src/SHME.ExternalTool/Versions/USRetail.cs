@@ -117,6 +117,33 @@
 
 				HarryState = 0xBA150,
 
+				// 0xBC728 through 0xBC742 - Button map. Every
+				// action in the Controller Config menu can be
+				// customized, apparently. Each value is two
+				// bytes, and can technically be set to any
+				// combination of buttons on the controller.
+				// These go in order from top to bottom, as
+				// shown in that config screen, so:
+				//
+				// Enter
+				// Cancel
+				// Skip
+				// Action
+				// Aim
+				// Light
+				// Run
+				// View
+				// Step L
+				// Step R
+				// Pause
+				// Item
+				// Map
+				// Option
+				//
+				// Set each short value to 0xFF0F and every
+				// button will be mapped to every action. Fun!
+
+
 				// 0xBC750 // View control normal/reversed
 
 				SaveData = 0xBCA34,

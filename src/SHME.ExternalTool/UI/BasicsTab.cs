@@ -107,7 +107,7 @@ namespace BizHawk.Client.EmuHawk
 			LblOverlayCamRoll.Text = Camera.Roll.ToString(f, c);
 		}
 
-		private string _lastHarrySpawnPointHash = "";
+		private string _lastHarrySpawnPointHash = String.Empty;
 		private PointOfInterest? _lastHarrySpawnPoint;
 		private void ReportPosition()
 		{
@@ -133,6 +133,28 @@ namespace BizHawk.Client.EmuHawk
 			if (hash != _lastHarrySpawnPointHash)
 			{
 				_lastHarrySpawnPoint = new PointOfInterest(address, Mem.ReadByteRange(address, 12));
+
+				// TODO: Get rid of this outer if statement after a basic
+				// WIP commit. I don't think it's necessary now that I'm
+				// using the _suppress boolean.
+
+				// A blank hash indicates the emulator has just loaded, which
+				// is not an appropriate time to force the camera's angles.
+				if (!String.IsNullOrEmpty(_lastHarrySpawnPointHash))
+				{
+					// Another inappropriate time to update is on save state
+					// loads. The Emu_StateLoaded handler sets this boolean.
+					if (_suppressForcedCameraYaw)
+					{
+						_forcedCameraYaw = null;
+						_suppressForcedCameraYaw = false;
+					}
+					else
+					{
+						(_forcedCameraYaw, _, _, _) = PointOfInterest.DecodeGeometry(TriggerStyle.ButtonYaw, _lastHarrySpawnPoint);
+					}
+				}
+
 				_lastHarrySpawnPointHash = hash;
 
 				string sep = c.NumberFormat.NumberGroupSeparator;
@@ -377,6 +399,7 @@ namespace BizHawk.Client.EmuHawk
 			ClearDisplayedTriggerInfo();
 
 			_levelDataNeedsUpdate = true;
+			_suppressForcedCameraYaw = true;
 		}
 
 		private void NudCrosshairLength_ValueChanged(object sender, EventArgs e)

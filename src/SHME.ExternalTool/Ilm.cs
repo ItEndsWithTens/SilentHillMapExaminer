@@ -58,9 +58,9 @@ namespace SHME.ExternalTool
 
 		public SubmeshHeader Header { get; }
 
-		public List<Vector3> Vertices { get; } = new List<Vector3>();
+		public IList<Vector3> Vertices { get; } = new List<Vector3>();
 
-		public List<List<int>> PolygonIndices { get; } = new List<List<int>>();
+		public IList<List<int>> PolygonIndices { get; } = new List<List<int>>();
 
 		public float Scale { get; set; } = 1.0f;
 
@@ -173,9 +173,9 @@ namespace SHME.ExternalTool
 	{
 		public IlmHeader Header { get; }
 
-		public List<string> Textures { get; } = new List<string>();
+		public IList<string> Textures { get; } = new List<string>();
 
-		public List<Submesh> Submeshes { get; } = new List<Submesh>();
+		public IList<Submesh> Submeshes { get; } = new List<Submesh>();
 
 		public IEnumerable<Vector3> Vertices => Submeshes.SelectMany(submesh => submesh.Vertices);
 
