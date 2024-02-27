@@ -134,25 +134,17 @@ namespace BizHawk.Client.EmuHawk
 			{
 				_lastHarrySpawnPoint = new PointOfInterest(address, Mem.ReadByteRange(address, 12));
 
-				// TODO: Get rid of this outer if statement after a basic
-				// WIP commit. I don't think it's necessary now that I'm
-				// using the _suppress boolean.
-
-				// A blank hash indicates the emulator has just loaded, which
-				// is not an appropriate time to force the camera's angles.
-				if (!String.IsNullOrEmpty(_lastHarrySpawnPointHash))
+				// To prevent the camera from being forcibly reoriented upon
+				// both SHME startup and save state loading, this boolean not
+				// only defaults to true but is set to true in Emu_StateLoaded.
+				if (_suppressForcedCameraYaw)
 				{
-					// Another inappropriate time to update is on save state
-					// loads. The Emu_StateLoaded handler sets this boolean.
-					if (_suppressForcedCameraYaw)
-					{
-						_forcedCameraYaw = null;
-						_suppressForcedCameraYaw = false;
-					}
-					else
-					{
-						(_forcedCameraYaw, _, _, _) = PointOfInterest.DecodeGeometry(TriggerStyle.ButtonYaw, _lastHarrySpawnPoint);
-					}
+					_forcedCameraYaw = null;
+					_suppressForcedCameraYaw = false;
+				}
+				else
+				{
+					(_forcedCameraYaw, _, _, _) = PointOfInterest.DecodeGeometry(TriggerStyle.ButtonYaw, _lastHarrySpawnPoint);
 				}
 
 				_lastHarrySpawnPointHash = hash;
