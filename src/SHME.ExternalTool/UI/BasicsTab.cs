@@ -17,25 +17,25 @@ namespace BizHawk.Client.EmuHawk
 	// bitfields/flags, the alignment helps make it more visually obvious which
 	// bits correspond to which enum members.
 	[Flags]
-	public enum ButtonFlags : ushort
+	public enum Buttons
 	{
-		None =     0b00000000_00000000,
-		Select =   0b00000000_00000001,
-		L3 =       0b00000000_00000010,
-		R3 =       0b00000000_00000100,
-		Start =    0b00000000_00001000,
-		Up =       0b00000000_00010000,
-		Right =    0b00000000_00100000,
-		Down =     0b00000000_01000000,
-		Left =     0b00000000_10000000,
-		L2 =       0b00000001_00000000,
-		R2 =       0b00000010_00000000,
-		L1 =       0b00000100_00000000,
-		R1 =       0b00001000_00000000,
-		Triangle = 0b00010000_00000000,
-		Circle =   0b00100000_00000000,
-		X =        0b01000000_00000000,
-		Square =   0b10000000_00000000
+		None =     0x0000,
+		Select =   0x0001,
+		L3 =       0x0002,
+		R3 =       0x0004,
+		Start =    0x0008,
+		Up =       0x0010,
+		Right =    0x0020,
+		Down =     0x0040,
+		Left =     0x0080,
+		L2 =       0x0100,
+		R2 =       0x0200,
+		L1 =       0x0400,
+		R1 =       0x0800,
+		Triangle = 0x1000,
+		Circle =   0x2000,
+		X =        0x4000,
+		Square =   0x8000
 	}
 #pragma warning restore IDE0055
 
@@ -66,11 +66,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportControls()
 		{
-			var raw = (ButtonFlags)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
+			var raw = (Buttons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
-			foreach (ButtonFlags button in Enum.GetValues(typeof(ButtonFlags)))
+			foreach (Buttons button in Enum.GetValues(typeof(Buttons)))
 			{
-				string buttonName = $"LblButton{Enum.GetName(typeof(ButtonFlags), button)}";
+				string buttonName = $"LblButton{Enum.GetName(typeof(Buttons), button)}";
 
 				Type thisType = typeof(CustomMainForm);
 				FieldInfo? info = thisType.GetField(buttonName, BindingFlags.Instance | BindingFlags.NonPublic);

@@ -14,17 +14,17 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private ButtonFlags _saveButton = ButtonFlags.None;
+		private Buttons _saveButton = Buttons.None;
 
 		private void InitializeSaveTab()
 		{
-			CmbSaveButton.DataSource = Enum.GetValues(typeof(ButtonFlags));
-			CmbSaveButton.SelectedItem = ButtonFlags.R3;
+			CmbSaveButton.DataSource = Enum.GetValues(typeof(Buttons));
+			CmbSaveButton.SelectedItem = Buttons.R3;
 		}
 
 		private void CheckForSaveButtonPress()
 		{
-			var raw = (ButtonFlags)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
+			var raw = (Buttons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
 			if (!raw.FasterHasFlag(_saveButton))
 			{

@@ -4,7 +4,7 @@ namespace SHME.ExternalTool
 {
 	public static class EnumExtensions
 	{
-		public static bool FasterHasFlag(this ButtonFlags value, ButtonFlags flag)
+		public static bool FasterHasFlag(this Buttons value, Buttons flag)
 		{
 			return (value & flag) != 0;
 		}
