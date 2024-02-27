@@ -369,6 +369,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer = new System.Windows.Forms.TabPage();
             this.TlpFramebufferTab = new System.Windows.Forms.TableLayoutPanel();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
@@ -427,7 +428,6 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonRight = new System.Windows.Forms.Label();
             this.LblButtonDown = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -545,6 +545,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer.SuspendLayout();
             this.TlpFramebufferTab.SuspendLayout();
             this.ScrFramebuffer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
@@ -562,7 +563,6 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel31.SuspendLayout();
             this.tableLayoutPanel30.SuspendLayout();
             this.tableLayoutPanel29.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -572,7 +572,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnGetPosition.Location = new System.Drawing.Point(3, 34);
             this.BtnGetPosition.Name = "BtnGetPosition";
             this.BtnGetPosition.Size = new System.Drawing.Size(75, 25);
-            this.BtnGetPosition.TabIndex = 0;
+            this.BtnGetPosition.TabIndex = 5;
             this.BtnGetPosition.Text = "Get";
             this.BtnGetPosition.UseVisualStyleBackColor = true;
             this.BtnGetPosition.Click += new System.EventHandler(this.BtnGetPosition_Click);
@@ -584,7 +584,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSetPosition.Location = new System.Drawing.Point(250, 34);
             this.BtnSetPosition.Name = "BtnSetPosition";
             this.BtnSetPosition.Size = new System.Drawing.Size(75, 25);
-            this.BtnSetPosition.TabIndex = 4;
+            this.BtnSetPosition.TabIndex = 40;
             this.BtnSetPosition.Text = "Set";
             this.BtnSetPosition.UseVisualStyleBackColor = true;
             this.BtnSetPosition.Click += new System.EventHandler(this.BtnSetPosition_Click);
@@ -595,7 +595,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxPositionX.Location = new System.Drawing.Point(84, 36);
             this.TbxPositionX.Name = "TbxPositionX";
             this.TbxPositionX.Size = new System.Drawing.Size(49, 20);
-            this.TbxPositionX.TabIndex = 1;
+            this.TbxPositionX.TabIndex = 15;
             this.TbxPositionX.Click += new System.EventHandler(this.Selectable_Enter);
             this.TbxPositionX.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxPositionX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxPosition_KeyDown);
@@ -606,7 +606,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxPositionY.Location = new System.Drawing.Point(139, 36);
             this.TbxPositionY.Name = "TbxPositionY";
             this.TbxPositionY.Size = new System.Drawing.Size(49, 20);
-            this.TbxPositionY.TabIndex = 2;
+            this.TbxPositionY.TabIndex = 25;
             this.TbxPositionY.Click += new System.EventHandler(this.Selectable_Enter);
             this.TbxPositionY.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxPositionY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxPosition_KeyDown);
@@ -617,7 +617,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryPositionX.Location = new System.Drawing.Point(86, 16);
             this.LblHarryPositionX.Name = "LblHarryPositionX";
             this.LblHarryPositionX.Size = new System.Drawing.Size(45, 15);
-            this.LblHarryPositionX.TabIndex = 4;
+            this.LblHarryPositionX.TabIndex = 10;
             this.LblHarryPositionX.Text = "<xxxxx>";
             this.LblHarryPositionX.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -627,7 +627,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryPositionY.Location = new System.Drawing.Point(141, 16);
             this.LblHarryPositionY.Name = "LblHarryPositionY";
             this.LblHarryPositionY.Size = new System.Drawing.Size(45, 15);
-            this.LblHarryPositionY.TabIndex = 5;
+            this.LblHarryPositionY.TabIndex = 20;
             this.LblHarryPositionY.Text = "<yyyyy>";
             this.LblHarryPositionY.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -637,7 +637,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxHarryPitch.Location = new System.Drawing.Point(84, 129);
             this.TbxHarryPitch.Name = "TbxHarryPitch";
             this.TbxHarryPitch.Size = new System.Drawing.Size(49, 20);
-            this.TbxHarryPitch.TabIndex = 6;
+            this.TbxHarryPitch.TabIndex = 65;
             this.TbxHarryPitch.Click += new System.EventHandler(this.Selectable_Enter);
             this.TbxHarryPitch.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxHarryPitch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxAngles_KeyDown);
@@ -648,7 +648,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxHarryYaw.Location = new System.Drawing.Point(139, 129);
             this.TbxHarryYaw.Name = "TbxHarryYaw";
             this.TbxHarryYaw.Size = new System.Drawing.Size(49, 20);
-            this.TbxHarryYaw.TabIndex = 8;
+            this.TbxHarryYaw.TabIndex = 75;
             this.TbxHarryYaw.Click += new System.EventHandler(this.Selectable_Enter);
             this.TbxHarryYaw.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxHarryYaw.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxAngles_KeyDown);
@@ -659,7 +659,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxHarryRoll.Location = new System.Drawing.Point(194, 129);
             this.TbxHarryRoll.Name = "TbxHarryRoll";
             this.TbxHarryRoll.Size = new System.Drawing.Size(49, 20);
-            this.TbxHarryRoll.TabIndex = 10;
+            this.TbxHarryRoll.TabIndex = 85;
             this.TbxHarryRoll.Click += new System.EventHandler(this.Selectable_Enter);
             this.TbxHarryRoll.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxHarryRoll.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxAngles_KeyDown);
@@ -671,7 +671,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnGetAngles.Location = new System.Drawing.Point(3, 127);
             this.BtnGetAngles.Name = "BtnGetAngles";
             this.BtnGetAngles.Size = new System.Drawing.Size(75, 25);
-            this.BtnGetAngles.TabIndex = 5;
+            this.BtnGetAngles.TabIndex = 55;
             this.BtnGetAngles.Text = "Get";
             this.BtnGetAngles.UseVisualStyleBackColor = true;
             this.BtnGetAngles.Click += new System.EventHandler(this.BtnGetAngles_Click);
@@ -734,7 +734,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
             this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
             this.tableLayoutPanel24.Size = new System.Drawing.Size(329, 281);
-            this.tableLayoutPanel24.TabIndex = 31;
+            this.tableLayoutPanel24.TabIndex = 0;
             // 
             // CbxEnableHarrySection
             // 
@@ -746,7 +746,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxEnableHarrySection.Location = new System.Drawing.Point(267, 261);
             this.CbxEnableHarrySection.Name = "CbxEnableHarrySection";
             this.CbxEnableHarrySection.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableHarrySection.TabIndex = 16;
+            this.CbxEnableHarrySection.TabIndex = 115;
             this.CbxEnableHarrySection.Text = "Enable";
             this.CbxEnableHarrySection.UseVisualStyleBackColor = true;
             // 
@@ -756,7 +756,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxPositionZ.Location = new System.Drawing.Point(194, 36);
             this.TbxPositionZ.Name = "TbxPositionZ";
             this.TbxPositionZ.Size = new System.Drawing.Size(49, 20);
-            this.TbxPositionZ.TabIndex = 3;
+            this.TbxPositionZ.TabIndex = 35;
             this.TbxPositionZ.Click += new System.EventHandler(this.Selectable_Enter);
             this.TbxPositionZ.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxPositionZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxPosition_KeyDown);
@@ -767,7 +767,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryPositionZ.Location = new System.Drawing.Point(196, 16);
             this.LblHarryPositionZ.Name = "LblHarryPositionZ";
             this.LblHarryPositionZ.Size = new System.Drawing.Size(45, 15);
-            this.LblHarryPositionZ.TabIndex = 18;
+            this.LblHarryPositionZ.TabIndex = 30;
             this.LblHarryPositionZ.Text = "<zzzzz>";
             this.LblHarryPositionZ.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -778,7 +778,7 @@ namespace BizHawk.Client.EmuHawk
             this.label59.Location = new System.Drawing.Point(18, 9);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(44, 13);
-            this.label59.TabIndex = 23;
+            this.label59.TabIndex = 0;
             this.label59.Text = "Position";
             // 
             // label61
@@ -788,7 +788,7 @@ namespace BizHawk.Client.EmuHawk
             this.label61.Location = new System.Drawing.Point(21, 102);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(39, 13);
-            this.label61.TabIndex = 24;
+            this.label61.TabIndex = 50;
             this.label61.Text = "Angles";
             // 
             // label18
@@ -799,7 +799,7 @@ namespace BizHawk.Client.EmuHawk
             this.label18.Location = new System.Drawing.Point(52, 226);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(81, 13);
-            this.label18.TabIndex = 25;
+            this.label18.TabIndex = 95;
             this.label18.Text = "Last spawn XZ:";
             // 
             // label19
@@ -810,7 +810,7 @@ namespace BizHawk.Client.EmuHawk
             this.label19.Location = new System.Drawing.Point(23, 258);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(110, 13);
-            this.label19.TabIndex = 29;
+            this.label19.TabIndex = 105;
             this.label19.Text = "Last spawn geometry:";
             // 
             // LblSpawnGeometry
@@ -821,7 +821,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblSpawnGeometry.Location = new System.Drawing.Point(139, 258);
             this.LblSpawnGeometry.Name = "LblSpawnGeometry";
             this.LblSpawnGeometry.Size = new System.Drawing.Size(62, 13);
-            this.LblSpawnGeometry.TabIndex = 27;
+            this.LblSpawnGeometry.TabIndex = 110;
             this.LblSpawnGeometry.Text = "<geometry>";
             // 
             // LblHarryRoll
@@ -830,7 +830,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryRoll.Location = new System.Drawing.Point(196, 109);
             this.LblHarryRoll.Name = "LblHarryRoll";
             this.LblHarryRoll.Size = new System.Drawing.Size(45, 15);
-            this.LblHarryRoll.TabIndex = 15;
+            this.LblHarryRoll.TabIndex = 80;
             this.LblHarryRoll.Text = "<roll>";
             this.LblHarryRoll.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -841,7 +841,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSetAngles.Location = new System.Drawing.Point(250, 127);
             this.BtnSetAngles.Name = "BtnSetAngles";
             this.BtnSetAngles.Size = new System.Drawing.Size(75, 25);
-            this.BtnSetAngles.TabIndex = 12;
+            this.BtnSetAngles.TabIndex = 90;
             this.BtnSetAngles.Text = "Set";
             this.BtnSetAngles.UseVisualStyleBackColor = true;
             this.BtnSetAngles.Click += new System.EventHandler(this.BtnSetAngles_Click);
@@ -852,7 +852,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryYaw.Location = new System.Drawing.Point(141, 109);
             this.LblHarryYaw.Name = "LblHarryYaw";
             this.LblHarryYaw.Size = new System.Drawing.Size(45, 15);
-            this.LblHarryYaw.TabIndex = 14;
+            this.LblHarryYaw.TabIndex = 70;
             this.LblHarryYaw.Text = "<yaw>";
             this.LblHarryYaw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -864,7 +864,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblSpawnXZ.Location = new System.Drawing.Point(139, 226);
             this.LblSpawnXZ.Name = "LblSpawnXZ";
             this.LblSpawnXZ.Size = new System.Drawing.Size(117, 13);
-            this.LblSpawnXZ.TabIndex = 26;
+            this.LblSpawnXZ.TabIndex = 100;
             this.LblSpawnXZ.Text = "PLACEHOLDER TEXT";
             // 
             // LblHarryPitch
@@ -873,7 +873,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryPitch.Location = new System.Drawing.Point(86, 109);
             this.LblHarryPitch.Name = "LblHarryPitch";
             this.LblHarryPitch.Size = new System.Drawing.Size(45, 15);
-            this.LblHarryPitch.TabIndex = 13;
+            this.LblHarryPitch.TabIndex = 60;
             this.LblHarryPitch.Text = "<pitch>";
             this.LblHarryPitch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -888,7 +888,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxHarrySetPositionMoveCamera.Location = new System.Drawing.Point(235, 69);
             this.CbxHarrySetPositionMoveCamera.Name = "CbxHarrySetPositionMoveCamera";
             this.CbxHarrySetPositionMoveCamera.Size = new System.Drawing.Size(91, 17);
-            this.CbxHarrySetPositionMoveCamera.TabIndex = 30;
+            this.CbxHarrySetPositionMoveCamera.TabIndex = 45;
             this.CbxHarrySetPositionMoveCamera.Text = "Move camera";
             this.CbxHarrySetPositionMoveCamera.UseVisualStyleBackColor = true;
             // 
@@ -946,7 +946,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel25.Size = new System.Drawing.Size(329, 281);
-            this.tableLayoutPanel25.TabIndex = 36;
+            this.tableLayoutPanel25.TabIndex = 0;
             // 
             // CbxCameraDetach
             // 
@@ -955,7 +955,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCameraDetach.Location = new System.Drawing.Point(3, 135);
             this.CbxCameraDetach.Name = "CbxCameraDetach";
             this.CbxCameraDetach.Size = new System.Drawing.Size(61, 17);
-            this.CbxCameraDetach.TabIndex = 23;
+            this.CbxCameraDetach.TabIndex = 75;
             this.CbxCameraDetach.Text = "Detach";
             this.CbxCameraDetach.UseVisualStyleBackColor = true;
             this.CbxCameraDetach.CheckedChanged += new System.EventHandler(this.CbxCameraDetach_CheckedChanged);
@@ -966,7 +966,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPositionZ.Location = new System.Drawing.Point(70, 104);
             this.LblCameraPositionZ.Name = "LblCameraPositionZ";
             this.LblCameraPositionZ.Size = new System.Drawing.Size(45, 15);
-            this.LblCameraPositionZ.TabIndex = 2;
+            this.LblCameraPositionZ.TabIndex = 40;
             this.LblCameraPositionZ.Text = "<z>";
             this.LblCameraPositionZ.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolTip1.SetToolTip(this.LblCameraPositionZ, "The game camera\'s position in SH coordinates");
@@ -978,7 +978,7 @@ namespace BizHawk.Client.EmuHawk
             this.label63.Location = new System.Drawing.Point(47, 73);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(17, 13);
-            this.label63.TabIndex = 30;
+            this.label63.TabIndex = 25;
             this.label63.Text = "Y:";
             // 
             // label62
@@ -988,7 +988,7 @@ namespace BizHawk.Client.EmuHawk
             this.label62.Location = new System.Drawing.Point(47, 41);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(17, 13);
-            this.label62.TabIndex = 29;
+            this.label62.TabIndex = 15;
             this.label62.Text = "X:";
             // 
             // LblCameraPositionY
@@ -997,7 +997,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPositionY.Location = new System.Drawing.Point(70, 72);
             this.LblCameraPositionY.Name = "LblCameraPositionY";
             this.LblCameraPositionY.Size = new System.Drawing.Size(45, 15);
-            this.LblCameraPositionY.TabIndex = 1;
+            this.LblCameraPositionY.TabIndex = 30;
             this.LblCameraPositionY.Text = "<y>";
             this.LblCameraPositionY.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolTip1.SetToolTip(this.LblCameraPositionY, "The game camera\'s position in SH coordinates");
@@ -1010,7 +1010,7 @@ namespace BizHawk.Client.EmuHawk
             this.label13.Location = new System.Drawing.Point(192, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(78, 13);
-            this.label13.TabIndex = 18;
+            this.label13.TabIndex = 5;
             this.label13.Text = "Draw distance:";
             // 
             // label1
@@ -1020,7 +1020,7 @@ namespace BizHawk.Client.EmuHawk
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(119, 13);
-            this.label1.TabIndex = 14;
+            this.label1.TabIndex = 0;
             this.label1.Text = "X east, Y down, Z north";
             this.toolTip1.SetToolTip(this.label1, "Cardinal directions relative to the top-down map view of Old Silent\r\nHill. The ar" +
         "ea maps of indoor levels may not match this.");
@@ -1031,7 +1031,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPositionX.Location = new System.Drawing.Point(70, 40);
             this.LblCameraPositionX.Name = "LblCameraPositionX";
             this.LblCameraPositionX.Size = new System.Drawing.Size(45, 15);
-            this.LblCameraPositionX.TabIndex = 0;
+            this.LblCameraPositionX.TabIndex = 20;
             this.LblCameraPositionX.Text = "<x>";
             this.LblCameraPositionX.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolTip1.SetToolTip(this.LblCameraPositionX, "The game camera\'s position in SH coordinates");
@@ -1041,7 +1041,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraDrawDistance.Location = new System.Drawing.Point(276, 0);
             this.LblCameraDrawDistance.Name = "LblCameraDrawDistance";
             this.LblCameraDrawDistance.Size = new System.Drawing.Size(50, 15);
-            this.LblCameraDrawDistance.TabIndex = 17;
+            this.LblCameraDrawDistance.TabIndex = 10;
             this.LblCameraDrawDistance.Text = "<meters>";
             // 
             // label64
@@ -1051,7 +1051,7 @@ namespace BizHawk.Client.EmuHawk
             this.label64.Location = new System.Drawing.Point(47, 105);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(17, 13);
-            this.label64.TabIndex = 31;
+            this.label64.TabIndex = 35;
             this.label64.Text = "Z:";
             // 
             // label67
@@ -1061,7 +1061,7 @@ namespace BizHawk.Client.EmuHawk
             this.label67.Location = new System.Drawing.Point(145, 105);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(28, 13);
-            this.label67.TabIndex = 34;
+            this.label67.TabIndex = 65;
             this.label67.Text = "Roll:";
             // 
             // label66
@@ -1071,7 +1071,7 @@ namespace BizHawk.Client.EmuHawk
             this.label66.Location = new System.Drawing.Point(142, 73);
             this.label66.Name = "label66";
             this.label66.Size = new System.Drawing.Size(31, 13);
-            this.label66.TabIndex = 33;
+            this.label66.TabIndex = 55;
             this.label66.Text = "Yaw:";
             // 
             // label65
@@ -1081,7 +1081,7 @@ namespace BizHawk.Client.EmuHawk
             this.label65.Location = new System.Drawing.Point(139, 41);
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(34, 13);
-            this.label65.TabIndex = 32;
+            this.label65.TabIndex = 45;
             this.label65.Text = "Pitch:";
             // 
             // LblCameraPitch
@@ -1091,7 +1091,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPitch.Location = new System.Drawing.Point(179, 40);
             this.LblCameraPitch.Name = "LblCameraPitch";
             this.LblCameraPitch.Size = new System.Drawing.Size(45, 15);
-            this.LblCameraPitch.TabIndex = 3;
+            this.LblCameraPitch.TabIndex = 50;
             this.LblCameraPitch.Text = "<pitch>";
             this.LblCameraPitch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1102,7 +1102,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraYaw.Location = new System.Drawing.Point(179, 72);
             this.LblCameraYaw.Name = "LblCameraYaw";
             this.LblCameraYaw.Size = new System.Drawing.Size(45, 15);
-            this.LblCameraYaw.TabIndex = 4;
+            this.LblCameraYaw.TabIndex = 60;
             this.LblCameraYaw.Text = "<yaw>";
             this.LblCameraYaw.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1113,7 +1113,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraRoll.Location = new System.Drawing.Point(179, 104);
             this.LblCameraRoll.Name = "LblCameraRoll";
             this.LblCameraRoll.Size = new System.Drawing.Size(45, 15);
-            this.LblCameraRoll.TabIndex = 5;
+            this.LblCameraRoll.TabIndex = 70;
             this.LblCameraRoll.Text = "<roll>";
             this.LblCameraRoll.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1123,8 +1123,8 @@ namespace BizHawk.Client.EmuHawk
             this.LblFov.Location = new System.Drawing.Point(128, 177);
             this.LblFov.Name = "LblFov";
             this.LblFov.Size = new System.Drawing.Size(45, 15);
-            this.LblFov.TabIndex = 20;
-            this.LblFov.Text = "54";
+            this.LblFov.TabIndex = 95;
+            this.LblFov.Text = "53";
             this.LblFov.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip1.SetToolTip(this.LblFov, "Vertical FOV, in degrees");
             // 
@@ -1137,9 +1137,9 @@ namespace BizHawk.Client.EmuHawk
             this.TrkFov.Minimum = 1;
             this.TrkFov.Name = "TrkFov";
             this.TrkFov.Size = new System.Drawing.Size(323, 45);
-            this.TrkFov.TabIndex = 19;
+            this.TrkFov.TabIndex = 100;
             this.toolTip1.SetToolTip(this.TrkFov, "Vertical FOV, in degrees");
-            this.TrkFov.Value = 54;
+            this.TrkFov.Value = 53;
             this.TrkFov.Scroll += new System.EventHandler(this.TrkFov_Scroll);
             // 
             // CbxCameraLockToHead
@@ -1150,7 +1150,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCameraLockToHead.Location = new System.Drawing.Point(3, 199);
             this.CbxCameraLockToHead.Name = "CbxCameraLockToHead";
             this.CbxCameraLockToHead.Size = new System.Drawing.Size(89, 17);
-            this.CbxCameraLockToHead.TabIndex = 35;
+            this.CbxCameraLockToHead.TabIndex = 85;
             this.CbxCameraLockToHead.Text = "Lock to head";
             this.CbxCameraLockToHead.UseVisualStyleBackColor = true;
             // 
@@ -1161,7 +1161,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCameraFreeze.Location = new System.Drawing.Point(3, 167);
             this.CbxCameraFreeze.Name = "CbxCameraFreeze";
             this.CbxCameraFreeze.Size = new System.Drawing.Size(58, 17);
-            this.CbxCameraFreeze.TabIndex = 16;
+            this.CbxCameraFreeze.TabIndex = 80;
             this.CbxCameraFreeze.Text = "Freeze";
             this.CbxCameraFreeze.UseVisualStyleBackColor = true;
             this.CbxCameraFreeze.CheckedChanged += new System.EventHandler(this.CbxCameraFreeze_CheckedChanged);
@@ -1175,7 +1175,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxShowLookAt.Location = new System.Drawing.Point(238, 135);
             this.CbxShowLookAt.Name = "CbxShowLookAt";
             this.CbxShowLookAt.Size = new System.Drawing.Size(88, 17);
-            this.CbxShowLookAt.TabIndex = 93;
+            this.CbxShowLookAt.TabIndex = 90;
             this.CbxShowLookAt.Text = "Show look at";
             this.toolTip1.SetToolTip(this.CbxShowLookAt, "Whether to draw directly on the game\'s framebuffer instead of BizHawk\'s GUI. Curr" +
         "ently available only in the Octoshock core.");
@@ -1295,7 +1295,7 @@ namespace BizHawk.Client.EmuHawk
             this.label4.Location = new System.Drawing.Point(216, 75);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
-            this.label4.TabIndex = 20;
+            this.label4.TabIndex = 5;
             this.label4.Text = "Sensitivity";
             this.toolTip1.SetToolTip(this.label4, "Mouse sensitivity, as an arbitrary multiplier");
             // 
@@ -1305,7 +1305,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxCameraFlySensitivity.Location = new System.Drawing.Point(276, 72);
             this.TbxCameraFlySensitivity.Name = "TbxCameraFlySensitivity";
             this.TbxCameraFlySensitivity.Size = new System.Drawing.Size(50, 20);
-            this.TbxCameraFlySensitivity.TabIndex = 25;
+            this.TbxCameraFlySensitivity.TabIndex = 10;
             this.TbxCameraFlySensitivity.Text = "0.25";
             this.toolTip1.SetToolTip(this.TbxCameraFlySensitivity, "Mouse sensitivity, as an arbitrary multiplier");
             this.TbxCameraFlySensitivity.TextChanged += new System.EventHandler(this.TbxCameraFlySensitivity_TextChanged);
@@ -1317,7 +1317,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCameraFlyInvert.Location = new System.Drawing.Point(3, 73);
             this.CbxCameraFlyInvert.Name = "CbxCameraFlyInvert";
             this.CbxCameraFlyInvert.Size = new System.Drawing.Size(53, 17);
-            this.CbxCameraFlyInvert.TabIndex = 15;
+            this.CbxCameraFlyInvert.TabIndex = 0;
             this.CbxCameraFlyInvert.Text = "Invert";
             this.CbxCameraFlyInvert.UseVisualStyleBackColor = true;
             // 
@@ -1356,7 +1356,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFirstPerson.Name = "BtnFirstPerson";
             this.tableLayoutPanel38.SetRowSpan(this.BtnFirstPerson, 2);
             this.BtnFirstPerson.Size = new System.Drawing.Size(75, 50);
-            this.BtnFirstPerson.TabIndex = 30;
+            this.BtnFirstPerson.TabIndex = 0;
             this.BtnFirstPerson.Text = "First person";
             this.toolTip1.SetToolTip(this.BtnFirstPerson, "Enter WASD first person mode");
             this.BtnFirstPerson.UseVisualStyleBackColor = true;
@@ -1383,7 +1383,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudEyeHeight.Name = "NudEyeHeight";
             this.NudEyeHeight.Size = new System.Drawing.Size(55, 20);
-            this.NudEyeHeight.TabIndex = 50;
+            this.NudEyeHeight.TabIndex = 20;
             this.toolTip1.SetToolTip(this.NudEyeHeight, "Crosshair length as a percentage of viewport height");
             this.NudEyeHeight.Value = new decimal(new int[] {
             16,
@@ -1398,7 +1398,7 @@ namespace BizHawk.Client.EmuHawk
             this.label48.Location = new System.Drawing.Point(208, 8);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(57, 13);
-            this.label48.TabIndex = 45;
+            this.label48.TabIndex = 15;
             this.label48.Text = "Eye height";
             this.toolTip1.SetToolTip(this.label48, "Movement speed, in units per frame");
             // 
@@ -1413,7 +1413,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxAlwaysRun.Location = new System.Drawing.Point(249, 36);
             this.CbxAlwaysRun.Name = "CbxAlwaysRun";
             this.CbxAlwaysRun.Size = new System.Drawing.Size(77, 17);
-            this.CbxAlwaysRun.TabIndex = 55;
+            this.CbxAlwaysRun.TabIndex = 25;
             this.CbxAlwaysRun.Text = "Always run";
             this.CbxAlwaysRun.UseVisualStyleBackColor = true;
             this.CbxAlwaysRun.CheckedChanged += new System.EventHandler(this.CbxAlwaysRun_CheckedChanged);
@@ -1426,7 +1426,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxShowFeet.Location = new System.Drawing.Point(84, 33);
             this.CbxShowFeet.Name = "CbxShowFeet";
             this.CbxShowFeet.Size = new System.Drawing.Size(74, 17);
-            this.CbxShowFeet.TabIndex = 40;
+            this.CbxShowFeet.TabIndex = 10;
             this.CbxShowFeet.Text = "Show feet";
             this.CbxShowFeet.UseVisualStyleBackColor = true;
             // 
@@ -1439,7 +1439,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxHideHarry.Location = new System.Drawing.Point(84, 10);
             this.CbxHideHarry.Name = "CbxHideHarry";
             this.CbxHideHarry.Size = new System.Drawing.Size(76, 17);
-            this.CbxHideHarry.TabIndex = 35;
+            this.CbxHideHarry.TabIndex = 5;
             this.CbxHideHarry.Text = "Hide Harry";
             this.CbxHideHarry.UseVisualStyleBackColor = true;
             this.CbxHideHarry.CheckedChanged += new System.EventHandler(this.CbxHideHarry_CheckedChanged);
@@ -1570,7 +1570,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel26.Size = new System.Drawing.Size(329, 281);
-            this.tableLayoutPanel26.TabIndex = 102;
+            this.tableLayoutPanel26.TabIndex = 0;
             // 
             // CbxOverlayCameraMatchGame
             // 
@@ -1582,7 +1582,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxOverlayCameraMatchGame.Location = new System.Drawing.Point(203, 3);
             this.CbxOverlayCameraMatchGame.Name = "CbxOverlayCameraMatchGame";
             this.CbxOverlayCameraMatchGame.Size = new System.Drawing.Size(123, 17);
-            this.CbxOverlayCameraMatchGame.TabIndex = 36;
+            this.CbxOverlayCameraMatchGame.TabIndex = 5;
             this.CbxOverlayCameraMatchGame.Text = "Match game camera";
             this.CbxOverlayCameraMatchGame.UseVisualStyleBackColor = true;
             this.CbxOverlayCameraMatchGame.CheckedChanged += new System.EventHandler(this.CbxOverlayCameraMatchGame_CheckedChanged);
@@ -1594,7 +1594,7 @@ namespace BizHawk.Client.EmuHawk
             this.label22.Location = new System.Drawing.Point(231, 29);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(34, 13);
-            this.label22.TabIndex = 40;
+            this.label22.TabIndex = 70;
             this.label22.Text = "Pitch:";
             // 
             // label23
@@ -1604,7 +1604,7 @@ namespace BizHawk.Client.EmuHawk
             this.label23.Location = new System.Drawing.Point(234, 55);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(31, 13);
-            this.label23.TabIndex = 41;
+            this.label23.TabIndex = 80;
             this.label23.Text = "Yaw:";
             // 
             // label24
@@ -1614,7 +1614,7 @@ namespace BizHawk.Client.EmuHawk
             this.label24.Location = new System.Drawing.Point(237, 81);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(28, 13);
-            this.label24.TabIndex = 42;
+            this.label24.TabIndex = 90;
             this.label24.Text = "Roll:";
             // 
             // label27
@@ -1624,7 +1624,7 @@ namespace BizHawk.Client.EmuHawk
             this.label27.Location = new System.Drawing.Point(102, 29);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(17, 13);
-            this.label27.TabIndex = 43;
+            this.label27.TabIndex = 40;
             this.label27.Text = "X:";
             // 
             // label26
@@ -1634,7 +1634,7 @@ namespace BizHawk.Client.EmuHawk
             this.label26.Location = new System.Drawing.Point(102, 55);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(17, 13);
-            this.label26.TabIndex = 44;
+            this.label26.TabIndex = 50;
             this.label26.Text = "Y:";
             // 
             // label25
@@ -1644,7 +1644,7 @@ namespace BizHawk.Client.EmuHawk
             this.label25.Location = new System.Drawing.Point(102, 81);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(17, 13);
-            this.label25.TabIndex = 45;
+            this.label25.TabIndex = 60;
             this.label25.Text = "Z:";
             // 
             // NudOverlayCameraZ
@@ -1663,7 +1663,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayCameraZ.Name = "NudOverlayCameraZ";
             this.NudOverlayCameraZ.Size = new System.Drawing.Size(55, 20);
-            this.NudOverlayCameraZ.TabIndex = 39;
+            this.NudOverlayCameraZ.TabIndex = 65;
             this.toolTip1.SetToolTip(this.NudOverlayCameraZ, "The overlay camera\'s position in overlay coordinates");
             this.NudOverlayCameraZ.ValueChanged += new System.EventHandler(this.NudOverlayCameraZ_ValueChanged);
             this.NudOverlayCameraZ.Click += new System.EventHandler(this.Selectable_Enter);
@@ -1676,7 +1676,7 @@ namespace BizHawk.Client.EmuHawk
             this.label84.Location = new System.Drawing.Point(186, 202);
             this.label84.Name = "label84";
             this.label84.Size = new System.Drawing.Size(79, 13);
-            this.label84.TabIndex = 101;
+            this.label84.TabIndex = 135;
             this.label84.Text = "Filled opacity %";
             // 
             // NudOverlayCameraY
@@ -1695,7 +1695,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayCameraY.Name = "NudOverlayCameraY";
             this.NudOverlayCameraY.Size = new System.Drawing.Size(55, 20);
-            this.NudOverlayCameraY.TabIndex = 38;
+            this.NudOverlayCameraY.TabIndex = 55;
             this.toolTip1.SetToolTip(this.NudOverlayCameraY, "The overlay camera\'s position in overlay coordinates");
             this.NudOverlayCameraY.ValueChanged += new System.EventHandler(this.NudOverlayCameraY_ValueChanged);
             this.NudOverlayCameraY.Click += new System.EventHandler(this.Selectable_Enter);
@@ -1717,7 +1717,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayCameraX.Name = "NudOverlayCameraX";
             this.NudOverlayCameraX.Size = new System.Drawing.Size(55, 20);
-            this.NudOverlayCameraX.TabIndex = 37;
+            this.NudOverlayCameraX.TabIndex = 45;
             this.toolTip1.SetToolTip(this.NudOverlayCameraX, "The overlay camera\'s position in overlay coordinates");
             this.NudOverlayCameraX.ValueChanged += new System.EventHandler(this.NudOverlayCameraX_ValueChanged);
             this.NudOverlayCameraX.Click += new System.EventHandler(this.Selectable_Enter);
@@ -1740,7 +1740,7 @@ namespace BizHawk.Client.EmuHawk
             0});
             this.NudOverlayRenderableOpacity.Name = "NudOverlayRenderableOpacity";
             this.NudOverlayRenderableOpacity.Size = new System.Drawing.Size(55, 20);
-            this.NudOverlayRenderableOpacity.TabIndex = 100;
+            this.NudOverlayRenderableOpacity.TabIndex = 140;
             this.NudOverlayRenderableOpacity.Value = new decimal(new int[] {
             30,
             0,
@@ -1755,7 +1755,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxReadLevelDataOnStageLoad.Location = new System.Drawing.Point(3, 200);
             this.CbxReadLevelDataOnStageLoad.Name = "CbxReadLevelDataOnStageLoad";
             this.CbxReadLevelDataOnStageLoad.Size = new System.Drawing.Size(121, 17);
-            this.CbxReadLevelDataOnStageLoad.TabIndex = 96;
+            this.CbxReadLevelDataOnStageLoad.TabIndex = 120;
             this.CbxReadLevelDataOnStageLoad.Text = "Auto read level data";
             this.CbxReadLevelDataOnStageLoad.UseVisualStyleBackColor = true;
             this.CbxReadLevelDataOnStageLoad.CheckedChanged += new System.EventHandler(this.CbxReadLevelDataOnStageLoad_CheckedChanged);
@@ -1768,7 +1768,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxEnableOverlayCameraReporting.Location = new System.Drawing.Point(3, 174);
             this.CbxEnableOverlayCameraReporting.Name = "CbxEnableOverlayCameraReporting";
             this.CbxEnableOverlayCameraReporting.Size = new System.Drawing.Size(100, 17);
-            this.CbxEnableOverlayCameraReporting.TabIndex = 14;
+            this.CbxEnableOverlayCameraReporting.TabIndex = 115;
             this.CbxEnableOverlayCameraReporting.Text = "Enable updates";
             this.CbxEnableOverlayCameraReporting.UseVisualStyleBackColor = true;
             // 
@@ -1788,7 +1788,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayCameraPitch.Name = "NudOverlayCameraPitch";
             this.NudOverlayCameraPitch.Size = new System.Drawing.Size(55, 20);
-            this.NudOverlayCameraPitch.TabIndex = 33;
+            this.NudOverlayCameraPitch.TabIndex = 75;
             this.NudOverlayCameraPitch.ValueChanged += new System.EventHandler(this.NudOverlayCameraPitch_ValueChanged);
             this.NudOverlayCameraPitch.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudOverlayCameraPitch.Enter += new System.EventHandler(this.Selectable_Enter);
@@ -1809,7 +1809,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayCameraYaw.Name = "NudOverlayCameraYaw";
             this.NudOverlayCameraYaw.Size = new System.Drawing.Size(55, 20);
-            this.NudOverlayCameraYaw.TabIndex = 34;
+            this.NudOverlayCameraYaw.TabIndex = 85;
             this.NudOverlayCameraYaw.ValueChanged += new System.EventHandler(this.NudOverlayCameraYaw_ValueChanged);
             this.NudOverlayCameraYaw.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudOverlayCameraYaw.Enter += new System.EventHandler(this.Selectable_Enter);
@@ -1830,7 +1830,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayCameraRoll.Name = "NudOverlayCameraRoll";
             this.NudOverlayCameraRoll.Size = new System.Drawing.Size(55, 20);
-            this.NudOverlayCameraRoll.TabIndex = 35;
+            this.NudOverlayCameraRoll.TabIndex = 95;
             this.NudOverlayCameraRoll.ValueChanged += new System.EventHandler(this.NudOverlayCameraRoll_ValueChanged);
             this.NudOverlayCameraRoll.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudOverlayCameraRoll.Enter += new System.EventHandler(this.Selectable_Enter);
@@ -1846,7 +1846,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCullBeyondFarClip.Location = new System.Drawing.Point(246, 150);
             this.CbxCullBeyondFarClip.Name = "CbxCullBeyondFarClip";
             this.CbxCullBeyondFarClip.Size = new System.Drawing.Size(80, 17);
-            this.CbxCullBeyondFarClip.TabIndex = 99;
+            this.CbxCullBeyondFarClip.TabIndex = 110;
             this.CbxCullBeyondFarClip.Text = "Far clipping";
             this.CbxCullBeyondFarClip.UseVisualStyleBackColor = true;
             this.CbxCullBeyondFarClip.CheckedChanged += new System.EventHandler(this.CbxCullBeyondFarClip_CheckedChanged);
@@ -1860,7 +1860,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCullBackfaces.Location = new System.Drawing.Point(221, 127);
             this.CbxCullBackfaces.Name = "CbxCullBackfaces";
             this.CbxCullBackfaces.Size = new System.Drawing.Size(105, 17);
-            this.CbxCullBackfaces.TabIndex = 97;
+            this.CbxCullBackfaces.TabIndex = 105;
             this.CbxCullBackfaces.Text = "Backface culling";
             this.CbxCullBackfaces.UseVisualStyleBackColor = true;
             this.CbxCullBackfaces.CheckedChanged += new System.EventHandler(this.CbxCullBackfaces_CheckedChanged);
@@ -1872,7 +1872,7 @@ namespace BizHawk.Client.EmuHawk
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(107, 13);
-            this.label2.TabIndex = 13;
+            this.label2.TabIndex = 0;
             this.label2.Text = "X east, Y up, Z south";
             this.toolTip1.SetToolTip(this.label2, "Cardinal directions relative to the top-down map view of Old Silent\r\nHill. The ar" +
         "ea maps of indoor levels may not match this.");
@@ -1883,7 +1883,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamPitch.Location = new System.Drawing.Point(8, 105);
             this.LblOverlayCamPitch.Name = "LblOverlayCamPitch";
             this.LblOverlayCamPitch.Size = new System.Drawing.Size(45, 15);
-            this.LblOverlayCamPitch.TabIndex = 9;
+            this.LblOverlayCamPitch.TabIndex = 25;
             this.LblOverlayCamPitch.Text = "<pitch>";
             this.LblOverlayCamPitch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1893,7 +1893,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamYaw.Location = new System.Drawing.Point(8, 128);
             this.LblOverlayCamYaw.Name = "LblOverlayCamYaw";
             this.LblOverlayCamYaw.Size = new System.Drawing.Size(45, 15);
-            this.LblOverlayCamYaw.TabIndex = 10;
+            this.LblOverlayCamYaw.TabIndex = 30;
             this.LblOverlayCamYaw.Text = "<yaw>";
             this.LblOverlayCamYaw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1903,7 +1903,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamRoll.Location = new System.Drawing.Point(8, 151);
             this.LblOverlayCamRoll.Name = "LblOverlayCamRoll";
             this.LblOverlayCamRoll.Size = new System.Drawing.Size(45, 15);
-            this.LblOverlayCamRoll.TabIndex = 11;
+            this.LblOverlayCamRoll.TabIndex = 35;
             this.LblOverlayCamRoll.Text = "<roll>";
             this.LblOverlayCamRoll.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -1913,7 +1913,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamPositionX.Location = new System.Drawing.Point(8, 28);
             this.LblOverlayCamPositionX.Name = "LblOverlayCamPositionX";
             this.LblOverlayCamPositionX.Size = new System.Drawing.Size(45, 15);
-            this.LblOverlayCamPositionX.TabIndex = 6;
+            this.LblOverlayCamPositionX.TabIndex = 10;
             this.LblOverlayCamPositionX.Text = "<x>";
             this.LblOverlayCamPositionX.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip1.SetToolTip(this.LblOverlayCamPositionX, "The overlay camera\'s position in overlay coordinates");
@@ -1924,7 +1924,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamPositionY.Location = new System.Drawing.Point(8, 54);
             this.LblOverlayCamPositionY.Name = "LblOverlayCamPositionY";
             this.LblOverlayCamPositionY.Size = new System.Drawing.Size(45, 15);
-            this.LblOverlayCamPositionY.TabIndex = 7;
+            this.LblOverlayCamPositionY.TabIndex = 15;
             this.LblOverlayCamPositionY.Text = "<y>";
             this.LblOverlayCamPositionY.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip1.SetToolTip(this.LblOverlayCamPositionY, "The overlay camera\'s position in overlay coordinates");
@@ -1935,7 +1935,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblOverlayCamPositionZ.Location = new System.Drawing.Point(8, 80);
             this.LblOverlayCamPositionZ.Name = "LblOverlayCamPositionZ";
             this.LblOverlayCamPositionZ.Size = new System.Drawing.Size(45, 15);
-            this.LblOverlayCamPositionZ.TabIndex = 8;
+            this.LblOverlayCamPositionZ.TabIndex = 20;
             this.LblOverlayCamPositionZ.Text = "<z>";
             this.LblOverlayCamPositionZ.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip1.SetToolTip(this.LblOverlayCamPositionZ, "The overlay camera\'s position in overlay coordinates");
@@ -1948,7 +1948,7 @@ namespace BizHawk.Client.EmuHawk
             this.label70.Location = new System.Drawing.Point(183, 176);
             this.label70.Name = "label70";
             this.label70.Size = new System.Drawing.Size(82, 13);
-            this.label70.TabIndex = 94;
+            this.label70.TabIndex = 125;
             this.label70.Text = "Crosshair length";
             this.toolTip1.SetToolTip(this.label70, "Crosshair length as a percentage of viewport height");
             // 
@@ -1964,7 +1964,7 @@ namespace BizHawk.Client.EmuHawk
             this.NudCrosshairLength.Location = new System.Drawing.Point(271, 173);
             this.NudCrosshairLength.Name = "NudCrosshairLength";
             this.NudCrosshairLength.Size = new System.Drawing.Size(55, 20);
-            this.NudCrosshairLength.TabIndex = 95;
+            this.NudCrosshairLength.TabIndex = 130;
             this.toolTip1.SetToolTip(this.NudCrosshairLength, "Crosshair length as a percentage of viewport height");
             this.NudCrosshairLength.Value = new decimal(new int[] {
             25,
@@ -1981,7 +1981,7 @@ namespace BizHawk.Client.EmuHawk
             this.label69.Location = new System.Drawing.Point(25, 241);
             this.label69.Name = "label69";
             this.label69.Size = new System.Drawing.Size(71, 13);
-            this.label69.TabIndex = 90;
+            this.label69.TabIndex = 145;
             this.label69.Text = "Render mode";
             // 
             // CbxEnableOverlay
@@ -1993,7 +1993,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxEnableOverlay.Location = new System.Drawing.Point(267, 261);
             this.CbxEnableOverlay.Name = "CbxEnableOverlay";
             this.CbxEnableOverlay.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableOverlay.TabIndex = 15;
+            this.CbxEnableOverlay.TabIndex = 155;
             this.CbxEnableOverlay.Text = "Enable";
             this.CbxEnableOverlay.UseVisualStyleBackColor = true;
             this.CbxEnableOverlay.CheckedChanged += new System.EventHandler(this.CbxEnableOverlay_CheckedChanged);
@@ -2011,7 +2011,7 @@ namespace BizHawk.Client.EmuHawk
             this.CmbRenderMode.Location = new System.Drawing.Point(3, 257);
             this.CmbRenderMode.Name = "CmbRenderMode";
             this.CmbRenderMode.Size = new System.Drawing.Size(116, 21);
-            this.CmbRenderMode.TabIndex = 89;
+            this.CmbRenderMode.TabIndex = 150;
             this.CmbRenderMode.SelectedIndexChanged += new System.EventHandler(this.CmbRenderMode_SelectedIndexChanged);
             // 
             // CbxOverlayRenderToFramebuffer
@@ -2023,7 +2023,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxOverlayRenderToFramebuffer.Location = new System.Drawing.Point(197, 104);
             this.CbxOverlayRenderToFramebuffer.Name = "CbxOverlayRenderToFramebuffer";
             this.CbxOverlayRenderToFramebuffer.Size = new System.Drawing.Size(129, 17);
-            this.CbxOverlayRenderToFramebuffer.TabIndex = 92;
+            this.CbxOverlayRenderToFramebuffer.TabIndex = 100;
             this.CbxOverlayRenderToFramebuffer.Text = "Render to framebuffer";
             this.toolTip1.SetToolTip(this.CbxOverlayRenderToFramebuffer, "Whether to draw directly on the game\'s framebuffer instead of BizHawk\'s GUI. Curr" +
         "ently available only in the Octoshock core.");
@@ -5532,6 +5532,17 @@ namespace BizHawk.Client.EmuHawk
             this.ScrFramebuffer.TabIndex = 8;
             this.ScrFramebuffer.Text = "scrollableControl1";
             // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
+            // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.AutoSize = true;
@@ -6298,17 +6309,6 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonDown.TabIndex = 5;
             this.LblButtonDown.Text = "Down";
             // 
-            // BpbFramebuffer
-            // 
-            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
-            this.BpbFramebuffer.Name = "BpbFramebuffer";
-            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
-            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BpbFramebuffer.TabIndex = 7;
-            this.BpbFramebuffer.TabStop = false;
-            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -6478,6 +6478,7 @@ namespace BizHawk.Client.EmuHawk
             this.TlpFramebufferTab.ResumeLayout(false);
             this.TlpFramebufferTab.PerformLayout();
             this.ScrFramebuffer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
@@ -6507,7 +6508,6 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel30.PerformLayout();
             this.tableLayoutPanel29.ResumeLayout(false);
             this.tableLayoutPanel29.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.ResumeLayout(false);
 
 		}
