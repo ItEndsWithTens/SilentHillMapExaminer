@@ -4366,7 +4366,7 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox6.Location = new System.Drawing.Point(7, 6);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(675, 196);
-            this.groupBox6.TabIndex = 37;
+            this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Model";
             // 
@@ -4388,7 +4388,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel20.Size = new System.Drawing.Size(669, 177);
-            this.tableLayoutPanel20.TabIndex = 50;
+            this.tableLayoutPanel20.TabIndex = 0;
             // 
             // tableLayoutPanel9
             // 
@@ -4405,7 +4405,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel9.Size = new System.Drawing.Size(258, 31);
-            this.tableLayoutPanel9.TabIndex = 49;
+            this.tableLayoutPanel9.TabIndex = 5;
             // 
             // CmbModelSubmeshName
             // 
@@ -4439,7 +4439,7 @@ namespace BizHawk.Client.EmuHawk
             this.CmbModelSubmeshName.Location = new System.Drawing.Point(134, 5);
             this.CmbModelSubmeshName.Name = "CmbModelSubmeshName";
             this.CmbModelSubmeshName.Size = new System.Drawing.Size(121, 21);
-            this.CmbModelSubmeshName.TabIndex = 46;
+            this.CmbModelSubmeshName.TabIndex = 5;
             this.CmbModelSubmeshName.Text = "HEAD1";
             // 
             // BtnReadHarryModel
@@ -4449,7 +4449,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadHarryModel.Location = new System.Drawing.Point(3, 3);
             this.BtnReadHarryModel.Name = "BtnReadHarryModel";
             this.BtnReadHarryModel.Size = new System.Drawing.Size(125, 25);
-            this.BtnReadHarryModel.TabIndex = 43;
+            this.BtnReadHarryModel.TabIndex = 0;
             this.BtnReadHarryModel.Text = "Read Harry submesh";
             this.BtnReadHarryModel.UseVisualStyleBackColor = true;
             this.BtnReadHarryModel.Click += new System.EventHandler(this.BtnReadHarryModel_Click);
@@ -4462,7 +4462,7 @@ namespace BizHawk.Client.EmuHawk
             this.TrkModelScale.Minimum = 1;
             this.TrkModelScale.Name = "TrkModelScale";
             this.TrkModelScale.Size = new System.Drawing.Size(430, 45);
-            this.TrkModelScale.TabIndex = 44;
+            this.TrkModelScale.TabIndex = 10;
             this.toolTip1.SetToolTip(this.TrkModelScale, "Arbitrary model scale factor");
             this.TrkModelScale.Value = 1000;
             this.TrkModelScale.Scroll += new System.EventHandler(this.TrkModelScale_Scroll);
@@ -4492,7 +4492,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel8.Size = new System.Drawing.Size(430, 44);
-            this.tableLayoutPanel8.TabIndex = 48;
+            this.tableLayoutPanel8.TabIndex = 20;
             // 
             // NudModelX
             // 
@@ -4510,7 +4510,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudModelX.Name = "NudModelX";
             this.NudModelX.Size = new System.Drawing.Size(50, 20);
-            this.NudModelX.TabIndex = 40;
+            this.NudModelX.TabIndex = 10;
             this.NudModelX.ValueChanged += new System.EventHandler(this.BtnModelSetModelPosition_Click);
             this.NudModelX.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudModelX.Enter += new System.EventHandler(this.Selectable_Enter);
@@ -4532,7 +4532,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudModelY.Name = "NudModelY";
             this.NudModelY.Size = new System.Drawing.Size(50, 20);
-            this.NudModelY.TabIndex = 41;
+            this.NudModelY.TabIndex = 20;
             this.NudModelY.ValueChanged += new System.EventHandler(this.BtnModelSetModelPosition_Click);
             this.NudModelY.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudModelY.Enter += new System.EventHandler(this.Selectable_Enter);
@@ -4554,7 +4554,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudModelZ.Name = "NudModelZ";
             this.NudModelZ.Size = new System.Drawing.Size(50, 20);
-            this.NudModelZ.TabIndex = 42;
+            this.NudModelZ.TabIndex = 30;
             this.NudModelZ.ValueChanged += new System.EventHandler(this.BtnModelSetModelPosition_Click);
             this.NudModelZ.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudModelZ.Enter += new System.EventHandler(this.Selectable_Enter);
@@ -4567,7 +4567,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblModelX.Location = new System.Drawing.Point(147, 0);
             this.LblModelX.Name = "LblModelX";
             this.LblModelX.Size = new System.Drawing.Size(24, 13);
-            this.LblModelX.TabIndex = 37;
+            this.LblModelX.TabIndex = 5;
             this.LblModelX.Text = "<x>";
             // 
             // LblModelY
@@ -4577,7 +4577,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblModelY.Location = new System.Drawing.Point(203, 0);
             this.LblModelY.Name = "LblModelY";
             this.LblModelY.Size = new System.Drawing.Size(24, 13);
-            this.LblModelY.TabIndex = 38;
+            this.LblModelY.TabIndex = 15;
             this.LblModelY.Text = "<y>";
             // 
             // LblModelZ
@@ -4587,7 +4587,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblModelZ.Location = new System.Drawing.Point(259, 0);
             this.LblModelZ.Name = "LblModelZ";
             this.LblModelZ.Size = new System.Drawing.Size(24, 13);
-            this.LblModelZ.TabIndex = 39;
+            this.LblModelZ.TabIndex = 25;
             this.LblModelZ.Text = "<z>";
             // 
             // BtnModelSetPosition
@@ -4597,7 +4597,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnModelSetPosition.Location = new System.Drawing.Point(302, 16);
             this.BtnModelSetPosition.Name = "BtnModelSetPosition";
             this.BtnModelSetPosition.Size = new System.Drawing.Size(125, 25);
-            this.BtnModelSetPosition.TabIndex = 36;
+            this.BtnModelSetPosition.TabIndex = 35;
             this.BtnModelSetPosition.Text = "Set model position";
             this.BtnModelSetPosition.UseVisualStyleBackColor = true;
             this.BtnModelSetPosition.Click += new System.EventHandler(this.BtnModelSetModelPosition_Click);
@@ -4609,7 +4609,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnModelGetPosition.Location = new System.Drawing.Point(3, 16);
             this.BtnModelGetPosition.Name = "BtnModelGetPosition";
             this.BtnModelGetPosition.Size = new System.Drawing.Size(125, 25);
-            this.BtnModelGetPosition.TabIndex = 35;
+            this.BtnModelGetPosition.TabIndex = 0;
             this.BtnModelGetPosition.Text = "Get Harry position";
             this.BtnModelGetPosition.UseVisualStyleBackColor = true;
             this.BtnModelGetPosition.Click += new System.EventHandler(this.BtnModelGetHarryPosition_Click);
@@ -4620,7 +4620,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblModelScale.Location = new System.Drawing.Point(439, 74);
             this.LblModelScale.Name = "LblModelScale";
             this.LblModelScale.Size = new System.Drawing.Size(45, 15);
-            this.LblModelScale.TabIndex = 45;
+            this.LblModelScale.TabIndex = 15;
             this.LblModelScale.Text = "1000";
             this.toolTip1.SetToolTip(this.LblModelScale, "Arbitrary model scale factor");
             // 
@@ -4632,7 +4632,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxEnableModelDisplay.Location = new System.Drawing.Point(607, 157);
             this.CbxEnableModelDisplay.Name = "CbxEnableModelDisplay";
             this.CbxEnableModelDisplay.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableModelDisplay.TabIndex = 50;
+            this.CbxEnableModelDisplay.TabIndex = 0;
             this.CbxEnableModelDisplay.Text = "Enable";
             this.CbxEnableModelDisplay.UseVisualStyleBackColor = true;
             // 
@@ -4645,7 +4645,7 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox5.Location = new System.Drawing.Point(6, 208);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(676, 404);
-            this.groupBox5.TabIndex = 36;
+            this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Boxes";
             // 
@@ -4666,7 +4666,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel7.Size = new System.Drawing.Size(670, 110);
-            this.tableLayoutPanel7.TabIndex = 121;
+            this.tableLayoutPanel7.TabIndex = 0;
             // 
             // tableLayoutPanel4
             // 
@@ -4699,7 +4699,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(189, 104);
-            this.tableLayoutPanel4.TabIndex = 118;
+            this.tableLayoutPanel4.TabIndex = 0;
             // 
             // NudOverlayTestBoxSizeX
             // 
@@ -4717,7 +4717,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestBoxSizeX.Name = "NudOverlayTestBoxSizeX";
             this.NudOverlayTestBoxSizeX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxSizeX.TabIndex = 99;
+            this.NudOverlayTestBoxSizeX.TabIndex = 40;
             this.toolTip1.SetToolTip(this.NudOverlayTestBoxSizeX, "The test box\'s position in SH coordinates");
             this.NudOverlayTestBoxSizeX.Value = new decimal(new int[] {
             1,
@@ -4744,7 +4744,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestBoxSizeY.Name = "NudOverlayTestBoxSizeY";
             this.NudOverlayTestBoxSizeY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxSizeY.TabIndex = 100;
+            this.NudOverlayTestBoxSizeY.TabIndex = 50;
             this.toolTip1.SetToolTip(this.NudOverlayTestBoxSizeY, "The test box\'s position in SH coordinates");
             this.NudOverlayTestBoxSizeY.Value = new decimal(new int[] {
             1,
@@ -4771,7 +4771,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestBoxSizeZ.Name = "NudOverlayTestBoxSizeZ";
             this.NudOverlayTestBoxSizeZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxSizeZ.TabIndex = 101;
+            this.NudOverlayTestBoxSizeZ.TabIndex = 60;
             this.toolTip1.SetToolTip(this.NudOverlayTestBoxSizeZ, "The test box\'s position in SH coordinates");
             this.NudOverlayTestBoxSizeZ.Value = new decimal(new int[] {
             1,
@@ -4790,7 +4790,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxOverlayTestBox.Location = new System.Drawing.Point(61, 4);
             this.CbxOverlayTestBox.Name = "CbxOverlayTestBox";
             this.CbxOverlayTestBox.Size = new System.Drawing.Size(67, 17);
-            this.CbxOverlayTestBox.TabIndex = 79;
+            this.CbxOverlayTestBox.TabIndex = 0;
             this.CbxOverlayTestBox.Text = "Test box";
             this.CbxOverlayTestBox.UseVisualStyleBackColor = true;
             // 
@@ -4801,7 +4801,7 @@ namespace BizHawk.Client.EmuHawk
             this.label53.Location = new System.Drawing.Point(86, 58);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(40, 13);
-            this.label53.TabIndex = 103;
+            this.label53.TabIndex = 45;
             this.label53.Text = "Size Y:";
             // 
             // label37
@@ -4811,7 +4811,7 @@ namespace BizHawk.Client.EmuHawk
             this.label37.Location = new System.Drawing.Point(86, 84);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(40, 13);
-            this.label37.TabIndex = 104;
+            this.label37.TabIndex = 55;
             this.label37.Text = "Size Z:";
             // 
             // label54
@@ -4821,7 +4821,7 @@ namespace BizHawk.Client.EmuHawk
             this.label54.Location = new System.Drawing.Point(86, 32);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(40, 13);
-            this.label54.TabIndex = 102;
+            this.label54.TabIndex = 35;
             this.label54.Text = "Size X:";
             // 
             // NudOverlayTestBoxX
@@ -4840,7 +4840,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestBoxX.Name = "NudOverlayTestBoxX";
             this.NudOverlayTestBoxX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxX.TabIndex = 80;
+            this.NudOverlayTestBoxX.TabIndex = 10;
             this.toolTip1.SetToolTip(this.NudOverlayTestBoxX, "The test box\'s position in SH coordinates");
             this.NudOverlayTestBoxX.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxX_ValueChanged);
             this.NudOverlayTestBoxX.Click += new System.EventHandler(this.Selectable_Enter);
@@ -4862,7 +4862,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestBoxY.Name = "NudOverlayTestBoxY";
             this.NudOverlayTestBoxY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxY.TabIndex = 81;
+            this.NudOverlayTestBoxY.TabIndex = 20;
             this.toolTip1.SetToolTip(this.NudOverlayTestBoxY, "The test box\'s position in SH coordinates");
             this.NudOverlayTestBoxY.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxY_ValueChanged);
             this.NudOverlayTestBoxY.Click += new System.EventHandler(this.Selectable_Enter);
@@ -4884,7 +4884,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestBoxZ.Name = "NudOverlayTestBoxZ";
             this.NudOverlayTestBoxZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxZ.TabIndex = 82;
+            this.NudOverlayTestBoxZ.TabIndex = 30;
             this.toolTip1.SetToolTip(this.NudOverlayTestBoxZ, "The test box\'s position in SH coordinates");
             this.NudOverlayTestBoxZ.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxZ_ValueChanged);
             this.NudOverlayTestBoxZ.Click += new System.EventHandler(this.Selectable_Enter);
@@ -4897,7 +4897,7 @@ namespace BizHawk.Client.EmuHawk
             this.label30.Location = new System.Drawing.Point(3, 32);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(17, 13);
-            this.label30.TabIndex = 83;
+            this.label30.TabIndex = 5;
             this.label30.Text = "X:";
             // 
             // label29
@@ -4907,7 +4907,7 @@ namespace BizHawk.Client.EmuHawk
             this.label29.Location = new System.Drawing.Point(3, 58);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(17, 13);
-            this.label29.TabIndex = 84;
+            this.label29.TabIndex = 15;
             this.label29.Text = "Y:";
             // 
             // label28
@@ -4917,7 +4917,7 @@ namespace BizHawk.Client.EmuHawk
             this.label28.Location = new System.Drawing.Point(3, 84);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(17, 13);
-            this.label28.TabIndex = 85;
+            this.label28.TabIndex = 25;
             this.label28.Text = "Z:";
             // 
             // tableLayoutPanel6
@@ -4949,7 +4949,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(189, 104);
-            this.tableLayoutPanel6.TabIndex = 120;
+            this.tableLayoutPanel6.TabIndex = 10;
             // 
             // CbxOverlayTestSheet
             // 
@@ -4959,7 +4959,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxOverlayTestSheet.Location = new System.Drawing.Point(56, 4);
             this.CbxOverlayTestSheet.Name = "CbxOverlayTestSheet";
             this.CbxOverlayTestSheet.Size = new System.Drawing.Size(76, 17);
-            this.CbxOverlayTestSheet.TabIndex = 105;
+            this.CbxOverlayTestSheet.TabIndex = 0;
             this.CbxOverlayTestSheet.Text = "Test sheet";
             this.CbxOverlayTestSheet.UseVisualStyleBackColor = true;
             // 
@@ -4979,7 +4979,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestSheetX.Name = "NudOverlayTestSheetX";
             this.NudOverlayTestSheetX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetX.TabIndex = 106;
+            this.NudOverlayTestSheetX.TabIndex = 10;
             this.toolTip1.SetToolTip(this.NudOverlayTestSheetX, "The test box\'s position in SH coordinates");
             this.NudOverlayTestSheetX.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetX_ValueChanged);
             this.NudOverlayTestSheetX.Click += new System.EventHandler(this.Selectable_Enter);
@@ -5001,7 +5001,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestSheetSizeX.Name = "NudOverlayTestSheetSizeX";
             this.NudOverlayTestSheetSizeX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetSizeX.TabIndex = 112;
+            this.NudOverlayTestSheetSizeX.TabIndex = 40;
             this.toolTip1.SetToolTip(this.NudOverlayTestSheetSizeX, "The test box\'s position in SH coordinates");
             this.NudOverlayTestSheetSizeX.Value = new decimal(new int[] {
             1,
@@ -5019,7 +5019,7 @@ namespace BizHawk.Client.EmuHawk
             this.label86.Location = new System.Drawing.Point(3, 84);
             this.label86.Name = "label86";
             this.label86.Size = new System.Drawing.Size(17, 13);
-            this.label86.TabIndex = 111;
+            this.label86.TabIndex = 25;
             this.label86.Text = "Z:";
             // 
             // label85
@@ -5029,7 +5029,7 @@ namespace BizHawk.Client.EmuHawk
             this.label85.Location = new System.Drawing.Point(86, 32);
             this.label85.Name = "label85";
             this.label85.Size = new System.Drawing.Size(40, 13);
-            this.label85.TabIndex = 115;
+            this.label85.TabIndex = 35;
             this.label85.Text = "Size X:";
             // 
             // label87
@@ -5039,7 +5039,7 @@ namespace BizHawk.Client.EmuHawk
             this.label87.Location = new System.Drawing.Point(3, 58);
             this.label87.Name = "label87";
             this.label87.Size = new System.Drawing.Size(17, 13);
-            this.label87.TabIndex = 110;
+            this.label87.TabIndex = 15;
             this.label87.Text = "Y:";
             // 
             // label79
@@ -5049,7 +5049,7 @@ namespace BizHawk.Client.EmuHawk
             this.label79.Location = new System.Drawing.Point(86, 84);
             this.label79.Name = "label79";
             this.label79.Size = new System.Drawing.Size(40, 13);
-            this.label79.TabIndex = 117;
+            this.label79.TabIndex = 45;
             this.label79.Text = "Size Z:";
             // 
             // label88
@@ -5059,7 +5059,7 @@ namespace BizHawk.Client.EmuHawk
             this.label88.Location = new System.Drawing.Point(3, 32);
             this.label88.Name = "label88";
             this.label88.Size = new System.Drawing.Size(17, 13);
-            this.label88.TabIndex = 109;
+            this.label88.TabIndex = 5;
             this.label88.Text = "X:";
             // 
             // NudOverlayTestSheetSizeZ
@@ -5078,7 +5078,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestSheetSizeZ.Name = "NudOverlayTestSheetSizeZ";
             this.NudOverlayTestSheetSizeZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetSizeZ.TabIndex = 114;
+            this.NudOverlayTestSheetSizeZ.TabIndex = 50;
             this.toolTip1.SetToolTip(this.NudOverlayTestSheetSizeZ, "The test box\'s position in SH coordinates");
             this.NudOverlayTestSheetSizeZ.Value = new decimal(new int[] {
             1,
@@ -5105,7 +5105,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestSheetZ.Name = "NudOverlayTestSheetZ";
             this.NudOverlayTestSheetZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetZ.TabIndex = 108;
+            this.NudOverlayTestSheetZ.TabIndex = 30;
             this.toolTip1.SetToolTip(this.NudOverlayTestSheetZ, "The test box\'s position in SH coordinates");
             this.NudOverlayTestSheetZ.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetZ_ValueChanged);
             this.NudOverlayTestSheetZ.Click += new System.EventHandler(this.Selectable_Enter);
@@ -5127,7 +5127,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestSheetY.Name = "NudOverlayTestSheetY";
             this.NudOverlayTestSheetY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetY.TabIndex = 107;
+            this.NudOverlayTestSheetY.TabIndex = 20;
             this.toolTip1.SetToolTip(this.NudOverlayTestSheetY, "The test box\'s position in SH coordinates");
             this.NudOverlayTestSheetY.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetY_ValueChanged);
             this.NudOverlayTestSheetY.Click += new System.EventHandler(this.Selectable_Enter);
@@ -5164,7 +5164,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(166, 104);
-            this.tableLayoutPanel5.TabIndex = 119;
+            this.tableLayoutPanel5.TabIndex = 5;
             // 
             // CbxOverlayTestLine
             // 
@@ -5174,7 +5174,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxOverlayTestLine.Location = new System.Drawing.Point(50, 4);
             this.CbxOverlayTestLine.Name = "CbxOverlayTestLine";
             this.CbxOverlayTestLine.Size = new System.Drawing.Size(66, 17);
-            this.CbxOverlayTestLine.TabIndex = 86;
+            this.CbxOverlayTestLine.TabIndex = 0;
             this.CbxOverlayTestLine.Text = "Test line";
             this.CbxOverlayTestLine.UseVisualStyleBackColor = true;
             // 
@@ -5194,7 +5194,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestLineAX.Name = "NudOverlayTestLineAX";
             this.NudOverlayTestLineAX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineAX.TabIndex = 87;
+            this.NudOverlayTestLineAX.TabIndex = 10;
             this.toolTip1.SetToolTip(this.NudOverlayTestLineAX, "The test box\'s position in SH coordinates");
             this.NudOverlayTestLineAX.ValueChanged += new System.EventHandler(this.NudOverlayTestLineAX_ValueChanged);
             this.NudOverlayTestLineAX.Click += new System.EventHandler(this.Selectable_Enter);
@@ -5216,7 +5216,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestLineAY.Name = "NudOverlayTestLineAY";
             this.NudOverlayTestLineAY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineAY.TabIndex = 88;
+            this.NudOverlayTestLineAY.TabIndex = 20;
             this.toolTip1.SetToolTip(this.NudOverlayTestLineAY, "The test box\'s position in SH coordinates");
             this.NudOverlayTestLineAY.Value = new decimal(new int[] {
             1,
@@ -5243,7 +5243,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestLineAZ.Name = "NudOverlayTestLineAZ";
             this.NudOverlayTestLineAZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineAZ.TabIndex = 89;
+            this.NudOverlayTestLineAZ.TabIndex = 30;
             this.toolTip1.SetToolTip(this.NudOverlayTestLineAZ, "The test box\'s position in SH coordinates");
             this.NudOverlayTestLineAZ.ValueChanged += new System.EventHandler(this.NudOverlayTestLineAZ_ValueChanged);
             this.NudOverlayTestLineAZ.Click += new System.EventHandler(this.Selectable_Enter);
@@ -5265,7 +5265,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestLineBX.Name = "NudOverlayTestLineBX";
             this.NudOverlayTestLineBX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineBX.TabIndex = 93;
+            this.NudOverlayTestLineBX.TabIndex = 40;
             this.toolTip1.SetToolTip(this.NudOverlayTestLineBX, "The test box\'s position in SH coordinates");
             this.NudOverlayTestLineBX.Value = new decimal(new int[] {
             1,
@@ -5292,7 +5292,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestLineBY.Name = "NudOverlayTestLineBY";
             this.NudOverlayTestLineBY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineBY.TabIndex = 94;
+            this.NudOverlayTestLineBY.TabIndex = 50;
             this.toolTip1.SetToolTip(this.NudOverlayTestLineBY, "The test box\'s position in SH coordinates");
             this.NudOverlayTestLineBY.Value = new decimal(new int[] {
             1,
@@ -5319,7 +5319,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudOverlayTestLineBZ.Name = "NudOverlayTestLineBZ";
             this.NudOverlayTestLineBZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineBZ.TabIndex = 95;
+            this.NudOverlayTestLineBZ.TabIndex = 60;
             this.toolTip1.SetToolTip(this.NudOverlayTestLineBZ, "The test box\'s position in SH coordinates");
             this.NudOverlayTestLineBZ.ValueChanged += new System.EventHandler(this.NudOverlayTestLineBZ_ValueChanged);
             this.NudOverlayTestLineBZ.Click += new System.EventHandler(this.Selectable_Enter);
@@ -5332,7 +5332,7 @@ namespace BizHawk.Client.EmuHawk
             this.label31.Location = new System.Drawing.Point(86, 84);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(17, 13);
-            this.label31.TabIndex = 98;
+            this.label31.TabIndex = 55;
             this.label31.Text = "Z:";
             // 
             // label34
@@ -5342,7 +5342,7 @@ namespace BizHawk.Client.EmuHawk
             this.label34.Location = new System.Drawing.Point(86, 58);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(17, 13);
-            this.label34.TabIndex = 97;
+            this.label34.TabIndex = 45;
             this.label34.Text = "Y:";
             // 
             // label36
@@ -5352,7 +5352,7 @@ namespace BizHawk.Client.EmuHawk
             this.label36.Location = new System.Drawing.Point(86, 32);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(17, 13);
-            this.label36.TabIndex = 96;
+            this.label36.TabIndex = 35;
             this.label36.Text = "X:";
             // 
             // label20
@@ -5362,7 +5362,7 @@ namespace BizHawk.Client.EmuHawk
             this.label20.Location = new System.Drawing.Point(3, 32);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(17, 13);
-            this.label20.TabIndex = 90;
+            this.label20.TabIndex = 5;
             this.label20.Text = "X:";
             // 
             // label17
@@ -5372,7 +5372,7 @@ namespace BizHawk.Client.EmuHawk
             this.label17.Location = new System.Drawing.Point(3, 58);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(17, 13);
-            this.label17.TabIndex = 91;
+            this.label17.TabIndex = 15;
             this.label17.Text = "Y:";
             // 
             // label16
@@ -5382,7 +5382,7 @@ namespace BizHawk.Client.EmuHawk
             this.label16.Location = new System.Drawing.Point(3, 84);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(17, 13);
-            this.label16.TabIndex = 92;
+            this.label16.TabIndex = 25;
             this.label16.Text = "Z:";
             // 
             // TbpFiles
