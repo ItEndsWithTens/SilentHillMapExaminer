@@ -3870,7 +3870,7 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox3.Location = new System.Drawing.Point(6, 74);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(676, 538);
-            this.groupBox3.TabIndex = 21;
+            this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "SaveRAM";
             // 
@@ -3902,7 +3902,7 @@ namespace BizHawk.Client.EmuHawk
             this.PnlSaveRamDangerArea.Location = new System.Drawing.Point(3, 34);
             this.PnlSaveRamDangerArea.Name = "PnlSaveRamDangerArea";
             this.PnlSaveRamDangerArea.Size = new System.Drawing.Size(664, 482);
-            this.PnlSaveRamDangerArea.TabIndex = 10;
+            this.PnlSaveRamDangerArea.TabIndex = 15;
             // 
             // tableLayoutPanel18
             // 
@@ -3924,7 +3924,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel18.Size = new System.Drawing.Size(628, 451);
-            this.tableLayoutPanel18.TabIndex = 9;
+            this.tableLayoutPanel18.TabIndex = 0;
             // 
             // CbxSaveRamDanger
             // 
@@ -3948,7 +3948,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSaveRamImportBrowse.Location = new System.Drawing.Point(550, 32);
             this.BtnSaveRamImportBrowse.Name = "BtnSaveRamImportBrowse";
             this.BtnSaveRamImportBrowse.Size = new System.Drawing.Size(75, 25);
-            this.BtnSaveRamImportBrowse.TabIndex = 5;
+            this.BtnSaveRamImportBrowse.TabIndex = 15;
             this.BtnSaveRamImportBrowse.Text = "...";
             this.BtnSaveRamImportBrowse.UseVisualStyleBackColor = true;
             this.BtnSaveRamImportBrowse.Click += new System.EventHandler(this.BtnSaveRamImportBrowse_Click);
@@ -3960,7 +3960,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSaveRamImportPath.Location = new System.Drawing.Point(84, 34);
             this.TbxSaveRamImportPath.Name = "TbxSaveRamImportPath";
             this.TbxSaveRamImportPath.Size = new System.Drawing.Size(460, 20);
-            this.TbxSaveRamImportPath.TabIndex = 4;
+            this.TbxSaveRamImportPath.TabIndex = 10;
             // 
             // BtnSaveRamImport
             // 
@@ -3970,7 +3970,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSaveRamImport.Location = new System.Drawing.Point(3, 32);
             this.BtnSaveRamImport.Name = "BtnSaveRamImport";
             this.BtnSaveRamImport.Size = new System.Drawing.Size(75, 25);
-            this.BtnSaveRamImport.TabIndex = 3;
+            this.BtnSaveRamImport.TabIndex = 5;
             this.BtnSaveRamImport.Text = "Import";
             this.BtnSaveRamImport.UseVisualStyleBackColor = true;
             this.BtnSaveRamImport.Click += new System.EventHandler(this.BtnSaveRamImport_Click);
@@ -3984,7 +3984,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxConvertStatesOrSaveRam.Location = new System.Drawing.Point(3, 63);
             this.GbxConvertStatesOrSaveRam.Name = "GbxConvertStatesOrSaveRam";
             this.GbxConvertStatesOrSaveRam.Size = new System.Drawing.Size(622, 385);
-            this.GbxConvertStatesOrSaveRam.TabIndex = 6;
+            this.GbxConvertStatesOrSaveRam.TabIndex = 20;
             this.GbxConvertStatesOrSaveRam.TabStop = false;
             this.GbxConvertStatesOrSaveRam.Text = "Convert";
             // 
@@ -4041,7 +4041,7 @@ namespace BizHawk.Client.EmuHawk
             this.label58.Location = new System.Drawing.Point(8, 9);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(130, 13);
-            this.label58.TabIndex = 30;
+            this.label58.TabIndex = 0;
             this.label58.Text = "Save state input directory:";
             // 
             // LbxConvertStatesToSaveRam
@@ -4055,7 +4055,7 @@ namespace BizHawk.Client.EmuHawk
             this.LbxConvertStatesToSaveRam.Name = "LbxConvertStatesToSaveRam";
             this.LbxConvertStatesToSaveRam.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.LbxConvertStatesToSaveRam.Size = new System.Drawing.Size(584, 240);
-            this.LbxConvertStatesToSaveRam.TabIndex = 25;
+            this.LbxConvertStatesToSaveRam.TabIndex = 20;
             // 
             // BtnConvertStatesToSaveRamGo
             // 
@@ -4064,7 +4064,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnConvertStatesToSaveRamGo.Location = new System.Drawing.Point(512, 280);
             this.BtnConvertStatesToSaveRamGo.Name = "BtnConvertStatesToSaveRamGo";
             this.BtnConvertStatesToSaveRamGo.Size = new System.Drawing.Size(75, 25);
-            this.BtnConvertStatesToSaveRamGo.TabIndex = 26;
+            this.BtnConvertStatesToSaveRamGo.TabIndex = 40;
             this.BtnConvertStatesToSaveRamGo.Text = "Go";
             this.BtnConvertStatesToSaveRamGo.UseVisualStyleBackColor = true;
             this.BtnConvertStatesToSaveRamGo.Click += new System.EventHandler(this.BtnConvertStatesToSaveRamGo_Click);
@@ -4075,7 +4075,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxConvertStatesToSaveRamInputPath.Location = new System.Drawing.Point(144, 5);
             this.TbxConvertStatesToSaveRamInputPath.Name = "TbxConvertStatesToSaveRamInputPath";
             this.TbxConvertStatesToSaveRamInputPath.Size = new System.Drawing.Size(281, 20);
-            this.TbxConvertStatesToSaveRamInputPath.TabIndex = 28;
+            this.TbxConvertStatesToSaveRamInputPath.TabIndex = 5;
             this.TbxConvertStatesToSaveRamInputPath.TextChanged += new System.EventHandler(this.TbxConvertStatesToSaveRamInputPath_TextChanged);
             // 
             // BtnConvertStatesToSaveRamInputPathBrowse
@@ -4085,7 +4085,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnConvertStatesToSaveRamInputPathBrowse.Location = new System.Drawing.Point(431, 3);
             this.BtnConvertStatesToSaveRamInputPathBrowse.Name = "BtnConvertStatesToSaveRamInputPathBrowse";
             this.BtnConvertStatesToSaveRamInputPathBrowse.Size = new System.Drawing.Size(75, 25);
-            this.BtnConvertStatesToSaveRamInputPathBrowse.TabIndex = 29;
+            this.BtnConvertStatesToSaveRamInputPathBrowse.TabIndex = 10;
             this.BtnConvertStatesToSaveRamInputPathBrowse.Text = "...";
             this.BtnConvertStatesToSaveRamInputPathBrowse.UseVisualStyleBackColor = true;
             this.BtnConvertStatesToSaveRamInputPathBrowse.Click += new System.EventHandler(this.BtnConvertStatesToSaveRamInputPathBrowse_Click);
@@ -4097,7 +4097,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnConvertStatesToSaveRamOutputPathBrowse.Location = new System.Drawing.Point(431, 280);
             this.BtnConvertStatesToSaveRamOutputPathBrowse.Name = "BtnConvertStatesToSaveRamOutputPathBrowse";
             this.BtnConvertStatesToSaveRamOutputPathBrowse.Size = new System.Drawing.Size(75, 25);
-            this.BtnConvertStatesToSaveRamOutputPathBrowse.TabIndex = 23;
+            this.BtnConvertStatesToSaveRamOutputPathBrowse.TabIndex = 35;
             this.BtnConvertStatesToSaveRamOutputPathBrowse.Text = "...";
             this.BtnConvertStatesToSaveRamOutputPathBrowse.UseVisualStyleBackColor = true;
             this.BtnConvertStatesToSaveRamOutputPathBrowse.Click += new System.EventHandler(this.BtnConvertStatesToSaveRamOutputPathBrowse_Click);
@@ -4109,7 +4109,7 @@ namespace BizHawk.Client.EmuHawk
             this.label55.Location = new System.Drawing.Point(3, 286);
             this.label55.Name = "label55";
             this.label55.Size = new System.Drawing.Size(135, 13);
-            this.label55.TabIndex = 24;
+            this.label55.TabIndex = 25;
             this.label55.Text = "SaveRAM output directory:";
             // 
             // TbxConvertStatesToSaveRamOutputPath
@@ -4118,7 +4118,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxConvertStatesToSaveRamOutputPath.Location = new System.Drawing.Point(144, 282);
             this.TbxConvertStatesToSaveRamOutputPath.Name = "TbxConvertStatesToSaveRamOutputPath";
             this.TbxConvertStatesToSaveRamOutputPath.Size = new System.Drawing.Size(281, 20);
-            this.TbxConvertStatesToSaveRamOutputPath.TabIndex = 22;
+            this.TbxConvertStatesToSaveRamOutputPath.TabIndex = 30;
             // 
             // BtnConvertStatesToSaveRamRefresh
             // 
@@ -4127,7 +4127,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnConvertStatesToSaveRamRefresh.Location = new System.Drawing.Point(512, 3);
             this.BtnConvertStatesToSaveRamRefresh.Name = "BtnConvertStatesToSaveRamRefresh";
             this.BtnConvertStatesToSaveRamRefresh.Size = new System.Drawing.Size(75, 25);
-            this.BtnConvertStatesToSaveRamRefresh.TabIndex = 27;
+            this.BtnConvertStatesToSaveRamRefresh.TabIndex = 15;
             this.BtnConvertStatesToSaveRamRefresh.Text = "Refresh";
             this.BtnConvertStatesToSaveRamRefresh.UseVisualStyleBackColor = true;
             this.BtnConvertStatesToSaveRamRefresh.Click += new System.EventHandler(this.BtnConvertStatesToSaveRamRefresh_Click);
@@ -4175,7 +4175,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnConvertSaveRamToStatesOutputPathBrowse.Location = new System.Drawing.Point(431, 280);
             this.BtnConvertSaveRamToStatesOutputPathBrowse.Name = "BtnConvertSaveRamToStatesOutputPathBrowse";
             this.BtnConvertSaveRamToStatesOutputPathBrowse.Size = new System.Drawing.Size(75, 25);
-            this.BtnConvertSaveRamToStatesOutputPathBrowse.TabIndex = 30;
+            this.BtnConvertSaveRamToStatesOutputPathBrowse.TabIndex = 35;
             this.BtnConvertSaveRamToStatesOutputPathBrowse.Text = "...";
             this.BtnConvertSaveRamToStatesOutputPathBrowse.UseVisualStyleBackColor = true;
             this.BtnConvertSaveRamToStatesOutputPathBrowse.Click += new System.EventHandler(this.BtnConvertSaveRamToStatesOutputPathBrowse_Click);
@@ -4187,7 +4187,7 @@ namespace BizHawk.Client.EmuHawk
             this.label57.Location = new System.Drawing.Point(3, 286);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(137, 13);
-            this.label57.TabIndex = 31;
+            this.label57.TabIndex = 25;
             this.label57.Text = "Save state output directory:";
             // 
             // BtnConvertSaveRamToStatesGo
@@ -4197,7 +4197,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnConvertSaveRamToStatesGo.Location = new System.Drawing.Point(512, 280);
             this.BtnConvertSaveRamToStatesGo.Name = "BtnConvertSaveRamToStatesGo";
             this.BtnConvertSaveRamToStatesGo.Size = new System.Drawing.Size(75, 25);
-            this.BtnConvertSaveRamToStatesGo.TabIndex = 24;
+            this.BtnConvertSaveRamToStatesGo.TabIndex = 40;
             this.BtnConvertSaveRamToStatesGo.Text = "Go";
             this.BtnConvertSaveRamToStatesGo.UseVisualStyleBackColor = true;
             this.BtnConvertSaveRamToStatesGo.Click += new System.EventHandler(this.BtnConvertSaveRamToStatesGo_Click);
@@ -4209,7 +4209,7 @@ namespace BizHawk.Client.EmuHawk
             this.label56.Location = new System.Drawing.Point(12, 9);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(128, 13);
-            this.label56.TabIndex = 27;
+            this.label56.TabIndex = 0;
             this.label56.Text = "SaveRAM input directory:";
             // 
             // TbxConvertSaveRamToStatesOutputPath
@@ -4218,7 +4218,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxConvertSaveRamToStatesOutputPath.Location = new System.Drawing.Point(146, 282);
             this.TbxConvertSaveRamToStatesOutputPath.Name = "TbxConvertSaveRamToStatesOutputPath";
             this.TbxConvertSaveRamToStatesOutputPath.Size = new System.Drawing.Size(279, 20);
-            this.TbxConvertSaveRamToStatesOutputPath.TabIndex = 29;
+            this.TbxConvertSaveRamToStatesOutputPath.TabIndex = 30;
             // 
             // TbxConvertSaveRamToStatesInputPath
             // 
@@ -4226,7 +4226,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxConvertSaveRamToStatesInputPath.Location = new System.Drawing.Point(146, 5);
             this.TbxConvertSaveRamToStatesInputPath.Name = "TbxConvertSaveRamToStatesInputPath";
             this.TbxConvertSaveRamToStatesInputPath.Size = new System.Drawing.Size(279, 20);
-            this.TbxConvertSaveRamToStatesInputPath.TabIndex = 25;
+            this.TbxConvertSaveRamToStatesInputPath.TabIndex = 5;
             this.TbxConvertSaveRamToStatesInputPath.TextChanged += new System.EventHandler(this.TbxConvertSaveRamToStatesInputPath_TextChanged);
             // 
             // BtnConvertSaveRamToStatesInputPathBrowse
@@ -4236,7 +4236,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnConvertSaveRamToStatesInputPathBrowse.Location = new System.Drawing.Point(431, 3);
             this.BtnConvertSaveRamToStatesInputPathBrowse.Name = "BtnConvertSaveRamToStatesInputPathBrowse";
             this.BtnConvertSaveRamToStatesInputPathBrowse.Size = new System.Drawing.Size(75, 25);
-            this.BtnConvertSaveRamToStatesInputPathBrowse.TabIndex = 26;
+            this.BtnConvertSaveRamToStatesInputPathBrowse.TabIndex = 10;
             this.BtnConvertSaveRamToStatesInputPathBrowse.Text = "...";
             this.BtnConvertSaveRamToStatesInputPathBrowse.UseVisualStyleBackColor = true;
             this.BtnConvertSaveRamToStatesInputPathBrowse.Click += new System.EventHandler(this.BtnConvertSaveRamToStatesInputPathBrowse_Click);
@@ -4248,7 +4248,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnConvertSaveRamToStatesRefresh.Location = new System.Drawing.Point(512, 3);
             this.BtnConvertSaveRamToStatesRefresh.Name = "BtnConvertSaveRamToStatesRefresh";
             this.BtnConvertSaveRamToStatesRefresh.Size = new System.Drawing.Size(75, 25);
-            this.BtnConvertSaveRamToStatesRefresh.TabIndex = 28;
+            this.BtnConvertSaveRamToStatesRefresh.TabIndex = 15;
             this.BtnConvertSaveRamToStatesRefresh.Text = "Refresh";
             this.BtnConvertSaveRamToStatesRefresh.UseVisualStyleBackColor = true;
             this.BtnConvertSaveRamToStatesRefresh.Click += new System.EventHandler(this.BtnConvertSaveRamToStatesRefresh_Click);
@@ -4266,7 +4266,7 @@ namespace BizHawk.Client.EmuHawk
             this.LbxConvertSaveRamToStates.Name = "LbxConvertSaveRamToStates";
             this.LbxConvertSaveRamToStates.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.LbxConvertSaveRamToStates.Size = new System.Drawing.Size(584, 240);
-            this.LbxConvertSaveRamToStates.TabIndex = 23;
+            this.LbxConvertSaveRamToStates.TabIndex = 20;
             // 
             // PbxHazardStripes
             // 
@@ -4297,7 +4297,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSaveRamExportPath.Location = new System.Drawing.Point(84, 5);
             this.TbxSaveRamExportPath.Name = "TbxSaveRamExportPath";
             this.TbxSaveRamExportPath.Size = new System.Drawing.Size(502, 20);
-            this.TbxSaveRamExportPath.TabIndex = 1;
+            this.TbxSaveRamExportPath.TabIndex = 5;
             // 
             // BtnSaveRamExportBrowse
             // 
@@ -4306,7 +4306,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSaveRamExportBrowse.Location = new System.Drawing.Point(592, 3);
             this.BtnSaveRamExportBrowse.Name = "BtnSaveRamExportBrowse";
             this.BtnSaveRamExportBrowse.Size = new System.Drawing.Size(75, 25);
-            this.BtnSaveRamExportBrowse.TabIndex = 2;
+            this.BtnSaveRamExportBrowse.TabIndex = 10;
             this.BtnSaveRamExportBrowse.Text = "...";
             this.BtnSaveRamExportBrowse.UseVisualStyleBackColor = true;
             this.BtnSaveRamExportBrowse.Click += new System.EventHandler(this.BtnSaveRamExportBrowse_Click);
@@ -4321,7 +4321,7 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox4.Location = new System.Drawing.Point(6, 7);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(676, 61);
-            this.groupBox4.TabIndex = 22;
+            this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "In-game saves";
             // 
@@ -4331,7 +4331,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnOpenSaveMenu.Location = new System.Drawing.Point(6, 19);
             this.BtnOpenSaveMenu.Name = "BtnOpenSaveMenu";
             this.BtnOpenSaveMenu.Size = new System.Drawing.Size(147, 23);
-            this.BtnOpenSaveMenu.TabIndex = 19;
+            this.BtnOpenSaveMenu.TabIndex = 0;
             this.BtnOpenSaveMenu.Text = "Open save menu";
             this.BtnOpenSaveMenu.UseVisualStyleBackColor = true;
             this.BtnOpenSaveMenu.Click += new System.EventHandler(this.BtnOpenSaveMenu_Click);
@@ -4342,7 +4342,7 @@ namespace BizHawk.Client.EmuHawk
             this.CmbSaveButton.Location = new System.Drawing.Point(159, 20);
             this.CmbSaveButton.Name = "CmbSaveButton";
             this.CmbSaveButton.Size = new System.Drawing.Size(99, 21);
-            this.CmbSaveButton.TabIndex = 20;
+            this.CmbSaveButton.TabIndex = 5;
             this.CmbSaveButton.SelectedValueChanged += new System.EventHandler(this.CmbSaveButton_SelectedValueChanged);
             // 
             // TbpTest
