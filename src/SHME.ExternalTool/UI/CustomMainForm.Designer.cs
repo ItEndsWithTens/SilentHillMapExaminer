@@ -2883,7 +2883,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel21.Size = new System.Drawing.Size(682, 612);
-            this.tableLayoutPanel21.TabIndex = 75;
+            this.tableLayoutPanel21.TabIndex = 0;
             // 
             // splitContainer2
             // 
@@ -2901,7 +2901,7 @@ namespace BizHawk.Client.EmuHawk
             this.splitContainer2.Panel2.Controls.Add(this.groupBox10);
             this.splitContainer2.Size = new System.Drawing.Size(676, 577);
             this.splitContainer2.SplitterDistance = 225;
-            this.splitContainer2.TabIndex = 76;
+            this.splitContainer2.TabIndex = 10;
             // 
             // LbxCameraPaths
             // 
@@ -2911,7 +2911,7 @@ namespace BizHawk.Client.EmuHawk
             this.LbxCameraPaths.Location = new System.Drawing.Point(0, 0);
             this.LbxCameraPaths.Name = "LbxCameraPaths";
             this.LbxCameraPaths.Size = new System.Drawing.Size(225, 577);
-            this.LbxCameraPaths.TabIndex = 56;
+            this.LbxCameraPaths.TabIndex = 0;
             this.LbxCameraPaths.SelectedIndexChanged += new System.EventHandler(this.LbxCameraPaths_SelectedIndexChanged);
             this.LbxCameraPaths.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.LbxCameraPaths_Format);
             // 
@@ -2922,7 +2922,7 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox10.Location = new System.Drawing.Point(0, 0);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(447, 577);
-            this.groupBox10.TabIndex = 74;
+            this.groupBox10.TabIndex = 0;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Selected path";
             // 
@@ -2976,7 +2976,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
             this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.666667F));
             this.tableLayoutPanel22.Size = new System.Drawing.Size(441, 558);
-            this.tableLayoutPanel22.TabIndex = 120;
+            this.tableLayoutPanel22.TabIndex = 0;
             // 
             // label107
             // 
@@ -2985,7 +2985,7 @@ namespace BizHawk.Client.EmuHawk
             this.label107.Location = new System.Drawing.Point(46, 12);
             this.label107.Name = "label107";
             this.label107.Size = new System.Drawing.Size(48, 13);
-            this.label107.TabIndex = 69;
+            this.label107.TabIndex = 0;
             this.label107.Text = "Address:";
             // 
             // LblCameraPathPitch
@@ -2995,7 +2995,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathPitch.Location = new System.Drawing.Point(100, 493);
             this.LblCameraPathPitch.Name = "LblCameraPathPitch";
             this.LblCameraPathPitch.Size = new System.Drawing.Size(42, 13);
-            this.LblCameraPathPitch.TabIndex = 117;
+            this.LblCameraPathPitch.TabIndex = 100;
             this.LblCameraPathPitch.Text = "<pitch>";
             // 
             // LblCameraPathYaw
@@ -3005,7 +3005,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathYaw.Location = new System.Drawing.Point(100, 531);
             this.LblCameraPathYaw.Name = "LblCameraPathYaw";
             this.LblCameraPathYaw.Size = new System.Drawing.Size(38, 13);
-            this.LblCameraPathYaw.TabIndex = 118;
+            this.LblCameraPathYaw.TabIndex = 110;
             this.LblCameraPathYaw.Text = "<yaw>";
             // 
             // LblCameraPathAddress
@@ -3015,7 +3015,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathAddress.Location = new System.Drawing.Point(100, 12);
             this.LblCameraPathAddress.Name = "LblCameraPathAddress";
             this.LblCameraPathAddress.Size = new System.Drawing.Size(56, 13);
-            this.LblCameraPathAddress.TabIndex = 70;
+            this.LblCameraPathAddress.TabIndex = 5;
             this.LblCameraPathAddress.Text = "<address>";
             this.LblCameraPathAddress.Click += new System.EventHandler(this.LblCameraPathAddress_Click);
             // 
@@ -3026,7 +3026,7 @@ namespace BizHawk.Client.EmuHawk
             this.label82.Location = new System.Drawing.Point(63, 531);
             this.label82.Name = "label82";
             this.label82.Size = new System.Drawing.Size(31, 13);
-            this.label82.TabIndex = 116;
+            this.label82.TabIndex = 105;
             this.label82.Text = "Yaw:";
             // 
             // label108
@@ -3036,7 +3036,7 @@ namespace BizHawk.Client.EmuHawk
             this.label108.Location = new System.Drawing.Point(6, 123);
             this.label108.Name = "label108";
             this.label108.Size = new System.Drawing.Size(88, 13);
-            this.label108.TabIndex = 57;
+            this.label108.TabIndex = 15;
             this.label108.Text = "Volume min XYZ:";
             // 
             // label77
@@ -3046,7 +3046,7 @@ namespace BizHawk.Client.EmuHawk
             this.label77.Location = new System.Drawing.Point(60, 493);
             this.label77.Name = "label77";
             this.label77.Size = new System.Drawing.Size(34, 13);
-            this.label77.TabIndex = 115;
+            this.label77.TabIndex = 95;
             this.label77.Text = "Pitch:";
             // 
             // label80
@@ -3056,7 +3056,7 @@ namespace BizHawk.Client.EmuHawk
             this.label80.Location = new System.Drawing.Point(3, 160);
             this.label80.Name = "label80";
             this.label80.Size = new System.Drawing.Size(91, 13);
-            this.label80.TabIndex = 108;
+            this.label80.TabIndex = 30;
             this.label80.Text = "Volume max XYZ:";
             // 
             // label83
@@ -3066,7 +3066,7 @@ namespace BizHawk.Client.EmuHawk
             this.label83.Location = new System.Drawing.Point(51, 419);
             this.label83.Name = "label83";
             this.label83.Size = new System.Drawing.Size(43, 13);
-            this.label83.TabIndex = 114;
+            this.label83.TabIndex = 85;
             this.label83.Text = "Thing6:";
             // 
             // LblCameraPathThing6
@@ -3076,7 +3076,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathThing6.Location = new System.Drawing.Point(100, 419);
             this.LblCameraPathThing6.Name = "LblCameraPathThing6";
             this.LblCameraPathThing6.Size = new System.Drawing.Size(48, 13);
-            this.LblCameraPathThing6.TabIndex = 113;
+            this.LblCameraPathThing6.TabIndex = 90;
             this.LblCameraPathThing6.Text = "<thing6>";
             // 
             // label81
@@ -3086,7 +3086,7 @@ namespace BizHawk.Client.EmuHawk
             this.label81.Location = new System.Drawing.Point(51, 382);
             this.label81.Name = "label81";
             this.label81.Size = new System.Drawing.Size(43, 13);
-            this.label81.TabIndex = 112;
+            this.label81.TabIndex = 75;
             this.label81.Text = "Thing5:";
             // 
             // LblCameraPathVolumeMin
@@ -3096,7 +3096,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathVolumeMin.Location = new System.Drawing.Point(100, 123);
             this.LblCameraPathVolumeMin.Name = "LblCameraPathVolumeMin";
             this.LblCameraPathVolumeMin.Size = new System.Drawing.Size(117, 13);
-            this.LblCameraPathVolumeMin.TabIndex = 58;
+            this.LblCameraPathVolumeMin.TabIndex = 20;
             this.LblCameraPathVolumeMin.Text = "PLACEHOLDER TEXT";
             // 
             // BtnCameraPathGoToVolumeMin
@@ -3106,7 +3106,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnCameraPathGoToVolumeMin.Location = new System.Drawing.Point(338, 117);
             this.BtnCameraPathGoToVolumeMin.Name = "BtnCameraPathGoToVolumeMin";
             this.BtnCameraPathGoToVolumeMin.Size = new System.Drawing.Size(100, 25);
-            this.BtnCameraPathGoToVolumeMin.TabIndex = 76;
+            this.BtnCameraPathGoToVolumeMin.TabIndex = 25;
             this.BtnCameraPathGoToVolumeMin.Text = "Go to min";
             this.BtnCameraPathGoToVolumeMin.UseVisualStyleBackColor = true;
             this.BtnCameraPathGoToVolumeMin.Click += new System.EventHandler(this.BtnCameraPathGoToVolumeMin_Click);
@@ -3118,7 +3118,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathThing5.Location = new System.Drawing.Point(100, 382);
             this.LblCameraPathThing5.Name = "LblCameraPathThing5";
             this.LblCameraPathThing5.Size = new System.Drawing.Size(48, 13);
-            this.LblCameraPathThing5.TabIndex = 111;
+            this.LblCameraPathThing5.TabIndex = 80;
             this.LblCameraPathThing5.Text = "<thing5>";
             // 
             // BtnCameraPathGoToVolumeMax
@@ -3128,7 +3128,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnCameraPathGoToVolumeMax.Location = new System.Drawing.Point(338, 154);
             this.BtnCameraPathGoToVolumeMax.Name = "BtnCameraPathGoToVolumeMax";
             this.BtnCameraPathGoToVolumeMax.Size = new System.Drawing.Size(100, 25);
-            this.BtnCameraPathGoToVolumeMax.TabIndex = 110;
+            this.BtnCameraPathGoToVolumeMax.TabIndex = 40;
             this.BtnCameraPathGoToVolumeMax.Text = "Go to max";
             this.BtnCameraPathGoToVolumeMax.UseVisualStyleBackColor = true;
             this.BtnCameraPathGoToVolumeMax.Click += new System.EventHandler(this.BtnCameraPathGoToVolumeMax_Click);
@@ -3140,7 +3140,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathVolumeMax.Location = new System.Drawing.Point(100, 160);
             this.LblCameraPathVolumeMax.Name = "LblCameraPathVolumeMax";
             this.LblCameraPathVolumeMax.Size = new System.Drawing.Size(117, 13);
-            this.LblCameraPathVolumeMax.TabIndex = 109;
+            this.LblCameraPathVolumeMax.TabIndex = 35;
             this.LblCameraPathVolumeMax.Text = "PLACEHOLDER TEXT";
             // 
             // LblCameraPathThing4
@@ -3150,7 +3150,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathThing4.Location = new System.Drawing.Point(100, 345);
             this.LblCameraPathThing4.Name = "LblCameraPathThing4";
             this.LblCameraPathThing4.Size = new System.Drawing.Size(48, 13);
-            this.LblCameraPathThing4.TabIndex = 104;
+            this.LblCameraPathThing4.TabIndex = 70;
             this.LblCameraPathThing4.Text = "<thing4>";
             // 
             // label104
@@ -3160,7 +3160,7 @@ namespace BizHawk.Client.EmuHawk
             this.label104.Location = new System.Drawing.Point(26, 234);
             this.label104.Name = "label104";
             this.label104.Size = new System.Drawing.Size(68, 13);
-            this.label104.TabIndex = 97;
+            this.label104.TabIndex = 45;
             this.label104.Text = "Area min XZ:";
             // 
             // label92
@@ -3170,7 +3170,7 @@ namespace BizHawk.Client.EmuHawk
             this.label92.Location = new System.Drawing.Point(51, 345);
             this.label92.Name = "label92";
             this.label92.Size = new System.Drawing.Size(43, 13);
-            this.label92.TabIndex = 105;
+            this.label92.TabIndex = 65;
             this.label92.Text = "Thing4:";
             // 
             // LblCameraPathAreaMin
@@ -3180,7 +3180,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathAreaMin.Location = new System.Drawing.Point(100, 234);
             this.LblCameraPathAreaMin.Name = "LblCameraPathAreaMin";
             this.LblCameraPathAreaMin.Size = new System.Drawing.Size(117, 13);
-            this.LblCameraPathAreaMin.TabIndex = 96;
+            this.LblCameraPathAreaMin.TabIndex = 50;
             this.LblCameraPathAreaMin.Text = "PLACEHOLDER TEXT";
             // 
             // LblCameraPathAreaMax
@@ -3190,7 +3190,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathAreaMax.Location = new System.Drawing.Point(100, 271);
             this.LblCameraPathAreaMax.Name = "LblCameraPathAreaMax";
             this.LblCameraPathAreaMax.Size = new System.Drawing.Size(117, 13);
-            this.LblCameraPathAreaMax.TabIndex = 98;
+            this.LblCameraPathAreaMax.TabIndex = 60;
             this.LblCameraPathAreaMax.Text = "PLACEHOLDER TEXT";
             // 
             // label102
@@ -3200,7 +3200,7 @@ namespace BizHawk.Client.EmuHawk
             this.label102.Location = new System.Drawing.Point(23, 271);
             this.label102.Name = "label102";
             this.label102.Size = new System.Drawing.Size(71, 13);
-            this.label102.TabIndex = 99;
+            this.label102.TabIndex = 55;
             this.label102.Text = "Area max XZ:";
             // 
             // CbxSelectedCameraPathDisabled
@@ -3210,7 +3210,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxSelectedCameraPathDisabled.Location = new System.Drawing.Point(100, 47);
             this.CbxSelectedCameraPathDisabled.Name = "CbxSelectedCameraPathDisabled";
             this.CbxSelectedCameraPathDisabled.Size = new System.Drawing.Size(67, 17);
-            this.CbxSelectedCameraPathDisabled.TabIndex = 119;
+            this.CbxSelectedCameraPathDisabled.TabIndex = 10;
             this.CbxSelectedCameraPathDisabled.Text = "Disabled";
             this.CbxSelectedCameraPathDisabled.UseVisualStyleBackColor = true;
             this.CbxSelectedCameraPathDisabled.CheckedChanged += new System.EventHandler(this.CbxSelectedCameraPathEnabled_CheckedChanged);
@@ -3222,7 +3222,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathCount.Location = new System.Drawing.Point(153, 8);
             this.LblCameraPathCount.Name = "LblCameraPathCount";
             this.LblCameraPathCount.Size = new System.Drawing.Size(10, 13);
-            this.LblCameraPathCount.TabIndex = 58;
+            this.LblCameraPathCount.TabIndex = 5;
             this.LblCameraPathCount.Text = "-";
             // 
             // BtnCameraPathReadArray
@@ -3232,7 +3232,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnCameraPathReadArray.Location = new System.Drawing.Point(3, 3);
             this.BtnCameraPathReadArray.Name = "BtnCameraPathReadArray";
             this.BtnCameraPathReadArray.Size = new System.Drawing.Size(144, 23);
-            this.BtnCameraPathReadArray.TabIndex = 57;
+            this.BtnCameraPathReadArray.TabIndex = 0;
             this.BtnCameraPathReadArray.Text = "Read camera paths";
             this.BtnCameraPathReadArray.UseVisualStyleBackColor = true;
             this.BtnCameraPathReadArray.Click += new System.EventHandler(this.BtnCameraPathReadArray_Click);
