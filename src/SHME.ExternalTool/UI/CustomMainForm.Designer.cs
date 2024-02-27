@@ -1188,7 +1188,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnGrabMapGraphic.Margin = new System.Windows.Forms.Padding(0);
             this.BtnGrabMapGraphic.Name = "BtnGrabMapGraphic";
             this.BtnGrabMapGraphic.Size = new System.Drawing.Size(125, 25);
-            this.BtnGrabMapGraphic.TabIndex = 15;
+            this.BtnGrabMapGraphic.TabIndex = 0;
             this.BtnGrabMapGraphic.Text = "Grab map graphic";
             this.BtnGrabMapGraphic.UseVisualStyleBackColor = true;
             this.BtnGrabMapGraphic.Click += new System.EventHandler(this.BtnGrabMapGraphic_Click);
@@ -3273,7 +3273,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(200, 130);
-            this.tableLayoutPanel3.TabIndex = 24;
+            this.tableLayoutPanel3.TabIndex = 5;
             // 
             // label14
             // 
@@ -3282,7 +3282,7 @@ namespace BizHawk.Client.EmuHawk
             this.label14.Location = new System.Drawing.Point(29, 4);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(67, 13);
-            this.label14.TabIndex = 21;
+            this.label14.TabIndex = 0;
             this.label14.Text = "Harry health:";
             // 
             // label52
@@ -3292,7 +3292,7 @@ namespace BizHawk.Client.EmuHawk
             this.label52.Location = new System.Drawing.Point(40, 67);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(56, 13);
-            this.label52.TabIndex = 22;
+            this.label52.TabIndex = 10;
             this.label52.Text = "Total time:";
             // 
             // LblRunningDistance
@@ -3302,7 +3302,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblRunningDistance.Location = new System.Drawing.Point(102, 111);
             this.LblRunningDistance.Name = "LblRunningDistance";
             this.LblRunningDistance.Size = new System.Drawing.Size(34, 13);
-            this.LblRunningDistance.TabIndex = 3;
+            this.LblRunningDistance.TabIndex = 35;
             this.LblRunningDistance.Text = "<run>";
             // 
             // LblTotalTime
@@ -3312,7 +3312,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblTotalTime.Location = new System.Drawing.Point(102, 67);
             this.LblTotalTime.Name = "LblTotalTime";
             this.LblTotalTime.Size = new System.Drawing.Size(62, 13);
-            this.LblTotalTime.TabIndex = 23;
+            this.LblTotalTime.TabIndex = 15;
             this.LblTotalTime.Text = "<totalTime>";
             // 
             // LblWalkingDistance
@@ -3322,7 +3322,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblWalkingDistance.Location = new System.Drawing.Point(102, 88);
             this.LblWalkingDistance.Name = "LblWalkingDistance";
             this.LblWalkingDistance.Size = new System.Drawing.Size(53, 13);
-            this.LblWalkingDistance.TabIndex = 2;
+            this.LblWalkingDistance.TabIndex = 25;
             this.LblWalkingDistance.Text = "<walked>";
             // 
             // LblHarryHealth
@@ -3332,7 +3332,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryHealth.Location = new System.Drawing.Point(102, 4);
             this.LblHarryHealth.Name = "LblHarryHealth";
             this.LblHarryHealth.Size = new System.Drawing.Size(74, 13);
-            this.LblHarryHealth.TabIndex = 20;
+            this.LblHarryHealth.TabIndex = 5;
             this.LblHarryHealth.Text = "<harry health>";
             // 
             // label8
@@ -3342,7 +3342,7 @@ namespace BizHawk.Client.EmuHawk
             this.label8.Location = new System.Drawing.Point(3, 111);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(93, 13);
-            this.label8.TabIndex = 1;
+            this.label8.TabIndex = 30;
             this.label8.Text = "Running distance:";
             // 
             // label7
@@ -3352,19 +3352,20 @@ namespace BizHawk.Client.EmuHawk
             this.label7.Location = new System.Drawing.Point(4, 88);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(92, 13);
-            this.label7.TabIndex = 0;
+            this.label7.TabIndex = 20;
             this.label7.Text = "Walking distance:";
             // 
             // CbxStats
             // 
+            this.CbxStats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CbxStats.AutoSize = true;
             this.CbxStats.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CbxStats.Checked = true;
             this.CbxStats.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxStats.Location = new System.Drawing.Point(687, 703);
+            this.CbxStats.Location = new System.Drawing.Point(623, 595);
             this.CbxStats.Name = "CbxStats";
             this.CbxStats.Size = new System.Drawing.Size(59, 17);
-            this.CbxStats.TabIndex = 4;
+            this.CbxStats.TabIndex = 0;
             this.CbxStats.Text = "Enable";
             this.CbxStats.UseVisualStyleBackColor = true;
             // 
@@ -3412,7 +3413,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel14.Size = new System.Drawing.Size(362, 194);
-            this.tableLayoutPanel14.TabIndex = 24;
+            this.tableLayoutPanel14.TabIndex = 0;
             // 
             // CbxFog
             // 
@@ -3455,7 +3456,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel13.Size = new System.Drawing.Size(131, 163);
-            this.tableLayoutPanel13.TabIndex = 23;
+            this.tableLayoutPanel13.TabIndex = 10;
             // 
             // CbxCustomWorldTint
             // 
@@ -3465,7 +3466,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCustomWorldTint.Location = new System.Drawing.Point(12, 3);
             this.CbxCustomWorldTint.Name = "CbxCustomWorldTint";
             this.CbxCustomWorldTint.Size = new System.Drawing.Size(106, 17);
-            this.CbxCustomWorldTint.TabIndex = 16;
+            this.CbxCustomWorldTint.TabIndex = 0;
             this.CbxCustomWorldTint.Text = "Custom world tint";
             this.CbxCustomWorldTint.UseVisualStyleBackColor = true;
             // 
@@ -3476,7 +3477,7 @@ namespace BizHawk.Client.EmuHawk
             this.label12.Location = new System.Drawing.Point(3, 29);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(18, 13);
-            this.label12.TabIndex = 10;
+            this.label12.TabIndex = 5;
             this.label12.Text = "R:";
             // 
             // label11
@@ -3486,7 +3487,7 @@ namespace BizHawk.Client.EmuHawk
             this.label11.Location = new System.Drawing.Point(3, 55);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(18, 13);
-            this.label11.TabIndex = 11;
+            this.label11.TabIndex = 15;
             this.label11.Text = "G:";
             // 
             // label10
@@ -3496,7 +3497,7 @@ namespace BizHawk.Client.EmuHawk
             this.label10.Location = new System.Drawing.Point(4, 81);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(17, 13);
-            this.label10.TabIndex = 12;
+            this.label10.TabIndex = 25;
             this.label10.Text = "B:";
             // 
             // BtnWorldTintDefault
@@ -3507,7 +3508,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnWorldTintDefault.Location = new System.Drawing.Point(3, 135);
             this.BtnWorldTintDefault.Name = "BtnWorldTintDefault";
             this.BtnWorldTintDefault.Size = new System.Drawing.Size(125, 25);
-            this.BtnWorldTintDefault.TabIndex = 18;
+            this.BtnWorldTintDefault.TabIndex = 45;
             this.BtnWorldTintDefault.Text = "Default";
             this.BtnWorldTintDefault.UseVisualStyleBackColor = true;
             this.BtnWorldTintDefault.Click += new System.EventHandler(this.BtnWorldTintDefault_Click);
@@ -3520,7 +3521,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnCustomWorldTintCurrent.Location = new System.Drawing.Point(3, 104);
             this.BtnCustomWorldTintCurrent.Name = "BtnCustomWorldTintCurrent";
             this.BtnCustomWorldTintCurrent.Size = new System.Drawing.Size(125, 25);
-            this.BtnCustomWorldTintCurrent.TabIndex = 20;
+            this.BtnCustomWorldTintCurrent.TabIndex = 40;
             this.BtnCustomWorldTintCurrent.Text = "Current";
             this.BtnCustomWorldTintCurrent.UseVisualStyleBackColor = true;
             this.BtnCustomWorldTintCurrent.Click += new System.EventHandler(this.BtnCustomWorldTintCurrent_Click);
@@ -3536,7 +3537,7 @@ namespace BizHawk.Client.EmuHawk
             0});
             this.NudWorldTintR.Name = "NudWorldTintR";
             this.NudWorldTintR.Size = new System.Drawing.Size(52, 20);
-            this.NudWorldTintR.TabIndex = 13;
+            this.NudWorldTintR.TabIndex = 10;
             this.NudWorldTintR.Value = new decimal(new int[] {
             121,
             0,
@@ -3555,7 +3556,7 @@ namespace BizHawk.Client.EmuHawk
             0});
             this.NudWorldTintG.Name = "NudWorldTintG";
             this.NudWorldTintG.Size = new System.Drawing.Size(52, 20);
-            this.NudWorldTintG.TabIndex = 14;
+            this.NudWorldTintG.TabIndex = 20;
             this.NudWorldTintG.Value = new decimal(new int[] {
             128,
             0,
@@ -3571,7 +3572,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnWorldTintColor.Name = "BtnWorldTintColor";
             this.tableLayoutPanel13.SetRowSpan(this.BtnWorldTintColor, 3);
             this.BtnWorldTintColor.Size = new System.Drawing.Size(43, 72);
-            this.BtnWorldTintColor.TabIndex = 9;
+            this.BtnWorldTintColor.TabIndex = 35;
             this.BtnWorldTintColor.UseVisualStyleBackColor = false;
             this.BtnWorldTintColor.Click += new System.EventHandler(this.BtnWorldTintColor_Click);
             // 
@@ -3586,7 +3587,7 @@ namespace BizHawk.Client.EmuHawk
             0});
             this.NudWorldTintB.Name = "NudWorldTintB";
             this.NudWorldTintB.Size = new System.Drawing.Size(52, 20);
-            this.NudWorldTintB.TabIndex = 15;
+            this.NudWorldTintB.TabIndex = 30;
             this.NudWorldTintB.Value = new decimal(new int[] {
             138,
             0,
@@ -3623,7 +3624,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel12.Size = new System.Drawing.Size(131, 163);
-            this.tableLayoutPanel12.TabIndex = 22;
+            this.tableLayoutPanel12.TabIndex = 5;
             // 
             // CbxCustomFog
             // 
@@ -3633,7 +3634,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCustomFog.Location = new System.Drawing.Point(26, 3);
             this.CbxCustomFog.Name = "CbxCustomFog";
             this.CbxCustomFog.Size = new System.Drawing.Size(79, 17);
-            this.CbxCustomFog.TabIndex = 8;
+            this.CbxCustomFog.TabIndex = 0;
             this.CbxCustomFog.Text = "Custom fog";
             this.CbxCustomFog.UseVisualStyleBackColor = true;
             // 
@@ -3644,7 +3645,7 @@ namespace BizHawk.Client.EmuHawk
             this.label5.Location = new System.Drawing.Point(3, 29);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(18, 13);
-            this.label5.TabIndex = 2;
+            this.label5.TabIndex = 5;
             this.label5.Text = "R:";
             // 
             // label6
@@ -3654,7 +3655,7 @@ namespace BizHawk.Client.EmuHawk
             this.label6.Location = new System.Drawing.Point(3, 55);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(18, 13);
-            this.label6.TabIndex = 3;
+            this.label6.TabIndex = 15;
             this.label6.Text = "G:";
             // 
             // label9
@@ -3664,7 +3665,7 @@ namespace BizHawk.Client.EmuHawk
             this.label9.Location = new System.Drawing.Point(4, 81);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(17, 13);
-            this.label9.TabIndex = 4;
+            this.label9.TabIndex = 25;
             this.label9.Text = "B:";
             // 
             // BtnCustomFogCurrent
@@ -3675,7 +3676,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnCustomFogCurrent.Location = new System.Drawing.Point(3, 104);
             this.BtnCustomFogCurrent.Name = "BtnCustomFogCurrent";
             this.BtnCustomFogCurrent.Size = new System.Drawing.Size(125, 25);
-            this.BtnCustomFogCurrent.TabIndex = 19;
+            this.BtnCustomFogCurrent.TabIndex = 40;
             this.BtnCustomFogCurrent.Text = "Current";
             this.BtnCustomFogCurrent.UseVisualStyleBackColor = true;
             this.BtnCustomFogCurrent.Click += new System.EventHandler(this.BtnCustomFogCurrent_Click);
@@ -3688,7 +3689,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFogColorDefault.Location = new System.Drawing.Point(3, 135);
             this.BtnFogColorDefault.Name = "BtnFogColorDefault";
             this.BtnFogColorDefault.Size = new System.Drawing.Size(125, 25);
-            this.BtnFogColorDefault.TabIndex = 17;
+            this.BtnFogColorDefault.TabIndex = 45;
             this.BtnFogColorDefault.Text = "Default";
             this.BtnFogColorDefault.UseVisualStyleBackColor = true;
             this.BtnFogColorDefault.Click += new System.EventHandler(this.BtnFogColorDefault_Click);
@@ -3704,7 +3705,7 @@ namespace BizHawk.Client.EmuHawk
             0});
             this.NudFogR.Name = "NudFogR";
             this.NudFogR.Size = new System.Drawing.Size(52, 20);
-            this.NudFogR.TabIndex = 5;
+            this.NudFogR.TabIndex = 10;
             this.NudFogR.Value = new decimal(new int[] {
             108,
             0,
@@ -3723,7 +3724,7 @@ namespace BizHawk.Client.EmuHawk
             0});
             this.NudFogG.Name = "NudFogG";
             this.NudFogG.Size = new System.Drawing.Size(52, 20);
-            this.NudFogG.TabIndex = 6;
+            this.NudFogG.TabIndex = 20;
             this.NudFogG.Value = new decimal(new int[] {
             100,
             0,
@@ -3742,7 +3743,7 @@ namespace BizHawk.Client.EmuHawk
             0});
             this.NudFogB.Name = "NudFogB";
             this.NudFogB.Size = new System.Drawing.Size(52, 20);
-            this.NudFogB.TabIndex = 7;
+            this.NudFogB.TabIndex = 30;
             this.NudFogB.Value = new decimal(new int[] {
             116,
             0,
@@ -3758,7 +3759,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFogColor.Name = "BtnFogColor";
             this.tableLayoutPanel12.SetRowSpan(this.BtnFogColor, 3);
             this.BtnFogColor.Size = new System.Drawing.Size(43, 72);
-            this.BtnFogColor.TabIndex = 1;
+            this.BtnFogColor.TabIndex = 35;
             this.BtnFogColor.UseVisualStyleBackColor = false;
             this.BtnFogColor.Click += new System.EventHandler(this.BtnFogColor_Click);
             // 
@@ -3770,7 +3771,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFogWorldTintColorSwap.Location = new System.Drawing.Point(78, 166);
             this.BtnFogWorldTintColorSwap.Name = "BtnFogWorldTintColorSwap";
             this.BtnFogWorldTintColorSwap.Size = new System.Drawing.Size(281, 25);
-            this.BtnFogWorldTintColorSwap.TabIndex = 0;
+            this.BtnFogWorldTintColorSwap.TabIndex = 15;
             this.BtnFogWorldTintColorSwap.Text = "Swap";
             this.BtnFogWorldTintColorSwap.UseVisualStyleBackColor = true;
             this.BtnFogWorldTintColorSwap.Click += new System.EventHandler(this.BtnFogWorldTintColorSwap_Click);
@@ -3782,7 +3783,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxDiscoMode.Location = new System.Drawing.Point(6, 595);
             this.CbxDiscoMode.Name = "CbxDiscoMode";
             this.CbxDiscoMode.Size = new System.Drawing.Size(82, 17);
-            this.CbxDiscoMode.TabIndex = 21;
+            this.CbxDiscoMode.TabIndex = 5;
             this.CbxDiscoMode.Text = "Disco mode";
             this.CbxDiscoMode.UseVisualStyleBackColor = true;
             this.CbxDiscoMode.CheckedChanged += new System.EventHandler(this.CbxDiscoMode_CheckedChanged);
@@ -3815,7 +3816,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel10.Size = new System.Drawing.Size(682, 612);
-            this.tableLayoutPanel10.TabIndex = 57;
+            this.tableLayoutPanel10.TabIndex = 0;
             // 
             // BtnReadStrings
             // 
@@ -3836,7 +3837,7 @@ namespace BizHawk.Client.EmuHawk
             this.RtbStrings.Location = new System.Drawing.Point(3, 34);
             this.RtbStrings.Name = "RtbStrings";
             this.RtbStrings.Size = new System.Drawing.Size(676, 575);
-            this.RtbStrings.TabIndex = 56;
+            this.RtbStrings.TabIndex = 10;
             this.RtbStrings.Text = "";
             // 
             // LblStringCount
@@ -3846,7 +3847,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblStringCount.Location = new System.Drawing.Point(134, 9);
             this.LblStringCount.Name = "LblStringCount";
             this.LblStringCount.Size = new System.Drawing.Size(10, 13);
-            this.LblStringCount.TabIndex = 55;
+            this.LblStringCount.TabIndex = 5;
             this.LblStringCount.Text = "-";
             // 
             // TbpSave
@@ -6534,7 +6535,6 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblCameraPitch;
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 		private Button BtnGrabMapGraphic;
-		private PictureBox PbxMapGraphic;
 		private TabControl TbcMainTabs;
 		private TabPage TbpBasics;
 		private TabPage TbpMap;
@@ -6925,5 +6925,6 @@ namespace BizHawk.Client.EmuHawk
 		private CheckBox CbxHideHarry;
 		private TableLayoutPanel tableLayoutPanel39;
 		private CheckBox CbxShowLookAt;
+		private PictureBox PbxMapGraphic;
 	}
 }
