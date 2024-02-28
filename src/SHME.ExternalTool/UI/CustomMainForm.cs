@@ -280,31 +280,28 @@ namespace BizHawk.Client.EmuHawk
 					{
 						Mem.WriteByte(Rom.Addresses.MainRam.CameraLockedToHead, 0x1);
 					}
-					if (!CbxOverlayRenderToFramebuffer.Checked)
+					if (CbxShowLookAt.Checked)
 					{
-						_gameCameraLookAt.Position = new Vector3
-						{
-							X = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX)),
-							Y = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY)),
-							Z = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ))
-						};
-
-						if (CbxCameraDetach.Checked)
-						{
-							HoldCamera();
-						}
-
-						if (_flyEnabled)
-						{
-							MoveCamera();
-							AimCamera(BtnCameraFly);
-						}
-						else if (_firstPersonEnabled)
-						{
-							MoveCameraFirstPerson();
-							AimCamera(BtnFirstPerson);
-							Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
-						}
+						Vector3 pos = _gameCameraLookAt.Position;
+						pos.X = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX));
+						pos.Y = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY));
+						pos.Z = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ));
+						_gameCameraLookAt.Position = pos;
+					}
+					if (CbxCameraDetach.Checked)
+					{
+						HoldCamera();
+					}
+					if (_flyEnabled)
+					{
+						MoveCamera();
+						AimCamera(BtnCameraFly);
+					}
+					else if (_firstPersonEnabled)
+					{
+						MoveCameraFirstPerson();
+						AimCamera(BtnFirstPerson);
+						Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
 					}
 					break;
 				case ToolFormUpdateType.PostFrame:
@@ -321,10 +318,13 @@ namespace BizHawk.Client.EmuHawk
 					{
 						ReportOverlayInfo();
 					}
-					if (CbxEnableOverlay.Checked && !CbxOverlayRenderToFramebuffer.Checked)
+					if (CbxEnableOverlay.Checked)
 					{
 						UpdateOverlay();
-						ApplyOverlayToGui();
+						if (!CbxOverlayRenderToFramebuffer.Checked)
+						{
+							ApplyOverlayToGui();
+						}
 					}
 					if (CbxStats.Checked)
 					{
