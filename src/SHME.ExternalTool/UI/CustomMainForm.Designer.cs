@@ -746,7 +746,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxEnableHarrySection.Location = new System.Drawing.Point(267, 261);
             this.CbxEnableHarrySection.Name = "CbxEnableHarrySection";
             this.CbxEnableHarrySection.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableHarrySection.TabIndex = 115;
+            this.CbxEnableHarrySection.TabIndex = 0;
             this.CbxEnableHarrySection.Text = "Enable";
             this.CbxEnableHarrySection.UseVisualStyleBackColor = true;
             // 
@@ -778,7 +778,7 @@ namespace BizHawk.Client.EmuHawk
             this.label59.Location = new System.Drawing.Point(18, 9);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(44, 13);
-            this.label59.TabIndex = 0;
+            this.label59.TabIndex = 3;
             this.label59.Text = "Position";
             // 
             // label61
@@ -1872,7 +1872,7 @@ namespace BizHawk.Client.EmuHawk
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(107, 13);
-            this.label2.TabIndex = 0;
+            this.label2.TabIndex = 3;
             this.label2.Text = "X east, Y up, Z south";
             this.toolTip1.SetToolTip(this.label2, "Cardinal directions relative to the top-down map view of Old Silent\r\nHill. The ar" +
         "ea maps of indoor levels may not match this.");
@@ -1993,7 +1993,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxEnableOverlay.Location = new System.Drawing.Point(267, 261);
             this.CbxEnableOverlay.Name = "CbxEnableOverlay";
             this.CbxEnableOverlay.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableOverlay.TabIndex = 155;
+            this.CbxEnableOverlay.TabIndex = 0;
             this.CbxEnableOverlay.Text = "Enable";
             this.CbxEnableOverlay.UseVisualStyleBackColor = true;
             this.CbxEnableOverlay.CheckedChanged += new System.EventHandler(this.CbxEnableOverlay_CheckedChanged);
