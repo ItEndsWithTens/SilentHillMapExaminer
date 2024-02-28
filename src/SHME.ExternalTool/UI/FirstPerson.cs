@@ -223,15 +223,26 @@ namespace BizHawk.Client.EmuHawk
 			else
 				Joy.Set("P1 D-Pad Down", false);
 
-			if (_stepL)
-				Joy.Set("P1 L1", true);
-			else
+			// Sending both sidestep inputs at the same time attempts to do
+			// an about-face, but since the camera's under user control, the
+			// sidestep controls lock up. Just silently ignore such input.
+			if (_stepL && _stepR)
+			{
 				Joy.Set("P1 L1", false);
-
-			if (_stepR)
-				Joy.Set("P1 R1", true);
-			else
 				Joy.Set("P1 R1", false);
+			}
+			else
+			{
+				if (_stepL)
+					Joy.Set("P1 L1", true);
+				else
+					Joy.Set("P1 L1", false);
+
+				if (_stepR)
+					Joy.Set("P1 R1", true);
+				else
+					Joy.Set("P1 R1", false);
+			}
 
 			if (_run)
 				Joy.Set("P1 □", true);
