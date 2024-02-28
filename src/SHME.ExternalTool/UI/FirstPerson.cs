@@ -47,12 +47,14 @@ namespace BizHawk.Client.EmuHawk
 					int y = Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionY);
 					int z = Mem.ReadS32(Rom.Addresses.MainRam.HarryPositionZ);
 
+					y += Core.FloatToQ((float)NudEyeHeight.Value);
+
 					Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualX, x);
-					Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualY, y + Core.FloatToQ(-1.75f));
+					Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualY, y);
 					Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualZ, z);
 
 					Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealX, x);
-					Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealY, y + Core.FloatToQ(-1.75f));
+					Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealY, y);
 					Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealZ, z);
 
 					_holdCameraPitch = 0;
