@@ -294,12 +294,13 @@ namespace BizHawk.Client.EmuHawk
 						if (_flyEnabled)
 						{
 							MoveCamera();
-							AimCamera();
+							AimCamera(BtnCameraFly);
 						}
 						else if (_firstPersonEnabled)
 						{
 							MoveCameraFirstPerson();
-							AimCameraFirstPerson();
+							AimCamera(BtnFirstPerson);
+							Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
 						}
 					}
 					break;
@@ -845,7 +846,13 @@ namespace BizHawk.Client.EmuHawk
 			if (_flyEnabled)
 			{
 				MoveCamera();
-				AimCamera();
+				AimCamera(BtnCameraFly);
+			}
+			else if (_firstPersonEnabled)
+			{
+				MoveCameraFirstPerson();
+				AimCamera(BtnFirstPerson);
+				Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
 			}
 		}
 	}

@@ -194,43 +194,6 @@ namespace BizHawk.Client.EmuHawk
 		/// 
 		/// </summary>
 		private bool _suppressForcedCameraYaw = true;
-		private void AimCameraFirstPerson()
-		{
-			Button btn = BtnFirstPerson;
-
-			_firstPersonCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
-			_firstPersonCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
-			_firstPersonCenter = btn.Parent.PointToScreen(_firstPersonCenter);
-
-			(Point screen, _, _, _, _, _, _) = InputManager.GetMainFormMouseInfo();
-
-			float deltaX = (screen.X - _firstPersonCenter.X) * _sensitivity;
-			float deltaY = (screen.Y - _firstPersonCenter.Y) * _sensitivity;
-
-			uint pitch = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealPitch);
-			uint yaw = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealYaw);
-
-			float pitchDegrees = Core.GameUnitsToDegrees(pitch);
-			float yawDegrees = Core.GameUnitsToDegrees(yaw);
-
-			if (CbxCameraFlyInvert.Checked)
-			{
-				pitchDegrees += deltaY;
-			}
-			else
-			{
-				pitchDegrees -= deltaY;
-			}
-			yawDegrees += deltaX;
-
-			_holdCameraPitch = Core.DegreesToGameUnits(pitchDegrees);
-			_holdCameraYaw = Core.DegreesToGameUnits(yawDegrees);
-			_holdCameraRoll = 0;
-
-			Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
-
-			Cursor.Position = _firstPersonCenter;
-		}
 
 		private void MoveCameraFirstPerson()
 		{

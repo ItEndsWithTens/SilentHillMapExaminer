@@ -55,12 +55,12 @@ namespace BizHawk.Client.EmuHawk
 
 					Rectangle bounds = btn.Parent.RectangleToScreen(btn.Bounds);
 
-					_flyCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
-					_flyCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
+					_aimCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
+					_aimCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
 
-					_flyCenter = btn.Parent.PointToScreen(_flyCenter);
+					_aimCenter = btn.Parent.PointToScreen(_aimCenter);
 
-					Cursor.Position = _flyCenter;
+					Cursor.Position = _aimCenter;
 
 					// Doesn't work in Mono yet, as seen here:
 					// https://github.com/mono/mono/blob/3d11ccdce6df39bb63c783af28ec9756d1b32db1/mcs/class/System.Windows.Forms/System.Windows.Forms/Cursor.cs#L198
@@ -259,21 +259,19 @@ namespace BizHawk.Client.EmuHawk
 		// framebuffer or not; look up what I believe is called the "delta time"
 		// approach real games use for consistent input with varying framerate.
 		private float _sensitivity = 0.25f;
-		private Point _flyCenter;
-		private void AimCamera()
+		private Point _aimCenter;
+		private void AimCamera(Button btn)
 		{
-			Button btn = BtnCameraFly;
-
-			_flyCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
-			_flyCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
-			_flyCenter = btn.Parent.PointToScreen(_flyCenter);
+			_aimCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
+			_aimCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
+			_aimCenter = btn.Parent.PointToScreen(_aimCenter);
 
 			// Ideally one would use the Input API, but the values it returns
 			// are in an unrecognizable coordinate space. This'll do for now.
 			(Point screen, _, _, _, _, _, _) = InputManager.GetMainFormMouseInfo();
 
-			float deltaX = (screen.X - _flyCenter.X) * _sensitivity;
-			float deltaY = (screen.Y - _flyCenter.Y) * _sensitivity;
+			float deltaX = (screen.X - _aimCenter.X) * _sensitivity;
+			float deltaY = (screen.Y - _aimCenter.Y) * _sensitivity;
 
 			uint pitch = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealPitch);
 			uint yaw = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealYaw);
@@ -295,7 +293,7 @@ namespace BizHawk.Client.EmuHawk
 			_holdCameraYaw = Core.DegreesToGameUnits(yawDegrees);
 			_holdCameraRoll = 0;
 
-			Cursor.Position = _flyCenter;
+			Cursor.Position = _aimCenter;
 		}
 
 		private void AttachCamera()
