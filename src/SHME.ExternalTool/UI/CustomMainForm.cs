@@ -198,14 +198,6 @@ namespace BizHawk.Client.EmuHawk
 
 			DetachEventHandlers();
 			AttachEventHandlers();
-
-			int raw = Mem.ReadS32(Rom.Addresses.MainRam.HarryModelPointer);
-			int address = raw - (int)Rom.Addresses.MainRam.BaseAddress;
-			IReadOnlyList<byte> headerBytes = Mem.ReadByteRange(address, IlmHeader.Length);
-			var header = new IlmHeader(headerBytes, raw);
-
-			IReadOnlyList<byte> remaining = Mem.ReadByteRange(address, (int)(Mem.GetMemoryDomainSize("MainRAM") - address));
-			_harryModel = new Ilm(header, remaining);
 		}
 
 		public static Bitmap GenerateReticle(Pen pen, int width, int height, float percent)
@@ -253,6 +245,17 @@ namespace BizHawk.Client.EmuHawk
 			{
 				_levelDataNeedsUpdate = true;
 				return;
+			}
+
+			if (_harryModel == null)
+			{
+				int raw = Mem.ReadS32(Rom.Addresses.MainRam.HarryModelPointer);
+				int address = raw - (int)Rom.Addresses.MainRam.BaseAddress;
+				IReadOnlyList<byte> headerBytes = Mem.ReadByteRange(address, IlmHeader.Length);
+				var header = new IlmHeader(headerBytes, raw);
+
+				IReadOnlyList<byte> remaining = Mem.ReadByteRange(address, (int)(Mem.GetMemoryDomainSize("MainRAM") - address));
+				_harryModel = new Ilm(header, remaining);
 			}
 
 			if (_forcedCameraYaw != null)

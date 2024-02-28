@@ -9,7 +9,7 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private Ilm _harryModel;
+		private Ilm? _harryModel;
 
 		private bool _firstPersonEnabled;
 		private bool FirstPersonEnabled
