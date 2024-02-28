@@ -14,14 +14,14 @@
     </PackageReference>
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
 
-    <Reference Include="BizHawk.Bizware.BizwareGL" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Bizware.BizwareGL.dll" />
-    <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Client.Common.dll" />
-    <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(BizHawkOutputDir)\EmuHawk.exe" />
-    <Reference Include="BizHawk.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Common.dll" />
-    <Reference Include="BizHawk.Emulation.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.Common.dll" />
-    <Reference Include="BizHawk.Emulation.Cores" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.Cores.dll" />
-    <Reference Include="BizHawk.Emulation.DiscSystem" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.DiscSystem.dll" />
-    <Reference Include="BizHawk.WinForms.Controls" HintPath="$(BizHawkOutputDir)\dll\BizHawk.WinForms.Controls.dll" />
+    <Reference Include="BizHawk.Bizware.BizwareGL" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Bizware.BizwareGL.dll" Private="false" />
+    <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Client.Common.dll" Private="false" />
+    <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(BizHawkOutputDir)\EmuHawk.exe" Private="false" />
+    <Reference Include="BizHawk.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Common.dll" Private="false" />
+    <Reference Include="BizHawk.Emulation.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.Common.dll" Private="false" />
+    <Reference Include="BizHawk.Emulation.Cores" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.Cores.dll" Private="false" />
+    <Reference Include="BizHawk.Emulation.DiscSystem" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.DiscSystem.dll" Private="false" />
+    <Reference Include="BizHawk.WinForms.Controls" HintPath="$(BizHawkOutputDir)\dll\BizHawk.WinForms.Controls.dll" Private="false" />
     <Reference Include="System.Windows.Forms" />
 
     <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj">
