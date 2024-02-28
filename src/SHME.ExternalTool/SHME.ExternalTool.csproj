@@ -50,8 +50,17 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="InstallInEmulator" AfterTargets="PostBuildEvent">
-    <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(BizHawkOutputDir)\ExternalTools" />
+  <Target Name="CreatePrepDir" AfterTargets="PostBuildEvent">
+    <RemoveDir Directories="$(PrepDir)" />
+    <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).dll" DestinationFolder="$(PrepDir)" />
+    <Copy SourceFiles="$(TopLevelDirectory)/README.md" DestinationFiles="$(PrepDir)/$(MSBuildProjectName).txt" />
+  </Target>
+
+  <Target Name="InstallInEmulator" AfterTargets="CreatePrepDir">
+    <ItemGroup>
+      <FileTree Include="$(PrepDir)/**/*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FileTree)" DestinationFolder="$(BizHawkOutputDir)/ExternalTools/%(FileTree.RecursiveDir)" />
   </Target>
 
   <PropertyGroup>
@@ -59,7 +68,7 @@
     <PrepDir>$(DistDir)\prep\</PrepDir>
   </PropertyGroup>
 
-  <Target Name="CreateZip" DependsOnTargets="Build">
+  <Target Name="CreateZip" DependsOnTargets="Build;CreatePrepDir">
     <!--ContinuousIntegrationBuild is necessary to strip local file paths from
     the embedded debug information, but it must be defined during the evaluation
     phase of a build. DeterministicSourcePaths can be modified in a target,
@@ -77,10 +86,7 @@
       Condition="('$(ContinuousIntegrationBuild)' != 'true') And ('$(SHMEForceNondeterministicPackage)' != 'true')"
       Text="@(Msg, ' ')" />
 
-    <RemoveDir Directories="$(PrepDir)" />
-    <Copy SourceFiles="$(OutputPath)\$(MSBuildProjectName).dll" DestinationFolder="$(PrepDir)" />
-    <Copy SourceFiles="$(TopLevelDirectory)\README.md" DestinationFiles="$(PrepDir)\$(MSBuildProjectName).txt" />
-    <ZipDirectory SourceDirectory="$(PrepDir)" DestinationFile="$(DistDir)\$(MSBuildProjectName)-$(Version).zip" Overwrite="true" />
+    <ZipDirectory SourceDirectory="$(PrepDir)" DestinationFile="$(DistDir)/$(MSBuildProjectName)-$(Version).zip" Overwrite="true" />
   </Target>
 
 </Project>
