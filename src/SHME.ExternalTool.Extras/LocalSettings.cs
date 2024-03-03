@@ -18,6 +18,11 @@ namespace SHME.ExternalTool.Extras
 		public static readonly int SaveButton;
 	}
 
+	// Hiding this class, and RoamingSettings, in a satellite assembly turns out
+	// to be necessary to prevent BizHawk from failing to load this external
+	// tool. Being classes derived from bases defined in an external assembly,
+	// they cause problems the first time BizHawk enumerates its external tools
+	// directory. Breaking them out to this extra assembly solves that.
 	public class LocalSettings : JsonSettings, IVersionable
 	{
 		public Version Version { get; set; } = new Version(1, 0, 0, 0);

@@ -20,14 +20,14 @@ using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
 {
-	// TODO: Use LoadAssemblyFiles instead of the static constructor!
-	[ExternalTool(ToolName, Description = ToolDescription,
+	[ExternalTool(
+		ToolName,
+		Description = ToolDescription,
 		LoadAssemblyFiles = [
-			//"SHME.ExternalTool/dll/JsonSettings/JsonSettings.dll",
-			//"SHME.ExternalTool/dll/JsonSettings/Castle.Core.dll",
-			//"SHME.ExternalTool/dll/JsonSettings/JsonSettings.Autosave.dll",
-			//"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll"
-			])]
+			"SHME.ExternalTool/dll/JsonSettings/JsonSettings.dll",
+			"SHME.ExternalTool/dll/JsonSettings/Castle.Core.dll",
+			"SHME.ExternalTool/dll/JsonSettings/JsonSettings.Autosave.dll",
+			"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll"])]
 
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
 	[ExternalToolApplicability.RomList(VSystemID.Raw.PSX, USRetailConstants.HashBizHawk)]
@@ -98,38 +98,6 @@ namespace BizHawk.Client.EmuHawk
 		private Rectangle _drawRegionRect;
 
 		private Settings Settings { get; set; } = null!;
-
-		// BizHawk's ExternalTool attribute has a LoadAssemblyFiles argument
-		// that can be used to load dependencies. Unfortunately that doesn't
-		// happen quite early enough in the external tool loading process to
-		// allow using types that are defined in an external tool plugin, but
-		// derived from types provided by 3rd party dependencies. Hiding such
-		// types in a separate assembly and loading it here in the static
-		// constructor avoids that problem.
-		static CustomMainForm()
-		{
-			Assembly a = typeof(Core).Assembly;
-
-			string toolsDir = Path.GetDirectoryName(a.Location);
-			string name = Path.GetFileNameWithoutExtension(a.Location);
-			string libDir = Path.Combine(toolsDir, name, "dll");
-
-			// Pardon the hardcoded specificity, but blindly loading all DLLs
-			// found in a given folder seems like it would be unwise, at best.
-			string settings = Directory.GetFiles(libDir, "JsonSettings.dll", SearchOption.AllDirectories).First();
-			string castle = Directory.GetFiles(libDir, "Castle.Core.dll", SearchOption.AllDirectories).First();
-			string autosave = Directory.GetFiles(libDir, "JsonSettings.Autosave.dll", SearchOption.AllDirectories).First();
-			string extras = Directory.GetFiles(libDir, $"{name}.Extras.dll", SearchOption.AllDirectories).First();
-
-			// LoadAssemblyFiles would load these dependencies just fine, but
-			// with one assembly needing to be loaded in the static constructor,
-			// the others might as well get loaded here too.
-			Assembly.LoadFrom(settings);
-			Assembly.LoadFrom(castle);
-			Assembly.LoadFrom(autosave);
-
-			Assembly.LoadFrom(extras);
-		}
 
 		public CustomMainForm()
 		{
