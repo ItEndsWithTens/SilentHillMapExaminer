@@ -17,10 +17,6 @@ namespace BizHawk.Client.EmuHawk
 		public IList<Renderable> CameraGems { get; } = new List<Renderable>();
 		public IList<Line> CameraLines { get; } = new List<Line>();
 
-		private void InitializeCameraTab()
-		{
-		}
-
 		private void ClearDisplayedCameraPathInfo()
 		{
 			string sep = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;

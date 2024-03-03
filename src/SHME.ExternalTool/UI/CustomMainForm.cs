@@ -3,6 +3,7 @@ using BizHawk.Common;
 using BizHawk.Emulation.Common;
 using BizHawk.Emulation.Cores.Sony.PSX;
 using SHME.ExternalTool;
+using SHME.ExternalTool.Extras;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -18,7 +20,14 @@ using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
 {
-	[ExternalTool(ToolName, Description = ToolDescription)]
+	// TODO: Use LoadAssemblyFiles instead of the static constructor!
+	[ExternalTool(ToolName, Description = ToolDescription,
+		LoadAssemblyFiles = [
+			//"SHME.ExternalTool/dll/JsonSettings/JsonSettings.dll",
+			//"SHME.ExternalTool/dll/JsonSettings/Castle.Core.dll",
+			//"SHME.ExternalTool/dll/JsonSettings/JsonSettings.Autosave.dll",
+			//"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll"
+			])]
 
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
 	[ExternalToolApplicability.RomList(VSystemID.Raw.PSX, USRetailConstants.HashBizHawk)]
@@ -66,7 +75,7 @@ namespace BizHawk.Client.EmuHawk
 		public Camera Camera { get; set; } = new Camera()
 		{
 			Culling = Culling.Frustum,
-			Fov = 50.0f
+			Fov = 53.13f
 		};
 
 		public IList<Renderable> Boxes { get; } = new List<Renderable>();
@@ -87,6 +96,40 @@ namespace BizHawk.Client.EmuHawk
 		// or a Vertex WorldToScreen method that doesn't need this?
 		private Viewport _dummyViewport = new Viewport();
 		private Rectangle _drawRegionRect;
+
+		private Settings Settings { get; set; } = null!;
+
+		// BizHawk's ExternalTool attribute has a LoadAssemblyFiles argument
+		// that can be used to load dependencies. Unfortunately that doesn't
+		// happen quite early enough in the external tool loading process to
+		// allow using types that are defined in an external tool plugin, but
+		// derived from types provided by 3rd party dependencies. Hiding such
+		// types in a separate assembly and loading it here in the static
+		// constructor avoids that problem.
+		static CustomMainForm()
+		{
+			Assembly a = typeof(Core).Assembly;
+
+			string toolsDir = Path.GetDirectoryName(a.Location);
+			string name = Path.GetFileNameWithoutExtension(a.Location);
+			string libDir = Path.Combine(toolsDir, name, "dll");
+
+			// Pardon the hardcoded specificity, but blindly loading all DLLs
+			// found in a given folder seems like it would be unwise, at best.
+			string settings = Directory.GetFiles(libDir, "JsonSettings.dll", SearchOption.AllDirectories).First();
+			string castle = Directory.GetFiles(libDir, "Castle.Core.dll", SearchOption.AllDirectories).First();
+			string autosave = Directory.GetFiles(libDir, "JsonSettings.Autosave.dll", SearchOption.AllDirectories).First();
+			string extras = Directory.GetFiles(libDir, $"{name}.Extras.dll", SearchOption.AllDirectories).First();
+
+			// LoadAssemblyFiles would load these dependencies just fine, but
+			// with one assembly needing to be loaded in the static constructor,
+			// the others might as well get loaded here too.
+			Assembly.LoadFrom(settings);
+			Assembly.LoadFrom(castle);
+			Assembly.LoadFrom(autosave);
+
+			Assembly.LoadFrom(extras);
+		}
 
 		public CustomMainForm()
 		{
@@ -112,7 +155,6 @@ namespace BizHawk.Client.EmuHawk
 
 			InitializeBasicsTab();
 			InitializePoisTab();
-			InitializeCameraTab();
 			InitializeSaveTab();
 			InitializeFramebufferTab();
 			InitializeUtilityTab();
@@ -153,6 +195,10 @@ namespace BizHawk.Client.EmuHawk
 		public override void Restart()
 		{
 			base.Restart();
+
+			LoadSettings();
+
+			LblTestModelScale.Text = TrkTestModelScale.Value.ToString(CultureInfo.CurrentCulture);
 
 			SetPlaceholderText();
 
@@ -305,7 +351,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					break;
 				case ToolFormUpdateType.PostFrame:
-					if (CbxEnableControlsSection.Checked)
+					if (CbxEnableControllerReporting.Checked)
 					{
 						ReportControls();
 					}
@@ -321,12 +367,12 @@ namespace BizHawk.Client.EmuHawk
 					if (CbxEnableOverlay.Checked)
 					{
 						UpdateOverlay();
-						if (!CbxOverlayRenderToFramebuffer.Checked)
+						if (!CbxRenderToFramebuffer.Checked)
 						{
 							ApplyOverlayToGui();
 						}
 					}
-					if (CbxStats.Checked)
+					if (CbxEnableStatsReporting.Checked)
 					{
 						ReportStats();
 					}
@@ -351,6 +397,17 @@ namespace BizHawk.Client.EmuHawk
 			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
 		}
 
+		private void LoadSettings()
+		{
+			Settings?.Dispose();
+
+			Assembly a = typeof(Core).Assembly;
+			string component = Path.GetFileNameWithoutExtension(a.Location);
+			Settings = new Settings("com.gyroshot", ToolName, component);
+
+			InitializeDataBindings();
+		}
+
 		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = new();
 		private IList<(Renderable, bool)> VisibleRenderables = new List<(Renderable, bool)>();
 
@@ -362,7 +419,7 @@ namespace BizHawk.Client.EmuHawk
 			Vector3 convertedPosition = CoordinateConverter.Convert(position, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 			Vector3 convertedAngles = AngleConverter.Convert(angles, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 
-			if (!CbxEnableOverlay.Checked && !CbxEnableModelDisplay.Checked)
+			if (!CbxEnableOverlay.Checked && !CbxEnableTestModelSection.Checked)
 			{
 				return;
 			}
@@ -383,19 +440,19 @@ namespace BizHawk.Client.EmuHawk
 					.Concat(CameraGems)
 					.ToList());
 			}
-			if (CbxEnableModelDisplay.Checked)
+			if (CbxEnableTestModelSection.Checked)
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					ModelBoxes);
 			}
-			if (CbxOverlayTestBox.Checked)
+			if (CbxEnableTestBox.Checked)
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					TestBox);
 			}
-			if (CbxOverlayTestSheet.Checked)
+			if (CbxEnableTestSheet.Checked)
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
@@ -409,7 +466,7 @@ namespace BizHawk.Client.EmuHawk
 					.Concat(CameraLines)
 					.ToList());
 			}
-			if (CbxOverlayTestLine.Checked)
+			if (CbxEnableTestLine.Checked)
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
@@ -509,7 +566,7 @@ namespace BizHawk.Client.EmuHawk
 								break;
 							}
 
-							float opacity = (float)NudOverlayRenderableOpacity.Value / 100.0f;
+							float opacity = (float)NudFilledOpacity.Value / 100.0f;
 							int alpha = (int)Math.Round(opacity * 255);
 							Pen.Color = Color.FromArgb(alpha, r.Tint ?? ScreenSpaceLines[0].color);
 							g.FillPolygon(Pen.Brush, visibleVertices.ToArray());
@@ -667,6 +724,8 @@ namespace BizHawk.Client.EmuHawk
 			FixedPointErrorClearTimer?.Dispose();
 			AnglesErrorClearTimer?.Dispose();
 
+			Settings?.Dispose();
+
 			GameSurface = null;
 		}
 
@@ -687,9 +746,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (sender is NumericUpDown nud)
 			{
-				int length = nud.Value.ToString().Length;
-
-				nud.Select(0, length);
+				nud.Select(0, nud.Text.Length);
 			}
 			else if (sender is TextBox tbx)
 			{
@@ -701,12 +758,12 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (Octoshock == null)
 			{
-				CbxOverlayRenderToFramebuffer.Enabled = false;
-				CbxOverlayRenderToFramebuffer.Checked = false;
+				CbxRenderToFramebuffer.Enabled = false;
+				CbxRenderToFramebuffer.Checked = false;
 			}
 			else
 			{
-				CbxOverlayRenderToFramebuffer.Enabled = true;
+				CbxRenderToFramebuffer.Enabled = true;
 			}
 
 			Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
@@ -723,7 +780,7 @@ namespace BizHawk.Client.EmuHawk
 				ClickPort.TopLeft = new Point(17, 8);
 			}
 
-			if (CbxOverlayRenderToFramebuffer.Checked)
+			if (CbxRenderToFramebuffer.Checked)
 			{
 				RenderPort.Width = 320;
 				RenderPort.Height = 224;
@@ -856,6 +913,25 @@ namespace BizHawk.Client.EmuHawk
 				MoveCameraFirstPerson();
 				AimCamera(BtnFirstPerson);
 				Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
+			}
+		}
+
+		private void Nud_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (sender is NumericUpDown nud && e.KeyCode == Keys.Enter)
+			{
+				nud.ResetIfBad(this);
+				BtnFramebufferGrab_Click(this, EventArgs.Empty);
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+		}
+
+		private void Nud_Leave(object sender, EventArgs e)
+		{
+			if (sender is NumericUpDown nud)
+			{
+				nud.ResetIfBad(this);
 			}
 		}
 	}

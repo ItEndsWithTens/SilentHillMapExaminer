@@ -19,14 +19,13 @@ namespace BizHawk.Client.EmuHawk
 		private void InitializeSaveTab()
 		{
 			CmbSaveButton.DataSource = Enum.GetValues(typeof(Buttons));
-			CmbSaveButton.SelectedItem = Buttons.R3;
 		}
 
 		private void CheckForSaveButtonPress()
 		{
 			var raw = (Buttons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
-			if (!raw.FasterHasFlag(_saveButton))
+			if (_saveButton != Buttons.None && !raw.FasterHasFlag(_saveButton))
 			{
 				BtnOpenSaveMenu_Click(BtnOpenSaveMenu, EventArgs.Empty);
 			}
@@ -555,7 +554,12 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CmbSaveButton_SelectedValueChanged(object sender, EventArgs e)
 		{
-			Enum.TryParse(CmbSaveButton.SelectedValue.ToString(), out _saveButton);
+			string text = CmbSaveButton.GetItemText(CmbSaveButton.SelectedItem);
+
+			if (!Enum.TryParse(text, out _saveButton))
+			{
+				_saveButton = Buttons.None;
+			};
 		}
 
 		private void CbxSaveRamDanger_CheckedChanged(object sender, EventArgs e)

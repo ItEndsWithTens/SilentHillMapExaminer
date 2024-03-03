@@ -56,11 +56,11 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPitch = new System.Windows.Forms.Label();
             this.LblCameraYaw = new System.Windows.Forms.Label();
             this.LblCameraRoll = new System.Windows.Forms.Label();
-            this.LblFov = new System.Windows.Forms.Label();
             this.TrkFov = new System.Windows.Forms.TrackBar();
             this.CbxCameraLockToHead = new System.Windows.Forms.CheckBox();
             this.CbxCameraFreeze = new System.Windows.Forms.CheckBox();
             this.CbxShowLookAt = new System.Windows.Forms.CheckBox();
+            this.LblFov = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.BtnGrabMapGraphic = new System.Windows.Forms.Button();
             this.PbxMapGraphic = new System.Windows.Forms.PictureBox();
@@ -70,8 +70,8 @@ namespace BizHawk.Client.EmuHawk
             this.GbxControls = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel39 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
-            this.TbxCameraFlySensitivity = new System.Windows.Forms.TextBox();
             this.CbxCameraFlyInvert = new System.Windows.Forms.CheckBox();
+            this.NudCameraFlySensitivity = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel38 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnFirstPerson = new System.Windows.Forms.Button();
             this.NudEyeHeight = new System.Windows.Forms.NumericUpDown();
@@ -81,8 +81,8 @@ namespace BizHawk.Client.EmuHawk
             this.CbxHideHarry = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel27 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnCameraFly = new System.Windows.Forms.Button();
-            this.TbxCameraFlySpeed = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.NudCameraFlySpeed = new System.Windows.Forms.NumericUpDown();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel26 = new System.Windows.Forms.TableLayoutPanel();
             this.CbxOverlayCameraMatchGame = new System.Windows.Forms.CheckBox();
@@ -96,14 +96,14 @@ namespace BizHawk.Client.EmuHawk
             this.label84 = new System.Windows.Forms.Label();
             this.NudOverlayCameraY = new System.Windows.Forms.NumericUpDown();
             this.NudOverlayCameraX = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayRenderableOpacity = new System.Windows.Forms.NumericUpDown();
+            this.NudFilledOpacity = new System.Windows.Forms.NumericUpDown();
             this.CbxReadLevelDataOnStageLoad = new System.Windows.Forms.CheckBox();
             this.CbxEnableOverlayCameraReporting = new System.Windows.Forms.CheckBox();
             this.NudOverlayCameraPitch = new System.Windows.Forms.NumericUpDown();
             this.NudOverlayCameraYaw = new System.Windows.Forms.NumericUpDown();
             this.NudOverlayCameraRoll = new System.Windows.Forms.NumericUpDown();
-            this.CbxCullBeyondFarClip = new System.Windows.Forms.CheckBox();
-            this.CbxCullBackfaces = new System.Windows.Forms.CheckBox();
+            this.CbxFarClipping = new System.Windows.Forms.CheckBox();
+            this.CbxBackfaceCulling = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.LblOverlayCamPitch = new System.Windows.Forms.Label();
             this.LblOverlayCamYaw = new System.Windows.Forms.Label();
@@ -116,7 +116,7 @@ namespace BizHawk.Client.EmuHawk
             this.label69 = new System.Windows.Forms.Label();
             this.CbxEnableOverlay = new System.Windows.Forms.CheckBox();
             this.CmbRenderMode = new System.Windows.Forms.ComboBox();
-            this.CbxOverlayRenderToFramebuffer = new System.Windows.Forms.CheckBox();
+            this.CbxRenderToFramebuffer = new System.Windows.Forms.CheckBox();
             this.TbpPois = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel33 = new System.Windows.Forms.TableLayoutPanel();
@@ -131,11 +131,11 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel32 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnClearPoisTriggers = new System.Windows.Forms.Button();
             this.label44 = new System.Windows.Forms.Label();
-            this.RdoOverlayAxisColorsOff = new System.Windows.Forms.RadioButton();
+            this.RdoAxisColorsOff = new System.Windows.Forms.RadioButton();
             this.label68 = new System.Windows.Forms.Label();
-            this.CmbRenderShape = new System.Windows.Forms.ComboBox();
-            this.RdoOverlayAxisColorsOverlay = new System.Windows.Forms.RadioButton();
-            this.RdoOverlayAxisColorsGame = new System.Windows.Forms.RadioButton();
+            this.CmbPoiRenderShape = new System.Windows.Forms.ComboBox();
+            this.RdoAxisColorsOverlay = new System.Windows.Forms.RadioButton();
+            this.RdoAxisColorsGame = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel37 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.TlpSelectedTriggerLeft = new System.Windows.Forms.TableLayoutPanel();
@@ -222,7 +222,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblHarryHealth = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.CbxStats = new System.Windows.Forms.CheckBox();
+            this.CbxEnableStatsReporting = new System.Windows.Forms.CheckBox();
             this.TbpMap = new System.Windows.Forms.TabPage();
             this.TbpFog = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
@@ -234,10 +234,10 @@ namespace BizHawk.Client.EmuHawk
             this.label10 = new System.Windows.Forms.Label();
             this.BtnWorldTintDefault = new System.Windows.Forms.Button();
             this.BtnCustomWorldTintCurrent = new System.Windows.Forms.Button();
-            this.NudWorldTintR = new System.Windows.Forms.NumericUpDown();
-            this.NudWorldTintG = new System.Windows.Forms.NumericUpDown();
+            this.NudCustomWorldTintR = new System.Windows.Forms.NumericUpDown();
+            this.NudCustomWorldTintG = new System.Windows.Forms.NumericUpDown();
             this.BtnWorldTintColor = new System.Windows.Forms.Button();
-            this.NudWorldTintB = new System.Windows.Forms.NumericUpDown();
+            this.NudCustomWorldTintB = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.CbxCustomFog = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -245,9 +245,9 @@ namespace BizHawk.Client.EmuHawk
             this.label9 = new System.Windows.Forms.Label();
             this.BtnCustomFogCurrent = new System.Windows.Forms.Button();
             this.BtnFogColorDefault = new System.Windows.Forms.Button();
-            this.NudFogR = new System.Windows.Forms.NumericUpDown();
-            this.NudFogG = new System.Windows.Forms.NumericUpDown();
-            this.NudFogB = new System.Windows.Forms.NumericUpDown();
+            this.NudCustomFogR = new System.Windows.Forms.NumericUpDown();
+            this.NudCustomFogG = new System.Windows.Forms.NumericUpDown();
+            this.NudCustomFogB = new System.Windows.Forms.NumericUpDown();
             this.BtnFogColor = new System.Windows.Forms.Button();
             this.BtnFogWorldTintColorSwap = new System.Windows.Forms.Button();
             this.CbxDiscoMode = new System.Windows.Forms.CheckBox();
@@ -302,54 +302,54 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.CmbModelSubmeshName = new System.Windows.Forms.ComboBox();
             this.BtnReadHarryModel = new System.Windows.Forms.Button();
-            this.TrkModelScale = new System.Windows.Forms.TrackBar();
+            this.TrkTestModelScale = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.NudModelX = new System.Windows.Forms.NumericUpDown();
-            this.NudModelY = new System.Windows.Forms.NumericUpDown();
-            this.NudModelZ = new System.Windows.Forms.NumericUpDown();
+            this.NudTestModelX = new System.Windows.Forms.NumericUpDown();
+            this.NudTestModelY = new System.Windows.Forms.NumericUpDown();
+            this.NudTestModelZ = new System.Windows.Forms.NumericUpDown();
             this.LblModelX = new System.Windows.Forms.Label();
             this.LblModelY = new System.Windows.Forms.Label();
             this.LblModelZ = new System.Windows.Forms.Label();
-            this.BtnModelSetPosition = new System.Windows.Forms.Button();
-            this.BtnModelGetPosition = new System.Windows.Forms.Button();
-            this.LblModelScale = new System.Windows.Forms.Label();
-            this.CbxEnableModelDisplay = new System.Windows.Forms.CheckBox();
+            this.BtnTestModelSetPosition = new System.Windows.Forms.Button();
+            this.BtnTestModelGetPosition = new System.Windows.Forms.Button();
+            this.LblTestModelScale = new System.Windows.Forms.Label();
+            this.CbxEnableTestModelSection = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.NudOverlayTestBoxSizeX = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestBoxSizeY = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestBoxSizeZ = new System.Windows.Forms.NumericUpDown();
-            this.CbxOverlayTestBox = new System.Windows.Forms.CheckBox();
+            this.NudTestBoxSizeX = new System.Windows.Forms.NumericUpDown();
+            this.NudTestBoxSizeY = new System.Windows.Forms.NumericUpDown();
+            this.NudTestBoxSizeZ = new System.Windows.Forms.NumericUpDown();
+            this.CbxEnableTestBox = new System.Windows.Forms.CheckBox();
             this.label53 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
-            this.NudOverlayTestBoxX = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestBoxY = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestBoxZ = new System.Windows.Forms.NumericUpDown();
+            this.NudTestBoxX = new System.Windows.Forms.NumericUpDown();
+            this.NudTestBoxY = new System.Windows.Forms.NumericUpDown();
+            this.NudTestBoxZ = new System.Windows.Forms.NumericUpDown();
             this.label30 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.CbxOverlayTestSheet = new System.Windows.Forms.CheckBox();
-            this.NudOverlayTestSheetX = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestSheetSizeX = new System.Windows.Forms.NumericUpDown();
+            this.CbxEnableTestSheet = new System.Windows.Forms.CheckBox();
+            this.NudTestSheetX = new System.Windows.Forms.NumericUpDown();
+            this.NudTestSheetSizeX = new System.Windows.Forms.NumericUpDown();
             this.label86 = new System.Windows.Forms.Label();
             this.label85 = new System.Windows.Forms.Label();
             this.label87 = new System.Windows.Forms.Label();
             this.label79 = new System.Windows.Forms.Label();
             this.label88 = new System.Windows.Forms.Label();
-            this.NudOverlayTestSheetSizeZ = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestSheetZ = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestSheetY = new System.Windows.Forms.NumericUpDown();
+            this.NudTestSheetSizeZ = new System.Windows.Forms.NumericUpDown();
+            this.NudTestSheetZ = new System.Windows.Forms.NumericUpDown();
+            this.NudTestSheetY = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.CbxOverlayTestLine = new System.Windows.Forms.CheckBox();
-            this.NudOverlayTestLineAX = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestLineAY = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestLineAZ = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestLineBX = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestLineBY = new System.Windows.Forms.NumericUpDown();
-            this.NudOverlayTestLineBZ = new System.Windows.Forms.NumericUpDown();
+            this.CbxEnableTestLine = new System.Windows.Forms.CheckBox();
+            this.NudTestLineAX = new System.Windows.Forms.NumericUpDown();
+            this.NudTestLineAY = new System.Windows.Forms.NumericUpDown();
+            this.NudTestLineAZ = new System.Windows.Forms.NumericUpDown();
+            this.NudTestLineBX = new System.Windows.Forms.NumericUpDown();
+            this.NudTestLineBY = new System.Windows.Forms.NumericUpDown();
+            this.NudTestLineBZ = new System.Windows.Forms.NumericUpDown();
             this.label31 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
@@ -421,7 +421,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonSquare = new System.Windows.Forms.Label();
             this.LblButtonCircle = new System.Windows.Forms.Label();
             this.LblButtonX = new System.Windows.Forms.Label();
-            this.CbxEnableControlsSection = new System.Windows.Forms.CheckBox();
+            this.CbxEnableControllerReporting = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel29 = new System.Windows.Forms.TableLayoutPanel();
             this.LblButtonUp = new System.Windows.Forms.Label();
             this.LblButtonLeft = new System.Windows.Forms.Label();
@@ -439,15 +439,17 @@ namespace BizHawk.Client.EmuHawk
             this.TlpBasics.SuspendLayout();
             this.GbxControls.SuspendLayout();
             this.tableLayoutPanel39.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCameraFlySensitivity)).BeginInit();
             this.tableLayoutPanel38.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudEyeHeight)).BeginInit();
             this.tableLayoutPanel27.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCameraFlySpeed)).BeginInit();
             this.GbxOverlay.SuspendLayout();
             this.tableLayoutPanel26.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayRenderableOpacity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFilledOpacity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraPitch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraYaw)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraRoll)).BeginInit();
@@ -481,13 +483,13 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFog.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintR)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomWorldTintR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomWorldTintG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomWorldTintB)).BeginInit();
             this.tableLayoutPanel12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudFogG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudFogB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomFogR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomFogG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomFogB)).BeginInit();
             this.TbpStrings.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.TbpSave.SuspendLayout();
@@ -507,33 +509,33 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox6.SuspendLayout();
             this.tableLayoutPanel20.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TrkModelScale)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TrkTestModelScale)).BeginInit();
             this.tableLayoutPanel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudModelX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudModelY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudModelZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestModelX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestModelY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestModelZ)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeZ)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxSizeX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxSizeY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxSizeZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxZ)).BeginInit();
             this.tableLayoutPanel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetSizeX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetSizeZ)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetZ)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetSizeX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetSizeZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetY)).BeginInit();
             this.tableLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineAX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineAY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineAZ)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineAX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineAY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineAZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineBX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineBY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineBZ)).BeginInit();
             this.TbpFiles.SuspendLayout();
             this.tableLayoutPanel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -937,22 +939,22 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel25.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel25.Name = "tableLayoutPanel25";
             this.tableLayoutPanel25.RowCount = 8;
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel25.Size = new System.Drawing.Size(329, 281);
             this.tableLayoutPanel25.TabIndex = 0;
             // 
             // CbxCameraDetach
             // 
-            this.CbxCameraDetach.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.CbxCameraDetach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CbxCameraDetach.AutoSize = true;
-            this.CbxCameraDetach.Location = new System.Drawing.Point(3, 135);
+            this.CbxCameraDetach.Location = new System.Drawing.Point(3, 150);
             this.CbxCameraDetach.Name = "CbxCameraDetach";
             this.CbxCameraDetach.Size = new System.Drawing.Size(61, 17);
             this.CbxCameraDetach.TabIndex = 75;
@@ -963,7 +965,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionZ
             // 
             this.LblCameraPositionZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPositionZ.Location = new System.Drawing.Point(70, 104);
+            this.LblCameraPositionZ.Location = new System.Drawing.Point(70, 111);
             this.LblCameraPositionZ.Name = "LblCameraPositionZ";
             this.LblCameraPositionZ.Size = new System.Drawing.Size(45, 15);
             this.LblCameraPositionZ.TabIndex = 40;
@@ -975,7 +977,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label63.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(47, 73);
+            this.label63.Location = new System.Drawing.Point(47, 78);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(17, 13);
             this.label63.TabIndex = 25;
@@ -985,7 +987,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label62.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(47, 41);
+            this.label62.Location = new System.Drawing.Point(47, 44);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(17, 13);
             this.label62.TabIndex = 15;
@@ -994,7 +996,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionY
             // 
             this.LblCameraPositionY.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPositionY.Location = new System.Drawing.Point(70, 72);
+            this.LblCameraPositionY.Location = new System.Drawing.Point(70, 77);
             this.LblCameraPositionY.Name = "LblCameraPositionY";
             this.LblCameraPositionY.Size = new System.Drawing.Size(45, 15);
             this.LblCameraPositionY.TabIndex = 30;
@@ -1028,7 +1030,7 @@ namespace BizHawk.Client.EmuHawk
             // LblCameraPositionX
             // 
             this.LblCameraPositionX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPositionX.Location = new System.Drawing.Point(70, 40);
+            this.LblCameraPositionX.Location = new System.Drawing.Point(70, 43);
             this.LblCameraPositionX.Name = "LblCameraPositionX";
             this.LblCameraPositionX.Size = new System.Drawing.Size(45, 15);
             this.LblCameraPositionX.TabIndex = 20;
@@ -1048,7 +1050,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label64.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(47, 105);
+            this.label64.Location = new System.Drawing.Point(47, 112);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(17, 13);
             this.label64.TabIndex = 35;
@@ -1058,7 +1060,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label67.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(145, 105);
+            this.label67.Location = new System.Drawing.Point(145, 112);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(28, 13);
             this.label67.TabIndex = 65;
@@ -1068,7 +1070,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label66.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label66.AutoSize = true;
-            this.label66.Location = new System.Drawing.Point(142, 73);
+            this.label66.Location = new System.Drawing.Point(142, 78);
             this.label66.Name = "label66";
             this.label66.Size = new System.Drawing.Size(31, 13);
             this.label66.TabIndex = 55;
@@ -1078,7 +1080,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label65.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(139, 41);
+            this.label65.Location = new System.Drawing.Point(139, 44);
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(34, 13);
             this.label65.TabIndex = 45;
@@ -1088,7 +1090,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.LblCameraPitch.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tableLayoutPanel25.SetColumnSpan(this.LblCameraPitch, 2);
-            this.LblCameraPitch.Location = new System.Drawing.Point(179, 40);
+            this.LblCameraPitch.Location = new System.Drawing.Point(179, 43);
             this.LblCameraPitch.Name = "LblCameraPitch";
             this.LblCameraPitch.Size = new System.Drawing.Size(45, 15);
             this.LblCameraPitch.TabIndex = 50;
@@ -1099,7 +1101,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.LblCameraYaw.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tableLayoutPanel25.SetColumnSpan(this.LblCameraYaw, 2);
-            this.LblCameraYaw.Location = new System.Drawing.Point(179, 72);
+            this.LblCameraYaw.Location = new System.Drawing.Point(179, 77);
             this.LblCameraYaw.Name = "LblCameraYaw";
             this.LblCameraYaw.Size = new System.Drawing.Size(45, 15);
             this.LblCameraYaw.TabIndex = 60;
@@ -1110,44 +1112,32 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.LblCameraRoll.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tableLayoutPanel25.SetColumnSpan(this.LblCameraRoll, 2);
-            this.LblCameraRoll.Location = new System.Drawing.Point(179, 104);
+            this.LblCameraRoll.Location = new System.Drawing.Point(179, 111);
             this.LblCameraRoll.Name = "LblCameraRoll";
             this.LblCameraRoll.Size = new System.Drawing.Size(45, 15);
             this.LblCameraRoll.TabIndex = 70;
             this.LblCameraRoll.Text = "<roll>";
             this.LblCameraRoll.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // LblFov
-            // 
-            this.LblFov.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.LblFov.Location = new System.Drawing.Point(128, 209);
-            this.LblFov.Name = "LblFov";
-            this.LblFov.Size = new System.Drawing.Size(45, 15);
-            this.LblFov.TabIndex = 95;
-            this.LblFov.Text = "53";
-            this.LblFov.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.toolTip1.SetToolTip(this.LblFov, "Vertical FOV, in degrees");
-            // 
             // TrkFov
             // 
             this.TrkFov.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel25.SetColumnSpan(this.TrkFov, 5);
-            this.TrkFov.Location = new System.Drawing.Point(3, 230);
+            this.TrkFov.Location = new System.Drawing.Point(3, 231);
             this.TrkFov.Maximum = 120;
             this.TrkFov.Minimum = 1;
             this.TrkFov.Name = "TrkFov";
             this.TrkFov.Size = new System.Drawing.Size(323, 45);
             this.TrkFov.TabIndex = 100;
             this.toolTip1.SetToolTip(this.TrkFov, "Vertical FOV, in degrees");
-            this.TrkFov.Value = 53;
+            this.TrkFov.Value = 1;
             this.TrkFov.Scroll += new System.EventHandler(this.TrkFov_Scroll);
             // 
             // CbxCameraLockToHead
             // 
-            this.CbxCameraLockToHead.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.CbxCameraLockToHead.AutoSize = true;
             this.tableLayoutPanel25.SetColumnSpan(this.CbxCameraLockToHead, 2);
-            this.CbxCameraLockToHead.Location = new System.Drawing.Point(3, 199);
+            this.CbxCameraLockToHead.Location = new System.Drawing.Point(3, 196);
             this.CbxCameraLockToHead.Name = "CbxCameraLockToHead";
             this.CbxCameraLockToHead.Size = new System.Drawing.Size(89, 17);
             this.CbxCameraLockToHead.TabIndex = 85;
@@ -1158,7 +1148,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.CbxCameraFreeze.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.CbxCameraFreeze.AutoSize = true;
-            this.CbxCameraFreeze.Location = new System.Drawing.Point(3, 167);
+            this.CbxCameraFreeze.Location = new System.Drawing.Point(3, 173);
             this.CbxCameraFreeze.Name = "CbxCameraFreeze";
             this.CbxCameraFreeze.Size = new System.Drawing.Size(58, 17);
             this.CbxCameraFreeze.TabIndex = 80;
@@ -1168,11 +1158,11 @@ namespace BizHawk.Client.EmuHawk
             // 
             // CbxShowLookAt
             // 
-            this.CbxShowLookAt.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CbxShowLookAt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CbxShowLookAt.AutoSize = true;
             this.CbxShowLookAt.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.tableLayoutPanel25.SetColumnSpan(this.CbxShowLookAt, 2);
-            this.CbxShowLookAt.Location = new System.Drawing.Point(238, 135);
+            this.CbxShowLookAt.Location = new System.Drawing.Point(238, 150);
             this.CbxShowLookAt.Name = "CbxShowLookAt";
             this.CbxShowLookAt.Size = new System.Drawing.Size(88, 17);
             this.CbxShowLookAt.TabIndex = 90;
@@ -1180,6 +1170,17 @@ namespace BizHawk.Client.EmuHawk
             this.toolTip1.SetToolTip(this.CbxShowLookAt, "Whether to draw directly on the game\'s framebuffer instead of BizHawk\'s GUI. Curr" +
         "ently available only in the Octoshock core.");
             this.CbxShowLookAt.UseVisualStyleBackColor = true;
+            // 
+            // LblFov
+            // 
+            this.LblFov.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.LblFov.Location = new System.Drawing.Point(128, 212);
+            this.LblFov.Name = "LblFov";
+            this.LblFov.Size = new System.Drawing.Size(45, 15);
+            this.LblFov.TabIndex = 95;
+            this.LblFov.Text = "1";
+            this.LblFov.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip1.SetToolTip(this.LblFov, "Vertical FOV, in degrees");
             // 
             // BtnGrabMapGraphic
             // 
@@ -1276,8 +1277,8 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel39.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel39.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel39.Controls.Add(this.label4, 1, 1);
-            this.tableLayoutPanel39.Controls.Add(this.TbxCameraFlySensitivity, 2, 1);
             this.tableLayoutPanel39.Controls.Add(this.CbxCameraFlyInvert, 0, 1);
+            this.tableLayoutPanel39.Controls.Add(this.NudCameraFlySensitivity, 2, 1);
             this.tableLayoutPanel39.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel39.Location = new System.Drawing.Point(3, 72);
             this.tableLayoutPanel39.Name = "tableLayoutPanel39";
@@ -1299,17 +1300,6 @@ namespace BizHawk.Client.EmuHawk
             this.label4.Text = "Sensitivity";
             this.toolTip1.SetToolTip(this.label4, "Mouse sensitivity, as an arbitrary multiplier");
             // 
-            // TbxCameraFlySensitivity
-            // 
-            this.TbxCameraFlySensitivity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TbxCameraFlySensitivity.Location = new System.Drawing.Point(276, 72);
-            this.TbxCameraFlySensitivity.Name = "TbxCameraFlySensitivity";
-            this.TbxCameraFlySensitivity.Size = new System.Drawing.Size(50, 20);
-            this.TbxCameraFlySensitivity.TabIndex = 10;
-            this.TbxCameraFlySensitivity.Text = "0.25";
-            this.toolTip1.SetToolTip(this.TbxCameraFlySensitivity, "Mouse sensitivity, as an arbitrary multiplier");
-            this.TbxCameraFlySensitivity.TextChanged += new System.EventHandler(this.TbxCameraFlySensitivity_TextChanged);
-            // 
             // CbxCameraFlyInvert
             // 
             this.CbxCameraFlyInvert.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -1320,6 +1310,35 @@ namespace BizHawk.Client.EmuHawk
             this.CbxCameraFlyInvert.TabIndex = 0;
             this.CbxCameraFlyInvert.Text = "Invert";
             this.CbxCameraFlyInvert.UseVisualStyleBackColor = true;
+            // 
+            // NudCameraFlySensitivity
+            // 
+            this.NudCameraFlySensitivity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.NudCameraFlySensitivity.DecimalPlaces = 2;
+            this.NudCameraFlySensitivity.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.NudCameraFlySensitivity.Location = new System.Drawing.Point(276, 72);
+            this.NudCameraFlySensitivity.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NudCameraFlySensitivity.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.NudCameraFlySensitivity.Name = "NudCameraFlySensitivity";
+            this.NudCameraFlySensitivity.Size = new System.Drawing.Size(50, 20);
+            this.NudCameraFlySensitivity.TabIndex = 11;
+            this.NudCameraFlySensitivity.ValueChanged += new System.EventHandler(this.NudCameraFlySensitivity_ValueChanged);
+            this.NudCameraFlySensitivity.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudCameraFlySensitivity.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudCameraFlySensitivity.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudCameraFlySensitivity.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // tableLayoutPanel38
             // 
@@ -1385,11 +1404,10 @@ namespace BizHawk.Client.EmuHawk
             this.NudEyeHeight.Size = new System.Drawing.Size(55, 20);
             this.NudEyeHeight.TabIndex = 20;
             this.toolTip1.SetToolTip(this.NudEyeHeight, "Crosshair length as a percentage of viewport height");
-            this.NudEyeHeight.Value = new decimal(new int[] {
-            16,
-            0,
-            0,
-            -2147418112});
+            this.NudEyeHeight.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudEyeHeight.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudEyeHeight.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudEyeHeight.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // label48
             // 
@@ -1452,10 +1470,9 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel27.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel27.Controls.Add(this.BtnCameraFly, 0, 0);
-            this.tableLayoutPanel27.Controls.Add(this.TbxCameraFlySpeed, 2, 0);
             this.tableLayoutPanel27.Controls.Add(this.label3, 1, 0);
+            this.tableLayoutPanel27.Controls.Add(this.NudCameraFlySpeed, 2, 0);
             this.tableLayoutPanel27.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel27.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel27.Margin = new System.Windows.Forms.Padding(0);
@@ -1480,17 +1497,6 @@ namespace BizHawk.Client.EmuHawk
             this.BtnCameraFly.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyDown);
             this.BtnCameraFly.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyUp);
             // 
-            // TbxCameraFlySpeed
-            // 
-            this.TbxCameraFlySpeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TbxCameraFlySpeed.Location = new System.Drawing.Point(276, 18);
-            this.TbxCameraFlySpeed.Name = "TbxCameraFlySpeed";
-            this.TbxCameraFlySpeed.Size = new System.Drawing.Size(50, 20);
-            this.TbxCameraFlySpeed.TabIndex = 10;
-            this.TbxCameraFlySpeed.Text = "0.125";
-            this.toolTip1.SetToolTip(this.TbxCameraFlySpeed, "Movement speed, in units per frame");
-            this.TbxCameraFlySpeed.TextChanged += new System.EventHandler(this.TbxCameraFlySpeed_TextChanged);
-            // 
             // label3
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -1501,6 +1507,35 @@ namespace BizHawk.Client.EmuHawk
             this.label3.TabIndex = 5;
             this.label3.Text = "Speed";
             this.toolTip1.SetToolTip(this.label3, "Movement speed, in units per frame");
+            // 
+            // NudCameraFlySpeed
+            // 
+            this.NudCameraFlySpeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.NudCameraFlySpeed.DecimalPlaces = 3;
+            this.NudCameraFlySpeed.Increment = new decimal(new int[] {
+            25,
+            0,
+            0,
+            196608});
+            this.NudCameraFlySpeed.Location = new System.Drawing.Point(276, 18);
+            this.NudCameraFlySpeed.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NudCameraFlySpeed.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.NudCameraFlySpeed.Name = "NudCameraFlySpeed";
+            this.NudCameraFlySpeed.Size = new System.Drawing.Size(50, 20);
+            this.NudCameraFlySpeed.TabIndex = 10;
+            this.NudCameraFlySpeed.ValueChanged += new System.EventHandler(this.NudCameraFlySpeed_ValueChanged);
+            this.NudCameraFlySpeed.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudCameraFlySpeed.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudCameraFlySpeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudCameraFlySpeed.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // GbxOverlay
             // 
@@ -1533,14 +1568,14 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel26.Controls.Add(this.label84, 3, 8);
             this.tableLayoutPanel26.Controls.Add(this.NudOverlayCameraY, 2, 2);
             this.tableLayoutPanel26.Controls.Add(this.NudOverlayCameraX, 2, 1);
-            this.tableLayoutPanel26.Controls.Add(this.NudOverlayRenderableOpacity, 4, 8);
+            this.tableLayoutPanel26.Controls.Add(this.NudFilledOpacity, 4, 8);
             this.tableLayoutPanel26.Controls.Add(this.CbxReadLevelDataOnStageLoad, 0, 8);
             this.tableLayoutPanel26.Controls.Add(this.CbxEnableOverlayCameraReporting, 0, 7);
             this.tableLayoutPanel26.Controls.Add(this.NudOverlayCameraPitch, 4, 1);
             this.tableLayoutPanel26.Controls.Add(this.NudOverlayCameraYaw, 4, 2);
             this.tableLayoutPanel26.Controls.Add(this.NudOverlayCameraRoll, 4, 3);
-            this.tableLayoutPanel26.Controls.Add(this.CbxCullBeyondFarClip, 3, 6);
-            this.tableLayoutPanel26.Controls.Add(this.CbxCullBackfaces, 3, 5);
+            this.tableLayoutPanel26.Controls.Add(this.CbxFarClipping, 3, 6);
+            this.tableLayoutPanel26.Controls.Add(this.CbxBackfaceCulling, 3, 5);
             this.tableLayoutPanel26.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamPitch, 0, 4);
             this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamYaw, 0, 5);
@@ -1553,7 +1588,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel26.Controls.Add(this.label69, 0, 9);
             this.tableLayoutPanel26.Controls.Add(this.CbxEnableOverlay, 3, 10);
             this.tableLayoutPanel26.Controls.Add(this.CmbRenderMode, 0, 10);
-            this.tableLayoutPanel26.Controls.Add(this.CbxOverlayRenderToFramebuffer, 2, 4);
+            this.tableLayoutPanel26.Controls.Add(this.CbxRenderToFramebuffer, 2, 4);
             this.tableLayoutPanel26.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel26.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
@@ -1652,12 +1687,12 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayCameraZ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.NudOverlayCameraZ.Location = new System.Drawing.Point(125, 78);
             this.NudOverlayCameraZ.Maximum = new decimal(new int[] {
-            360,
+            1024,
             0,
             0,
             0});
             this.NudOverlayCameraZ.Minimum = new decimal(new int[] {
-            360,
+            1024,
             0,
             0,
             -2147483648});
@@ -1684,12 +1719,12 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayCameraY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.NudOverlayCameraY.Location = new System.Drawing.Point(125, 52);
             this.NudOverlayCameraY.Maximum = new decimal(new int[] {
-            360,
+            1024,
             0,
             0,
             0});
             this.NudOverlayCameraY.Minimum = new decimal(new int[] {
-            360,
+            1024,
             0,
             0,
             -2147483648});
@@ -1706,12 +1741,12 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayCameraX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.NudOverlayCameraX.Location = new System.Drawing.Point(125, 26);
             this.NudOverlayCameraX.Maximum = new decimal(new int[] {
-            360,
+            1024,
             0,
             0,
             0});
             this.NudOverlayCameraX.Minimum = new decimal(new int[] {
-            360,
+            1024,
             0,
             0,
             -2147483648});
@@ -1723,29 +1758,33 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayCameraX.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudOverlayCameraX.Enter += new System.EventHandler(this.Selectable_Enter);
             // 
-            // NudOverlayRenderableOpacity
+            // NudFilledOpacity
             // 
-            this.NudOverlayRenderableOpacity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.NudOverlayRenderableOpacity.DecimalPlaces = 1;
-            this.NudOverlayRenderableOpacity.Increment = new decimal(new int[] {
+            this.NudFilledOpacity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.NudFilledOpacity.DecimalPlaces = 1;
+            this.NudFilledOpacity.Increment = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.NudOverlayRenderableOpacity.Location = new System.Drawing.Point(271, 199);
-            this.NudOverlayRenderableOpacity.Minimum = new decimal(new int[] {
+            this.NudFilledOpacity.Location = new System.Drawing.Point(271, 199);
+            this.NudFilledOpacity.Minimum = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.NudOverlayRenderableOpacity.Name = "NudOverlayRenderableOpacity";
-            this.NudOverlayRenderableOpacity.Size = new System.Drawing.Size(55, 20);
-            this.NudOverlayRenderableOpacity.TabIndex = 140;
-            this.NudOverlayRenderableOpacity.Value = new decimal(new int[] {
-            30,
+            this.NudFilledOpacity.Name = "NudFilledOpacity";
+            this.NudFilledOpacity.Size = new System.Drawing.Size(55, 20);
+            this.NudFilledOpacity.TabIndex = 140;
+            this.NudFilledOpacity.Value = new decimal(new int[] {
+            5,
             0,
             0,
             0});
+            this.NudFilledOpacity.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudFilledOpacity.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudFilledOpacity.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudFilledOpacity.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // CbxReadLevelDataOnStageLoad
             // 
@@ -1835,35 +1874,35 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayCameraRoll.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudOverlayCameraRoll.Enter += new System.EventHandler(this.Selectable_Enter);
             // 
-            // CbxCullBeyondFarClip
+            // CbxFarClipping
             // 
-            this.CbxCullBeyondFarClip.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.CbxCullBeyondFarClip.AutoSize = true;
-            this.CbxCullBeyondFarClip.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxCullBeyondFarClip.Checked = true;
-            this.CbxCullBeyondFarClip.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tableLayoutPanel26.SetColumnSpan(this.CbxCullBeyondFarClip, 2);
-            this.CbxCullBeyondFarClip.Location = new System.Drawing.Point(246, 150);
-            this.CbxCullBeyondFarClip.Name = "CbxCullBeyondFarClip";
-            this.CbxCullBeyondFarClip.Size = new System.Drawing.Size(80, 17);
-            this.CbxCullBeyondFarClip.TabIndex = 110;
-            this.CbxCullBeyondFarClip.Text = "Far clipping";
-            this.CbxCullBeyondFarClip.UseVisualStyleBackColor = true;
-            this.CbxCullBeyondFarClip.CheckedChanged += new System.EventHandler(this.CbxCullBeyondFarClip_CheckedChanged);
+            this.CbxFarClipping.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CbxFarClipping.AutoSize = true;
+            this.CbxFarClipping.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxFarClipping.Checked = true;
+            this.CbxFarClipping.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tableLayoutPanel26.SetColumnSpan(this.CbxFarClipping, 2);
+            this.CbxFarClipping.Location = new System.Drawing.Point(246, 150);
+            this.CbxFarClipping.Name = "CbxFarClipping";
+            this.CbxFarClipping.Size = new System.Drawing.Size(80, 17);
+            this.CbxFarClipping.TabIndex = 110;
+            this.CbxFarClipping.Text = "Far clipping";
+            this.CbxFarClipping.UseVisualStyleBackColor = true;
+            this.CbxFarClipping.CheckedChanged += new System.EventHandler(this.CbxCullBeyondFarClip_CheckedChanged);
             // 
-            // CbxCullBackfaces
+            // CbxBackfaceCulling
             // 
-            this.CbxCullBackfaces.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.CbxCullBackfaces.AutoSize = true;
-            this.CbxCullBackfaces.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel26.SetColumnSpan(this.CbxCullBackfaces, 2);
-            this.CbxCullBackfaces.Location = new System.Drawing.Point(221, 127);
-            this.CbxCullBackfaces.Name = "CbxCullBackfaces";
-            this.CbxCullBackfaces.Size = new System.Drawing.Size(105, 17);
-            this.CbxCullBackfaces.TabIndex = 105;
-            this.CbxCullBackfaces.Text = "Backface culling";
-            this.CbxCullBackfaces.UseVisualStyleBackColor = true;
-            this.CbxCullBackfaces.CheckedChanged += new System.EventHandler(this.CbxCullBackfaces_CheckedChanged);
+            this.CbxBackfaceCulling.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CbxBackfaceCulling.AutoSize = true;
+            this.CbxBackfaceCulling.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel26.SetColumnSpan(this.CbxBackfaceCulling, 2);
+            this.CbxBackfaceCulling.Location = new System.Drawing.Point(221, 127);
+            this.CbxBackfaceCulling.Name = "CbxBackfaceCulling";
+            this.CbxBackfaceCulling.Size = new System.Drawing.Size(105, 17);
+            this.CbxBackfaceCulling.TabIndex = 105;
+            this.CbxBackfaceCulling.Text = "Backface culling";
+            this.CbxBackfaceCulling.UseVisualStyleBackColor = true;
+            this.CbxBackfaceCulling.CheckedChanged += new System.EventHandler(this.CbxCullBackfaces_CheckedChanged);
             // 
             // label2
             // 
@@ -1966,12 +2005,11 @@ namespace BizHawk.Client.EmuHawk
             this.NudCrosshairLength.Size = new System.Drawing.Size(55, 20);
             this.NudCrosshairLength.TabIndex = 130;
             this.toolTip1.SetToolTip(this.NudCrosshairLength, "Crosshair length as a percentage of viewport height");
-            this.NudCrosshairLength.Value = new decimal(new int[] {
-            25,
-            0,
-            0,
-            65536});
             this.NudCrosshairLength.ValueChanged += new System.EventHandler(this.NudCrosshairLength_ValueChanged);
+            this.NudCrosshairLength.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudCrosshairLength.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudCrosshairLength.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudCrosshairLength.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // label69
             // 
@@ -2014,21 +2052,21 @@ namespace BizHawk.Client.EmuHawk
             this.CmbRenderMode.TabIndex = 150;
             this.CmbRenderMode.SelectedIndexChanged += new System.EventHandler(this.CmbRenderMode_SelectedIndexChanged);
             // 
-            // CbxOverlayRenderToFramebuffer
+            // CbxRenderToFramebuffer
             // 
-            this.CbxOverlayRenderToFramebuffer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CbxOverlayRenderToFramebuffer.AutoSize = true;
-            this.CbxOverlayRenderToFramebuffer.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel26.SetColumnSpan(this.CbxOverlayRenderToFramebuffer, 3);
-            this.CbxOverlayRenderToFramebuffer.Location = new System.Drawing.Point(197, 104);
-            this.CbxOverlayRenderToFramebuffer.Name = "CbxOverlayRenderToFramebuffer";
-            this.CbxOverlayRenderToFramebuffer.Size = new System.Drawing.Size(129, 17);
-            this.CbxOverlayRenderToFramebuffer.TabIndex = 100;
-            this.CbxOverlayRenderToFramebuffer.Text = "Render to framebuffer";
-            this.toolTip1.SetToolTip(this.CbxOverlayRenderToFramebuffer, "Whether to draw directly on the game\'s framebuffer instead of BizHawk\'s GUI. Curr" +
+            this.CbxRenderToFramebuffer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CbxRenderToFramebuffer.AutoSize = true;
+            this.CbxRenderToFramebuffer.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel26.SetColumnSpan(this.CbxRenderToFramebuffer, 3);
+            this.CbxRenderToFramebuffer.Location = new System.Drawing.Point(197, 104);
+            this.CbxRenderToFramebuffer.Name = "CbxRenderToFramebuffer";
+            this.CbxRenderToFramebuffer.Size = new System.Drawing.Size(129, 17);
+            this.CbxRenderToFramebuffer.TabIndex = 100;
+            this.CbxRenderToFramebuffer.Text = "Render to framebuffer";
+            this.toolTip1.SetToolTip(this.CbxRenderToFramebuffer, "Whether to draw directly on the game\'s framebuffer instead of BizHawk\'s GUI. Curr" +
         "ently available only in the Octoshock core.");
-            this.CbxOverlayRenderToFramebuffer.UseVisualStyleBackColor = true;
-            this.CbxOverlayRenderToFramebuffer.CheckedChanged += new System.EventHandler(this.CbxOverlayRenderToFramebuffer_CheckedChanged);
+            this.CbxRenderToFramebuffer.UseVisualStyleBackColor = true;
+            this.CbxRenderToFramebuffer.CheckedChanged += new System.EventHandler(this.CbxOverlayRenderToFramebuffer_CheckedChanged);
             // 
             // TbpPois
             // 
@@ -2192,11 +2230,11 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel32.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel32.Controls.Add(this.BtnClearPoisTriggers, 0, 0);
             this.tableLayoutPanel32.Controls.Add(this.label44, 2, 1);
-            this.tableLayoutPanel32.Controls.Add(this.RdoOverlayAxisColorsOff, 4, 2);
+            this.tableLayoutPanel32.Controls.Add(this.RdoAxisColorsOff, 4, 2);
             this.tableLayoutPanel32.Controls.Add(this.label68, 0, 1);
-            this.tableLayoutPanel32.Controls.Add(this.CmbRenderShape, 0, 2);
-            this.tableLayoutPanel32.Controls.Add(this.RdoOverlayAxisColorsOverlay, 3, 2);
-            this.tableLayoutPanel32.Controls.Add(this.RdoOverlayAxisColorsGame, 2, 2);
+            this.tableLayoutPanel32.Controls.Add(this.CmbPoiRenderShape, 0, 2);
+            this.tableLayoutPanel32.Controls.Add(this.RdoAxisColorsOverlay, 3, 2);
+            this.tableLayoutPanel32.Controls.Add(this.RdoAxisColorsGame, 2, 2);
             this.tableLayoutPanel32.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel32.Location = new System.Drawing.Point(0, 498);
             this.tableLayoutPanel32.Margin = new System.Windows.Forms.Padding(0);
@@ -2234,19 +2272,19 @@ namespace BizHawk.Client.EmuHawk
             this.toolTip1.SetToolTip(this.label44, "Cardinal directions relative to the top-down map view of Old Silent\r\nHill. The ar" +
         "ea maps of indoor levels may not match this.");
             // 
-            // RdoOverlayAxisColorsOff
+            // RdoAxisColorsOff
             // 
-            this.RdoOverlayAxisColorsOff.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.RdoOverlayAxisColorsOff.AutoSize = true;
-            this.RdoOverlayAxisColorsOff.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.RdoOverlayAxisColorsOff.Location = new System.Drawing.Point(286, 92);
-            this.RdoOverlayAxisColorsOff.Name = "RdoOverlayAxisColorsOff";
-            this.RdoOverlayAxisColorsOff.Size = new System.Drawing.Size(39, 17);
-            this.RdoOverlayAxisColorsOff.TabIndex = 30;
-            this.RdoOverlayAxisColorsOff.TabStop = true;
-            this.RdoOverlayAxisColorsOff.Text = "Off";
-            this.RdoOverlayAxisColorsOff.UseVisualStyleBackColor = true;
-            this.RdoOverlayAxisColorsOff.CheckedChanged += new System.EventHandler(this.RdoOverlayAxisColors_CheckedChanged);
+            this.RdoAxisColorsOff.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.RdoAxisColorsOff.AutoSize = true;
+            this.RdoAxisColorsOff.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.RdoAxisColorsOff.Location = new System.Drawing.Point(286, 92);
+            this.RdoAxisColorsOff.Name = "RdoAxisColorsOff";
+            this.RdoAxisColorsOff.Size = new System.Drawing.Size(39, 17);
+            this.RdoAxisColorsOff.TabIndex = 30;
+            this.RdoAxisColorsOff.TabStop = true;
+            this.RdoAxisColorsOff.Text = "Off";
+            this.RdoAxisColorsOff.UseVisualStyleBackColor = true;
+            this.RdoAxisColorsOff.CheckedChanged += new System.EventHandler(this.RdoOverlayAxisColors_CheckedChanged);
             // 
             // label68
             // 
@@ -2258,51 +2296,51 @@ namespace BizHawk.Client.EmuHawk
             this.label68.TabIndex = 5;
             this.label68.Text = "Shape";
             // 
-            // CmbRenderShape
+            // CmbPoiRenderShape
             // 
-            this.CmbRenderShape.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.CmbRenderShape.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CmbRenderShape.FormattingEnabled = true;
-            this.CmbRenderShape.Items.AddRange(new object[] {
+            this.CmbPoiRenderShape.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.CmbPoiRenderShape.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbPoiRenderShape.FormattingEnabled = true;
+            this.CmbPoiRenderShape.Items.AddRange(new object[] {
             "Volumes",
             "Cubes",
             "Centers"});
-            this.CmbRenderShape.Location = new System.Drawing.Point(3, 90);
-            this.CmbRenderShape.Name = "CmbRenderShape";
-            this.CmbRenderShape.Size = new System.Drawing.Size(75, 21);
-            this.CmbRenderShape.TabIndex = 10;
-            this.CmbRenderShape.SelectedIndexChanged += new System.EventHandler(this.CmbRenderShape_SelectedIndexChanged);
+            this.CmbPoiRenderShape.Location = new System.Drawing.Point(3, 90);
+            this.CmbPoiRenderShape.Name = "CmbPoiRenderShape";
+            this.CmbPoiRenderShape.Size = new System.Drawing.Size(75, 21);
+            this.CmbPoiRenderShape.TabIndex = 10;
+            this.CmbPoiRenderShape.SelectedIndexChanged += new System.EventHandler(this.CmbRenderShape_SelectedIndexChanged);
             // 
-            // RdoOverlayAxisColorsOverlay
+            // RdoAxisColorsOverlay
             // 
-            this.RdoOverlayAxisColorsOverlay.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.RdoOverlayAxisColorsOverlay.AutoSize = true;
-            this.RdoOverlayAxisColorsOverlay.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.RdoOverlayAxisColorsOverlay.Location = new System.Drawing.Point(219, 92);
-            this.RdoOverlayAxisColorsOverlay.Name = "RdoOverlayAxisColorsOverlay";
-            this.RdoOverlayAxisColorsOverlay.Size = new System.Drawing.Size(61, 17);
-            this.RdoOverlayAxisColorsOverlay.TabIndex = 25;
-            this.RdoOverlayAxisColorsOverlay.TabStop = true;
-            this.RdoOverlayAxisColorsOverlay.Text = "Overlay";
-            this.toolTip1.SetToolTip(this.RdoOverlayAxisColorsOverlay, "X east, Y up, Z south");
-            this.RdoOverlayAxisColorsOverlay.UseVisualStyleBackColor = true;
-            this.RdoOverlayAxisColorsOverlay.CheckedChanged += new System.EventHandler(this.RdoOverlayAxisColors_CheckedChanged);
+            this.RdoAxisColorsOverlay.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.RdoAxisColorsOverlay.AutoSize = true;
+            this.RdoAxisColorsOverlay.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.RdoAxisColorsOverlay.Location = new System.Drawing.Point(219, 92);
+            this.RdoAxisColorsOverlay.Name = "RdoAxisColorsOverlay";
+            this.RdoAxisColorsOverlay.Size = new System.Drawing.Size(61, 17);
+            this.RdoAxisColorsOverlay.TabIndex = 25;
+            this.RdoAxisColorsOverlay.TabStop = true;
+            this.RdoAxisColorsOverlay.Text = "Overlay";
+            this.toolTip1.SetToolTip(this.RdoAxisColorsOverlay, "X east, Y up, Z south");
+            this.RdoAxisColorsOverlay.UseVisualStyleBackColor = true;
+            this.RdoAxisColorsOverlay.CheckedChanged += new System.EventHandler(this.RdoOverlayAxisColors_CheckedChanged);
             // 
-            // RdoOverlayAxisColorsGame
+            // RdoAxisColorsGame
             // 
-            this.RdoOverlayAxisColorsGame.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.RdoOverlayAxisColorsGame.AutoSize = true;
-            this.RdoOverlayAxisColorsGame.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.RdoOverlayAxisColorsGame.Checked = true;
-            this.RdoOverlayAxisColorsGame.Location = new System.Drawing.Point(160, 92);
-            this.RdoOverlayAxisColorsGame.Name = "RdoOverlayAxisColorsGame";
-            this.RdoOverlayAxisColorsGame.Size = new System.Drawing.Size(53, 17);
-            this.RdoOverlayAxisColorsGame.TabIndex = 20;
-            this.RdoOverlayAxisColorsGame.TabStop = true;
-            this.RdoOverlayAxisColorsGame.Text = "Game";
-            this.toolTip1.SetToolTip(this.RdoOverlayAxisColorsGame, "X east, Y down, Z north");
-            this.RdoOverlayAxisColorsGame.UseVisualStyleBackColor = true;
-            this.RdoOverlayAxisColorsGame.CheckedChanged += new System.EventHandler(this.RdoOverlayAxisColors_CheckedChanged);
+            this.RdoAxisColorsGame.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.RdoAxisColorsGame.AutoSize = true;
+            this.RdoAxisColorsGame.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.RdoAxisColorsGame.Checked = true;
+            this.RdoAxisColorsGame.Location = new System.Drawing.Point(160, 92);
+            this.RdoAxisColorsGame.Name = "RdoAxisColorsGame";
+            this.RdoAxisColorsGame.Size = new System.Drawing.Size(53, 17);
+            this.RdoAxisColorsGame.TabIndex = 20;
+            this.RdoAxisColorsGame.TabStop = true;
+            this.RdoAxisColorsGame.Text = "Game";
+            this.toolTip1.SetToolTip(this.RdoAxisColorsGame, "X east, Y down, Z north");
+            this.RdoAxisColorsGame.UseVisualStyleBackColor = true;
+            this.RdoAxisColorsGame.CheckedChanged += new System.EventHandler(this.RdoOverlayAxisColors_CheckedChanged);
             // 
             // tableLayoutPanel37
             // 
@@ -3240,7 +3278,7 @@ namespace BizHawk.Client.EmuHawk
             // TbpStats
             // 
             this.TbpStats.Controls.Add(this.tableLayoutPanel3);
-            this.TbpStats.Controls.Add(this.CbxStats);
+            this.TbpStats.Controls.Add(this.CbxEnableStatsReporting);
             this.TbpStats.Location = new System.Drawing.Point(4, 22);
             this.TbpStats.Name = "TbpStats";
             this.TbpStats.Padding = new System.Windows.Forms.Padding(3);
@@ -3355,19 +3393,19 @@ namespace BizHawk.Client.EmuHawk
             this.label7.TabIndex = 20;
             this.label7.Text = "Walking distance:";
             // 
-            // CbxStats
+            // CbxEnableStatsReporting
             // 
-            this.CbxStats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CbxStats.AutoSize = true;
-            this.CbxStats.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxStats.Checked = true;
-            this.CbxStats.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CbxStats.Location = new System.Drawing.Point(623, 595);
-            this.CbxStats.Name = "CbxStats";
-            this.CbxStats.Size = new System.Drawing.Size(59, 17);
-            this.CbxStats.TabIndex = 0;
-            this.CbxStats.Text = "Enable";
-            this.CbxStats.UseVisualStyleBackColor = true;
+            this.CbxEnableStatsReporting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CbxEnableStatsReporting.AutoSize = true;
+            this.CbxEnableStatsReporting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxEnableStatsReporting.Checked = true;
+            this.CbxEnableStatsReporting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbxEnableStatsReporting.Location = new System.Drawing.Point(623, 595);
+            this.CbxEnableStatsReporting.Name = "CbxEnableStatsReporting";
+            this.CbxEnableStatsReporting.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableStatsReporting.TabIndex = 0;
+            this.CbxEnableStatsReporting.Text = "Enable";
+            this.CbxEnableStatsReporting.UseVisualStyleBackColor = true;
             // 
             // TbpMap
             // 
@@ -3441,10 +3479,10 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel13.Controls.Add(this.label10, 0, 3);
             this.tableLayoutPanel13.Controls.Add(this.BtnWorldTintDefault, 0, 5);
             this.tableLayoutPanel13.Controls.Add(this.BtnCustomWorldTintCurrent, 0, 4);
-            this.tableLayoutPanel13.Controls.Add(this.NudWorldTintR, 1, 1);
-            this.tableLayoutPanel13.Controls.Add(this.NudWorldTintG, 1, 2);
+            this.tableLayoutPanel13.Controls.Add(this.NudCustomWorldTintR, 1, 1);
+            this.tableLayoutPanel13.Controls.Add(this.NudCustomWorldTintG, 1, 2);
             this.tableLayoutPanel13.Controls.Add(this.BtnWorldTintColor, 2, 1);
-            this.tableLayoutPanel13.Controls.Add(this.NudWorldTintB, 1, 3);
+            this.tableLayoutPanel13.Controls.Add(this.NudCustomWorldTintB, 1, 3);
             this.tableLayoutPanel13.Location = new System.Drawing.Point(231, 0);
             this.tableLayoutPanel13.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
@@ -3526,43 +3564,51 @@ namespace BizHawk.Client.EmuHawk
             this.BtnCustomWorldTintCurrent.UseVisualStyleBackColor = true;
             this.BtnCustomWorldTintCurrent.Click += new System.EventHandler(this.BtnCustomWorldTintCurrent_Click);
             // 
-            // NudWorldTintR
+            // NudCustomWorldTintR
             // 
-            this.NudWorldTintR.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudWorldTintR.Location = new System.Drawing.Point(27, 26);
-            this.NudWorldTintR.Maximum = new decimal(new int[] {
+            this.NudCustomWorldTintR.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudCustomWorldTintR.Location = new System.Drawing.Point(27, 26);
+            this.NudCustomWorldTintR.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.NudWorldTintR.Name = "NudWorldTintR";
-            this.NudWorldTintR.Size = new System.Drawing.Size(52, 20);
-            this.NudWorldTintR.TabIndex = 10;
-            this.NudWorldTintR.Value = new decimal(new int[] {
+            this.NudCustomWorldTintR.Name = "NudCustomWorldTintR";
+            this.NudCustomWorldTintR.Size = new System.Drawing.Size(52, 20);
+            this.NudCustomWorldTintR.TabIndex = 10;
+            this.NudCustomWorldTintR.Value = new decimal(new int[] {
             121,
             0,
             0,
             0});
-            this.NudWorldTintR.ValueChanged += new System.EventHandler(this.NudWorldTintR_ValueChanged);
+            this.NudCustomWorldTintR.ValueChanged += new System.EventHandler(this.NudWorldTintR_ValueChanged);
+            this.NudCustomWorldTintR.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomWorldTintR.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomWorldTintR.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudCustomWorldTintR.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudWorldTintG
+            // NudCustomWorldTintG
             // 
-            this.NudWorldTintG.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudWorldTintG.Location = new System.Drawing.Point(27, 52);
-            this.NudWorldTintG.Maximum = new decimal(new int[] {
+            this.NudCustomWorldTintG.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudCustomWorldTintG.Location = new System.Drawing.Point(27, 52);
+            this.NudCustomWorldTintG.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.NudWorldTintG.Name = "NudWorldTintG";
-            this.NudWorldTintG.Size = new System.Drawing.Size(52, 20);
-            this.NudWorldTintG.TabIndex = 20;
-            this.NudWorldTintG.Value = new decimal(new int[] {
+            this.NudCustomWorldTintG.Name = "NudCustomWorldTintG";
+            this.NudCustomWorldTintG.Size = new System.Drawing.Size(52, 20);
+            this.NudCustomWorldTintG.TabIndex = 20;
+            this.NudCustomWorldTintG.Value = new decimal(new int[] {
             128,
             0,
             0,
             0});
-            this.NudWorldTintG.ValueChanged += new System.EventHandler(this.NudWorldTintG_ValueChanged);
+            this.NudCustomWorldTintG.ValueChanged += new System.EventHandler(this.NudWorldTintG_ValueChanged);
+            this.NudCustomWorldTintG.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomWorldTintG.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomWorldTintG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudCustomWorldTintG.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // BtnWorldTintColor
             // 
@@ -3576,24 +3622,28 @@ namespace BizHawk.Client.EmuHawk
             this.BtnWorldTintColor.UseVisualStyleBackColor = false;
             this.BtnWorldTintColor.Click += new System.EventHandler(this.BtnWorldTintColor_Click);
             // 
-            // NudWorldTintB
+            // NudCustomWorldTintB
             // 
-            this.NudWorldTintB.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudWorldTintB.Location = new System.Drawing.Point(27, 78);
-            this.NudWorldTintB.Maximum = new decimal(new int[] {
+            this.NudCustomWorldTintB.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudCustomWorldTintB.Location = new System.Drawing.Point(27, 78);
+            this.NudCustomWorldTintB.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.NudWorldTintB.Name = "NudWorldTintB";
-            this.NudWorldTintB.Size = new System.Drawing.Size(52, 20);
-            this.NudWorldTintB.TabIndex = 30;
-            this.NudWorldTintB.Value = new decimal(new int[] {
+            this.NudCustomWorldTintB.Name = "NudCustomWorldTintB";
+            this.NudCustomWorldTintB.Size = new System.Drawing.Size(52, 20);
+            this.NudCustomWorldTintB.TabIndex = 30;
+            this.NudCustomWorldTintB.Value = new decimal(new int[] {
             138,
             0,
             0,
             0});
-            this.NudWorldTintB.ValueChanged += new System.EventHandler(this.NudWorldTintB_ValueChanged);
+            this.NudCustomWorldTintB.ValueChanged += new System.EventHandler(this.NudWorldTintB_ValueChanged);
+            this.NudCustomWorldTintB.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomWorldTintB.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomWorldTintB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudCustomWorldTintB.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // tableLayoutPanel12
             // 
@@ -3609,9 +3659,9 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel12.Controls.Add(this.label9, 0, 3);
             this.tableLayoutPanel12.Controls.Add(this.BtnCustomFogCurrent, 0, 4);
             this.tableLayoutPanel12.Controls.Add(this.BtnFogColorDefault, 0, 5);
-            this.tableLayoutPanel12.Controls.Add(this.NudFogR, 1, 1);
-            this.tableLayoutPanel12.Controls.Add(this.NudFogG, 1, 2);
-            this.tableLayoutPanel12.Controls.Add(this.NudFogB, 1, 3);
+            this.tableLayoutPanel12.Controls.Add(this.NudCustomFogR, 1, 1);
+            this.tableLayoutPanel12.Controls.Add(this.NudCustomFogG, 1, 2);
+            this.tableLayoutPanel12.Controls.Add(this.NudCustomFogB, 1, 3);
             this.tableLayoutPanel12.Controls.Add(this.BtnFogColor, 2, 1);
             this.tableLayoutPanel12.Location = new System.Drawing.Point(75, 0);
             this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(0);
@@ -3694,62 +3744,74 @@ namespace BizHawk.Client.EmuHawk
             this.BtnFogColorDefault.UseVisualStyleBackColor = true;
             this.BtnFogColorDefault.Click += new System.EventHandler(this.BtnFogColorDefault_Click);
             // 
-            // NudFogR
+            // NudCustomFogR
             // 
-            this.NudFogR.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudFogR.Location = new System.Drawing.Point(27, 26);
-            this.NudFogR.Maximum = new decimal(new int[] {
+            this.NudCustomFogR.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudCustomFogR.Location = new System.Drawing.Point(27, 26);
+            this.NudCustomFogR.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.NudFogR.Name = "NudFogR";
-            this.NudFogR.Size = new System.Drawing.Size(52, 20);
-            this.NudFogR.TabIndex = 10;
-            this.NudFogR.Value = new decimal(new int[] {
+            this.NudCustomFogR.Name = "NudCustomFogR";
+            this.NudCustomFogR.Size = new System.Drawing.Size(52, 20);
+            this.NudCustomFogR.TabIndex = 10;
+            this.NudCustomFogR.Value = new decimal(new int[] {
             108,
             0,
             0,
             0});
-            this.NudFogR.ValueChanged += new System.EventHandler(this.NudFogR_ValueChanged);
+            this.NudCustomFogR.ValueChanged += new System.EventHandler(this.NudFogR_ValueChanged);
+            this.NudCustomFogR.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomFogR.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomFogR.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudCustomFogR.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudFogG
+            // NudCustomFogG
             // 
-            this.NudFogG.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudFogG.Location = new System.Drawing.Point(27, 52);
-            this.NudFogG.Maximum = new decimal(new int[] {
+            this.NudCustomFogG.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudCustomFogG.Location = new System.Drawing.Point(27, 52);
+            this.NudCustomFogG.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.NudFogG.Name = "NudFogG";
-            this.NudFogG.Size = new System.Drawing.Size(52, 20);
-            this.NudFogG.TabIndex = 20;
-            this.NudFogG.Value = new decimal(new int[] {
+            this.NudCustomFogG.Name = "NudCustomFogG";
+            this.NudCustomFogG.Size = new System.Drawing.Size(52, 20);
+            this.NudCustomFogG.TabIndex = 20;
+            this.NudCustomFogG.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.NudFogG.ValueChanged += new System.EventHandler(this.NudFogG_ValueChanged);
+            this.NudCustomFogG.ValueChanged += new System.EventHandler(this.NudFogG_ValueChanged);
+            this.NudCustomFogG.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomFogG.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomFogG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudCustomFogG.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudFogB
+            // NudCustomFogB
             // 
-            this.NudFogB.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudFogB.Location = new System.Drawing.Point(27, 78);
-            this.NudFogB.Maximum = new decimal(new int[] {
+            this.NudCustomFogB.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudCustomFogB.Location = new System.Drawing.Point(27, 78);
+            this.NudCustomFogB.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.NudFogB.Name = "NudFogB";
-            this.NudFogB.Size = new System.Drawing.Size(52, 20);
-            this.NudFogB.TabIndex = 30;
-            this.NudFogB.Value = new decimal(new int[] {
+            this.NudCustomFogB.Name = "NudCustomFogB";
+            this.NudCustomFogB.Size = new System.Drawing.Size(52, 20);
+            this.NudCustomFogB.TabIndex = 30;
+            this.NudCustomFogB.Value = new decimal(new int[] {
             116,
             0,
             0,
             0});
-            this.NudFogB.ValueChanged += new System.EventHandler(this.NudFogB_ValueChanged);
+            this.NudCustomFogB.ValueChanged += new System.EventHandler(this.NudFogB_ValueChanged);
+            this.NudCustomFogB.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomFogB.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudCustomFogB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudCustomFogB.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // BtnFogColor
             // 
@@ -4338,6 +4400,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // CmbSaveButton
             // 
+            this.CmbSaveButton.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbSaveButton.FormattingEnabled = true;
             this.CmbSaveButton.Location = new System.Drawing.Point(159, 20);
             this.CmbSaveButton.Name = "CmbSaveButton";
@@ -4376,10 +4439,10 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel20.Controls.Add(this.tableLayoutPanel9, 0, 0);
-            this.tableLayoutPanel20.Controls.Add(this.TrkModelScale, 0, 1);
+            this.tableLayoutPanel20.Controls.Add(this.TrkTestModelScale, 0, 1);
             this.tableLayoutPanel20.Controls.Add(this.tableLayoutPanel8, 0, 2);
-            this.tableLayoutPanel20.Controls.Add(this.LblModelScale, 1, 1);
-            this.tableLayoutPanel20.Controls.Add(this.CbxEnableModelDisplay, 1, 2);
+            this.tableLayoutPanel20.Controls.Add(this.LblTestModelScale, 1, 1);
+            this.tableLayoutPanel20.Controls.Add(this.CbxEnableTestModelSection, 1, 2);
             this.tableLayoutPanel20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel20.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel20.Name = "tableLayoutPanel20";
@@ -4454,18 +4517,18 @@ namespace BizHawk.Client.EmuHawk
             this.BtnReadHarryModel.UseVisualStyleBackColor = true;
             this.BtnReadHarryModel.Click += new System.EventHandler(this.BtnReadHarryModel_Click);
             // 
-            // TrkModelScale
+            // TrkTestModelScale
             // 
-            this.TrkModelScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TrkModelScale.Location = new System.Drawing.Point(3, 59);
-            this.TrkModelScale.Maximum = 2000;
-            this.TrkModelScale.Minimum = 1;
-            this.TrkModelScale.Name = "TrkModelScale";
-            this.TrkModelScale.Size = new System.Drawing.Size(430, 45);
-            this.TrkModelScale.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.TrkModelScale, "Arbitrary model scale factor");
-            this.TrkModelScale.Value = 1000;
-            this.TrkModelScale.Scroll += new System.EventHandler(this.TrkModelScale_Scroll);
+            this.TrkTestModelScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TrkTestModelScale.Location = new System.Drawing.Point(3, 59);
+            this.TrkTestModelScale.Maximum = 2000;
+            this.TrkTestModelScale.Minimum = 1;
+            this.TrkTestModelScale.Name = "TrkTestModelScale";
+            this.TrkTestModelScale.Size = new System.Drawing.Size(430, 45);
+            this.TrkTestModelScale.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.TrkTestModelScale, "Arbitrary model scale factor");
+            this.TrkTestModelScale.Value = 1;
+            this.TrkTestModelScale.Scroll += new System.EventHandler(this.TrkModelScale_Scroll);
             // 
             // tableLayoutPanel8
             // 
@@ -4478,14 +4541,14 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.Controls.Add(this.NudModelX, 1, 1);
-            this.tableLayoutPanel8.Controls.Add(this.NudModelY, 2, 1);
-            this.tableLayoutPanel8.Controls.Add(this.NudModelZ, 3, 1);
+            this.tableLayoutPanel8.Controls.Add(this.NudTestModelX, 1, 1);
+            this.tableLayoutPanel8.Controls.Add(this.NudTestModelY, 2, 1);
+            this.tableLayoutPanel8.Controls.Add(this.NudTestModelZ, 3, 1);
             this.tableLayoutPanel8.Controls.Add(this.LblModelX, 1, 0);
             this.tableLayoutPanel8.Controls.Add(this.LblModelY, 2, 0);
             this.tableLayoutPanel8.Controls.Add(this.LblModelZ, 3, 0);
-            this.tableLayoutPanel8.Controls.Add(this.BtnModelSetPosition, 4, 1);
-            this.tableLayoutPanel8.Controls.Add(this.BtnModelGetPosition, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.BtnTestModelSetPosition, 4, 1);
+            this.tableLayoutPanel8.Controls.Add(this.BtnTestModelGetPosition, 0, 1);
             this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 130);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 2;
@@ -4494,71 +4557,74 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel8.Size = new System.Drawing.Size(430, 44);
             this.tableLayoutPanel8.TabIndex = 20;
             // 
-            // NudModelX
+            // NudTestModelX
             // 
-            this.NudModelX.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.NudModelX.Location = new System.Drawing.Point(134, 18);
-            this.NudModelX.Maximum = new decimal(new int[] {
+            this.NudTestModelX.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.NudTestModelX.Location = new System.Drawing.Point(134, 18);
+            this.NudTestModelX.Maximum = new decimal(new int[] {
             32768,
             0,
             0,
             0});
-            this.NudModelX.Minimum = new decimal(new int[] {
+            this.NudTestModelX.Minimum = new decimal(new int[] {
             32768,
             0,
             0,
             -2147483648});
-            this.NudModelX.Name = "NudModelX";
-            this.NudModelX.Size = new System.Drawing.Size(50, 20);
-            this.NudModelX.TabIndex = 10;
-            this.NudModelX.ValueChanged += new System.EventHandler(this.BtnModelSetModelPosition_Click);
-            this.NudModelX.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudModelX.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudModelX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudModel_KeyDown);
+            this.NudTestModelX.Name = "NudTestModelX";
+            this.NudTestModelX.Size = new System.Drawing.Size(50, 20);
+            this.NudTestModelX.TabIndex = 10;
+            this.NudTestModelX.ValueChanged += new System.EventHandler(this.BtnModelSetModelPosition_Click);
+            this.NudTestModelX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestModelX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestModelX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestModelX.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudModelY
+            // NudTestModelY
             // 
-            this.NudModelY.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.NudModelY.Location = new System.Drawing.Point(190, 18);
-            this.NudModelY.Maximum = new decimal(new int[] {
+            this.NudTestModelY.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.NudTestModelY.Location = new System.Drawing.Point(190, 18);
+            this.NudTestModelY.Maximum = new decimal(new int[] {
             32768,
             0,
             0,
             0});
-            this.NudModelY.Minimum = new decimal(new int[] {
+            this.NudTestModelY.Minimum = new decimal(new int[] {
             32768,
             0,
             0,
             -2147483648});
-            this.NudModelY.Name = "NudModelY";
-            this.NudModelY.Size = new System.Drawing.Size(50, 20);
-            this.NudModelY.TabIndex = 20;
-            this.NudModelY.ValueChanged += new System.EventHandler(this.BtnModelSetModelPosition_Click);
-            this.NudModelY.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudModelY.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudModelY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudModel_KeyDown);
+            this.NudTestModelY.Name = "NudTestModelY";
+            this.NudTestModelY.Size = new System.Drawing.Size(50, 20);
+            this.NudTestModelY.TabIndex = 20;
+            this.NudTestModelY.ValueChanged += new System.EventHandler(this.BtnModelSetModelPosition_Click);
+            this.NudTestModelY.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestModelY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestModelY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestModelY.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudModelZ
+            // NudTestModelZ
             // 
-            this.NudModelZ.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.NudModelZ.Location = new System.Drawing.Point(246, 18);
-            this.NudModelZ.Maximum = new decimal(new int[] {
+            this.NudTestModelZ.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.NudTestModelZ.Location = new System.Drawing.Point(246, 18);
+            this.NudTestModelZ.Maximum = new decimal(new int[] {
             32768,
             0,
             0,
             0});
-            this.NudModelZ.Minimum = new decimal(new int[] {
+            this.NudTestModelZ.Minimum = new decimal(new int[] {
             32768,
             0,
             0,
             -2147483648});
-            this.NudModelZ.Name = "NudModelZ";
-            this.NudModelZ.Size = new System.Drawing.Size(50, 20);
-            this.NudModelZ.TabIndex = 30;
-            this.NudModelZ.ValueChanged += new System.EventHandler(this.BtnModelSetModelPosition_Click);
-            this.NudModelZ.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudModelZ.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudModelZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudModel_KeyDown);
+            this.NudTestModelZ.Name = "NudTestModelZ";
+            this.NudTestModelZ.Size = new System.Drawing.Size(50, 20);
+            this.NudTestModelZ.TabIndex = 30;
+            this.NudTestModelZ.ValueChanged += new System.EventHandler(this.BtnModelSetModelPosition_Click);
+            this.NudTestModelZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestModelZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestModelZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestModelZ.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // LblModelX
             // 
@@ -4590,51 +4656,51 @@ namespace BizHawk.Client.EmuHawk
             this.LblModelZ.TabIndex = 25;
             this.LblModelZ.Text = "<z>";
             // 
-            // BtnModelSetPosition
+            // BtnTestModelSetPosition
             // 
-            this.BtnModelSetPosition.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BtnModelSetPosition.AutoSize = true;
-            this.BtnModelSetPosition.Location = new System.Drawing.Point(302, 16);
-            this.BtnModelSetPosition.Name = "BtnModelSetPosition";
-            this.BtnModelSetPosition.Size = new System.Drawing.Size(125, 25);
-            this.BtnModelSetPosition.TabIndex = 35;
-            this.BtnModelSetPosition.Text = "Set model position";
-            this.BtnModelSetPosition.UseVisualStyleBackColor = true;
-            this.BtnModelSetPosition.Click += new System.EventHandler(this.BtnModelSetModelPosition_Click);
+            this.BtnTestModelSetPosition.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnTestModelSetPosition.AutoSize = true;
+            this.BtnTestModelSetPosition.Location = new System.Drawing.Point(302, 16);
+            this.BtnTestModelSetPosition.Name = "BtnTestModelSetPosition";
+            this.BtnTestModelSetPosition.Size = new System.Drawing.Size(125, 25);
+            this.BtnTestModelSetPosition.TabIndex = 35;
+            this.BtnTestModelSetPosition.Text = "Set model position";
+            this.BtnTestModelSetPosition.UseVisualStyleBackColor = true;
+            this.BtnTestModelSetPosition.Click += new System.EventHandler(this.BtnModelSetModelPosition_Click);
             // 
-            // BtnModelGetPosition
+            // BtnTestModelGetPosition
             // 
-            this.BtnModelGetPosition.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BtnModelGetPosition.AutoSize = true;
-            this.BtnModelGetPosition.Location = new System.Drawing.Point(3, 16);
-            this.BtnModelGetPosition.Name = "BtnModelGetPosition";
-            this.BtnModelGetPosition.Size = new System.Drawing.Size(125, 25);
-            this.BtnModelGetPosition.TabIndex = 0;
-            this.BtnModelGetPosition.Text = "Get Harry position";
-            this.BtnModelGetPosition.UseVisualStyleBackColor = true;
-            this.BtnModelGetPosition.Click += new System.EventHandler(this.BtnModelGetHarryPosition_Click);
+            this.BtnTestModelGetPosition.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnTestModelGetPosition.AutoSize = true;
+            this.BtnTestModelGetPosition.Location = new System.Drawing.Point(3, 16);
+            this.BtnTestModelGetPosition.Name = "BtnTestModelGetPosition";
+            this.BtnTestModelGetPosition.Size = new System.Drawing.Size(125, 25);
+            this.BtnTestModelGetPosition.TabIndex = 0;
+            this.BtnTestModelGetPosition.Text = "Get Harry position";
+            this.BtnTestModelGetPosition.UseVisualStyleBackColor = true;
+            this.BtnTestModelGetPosition.Click += new System.EventHandler(this.BtnModelGetHarryPosition_Click);
             // 
-            // LblModelScale
+            // LblTestModelScale
             // 
-            this.LblModelScale.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblModelScale.Location = new System.Drawing.Point(439, 74);
-            this.LblModelScale.Name = "LblModelScale";
-            this.LblModelScale.Size = new System.Drawing.Size(45, 15);
-            this.LblModelScale.TabIndex = 15;
-            this.LblModelScale.Text = "1000";
-            this.toolTip1.SetToolTip(this.LblModelScale, "Arbitrary model scale factor");
+            this.LblTestModelScale.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.LblTestModelScale.Location = new System.Drawing.Point(439, 74);
+            this.LblTestModelScale.Name = "LblTestModelScale";
+            this.LblTestModelScale.Size = new System.Drawing.Size(45, 15);
+            this.LblTestModelScale.TabIndex = 15;
+            this.LblTestModelScale.Text = "1";
+            this.toolTip1.SetToolTip(this.LblTestModelScale, "Arbitrary model scale factor");
             // 
-            // CbxEnableModelDisplay
+            // CbxEnableTestModelSection
             // 
-            this.CbxEnableModelDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CbxEnableModelDisplay.AutoSize = true;
-            this.CbxEnableModelDisplay.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxEnableModelDisplay.Location = new System.Drawing.Point(607, 157);
-            this.CbxEnableModelDisplay.Name = "CbxEnableModelDisplay";
-            this.CbxEnableModelDisplay.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableModelDisplay.TabIndex = 0;
-            this.CbxEnableModelDisplay.Text = "Enable";
-            this.CbxEnableModelDisplay.UseVisualStyleBackColor = true;
+            this.CbxEnableTestModelSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CbxEnableTestModelSection.AutoSize = true;
+            this.CbxEnableTestModelSection.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxEnableTestModelSection.Location = new System.Drawing.Point(607, 157);
+            this.CbxEnableTestModelSection.Name = "CbxEnableTestModelSection";
+            this.CbxEnableTestModelSection.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableTestModelSection.TabIndex = 0;
+            this.CbxEnableTestModelSection.Text = "Enable";
+            this.CbxEnableTestModelSection.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
@@ -4678,16 +4744,16 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel4.Controls.Add(this.NudOverlayTestBoxSizeX, 3, 1);
-            this.tableLayoutPanel4.Controls.Add(this.NudOverlayTestBoxSizeY, 3, 2);
-            this.tableLayoutPanel4.Controls.Add(this.NudOverlayTestBoxSizeZ, 3, 3);
-            this.tableLayoutPanel4.Controls.Add(this.CbxOverlayTestBox, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.NudTestBoxSizeX, 3, 1);
+            this.tableLayoutPanel4.Controls.Add(this.NudTestBoxSizeY, 3, 2);
+            this.tableLayoutPanel4.Controls.Add(this.NudTestBoxSizeZ, 3, 3);
+            this.tableLayoutPanel4.Controls.Add(this.CbxEnableTestBox, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label53, 2, 2);
             this.tableLayoutPanel4.Controls.Add(this.label37, 2, 3);
             this.tableLayoutPanel4.Controls.Add(this.label54, 2, 1);
-            this.tableLayoutPanel4.Controls.Add(this.NudOverlayTestBoxX, 1, 1);
-            this.tableLayoutPanel4.Controls.Add(this.NudOverlayTestBoxY, 1, 2);
-            this.tableLayoutPanel4.Controls.Add(this.NudOverlayTestBoxZ, 1, 3);
+            this.tableLayoutPanel4.Controls.Add(this.NudTestBoxX, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.NudTestBoxY, 1, 2);
+            this.tableLayoutPanel4.Controls.Add(this.NudTestBoxZ, 1, 3);
             this.tableLayoutPanel4.Controls.Add(this.label30, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label29, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.label28, 0, 3);
@@ -4701,98 +4767,104 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel4.Size = new System.Drawing.Size(189, 104);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
-            // NudOverlayTestBoxSizeX
+            // NudTestBoxSizeX
             // 
-            this.NudOverlayTestBoxSizeX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestBoxSizeX.Location = new System.Drawing.Point(132, 29);
-            this.NudOverlayTestBoxSizeX.Maximum = new decimal(new int[] {
+            this.NudTestBoxSizeX.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestBoxSizeX.Location = new System.Drawing.Point(132, 29);
+            this.NudTestBoxSizeX.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestBoxSizeX.Minimum = new decimal(new int[] {
-            1024,
-            0,
-            0,
-            -2147483648});
-            this.NudOverlayTestBoxSizeX.Name = "NudOverlayTestBoxSizeX";
-            this.NudOverlayTestBoxSizeX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxSizeX.TabIndex = 40;
-            this.toolTip1.SetToolTip(this.NudOverlayTestBoxSizeX, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestBoxSizeX.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.NudOverlayTestBoxSizeX.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxSizeX_ValueChanged);
-            this.NudOverlayTestBoxSizeX.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestBoxSizeX.Enter += new System.EventHandler(this.Selectable_Enter);
-            // 
-            // NudOverlayTestBoxSizeY
-            // 
-            this.NudOverlayTestBoxSizeY.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestBoxSizeY.Location = new System.Drawing.Point(132, 55);
-            this.NudOverlayTestBoxSizeY.Maximum = new decimal(new int[] {
-            1024,
-            0,
-            0,
-            0});
-            this.NudOverlayTestBoxSizeY.Minimum = new decimal(new int[] {
+            this.NudTestBoxSizeX.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestBoxSizeY.Name = "NudOverlayTestBoxSizeY";
-            this.NudOverlayTestBoxSizeY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxSizeY.TabIndex = 50;
-            this.toolTip1.SetToolTip(this.NudOverlayTestBoxSizeY, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestBoxSizeY.Value = new decimal(new int[] {
+            this.NudTestBoxSizeX.Name = "NudTestBoxSizeX";
+            this.NudTestBoxSizeX.Size = new System.Drawing.Size(54, 20);
+            this.NudTestBoxSizeX.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.NudTestBoxSizeX, "The test box\'s position in SH coordinates");
+            this.NudTestBoxSizeX.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.NudOverlayTestBoxSizeY.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxSizeY_ValueChanged);
-            this.NudOverlayTestBoxSizeY.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestBoxSizeY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxSizeX.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxSizeX_ValueChanged);
+            this.NudTestBoxSizeX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxSizeX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxSizeX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestBoxSizeX.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestBoxSizeZ
+            // NudTestBoxSizeY
             // 
-            this.NudOverlayTestBoxSizeZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestBoxSizeZ.Location = new System.Drawing.Point(132, 81);
-            this.NudOverlayTestBoxSizeZ.Maximum = new decimal(new int[] {
+            this.NudTestBoxSizeY.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestBoxSizeY.Location = new System.Drawing.Point(132, 55);
+            this.NudTestBoxSizeY.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestBoxSizeZ.Minimum = new decimal(new int[] {
+            this.NudTestBoxSizeY.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestBoxSizeZ.Name = "NudOverlayTestBoxSizeZ";
-            this.NudOverlayTestBoxSizeZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxSizeZ.TabIndex = 60;
-            this.toolTip1.SetToolTip(this.NudOverlayTestBoxSizeZ, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestBoxSizeZ.Value = new decimal(new int[] {
+            this.NudTestBoxSizeY.Name = "NudTestBoxSizeY";
+            this.NudTestBoxSizeY.Size = new System.Drawing.Size(54, 20);
+            this.NudTestBoxSizeY.TabIndex = 50;
+            this.toolTip1.SetToolTip(this.NudTestBoxSizeY, "The test box\'s position in SH coordinates");
+            this.NudTestBoxSizeY.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.NudOverlayTestBoxSizeZ.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxSizeZ_ValueChanged);
-            this.NudOverlayTestBoxSizeZ.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestBoxSizeZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxSizeY.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxSizeY_ValueChanged);
+            this.NudTestBoxSizeY.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxSizeY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxSizeY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestBoxSizeY.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // CbxOverlayTestBox
+            // NudTestBoxSizeZ
             // 
-            this.CbxOverlayTestBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.CbxOverlayTestBox.AutoSize = true;
-            this.tableLayoutPanel4.SetColumnSpan(this.CbxOverlayTestBox, 4);
-            this.CbxOverlayTestBox.Location = new System.Drawing.Point(61, 4);
-            this.CbxOverlayTestBox.Name = "CbxOverlayTestBox";
-            this.CbxOverlayTestBox.Size = new System.Drawing.Size(67, 17);
-            this.CbxOverlayTestBox.TabIndex = 0;
-            this.CbxOverlayTestBox.Text = "Test box";
-            this.CbxOverlayTestBox.UseVisualStyleBackColor = true;
+            this.NudTestBoxSizeZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestBoxSizeZ.Location = new System.Drawing.Point(132, 81);
+            this.NudTestBoxSizeZ.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.NudTestBoxSizeZ.Minimum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            -2147483648});
+            this.NudTestBoxSizeZ.Name = "NudTestBoxSizeZ";
+            this.NudTestBoxSizeZ.Size = new System.Drawing.Size(54, 20);
+            this.NudTestBoxSizeZ.TabIndex = 60;
+            this.toolTip1.SetToolTip(this.NudTestBoxSizeZ, "The test box\'s position in SH coordinates");
+            this.NudTestBoxSizeZ.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NudTestBoxSizeZ.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxSizeZ_ValueChanged);
+            this.NudTestBoxSizeZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxSizeZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxSizeZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestBoxSizeZ.Leave += new System.EventHandler(this.Nud_Leave);
+            // 
+            // CbxEnableTestBox
+            // 
+            this.CbxEnableTestBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.CbxEnableTestBox.AutoSize = true;
+            this.tableLayoutPanel4.SetColumnSpan(this.CbxEnableTestBox, 4);
+            this.CbxEnableTestBox.Location = new System.Drawing.Point(61, 4);
+            this.CbxEnableTestBox.Name = "CbxEnableTestBox";
+            this.CbxEnableTestBox.Size = new System.Drawing.Size(67, 17);
+            this.CbxEnableTestBox.TabIndex = 0;
+            this.CbxEnableTestBox.Text = "Test box";
+            this.CbxEnableTestBox.UseVisualStyleBackColor = true;
             // 
             // label53
             // 
@@ -4824,71 +4896,77 @@ namespace BizHawk.Client.EmuHawk
             this.label54.TabIndex = 35;
             this.label54.Text = "Size X:";
             // 
-            // NudOverlayTestBoxX
+            // NudTestBoxX
             // 
-            this.NudOverlayTestBoxX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestBoxX.Location = new System.Drawing.Point(26, 29);
-            this.NudOverlayTestBoxX.Maximum = new decimal(new int[] {
+            this.NudTestBoxX.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestBoxX.Location = new System.Drawing.Point(26, 29);
+            this.NudTestBoxX.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestBoxX.Minimum = new decimal(new int[] {
+            this.NudTestBoxX.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestBoxX.Name = "NudOverlayTestBoxX";
-            this.NudOverlayTestBoxX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxX.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.NudOverlayTestBoxX, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestBoxX.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxX_ValueChanged);
-            this.NudOverlayTestBoxX.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestBoxX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxX.Name = "NudTestBoxX";
+            this.NudTestBoxX.Size = new System.Drawing.Size(54, 20);
+            this.NudTestBoxX.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.NudTestBoxX, "The test box\'s position in SH coordinates");
+            this.NudTestBoxX.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxX_ValueChanged);
+            this.NudTestBoxX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestBoxX.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestBoxY
+            // NudTestBoxY
             // 
-            this.NudOverlayTestBoxY.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestBoxY.Location = new System.Drawing.Point(26, 55);
-            this.NudOverlayTestBoxY.Maximum = new decimal(new int[] {
+            this.NudTestBoxY.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestBoxY.Location = new System.Drawing.Point(26, 55);
+            this.NudTestBoxY.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestBoxY.Minimum = new decimal(new int[] {
+            this.NudTestBoxY.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestBoxY.Name = "NudOverlayTestBoxY";
-            this.NudOverlayTestBoxY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxY.TabIndex = 20;
-            this.toolTip1.SetToolTip(this.NudOverlayTestBoxY, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestBoxY.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxY_ValueChanged);
-            this.NudOverlayTestBoxY.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestBoxY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxY.Name = "NudTestBoxY";
+            this.NudTestBoxY.Size = new System.Drawing.Size(54, 20);
+            this.NudTestBoxY.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.NudTestBoxY, "The test box\'s position in SH coordinates");
+            this.NudTestBoxY.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxY_ValueChanged);
+            this.NudTestBoxY.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestBoxY.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestBoxZ
+            // NudTestBoxZ
             // 
-            this.NudOverlayTestBoxZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestBoxZ.Location = new System.Drawing.Point(26, 81);
-            this.NudOverlayTestBoxZ.Maximum = new decimal(new int[] {
+            this.NudTestBoxZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestBoxZ.Location = new System.Drawing.Point(26, 81);
+            this.NudTestBoxZ.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestBoxZ.Minimum = new decimal(new int[] {
+            this.NudTestBoxZ.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestBoxZ.Name = "NudOverlayTestBoxZ";
-            this.NudOverlayTestBoxZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestBoxZ.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.NudOverlayTestBoxZ, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestBoxZ.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxZ_ValueChanged);
-            this.NudOverlayTestBoxZ.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestBoxZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxZ.Name = "NudTestBoxZ";
+            this.NudTestBoxZ.Size = new System.Drawing.Size(54, 20);
+            this.NudTestBoxZ.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.NudTestBoxZ, "The test box\'s position in SH coordinates");
+            this.NudTestBoxZ.ValueChanged += new System.EventHandler(this.NudOverlayTestBoxZ_ValueChanged);
+            this.NudTestBoxZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestBoxZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestBoxZ.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // label30
             // 
@@ -4930,17 +5008,17 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel6.Controls.Add(this.CbxOverlayTestSheet, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.NudOverlayTestSheetX, 1, 1);
-            this.tableLayoutPanel6.Controls.Add(this.NudOverlayTestSheetSizeX, 3, 1);
+            this.tableLayoutPanel6.Controls.Add(this.CbxEnableTestSheet, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.NudTestSheetX, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.NudTestSheetSizeX, 3, 1);
             this.tableLayoutPanel6.Controls.Add(this.label86, 0, 3);
             this.tableLayoutPanel6.Controls.Add(this.label85, 2, 1);
             this.tableLayoutPanel6.Controls.Add(this.label87, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.label79, 2, 3);
             this.tableLayoutPanel6.Controls.Add(this.label88, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.NudOverlayTestSheetSizeZ, 3, 3);
-            this.tableLayoutPanel6.Controls.Add(this.NudOverlayTestSheetZ, 1, 3);
-            this.tableLayoutPanel6.Controls.Add(this.NudOverlayTestSheetY, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.NudTestSheetSizeZ, 3, 3);
+            this.tableLayoutPanel6.Controls.Add(this.NudTestSheetZ, 1, 3);
+            this.tableLayoutPanel6.Controls.Add(this.NudTestSheetY, 1, 2);
             this.tableLayoutPanel6.Location = new System.Drawing.Point(478, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 4;
@@ -4951,66 +5029,70 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel6.Size = new System.Drawing.Size(189, 104);
             this.tableLayoutPanel6.TabIndex = 10;
             // 
-            // CbxOverlayTestSheet
+            // CbxEnableTestSheet
             // 
-            this.CbxOverlayTestSheet.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.CbxOverlayTestSheet.AutoSize = true;
-            this.tableLayoutPanel6.SetColumnSpan(this.CbxOverlayTestSheet, 4);
-            this.CbxOverlayTestSheet.Location = new System.Drawing.Point(56, 4);
-            this.CbxOverlayTestSheet.Name = "CbxOverlayTestSheet";
-            this.CbxOverlayTestSheet.Size = new System.Drawing.Size(76, 17);
-            this.CbxOverlayTestSheet.TabIndex = 0;
-            this.CbxOverlayTestSheet.Text = "Test sheet";
-            this.CbxOverlayTestSheet.UseVisualStyleBackColor = true;
+            this.CbxEnableTestSheet.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.CbxEnableTestSheet.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.CbxEnableTestSheet, 4);
+            this.CbxEnableTestSheet.Location = new System.Drawing.Point(56, 4);
+            this.CbxEnableTestSheet.Name = "CbxEnableTestSheet";
+            this.CbxEnableTestSheet.Size = new System.Drawing.Size(76, 17);
+            this.CbxEnableTestSheet.TabIndex = 0;
+            this.CbxEnableTestSheet.Text = "Test sheet";
+            this.CbxEnableTestSheet.UseVisualStyleBackColor = true;
             // 
-            // NudOverlayTestSheetX
+            // NudTestSheetX
             // 
-            this.NudOverlayTestSheetX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestSheetX.Location = new System.Drawing.Point(26, 29);
-            this.NudOverlayTestSheetX.Maximum = new decimal(new int[] {
+            this.NudTestSheetX.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestSheetX.Location = new System.Drawing.Point(26, 29);
+            this.NudTestSheetX.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestSheetX.Minimum = new decimal(new int[] {
+            this.NudTestSheetX.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestSheetX.Name = "NudOverlayTestSheetX";
-            this.NudOverlayTestSheetX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetX.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.NudOverlayTestSheetX, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestSheetX.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetX_ValueChanged);
-            this.NudOverlayTestSheetX.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestSheetX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetX.Name = "NudTestSheetX";
+            this.NudTestSheetX.Size = new System.Drawing.Size(54, 20);
+            this.NudTestSheetX.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.NudTestSheetX, "The test box\'s position in SH coordinates");
+            this.NudTestSheetX.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetX_ValueChanged);
+            this.NudTestSheetX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestSheetX.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestSheetSizeX
+            // NudTestSheetSizeX
             // 
-            this.NudOverlayTestSheetSizeX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestSheetSizeX.Location = new System.Drawing.Point(132, 29);
-            this.NudOverlayTestSheetSizeX.Maximum = new decimal(new int[] {
+            this.NudTestSheetSizeX.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestSheetSizeX.Location = new System.Drawing.Point(132, 29);
+            this.NudTestSheetSizeX.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestSheetSizeX.Minimum = new decimal(new int[] {
+            this.NudTestSheetSizeX.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestSheetSizeX.Name = "NudOverlayTestSheetSizeX";
-            this.NudOverlayTestSheetSizeX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetSizeX.TabIndex = 40;
-            this.toolTip1.SetToolTip(this.NudOverlayTestSheetSizeX, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestSheetSizeX.Value = new decimal(new int[] {
+            this.NudTestSheetSizeX.Name = "NudTestSheetSizeX";
+            this.NudTestSheetSizeX.Size = new System.Drawing.Size(54, 20);
+            this.NudTestSheetSizeX.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.NudTestSheetSizeX, "The test box\'s position in SH coordinates");
+            this.NudTestSheetSizeX.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.NudOverlayTestSheetSizeX.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetSizeX_ValueChanged);
-            this.NudOverlayTestSheetSizeX.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestSheetSizeX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetSizeX.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetSizeX_ValueChanged);
+            this.NudTestSheetSizeX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetSizeX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetSizeX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestSheetSizeX.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // label86
             // 
@@ -5062,76 +5144,82 @@ namespace BizHawk.Client.EmuHawk
             this.label88.TabIndex = 5;
             this.label88.Text = "X:";
             // 
-            // NudOverlayTestSheetSizeZ
+            // NudTestSheetSizeZ
             // 
-            this.NudOverlayTestSheetSizeZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestSheetSizeZ.Location = new System.Drawing.Point(132, 81);
-            this.NudOverlayTestSheetSizeZ.Maximum = new decimal(new int[] {
+            this.NudTestSheetSizeZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestSheetSizeZ.Location = new System.Drawing.Point(132, 81);
+            this.NudTestSheetSizeZ.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestSheetSizeZ.Minimum = new decimal(new int[] {
+            this.NudTestSheetSizeZ.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestSheetSizeZ.Name = "NudOverlayTestSheetSizeZ";
-            this.NudOverlayTestSheetSizeZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetSizeZ.TabIndex = 50;
-            this.toolTip1.SetToolTip(this.NudOverlayTestSheetSizeZ, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestSheetSizeZ.Value = new decimal(new int[] {
+            this.NudTestSheetSizeZ.Name = "NudTestSheetSizeZ";
+            this.NudTestSheetSizeZ.Size = new System.Drawing.Size(54, 20);
+            this.NudTestSheetSizeZ.TabIndex = 50;
+            this.toolTip1.SetToolTip(this.NudTestSheetSizeZ, "The test box\'s position in SH coordinates");
+            this.NudTestSheetSizeZ.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.NudOverlayTestSheetSizeZ.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetSizeZ_ValueChanged);
-            this.NudOverlayTestSheetSizeZ.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestSheetSizeZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetSizeZ.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetSizeZ_ValueChanged);
+            this.NudTestSheetSizeZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetSizeZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetSizeZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestSheetSizeZ.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestSheetZ
+            // NudTestSheetZ
             // 
-            this.NudOverlayTestSheetZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestSheetZ.Location = new System.Drawing.Point(26, 81);
-            this.NudOverlayTestSheetZ.Maximum = new decimal(new int[] {
+            this.NudTestSheetZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestSheetZ.Location = new System.Drawing.Point(26, 81);
+            this.NudTestSheetZ.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestSheetZ.Minimum = new decimal(new int[] {
+            this.NudTestSheetZ.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestSheetZ.Name = "NudOverlayTestSheetZ";
-            this.NudOverlayTestSheetZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetZ.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.NudOverlayTestSheetZ, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestSheetZ.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetZ_ValueChanged);
-            this.NudOverlayTestSheetZ.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestSheetZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetZ.Name = "NudTestSheetZ";
+            this.NudTestSheetZ.Size = new System.Drawing.Size(54, 20);
+            this.NudTestSheetZ.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.NudTestSheetZ, "The test box\'s position in SH coordinates");
+            this.NudTestSheetZ.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetZ_ValueChanged);
+            this.NudTestSheetZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestSheetZ.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestSheetY
+            // NudTestSheetY
             // 
-            this.NudOverlayTestSheetY.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestSheetY.Location = new System.Drawing.Point(26, 55);
-            this.NudOverlayTestSheetY.Maximum = new decimal(new int[] {
+            this.NudTestSheetY.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestSheetY.Location = new System.Drawing.Point(26, 55);
+            this.NudTestSheetY.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestSheetY.Minimum = new decimal(new int[] {
+            this.NudTestSheetY.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestSheetY.Name = "NudOverlayTestSheetY";
-            this.NudOverlayTestSheetY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestSheetY.TabIndex = 20;
-            this.toolTip1.SetToolTip(this.NudOverlayTestSheetY, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestSheetY.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetY_ValueChanged);
-            this.NudOverlayTestSheetY.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestSheetY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetY.Name = "NudTestSheetY";
+            this.NudTestSheetY.Size = new System.Drawing.Size(54, 20);
+            this.NudTestSheetY.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.NudTestSheetY, "The test box\'s position in SH coordinates");
+            this.NudTestSheetY.ValueChanged += new System.EventHandler(this.NudOverlayTestSheetY_ValueChanged);
+            this.NudTestSheetY.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestSheetY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestSheetY.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // tableLayoutPanel5
             // 
@@ -5143,13 +5231,13 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel5.Controls.Add(this.CbxOverlayTestLine, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.NudOverlayTestLineAX, 1, 1);
-            this.tableLayoutPanel5.Controls.Add(this.NudOverlayTestLineAY, 1, 2);
-            this.tableLayoutPanel5.Controls.Add(this.NudOverlayTestLineAZ, 1, 3);
-            this.tableLayoutPanel5.Controls.Add(this.NudOverlayTestLineBX, 3, 1);
-            this.tableLayoutPanel5.Controls.Add(this.NudOverlayTestLineBY, 3, 2);
-            this.tableLayoutPanel5.Controls.Add(this.NudOverlayTestLineBZ, 3, 3);
+            this.tableLayoutPanel5.Controls.Add(this.CbxEnableTestLine, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.NudTestLineAX, 1, 1);
+            this.tableLayoutPanel5.Controls.Add(this.NudTestLineAY, 1, 2);
+            this.tableLayoutPanel5.Controls.Add(this.NudTestLineAZ, 1, 3);
+            this.tableLayoutPanel5.Controls.Add(this.NudTestLineBX, 3, 1);
+            this.tableLayoutPanel5.Controls.Add(this.NudTestLineBY, 3, 2);
+            this.tableLayoutPanel5.Controls.Add(this.NudTestLineBZ, 3, 3);
             this.tableLayoutPanel5.Controls.Add(this.label31, 2, 3);
             this.tableLayoutPanel5.Controls.Add(this.label34, 2, 2);
             this.tableLayoutPanel5.Controls.Add(this.label36, 2, 1);
@@ -5166,164 +5254,176 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel5.Size = new System.Drawing.Size(166, 104);
             this.tableLayoutPanel5.TabIndex = 5;
             // 
-            // CbxOverlayTestLine
+            // CbxEnableTestLine
             // 
-            this.CbxOverlayTestLine.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.CbxOverlayTestLine.AutoSize = true;
-            this.tableLayoutPanel5.SetColumnSpan(this.CbxOverlayTestLine, 4);
-            this.CbxOverlayTestLine.Location = new System.Drawing.Point(50, 4);
-            this.CbxOverlayTestLine.Name = "CbxOverlayTestLine";
-            this.CbxOverlayTestLine.Size = new System.Drawing.Size(66, 17);
-            this.CbxOverlayTestLine.TabIndex = 0;
-            this.CbxOverlayTestLine.Text = "Test line";
-            this.CbxOverlayTestLine.UseVisualStyleBackColor = true;
+            this.CbxEnableTestLine.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.CbxEnableTestLine.AutoSize = true;
+            this.tableLayoutPanel5.SetColumnSpan(this.CbxEnableTestLine, 4);
+            this.CbxEnableTestLine.Location = new System.Drawing.Point(50, 4);
+            this.CbxEnableTestLine.Name = "CbxEnableTestLine";
+            this.CbxEnableTestLine.Size = new System.Drawing.Size(66, 17);
+            this.CbxEnableTestLine.TabIndex = 0;
+            this.CbxEnableTestLine.Text = "Test line";
+            this.CbxEnableTestLine.UseVisualStyleBackColor = true;
             // 
-            // NudOverlayTestLineAX
+            // NudTestLineAX
             // 
-            this.NudOverlayTestLineAX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestLineAX.Location = new System.Drawing.Point(26, 29);
-            this.NudOverlayTestLineAX.Maximum = new decimal(new int[] {
+            this.NudTestLineAX.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestLineAX.Location = new System.Drawing.Point(26, 29);
+            this.NudTestLineAX.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestLineAX.Minimum = new decimal(new int[] {
+            this.NudTestLineAX.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestLineAX.Name = "NudOverlayTestLineAX";
-            this.NudOverlayTestLineAX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineAX.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.NudOverlayTestLineAX, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestLineAX.ValueChanged += new System.EventHandler(this.NudOverlayTestLineAX_ValueChanged);
-            this.NudOverlayTestLineAX.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestLineAX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineAX.Name = "NudTestLineAX";
+            this.NudTestLineAX.Size = new System.Drawing.Size(54, 20);
+            this.NudTestLineAX.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.NudTestLineAX, "The test box\'s position in SH coordinates");
+            this.NudTestLineAX.ValueChanged += new System.EventHandler(this.NudOverlayTestLineAX_ValueChanged);
+            this.NudTestLineAX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineAX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineAX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestLineAX.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestLineAY
+            // NudTestLineAY
             // 
-            this.NudOverlayTestLineAY.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestLineAY.Location = new System.Drawing.Point(26, 55);
-            this.NudOverlayTestLineAY.Maximum = new decimal(new int[] {
+            this.NudTestLineAY.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestLineAY.Location = new System.Drawing.Point(26, 55);
+            this.NudTestLineAY.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestLineAY.Minimum = new decimal(new int[] {
+            this.NudTestLineAY.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestLineAY.Name = "NudOverlayTestLineAY";
-            this.NudOverlayTestLineAY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineAY.TabIndex = 20;
-            this.toolTip1.SetToolTip(this.NudOverlayTestLineAY, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestLineAY.Value = new decimal(new int[] {
+            this.NudTestLineAY.Name = "NudTestLineAY";
+            this.NudTestLineAY.Size = new System.Drawing.Size(54, 20);
+            this.NudTestLineAY.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.NudTestLineAY, "The test box\'s position in SH coordinates");
+            this.NudTestLineAY.Value = new decimal(new int[] {
             1,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestLineAY.ValueChanged += new System.EventHandler(this.NudOverlayTestLineAY_ValueChanged);
-            this.NudOverlayTestLineAY.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestLineAY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineAY.ValueChanged += new System.EventHandler(this.NudOverlayTestLineAY_ValueChanged);
+            this.NudTestLineAY.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineAY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineAY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestLineAY.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestLineAZ
+            // NudTestLineAZ
             // 
-            this.NudOverlayTestLineAZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestLineAZ.Location = new System.Drawing.Point(26, 81);
-            this.NudOverlayTestLineAZ.Maximum = new decimal(new int[] {
+            this.NudTestLineAZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestLineAZ.Location = new System.Drawing.Point(26, 81);
+            this.NudTestLineAZ.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestLineAZ.Minimum = new decimal(new int[] {
+            this.NudTestLineAZ.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestLineAZ.Name = "NudOverlayTestLineAZ";
-            this.NudOverlayTestLineAZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineAZ.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.NudOverlayTestLineAZ, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestLineAZ.ValueChanged += new System.EventHandler(this.NudOverlayTestLineAZ_ValueChanged);
-            this.NudOverlayTestLineAZ.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestLineAZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineAZ.Name = "NudTestLineAZ";
+            this.NudTestLineAZ.Size = new System.Drawing.Size(54, 20);
+            this.NudTestLineAZ.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.NudTestLineAZ, "The test box\'s position in SH coordinates");
+            this.NudTestLineAZ.ValueChanged += new System.EventHandler(this.NudOverlayTestLineAZ_ValueChanged);
+            this.NudTestLineAZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineAZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineAZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestLineAZ.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestLineBX
+            // NudTestLineBX
             // 
-            this.NudOverlayTestLineBX.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestLineBX.Location = new System.Drawing.Point(109, 29);
-            this.NudOverlayTestLineBX.Maximum = new decimal(new int[] {
+            this.NudTestLineBX.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestLineBX.Location = new System.Drawing.Point(109, 29);
+            this.NudTestLineBX.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestLineBX.Minimum = new decimal(new int[] {
+            this.NudTestLineBX.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestLineBX.Name = "NudOverlayTestLineBX";
-            this.NudOverlayTestLineBX.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineBX.TabIndex = 40;
-            this.toolTip1.SetToolTip(this.NudOverlayTestLineBX, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestLineBX.Value = new decimal(new int[] {
+            this.NudTestLineBX.Name = "NudTestLineBX";
+            this.NudTestLineBX.Size = new System.Drawing.Size(54, 20);
+            this.NudTestLineBX.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.NudTestLineBX, "The test box\'s position in SH coordinates");
+            this.NudTestLineBX.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.NudOverlayTestLineBX.ValueChanged += new System.EventHandler(this.NudOverlayTestLineBX_ValueChanged);
-            this.NudOverlayTestLineBX.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestLineBX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineBX.ValueChanged += new System.EventHandler(this.NudOverlayTestLineBX_ValueChanged);
+            this.NudTestLineBX.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineBX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineBX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestLineBX.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestLineBY
+            // NudTestLineBY
             // 
-            this.NudOverlayTestLineBY.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestLineBY.Location = new System.Drawing.Point(109, 55);
-            this.NudOverlayTestLineBY.Maximum = new decimal(new int[] {
+            this.NudTestLineBY.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestLineBY.Location = new System.Drawing.Point(109, 55);
+            this.NudTestLineBY.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestLineBY.Minimum = new decimal(new int[] {
+            this.NudTestLineBY.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestLineBY.Name = "NudOverlayTestLineBY";
-            this.NudOverlayTestLineBY.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineBY.TabIndex = 50;
-            this.toolTip1.SetToolTip(this.NudOverlayTestLineBY, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestLineBY.Value = new decimal(new int[] {
+            this.NudTestLineBY.Name = "NudTestLineBY";
+            this.NudTestLineBY.Size = new System.Drawing.Size(54, 20);
+            this.NudTestLineBY.TabIndex = 50;
+            this.toolTip1.SetToolTip(this.NudTestLineBY, "The test box\'s position in SH coordinates");
+            this.NudTestLineBY.Value = new decimal(new int[] {
             1,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestLineBY.ValueChanged += new System.EventHandler(this.NudOverlayTestLineBY_ValueChanged);
-            this.NudOverlayTestLineBY.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestLineBY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineBY.ValueChanged += new System.EventHandler(this.NudOverlayTestLineBY_ValueChanged);
+            this.NudTestLineBY.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineBY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineBY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestLineBY.Leave += new System.EventHandler(this.Nud_Leave);
             // 
-            // NudOverlayTestLineBZ
+            // NudTestLineBZ
             // 
-            this.NudOverlayTestLineBZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.NudOverlayTestLineBZ.Location = new System.Drawing.Point(109, 81);
-            this.NudOverlayTestLineBZ.Maximum = new decimal(new int[] {
+            this.NudTestLineBZ.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudTestLineBZ.Location = new System.Drawing.Point(109, 81);
+            this.NudTestLineBZ.Maximum = new decimal(new int[] {
             1024,
             0,
             0,
             0});
-            this.NudOverlayTestLineBZ.Minimum = new decimal(new int[] {
+            this.NudTestLineBZ.Minimum = new decimal(new int[] {
             1024,
             0,
             0,
             -2147483648});
-            this.NudOverlayTestLineBZ.Name = "NudOverlayTestLineBZ";
-            this.NudOverlayTestLineBZ.Size = new System.Drawing.Size(54, 20);
-            this.NudOverlayTestLineBZ.TabIndex = 60;
-            this.toolTip1.SetToolTip(this.NudOverlayTestLineBZ, "The test box\'s position in SH coordinates");
-            this.NudOverlayTestLineBZ.ValueChanged += new System.EventHandler(this.NudOverlayTestLineBZ_ValueChanged);
-            this.NudOverlayTestLineBZ.Click += new System.EventHandler(this.Selectable_Enter);
-            this.NudOverlayTestLineBZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineBZ.Name = "NudTestLineBZ";
+            this.NudTestLineBZ.Size = new System.Drawing.Size(54, 20);
+            this.NudTestLineBZ.TabIndex = 60;
+            this.toolTip1.SetToolTip(this.NudTestLineBZ, "The test box\'s position in SH coordinates");
+            this.NudTestLineBZ.ValueChanged += new System.EventHandler(this.NudOverlayTestLineBZ_ValueChanged);
+            this.NudTestLineBZ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineBZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudTestLineBZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudTestLineBZ.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // label31
             // 
@@ -5698,14 +5798,15 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferH.TabIndex = 40;
             this.toolTip1.SetToolTip(this.NudFramebufferH, "Height");
             this.NudFramebufferH.Value = new decimal(new int[] {
-            448,
+            1,
             0,
             0,
             0});
             this.NudFramebufferH.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferH.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferH.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudFramebufferH.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
+            this.NudFramebufferH.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudFramebufferH.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // NudFramebufferW
             // 
@@ -5726,14 +5827,15 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferW.TabIndex = 30;
             this.toolTip1.SetToolTip(this.NudFramebufferW, "Width");
             this.NudFramebufferW.Value = new decimal(new int[] {
-            320,
+            1,
             0,
             0,
             0});
             this.NudFramebufferW.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferW.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferW.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudFramebufferW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
+            this.NudFramebufferW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudFramebufferW.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // label91
             // 
@@ -5761,7 +5863,8 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferOfsX.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferOfsX.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferOfsX.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudFramebufferOfsX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
+            this.NudFramebufferOfsX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudFramebufferOfsX.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // NudFramebufferOfsY
             // 
@@ -5776,15 +5879,11 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferOfsY.Size = new System.Drawing.Size(55, 20);
             this.NudFramebufferOfsY.TabIndex = 20;
             this.toolTip1.SetToolTip(this.NudFramebufferOfsY, "Y offset");
-            this.NudFramebufferOfsY.Value = new decimal(new int[] {
-            32,
-            0,
-            0,
-            0});
             this.NudFramebufferOfsY.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferOfsY.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferOfsY.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudFramebufferOfsY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
+            this.NudFramebufferOfsY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudFramebufferOfsY.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // TbpUtility
             // 
@@ -5839,6 +5938,8 @@ namespace BizHawk.Client.EmuHawk
             this.TbxUtilityAnglesGameUnits.Size = new System.Drawing.Size(70, 20);
             this.TbxUtilityAnglesGameUnits.TabIndex = 5;
             this.toolTip1.SetToolTip(this.TbxUtilityAnglesGameUnits, "Hexadecimal, 0x0 through 0xFFF");
+            this.TbxUtilityAnglesGameUnits.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxUtilityAnglesGameUnits.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxUtilityAnglesGameUnits.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxUtilityAnglesGameUnits_KeyDown);
             // 
             // label78
@@ -5868,6 +5969,8 @@ namespace BizHawk.Client.EmuHawk
             this.TbxUtilityAnglesDegrees.Name = "TbxUtilityAnglesDegrees";
             this.TbxUtilityAnglesDegrees.Size = new System.Drawing.Size(70, 20);
             this.TbxUtilityAnglesDegrees.TabIndex = 15;
+            this.TbxUtilityAnglesDegrees.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxUtilityAnglesDegrees.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxUtilityAnglesDegrees.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxUtilityAnglesDegrees_KeyDown);
             // 
             // label76
@@ -5964,6 +6067,8 @@ namespace BizHawk.Client.EmuHawk
             this.TbxUtilityFixedPointQ.Name = "TbxUtilityFixedPointQ";
             this.TbxUtilityFixedPointQ.Size = new System.Drawing.Size(100, 20);
             this.TbxUtilityFixedPointQ.TabIndex = 25;
+            this.TbxUtilityFixedPointQ.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxUtilityFixedPointQ.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxUtilityFixedPointQ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxUtilityFixedPointQ_KeyDown);
             // 
             // TbxUtilityFixedPointFloat
@@ -5973,6 +6078,8 @@ namespace BizHawk.Client.EmuHawk
             this.TbxUtilityFixedPointFloat.Name = "TbxUtilityFixedPointFloat";
             this.TbxUtilityFixedPointFloat.Size = new System.Drawing.Size(100, 20);
             this.TbxUtilityFixedPointFloat.TabIndex = 15;
+            this.TbxUtilityFixedPointFloat.Click += new System.EventHandler(this.Selectable_Enter);
+            this.TbxUtilityFixedPointFloat.Enter += new System.EventHandler(this.Selectable_Enter);
             this.TbxUtilityFixedPointFloat.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxUtilityFixedPointFloat_KeyDown);
             // 
             // label74
@@ -6041,7 +6148,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel28, 0, 0);
             this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel31, 1, 2);
             this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel30, 3, 1);
-            this.tableLayoutPanel23.Controls.Add(this.CbxEnableControlsSection, 4, 2);
+            this.tableLayoutPanel23.Controls.Add(this.CbxEnableControllerReporting, 4, 2);
             this.tableLayoutPanel23.Controls.Add(this.tableLayoutPanel29, 0, 1);
             this.tableLayoutPanel23.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel23.Location = new System.Drawing.Point(3, 16);
@@ -6236,17 +6343,17 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonX.TabIndex = 15;
             this.LblButtonX.Text = "X";
             // 
-            // CbxEnableControlsSection
+            // CbxEnableControllerReporting
             // 
-            this.CbxEnableControlsSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CbxEnableControlsSection.AutoSize = true;
-            this.CbxEnableControlsSection.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxEnableControlsSection.Location = new System.Drawing.Point(306, 278);
-            this.CbxEnableControlsSection.Name = "CbxEnableControlsSection";
-            this.CbxEnableControlsSection.Size = new System.Drawing.Size(59, 17);
-            this.CbxEnableControlsSection.TabIndex = 0;
-            this.CbxEnableControlsSection.Text = "Enable";
-            this.CbxEnableControlsSection.UseVisualStyleBackColor = true;
+            this.CbxEnableControllerReporting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CbxEnableControllerReporting.AutoSize = true;
+            this.CbxEnableControllerReporting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxEnableControllerReporting.Location = new System.Drawing.Point(306, 278);
+            this.CbxEnableControllerReporting.Name = "CbxEnableControllerReporting";
+            this.CbxEnableControllerReporting.Size = new System.Drawing.Size(59, 17);
+            this.CbxEnableControllerReporting.TabIndex = 0;
+            this.CbxEnableControllerReporting.Text = "Enable";
+            this.CbxEnableControllerReporting.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel29
             // 
@@ -6332,18 +6439,20 @@ namespace BizHawk.Client.EmuHawk
             this.GbxControls.PerformLayout();
             this.tableLayoutPanel39.ResumeLayout(false);
             this.tableLayoutPanel39.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCameraFlySensitivity)).EndInit();
             this.tableLayoutPanel38.ResumeLayout(false);
             this.tableLayoutPanel38.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudEyeHeight)).EndInit();
             this.tableLayoutPanel27.ResumeLayout(false);
             this.tableLayoutPanel27.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCameraFlySpeed)).EndInit();
             this.GbxOverlay.ResumeLayout(false);
             this.tableLayoutPanel26.ResumeLayout(false);
             this.tableLayoutPanel26.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayRenderableOpacity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudFilledOpacity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraPitch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraYaw)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudOverlayCameraRoll)).EndInit();
@@ -6395,14 +6504,14 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel14.PerformLayout();
             this.tableLayoutPanel13.ResumeLayout(false);
             this.tableLayoutPanel13.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintR)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudWorldTintB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomWorldTintR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomWorldTintG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomWorldTintB)).EndInit();
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel12.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudFogR)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudFogG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudFogB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomFogR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomFogG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudCustomFogB)).EndInit();
             this.TbpStrings.ResumeLayout(false);
             this.TbpStrings.PerformLayout();
             this.tableLayoutPanel10.ResumeLayout(false);
@@ -6433,39 +6542,39 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel20.PerformLayout();
             this.tableLayoutPanel9.ResumeLayout(false);
             this.tableLayoutPanel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TrkModelScale)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TrkTestModelScale)).EndInit();
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudModelX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudModelY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudModelZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestModelX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestModelY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestModelZ)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxSizeZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestBoxZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxSizeX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxSizeY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxSizeZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestBoxZ)).EndInit();
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetSizeX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetSizeZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestSheetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetSizeX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetSizeZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestSheetY)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineAX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineAY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineAZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NudOverlayTestLineBZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineAX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineAY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineAZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineBX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineBY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NudTestLineBZ)).EndInit();
             this.TbpFiles.ResumeLayout(false);
             this.tableLayoutPanel19.ResumeLayout(false);
             this.tableLayoutPanel19.PerformLayout();
@@ -6556,21 +6665,21 @@ namespace BizHawk.Client.EmuHawk
 		private Label label7;
 		private Label LblRunningDistance;
 		private Label LblWalkingDistance;
-		private CheckBox CbxStats;
+		private CheckBox CbxEnableStatsReporting;
 		private TabPage TbpFog;
 		private CheckBox CbxFog;
 		private Button BtnFogColor;
 		private Label label9;
 		private Label label6;
 		private Label label5;
-		private NumericUpDown NudFogB;
-		private NumericUpDown NudFogG;
-		private NumericUpDown NudFogR;
+		private NumericUpDown NudCustomFogB;
+		private NumericUpDown NudCustomFogG;
+		private NumericUpDown NudCustomFogR;
 		private CheckBox CbxCustomFog;
 		private CheckBox CbxCustomWorldTint;
-		private NumericUpDown NudWorldTintB;
-		private NumericUpDown NudWorldTintG;
-		private NumericUpDown NudWorldTintR;
+		private NumericUpDown NudCustomWorldTintB;
+		private NumericUpDown NudCustomWorldTintG;
+		private NumericUpDown NudCustomWorldTintR;
 		private Label label10;
 		private Label label11;
 		private Label label12;
@@ -6663,7 +6772,7 @@ namespace BizHawk.Client.EmuHawk
 		private Button BtnSaveRamImport;
 		private Label label15;
 		private Label LblSelectedTriggerPoiGeometry;
-		private ComboBox CmbRenderShape;
+		private ComboBox CmbPoiRenderShape;
 		private Button BtnClearPoisTriggers;
 		private GroupBox GbxConvertStatesOrSaveRam;
 		private PictureBox PbxHazardStripes;
@@ -6687,34 +6796,34 @@ namespace BizHawk.Client.EmuHawk
 		private Label label37;
 		private Label label53;
 		private Label label54;
-		private NumericUpDown NudOverlayTestBoxSizeZ;
-		private NumericUpDown NudOverlayTestBoxSizeY;
-		private NumericUpDown NudOverlayTestBoxSizeX;
+		private NumericUpDown NudTestBoxSizeZ;
+		private NumericUpDown NudTestBoxSizeY;
+		private NumericUpDown NudTestBoxSizeX;
 		private Label label31;
 		private Label label34;
 		private Label label36;
-		private NumericUpDown NudOverlayTestLineBZ;
-		private NumericUpDown NudOverlayTestLineBY;
-		private NumericUpDown NudOverlayTestLineBX;
+		private NumericUpDown NudTestLineBZ;
+		private NumericUpDown NudTestLineBY;
+		private NumericUpDown NudTestLineBX;
 		private Label label16;
 		private Label label17;
 		private Label label20;
-		private NumericUpDown NudOverlayTestLineAZ;
-		private NumericUpDown NudOverlayTestLineAY;
-		private NumericUpDown NudOverlayTestLineAX;
-		private CheckBox CbxOverlayTestLine;
+		private NumericUpDown NudTestLineAZ;
+		private NumericUpDown NudTestLineAY;
+		private NumericUpDown NudTestLineAX;
+		private CheckBox CbxEnableTestLine;
 		private Label label28;
 		private Label label29;
 		private Label label30;
-		private NumericUpDown NudOverlayTestBoxZ;
-		private NumericUpDown NudOverlayTestBoxY;
-		private NumericUpDown NudOverlayTestBoxX;
-		private CheckBox CbxOverlayTestBox;
+		private NumericUpDown NudTestBoxZ;
+		private NumericUpDown NudTestBoxY;
+		private NumericUpDown NudTestBoxX;
+		private CheckBox CbxEnableTestBox;
 		private Label label68;
-		private RadioButton RdoOverlayAxisColorsOff;
+		private RadioButton RdoAxisColorsOff;
 		private Label label44;
-		private RadioButton RdoOverlayAxisColorsOverlay;
-		private RadioButton RdoOverlayAxisColorsGame;
+		private RadioButton RdoAxisColorsOverlay;
+		private RadioButton RdoAxisColorsGame;
 		private Label label69;
 		private GroupBox groupBox6;
 		private ComboBox CmbModelSubmeshName;
@@ -6740,7 +6849,7 @@ namespace BizHawk.Client.EmuHawk
         private Button BtnFramebufferZoomOut;
         private ComboBox CmbFramebufferZoom;
 		private Button BtnFramebufferSave;
-		private CheckBox CbxOverlayRenderToFramebuffer;
+		private CheckBox CbxRenderToFramebuffer;
 		private CheckBox CbxDiscoMode;
 		private NumericUpDown NudCrosshairLength;
 		private Label label70;
@@ -6790,22 +6899,22 @@ namespace BizHawk.Client.EmuHawk
 		private Label label82;
 		private Label label77;
 		private CheckBox CbxReadLevelDataOnStageLoad;
-		private CheckBox CbxCullBeyondFarClip;
-		private CheckBox CbxCullBackfaces;
+		private CheckBox CbxFarClipping;
+		private CheckBox CbxBackfaceCulling;
 		private CheckBox CbxSelectedCameraPathDisabled;
 		private Label label79;
 		private Label label85;
-		private NumericUpDown NudOverlayTestSheetSizeZ;
-		private NumericUpDown NudOverlayTestSheetSizeX;
+		private NumericUpDown NudTestSheetSizeZ;
+		private NumericUpDown NudTestSheetSizeX;
 		private Label label86;
 		private Label label87;
 		private Label label88;
-		private NumericUpDown NudOverlayTestSheetZ;
-		private NumericUpDown NudOverlayTestSheetY;
-		private NumericUpDown NudOverlayTestSheetX;
-		private CheckBox CbxOverlayTestSheet;
+		private NumericUpDown NudTestSheetZ;
+		private NumericUpDown NudTestSheetY;
+		private NumericUpDown NudTestSheetX;
+		private CheckBox CbxEnableTestSheet;
 		private Label label84;
-		private NumericUpDown NudOverlayRenderableOpacity;
+		private NumericUpDown NudFilledOpacity;
 		private TableLayoutPanel tableLayoutPanel1;
 		private TableLayoutPanel tableLayoutPanel2;
 		private TableLayoutPanel tableLayoutPanel3;
@@ -6855,18 +6964,18 @@ namespace BizHawk.Client.EmuHawk
 		private TableLayoutPanel TlpFramebufferTab;
 		private TableLayoutPanel tableLayoutPanel19;
 		private TableLayoutPanel tableLayoutPanel20;
-		private TrackBar TrkModelScale;
+		private TrackBar TrkTestModelScale;
 		private TableLayoutPanel tableLayoutPanel8;
-		private NumericUpDown NudModelX;
-		private NumericUpDown NudModelY;
-		private NumericUpDown NudModelZ;
+		private NumericUpDown NudTestModelX;
+		private NumericUpDown NudTestModelY;
+		private NumericUpDown NudTestModelZ;
 		private Label LblModelX;
 		private Label LblModelY;
 		private Label LblModelZ;
-		private Button BtnModelSetPosition;
-		private Button BtnModelGetPosition;
-		private Label LblModelScale;
-		private CheckBox CbxEnableModelDisplay;
+		private Button BtnTestModelSetPosition;
+		private Button BtnTestModelGetPosition;
+		private Label LblTestModelScale;
+		private CheckBox CbxEnableTestModelSection;
 		private SplitContainer splitContainer2;
 		private TableLayoutPanel tableLayoutPanel21;
 		private TableLayoutPanel tableLayoutPanel22;
@@ -6904,7 +7013,7 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblButtonSquare;
 		private Label LblButtonCircle;
 		private Label LblButtonX;
-		private CheckBox CbxEnableControlsSection;
+		private CheckBox CbxEnableControllerReporting;
 		private TableLayoutPanel tableLayoutPanel29;
 		private Label LblButtonUp;
 		private Label LblButtonLeft;
@@ -6912,11 +7021,9 @@ namespace BizHawk.Client.EmuHawk
 		private Label LblButtonDown;
 		private TableLayoutPanel tableLayoutPanel27;
 		private CheckBox CbxCameraFlyInvert;
-		private TextBox TbxCameraFlySensitivity;
 		private Label label4;
 		private CheckBox CbxCameraDetach;
 		private Button BtnCameraFly;
-		private TextBox TbxCameraFlySpeed;
 		private Label label3;
 		private TableLayoutPanel tableLayoutPanel38;
 		private CheckBox CbxAlwaysRun;
@@ -6926,5 +7033,7 @@ namespace BizHawk.Client.EmuHawk
 		private TableLayoutPanel tableLayoutPanel39;
 		private CheckBox CbxShowLookAt;
 		private PictureBox PbxMapGraphic;
+		private NumericUpDown NudCameraFlySpeed;
+		private NumericUpDown NudCameraFlySensitivity;
 	}
 }

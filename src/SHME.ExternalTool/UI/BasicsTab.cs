@@ -46,8 +46,7 @@ namespace BizHawk.Client.EmuHawk
 		private void InitializeBasicsTab()
 		{
 			TrkFov.Value = (int)Camera.Fov;
-
-			CmbRenderMode.SelectedIndex = 0;
+			LblFov.Text = TrkFov.Value.ToString(CultureInfo.CurrentCulture);
 		}
 
 		private void ReportAngles()
@@ -302,7 +301,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CbxCullBackfaces_CheckedChanged(object sender, EventArgs e)
 		{
-			if (CbxCullBackfaces.Checked)
+			if (CbxBackfaceCulling.Checked)
 			{
 				Camera.Culling |= Culling.Backface;
 			}
@@ -314,7 +313,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CbxCullBeyondFarClip_CheckedChanged(object sender, EventArgs e)
 		{
-			if (CbxCullBeyondFarClip.Checked)
+			if (CbxFarClipping.Checked)
 			{
 				Camera.Culling |= Culling.Far;
 			}
@@ -344,7 +343,7 @@ namespace BizHawk.Client.EmuHawk
 			ClearOverlay();
 			InitializeOverlay();
 
-			if (CbxOverlayRenderToFramebuffer.Checked)
+			if (CbxRenderToFramebuffer.Checked)
 			{
 				long a = Rom.Addresses.MainRam.IndexOfDrawRegion;
 				a += Rom.Addresses.MainRam.BaseAddress;
@@ -367,12 +366,12 @@ namespace BizHawk.Client.EmuHawk
 			switch (CmbRenderMode.SelectedIndex)
 			{
 				case 1:
-					CbxCullBackfaces.Checked = true;
-					CbxCullBeyondFarClip.Checked = true;
+					CbxBackfaceCulling.Checked = true;
+					CbxFarClipping.Checked = true;
 					break;
 				default:
-					CbxCullBackfaces.Checked = false;
-					CbxCullBeyondFarClip.Checked = true;
+					CbxBackfaceCulling.Checked = false;
+					CbxFarClipping.Checked = true;
 					break;
 			}
 		}

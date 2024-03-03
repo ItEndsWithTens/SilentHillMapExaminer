@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
@@ -12,7 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
 
     <Reference Include="BizHawk.Bizware.BizwareGL" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Bizware.BizwareGL.dll" Private="false" />
     <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Client.Common.dll" Private="false" />
@@ -27,6 +27,8 @@
     <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+
+    <ProjectReference Include="..\SHME.ExternalTool.Extras\SHME.ExternalTool.Extras.csproj" />
   </ItemGroup>
 
   <!--Node reuse by MSBuild means that after a build, an inline task using the
@@ -50,9 +52,18 @@
     </PropertyGroup>
   </Target>
 
+  <PropertyGroup>
+    <DistDir>$(ArtifactsDir)/dist/</DistDir>
+    <PrepDir>$(DistDir)/prep/</PrepDir>
+  </PropertyGroup>
+
   <Target Name="CreatePrepDir" AfterTargets="PostBuildEvent">
     <RemoveDir Directories="$(PrepDir)" />
     <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).dll" DestinationFolder="$(PrepDir)" />
+    <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).Extras.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll" />
+    <Copy SourceFiles="$(OutputPath)/JsonSettings.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll/JsonSettings" />
+    <Copy SourceFiles="$(OutputPath)/JsonSettings.Autosave.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll/JsonSettings" />
+    <Copy SourceFiles="$(OutputPath)/Castle.Core.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll/JsonSettings" />
     <Copy SourceFiles="$(TopLevelDirectory)/README.md" DestinationFiles="$(PrepDir)/$(MSBuildProjectName).txt" />
   </Target>
 
@@ -62,11 +73,6 @@
     </ItemGroup>
     <Copy SourceFiles="@(FileTree)" DestinationFolder="$(BizHawkOutputDir)/ExternalTools/%(FileTree.RecursiveDir)" />
   </Target>
-
-  <PropertyGroup>
-    <DistDir>$(ArtifactsDir)\dist\</DistDir>
-    <PrepDir>$(DistDir)\prep\</PrepDir>
-  </PropertyGroup>
 
   <Target Name="CreateZip" DependsOnTargets="Build;CreatePrepDir">
     <!--ContinuousIntegrationBuild is necessary to strip local file paths from

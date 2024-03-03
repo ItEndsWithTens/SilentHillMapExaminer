@@ -369,24 +369,14 @@ namespace BizHawk.Client.EmuHawk
 			BtnCameraFly_ClickSecond(this, EventArgs.Empty);
 		}
 
-		private void TbxCameraFlySensitivity_TextChanged(object sender, EventArgs e)
+		private void NudCameraFlySensitivity_ValueChanged(object sender, EventArgs e)
 		{
-			bool success = Single.TryParse(TbxCameraFlySensitivity.Text, out float temp);
-
-			if (success)
-			{
-				_sensitivity = temp;
-			}
+			_sensitivity = (float)NudCameraFlySensitivity.Value;
 		}
 
-		private void TbxCameraFlySpeed_TextChanged(object sender, EventArgs e)
+		private void NudCameraFlySpeed_ValueChanged(object sender, EventArgs e)
 		{
-			bool success = Single.TryParse(TbxCameraFlySpeed.Text, out float temp);
-
-			if (success)
-			{
-				_speed = temp;
-			}
+			_speed = (float)NudCameraFlySpeed.Value;
 		}
 	}
 }

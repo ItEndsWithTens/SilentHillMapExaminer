@@ -32,7 +32,6 @@ namespace BizHawk.Client.EmuHawk
 			CmbFramebufferZoom.DataSource = zooms;
 			CmbFramebufferZoom.ValueMember = "Item1";
 			CmbFramebufferZoom.DisplayMember = "Item2";
-			CmbFramebufferZoom.SelectedIndex = 3;
 		}
 
 		private void SetFramebufferZoom()
@@ -159,16 +158,6 @@ namespace BizHawk.Client.EmuHawk
 		private void CmbFramebufferZoom_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			SetFramebufferZoom();
-		}
-
-		private void NudFramebuffer_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Enter)
-			{
-				BtnFramebufferGrab_Click(this, EventArgs.Empty);
-				e.Handled = true;
-				e.SuppressKeyPress = true;
-			}
 		}
 
 		private void NudFramebuffer_ValueChanged(object sender, EventArgs e)
