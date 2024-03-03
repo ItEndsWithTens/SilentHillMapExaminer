@@ -52,6 +52,11 @@ namespace BizHawk.Client.EmuHawk
 
 		public static void ResetIfBad(this NumericUpDown nud, CustomMainForm form)
 		{
+			if (Decimal.TryParse(nud.Text, out decimal _))
+			{
+				return;
+			}
+
 			string name = form.GetFieldName(nud).Substring(3);
 			BindingFlags flags = BindingFlags.Static | BindingFlags.Public;
 
@@ -64,11 +69,8 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			if (!Decimal.TryParse(nud.Text, out decimal _))
-			{
-				nud.Value = (decimal)info.GetValue(form);
-				nud.Text = nud.Value.ToString(CultureInfo.CurrentCulture);
-			}
+			nud.Value = (decimal)info.GetValue(form);
+			nud.Text = nud.Value.ToString(CultureInfo.CurrentCulture);
 		}
 	}
 
