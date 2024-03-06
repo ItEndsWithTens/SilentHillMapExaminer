@@ -6,6 +6,7 @@ using Nucs.JsonSettings.Modulation.Recovery;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace SHME.ExternalTool.Extras
 {
@@ -36,6 +37,24 @@ namespace SHME.ExternalTool.Extras
 				.WithRecovery(actionR)
 				.LoadNow()
 				.EnableAutosave();
+
+			// Settings that are collections need to be initialized as empty
+			// first, then populated later. Otherwise JsonSettings creates a
+			// series of duplicate entries in your settings file on every load.
+			if (Local.FirstPersonBinds?.Count < DefaultLocalSettings.FirstPersonBinds.Count)
+			{
+				foreach (InputBind d in DefaultLocalSettings.FirstPersonBinds)
+				{
+					bool exists = Local.FirstPersonBinds
+						.Where((l) => l.Command == d.Command)
+						.Any();
+
+					if (!exists)
+					{
+						Local.FirstPersonBinds.Add(d);
+					}
+				}
+			}
 
 			Roaming = JsonSettings
 				.Configure<RoamingSettings>(roamingPath)

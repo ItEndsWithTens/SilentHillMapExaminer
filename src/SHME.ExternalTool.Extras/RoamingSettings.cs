@@ -91,81 +91,81 @@ namespace SHME.ExternalTool.Extras
 		public override string FileName { get; set; } = "roaming.json";
 
 		// Basics tab
-		virtual public bool EnableHarrySection { get; set; } = DefaultRoamingSettings.EnableHarrySection;
-		virtual public bool EnableOverlay { get; set; } = DefaultRoamingSettings.EnableOverlay;
+		public virtual bool EnableHarrySection { get; set; } = DefaultRoamingSettings.EnableHarrySection;
+		public virtual bool EnableOverlay { get; set; } = DefaultRoamingSettings.EnableOverlay;
 
-		virtual public decimal CameraFlySpeed { get; set; } = DefaultRoamingSettings.CameraFlySpeed;
-		virtual public bool HideHarry { get; set; } = DefaultRoamingSettings.HideHarry;
-		virtual public bool ShowFeet { get; set; } = DefaultRoamingSettings.ShowFeet;
-		virtual public decimal EyeHeight { get; set; } = DefaultRoamingSettings.EyeHeight;
-		virtual public bool AlwaysRun { get; set; } = DefaultRoamingSettings.AlwaysRun;
+		public virtual decimal CameraFlySpeed { get; set; } = DefaultRoamingSettings.CameraFlySpeed;
+		public virtual bool HideHarry { get; set; } = DefaultRoamingSettings.HideHarry;
+		public virtual bool ShowFeet { get; set; } = DefaultRoamingSettings.ShowFeet;
+		public virtual decimal EyeHeight { get; set; } = DefaultRoamingSettings.EyeHeight;
+		public virtual bool AlwaysRun { get; set; } = DefaultRoamingSettings.AlwaysRun;
 
-		virtual public bool EnableOverlayCameraReporting { get; set; } = DefaultRoamingSettings.EnableOverlayCameraReporting;
-		virtual public bool ReadLevelDataOnStageLoad { get; set; } = DefaultRoamingSettings.ReadLevelDataOnStageLoad;
-		virtual public bool RenderToFramebuffer { get; set; } = DefaultRoamingSettings.RenderToFramebuffer;
-		virtual public bool BackfaceCulling { get; set; } = DefaultRoamingSettings.BackfaceCulling;
-		virtual public bool FarClipping { get; set; } = DefaultRoamingSettings.FarClipping;
-		virtual public decimal CrosshairLength { get; set; } = DefaultRoamingSettings.CrosshairLength;
-		virtual public decimal FilledOpacity { get; set; } = DefaultRoamingSettings.FilledOpacity;
-		virtual public int RenderMode { get; set; } = DefaultRoamingSettings.RenderMode;
+		public virtual bool EnableOverlayCameraReporting { get; set; } = DefaultRoamingSettings.EnableOverlayCameraReporting;
+		public virtual bool ReadLevelDataOnStageLoad { get; set; } = DefaultRoamingSettings.ReadLevelDataOnStageLoad;
+		public virtual bool RenderToFramebuffer { get; set; } = DefaultRoamingSettings.RenderToFramebuffer;
+		public virtual bool BackfaceCulling { get; set; } = DefaultRoamingSettings.BackfaceCulling;
+		public virtual bool FarClipping { get; set; } = DefaultRoamingSettings.FarClipping;
+		public virtual decimal CrosshairLength { get; set; } = DefaultRoamingSettings.CrosshairLength;
+		public virtual decimal FilledOpacity { get; set; } = DefaultRoamingSettings.FilledOpacity;
+		public virtual int RenderMode { get; set; } = DefaultRoamingSettings.RenderMode;
 
 		// POIs tab
-		virtual public bool SelectedTriggerEnableUpdates { get; set; } = DefaultRoamingSettings.SelectedTriggerEnableUpdates;
-		virtual public int PoiRenderShape { get; set; } = DefaultRoamingSettings.PoiRenderShape;
-		virtual public bool AxisColorsGame { get; set; } = DefaultRoamingSettings.AxisColorsGame;
-		virtual public bool AxisColorsOverlay { get; set; } = DefaultRoamingSettings.AxisColorsOverlay;
-		virtual public bool AxisColorsOff { get; set; } = DefaultRoamingSettings.AxisColorsOff;
+		public virtual bool SelectedTriggerEnableUpdates { get; set; } = DefaultRoamingSettings.SelectedTriggerEnableUpdates;
+		public virtual int PoiRenderShape { get; set; } = DefaultRoamingSettings.PoiRenderShape;
+		public virtual bool AxisColorsGame { get; set; } = DefaultRoamingSettings.AxisColorsGame;
+		public virtual bool AxisColorsOverlay { get; set; } = DefaultRoamingSettings.AxisColorsOverlay;
+		public virtual bool AxisColorsOff { get; set; } = DefaultRoamingSettings.AxisColorsOff;
 
 		// Stats tab
-		virtual public bool EnableStatsReporting { get; set; } = DefaultRoamingSettings.EnableStatsReporting;
+		public virtual bool EnableStatsReporting { get; set; } = DefaultRoamingSettings.EnableStatsReporting;
 
 		// Fog tab
-		virtual public decimal CustomFogR { get; set; } = DefaultRoamingSettings.CustomFogR;
-		virtual public decimal CustomFogG { get; set; } = DefaultRoamingSettings.CustomFogG;
-		virtual public decimal CustomFogB { get; set; } = DefaultRoamingSettings.CustomFogB;
-		virtual public decimal CustomWorldTintR { get; set; } = DefaultRoamingSettings.CustomWorldTintR;
-		virtual public decimal CustomWorldTintG { get; set; } = DefaultRoamingSettings.CustomWorldTintG;
-		virtual public decimal CustomWorldTintB { get; set; } = DefaultRoamingSettings.CustomWorldTintB;
+		public virtual decimal CustomFogR { get; set; } = DefaultRoamingSettings.CustomFogR;
+		public virtual decimal CustomFogG { get; set; } = DefaultRoamingSettings.CustomFogG;
+		public virtual decimal CustomFogB { get; set; } = DefaultRoamingSettings.CustomFogB;
+		public virtual decimal CustomWorldTintR { get; set; } = DefaultRoamingSettings.CustomWorldTintR;
+		public virtual decimal CustomWorldTintG { get; set; } = DefaultRoamingSettings.CustomWorldTintG;
+		public virtual decimal CustomWorldTintB { get; set; } = DefaultRoamingSettings.CustomWorldTintB;
 
 		// Test tab
-		virtual public bool EnableTestModelSection { get; set; } = DefaultRoamingSettings.EnableTestModelSection;
-		virtual public int TestModelScale { get; set; } = DefaultRoamingSettings.TestModelScale;
-		virtual public decimal TestModelX { get; set; } = DefaultRoamingSettings.TestModelX;
-		virtual public decimal TestModelY { get; set; } = DefaultRoamingSettings.TestModelY;
-		virtual public decimal TestModelZ { get; set; } = DefaultRoamingSettings.TestModelZ;
+		public virtual bool EnableTestModelSection { get; set; } = DefaultRoamingSettings.EnableTestModelSection;
+		public virtual int TestModelScale { get; set; } = DefaultRoamingSettings.TestModelScale;
+		public virtual decimal TestModelX { get; set; } = DefaultRoamingSettings.TestModelX;
+		public virtual decimal TestModelY { get; set; } = DefaultRoamingSettings.TestModelY;
+		public virtual decimal TestModelZ { get; set; } = DefaultRoamingSettings.TestModelZ;
 
-		virtual public bool EnableTestBox { get; set; } = DefaultRoamingSettings.EnableTestBox;
-		virtual public decimal TestBoxX { get; set; } = DefaultRoamingSettings.TestBoxX;
-		virtual public decimal TestBoxY { get; set; } = DefaultRoamingSettings.TestBoxY;
-		virtual public decimal TestBoxZ { get; set; } = DefaultRoamingSettings.TestBoxZ;
-		virtual public decimal TestBoxSizeX { get; set; } = DefaultRoamingSettings.TestBoxSizeX;
-		virtual public decimal TestBoxSizeY { get; set; } = DefaultRoamingSettings.TestBoxSizeY;
-		virtual public decimal TestBoxSizeZ { get; set; } = DefaultRoamingSettings.TestBoxSizeZ;
+		public virtual bool EnableTestBox { get; set; } = DefaultRoamingSettings.EnableTestBox;
+		public virtual decimal TestBoxX { get; set; } = DefaultRoamingSettings.TestBoxX;
+		public virtual decimal TestBoxY { get; set; } = DefaultRoamingSettings.TestBoxY;
+		public virtual decimal TestBoxZ { get; set; } = DefaultRoamingSettings.TestBoxZ;
+		public virtual decimal TestBoxSizeX { get; set; } = DefaultRoamingSettings.TestBoxSizeX;
+		public virtual decimal TestBoxSizeY { get; set; } = DefaultRoamingSettings.TestBoxSizeY;
+		public virtual decimal TestBoxSizeZ { get; set; } = DefaultRoamingSettings.TestBoxSizeZ;
 
-		virtual public bool EnableTestLine { get; set; } = DefaultRoamingSettings.EnableTestLine;
-		virtual public decimal TestLineAX { get; set; } = DefaultRoamingSettings.TestLineAX;
-		virtual public decimal TestLineAY { get; set; } = DefaultRoamingSettings.TestLineAY;
-		virtual public decimal TestLineAZ { get; set; } = DefaultRoamingSettings.TestLineAZ;
-		virtual public decimal TestLineBX { get; set; } = DefaultRoamingSettings.TestLineBX;
-		virtual public decimal TestLineBY { get; set; } = DefaultRoamingSettings.TestLineBY;
-		virtual public decimal TestLineBZ { get; set; } = DefaultRoamingSettings.TestLineBZ;
+		public virtual bool EnableTestLine { get; set; } = DefaultRoamingSettings.EnableTestLine;
+		public virtual decimal TestLineAX { get; set; } = DefaultRoamingSettings.TestLineAX;
+		public virtual decimal TestLineAY { get; set; } = DefaultRoamingSettings.TestLineAY;
+		public virtual decimal TestLineAZ { get; set; } = DefaultRoamingSettings.TestLineAZ;
+		public virtual decimal TestLineBX { get; set; } = DefaultRoamingSettings.TestLineBX;
+		public virtual decimal TestLineBY { get; set; } = DefaultRoamingSettings.TestLineBY;
+		public virtual decimal TestLineBZ { get; set; } = DefaultRoamingSettings.TestLineBZ;
 
 
-		virtual public bool EnableTestSheet { get; set; } = DefaultRoamingSettings.EnableTestSheet;
-		virtual public decimal TestSheetX { get; set; } = DefaultRoamingSettings.TestSheetX;
-		virtual public decimal TestSheetY { get; set; } = DefaultRoamingSettings.TestSheetY;
-		virtual public decimal TestSheetZ { get; set; } = DefaultRoamingSettings.TestSheetZ;
-		virtual public decimal TestSheetSizeX { get; set; } = DefaultRoamingSettings.TestSheetSizeX;
-		virtual public decimal TestSheetSizeZ { get; set; } = DefaultRoamingSettings.TestSheetSizeZ;
+		public virtual bool EnableTestSheet { get; set; } = DefaultRoamingSettings.EnableTestSheet;
+		public virtual decimal TestSheetX { get; set; } = DefaultRoamingSettings.TestSheetX;
+		public virtual decimal TestSheetY { get; set; } = DefaultRoamingSettings.TestSheetY;
+		public virtual decimal TestSheetZ { get; set; } = DefaultRoamingSettings.TestSheetZ;
+		public virtual decimal TestSheetSizeX { get; set; } = DefaultRoamingSettings.TestSheetSizeX;
+		public virtual decimal TestSheetSizeZ { get; set; } = DefaultRoamingSettings.TestSheetSizeZ;
 
 		// Framebuffer tab
-		virtual public decimal FramebufferOfsX { get; set; } = DefaultRoamingSettings.FramebufferOfsX;
-		virtual public decimal FramebufferOfsY { get; set; } = DefaultRoamingSettings.FramebufferOfsY;
-		virtual public decimal FramebufferW { get; set; } = DefaultRoamingSettings.FramebufferW;
-		virtual public decimal FramebufferH { get; set; } = DefaultRoamingSettings.FramebufferH;
-		virtual public int FramebufferZoom { get; set; } = DefaultRoamingSettings.FramebufferZoom;
+		public virtual decimal FramebufferOfsX { get; set; } = DefaultRoamingSettings.FramebufferOfsX;
+		public virtual decimal FramebufferOfsY { get; set; } = DefaultRoamingSettings.FramebufferOfsY;
+		public virtual decimal FramebufferW { get; set; } = DefaultRoamingSettings.FramebufferW;
+		public virtual decimal FramebufferH { get; set; } = DefaultRoamingSettings.FramebufferH;
+		public virtual int FramebufferZoom { get; set; } = DefaultRoamingSettings.FramebufferZoom;
 
 		// Misc tab
-		virtual public bool EnableControllerReporting { get; set; } = DefaultRoamingSettings.EnableControllerReporting;
+		public virtual bool EnableControllerReporting { get; set; } = DefaultRoamingSettings.EnableControllerReporting;
 	}
 }

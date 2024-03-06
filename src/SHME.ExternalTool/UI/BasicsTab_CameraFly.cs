@@ -1,4 +1,6 @@
-﻿using SHME.ExternalTool;
+﻿using BizHawk.Client.Common;
+using SHME.ExternalTool;
+using SHME.ExternalTool.UI;
 using System;
 using System.Drawing;
 using System.Numerics;
@@ -175,7 +177,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		// These use Silent Hill coordinates, i.e. +X east, +Y down, +Z north.
-		private Vector3 _worldUp = new Vector3(0.0f, -1.0f, 0.0f);
+		private Vector3 _worldUp = new(0.0f, -1.0f, 0.0f);
 		private Vector3 _camPos;
 		private Vector3 _camLook;
 		private Vector3 _camRight;
@@ -367,6 +369,24 @@ namespace BizHawk.Client.EmuHawk
 		private void BtnCameraFly_LostFocus(object sender, EventArgs e)
 		{
 			BtnCameraFly_ClickSecond(this, EventArgs.Empty);
+		}
+
+		// TODO: Test this in Linux! I think I've had issues with keeping
+		// references to Forms around instead of making a new one every
+		// time I access it? Need to double check.
+		private InputConfigForm _inputConfigForm;
+		private void BtnInputConfig_Click(object sender, EventArgs e)
+		{
+			_inputConfigForm?.Dispose();
+			_inputConfigForm = new InputConfigForm(Settings);
+
+			// I'll need these stop/start sound things if I have to make
+			// this form modal, unfortunately, to avoid the audio hitching.
+			// Come to think of it I should add calls to this for the various
+			// color picker dialogs.
+			//DialogController.StopSound();
+			_inputConfigForm.Show(Owner);
+			//DialogController.StartSound();
 		}
 
 		private void NudCameraFlySensitivity_ValueChanged(object sender, EventArgs e)

@@ -428,6 +428,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonRight = new System.Windows.Forms.Label();
             this.LblButtonDown = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.BtnInputConfig = new System.Windows.Forms.Button();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -1279,6 +1280,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel39.Controls.Add(this.label4, 1, 1);
             this.tableLayoutPanel39.Controls.Add(this.CbxCameraFlyInvert, 0, 1);
             this.tableLayoutPanel39.Controls.Add(this.NudCameraFlySensitivity, 2, 1);
+            this.tableLayoutPanel39.Controls.Add(this.BtnInputConfig, 1, 0);
             this.tableLayoutPanel39.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel39.Location = new System.Drawing.Point(3, 72);
             this.tableLayoutPanel39.Name = "tableLayoutPanel39";
@@ -6417,6 +6419,16 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonDown.TabIndex = 15;
             this.LblButtonDown.Text = "Down";
             // 
+            // BtnInputConfig
+            // 
+            this.BtnInputConfig.Location = new System.Drawing.Point(62, 3);
+            this.BtnInputConfig.Name = "BtnInputConfig";
+            this.BtnInputConfig.Size = new System.Drawing.Size(75, 23);
+            this.BtnInputConfig.TabIndex = 12;
+            this.BtnInputConfig.Text = "Input config";
+            this.BtnInputConfig.UseVisualStyleBackColor = true;
+            this.BtnInputConfig.Click += new System.EventHandler(this.BtnInputConfig_Click);
+            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -7035,5 +7047,6 @@ namespace BizHawk.Client.EmuHawk
 		private PictureBox PbxMapGraphic;
 		private NumericUpDown NudCameraFlySpeed;
 		private NumericUpDown NudCameraFlySensitivity;
+		private Button BtnInputConfig;
 	}
 }

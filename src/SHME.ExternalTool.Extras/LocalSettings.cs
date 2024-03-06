@@ -1,6 +1,8 @@
 ﻿using Nucs.JsonSettings;
 using Nucs.JsonSettings.Modulation;
 using System;
+using System.Collections.ObjectModel;
+using System.Windows.Forms;
 
 namespace SHME.ExternalTool.Extras
 {
@@ -16,6 +18,17 @@ namespace SHME.ExternalTool.Extras
 		public static readonly decimal CameraFlySensitivity = 0.25m;
 
 		public static readonly int SaveButton;
+
+		public static readonly Collection<InputBind> FirstPersonBinds = new([
+			new(GameCommand.Forward, Keys.W, MouseButtons.None),
+			new(GameCommand.Backward, Keys.S, MouseButtons.None),
+			new(GameCommand.Action, Keys.E, MouseButtons.Left),
+			new(GameCommand.Aim, Keys.Q, MouseButtons.Right),
+			new(GameCommand.Light, Keys.F, MouseButtons.None),
+			new(GameCommand.Run, Keys.ShiftKey, MouseButtons.None),
+			new(GameCommand.View, Keys.Z, MouseButtons.None),
+			new(GameCommand.StepLeft, Keys.A, MouseButtons.None),
+			new(GameCommand.StepRight, Keys.D, MouseButtons.None)]);
 	}
 
 	// Hiding this class, and RoamingSettings, in a satellite assembly turns out
@@ -30,10 +43,12 @@ namespace SHME.ExternalTool.Extras
 		public override string FileName { get; set; } = "local.json";
 
 		// Basics tab
-		virtual public bool CameraFlyInvert { get; set; } = DefaultLocalSettings.CameraFlyInvert;
-		virtual public decimal CameraFlySensitivity { get; set; } = DefaultLocalSettings.CameraFlySensitivity;
+		public virtual bool CameraFlyInvert { get; set; } = DefaultLocalSettings.CameraFlyInvert;
+		public virtual decimal CameraFlySensitivity { get; set; } = DefaultLocalSettings.CameraFlySensitivity;
+
+		public virtual Collection<InputBind> FirstPersonBinds { get; } = [];
 
 		// Save tab
-		virtual public int SaveButton { get; set; } = DefaultLocalSettings.SaveButton;
+		public virtual int SaveButton { get; set; } = DefaultLocalSettings.SaveButton;
 	}
 }

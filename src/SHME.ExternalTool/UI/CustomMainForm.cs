@@ -692,6 +692,8 @@ namespace BizHawk.Client.EmuHawk
 			FixedPointErrorClearTimer?.Dispose();
 			AnglesErrorClearTimer?.Dispose();
 
+			_inputConfigForm?.Dispose();
+
 			Settings?.Dispose();
 
 			GameSurface = null;

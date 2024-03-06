@@ -1,4 +1,5 @@
 ﻿using SHME.ExternalTool;
+using SHME.ExternalTool.Extras;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -122,62 +123,84 @@ namespace BizHawk.Client.EmuHawk
 			{
 				return;
 			}
-
-			switch (e.KeyCode)
+			else if (e.KeyCode == Keys.Escape)
 			{
-				case Keys.W:
+				FirstPersonEnabled = false;
+				return;
+			}
+
+			GameCommand? command = Settings.Local.FirstPersonBinds
+				.Where((bind) => bind.KeyBind == e.KeyCode)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
+			{
+				case GameCommand.Forward:
 					_forward = true;
 					break;
-				case Keys.S:
+				case GameCommand.Backward:
 					_backward = true;
 					break;
-				case Keys.A:
-					_stepL = true;
-					break;
-				case Keys.D:
-					_stepR = true;
-					break;
-				case Keys.E:
+				case GameCommand.Action:
 					_action = true;
 					break;
-				case Keys.F:
+				case GameCommand.Aim:
+					_aim = true;
+					break;
+				case GameCommand.Light:
 					_light = true;
 					break;
-				case Keys.ShiftKey:
+				case GameCommand.Run:
 					_run = !CbxAlwaysRun.Checked;
 					break;
-				case Keys.Escape:
-					FirstPersonEnabled = false;
+				case GameCommand.StepLeft:
+					_stepL = true;
 					break;
+				case GameCommand.StepRight:
+					_stepR = true;
+					break;
+				case GameCommand.None:
+				case null:
 				default:
 					break;
 			}
 		}
 		private void BtnFirstPerson_KeyUp(object sender, KeyEventArgs e)
 		{
-			switch (e.KeyCode)
+			GameCommand? command = Settings.Local.FirstPersonBinds
+				.Where((bind) => bind.KeyBind == e.KeyCode)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
 			{
-				case Keys.W:
+				case GameCommand.Forward:
 					_forward = false;
 					break;
-				case Keys.S:
+				case GameCommand.Backward:
 					_backward = false;
 					break;
-				case Keys.A:
-					_stepL = false;
-					break;
-				case Keys.D:
-					_stepR = false;
-					break;
-				case Keys.E:
+				case GameCommand.Action:
 					_action = false;
 					break;
-				case Keys.F:
+				case GameCommand.Aim:
+					_aim = false;
+					break;
+				case GameCommand.Light:
 					_light = false;
 					break;
-				case Keys.ShiftKey:
+				case GameCommand.Run:
 					_run = CbxAlwaysRun.Checked;
 					break;
+				case GameCommand.StepLeft:
+					_stepL = false;
+					break;
+				case GameCommand.StepRight:
+					_stepR = false;
+					break;
+				case GameCommand.None:
+				case null:
 				default:
 					break;
 			}
@@ -191,7 +214,8 @@ namespace BizHawk.Client.EmuHawk
 		/// </summary>
 		private float? _forcedCameraYaw;
 		/// <summary>
-		/// 
+		/// Whether to ignore the next attempt to forcibly aim the mouselook
+		/// camera. Useful on initial tool load, or when loading a save state.
 		/// </summary>
 		private bool _suppressForcedCameraYaw = true;
 
@@ -272,26 +296,44 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnFirstPerson_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (e.Button == MouseButtons.Left)
-			{
-				_action = true;
-			}
+			GameCommand? command = Settings.Local.FirstPersonBinds
+				.Where((bind) => bind.MouseBind == e.Button)
+				.FirstOrDefault()
+				?.Command;
 
-			if (e.Button == MouseButtons.Right)
+			switch (command)
 			{
-				_aim = true;
+				case GameCommand.Action:
+					_action = true;
+					break;
+				case GameCommand.Aim:
+					_aim = true;
+					break;
+				case GameCommand.None:
+				case null:
+				default:
+					break;
 			}
 		}
 		private void BtnFirstPerson_MouseUp(object sender, MouseEventArgs e)
 		{
-			if (e.Button == MouseButtons.Left)
-			{
-				_action = false;
-			}
+			GameCommand? command = Settings.Local.FirstPersonBinds
+				.Where((bind) => bind.MouseBind == e.Button)
+				.FirstOrDefault()
+				?.Command;
 
-			if (e.Button == MouseButtons.Right)
+			switch (command)
 			{
-				_aim = false;
+				case GameCommand.Action:
+					_action = false;
+					break;
+				case GameCommand.Aim:
+					_aim = false;
+					break;
+				case GameCommand.None:
+				case null:
+				default:
+					break;
 			}
 		}
 
