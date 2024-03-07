@@ -93,7 +93,9 @@ namespace BizHawk.Client.EmuHawk
 				Color = Color.FromArgb((int)NudCustomFogR.Value, (int)NudCustomFogG.Value, (int)NudCustomFogB.Value)
 			};
 
+			DialogController.StopSound();
 			DialogResult result = dialog.ShowDialog(this);
+			DialogController.StartSound();
 
 			if (result == DialogResult.OK)
 			{
@@ -135,7 +137,9 @@ namespace BizHawk.Client.EmuHawk
 				Color = Color.FromArgb((int)NudCustomWorldTintR.Value, (int)NudCustomWorldTintG.Value, (int)NudCustomWorldTintB.Value)
 			};
 
+			DialogController.StopSound();
 			DialogResult result = dialog.ShowDialog(this);
+			DialogController.StartSound();
 
 			if (result == DialogResult.OK)
 			{

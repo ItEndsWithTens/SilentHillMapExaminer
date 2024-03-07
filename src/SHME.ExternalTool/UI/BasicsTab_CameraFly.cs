@@ -459,13 +459,7 @@ namespace BizHawk.Client.EmuHawk
 				Text = $"{ToolName} input binds"
 			};
 
-			// I'll need these stop/start sound things if I have to make
-			// this form modal, unfortunately, to avoid the audio hitching.
-			// Come to think of it I should add calls to this for the various
-			// color picker dialogs.
-			//DialogController.StopSound();
 			_inputConfigForm.Show(Owner);
-			//DialogController.StartSound();
 		}
 
 		private void NudCameraFlySensitivity_ValueChanged(object sender, EventArgs e)
