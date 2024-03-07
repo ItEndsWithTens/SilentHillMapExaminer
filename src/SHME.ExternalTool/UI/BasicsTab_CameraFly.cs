@@ -450,16 +450,16 @@ namespace BizHawk.Client.EmuHawk
 		// TODO: Test this in Linux! I think I've had issues with keeping
 		// references to Forms around instead of making a new one every
 		// time I access it? Need to double check.
-		private InputConfigForm _inputConfigForm;
-		private void BtnInputConfig_Click(object sender, EventArgs e)
+		private InputBindsForm? _inputBindsForm;
+		private void BtnInputBinds_Click(object sender, EventArgs e)
 		{
-			_inputConfigForm?.Dispose();
-			_inputConfigForm = new InputConfigForm(Settings)
+			_inputBindsForm?.Dispose();
+			_inputBindsForm = new InputBindsForm(Settings)
 			{
 				Text = $"{ToolName} input binds"
 			};
 
-			_inputConfigForm.Show(Owner);
+			_inputBindsForm.Show(Owner);
 		}
 
 		private void NudCameraFlySensitivity_ValueChanged(object sender, EventArgs e)

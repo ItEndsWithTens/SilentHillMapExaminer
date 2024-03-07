@@ -2,7 +2,7 @@
 
 namespace SHME.ExternalTool.UI
 {
-	public partial class InputConfigForm
+	public partial class InputBindsForm
 	{
 		private GroupBox GbxFirstPersonInputBinds;
 
@@ -225,7 +225,7 @@ namespace SHME.ExternalTool.UI
             this.ClientSize = new System.Drawing.Size(1008, 985);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "InputConfigForm";
-            this.Shown += new System.EventHandler(this.InputConfigForm_Shown);
+            this.Shown += new System.EventHandler(this.InputBindsForm_Shown);
             this.GbxFirstPersonInputBinds.ResumeLayout(false);
             this.TlpConfigFpsInput.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DgvFpsInputBinds)).EndInit();

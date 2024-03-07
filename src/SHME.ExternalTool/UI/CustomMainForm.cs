@@ -692,7 +692,7 @@ namespace BizHawk.Client.EmuHawk
 			FixedPointErrorClearTimer?.Dispose();
 			AnglesErrorClearTimer?.Dispose();
 
-			_inputConfigForm?.Dispose();
+			_inputBindsForm?.Dispose();
 
 			Settings?.Dispose();
 

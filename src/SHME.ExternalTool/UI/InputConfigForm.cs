@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SHME.ExternalTool.UI
 {
-	public partial class InputConfigForm : Form
+	public partial class InputBindsForm : Form
 	{
 		private readonly Settings _settings;
 
@@ -56,7 +56,7 @@ namespace SHME.ExternalTool.UI
 			}
 		}
 
-		public InputConfigForm(Settings settings)
+		public InputBindsForm(Settings settings)
 		{
 			InitializeComponent();
 
@@ -98,7 +98,7 @@ namespace SHME.ExternalTool.UI
 			Editing = false;
 		}
 
-		private void InputConfigForm_Shown(object sender, EventArgs e)
+		private void InputBindsForm_Shown(object sender, EventArgs e)
 		{
 			DgvFlyInputBinds.ClearSelection();
 			DgvFpsInputBinds.ClearSelection();
