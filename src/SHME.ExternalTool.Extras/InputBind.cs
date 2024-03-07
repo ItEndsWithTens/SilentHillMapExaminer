@@ -24,7 +24,7 @@ namespace SHME.ExternalTool.Extras
 		Option
 	}
 
-	public class InputBind(ShmeCommand command, Keys keyBind, MouseButtons mouseBind, string buttonName)
+	public class InputBind(ShmeCommand command, Keys keyBind, MouseButtons mouseBind)
 	{
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ShmeCommand Command { get; set; } = command;
@@ -35,13 +35,10 @@ namespace SHME.ExternalTool.Extras
 		[JsonConverter(typeof(StringEnumConverter))]
 		public MouseButtons MouseBind { get; set; } = mouseBind;
 
-		[JsonIgnore]
-		public string ButtonName { get; set; } = buttonName;
-
-		public InputBind(ShmeCommand command, Keys keyBind, MouseButtons mouseBind) : this(command, keyBind, mouseBind, String.Empty)
+		public InputBind() : this(ShmeCommand.None, Keys.None, MouseButtons.None)
 		{
 		}
-		public InputBind(InputBind b) : this(b.Command, b.KeyBind, b.MouseBind, b.ButtonName)
+		public InputBind(InputBind b) : this(b.Command, b.KeyBind, b.MouseBind)
 		{
 		}
 	}
