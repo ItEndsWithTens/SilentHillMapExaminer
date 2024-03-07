@@ -47,12 +47,19 @@ namespace SHME.ExternalTool.UI
 					{
 						_settings.Local.Save();
 					}
+					else
+					{
+						_suppressSave = false;
+					}
 
 					cell.Style.SelectionBackColor = DgvFpsInputBinds.DefaultCellStyle.SelectionBackColor;
 					cell.Style.SelectionForeColor = DgvFpsInputBinds.DefaultCellStyle.SelectionForeColor;
-
-					_suppressSave = false;
 				}
+
+				// Toggling AutoSizeMode off and on again is an easy way to auto
+				// size the column after a change.
+				cell.OwningColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+				cell.OwningColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 			}
 		}
 
@@ -69,22 +76,46 @@ namespace SHME.ExternalTool.UI
 
 			_settings = settings;
 
-			DgvFlyInputBinds.DataSource = _settings.Local.FlyBinds;
-			DgvFpsInputBinds.DataSource = _settings.Local.FpsBinds;
+			BuildColumns(DgvFlyInputBinds, _settings.Local.FlyBinds);
+			BuildColumns(DgvFpsInputBinds, _settings.Local.FpsBinds);
+		}
+
+		private static void BuildColumns(DataGridView dgv, Collection<InputBind> binds)
+		{
+			dgv.AutoGenerateColumns = false;
+			dgv.DataSource = binds;
 
 			// Columns don't need to be sortable anyway, but this property turns
 			// out to be critical to allow the header text to be fully centered,
 			// otherwise the calculations leave room for the sort triangle. The
 			// first column doesn't strictly need this, since it's not editable,
 			// but no harm setting it explicitly for all.
-			foreach (DataGridViewColumn col in DgvFlyInputBinds.Columns)
+			var sortMode = DataGridViewColumnSortMode.NotSortable;
+
+			var commandColumn = new DataGridViewTextBoxColumn()
 			{
-				col.SortMode = DataGridViewColumnSortMode.NotSortable;
-			}
-			foreach (DataGridViewColumn col in DgvFpsInputBinds.Columns)
+				DataPropertyName = "Command",
+				HeaderText = "Command",
+				SortMode = sortMode
+			};
+
+			var keyColumn = new DataGridViewTextBoxColumn()
 			{
-				col.SortMode = DataGridViewColumnSortMode.NotSortable;
-			}
+				DataPropertyName = "KeyBind",
+				HeaderText = "Key",
+				SortMode = sortMode
+			};
+
+			var mouseColumn = new DataGridViewTextBoxColumn()
+			{
+				DataPropertyName = "MouseBind",
+				HeaderText = "Mouse button",
+				SortMode = sortMode
+			};
+
+			dgv.Columns.Add(commandColumn);
+			dgv.Columns.Add(keyColumn);
+			dgv.Columns.Add(mouseColumn);
 		}
 
 		private void FinishEditing(bool suppressSave = false)
