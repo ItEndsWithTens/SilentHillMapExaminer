@@ -117,6 +117,7 @@ namespace BizHawk.Client.EmuHawk
 		private bool _view;
 		private bool _stepL;
 		private bool _stepR;
+		private bool _map;
 		private void BtnCameraFps_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (!FpsEnabled)
@@ -208,6 +209,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private Point _firstPersonCenter;
 
+		private Dictionary<string, string> _buttonNames = [];
+
 		/// <summary>
 		/// The camera yaw to apply when forcibly aiming the mouselook camera,
 		/// for example when going through a door in first person.
@@ -235,58 +238,28 @@ namespace BizHawk.Client.EmuHawk
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealY, y);
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealZ, z);
 
-			// For future copy pasting: P1 △
-
-			if (_forward)
-				Joy.Set("P1 D-Pad Up", true);
-			else
-				Joy.Set("P1 D-Pad Up", false);
-
-			if (_backward)
-				Joy.Set("P1 D-Pad Down", true);
-			else
-				Joy.Set("P1 D-Pad Down", false);
+			Joy.Set(_buttonNames["Up"], _forward);
+			Joy.Set(_buttonNames["Down"], _backward);
+			Joy.Set(_buttonNames["X"], _action);
+			Joy.Set(_buttonNames["R2"], _aim);
+			Joy.Set(_buttonNames["Circle"], _light);
+			Joy.Set(_buttonNames["Square"], _run);
+			Joy.Set(_buttonNames["L2"], _view);
+			Joy.Set(_buttonNames["Triangle"], _map);
 
 			// Sending both sidestep inputs at the same time attempts to do
 			// an about-face, but since the camera's under user control, the
 			// sidestep controls lock up. Just silently ignore such input.
 			if (_stepL && _stepR)
 			{
-				Joy.Set("P1 L1", false);
-				Joy.Set("P1 R1", false);
+				Joy.Set(_buttonNames["L1"], false);
+				Joy.Set(_buttonNames["R1"], false);
 			}
 			else
 			{
-				if (_stepL)
-					Joy.Set("P1 L1", true);
-				else
-					Joy.Set("P1 L1", false);
-
-				if (_stepR)
-					Joy.Set("P1 R1", true);
-				else
-					Joy.Set("P1 R1", false);
+				Joy.Set(_buttonNames["L1"], _stepL);
+				Joy.Set(_buttonNames["R1"], _stepR);
 			}
-
-			if (_run)
-				Joy.Set("P1 □", true);
-			else
-				Joy.Set("P1 □", false);
-
-			if (_action)
-				Joy.Set(Octoshock != null ? "P1 Cross" : "P1 X", true);
-			else
-				Joy.Set(Octoshock != null ? "P1 Cross" : "P1 X", false);
-
-			if (_aim)
-				Joy.Set("P1 R2", true);
-			else
-				Joy.Set("P1 R2", false);
-
-			if (_light)
-				Joy.Set("P1 ○", true);
-			else
-				Joy.Set("P1 ○", false);
 		}
 
 		private void BtnCameraFps_LostFocus(object sender, EventArgs e)

@@ -252,7 +252,7 @@ namespace BizHawk.Client.EmuHawk
 		// TODO: Make aim and move speeds the same whether rendering to the
 		// framebuffer or not; look up what I believe is called the "delta time"
 		// approach real games use for consistent input with varying framerate.
-		private float _sensitivity = 0.25f;
+		private float _sensitivity;
 		private Point _aimCenter;
 		private void AimCamera(Button btn)
 		{
@@ -412,7 +412,6 @@ namespace BizHawk.Client.EmuHawk
 					break;
 			}
 		}
-
 		private void BtnCameraFly_MouseUp(object sender, MouseEventArgs e)
 		{
 			ShmeCommand? command = Settings.Local.FlyBinds
