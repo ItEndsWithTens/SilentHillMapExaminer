@@ -19,10 +19,12 @@ namespace SHME.ExternalTool.Extras
 		Aim,
 		Light,
 		Run,
-		View
+		View,
+		Map,
+		Option
 	}
 
-	public class InputBind(ShmeCommand command, Keys keyBind, MouseButtons mouseBind)
+	public class InputBind(ShmeCommand command, Keys keyBind, MouseButtons mouseBind, string buttonName)
 	{
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ShmeCommand Command { get; set; } = command;
@@ -33,7 +35,13 @@ namespace SHME.ExternalTool.Extras
 		[JsonConverter(typeof(StringEnumConverter))]
 		public MouseButtons MouseBind { get; set; } = mouseBind;
 
-		public InputBind(InputBind b) : this(b.Command, b.KeyBind, b.MouseBind)
+		[JsonIgnore]
+		public string ButtonName { get; set; } = buttonName;
+
+		public InputBind(ShmeCommand command, Keys keyBind, MouseButtons mouseBind) : this(command, keyBind, mouseBind, String.Empty)
+		{
+		}
+		public InputBind(InputBind b) : this(b.Command, b.KeyBind, b.MouseBind, b.ButtonName)
 		{
 		}
 	}

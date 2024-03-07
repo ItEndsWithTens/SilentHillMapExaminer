@@ -36,7 +36,8 @@ namespace SHME.ExternalTool.Extras
 			new(ShmeCommand.Aim, Keys.Q, MouseButtons.Right),
 			new(ShmeCommand.Light, Keys.F, MouseButtons.None),
 			new(ShmeCommand.Run, Keys.ShiftKey, MouseButtons.None),
-			new(ShmeCommand.View, Keys.Z, MouseButtons.None)]);
+			new(ShmeCommand.View, Keys.Z, MouseButtons.None),
+			new(ShmeCommand.Map, Keys.C, MouseButtons.None)]);
 	}
 
 	// Hiding this class, and RoamingSettings, in a satellite assembly turns out

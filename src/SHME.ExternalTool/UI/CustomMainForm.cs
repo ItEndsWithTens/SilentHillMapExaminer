@@ -164,9 +164,9 @@ namespace BizHawk.Client.EmuHawk
 		{
 			base.Restart();
 
-			SetButtonNames();
-
 			LoadSettings();
+
+			SetButtonNames();
 
 			LblTestModelScale.Text = TrkTestModelScale.Value.ToString(CultureInfo.CurrentCulture);
 
@@ -703,32 +703,34 @@ namespace BizHawk.Client.EmuHawk
 
 		private void SetButtonNames()
 		{
-			_buttonNames.Clear();
+			Dictionary<ShmeCommand, InputBind> dict = Settings.Local.FpsBinds
+				.ToDictionary((item) => item.Command);
+
 			if (Octoshock != null)
 			{
-				_buttonNames.Add("Up", "P1 Up");
-				_buttonNames.Add("Down", "P1 Down");
-				_buttonNames.Add("X", "P1 Cross");
-				_buttonNames.Add("R2", "P1 R2");
-				_buttonNames.Add("Circle", "P1 Circle");
-				_buttonNames.Add("Square", "P1 Square");
-				_buttonNames.Add("L2", "P1 L2");
-				_buttonNames.Add("L1", "P1 L1");
-				_buttonNames.Add("R1", "P1 R1");
-				_buttonNames.Add("Triangle", "P1 Triangle");
+				dict[ShmeCommand.Forward].ButtonName = "P1 Up";
+				dict[ShmeCommand.Backward].ButtonName ="P1 Down";
+				dict[ShmeCommand.Action].ButtonName ="P1 Cross";
+				dict[ShmeCommand.Aim].ButtonName = "P1 R2";
+				dict[ShmeCommand.Light].ButtonName ="P1 Circle";
+				dict[ShmeCommand.Run].ButtonName ="P1 Square";
+				dict[ShmeCommand.View].ButtonName = "P1 L2";
+				dict[ShmeCommand.Left].ButtonName = "P1 L1";
+				dict[ShmeCommand.Right].ButtonName = "P1 R1";
+				dict[ShmeCommand.Map].ButtonName ="P1 Triangle";
 			}
 			else
 			{
-				_buttonNames.Add("Up", "P1 D-Pad Up");
-				_buttonNames.Add("Down", "P1 D-Pad Down");
-				_buttonNames.Add("X", "P1 X");
-				_buttonNames.Add("R2", "P1 R2");
-				_buttonNames.Add("Circle", "P1 ○");
-				_buttonNames.Add("Square", "P1 □");
-				_buttonNames.Add("L2", "P1 L2");
-				_buttonNames.Add("L1", "P1 L1");
-				_buttonNames.Add("R1", "P1 R1");
-				_buttonNames.Add("Triangle", "P1 △");
+				dict[ShmeCommand.Forward].ButtonName = "P1 D-Pad Up";
+				dict[ShmeCommand.Backward].ButtonName = "P1 D-Pad Down";
+				dict[ShmeCommand.Action].ButtonName = "P1 X";
+				dict[ShmeCommand.Aim].ButtonName = "P1 R2";
+				dict[ShmeCommand.Light].ButtonName = "P1 ○";
+				dict[ShmeCommand.Run].ButtonName = "P1 □";
+				dict[ShmeCommand.View].ButtonName = "P1 L2";
+				dict[ShmeCommand.Left].ButtonName = "P1 L1";
+				dict[ShmeCommand.Right].ButtonName = "P1 R1";
+				dict[ShmeCommand.Map].ButtonName = "P1 △";
 			}
 		}
 

@@ -161,6 +161,9 @@ namespace BizHawk.Client.EmuHawk
 				case ShmeCommand.Run:
 					_run = !CbxAlwaysRun.Checked;
 					break;
+				case ShmeCommand.Map:
+					_map = true;
+					break;
 				case ShmeCommand.None:
 				case null:
 				default:
@@ -200,6 +203,9 @@ namespace BizHawk.Client.EmuHawk
 				case ShmeCommand.Run:
 					_run = CbxAlwaysRun.Checked;
 					break;
+				case ShmeCommand.Map:
+					_map = false;
+					break;
 				case ShmeCommand.None:
 				case null:
 				default:
@@ -208,8 +214,6 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private Point _firstPersonCenter;
-
-		private Dictionary<string, string> _buttonNames = [];
 
 		/// <summary>
 		/// The camera yaw to apply when forcibly aiming the mouselook camera,
@@ -238,27 +242,29 @@ namespace BizHawk.Client.EmuHawk
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealY, y);
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealZ, z);
 
-			Joy.Set(_buttonNames["Up"], _forward);
-			Joy.Set(_buttonNames["Down"], _backward);
-			Joy.Set(_buttonNames["X"], _action);
-			Joy.Set(_buttonNames["R2"], _aim);
-			Joy.Set(_buttonNames["Circle"], _light);
-			Joy.Set(_buttonNames["Square"], _run);
-			Joy.Set(_buttonNames["L2"], _view);
-			Joy.Set(_buttonNames["Triangle"], _map);
+			var dict = Settings.Local.FpsBinds.ToDictionary((item) => item.Command);
+
+			Joy.Set(dict[ShmeCommand.Forward].ButtonName, _forward);
+			Joy.Set(dict[ShmeCommand.Backward].ButtonName, _backward);
+			Joy.Set(dict[ShmeCommand.Action].ButtonName, _action);
+			Joy.Set(dict[ShmeCommand.Aim].ButtonName, _aim);
+			Joy.Set(dict[ShmeCommand.Light].ButtonName, _light);
+			Joy.Set(dict[ShmeCommand.Run].ButtonName, _run);
+			Joy.Set(dict[ShmeCommand.View].ButtonName, _view);
+			Joy.Set(dict[ShmeCommand.Map].ButtonName, _map);
 
 			// Sending both sidestep inputs at the same time attempts to do
 			// an about-face, but since the camera's under user control, the
 			// sidestep controls lock up. Just silently ignore such input.
 			if (_stepL && _stepR)
 			{
-				Joy.Set(_buttonNames["L1"], false);
-				Joy.Set(_buttonNames["R1"], false);
+				Joy.Set(dict[ShmeCommand.Left].ButtonName, false);
+				Joy.Set(dict[ShmeCommand.Right].ButtonName, false);
 			}
 			else
 			{
-				Joy.Set(_buttonNames["L1"], _stepL);
-				Joy.Set(_buttonNames["R1"], _stepR);
+				Joy.Set(dict[ShmeCommand.Left].ButtonName, _stepL);
+				Joy.Set(dict[ShmeCommand.Right].ButtonName, _stepR);
 			}
 		}
 
