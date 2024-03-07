@@ -41,17 +41,32 @@ namespace SHME.ExternalTool.Extras
 			// Settings that are collections need to be initialized as empty
 			// first, then populated later. Otherwise JsonSettings creates a
 			// series of duplicate entries in your settings file on every load.
-			if (Local.FirstPersonBinds?.Count < DefaultLocalSettings.FirstPersonBinds.Count)
+			if (Local.FpsBinds?.Count < DefaultLocalSettings.FpsBinds.Count)
 			{
-				foreach (InputBind d in DefaultLocalSettings.FirstPersonBinds)
+				foreach (InputBind d in DefaultLocalSettings.FpsBinds)
 				{
-					bool exists = Local.FirstPersonBinds
+					bool exists = Local.FpsBinds
 						.Where((l) => l.Command == d.Command)
 						.Any();
 
 					if (!exists)
 					{
-						Local.FirstPersonBinds.Add(d);
+						Local.FpsBinds.Add(new InputBind(d));
+					}
+				}
+			}
+
+			if (Local.FlyBinds?.Count < DefaultLocalSettings.FlyBinds.Count)
+			{
+				foreach (InputBind d in DefaultLocalSettings.FlyBinds)
+				{
+					bool exists = Local.FlyBinds
+						.Where((l) => l.Command == d.Command)
+						.Any();
+
+					if (!exists)
+					{
+						Local.FlyBinds.Add(new InputBind(d));
 					}
 				}
 			}

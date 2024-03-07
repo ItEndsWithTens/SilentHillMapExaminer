@@ -19,16 +19,24 @@ namespace SHME.ExternalTool.Extras
 
 		public static readonly int SaveButton;
 
-		public static readonly Collection<InputBind> FirstPersonBinds = new([
-			new(GameCommand.Forward, Keys.W, MouseButtons.None),
-			new(GameCommand.Backward, Keys.S, MouseButtons.None),
-			new(GameCommand.Action, Keys.E, MouseButtons.Left),
-			new(GameCommand.Aim, Keys.Q, MouseButtons.Right),
-			new(GameCommand.Light, Keys.F, MouseButtons.None),
-			new(GameCommand.Run, Keys.ShiftKey, MouseButtons.None),
-			new(GameCommand.View, Keys.Z, MouseButtons.None),
-			new(GameCommand.StepLeft, Keys.A, MouseButtons.None),
-			new(GameCommand.StepRight, Keys.D, MouseButtons.None)]);
+		public static readonly Collection<InputBind> FlyBinds = new([
+			new(ShmeCommand.Forward, Keys.W, MouseButtons.None),
+			new(ShmeCommand.Backward, Keys.S, MouseButtons.None),
+			new(ShmeCommand.Left, Keys.A, MouseButtons.None),
+			new(ShmeCommand.Right, Keys.D, MouseButtons.None),
+			new(ShmeCommand.Up, Keys.E, MouseButtons.None),
+			new(ShmeCommand.Down, Keys.Q, MouseButtons.None)]);
+
+		public static readonly Collection<InputBind> FpsBinds = new([
+			new(ShmeCommand.Forward, Keys.W, MouseButtons.None),
+			new(ShmeCommand.Backward, Keys.S, MouseButtons.None),
+			new(ShmeCommand.Left, Keys.A, MouseButtons.None),
+			new(ShmeCommand.Right, Keys.D, MouseButtons.None),
+			new(ShmeCommand.Action, Keys.E, MouseButtons.Left),
+			new(ShmeCommand.Aim, Keys.Q, MouseButtons.Right),
+			new(ShmeCommand.Light, Keys.F, MouseButtons.None),
+			new(ShmeCommand.Run, Keys.ShiftKey, MouseButtons.None),
+			new(ShmeCommand.View, Keys.Z, MouseButtons.None)]);
 	}
 
 	// Hiding this class, and RoamingSettings, in a satellite assembly turns out
@@ -46,7 +54,8 @@ namespace SHME.ExternalTool.Extras
 		public virtual bool CameraFlyInvert { get; set; } = DefaultLocalSettings.CameraFlyInvert;
 		public virtual decimal CameraFlySensitivity { get; set; } = DefaultLocalSettings.CameraFlySensitivity;
 
-		public virtual Collection<InputBind> FirstPersonBinds { get; } = [];
+		public virtual Collection<InputBind> FlyBinds { get; } = [];
+		public virtual Collection<InputBind> FpsBinds { get; } = [];
 
 		// Save tab
 		public virtual int SaveButton { get; set; } = DefaultLocalSettings.SaveButton;

@@ -72,8 +72,9 @@ namespace BizHawk.Client.EmuHawk
             this.label4 = new System.Windows.Forms.Label();
             this.CbxCameraFlyInvert = new System.Windows.Forms.CheckBox();
             this.NudCameraFlySensitivity = new System.Windows.Forms.NumericUpDown();
+            this.BtnInputConfig = new System.Windows.Forms.Button();
             this.tableLayoutPanel38 = new System.Windows.Forms.TableLayoutPanel();
-            this.BtnFirstPerson = new System.Windows.Forms.Button();
+            this.BtnCameraFps = new System.Windows.Forms.Button();
             this.NudEyeHeight = new System.Windows.Forms.NumericUpDown();
             this.label48 = new System.Windows.Forms.Label();
             this.CbxAlwaysRun = new System.Windows.Forms.CheckBox();
@@ -428,7 +429,6 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonRight = new System.Windows.Forms.Label();
             this.LblButtonDown = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.BtnInputConfig = new System.Windows.Forms.Button();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -1342,6 +1342,16 @@ namespace BizHawk.Client.EmuHawk
             this.NudCameraFlySensitivity.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
             this.NudCameraFlySensitivity.Leave += new System.EventHandler(this.Nud_Leave);
             // 
+            // BtnInputConfig
+            // 
+            this.BtnInputConfig.Location = new System.Drawing.Point(62, 3);
+            this.BtnInputConfig.Name = "BtnInputConfig";
+            this.BtnInputConfig.Size = new System.Drawing.Size(75, 23);
+            this.BtnInputConfig.TabIndex = 12;
+            this.BtnInputConfig.Text = "Input config";
+            this.BtnInputConfig.UseVisualStyleBackColor = true;
+            this.BtnInputConfig.Click += new System.EventHandler(this.BtnInputConfig_Click);
+            // 
             // tableLayoutPanel38
             // 
             this.tableLayoutPanel38.AutoSize = true;
@@ -1352,7 +1362,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel38.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel38.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel38.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel38.Controls.Add(this.BtnFirstPerson, 0, 0);
+            this.tableLayoutPanel38.Controls.Add(this.BtnCameraFps, 0, 0);
             this.tableLayoutPanel38.Controls.Add(this.NudEyeHeight, 4, 0);
             this.tableLayoutPanel38.Controls.Add(this.label48, 3, 0);
             this.tableLayoutPanel38.Controls.Add(this.CbxAlwaysRun, 3, 1);
@@ -1369,23 +1379,23 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel38.Size = new System.Drawing.Size(329, 60);
             this.tableLayoutPanel38.TabIndex = 10;
             // 
-            // BtnFirstPerson
+            // BtnCameraFps
             // 
-            this.BtnFirstPerson.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BtnFirstPerson.AutoSize = true;
-            this.BtnFirstPerson.Location = new System.Drawing.Point(3, 5);
-            this.BtnFirstPerson.Name = "BtnFirstPerson";
-            this.tableLayoutPanel38.SetRowSpan(this.BtnFirstPerson, 2);
-            this.BtnFirstPerson.Size = new System.Drawing.Size(75, 50);
-            this.BtnFirstPerson.TabIndex = 0;
-            this.BtnFirstPerson.Text = "First person";
-            this.toolTip1.SetToolTip(this.BtnFirstPerson, "Enter WASD first person mode");
-            this.BtnFirstPerson.UseVisualStyleBackColor = true;
-            this.BtnFirstPerson.Click += new System.EventHandler(this.BtnFirstPerson_ClickFirst);
-            this.BtnFirstPerson.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnFirstPerson_KeyDown);
-            this.BtnFirstPerson.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnFirstPerson_KeyUp);
-            this.BtnFirstPerson.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnFirstPerson_MouseDown);
-            this.BtnFirstPerson.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnFirstPerson_MouseUp);
+            this.BtnCameraFps.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnCameraFps.AutoSize = true;
+            this.BtnCameraFps.Location = new System.Drawing.Point(3, 5);
+            this.BtnCameraFps.Name = "BtnCameraFps";
+            this.tableLayoutPanel38.SetRowSpan(this.BtnCameraFps, 2);
+            this.BtnCameraFps.Size = new System.Drawing.Size(75, 50);
+            this.BtnCameraFps.TabIndex = 0;
+            this.BtnCameraFps.Text = "First person";
+            this.toolTip1.SetToolTip(this.BtnCameraFps, "Enter first person mode");
+            this.BtnCameraFps.UseVisualStyleBackColor = true;
+            this.BtnCameraFps.Click += new System.EventHandler(this.BtnCameraFps_ClickFirst);
+            this.BtnCameraFps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFps_KeyDown);
+            this.BtnCameraFps.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFps_KeyUp);
+            this.BtnCameraFps.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnCameraFps_MouseDown);
+            this.BtnCameraFps.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnCameraFps_MouseUp);
             // 
             // NudEyeHeight
             // 
@@ -1493,11 +1503,13 @@ namespace BizHawk.Client.EmuHawk
             this.BtnCameraFly.Size = new System.Drawing.Size(75, 50);
             this.BtnCameraFly.TabIndex = 0;
             this.BtnCameraFly.Text = "Fly";
-            this.toolTip1.SetToolTip(this.BtnCameraFly, "Enter WASDEQ fly mode");
+            this.toolTip1.SetToolTip(this.BtnCameraFly, "Enter fly mode");
             this.BtnCameraFly.UseVisualStyleBackColor = true;
             this.BtnCameraFly.Click += new System.EventHandler(this.BtnCameraFly_ClickFirst);
             this.BtnCameraFly.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyDown);
             this.BtnCameraFly.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BtnCameraFly_KeyUp);
+            this.BtnCameraFly.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnCameraFly_MouseDown);
+            this.BtnCameraFly.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnCameraFly_MouseUp);
             // 
             // label3
             // 
@@ -6419,16 +6431,6 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonDown.TabIndex = 15;
             this.LblButtonDown.Text = "Down";
             // 
-            // BtnInputConfig
-            // 
-            this.BtnInputConfig.Location = new System.Drawing.Point(62, 3);
-            this.BtnInputConfig.Name = "BtnInputConfig";
-            this.BtnInputConfig.Size = new System.Drawing.Size(75, 23);
-            this.BtnInputConfig.TabIndex = 12;
-            this.BtnInputConfig.Text = "Input config";
-            this.BtnInputConfig.UseVisualStyleBackColor = true;
-            this.BtnInputConfig.Click += new System.EventHandler(this.BtnInputConfig_Click);
-            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -7006,7 +7008,7 @@ namespace BizHawk.Client.EmuHawk
 		private TableLayoutPanel tableLayoutPanel36;
 		private TableLayoutPanel tableLayoutPanel37;
 		private TabPage TbpMisc;
-		private Button BtnFirstPerson;
+		private Button BtnCameraFps;
 		private CheckBox CbxShowFeet;
 		private GroupBox GbxController;
 		private TableLayoutPanel tableLayoutPanel23;

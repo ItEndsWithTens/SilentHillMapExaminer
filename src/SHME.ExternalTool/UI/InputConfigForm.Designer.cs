@@ -12,19 +12,32 @@ namespace SHME.ExternalTool.UI
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.GbxFirstPersonInputBinds = new System.Windows.Forms.GroupBox();
-            this.DgvInputBinds = new System.Windows.Forms.DataGridView();
+            this.TlpConfigFpsInput = new System.Windows.Forms.TableLayoutPanel();
+            this.BtnFpsInputDefault = new System.Windows.Forms.Button();
+            this.DgvFpsInputBinds = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.GbxFlyInputBinds = new System.Windows.Forms.GroupBox();
+            this.TlpConfigFlyInput = new System.Windows.Forms.TableLayoutPanel();
+            this.DgvFlyInputBinds = new System.Windows.Forms.DataGridView();
+            this.BtnFlyInputDefault = new System.Windows.Forms.Button();
             this.GbxFirstPersonInputBinds.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvInputBinds)).BeginInit();
+            this.TlpConfigFpsInput.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvFpsInputBinds)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            this.GbxFlyInputBinds.SuspendLayout();
+            this.TlpConfigFlyInput.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvFlyInputBinds)).BeginInit();
             this.SuspendLayout();
             // 
             // GbxFirstPersonInputBinds
             // 
             this.GbxFirstPersonInputBinds.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.GbxFirstPersonInputBinds.Controls.Add(this.DgvInputBinds);
+            this.GbxFirstPersonInputBinds.Controls.Add(this.TlpConfigFpsInput);
             this.GbxFirstPersonInputBinds.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GbxFirstPersonInputBinds.Location = new System.Drawing.Point(507, 3);
             this.GbxFirstPersonInputBinds.Name = "GbxFirstPersonInputBinds";
@@ -33,17 +46,43 @@ namespace SHME.ExternalTool.UI
             this.GbxFirstPersonInputBinds.TabStop = false;
             this.GbxFirstPersonInputBinds.Text = "First person";
             // 
-            // DgvInputBinds
+            // TlpConfigFpsInput
             // 
-            this.DgvInputBinds.AllowUserToAddRows = false;
-            this.DgvInputBinds.AllowUserToDeleteRows = false;
-            this.DgvInputBinds.AllowUserToResizeColumns = false;
-            this.DgvInputBinds.AllowUserToResizeRows = false;
+            this.TlpConfigFpsInput.ColumnCount = 1;
+            this.TlpConfigFpsInput.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.TlpConfigFpsInput.Controls.Add(this.BtnFpsInputDefault, 0, 1);
+            this.TlpConfigFpsInput.Controls.Add(this.DgvFpsInputBinds, 0, 0);
+            this.TlpConfigFpsInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TlpConfigFpsInput.Location = new System.Drawing.Point(3, 16);
+            this.TlpConfigFpsInput.Name = "TlpConfigFpsInput";
+            this.TlpConfigFpsInput.RowCount = 2;
+            this.TlpConfigFpsInput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.TlpConfigFpsInput.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TlpConfigFpsInput.Size = new System.Drawing.Size(492, 960);
+            this.TlpConfigFpsInput.TabIndex = 2;
+            // 
+            // BtnFpsInputDefault
+            // 
+            this.BtnFpsInputDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BtnFpsInputDefault.Location = new System.Drawing.Point(3, 932);
+            this.BtnFpsInputDefault.Name = "BtnFpsInputDefault";
+            this.BtnFpsInputDefault.Size = new System.Drawing.Size(486, 25);
+            this.BtnFpsInputDefault.TabIndex = 4;
+            this.BtnFpsInputDefault.Text = "Default";
+            this.BtnFpsInputDefault.UseVisualStyleBackColor = true;
+            this.BtnFpsInputDefault.Click += new System.EventHandler(this.BtnInputBindsDefault_Click);
+            // 
+            // DgvFpsInputBinds
+            // 
+            this.DgvFpsInputBinds.AllowUserToAddRows = false;
+            this.DgvFpsInputBinds.AllowUserToDeleteRows = false;
+            this.DgvFpsInputBinds.AllowUserToResizeColumns = false;
+            this.DgvFpsInputBinds.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.DgvInputBinds.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.DgvInputBinds.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.DgvInputBinds.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.DgvInputBinds.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.DgvFpsInputBinds.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DgvFpsInputBinds.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.DgvFpsInputBinds.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.DgvFpsInputBinds.BackgroundColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -51,8 +90,8 @@ namespace SHME.ExternalTool.UI
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvInputBinds.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvInputBinds.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvFpsInputBinds.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.DgvFpsInputBinds.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -61,23 +100,24 @@ namespace SHME.ExternalTool.UI
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgvInputBinds.DefaultCellStyle = dataGridViewCellStyle3;
-            this.DgvInputBinds.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DgvInputBinds.Location = new System.Drawing.Point(3, 16);
-            this.DgvInputBinds.MultiSelect = false;
-            this.DgvInputBinds.Name = "DgvInputBinds";
-            this.DgvInputBinds.ReadOnly = true;
-            this.DgvInputBinds.RowHeadersVisible = false;
+            this.DgvFpsInputBinds.DefaultCellStyle = dataGridViewCellStyle3;
+            this.DgvFpsInputBinds.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DgvFpsInputBinds.Location = new System.Drawing.Point(3, 3);
+            this.DgvFpsInputBinds.MultiSelect = false;
+            this.DgvFpsInputBinds.Name = "DgvFpsInputBinds";
+            this.DgvFpsInputBinds.ReadOnly = true;
+            this.DgvFpsInputBinds.RowHeadersVisible = false;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DgvInputBinds.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.DgvInputBinds.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.DgvInputBinds.Size = new System.Drawing.Size(492, 960);
-            this.DgvInputBinds.StandardTab = true;
-            this.DgvInputBinds.TabIndex = 1;
-            this.DgvInputBinds.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInputBinds_CellDoubleClick);
-            this.DgvInputBinds.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInputBinds_CellLeave);
-            this.DgvInputBinds.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvInputBinds_CellMouseDown);
-            this.DgvInputBinds.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvInputBinds_KeyDown);
+            this.DgvFpsInputBinds.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.DgvFpsInputBinds.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.DgvFpsInputBinds.Size = new System.Drawing.Size(486, 923);
+            this.DgvFpsInputBinds.StandardTab = true;
+            this.DgvFpsInputBinds.TabIndex = 1;
+            this.DgvFpsInputBinds.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInputBinds_CellDoubleClick);
+            this.DgvFpsInputBinds.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInputBinds_CellEnter);
+            this.DgvFpsInputBinds.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInputBinds_CellLeave);
+            this.DgvFpsInputBinds.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvInputBinds_CellMouseDown);
+            this.DgvFpsInputBinds.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvInputBinds_KeyDown);
             // 
             // tableLayoutPanel1
             // 
@@ -97,6 +137,7 @@ namespace SHME.ExternalTool.UI
             // 
             // GbxFlyInputBinds
             // 
+            this.GbxFlyInputBinds.Controls.Add(this.TlpConfigFlyInput);
             this.GbxFlyInputBinds.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GbxFlyInputBinds.Location = new System.Drawing.Point(3, 3);
             this.GbxFlyInputBinds.Name = "GbxFlyInputBinds";
@@ -104,6 +145,79 @@ namespace SHME.ExternalTool.UI
             this.GbxFlyInputBinds.TabIndex = 1;
             this.GbxFlyInputBinds.TabStop = false;
             this.GbxFlyInputBinds.Text = "Fly";
+            // 
+            // TlpConfigFlyInput
+            // 
+            this.TlpConfigFlyInput.ColumnCount = 1;
+            this.TlpConfigFlyInput.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.TlpConfigFlyInput.Controls.Add(this.DgvFlyInputBinds, 0, 0);
+            this.TlpConfigFlyInput.Controls.Add(this.BtnFlyInputDefault, 0, 1);
+            this.TlpConfigFlyInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TlpConfigFlyInput.Location = new System.Drawing.Point(3, 16);
+            this.TlpConfigFlyInput.Name = "TlpConfigFlyInput";
+            this.TlpConfigFlyInput.RowCount = 2;
+            this.TlpConfigFlyInput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.TlpConfigFlyInput.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TlpConfigFlyInput.Size = new System.Drawing.Size(492, 960);
+            this.TlpConfigFlyInput.TabIndex = 3;
+            // 
+            // DgvFlyInputBinds
+            // 
+            this.DgvFlyInputBinds.AllowUserToAddRows = false;
+            this.DgvFlyInputBinds.AllowUserToDeleteRows = false;
+            this.DgvFlyInputBinds.AllowUserToResizeColumns = false;
+            this.DgvFlyInputBinds.AllowUserToResizeRows = false;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.DgvFlyInputBinds.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.DgvFlyInputBinds.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.DgvFlyInputBinds.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.DgvFlyInputBinds.BackgroundColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvFlyInputBinds.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.DgvFlyInputBinds.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(10);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvFlyInputBinds.DefaultCellStyle = dataGridViewCellStyle7;
+            this.DgvFlyInputBinds.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DgvFlyInputBinds.Location = new System.Drawing.Point(3, 3);
+            this.DgvFlyInputBinds.MultiSelect = false;
+            this.DgvFlyInputBinds.Name = "DgvFlyInputBinds";
+            this.DgvFlyInputBinds.ReadOnly = true;
+            this.DgvFlyInputBinds.RowHeadersVisible = false;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DgvFlyInputBinds.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            this.DgvFlyInputBinds.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.DgvFlyInputBinds.Size = new System.Drawing.Size(486, 923);
+            this.DgvFlyInputBinds.StandardTab = true;
+            this.DgvFlyInputBinds.TabIndex = 2;
+            this.DgvFlyInputBinds.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInputBinds_CellDoubleClick);
+            this.DgvFlyInputBinds.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInputBinds_CellEnter);
+            this.DgvFlyInputBinds.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInputBinds_CellLeave);
+            this.DgvFlyInputBinds.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvInputBinds_CellMouseDown);
+            this.DgvFlyInputBinds.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvInputBinds_KeyDown);
+            // 
+            // BtnFlyInputDefault
+            // 
+            this.BtnFlyInputDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BtnFlyInputDefault.Location = new System.Drawing.Point(3, 932);
+            this.BtnFlyInputDefault.Name = "BtnFlyInputDefault";
+            this.BtnFlyInputDefault.Size = new System.Drawing.Size(486, 25);
+            this.BtnFlyInputDefault.TabIndex = 3;
+            this.BtnFlyInputDefault.Text = "Default";
+            this.BtnFlyInputDefault.UseVisualStyleBackColor = true;
+            this.BtnFlyInputDefault.Click += new System.EventHandler(this.BtnInputBindsDefault_Click);
             // 
             // InputConfigForm
             // 
@@ -113,13 +227,22 @@ namespace SHME.ExternalTool.UI
             this.Name = "InputConfigForm";
             this.Shown += new System.EventHandler(this.InputConfigForm_Shown);
             this.GbxFirstPersonInputBinds.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DgvInputBinds)).EndInit();
+            this.TlpConfigFpsInput.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DgvFpsInputBinds)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.GbxFlyInputBinds.ResumeLayout(false);
+            this.TlpConfigFlyInput.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DgvFlyInputBinds)).EndInit();
             this.ResumeLayout(false);
 
 		}
-		private DataGridView DgvInputBinds;
+		private DataGridView DgvFpsInputBinds;
 		private TableLayoutPanel tableLayoutPanel1;
 		private GroupBox GbxFlyInputBinds;
+		private DataGridView DgvFlyInputBinds;
+		private TableLayoutPanel TlpConfigFlyInput;
+		private Button BtnFlyInputDefault;
+		private TableLayoutPanel TlpConfigFpsInput;
+		private Button BtnFpsInputDefault;
 	}
 }

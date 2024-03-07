@@ -314,7 +314,7 @@ namespace BizHawk.Client.EmuHawk
 					else if (_firstPersonEnabled)
 					{
 						MoveCameraFirstPerson();
-						AimCamera(BtnFirstPerson);
+						AimCamera(BtnCameraFps);
 						Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
 					}
 					break;
@@ -595,7 +595,7 @@ namespace BizHawk.Client.EmuHawk
 			RaycastSelectionTimer.Tick += RaycastSelectionTimer_Tick;
 
 			BtnCameraFly.LostFocus += BtnCameraFly_LostFocus;
-			BtnFirstPerson.LostFocus += BtnFirstPerson_LostFocus;
+			BtnCameraFps.LostFocus += BtnCameraFps_LostFocus;
 		}
 		private void DetachEventHandlers()
 		{
@@ -610,7 +610,7 @@ namespace BizHawk.Client.EmuHawk
 			RaycastSelectionTimer.Tick -= RaycastSelectionTimer_Tick;
 
 			BtnCameraFly.LostFocus -= BtnCameraFly_LostFocus;
-			BtnFirstPerson.LostFocus -= BtnFirstPerson_LostFocus;
+			BtnCameraFps.LostFocus -= BtnCameraFps_LostFocus;
 		}
 
 		private float CalculateGameFov()
@@ -881,7 +881,7 @@ namespace BizHawk.Client.EmuHawk
 			else if (_firstPersonEnabled)
 			{
 				MoveCameraFirstPerson();
-				AimCamera(BtnFirstPerson);
+				AimCamera(BtnCameraFps);
 				Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
 			}
 		}

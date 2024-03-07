@@ -13,7 +13,7 @@ namespace BizHawk.Client.EmuHawk
 		private Ilm? _harryModel;
 
 		private bool _firstPersonEnabled;
-		private bool FirstPersonEnabled
+		private bool FpsEnabled
 		{
 			get => _firstPersonEnabled;
 			set
@@ -25,7 +25,7 @@ namespace BizHawk.Client.EmuHawk
 
 				_firstPersonEnabled = value;
 
-				Button btn = BtnFirstPerson;
+				Button btn = BtnCameraFps;
 
 				if (value)
 				{
@@ -104,9 +104,9 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private void BtnFirstPerson_ClickFirst(object sender, EventArgs e)
+		private void BtnCameraFps_ClickFirst(object sender, EventArgs e)
 		{
-			FirstPersonEnabled = true;
+			FpsEnabled = true;
 		}
 
 		// In-game actions, named as per the game's "Controller Config" screen.
@@ -117,89 +117,89 @@ namespace BizHawk.Client.EmuHawk
 		private bool _view;
 		private bool _stepL;
 		private bool _stepR;
-		private void BtnFirstPerson_KeyDown(object sender, KeyEventArgs e)
+		private void BtnCameraFps_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (!FirstPersonEnabled)
+			if (!FpsEnabled)
 			{
 				return;
 			}
 			else if (e.KeyCode == Keys.Escape)
 			{
-				FirstPersonEnabled = false;
+				FpsEnabled = false;
 				return;
 			}
 
-			GameCommand? command = Settings.Local.FirstPersonBinds
+			ShmeCommand? command = Settings.Local.FpsBinds
 				.Where((bind) => bind.KeyBind == e.KeyCode)
 				.FirstOrDefault()
 				?.Command;
 
 			switch (command)
 			{
-				case GameCommand.Forward:
+				case ShmeCommand.Forward:
 					_forward = true;
 					break;
-				case GameCommand.Backward:
+				case ShmeCommand.Backward:
 					_backward = true;
 					break;
-				case GameCommand.Action:
-					_action = true;
-					break;
-				case GameCommand.Aim:
-					_aim = true;
-					break;
-				case GameCommand.Light:
-					_light = true;
-					break;
-				case GameCommand.Run:
-					_run = !CbxAlwaysRun.Checked;
-					break;
-				case GameCommand.StepLeft:
+				case ShmeCommand.Left:
 					_stepL = true;
 					break;
-				case GameCommand.StepRight:
+				case ShmeCommand.Right:
 					_stepR = true;
 					break;
-				case GameCommand.None:
+				case ShmeCommand.Action:
+					_action = true;
+					break;
+				case ShmeCommand.Aim:
+					_aim = true;
+					break;
+				case ShmeCommand.Light:
+					_light = true;
+					break;
+				case ShmeCommand.Run:
+					_run = !CbxAlwaysRun.Checked;
+					break;
+				case ShmeCommand.None:
 				case null:
 				default:
 					break;
 			}
 		}
-		private void BtnFirstPerson_KeyUp(object sender, KeyEventArgs e)
+		private void BtnCameraFps_KeyUp(object sender, KeyEventArgs e)
 		{
-			GameCommand? command = Settings.Local.FirstPersonBinds
+			ShmeCommand? command = Settings.Local.FpsBinds
 				.Where((bind) => bind.KeyBind == e.KeyCode)
 				.FirstOrDefault()
 				?.Command;
 
 			switch (command)
 			{
-				case GameCommand.Forward:
+				case ShmeCommand.Forward:
 					_forward = false;
 					break;
-				case GameCommand.Backward:
+				case ShmeCommand.Backward:
 					_backward = false;
 					break;
-				case GameCommand.Action:
-					_action = false;
-					break;
-				case GameCommand.Aim:
-					_aim = false;
-					break;
-				case GameCommand.Light:
-					_light = false;
-					break;
-				case GameCommand.Run:
-					_run = CbxAlwaysRun.Checked;
-					break;
-				case GameCommand.StepLeft:
+				case ShmeCommand.Left:
 					_stepL = false;
 					break;
-				case GameCommand.StepRight:
+				case ShmeCommand.Right:
 					_stepR = false;
 					break;
-				case GameCommand.None:
+				case ShmeCommand.Action:
+					_action = false;
+					break;
+				case ShmeCommand.Aim:
+					_aim = false;
+					break;
+				case ShmeCommand.Light:
+					_light = false;
+					break;
+				case ShmeCommand.Run:
+					_run = CbxAlwaysRun.Checked;
+					break;
+				case ShmeCommand.None:
 				case null:
 				default:
 					break;
@@ -289,48 +289,48 @@ namespace BizHawk.Client.EmuHawk
 				Joy.Set("P1 ○", false);
 		}
 
-		private void BtnFirstPerson_LostFocus(object sender, EventArgs e)
+		private void BtnCameraFps_LostFocus(object sender, EventArgs e)
 		{
-			FirstPersonEnabled = false;
+			FpsEnabled = false;
 		}
 
-		private void BtnFirstPerson_MouseDown(object sender, MouseEventArgs e)
+		private void BtnCameraFps_MouseDown(object sender, MouseEventArgs e)
 		{
-			GameCommand? command = Settings.Local.FirstPersonBinds
+			ShmeCommand? command = Settings.Local.FpsBinds
 				.Where((bind) => bind.MouseBind == e.Button)
 				.FirstOrDefault()
 				?.Command;
 
 			switch (command)
 			{
-				case GameCommand.Action:
+				case ShmeCommand.Action:
 					_action = true;
 					break;
-				case GameCommand.Aim:
+				case ShmeCommand.Aim:
 					_aim = true;
 					break;
-				case GameCommand.None:
+				case ShmeCommand.None:
 				case null:
 				default:
 					break;
 			}
 		}
-		private void BtnFirstPerson_MouseUp(object sender, MouseEventArgs e)
+		private void BtnCameraFps_MouseUp(object sender, MouseEventArgs e)
 		{
-			GameCommand? command = Settings.Local.FirstPersonBinds
+			ShmeCommand? command = Settings.Local.FpsBinds
 				.Where((bind) => bind.MouseBind == e.Button)
 				.FirstOrDefault()
 				?.Command;
 
 			switch (command)
 			{
-				case GameCommand.Action:
+				case ShmeCommand.Action:
 					_action = false;
 					break;
-				case GameCommand.Aim:
+				case ShmeCommand.Aim:
 					_aim = false;
 					break;
-				case GameCommand.None:
+				case ShmeCommand.None:
 				case null:
 				default:
 					break;

@@ -1,6 +1,7 @@
 ﻿using SHME.ExternalTool.Extras;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -25,7 +26,16 @@ namespace SHME.ExternalTool.UI
 
 				_editing = value;
 
-				DataGridViewCell cell = DgvInputBinds.SelectedCells[0];
+				DataGridViewCell cell;
+				if (DgvFlyInputBinds.SelectedCells.Count > 0)
+				{
+					cell = DgvFlyInputBinds.SelectedCells[0];
+				}
+				else
+				{
+					cell = DgvFpsInputBinds.SelectedCells[0];
+				}
+
 				if (value)
 				{
 					cell.Style.SelectionBackColor = Color.FromArgb(192, 255, 255);
@@ -38,8 +48,8 @@ namespace SHME.ExternalTool.UI
 						_settings.Local.Save();
 					}
 
-					cell.Style.SelectionBackColor = DgvInputBinds.DefaultCellStyle.SelectionBackColor;
-					cell.Style.SelectionForeColor = DgvInputBinds.DefaultCellStyle.SelectionForeColor;
+					cell.Style.SelectionBackColor = DgvFpsInputBinds.DefaultCellStyle.SelectionBackColor;
+					cell.Style.SelectionForeColor = DgvFpsInputBinds.DefaultCellStyle.SelectionForeColor;
 
 					_suppressSave = false;
 				}
@@ -59,15 +69,20 @@ namespace SHME.ExternalTool.UI
 
 			_settings = settings;
 
-			DgvInputBinds.DataSource = _settings.Local.FirstPersonBinds;
+			DgvFlyInputBinds.DataSource = _settings.Local.FlyBinds;
+			DgvFpsInputBinds.DataSource = _settings.Local.FpsBinds;
 
-			foreach (DataGridViewColumn col in DgvInputBinds.Columns)
+			// Columns don't need to be sortable anyway, but this property turns
+			// out to be critical to allow the header text to be fully centered,
+			// otherwise the calculations leave room for the sort triangle. The
+			// first column doesn't strictly need this, since it's not editable,
+			// but no harm setting it explicitly for all.
+			foreach (DataGridViewColumn col in DgvFlyInputBinds.Columns)
 			{
-				// Columns don't need to be sortable anyway, but this property
-				// turns out to be critical to allow the header text to be fully
-				// centered. Otherwise the calculations leave room for the sort
-				// triangle. The first column doesn't strictly need this, since
-				// it's not editable, but no harm setting it explicitly for all.
+				col.SortMode = DataGridViewColumnSortMode.NotSortable;
+			}
+			foreach (DataGridViewColumn col in DgvFpsInputBinds.Columns)
+			{
 				col.SortMode = DataGridViewColumnSortMode.NotSortable;
 			}
 		}
@@ -85,7 +100,38 @@ namespace SHME.ExternalTool.UI
 
 		private void InputConfigForm_Shown(object sender, EventArgs e)
 		{
-			DgvInputBinds.ClearSelection();
+			DgvFlyInputBinds.ClearSelection();
+			DgvFpsInputBinds.ClearSelection();
+		}
+
+		private void BtnInputBindsDefault_Click(object sender, EventArgs e)
+		{
+			DataGridView dgv;
+			Collection<InputBind> defaultBinds;
+			if (sender == BtnFlyInputDefault)
+			{
+				dgv = DgvFlyInputBinds;
+				defaultBinds = DefaultLocalSettings.FlyBinds;
+			}
+			else
+			{
+				dgv = DgvFpsInputBinds;
+				defaultBinds = DefaultLocalSettings.FpsBinds;
+			}
+
+			foreach (DataGridViewRow row in dgv.Rows)
+			{
+				var bind = (InputBind)row.DataBoundItem;
+
+				InputBind defaultBind = defaultBinds
+					.Where((b) => b.Command == bind.Command)
+					.FirstOrDefault();
+
+				row.Cells[1].Value = defaultBind.KeyBind;
+				row.Cells[2].Value = defaultBind.MouseBind;
+			}
+
+			_settings.Local.Save();
 		}
 
 		private void DgvInputBinds_KeyDown(object sender, KeyEventArgs e)
@@ -96,7 +142,19 @@ namespace SHME.ExternalTool.UI
 				return;
 			}
 
-			DataGridViewCell cell = DgvInputBinds.SelectedCells[0];
+			DataGridViewCell cell;
+			Collection<InputBind> inputBinds;
+			if (DgvFlyInputBinds.SelectedCells.Count > 0)
+			{
+				cell = DgvFlyInputBinds.SelectedCells[0];
+				inputBinds = _settings.Local.FlyBinds;
+			}
+			else
+			{
+				cell = DgvFpsInputBinds.SelectedCells[0];
+				inputBinds = _settings.Local.FpsBinds;
+			}
+
 			if (cell.OwningRow.DataBoundItem is not InputBind bind)
 			{
 				FinishEditing(true);
@@ -131,15 +189,15 @@ namespace SHME.ExternalTool.UI
 						if (bind.KeyBind == Keys.None)
 						{
 							suppress = true;
-							break;
 						}
 						else
 						{
 							bind.KeyBind = Keys.None;
 						}
+						break;
 					}
 
-					IEnumerable<InputBind> dupes = _settings.Local.FirstPersonBinds
+					IEnumerable<InputBind> dupes = inputBinds
 						.Where((b) => b.KeyBind == e.KeyCode && b != bind);
 
 					suppress = e.KeyCode == bind.KeyBind;
@@ -182,7 +240,18 @@ namespace SHME.ExternalTool.UI
 				return;
 			}
 
-			DataGridViewCell cell = DgvInputBinds.SelectedCells[0];
+			DataGridViewCell cell;
+			Collection<InputBind> inputBinds;
+			if (DgvFlyInputBinds.SelectedCells.Count > 0)
+			{
+				cell = DgvFlyInputBinds.SelectedCells[0];
+				inputBinds = _settings.Local.FlyBinds;
+			}
+			else
+			{
+				cell = DgvFpsInputBinds.SelectedCells[0];
+				inputBinds = _settings.Local.FpsBinds;
+			}
 
 			if (cell.ColumnIndex != 2)
 			{
@@ -194,8 +263,8 @@ namespace SHME.ExternalTool.UI
 				return;
 			}
 
-			IEnumerable<InputBind> dupes = _settings.Local.FirstPersonBinds
-				.Where((b) => b.MouseBind == e.Button && !ReferenceEquals(b, bind));
+			IEnumerable<InputBind> dupes = inputBinds
+				.Where((b) => b.MouseBind == e.Button && b != bind);
 
 			bool suppress = e.Button == bind.MouseBind;
 			foreach (InputBind dupe in dupes)
@@ -207,6 +276,14 @@ namespace SHME.ExternalTool.UI
 			bind.MouseBind = e.Button;
 
 			FinishEditing(suppress);
+		}
+
+		private void DgvInputBinds_CellEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			if (sender == DgvFlyInputBinds)
+				DgvFpsInputBinds.ClearSelection();
+			else if (sender == DgvFpsInputBinds)
+				DgvFlyInputBinds.ClearSelection();
 		}
 	}
 }

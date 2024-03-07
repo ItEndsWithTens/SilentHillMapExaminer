@@ -1,8 +1,10 @@
 ﻿using BizHawk.Client.Common;
 using SHME.ExternalTool;
+using SHME.ExternalTool.Extras;
 using SHME.ExternalTool.UI;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 
@@ -86,17 +88,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 		private void BtnCameraFly_ClickFirst(object sender, EventArgs e)
 		{
-			BtnCameraFly.Click -= BtnCameraFly_ClickFirst;
-			BtnCameraFly.Click += BtnCameraFly_ClickSecond;
-
 			FlyEnabled = true;
-		}
-		private void BtnCameraFly_ClickSecond(object sender, EventArgs e)
-		{
-			FlyEnabled = false;
-
-			BtnCameraFly.Click -= BtnCameraFly_ClickSecond;
-			BtnCameraFly.Click += BtnCameraFly_ClickFirst;
 		}
 
 		private void CbxCameraDetach_CheckedChanged(object sender, EventArgs e)
@@ -311,56 +303,72 @@ namespace BizHawk.Client.EmuHawk
 			{
 				return;
 			}
-
-			switch (e.KeyCode)
+			else if (e.KeyCode == Keys.Escape)
 			{
-				case Keys.W:
+				FlyEnabled = false;
+				return;
+			}
+
+			ShmeCommand? command = Settings.Local.FlyBinds
+				.Where((bind) => bind.KeyBind == e.KeyCode)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
+			{
+				case ShmeCommand.Forward:
 					_forward = true;
 					break;
-				case Keys.S:
+				case ShmeCommand.Backward:
 					_backward = true;
 					break;
-				case Keys.A:
+				case ShmeCommand.Left:
 					_left = true;
 					break;
-				case Keys.D:
+				case ShmeCommand.Right:
 					_right = true;
 					break;
-				case Keys.E:
+				case ShmeCommand.Up:
 					_up = true;
 					break;
-				case Keys.Q:
+				case ShmeCommand.Down:
 					_down = true;
 					break;
-				case Keys.Escape:
-					BtnCameraFly_ClickSecond(this, EventArgs.Empty);
-					break;
+				case ShmeCommand.None:
+				case null:
 				default:
 					break;
 			}
 		}
 		private void BtnCameraFly_KeyUp(object sender, KeyEventArgs e)
 		{
-			switch (e.KeyCode)
+			ShmeCommand? command = Settings.Local.FlyBinds
+				.Where((bind) => bind.KeyBind == e.KeyCode)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
 			{
-				case Keys.W:
+				case ShmeCommand.Forward:
 					_forward = false;
 					break;
-				case Keys.S:
+				case ShmeCommand.Backward:
 					_backward = false;
 					break;
-				case Keys.A:
+				case ShmeCommand.Left:
 					_left = false;
 					break;
-				case Keys.D:
+				case ShmeCommand.Right:
 					_right = false;
 					break;
-				case Keys.E:
+				case ShmeCommand.Up:
 					_up = false;
 					break;
-				case Keys.Q:
+				case ShmeCommand.Down:
 					_down = false;
 					break;
+				case ShmeCommand.None:
+				case null:
 				default:
 					break;
 			}
@@ -368,7 +376,75 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnCameraFly_LostFocus(object sender, EventArgs e)
 		{
-			BtnCameraFly_ClickSecond(this, EventArgs.Empty);
+			FlyEnabled = false;
+		}
+
+		private void BtnCameraFly_MouseDown(object sender, MouseEventArgs e)
+		{
+			ShmeCommand? command = Settings.Local.FlyBinds
+				.Where((bind) => bind.MouseBind == e.Button)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
+			{
+				case ShmeCommand.Forward:
+					_forward = true;
+					break;
+				case ShmeCommand.Backward:
+					_backward = true;
+					break;
+				case ShmeCommand.Left:
+					_left = true;
+					break;
+				case ShmeCommand.Right:
+					_right = true;
+					break;
+				case ShmeCommand.Up:
+					_up = true;
+					break;
+				case ShmeCommand.Down:
+					_down = true;
+					break;
+				case ShmeCommand.None:
+				case null:
+				default:
+					break;
+			}
+		}
+
+		private void BtnCameraFly_MouseUp(object sender, MouseEventArgs e)
+		{
+			ShmeCommand? command = Settings.Local.FlyBinds
+				.Where((bind) => bind.MouseBind == e.Button)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
+			{
+				case ShmeCommand.Forward:
+					_forward = false;
+					break;
+				case ShmeCommand.Backward:
+					_backward = false;
+					break;
+				case ShmeCommand.Left:
+					_left = false;
+					break;
+				case ShmeCommand.Right:
+					_right = false;
+					break;
+				case ShmeCommand.Up:
+					_up = false;
+					break;
+				case ShmeCommand.Down:
+					_down = false;
+					break;
+				case ShmeCommand.None:
+				case null:
+				default:
+					break;
+			}
 		}
 
 		// TODO: Test this in Linux! I think I've had issues with keeping
@@ -378,7 +454,10 @@ namespace BizHawk.Client.EmuHawk
 		private void BtnInputConfig_Click(object sender, EventArgs e)
 		{
 			_inputConfigForm?.Dispose();
-			_inputConfigForm = new InputConfigForm(Settings);
+			_inputConfigForm = new InputConfigForm(Settings)
+			{
+				Text = $"{ToolName} input binds"
+			};
 
 			// I'll need these stop/start sound things if I have to make
 			// this form modal, unfortunately, to avoid the audio hitching.
