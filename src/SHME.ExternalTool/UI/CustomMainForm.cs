@@ -315,6 +315,13 @@ namespace BizHawk.Client.EmuHawk
 					}
 					else if (_firstPersonEnabled)
 					{
+						long address = Rom.Addresses.MainRam.ControllerLayout;
+						string hash = Mem.HashRegion(address, SHME.ExternalTool.ControllerConfig.Size);
+						if (hash != _lastControllerLayoutHash)
+						{
+							SetButtonNames();
+							_lastControllerLayoutHash = hash;
+						}
 						MoveCameraFirstPerson();
 						AimCamera(BtnCameraFps);
 						Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
@@ -379,7 +386,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = new();
-		private IList<(Renderable, bool)> VisibleRenderables = new List<(Renderable, bool)>();
+		private IList<(Renderable, bool)> VisibleRenderables = [];
 
 		private void UpdateOverlay()
 		{
@@ -701,34 +708,63 @@ namespace BizHawk.Client.EmuHawk
 			GameSurface = null;
 		}
 
+		private string _lastControllerLayoutHash = String.Empty;
+		private SHME.ExternalTool.ControllerConfig _controllerConfig;
 		private void SetButtonNames()
 		{
+			long address = Rom.Addresses.MainRam.ControllerLayout;
+			IReadOnlyList<byte> bytes = Mem.ReadByteRange(address, SHME.ExternalTool.ControllerConfig.Size);
+			_controllerConfig = new SHME.ExternalTool.ControllerConfig(bytes);
+
+			Dictionary<PsxButtons, string> names = new()
+			{
+				{ PsxButtons.None, String.Empty },
+				{ PsxButtons.Select, "P1 Select" },
+				{ PsxButtons.Start, "P1 Start" },
+				{ PsxButtons.L2, "P1 L2" },
+				{ PsxButtons.R2, "P1 R2" },
+				{ PsxButtons.L1, "P1 L1" },
+				{ PsxButtons.R1, "P1 R1" }
+			};
+
 			if (Octoshock != null)
 			{
-				_commandButtons[ShmeCommand.Forward] = "P1 Up";
-				_commandButtons[ShmeCommand.Backward] ="P1 Down";
-				_commandButtons[ShmeCommand.Action] ="P1 Cross";
-				_commandButtons[ShmeCommand.Aim] = "P1 R2";
-				_commandButtons[ShmeCommand.Light] ="P1 Circle";
-				_commandButtons[ShmeCommand.Run] ="P1 Square";
-				_commandButtons[ShmeCommand.View] = "P1 L2";
-				_commandButtons[ShmeCommand.Left] = "P1 L1";
-				_commandButtons[ShmeCommand.Right] = "P1 R1";
-				_commandButtons[ShmeCommand.Map] ="P1 Triangle";
+				names[PsxButtons.L3] = "P1 L3";
+				names[PsxButtons.R3] = "P1 R3";
+				names[PsxButtons.Up] = "P1 Up";
+				names[PsxButtons.Right] = "P1 Right";
+				names[PsxButtons.Down] = "P1 Down";
+				names[PsxButtons.Left] = "P1 Left";
+				names[PsxButtons.Triangle] = "P1 Triangle";
+				names[PsxButtons.Circle] = "P1 Circle";
+				names[PsxButtons.X] = "P1 Cross";
+				names[PsxButtons.Square] = "P1 Square";
 			}
 			else
 			{
-				_commandButtons[ShmeCommand.Forward] = "P1 D-Pad Up";
-				_commandButtons[ShmeCommand.Backward] = "P1 D-Pad Down";
-				_commandButtons[ShmeCommand.Action] = "P1 X";
-				_commandButtons[ShmeCommand.Aim] = "P1 R2";
-				_commandButtons[ShmeCommand.Light] = "P1 ○";
-				_commandButtons[ShmeCommand.Run] = "P1 □";
-				_commandButtons[ShmeCommand.View] = "P1 L2";
-				_commandButtons[ShmeCommand.Left] = "P1 L1";
-				_commandButtons[ShmeCommand.Right] = "P1 R1";
-				_commandButtons[ShmeCommand.Map] = "P1 △";
+				names[PsxButtons.L3] = "P1 Left Stick, Button";
+				names[PsxButtons.R3] = "P1 Right Stick, Button";
+				names[PsxButtons.Up] = "P1 D-Pad Up";
+				names[PsxButtons.Right] = "P1 D-Pad Right";
+				names[PsxButtons.Down] = "P1 D-Pad Down";
+				names[PsxButtons.Left] = "P1 D-Pad Left";
+				names[PsxButtons.Triangle] = "P1 △";
+				names[PsxButtons.Circle] = "P1 ○";
+				names[PsxButtons.X] = "P1 X";
+				names[PsxButtons.Square] = "P1 □";
 			}
+
+			_buttonNames.Clear();
+			_buttonNames[ShmeCommand.Forward] = names[PsxButtons.Up];
+			_buttonNames[ShmeCommand.Backward] = names[PsxButtons.Down];
+			_buttonNames[ShmeCommand.Action] = names[_controllerConfig.Action.FilterToAny()];
+			_buttonNames[ShmeCommand.Aim] = names[_controllerConfig.Aim.FilterToAny()];
+			_buttonNames[ShmeCommand.Light] = names[_controllerConfig.Light.FilterToAny()];
+			_buttonNames[ShmeCommand.Run] = names[_controllerConfig.Run.FilterToAny()];
+			_buttonNames[ShmeCommand.View] = names[_controllerConfig.View.FilterToAny()];
+			_buttonNames[ShmeCommand.Left] = names[_controllerConfig.StepL.FilterToAny()];
+			_buttonNames[ShmeCommand.Right] = names[_controllerConfig.StepR.FilterToAny()];
+			_buttonNames[ShmeCommand.Map] = names[_controllerConfig.Map.FilterToAny()];
 		}
 
 		private void SetPlaceholderText()

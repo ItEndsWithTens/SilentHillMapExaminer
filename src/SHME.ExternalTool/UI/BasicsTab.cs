@@ -17,7 +17,7 @@ namespace BizHawk.Client.EmuHawk
 	// bitfields/flags, the alignment helps make it more visually obvious which
 	// bits correspond to which enum members.
 	[Flags]
-	public enum Buttons
+	public enum PsxButtons
 	{
 		None =     0x0000,
 		Select =   0x0001,
@@ -67,11 +67,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportControls()
 		{
-			var raw = (Buttons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
+			var raw = (PsxButtons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
-			foreach (Buttons button in Enum.GetValues(typeof(Buttons)))
+			foreach (PsxButtons button in Enum.GetValues(typeof(PsxButtons)))
 			{
-				string buttonName = $"LblButton{Enum.GetName(typeof(Buttons), button)}";
+				string buttonName = $"LblButton{Enum.GetName(typeof(PsxButtons), button)}";
 
 				Type thisType = typeof(CustomMainForm);
 				FieldInfo? info = thisType.GetField(buttonName, BindingFlags.Instance | BindingFlags.NonPublic);

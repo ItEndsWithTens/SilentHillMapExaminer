@@ -14,18 +14,18 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private Buttons _saveButton = Buttons.None;
+		private PsxButtons _saveButton = PsxButtons.None;
 
 		private void InitializeSaveTab()
 		{
-			CmbSaveButton.DataSource = Enum.GetValues(typeof(Buttons));
+			CmbSaveButton.DataSource = Enum.GetValues(typeof(PsxButtons));
 		}
 
 		private void CheckForSaveButtonPress()
 		{
-			var raw = (Buttons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
+			var raw = (PsxButtons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
-			if (_saveButton != Buttons.None && !raw.FasterHasFlag(_saveButton))
+			if (_saveButton != PsxButtons.None && !raw.FasterHasFlag(_saveButton))
 			{
 				BtnOpenSaveMenu_Click(BtnOpenSaveMenu, EventArgs.Empty);
 			}
@@ -558,7 +558,7 @@ namespace BizHawk.Client.EmuHawk
 
 			if (!Enum.TryParse(text, out _saveButton))
 			{
-				_saveButton = Buttons.None;
+				_saveButton = PsxButtons.None;
 			};
 		}
 

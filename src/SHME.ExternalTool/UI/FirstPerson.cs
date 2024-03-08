@@ -215,7 +215,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private Point _firstPersonCenter;
 
-		private Dictionary<ShmeCommand, string> _commandButtons = [];
+		private readonly Dictionary<ShmeCommand, string> _buttonNames = [];
 
 		/// <summary>
 		/// The camera yaw to apply when forcibly aiming the mouselook camera,
@@ -244,27 +244,27 @@ namespace BizHawk.Client.EmuHawk
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealY, y);
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealZ, z);
 
-			Joy.Set(_commandButtons[ShmeCommand.Forward], _forward);
-			Joy.Set(_commandButtons[ShmeCommand.Backward], _backward);
-			Joy.Set(_commandButtons[ShmeCommand.Action], _action);
-			Joy.Set(_commandButtons[ShmeCommand.Aim], _aim);
-			Joy.Set(_commandButtons[ShmeCommand.Light], _light);
-			Joy.Set(_commandButtons[ShmeCommand.Run], _run);
-			Joy.Set(_commandButtons[ShmeCommand.View], _view);
-			Joy.Set(_commandButtons[ShmeCommand.Map], _map);
+			Joy.Set(_buttonNames[ShmeCommand.Forward], _forward);
+			Joy.Set(_buttonNames[ShmeCommand.Backward], _backward);
+			Joy.Set(_buttonNames[ShmeCommand.Action], _action);
+			Joy.Set(_buttonNames[ShmeCommand.Aim], _aim);
+			Joy.Set(_buttonNames[ShmeCommand.Light], _light);
+			Joy.Set(_buttonNames[ShmeCommand.Run], _run);
+			Joy.Set(_buttonNames[ShmeCommand.View], _view);
+			Joy.Set(_buttonNames[ShmeCommand.Map], _map);
 
 			// Sending both sidestep inputs at the same time attempts to do
 			// an about-face, but since the camera's under user control, the
 			// sidestep controls lock up. Just silently ignore such input.
 			if (_stepL && _stepR)
 			{
-				Joy.Set(_commandButtons[ShmeCommand.Left], false);
-				Joy.Set(_commandButtons[ShmeCommand.Right], false);
+				Joy.Set(_buttonNames[ShmeCommand.Left], false);
+				Joy.Set(_buttonNames[ShmeCommand.Right], false);
 			}
 			else
 			{
-				Joy.Set(_commandButtons[ShmeCommand.Left], _stepL);
-				Joy.Set(_commandButtons[ShmeCommand.Right], _stepR);
+				Joy.Set(_buttonNames[ShmeCommand.Left], _stepL);
+				Joy.Set(_buttonNames[ShmeCommand.Right], _stepR);
 			}
 		}
 
