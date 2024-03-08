@@ -104,115 +104,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private void BtnCameraFps_ClickFirst(object sender, EventArgs e)
-		{
-			FpsEnabled = true;
-		}
-
-		// In-game actions, named as per the game's "Controller Config" screen.
-		private bool _action;
-		private bool _aim;
-		private bool _light;
-		private bool _run;
-		private bool _view;
-		private bool _stepL;
-		private bool _stepR;
-		private bool _map;
-		private void BtnCameraFps_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (!FpsEnabled)
-			{
-				return;
-			}
-			else if (e.KeyCode == Keys.Escape)
-			{
-				FpsEnabled = false;
-				return;
-			}
-
-			ShmeCommand? command = Settings.Local.FpsBinds
-				.Where((bind) => bind.KeyBind == e.KeyCode)
-				.FirstOrDefault()
-				?.Command;
-
-			switch (command)
-			{
-				case ShmeCommand.Forward:
-					_forward = true;
-					break;
-				case ShmeCommand.Backward:
-					_backward = true;
-					break;
-				case ShmeCommand.Left:
-					_stepL = true;
-					break;
-				case ShmeCommand.Right:
-					_stepR = true;
-					break;
-				case ShmeCommand.Action:
-					_action = true;
-					break;
-				case ShmeCommand.Aim:
-					_aim = true;
-					break;
-				case ShmeCommand.Light:
-					_light = true;
-					break;
-				case ShmeCommand.Run:
-					_run = !CbxAlwaysRun.Checked;
-					break;
-				case ShmeCommand.Map:
-					_map = true;
-					break;
-				case ShmeCommand.None:
-				case null:
-				default:
-					break;
-			}
-		}
-		private void BtnCameraFps_KeyUp(object sender, KeyEventArgs e)
-		{
-			ShmeCommand? command = Settings.Local.FpsBinds
-				.Where((bind) => bind.KeyBind == e.KeyCode)
-				.FirstOrDefault()
-				?.Command;
-
-			switch (command)
-			{
-				case ShmeCommand.Forward:
-					_forward = false;
-					break;
-				case ShmeCommand.Backward:
-					_backward = false;
-					break;
-				case ShmeCommand.Left:
-					_stepL = false;
-					break;
-				case ShmeCommand.Right:
-					_stepR = false;
-					break;
-				case ShmeCommand.Action:
-					_action = false;
-					break;
-				case ShmeCommand.Aim:
-					_aim = false;
-					break;
-				case ShmeCommand.Light:
-					_light = false;
-					break;
-				case ShmeCommand.Run:
-					_run = CbxAlwaysRun.Checked;
-					break;
-				case ShmeCommand.Map:
-					_map = false;
-					break;
-				case ShmeCommand.None:
-				case null:
-				default:
-					break;
-			}
-		}
-
 		private Point _firstPersonCenter;
 
 		private readonly Dictionary<ShmeCommand, string> _buttonNames = [];
@@ -268,6 +159,120 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		// In-game actions, named as per the game's "Controller Config" screen.
+		private bool _action;
+		private bool _aim;
+		private bool _light;
+		private bool _run;
+		private bool _view;
+		private bool _stepL;
+		private bool _stepR;
+		private bool _map;
+		private void StartCommand(ShmeCommand? command)
+		{
+			switch (command)
+			{
+				case ShmeCommand.Forward:
+					_forward = true;
+					break;
+				case ShmeCommand.Backward:
+					_backward = true;
+					break;
+				case ShmeCommand.Left:
+					_stepL = true;
+					break;
+				case ShmeCommand.Right:
+					_stepR = true;
+					break;
+				case ShmeCommand.Action:
+					_action = true;
+					break;
+				case ShmeCommand.Aim:
+					_aim = true;
+					break;
+				case ShmeCommand.Light:
+					_light = true;
+					break;
+				case ShmeCommand.Run:
+					_run = !CbxAlwaysRun.Checked;
+					break;
+				case ShmeCommand.Map:
+					_map = true;
+					break;
+				case ShmeCommand.None:
+				case null:
+				default:
+					break;
+			}
+		}
+		private void StopCommand(ShmeCommand? command)
+		{
+			switch (command)
+			{
+				case ShmeCommand.Forward:
+					_forward = false;
+					break;
+				case ShmeCommand.Backward:
+					_backward = false;
+					break;
+				case ShmeCommand.Left:
+					_stepL = false;
+					break;
+				case ShmeCommand.Right:
+					_stepR = false;
+					break;
+				case ShmeCommand.Action:
+					_action = false;
+					break;
+				case ShmeCommand.Aim:
+					_aim = false;
+					break;
+				case ShmeCommand.Light:
+					_light = false;
+					break;
+				case ShmeCommand.Run:
+					_run = CbxAlwaysRun.Checked;
+					break;
+				case ShmeCommand.Map:
+					_map = false;
+					break;
+				case ShmeCommand.None:
+				case null:
+				default:
+					break;
+			}
+		}
+
+		private void BtnCameraFps_ClickFirst(object sender, EventArgs e)
+		{
+			FpsEnabled = true;
+		}
+
+		private void BtnCameraFps_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (!FpsEnabled)
+			{
+				return;
+			}
+			else if (e.KeyCode == Keys.Escape)
+			{
+				FpsEnabled = false;
+				return;
+			}
+
+			StartCommand(Settings.Local.FpsBinds
+				.Where((bind) => bind.KeyBind == e.KeyCode)
+				.FirstOrDefault()
+				?.Command);
+		}
+		private void BtnCameraFps_KeyUp(object sender, KeyEventArgs e)
+		{
+			StopCommand(Settings.Local.FpsBinds
+				.Where((bind) => bind.KeyBind == e.KeyCode)
+				.FirstOrDefault()
+				?.Command);
+		}
+
 		private void BtnCameraFps_LostFocus(object sender, EventArgs e)
 		{
 			FpsEnabled = false;
@@ -275,45 +280,17 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnCameraFps_MouseDown(object sender, MouseEventArgs e)
 		{
-			ShmeCommand? command = Settings.Local.FpsBinds
+			StartCommand(Settings.Local.FpsBinds
 				.Where((bind) => bind.MouseBind == e.Button)
 				.FirstOrDefault()
-				?.Command;
-
-			switch (command)
-			{
-				case ShmeCommand.Action:
-					_action = true;
-					break;
-				case ShmeCommand.Aim:
-					_aim = true;
-					break;
-				case ShmeCommand.None:
-				case null:
-				default:
-					break;
-			}
+				?.Command);
 		}
 		private void BtnCameraFps_MouseUp(object sender, MouseEventArgs e)
 		{
-			ShmeCommand? command = Settings.Local.FpsBinds
+			StopCommand(Settings.Local.FpsBinds
 				.Where((bind) => bind.MouseBind == e.Button)
 				.FirstOrDefault()
-				?.Command;
-
-			switch (command)
-			{
-				case ShmeCommand.Action:
-					_action = false;
-					break;
-				case ShmeCommand.Aim:
-					_aim = false;
-					break;
-				case ShmeCommand.None:
-				case null:
-				default:
-					break;
-			}
+				?.Command);
 		}
 
 		private void CbxAlwaysRun_CheckedChanged(object sender, EventArgs e)
