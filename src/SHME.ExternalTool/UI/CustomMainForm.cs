@@ -754,7 +754,6 @@ namespace BizHawk.Client.EmuHawk
 				names[PsxButtons.Square] = "P1 □";
 			}
 
-			_buttonNames.Clear();
 			_buttonNames[ShmeCommand.Forward] = names[PsxButtons.Up];
 			_buttonNames[ShmeCommand.Backward] = names[PsxButtons.Down];
 			_buttonNames[ShmeCommand.Action] = names[_controllerConfig.Action.FilterToAny()];
