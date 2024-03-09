@@ -97,7 +97,17 @@ namespace BizHawk.Client.EmuHawk
 		private Viewport _dummyViewport = new Viewport();
 		private Rectangle _drawRegionRect;
 
-		private Settings Settings { get; set; } = null!;
+		// Manually implementing a backing field is necessary to store it as a
+		// plain object, which in turn prevents BizHawk under Mono from failing
+		// to load the Settings type on first reflection access. To see exactly
+		// where things go pear shaped, see the BizHawk codebase:
+		// https://github.com/TASEmulators/BizHawk/blob/745efb1dd8eb82f31ba9201a79cdfc5bcaf1f5d1/src/BizHawk.Client.EmuHawk/tools/ExternalToolManager.cs#L124-L125
+		private object _settings = null!;
+		private Settings Settings
+		{
+			get => (Settings)_settings;
+			set => _settings = value;
+		}
 
 		public CustomMainForm()
 		{

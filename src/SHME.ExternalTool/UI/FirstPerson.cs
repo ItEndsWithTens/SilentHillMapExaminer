@@ -106,7 +106,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private Point _firstPersonCenter;
 
-		private readonly Dictionary<ShmeCommand, string> _buttonNames = [];
+		private readonly Dictionary<object, string> _buttonNames = [];
 
 		/// <summary>
 		/// The camera yaw to apply when forcibly aiming the mouselook camera,

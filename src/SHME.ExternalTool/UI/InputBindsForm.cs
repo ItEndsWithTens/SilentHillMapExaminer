@@ -10,7 +10,12 @@ namespace SHME.ExternalTool.UI
 {
 	public partial class InputBindsForm : Form
 	{
-		private readonly Settings _settings;
+		private object _settings = null!;
+		private Settings Settings
+		{
+			get => (Settings)_settings;
+			set => _settings = value;
+		}
 
 		private bool _suppressSave;
 		private bool _editing;
@@ -45,7 +50,7 @@ namespace SHME.ExternalTool.UI
 				{
 					if (!_suppressSave)
 					{
-						_settings.Local.Save();
+						Settings.Local.Save();
 					}
 					else
 					{
@@ -74,10 +79,10 @@ namespace SHME.ExternalTool.UI
 				border + 540 + border);
 			MaximumSize = Size;
 
-			_settings = settings;
+			Settings = settings;
 
-			BuildColumns(DgvFlyInputBinds, _settings.Local.FlyBinds);
-			BuildColumns(DgvFpsInputBinds, _settings.Local.FpsBinds);
+			BuildColumns(DgvFlyInputBinds, Settings.Local.FlyBinds);
+			BuildColumns(DgvFpsInputBinds, Settings.Local.FpsBinds);
 		}
 
 		private static void BuildColumns(DataGridView dgv, Collection<InputBind> binds)
@@ -154,15 +159,21 @@ namespace SHME.ExternalTool.UI
 			{
 				var bind = (InputBind)row.DataBoundItem;
 
+				object b = bind;
+				bool CommandMatches(object o)
+				{
+					return ((InputBind)o).Command == ((InputBind)b).Command;
+				}
+
 				InputBind defaultBind = defaultBinds
-					.Where((b) => b.Command == bind.Command)
+					.Where(CommandMatches)
 					.FirstOrDefault();
 
 				row.Cells[1].Value = defaultBind.KeyBind;
 				row.Cells[2].Value = defaultBind.MouseBind;
 			}
 
-			_settings.Local.Save();
+			Settings.Local.Save();
 		}
 
 		private void DgvInputBinds_KeyDown(object sender, KeyEventArgs e)
@@ -178,12 +189,12 @@ namespace SHME.ExternalTool.UI
 			if (DgvFlyInputBinds.SelectedCells.Count > 0)
 			{
 				cell = DgvFlyInputBinds.SelectedCells[0];
-				inputBinds = _settings.Local.FlyBinds;
+				inputBinds = Settings.Local.FlyBinds;
 			}
 			else
 			{
 				cell = DgvFpsInputBinds.SelectedCells[0];
-				inputBinds = _settings.Local.FpsBinds;
+				inputBinds = Settings.Local.FpsBinds;
 			}
 
 			if (cell.OwningRow.DataBoundItem is not InputBind bind)
@@ -228,8 +239,13 @@ namespace SHME.ExternalTool.UI
 						break;
 					}
 
-					IEnumerable<InputBind> dupes = inputBinds
-						.Where((b) => b.KeyBind == e.KeyCode && b != bind);
+					object b = bind;
+					bool KeyBindMatches(object o)
+					{
+						return ((InputBind)o).KeyBind == e.KeyCode && !ReferenceEquals(o, b);
+					}
+
+					IEnumerable<InputBind> dupes = inputBinds.Where(KeyBindMatches);
 
 					suppress = e.KeyCode == bind.KeyBind;
 					foreach (InputBind dupe in dupes)
@@ -276,12 +292,12 @@ namespace SHME.ExternalTool.UI
 			if (DgvFlyInputBinds.SelectedCells.Count > 0)
 			{
 				cell = DgvFlyInputBinds.SelectedCells[0];
-				inputBinds = _settings.Local.FlyBinds;
+				inputBinds = Settings.Local.FlyBinds;
 			}
 			else
 			{
 				cell = DgvFpsInputBinds.SelectedCells[0];
-				inputBinds = _settings.Local.FpsBinds;
+				inputBinds = Settings.Local.FpsBinds;
 			}
 
 			if (cell.ColumnIndex != 2)
@@ -294,8 +310,13 @@ namespace SHME.ExternalTool.UI
 				return;
 			}
 
-			IEnumerable<InputBind> dupes = inputBinds
-				.Where((b) => b.MouseBind == e.Button && b != bind);
+			object b = bind;
+			bool MouseBindMatches(object o)
+			{
+				return ((InputBind)o).MouseBind == e.Button && !ReferenceEquals(o, b);
+			}
+
+			IEnumerable<InputBind> dupes = inputBinds.Where(MouseBindMatches);
 
 			bool suppress = e.Button == bind.MouseBind;
 			foreach (InputBind dupe in dupes)

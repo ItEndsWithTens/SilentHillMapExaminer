@@ -65,6 +65,9 @@
     <Copy SourceFiles="$(OutputPath)/JsonSettings.Autosave.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll/JsonSettings" />
     <Copy SourceFiles="$(OutputPath)/Castle.Core.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll/JsonSettings" />
     <Copy SourceFiles="$(TopLevelDirectory)/README.md" DestinationFiles="$(PrepDir)/$(MSBuildProjectName).txt" />
+
+    <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).pdb" DestinationFolder="$(PrepDir)" Condition="Exists('$(OutputPath)/$(MSBuildProjectName).pdb')" />
+    <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).Extras.pdb" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll" Condition="Exists('$(OutputPath)/$(MSBuildProjectName).Extras.pdb')" />
   </Target>
 
   <Target Name="InstallInEmulator" AfterTargets="CreatePrepDir">
