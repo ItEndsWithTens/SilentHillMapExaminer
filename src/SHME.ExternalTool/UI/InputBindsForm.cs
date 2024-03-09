@@ -159,14 +159,14 @@ namespace SHME.ExternalTool.UI
 			{
 				var bind = (InputBind)row.DataBoundItem;
 
-				object b = bind;
-				bool CommandMatches(object o)
-				{
-					return ((InputBind)o).Command == ((InputBind)b).Command;
-				}
-
+				// Using the InputBind instance directly in the lambda below
+				// would create an anonymous method in the assembly that had a
+				// field of the InputBind type. Since InputBind is defined in an
+				// external assembly, it would be an obstacle to loading the
+				// plugin, just like the JsonSettings and ShmeCommand types.
+				object o = bind;
 				InputBind defaultBind = defaultBinds
-					.Where(CommandMatches)
+					.Where((b) => b.Command == ((InputBind)o).Command)
 					.FirstOrDefault();
 
 				row.Cells[1].Value = defaultBind.KeyBind;
@@ -239,13 +239,9 @@ namespace SHME.ExternalTool.UI
 						break;
 					}
 
-					object b = bind;
-					bool KeyBindMatches(object o)
-					{
-						return ((InputBind)o).KeyBind == e.KeyCode && !ReferenceEquals(o, b);
-					}
-
-					IEnumerable<InputBind> dupes = inputBinds.Where(KeyBindMatches);
+					object o = bind;
+					IEnumerable<InputBind> dupes = inputBinds
+						.Where((b) => b.KeyBind == e.KeyCode && !ReferenceEquals(b, o));
 
 					suppress = e.KeyCode == bind.KeyBind;
 					foreach (InputBind dupe in dupes)
@@ -310,13 +306,9 @@ namespace SHME.ExternalTool.UI
 				return;
 			}
 
-			object b = bind;
-			bool MouseBindMatches(object o)
-			{
-				return ((InputBind)o).MouseBind == e.Button && !ReferenceEquals(o, b);
-			}
-
-			IEnumerable<InputBind> dupes = inputBinds.Where(MouseBindMatches);
+			object o = bind;
+			IEnumerable<InputBind> dupes = inputBinds
+				.Where((b) => b.MouseBind == e.Button && !ReferenceEquals(b, o));
 
 			bool suppress = e.Button == bind.MouseBind;
 			foreach (InputBind dupe in dupes)
