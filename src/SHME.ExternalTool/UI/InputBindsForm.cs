@@ -339,30 +339,40 @@ namespace SHME.ExternalTool.UI
 
 		private void DgvInputBinds_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
 		{
+			var dgv = sender as DataGridView;
+			if (ReferenceEquals(sender, DgvFlyInputBinds))
+			{
+				DgvFpsInputBinds.ClearSelection();
+			}
+			else if (ReferenceEquals(sender, DgvFpsInputBinds))
+			{
+				DgvFlyInputBinds.ClearSelection();
+			}
+			else
+			{
+				return;
+			}
+
 			if (!Editing)
 			{
 				return;
 			}
 
-			DataGridViewCell cell;
 			Collection<InputBind> inputBinds;
-			if (DgvFlyInputBinds.SelectedCells.Count > 0)
+			if (ReferenceEquals(dgv, DgvFlyInputBinds))
 			{
-				cell = DgvFlyInputBinds.SelectedCells[0];
 				inputBinds = Settings.Local.FlyBinds;
 			}
 			else
 			{
-				cell = DgvFpsInputBinds.SelectedCells[0];
 				inputBinds = Settings.Local.FpsBinds;
 			}
 
-			if (cell.ColumnIndex != 2)
-			{
-				return;
-			}
-
-			if (cell.OwningRow.DataBoundItem is not InputBind bind)
+			DataGridViewCell selected = dgv.SelectedCells[0];
+			if (selected.ColumnIndex == 0
+				|| e.ColumnIndex != selected.ColumnIndex
+				|| e.RowIndex != selected.RowIndex
+				|| selected.OwningRow.DataBoundItem is not InputBind bind)
 			{
 				return;
 			}
