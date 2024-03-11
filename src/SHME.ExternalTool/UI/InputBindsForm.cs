@@ -17,6 +17,11 @@ namespace SHME.ExternalTool.UI
 			set => _settings = value;
 		}
 
+		// WinForms, running under Mono, has problems with padding DataGridView
+		// cells, failing to take it into account when auto sizing and making
+		// the contents of the cell invisible.
+		private Padding _cellPadding = new Padding(10);
+
 		private bool _suppressSave;
 		private bool _editing;
 		private bool Editing
@@ -57,14 +62,14 @@ namespace SHME.ExternalTool.UI
 						_suppressSave = false;
 					}
 
-					cell.Style.SelectionBackColor = DgvFpsInputBinds.DefaultCellStyle.SelectionBackColor;
-					cell.Style.SelectionForeColor = DgvFpsInputBinds.DefaultCellStyle.SelectionForeColor;
+					cell.Style.SelectionBackColor = cell.DataGridView.DefaultCellStyle.SelectionBackColor;
+					cell.Style.SelectionForeColor = cell.DataGridView.DefaultCellStyle.SelectionForeColor;
 				}
 
-				// Toggling AutoSizeMode off and on again is an easy way to auto
-				// size the column after a change.
-				cell.OwningColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
-				cell.OwningColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+				UpdateColumnSize(cell.DataGridView, _cellPadding, cell.ColumnIndex);
+				UpdateRowSize(cell.DataGridView, _cellPadding, cell.RowIndex);
+
+				cell.DataGridView.Refresh();
 			}
 		}
 
@@ -138,6 +143,60 @@ namespace SHME.ExternalTool.UI
 		{
 			DgvFlyInputBinds.ClearSelection();
 			DgvFpsInputBinds.ClearSelection();
+
+			UpdateSize(DgvFlyInputBinds, _cellPadding);
+			UpdateSize(DgvFpsInputBinds, _cellPadding);
+		}
+
+		private static void UpdateColumnSize(DataGridView dgv, Padding padding, int columnIndex)
+		{
+			int width = 0;
+			foreach (DataGridViewRow row in dgv.Rows)
+			{
+				foreach(DataGridViewCell c in row.Cells)
+				{
+					if (c.ColumnIndex == columnIndex)
+					{
+						string? text = c.FormattedValue.ToString();
+						if (text == null)
+							continue;
+						Size size = TextRenderer.MeasureText(text, dgv.DefaultCellStyle.Font);
+						size.Width += padding.Left + padding.Right;
+						if (size.Width > width)
+							width = size.Width;
+					}
+				}
+			}
+			dgv.Columns[columnIndex].Width = width;
+		}
+
+		private static void UpdateRowSize(DataGridView dgv, Padding padding, int rowIndex)
+		{
+			int height = 0;
+			foreach (DataGridViewCell c in dgv.Rows[rowIndex].Cells)
+			{
+				string? text = c.FormattedValue.ToString();
+				if (text == null)
+					continue;
+				Size size = TextRenderer.MeasureText(text, dgv.DefaultCellStyle.Font);
+				size.Height += padding.Top + padding.Bottom;
+				if (size.Height > height)
+					height = size.Height;
+			}
+			dgv.Rows[rowIndex].Height = height;
+		}
+
+		private static void UpdateSize(DataGridView dgv, Padding padding)
+		{
+			for (int i = 0; i < dgv.Columns.Count; i++)
+			{
+				UpdateColumnSize(dgv, padding, i);
+			}
+
+			for (int i = 0; i < dgv.Rows.Count; i++)
+			{
+				UpdateRowSize(dgv, padding, i);
+			}
 		}
 
 		private void BtnInputBindsDefault_Click(object sender, EventArgs e)
@@ -172,6 +231,8 @@ namespace SHME.ExternalTool.UI
 				row.Cells[1].Value = defaultBind.KeyBind;
 				row.Cells[2].Value = defaultBind.MouseBind;
 			}
+
+			UpdateSize(dgv, _cellPadding);
 
 			Settings.Local.Save();
 		}
