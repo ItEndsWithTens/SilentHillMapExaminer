@@ -20,36 +20,28 @@ namespace SHME.ExternalTool.UI
 		// WinForms, running under Mono, has problems with padding DataGridView
 		// cells, failing to take it into account when auto sizing and making
 		// the contents of the cell invisible.
-		private Padding _cellPadding = new Padding(10);
+		private Padding _cellPadding = new(10);
 
 		private bool _suppressSave;
-		private bool _editing;
-		private bool Editing
+		private DataGridViewCell? _editingCell;
+		private DataGridViewCell? EditingCell
 		{
-			get => _editing;
+			get => _editingCell;
 			set
 			{
-				if (value == _editing)
+				if (value == _editingCell)
 				{
 					return;
 				}
 
-				_editing = value;
+				DataGridView dgv;
 
-				DataGridViewCell cell;
-				if (DgvFlyInputBinds.SelectedCells.Count > 0)
+				if (value != null)
 				{
-					cell = DgvFlyInputBinds.SelectedCells[0];
-				}
-				else
-				{
-					cell = DgvFpsInputBinds.SelectedCells[0];
-				}
-
-				if (value)
-				{
-					cell.Style.SelectionBackColor = Color.FromArgb(192, 255, 255);
-					cell.Style.SelectionForeColor = Color.Black;
+					value.Style.SelectionBackColor = Color.FromArgb(192, 255, 255);
+					value.Style.SelectionForeColor = Color.Black;
+					dgv = value.DataGridView;
+					_editingCell = value;
 				}
 				else
 				{
@@ -62,14 +54,17 @@ namespace SHME.ExternalTool.UI
 						_suppressSave = false;
 					}
 
-					cell.Style.SelectionBackColor = cell.DataGridView.DefaultCellStyle.SelectionBackColor;
-					cell.Style.SelectionForeColor = cell.DataGridView.DefaultCellStyle.SelectionForeColor;
+					_editingCell.Style.SelectionBackColor = _editingCell.DataGridView.DefaultCellStyle.SelectionBackColor;
+					_editingCell.Style.SelectionForeColor = _editingCell.DataGridView.DefaultCellStyle.SelectionForeColor;
+					dgv = _editingCell.DataGridView;
+
+					UpdateColumnSize(dgv, _cellPadding, _editingCell.ColumnIndex);
+					UpdateRowSize(dgv, _cellPadding, _editingCell.RowIndex);
+
+					_editingCell = value;
 				}
 
-				UpdateColumnSize(cell.DataGridView, _cellPadding, cell.ColumnIndex);
-				UpdateRowSize(cell.DataGridView, _cellPadding, cell.RowIndex);
-
-				cell.DataGridView.Refresh();
+				dgv.Refresh();
 			}
 		}
 
@@ -130,13 +125,13 @@ namespace SHME.ExternalTool.UI
 
 		private void FinishEditing(bool suppressSave = false)
 		{
-			if (!Editing)
+			if (EditingCell == null)
 			{
 				return;
 			}
 
 			_suppressSave = suppressSave;
-			Editing = false;
+			EditingCell = null;
 		}
 
 		private void InputBindsForm_Shown(object sender, EventArgs e)
@@ -153,7 +148,7 @@ namespace SHME.ExternalTool.UI
 			int width = 0;
 			foreach (DataGridViewRow row in dgv.Rows)
 			{
-				foreach(DataGridViewCell c in row.Cells)
+				foreach (DataGridViewCell c in row.Cells)
 				{
 					if (c.ColumnIndex == columnIndex)
 					{
@@ -203,7 +198,7 @@ namespace SHME.ExternalTool.UI
 		{
 			DataGridView dgv;
 			Collection<InputBind> defaultBinds;
-			if (sender == BtnFlyInputDefault)
+			if (ReferenceEquals(sender, BtnFlyInputDefault))
 			{
 				dgv = DgvFlyInputBinds;
 				defaultBinds = DefaultLocalSettings.FlyBinds;
@@ -239,34 +234,27 @@ namespace SHME.ExternalTool.UI
 
 		private void DgvInputBinds_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (!Editing || e.KeyCode == Keys.Escape)
+			if (EditingCell == null
+				|| e.KeyCode == Keys.Escape
+				|| EditingCell.OwningRow.DataBoundItem is not InputBind bind)
 			{
 				FinishEditing(true);
 				return;
 			}
 
-			DataGridViewCell cell;
 			Collection<InputBind> inputBinds;
-			if (DgvFlyInputBinds.SelectedCells.Count > 0)
+			if (ReferenceEquals(EditingCell.DataGridView, DgvFlyInputBinds))
 			{
-				cell = DgvFlyInputBinds.SelectedCells[0];
 				inputBinds = Settings.Local.FlyBinds;
 			}
 			else
 			{
-				cell = DgvFpsInputBinds.SelectedCells[0];
 				inputBinds = Settings.Local.FpsBinds;
-			}
-
-			if (cell.OwningRow.DataBoundItem is not InputBind bind)
-			{
-				FinishEditing(true);
-				return;
 			}
 
 			bool suppress = false;
 
-			switch (cell.ColumnIndex)
+			switch (EditingCell.ColumnIndex)
 			{
 				case 2:
 					if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
@@ -329,7 +317,7 @@ namespace SHME.ExternalTool.UI
 				return;
 			}
 
-			Editing = true;
+			EditingCell = ((DataGridView)sender)[e.ColumnIndex, e.RowIndex];
 		}
 
 		private void DgvInputBinds_CellLeave(object sender, DataGridViewCellEventArgs e)
@@ -353,7 +341,7 @@ namespace SHME.ExternalTool.UI
 				return;
 			}
 
-			if (!Editing)
+			if (EditingCell == null)
 			{
 				return;
 			}
@@ -368,12 +356,13 @@ namespace SHME.ExternalTool.UI
 				inputBinds = Settings.Local.FpsBinds;
 			}
 
-			DataGridViewCell selected = dgv.SelectedCells[0];
-			if (selected.ColumnIndex == 0
-				|| e.ColumnIndex != selected.ColumnIndex
-				|| e.RowIndex != selected.RowIndex
-				|| selected.OwningRow.DataBoundItem is not InputBind bind)
+			if (!ReferenceEquals(dgv, EditingCell.DataGridView)
+				|| EditingCell.ColumnIndex != 2
+				|| e.ColumnIndex != EditingCell.ColumnIndex
+				|| e.RowIndex != EditingCell.RowIndex
+				|| EditingCell.OwningRow.DataBoundItem is not InputBind bind)
 			{
+				FinishEditing(true);
 				return;
 			}
 
@@ -395,10 +384,14 @@ namespace SHME.ExternalTool.UI
 
 		private void DgvInputBinds_CellEnter(object sender, DataGridViewCellEventArgs e)
 		{
-			if (sender == DgvFlyInputBinds)
+			if (ReferenceEquals(sender, DgvFlyInputBinds))
+			{
 				DgvFpsInputBinds.ClearSelection();
-			else if (sender == DgvFpsInputBinds)
+			}
+			else if (ReferenceEquals(sender, DgvFpsInputBinds))
+			{
 				DgvFlyInputBinds.ClearSelection();
+			}
 		}
 	}
 }
