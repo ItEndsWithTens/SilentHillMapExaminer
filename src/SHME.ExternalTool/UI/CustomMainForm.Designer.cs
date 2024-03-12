@@ -1301,7 +1301,7 @@ namespace BizHawk.Client.EmuHawk
             0,
             0,
             131072});
-            this.NudCameraFlySensitivity.Location = new System.Drawing.Point(276, 72);
+            this.NudCameraFlySensitivity.Location = new System.Drawing.Point(266, 72);
             this.NudCameraFlySensitivity.Maximum = new decimal(new int[] {
             10,
             0,
@@ -1313,7 +1313,7 @@ namespace BizHawk.Client.EmuHawk
             0,
             -2147483648});
             this.NudCameraFlySensitivity.Name = "NudCameraFlySensitivity";
-            this.NudCameraFlySensitivity.Size = new System.Drawing.Size(50, 20);
+            this.NudCameraFlySensitivity.Size = new System.Drawing.Size(60, 20);
             this.NudCameraFlySensitivity.TabIndex = 11;
             this.NudCameraFlySensitivity.ValueChanged += new System.EventHandler(this.NudCameraFlySensitivity_ValueChanged);
             this.NudCameraFlySensitivity.Click += new System.EventHandler(this.Selectable_Enter);
@@ -1325,7 +1325,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(216, 75);
+            this.label4.Location = new System.Drawing.Point(206, 75);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
             this.label4.TabIndex = 5;
@@ -1408,14 +1408,14 @@ namespace BizHawk.Client.EmuHawk
             0,
             0,
             131072});
-            this.NudEyeHeight.Location = new System.Drawing.Point(271, 5);
+            this.NudEyeHeight.Location = new System.Drawing.Point(266, 5);
             this.NudEyeHeight.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             -2147483648});
             this.NudEyeHeight.Name = "NudEyeHeight";
-            this.NudEyeHeight.Size = new System.Drawing.Size(55, 20);
+            this.NudEyeHeight.Size = new System.Drawing.Size(60, 20);
             this.NudEyeHeight.TabIndex = 20;
             this.toolTip1.SetToolTip(this.NudEyeHeight, "Crosshair length as a percentage of viewport height");
             this.NudEyeHeight.Click += new System.EventHandler(this.Selectable_Enter);
@@ -1427,7 +1427,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label48.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(208, 8);
+            this.label48.Location = new System.Drawing.Point(203, 8);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(57, 13);
             this.label48.TabIndex = 15;
@@ -1517,7 +1517,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(232, 21);
+            this.label3.Location = new System.Drawing.Point(222, 21);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(38, 13);
             this.label3.TabIndex = 5;
@@ -1533,7 +1533,7 @@ namespace BizHawk.Client.EmuHawk
             0,
             0,
             196608});
-            this.NudCameraFlySpeed.Location = new System.Drawing.Point(276, 18);
+            this.NudCameraFlySpeed.Location = new System.Drawing.Point(266, 18);
             this.NudCameraFlySpeed.Maximum = new decimal(new int[] {
             10,
             0,
@@ -1545,7 +1545,7 @@ namespace BizHawk.Client.EmuHawk
             0,
             -2147483648});
             this.NudCameraFlySpeed.Name = "NudCameraFlySpeed";
-            this.NudCameraFlySpeed.Size = new System.Drawing.Size(50, 20);
+            this.NudCameraFlySpeed.Size = new System.Drawing.Size(60, 20);
             this.NudCameraFlySpeed.TabIndex = 10;
             this.NudCameraFlySpeed.ValueChanged += new System.EventHandler(this.NudCameraFlySpeed_ValueChanged);
             this.NudCameraFlySpeed.Click += new System.EventHandler(this.Selectable_Enter);
