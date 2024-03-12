@@ -75,8 +75,8 @@ namespace SHME.ExternalTool.UI
 			int border = 12;
 			AutoScrollMargin = new Size(border, border);
 			ClientSize = new Size(
-				border + 540 + border,
-				border + 540 + border);
+				border + 640 + border,
+				border + 512 + border);
 			MaximumSize = Size;
 
 			Settings = settings;
@@ -141,28 +141,46 @@ namespace SHME.ExternalTool.UI
 
 			UpdateSize(DgvFlyInputBinds, _cellPadding);
 			UpdateSize(DgvFpsInputBinds, _cellPadding);
+
+			DgvFlyInputBinds.Refresh();
+			DgvFpsInputBinds.Refresh();
 		}
 
 		private static void UpdateColumnSize(DataGridView dgv, Padding padding, int columnIndex)
 		{
+			DataGridViewColumn column = dgv.Columns[columnIndex];
+			string? text = column.HeaderText;
+			Size size = TextRenderer.MeasureText(text, dgv.ColumnHeadersDefaultCellStyle.Font);
+			size.Width += padding.Left + padding.Right;
+
 			int width = 0;
+			if (size.Width > width)
+			{
+				width = size.Width;
+			}
+
 			foreach (DataGridViewRow row in dgv.Rows)
 			{
 				foreach (DataGridViewCell c in row.Cells)
 				{
 					if (c.ColumnIndex == columnIndex)
 					{
-						string? text = c.FormattedValue.ToString();
+						text = c.FormattedValue.ToString();
 						if (text == null)
+						{
 							continue;
-						Size size = TextRenderer.MeasureText(text, dgv.DefaultCellStyle.Font);
+						}
+						size = TextRenderer.MeasureText(text, dgv.DefaultCellStyle.Font);
 						size.Width += padding.Left + padding.Right;
 						if (size.Width > width)
+						{
 							width = size.Width;
+						}
 					}
 				}
 			}
-			dgv.Columns[columnIndex].Width = width;
+
+			column.Width = width;
 		}
 
 		private static void UpdateRowSize(DataGridView dgv, Padding padding, int rowIndex)
@@ -183,6 +201,24 @@ namespace SHME.ExternalTool.UI
 
 		private static void UpdateSize(DataGridView dgv, Padding padding)
 		{
+			int height = 0;
+			for (int i = 0; i < dgv.Columns.Count; i++)
+			{
+				string? text = dgv.Columns[i].HeaderText;
+				if (text == null)
+				{
+					continue;
+				}
+
+				Size size = TextRenderer.MeasureText(text, dgv.ColumnHeadersDefaultCellStyle.Font);
+				size.Height += padding.Top + padding.Bottom;
+				if (size.Height > height)
+				{
+					height = size.Height;
+				}
+			}
+			dgv.ColumnHeadersHeight = height;
+
 			for (int i = 0; i < dgv.Columns.Count; i++)
 			{
 				UpdateColumnSize(dgv, padding, i);
