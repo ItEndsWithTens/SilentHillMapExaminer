@@ -125,34 +125,6 @@ namespace SHME.ExternalTool.UI
 			dgv.DataBindingComplete += Dgv_DataBindingComplete;
 		}
 
-		private static void Dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-		{
-			if (sender is DataGridView dgv)
-			{
-				dgv.ClearSelection();
-			}
-		}
-
-		private void FinishEditing(bool suppressSave = false)
-		{
-			if (EditingCell == null)
-			{
-				return;
-			}
-
-			_suppressSave = suppressSave;
-			EditingCell = null;
-		}
-
-		private void InputBindsForm_Shown(object sender, EventArgs e)
-		{
-			UpdateSize(DgvFlyInputBinds, _cellPadding);
-			UpdateSize(DgvFpsInputBinds, _cellPadding);
-
-			DgvFlyInputBinds.Refresh();
-			DgvFpsInputBinds.Refresh();
-		}
-
 		private static void UpdateColumnSize(DataGridView dgv, Padding padding, int columnIndex)
 		{
 			DataGridViewColumn column = dgv.Columns[columnIndex];
@@ -235,6 +207,25 @@ namespace SHME.ExternalTool.UI
 			{
 				UpdateRowSize(dgv, padding, i);
 			}
+		}
+
+		private static void Dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+		{
+			if (sender is DataGridView dgv)
+			{
+				dgv.ClearSelection();
+			}
+		}
+
+		private void FinishEditing(bool suppressSave = false)
+		{
+			if (EditingCell == null)
+			{
+				return;
+			}
+
+			_suppressSave = suppressSave;
+			EditingCell = null;
 		}
 
 		private void BtnInputBindsDefault_Click(object sender, EventArgs e)
@@ -435,6 +426,15 @@ namespace SHME.ExternalTool.UI
 			{
 				DgvFlyInputBinds.ClearSelection();
 			}
+		}
+
+		private void InputBindsForm_Shown(object sender, EventArgs e)
+		{
+			UpdateSize(DgvFlyInputBinds, _cellPadding);
+			UpdateSize(DgvFpsInputBinds, _cellPadding);
+
+			DgvFlyInputBinds.Refresh();
+			DgvFpsInputBinds.Refresh();
 		}
 	}
 }
