@@ -70,31 +70,31 @@ namespace BizHawk.Client.EmuHawk
 
 		protected override string WindowTitleStatic => ToolName;
 
-		public Core Core { get; } = new Core();
+		public Core Core { get; } = new();
 
-		public Camera Camera { get; set; } = new Camera()
+		public Camera Camera { get; set; } = new()
 		{
 			Culling = Culling.Frustum,
 			Fov = 53.13f
 		};
 
-		public IList<Renderable> Boxes { get; } = new List<Renderable>();
-		public IList<Renderable> TestBoxes { get; } = new List<Renderable>();
-		public IList<Renderable> Gems { get; } = new List<Renderable>();
-		public IList<Renderable> Lines { get; } = new List<Renderable>();
+		public IList<Renderable> Boxes { get; } = [];
+		public IList<Renderable> TestBoxes { get; } = [];
+		public IList<Renderable> Gems { get; } = [];
+		public IList<Renderable> Lines { get; } = [];
 
-		public Pen Pen { get; set; } = new Pen(Brushes.White);
-		public Bitmap Reticle { get; set; } = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
-		public Bitmap Overlay { get; set; } = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+		public Pen Pen { get; set; } = new(Brushes.White);
+		public Bitmap Reticle { get; set; } = new(1, 1, PixelFormat.Format32bppArgb);
+		public Bitmap Overlay { get; set; } = new(1, 1, PixelFormat.Format32bppArgb);
 
 		public Rom Rom => Core.Rom;
 
-		private Viewport ClickPort { get; set; } = new Viewport();
-		private Viewport RenderPort { get; set; } = new Viewport();
+		private Viewport ClickPort { get; set; } = new();
+		private Viewport RenderPort { get; set; } = new();
 
 		// TODO: Try to eliminate need for this; maybe better Viewport class,
 		// or a Vertex WorldToScreen method that doesn't need this?
-		private Viewport _dummyViewport = new Viewport();
+		private Viewport _dummyViewport = new();
 		private Rectangle _drawRegionRect;
 
 		// Manually implementing a backing field is necessary to store it as a
@@ -395,7 +395,7 @@ namespace BizHawk.Client.EmuHawk
 			InitializeDataBindings();
 		}
 
-		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = new();
+		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = [];
 		private IList<(Renderable, bool)> VisibleRenderables = [];
 
 		private void UpdateOverlay()
@@ -421,11 +421,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
-					Boxes
-					.Concat(Gems)
-					.Concat(CameraBoxes)
-					.Concat(CameraGems)
-					.ToList());
+					[.. Boxes, .. Gems, .. CameraBoxes, .. CameraGems]);
 			}
 			if (CbxEnableTestModelSection.Checked)
 			{
@@ -449,9 +445,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
-					Lines
-					.Concat(CameraLines)
-					.ToList());
+					[.. Lines, .. CameraLines]);
 			}
 			if (CbxEnableTestLine.Checked)
 			{

@@ -12,7 +12,14 @@ namespace SHME.ExternalTool.Extras
 {
 	public class Settings : IDisposable
 	{
+		/// <summary>
+		/// User-specific, machine-dependent settings.
+		/// </summary>
 		public LocalSettings Local { get; set; }
+
+		/// <summary>
+		/// User-specific, machine-independent settings.
+		/// </summary>
 		public RoamingSettings Roaming { get; set; }
 
 		private bool disposedValue;
