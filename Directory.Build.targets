@@ -3,8 +3,8 @@
   <PropertyGroup>
     <!--Mono doesn't seem to like embedded symbols, so just use the old style
     and avoid the heartache of hours wasted wondering why it doesn't work.-->
-    <DebugType Condition="'$(Configuration)' == 'Debug' And '$(BuildOS)' == 'Linux'">full</DebugType>
-    <DebugType Condition="'$(DebugType)' == ''">embedded</DebugType>
+    <DebugType>embedded</DebugType>
+    <DebugType Condition="('$(Configuration)' == 'Debug') And ('$(BuildOS)' == 'Linux')">full</DebugType>
   </PropertyGroup>
 
   <Target Name="GitCheck" AfterTargets="ResolveProjectReferences">
