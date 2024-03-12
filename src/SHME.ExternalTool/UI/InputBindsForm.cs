@@ -121,6 +121,16 @@ namespace SHME.ExternalTool.UI
 			dgv.Columns.Add(commandColumn);
 			dgv.Columns.Add(keyColumn);
 			dgv.Columns.Add(mouseColumn);
+
+			dgv.DataBindingComplete += Dgv_DataBindingComplete;
+		}
+
+		private static void Dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+		{
+			if (sender is DataGridView dgv)
+			{
+				dgv.ClearSelection();
+			}
 		}
 
 		private void FinishEditing(bool suppressSave = false)
@@ -136,9 +146,6 @@ namespace SHME.ExternalTool.UI
 
 		private void InputBindsForm_Shown(object sender, EventArgs e)
 		{
-			DgvFlyInputBinds.ClearSelection();
-			DgvFpsInputBinds.ClearSelection();
-
 			UpdateSize(DgvFlyInputBinds, _cellPadding);
 			UpdateSize(DgvFpsInputBinds, _cellPadding);
 
