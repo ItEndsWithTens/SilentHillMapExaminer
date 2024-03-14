@@ -1,5 +1,12 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+  <PropertyGroup>
+    <!--Mono doesn't seem to like embedded symbols, so just use the old style
+    and avoid the heartache of hours wasted wondering why it doesn't work.-->
+    <DebugType>embedded</DebugType>
+    <DebugType Condition="('$(Configuration)' == 'Debug') And ('$(BuildOS)' == 'Linux')">full</DebugType>
+  </PropertyGroup>
+
   <Target Name="GitCheck" AfterTargets="ResolveProjectReferences">
     <Exec
       Command="git --version"

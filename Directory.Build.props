@@ -25,11 +25,11 @@
     <MacBundleName>$(Product)</MacBundleName>
     <MacBundleMono>false</MacBundleMono>
 
-    <!--Taken together, these properties allow Source Link to provide embedded
-    debug information that's tied to public source files hosted on Github,
-    allowing convenient debugging even without local copies of the code.-->
+    <!--Taken together with DebugType, in Directory.Build.targets, these 
+    properties allow Source Link to provide embedded debug information 
+    that's tied to public source files hosted on Github, allowing convenient
+    debugging even without local copies of the code.-->
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>embedded</DebugType>
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
 

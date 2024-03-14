@@ -3,6 +3,7 @@ using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Numerics;
 using System.Windows.Forms;
 
@@ -14,9 +15,9 @@ namespace BizHawk.Client.EmuHawk
 		{
 			(Vector3 harry, _) = GetPosition();
 
-			NudModelX.Value = (int)harry.X;
-			NudModelY.Value = (int)harry.Y;
-			NudModelZ.Value = (int)harry.Z;
+			NudTestModelX.Value = (int)harry.X;
+			NudTestModelY.Value = (int)harry.Y;
+			NudTestModelZ.Value = (int)harry.Z;
 		}
 
 		private void BtnModelSetModelPosition_Click(object sender, EventArgs e)
@@ -24,9 +25,9 @@ namespace BizHawk.Client.EmuHawk
 			var aabb = new Aabb(ModelBoxes);
 
 			var target = new Vector3(
-				(float)NudModelX.Value,
-				-(float)NudModelY.Value,
-				-(float)NudModelZ.Value);
+				(float)NudTestModelX.Value,
+				-(float)NudTestModelY.Value,
+				-(float)NudTestModelZ.Value);
 
 			Vector3 diff = target - aabb.Center;
 
@@ -58,7 +59,7 @@ namespace BizHawk.Client.EmuHawk
 		private void NudOverlayTestBoxX_ValueChanged(object sender, EventArgs e)
 		{
 			TestBox.Position = new Vector3(
-				(float)NudOverlayTestBoxX.Value,
+				(float)NudTestBoxX.Value,
 				TestBox.Position.Y,
 				TestBox.Position.Z);
 		}
@@ -67,7 +68,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			TestBox.Position = new Vector3(
 				TestBox.Position.X,
-				-(float)NudOverlayTestBoxY.Value, // Convert from SH coords
+				-(float)NudTestBoxY.Value, // Convert from SH coords
 				TestBox.Position.Z);
 		}
 
@@ -76,13 +77,13 @@ namespace BizHawk.Client.EmuHawk
 			TestBox.Position = new Vector3(
 				TestBox.Position.X,
 				TestBox.Position.Y,
-				-(float)NudOverlayTestBoxZ.Value); // Convert from SH coords
+				-(float)NudTestBoxZ.Value); // Convert from SH coords
 		}
 
 		private void NudOverlayTestBoxSizeX_ValueChanged(object sender, EventArgs e)
 		{
 			Renderable rainbow = new BoxGenerator(
-				(float)NudOverlayTestBoxSizeX.Value,
+				(float)NudTestBoxSizeX.Value,
 				Math.Abs(TestBox.Aabb.Max.Y - TestBox.Aabb.Min.Y),
 				Math.Abs(TestBox.Aabb.Max.Z - TestBox.Aabb.Min.Z),
 				Color.White).GenerateRainbowBox().ToWorld();
@@ -96,7 +97,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Renderable rainbow = new BoxGenerator(
 				Math.Abs(TestBox.Aabb.Max.X - TestBox.Aabb.Min.X),
-				(float)NudOverlayTestBoxSizeY.Value,
+				(float)NudTestBoxSizeY.Value,
 				Math.Abs(TestBox.Aabb.Max.Z - TestBox.Aabb.Min.Z),
 				Color.White).GenerateRainbowBox().ToWorld();
 
@@ -110,7 +111,7 @@ namespace BizHawk.Client.EmuHawk
 			Renderable rainbow = new BoxGenerator(
 				Math.Abs(TestBox.Aabb.Max.X - TestBox.Aabb.Min.X),
 				Math.Abs(TestBox.Aabb.Max.Y - TestBox.Aabb.Min.Y),
-				(float)NudOverlayTestBoxSizeZ.Value,
+				(float)NudTestBoxSizeZ.Value,
 				Color.White).GenerateRainbowBox().ToWorld();
 
 			rainbow.Position = TestBox.Position;
@@ -130,7 +131,7 @@ namespace BizHawk.Client.EmuHawk
 			v = new Vertex(v)
 			{
 				Position = new Vector3(
-					(float)NudOverlayTestLineAX.Value,
+					(float)NudTestLineAX.Value,
 					v.Position.Y,
 					v.Position.Z)
 			};
@@ -153,7 +154,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Position = new Vector3(
 					v.Position.X,
-					-(float)NudOverlayTestLineAY.Value, // Convert from SH coords
+					-(float)NudTestLineAY.Value, // Convert from SH coords
 					v.Position.Z)
 			};
 
@@ -176,7 +177,7 @@ namespace BizHawk.Client.EmuHawk
 				Position = new Vector3(
 					v.Position.X,
 					v.Position.Y,
-					-(float)NudOverlayTestLineAZ.Value) // Convert from SH coords
+					-(float)NudTestLineAZ.Value) // Convert from SH coords
 			};
 
 			line.A = v;
@@ -196,7 +197,7 @@ namespace BizHawk.Client.EmuHawk
 			v = new Vertex(v)
 			{
 				Position = new Vector3(
-					(float)NudOverlayTestLineBX.Value,
+					(float)NudTestLineBX.Value,
 					v.Position.Y,
 					v.Position.Z)
 			};
@@ -219,7 +220,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Position = new Vector3(
 					v.Position.X,
-					-(float)NudOverlayTestLineBY.Value, // Convert from SH coords
+					-(float)NudTestLineBY.Value, // Convert from SH coords
 					v.Position.Z)
 			};
 
@@ -242,7 +243,7 @@ namespace BizHawk.Client.EmuHawk
 				Position = new Vector3(
 					v.Position.X,
 					v.Position.Y,
-					-(float)NudOverlayTestLineBZ.Value) // Convert from SH coords
+					-(float)NudTestLineBZ.Value) // Convert from SH coords
 			};
 
 			line.B = v;
@@ -253,7 +254,7 @@ namespace BizHawk.Client.EmuHawk
 		private void NudOverlayTestSheetX_ValueChanged(object sender, EventArgs e)
 		{
 			TestSheet.Position = new Vector3(
-				(float)NudOverlayTestSheetX.Value,
+				(float)NudTestSheetX.Value,
 				TestSheet.Position.Y,
 				TestSheet.Position.Z);
 		}
@@ -262,7 +263,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			TestSheet.Position = new Vector3(
 				TestSheet.Position.X,
-				-(float)NudOverlayTestSheetY.Value, // Convert from SH coords
+				-(float)NudTestSheetY.Value, // Convert from SH coords
 				TestSheet.Position.Z);
 		}
 
@@ -271,13 +272,13 @@ namespace BizHawk.Client.EmuHawk
 			TestSheet.Position = new Vector3(
 				TestSheet.Position.X,
 				TestSheet.Position.Y,
-				-(float)NudOverlayTestSheetZ.Value); // Convert from SH coords
+				-(float)NudTestSheetZ.Value); // Convert from SH coords
 		}
 
 		private void NudOverlayTestSheetSizeX_ValueChanged(object sender, EventArgs e)
 		{
 			Renderable sheet = new SheetGenerator(
-				(float)NudOverlayTestSheetSizeX.Value,
+				(float)NudTestSheetSizeX.Value,
 				Math.Abs(TestSheet.Aabb.Max.Z - TestSheet.Aabb.Min.Z),
 				Color.White).Generate().ToWorld();
 
@@ -290,7 +291,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Renderable sheet = new SheetGenerator(
 				Math.Abs(TestSheet.Aabb.Max.X - TestSheet.Aabb.Min.X),
-				(float)NudOverlayTestSheetSizeZ.Value,
+				(float)NudTestSheetSizeZ.Value,
 				Color.White).Generate().ToWorld();
 
 			sheet.Position = TestSheet.Position;
@@ -299,7 +300,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private Ilm? Model { get; set; }
-		private List<Renderable> ModelBoxes { get; } = new List<Renderable>();
+		private List<Renderable> ModelBoxes { get; } = [];
 
 		private void BtnReadHarryModel_Click(object sender, EventArgs e)
 		{
@@ -322,7 +323,7 @@ namespace BizHawk.Client.EmuHawk
 			// Can't get an actual stream from ApiHawk, but this'll do nicely.
 			IReadOnlyList<byte> remaining = Mem.ReadByteRange(harryModelAddress, (int)(Mem.GetMemoryDomainSize("MainRAM") - harryModelAddress));
 
-			Model = new Ilm(header, remaining, TrkModelScale.Value);
+			Model = new Ilm(header, remaining, TrkTestModelScale.Value);
 
 			var generator = new BoxGenerator(0.025f, Color.Yellow);
 
@@ -330,7 +331,7 @@ namespace BizHawk.Client.EmuHawk
 			ModelBoxes.Clear();
 			foreach (Submesh submesh in Model.Submeshes)
 			{
-				if (!all && submesh.Name != CmbModelSubmeshName.Text.ToUpper())
+				if (!all && !String.Equals(submesh.Name, CmbModelSubmeshName.Text, StringComparison.OrdinalIgnoreCase))
 				{
 					continue;
 				}
@@ -355,15 +356,15 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CbxEnableModelDisplay_CheckedChanged(object sender, EventArgs e)
 		{
-			if (!CbxEnableModelDisplay.Checked)
+			if (!CbxEnableTestModelSection.Checked)
 			{
 				Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
 			}
 		}
 
-		private void TrkModelScale_Scroll(object sender, System.EventArgs e)
+		private void TrkModelScale_Scroll(object sender, EventArgs e)
 		{
-			LblModelScale.Text = TrkModelScale.Value.ToString();
+			LblTestModelScale.Text = TrkTestModelScale.Value.ToString(CultureInfo.CurrentCulture);
 		}
 	}
 }

@@ -26,8 +26,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private void UpdateFog()
 		{
-			var colorF = Color.FromArgb((int)NudFogR.Value, (int)NudFogG.Value, (int)NudFogB.Value);
-			var colorW = Color.FromArgb((int)NudWorldTintR.Value, (int)NudWorldTintG.Value, (int)NudWorldTintB.Value);
+			var colorF = Color.FromArgb((int)NudCustomFogR.Value, (int)NudCustomFogG.Value, (int)NudCustomFogB.Value);
+			var colorW = Color.FromArgb((int)NudCustomWorldTintR.Value, (int)NudCustomWorldTintG.Value, (int)NudCustomWorldTintB.Value);
 
 			if (CbxDiscoMode.Checked)
 			{
@@ -64,7 +64,7 @@ namespace BizHawk.Client.EmuHawk
 		private void NudFogR_ValueChanged(object sender, EventArgs e)
 		{
 			BtnFogColor.BackColor = Color.FromArgb(
-				(int)NudFogR.Value,
+				(int)NudCustomFogR.Value,
 				BtnFogColor.BackColor.G,
 				BtnFogColor.BackColor.B);
 		}
@@ -73,7 +73,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			BtnFogColor.BackColor = Color.FromArgb(
 				BtnFogColor.BackColor.R,
-				(int)NudFogG.Value,
+				(int)NudCustomFogG.Value,
 				BtnFogColor.BackColor.B);
 		}
 
@@ -82,7 +82,7 @@ namespace BizHawk.Client.EmuHawk
 			BtnFogColor.BackColor = Color.FromArgb(
 				BtnFogColor.BackColor.R,
 				BtnFogColor.BackColor.G,
-				(int)NudFogB.Value);
+				(int)NudCustomFogB.Value);
 		}
 
 		private void BtnFogColor_Click(object sender, EventArgs e)
@@ -90,23 +90,25 @@ namespace BizHawk.Client.EmuHawk
 			using var dialog = new ColorDialog()
 			{
 				FullOpen = true,
-				Color = Color.FromArgb((int)NudFogR.Value, (int)NudFogG.Value, (int)NudFogB.Value)
+				Color = Color.FromArgb((int)NudCustomFogR.Value, (int)NudCustomFogG.Value, (int)NudCustomFogB.Value)
 			};
 
+			DialogController.StopSound();
 			DialogResult result = dialog.ShowDialog(this);
+			DialogController.StartSound();
 
 			if (result == DialogResult.OK)
 			{
-				NudFogR.Value = dialog.Color.R;
-				NudFogG.Value = dialog.Color.G;
-				NudFogB.Value = dialog.Color.B;
+				NudCustomFogR.Value = dialog.Color.R;
+				NudCustomFogG.Value = dialog.Color.G;
+				NudCustomFogB.Value = dialog.Color.B;
 			}
 		}
 
 		private void NudWorldTintR_ValueChanged(object sender, EventArgs e)
 		{
 			BtnWorldTintColor.BackColor = Color.FromArgb(
-				(int)NudWorldTintR.Value,
+				(int)NudCustomWorldTintR.Value,
 				BtnWorldTintColor.BackColor.G,
 				BtnWorldTintColor.BackColor.B);
 		}
@@ -115,7 +117,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			BtnWorldTintColor.BackColor = Color.FromArgb(
 				BtnWorldTintColor.BackColor.R,
-				(int)NudWorldTintG.Value,
+				(int)NudCustomWorldTintG.Value,
 				BtnWorldTintColor.BackColor.B);
 		}
 
@@ -124,7 +126,7 @@ namespace BizHawk.Client.EmuHawk
 			BtnWorldTintColor.BackColor = Color.FromArgb(
 				BtnWorldTintColor.BackColor.R,
 				BtnWorldTintColor.BackColor.G,
-				(int)NudWorldTintB.Value);
+				(int)NudCustomWorldTintB.Value);
 		}
 
 		private void BtnWorldTintColor_Click(object sender, EventArgs e)
@@ -132,52 +134,54 @@ namespace BizHawk.Client.EmuHawk
 			using var dialog = new ColorDialog()
 			{
 				FullOpen = true,
-				Color = Color.FromArgb((int)NudWorldTintR.Value, (int)NudWorldTintG.Value, (int)NudWorldTintB.Value)
+				Color = Color.FromArgb((int)NudCustomWorldTintR.Value, (int)NudCustomWorldTintG.Value, (int)NudCustomWorldTintB.Value)
 			};
 
+			DialogController.StopSound();
 			DialogResult result = dialog.ShowDialog(this);
+			DialogController.StartSound();
 
 			if (result == DialogResult.OK)
 			{
-				NudWorldTintR.Value = dialog.Color.R;
-				NudWorldTintG.Value = dialog.Color.G;
-				NudWorldTintB.Value = dialog.Color.B;
+				NudCustomWorldTintR.Value = dialog.Color.R;
+				NudCustomWorldTintG.Value = dialog.Color.G;
+				NudCustomWorldTintB.Value = dialog.Color.B;
 			}
 		}
 
 		private void BtnFogColorDefault_Click(object sender, EventArgs e)
 		{
-			NudFogR.Value = 108;
-			NudFogG.Value = 100;
-			NudFogB.Value = 116;
+			NudCustomFogR.Value = 108;
+			NudCustomFogG.Value = 100;
+			NudCustomFogB.Value = 116;
 		}
 
 		private void BtnWorldTintDefault_Click(object sender, EventArgs e)
 		{
-			NudWorldTintR.Value = 121;
-			NudWorldTintG.Value = 128;
-			NudWorldTintB.Value = 138;
+			NudCustomWorldTintR.Value = 121;
+			NudCustomWorldTintG.Value = 128;
+			NudCustomWorldTintB.Value = 138;
 		}
 
 		private void BtnCustomFogCurrent_Click(object sender, EventArgs e)
 		{
-			NudFogR.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorR);
-			NudFogG.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorG);
-			NudFogB.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorB);
+			NudCustomFogR.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorR);
+			NudCustomFogG.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorG);
+			NudCustomFogB.Value = Mem.ReadByte(Rom.Addresses.MainRam.FogColorB);
 		}
 
 		private void BtnCustomWorldTintCurrent_Click(object sender, EventArgs e)
 		{
-			NudWorldTintR.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintR);
-			NudWorldTintG.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintG);
-			NudWorldTintB.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintB);
+			NudCustomWorldTintR.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintR);
+			NudCustomWorldTintG.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintG);
+			NudCustomWorldTintB.Value = Mem.ReadByte(Rom.Addresses.MainRam.WorldTintB);
 		}
 
 		private void BtnFogWorldTintColorSwap_Click(object sender, EventArgs e)
 		{
-			(NudFogR.Value, NudWorldTintR.Value) = (NudWorldTintR.Value, NudFogR.Value);
-			(NudFogG.Value, NudWorldTintG.Value) = (NudWorldTintG.Value, NudFogG.Value);
-			(NudFogB.Value, NudWorldTintB.Value) = (NudWorldTintB.Value, NudFogB.Value);
+			(NudCustomFogR.Value, NudCustomWorldTintR.Value) = (NudCustomWorldTintR.Value, NudCustomFogR.Value);
+			(NudCustomFogG.Value, NudCustomWorldTintG.Value) = (NudCustomWorldTintG.Value, NudCustomFogG.Value);
+			(NudCustomFogB.Value, NudCustomWorldTintB.Value) = (NudCustomWorldTintB.Value, NudCustomFogB.Value);
 		}
 
 		private void CbxDiscoMode_CheckedChanged(object sender, EventArgs e)

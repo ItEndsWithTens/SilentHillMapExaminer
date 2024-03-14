@@ -1,6 +1,10 @@
-﻿using SHME.ExternalTool;
+﻿using BizHawk.Client.Common;
+using SHME.ExternalTool;
+using SHME.ExternalTool.Extras;
+using SHME.ExternalTool.UI;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 
@@ -8,11 +12,6 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private void BtnCameraFly_LostFocus(object sender, EventArgs e)
-		{
-			BtnCameraFly_ClickSecond(this, EventArgs.Empty);
-		}
-
 		// Cursor visibility in Winforms stacks up, i.e. calling Cursor.Show on
 		// a visible cursor isn't a no-op, and would afterward require two calls
 		// to Hide before it disappeared.
@@ -60,12 +59,12 @@ namespace BizHawk.Client.EmuHawk
 
 					Rectangle bounds = btn.Parent.RectangleToScreen(btn.Bounds);
 
-					_flyCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
-					_flyCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
+					_aimCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
+					_aimCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
 
-					_flyCenter = btn.Parent.PointToScreen(_flyCenter);
+					_aimCenter = btn.Parent.PointToScreen(_aimCenter);
 
-					Cursor.Position = _flyCenter;
+					Cursor.Position = _aimCenter;
 
 					// Doesn't work in Mono yet, as seen here:
 					// https://github.com/mono/mono/blob/3d11ccdce6df39bb63c783af28ec9756d1b32db1/mcs/class/System.Windows.Forms/System.Windows.Forms/Cursor.cs#L198
@@ -89,17 +88,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 		private void BtnCameraFly_ClickFirst(object sender, EventArgs e)
 		{
-			BtnCameraFly.Click -= BtnCameraFly_ClickFirst;
-			BtnCameraFly.Click += BtnCameraFly_ClickSecond;
-
 			FlyEnabled = true;
-		}
-		private void BtnCameraFly_ClickSecond(object sender, EventArgs e)
-		{
-			FlyEnabled = false;
-
-			BtnCameraFly.Click -= BtnCameraFly_ClickSecond;
-			BtnCameraFly.Click += BtnCameraFly_ClickFirst;
 		}
 
 		private void CbxCameraDetach_CheckedChanged(object sender, EventArgs e)
@@ -128,6 +117,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private void HoldCamera()
 		{
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraState, 0x3);
+
 			Mem.WriteU16(Rom.Addresses.MainRam.CameraIdealPitch, _holdCameraPitch);
 			Mem.WriteU16(Rom.Addresses.MainRam.CameraIdealYaw, _holdCameraYaw);
 			Mem.WriteU16(Rom.Addresses.MainRam.CameraIdealRoll, _holdCameraRoll);
@@ -164,9 +155,9 @@ namespace BizHawk.Client.EmuHawk
 
 			Vector3 lookAt = Vector3.Transform(new Vector3(0.0f, 0.0f, -1.0f), matrix);
 
-			x += (lookAt.X * 1.0f);
-			y += (lookAt.Y * 1.0f);
-			z += (lookAt.Z * 1.0f);
+			x += lookAt.X;
+			y += lookAt.Y;
+			z += lookAt.Z;
 
 			// Back to SH coordinates.
 			y = -y;
@@ -178,7 +169,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		// These use Silent Hill coordinates, i.e. +X east, +Y down, +Z north.
-		private Vector3 _worldUp = new Vector3(0.0f, -1.0f, 0.0f);
+		private Vector3 _worldUp = new(0.0f, -1.0f, 0.0f);
 		private Vector3 _camPos;
 		private Vector3 _camLook;
 		private Vector3 _camRight;
@@ -207,7 +198,7 @@ namespace BizHawk.Client.EmuHawk
 				_camPos += _speed * _diff;
 				_camLook += _speed * _diff;
 			}
-			else if (_backward)
+			if (_backward)
 			{
 				_camPos -= _speed * _diff;
 				_camLook -= _speed * _diff;
@@ -220,7 +211,7 @@ namespace BizHawk.Client.EmuHawk
 				_camPos -= _speed * _camRight;
 				_camLook -= _speed * _camRight;
 			}
-			else if (_right)
+			if (_right)
 			{
 				_camPos += _speed * _camRight;
 				_camLook += _speed * _camRight;
@@ -231,7 +222,7 @@ namespace BizHawk.Client.EmuHawk
 				_camPos += _speed * _worldUp;
 				_camLook += _speed * _worldUp;
 			}
-			else if (_down)
+			if (_down)
 			{
 				_camPos -= _speed * _worldUp;
 				_camLook -= _speed * _worldUp;
@@ -261,22 +252,20 @@ namespace BizHawk.Client.EmuHawk
 		// TODO: Make aim and move speeds the same whether rendering to the
 		// framebuffer or not; look up what I believe is called the "delta time"
 		// approach real games use for consistent input with varying framerate.
-		private float _sensitivity = 0.25f;
-		private Point _flyCenter;
-		private void AimCamera()
+		private float _sensitivity;
+		private Point _aimCenter;
+		private void AimCamera(Button btn)
 		{
-			Button btn = BtnCameraFly;
-
-			_flyCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
-			_flyCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
-			_flyCenter = btn.Parent.PointToScreen(_flyCenter);
+			_aimCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
+			_aimCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
+			_aimCenter = btn.Parent.PointToScreen(_aimCenter);
 
 			// Ideally one would use the Input API, but the values it returns
 			// are in an unrecognizable coordinate space. This'll do for now.
 			(Point screen, _, _, _, _, _, _) = InputManager.GetMainFormMouseInfo();
 
-			float deltaX = (screen.X - _flyCenter.X) * _sensitivity;
-			float deltaY = (screen.Y - _flyCenter.Y) * _sensitivity;
+			float deltaX = (screen.X - _aimCenter.X) * _sensitivity;
+			float deltaY = (screen.Y - _aimCenter.Y) * _sensitivity;
 
 			uint pitch = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealPitch);
 			uint yaw = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealYaw);
@@ -298,7 +287,7 @@ namespace BizHawk.Client.EmuHawk
 			_holdCameraYaw = Core.DegreesToGameUnits(yawDegrees);
 			_holdCameraRoll = 0;
 
-			Cursor.Position = _flyCenter;
+			Cursor.Position = _aimCenter;
 		}
 
 		private void AttachCamera()
@@ -314,79 +303,172 @@ namespace BizHawk.Client.EmuHawk
 			{
 				return;
 			}
-
-			switch (e.KeyCode)
+			else if (e.KeyCode == Keys.Escape)
 			{
-				case Keys.W:
+				FlyEnabled = false;
+				return;
+			}
+
+			ShmeCommand? command = Settings.Local.FlyBinds
+				.Where((bind) => bind.KeyBind == e.KeyCode)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
+			{
+				case ShmeCommand.Forward:
 					_forward = true;
 					break;
-				case Keys.S:
+				case ShmeCommand.Backward:
 					_backward = true;
 					break;
-				case Keys.A:
+				case ShmeCommand.Left:
 					_left = true;
 					break;
-				case Keys.D:
+				case ShmeCommand.Right:
 					_right = true;
 					break;
-				case Keys.E:
+				case ShmeCommand.Up:
 					_up = true;
 					break;
-				case Keys.Q:
+				case ShmeCommand.Down:
 					_down = true;
 					break;
-				case Keys.Escape:
-					BtnCameraFly_ClickSecond(this, EventArgs.Empty);
-					break;
+				case ShmeCommand.None:
+				case null:
 				default:
 					break;
 			}
 		}
 		private void BtnCameraFly_KeyUp(object sender, KeyEventArgs e)
 		{
-			switch (e.KeyCode)
+			ShmeCommand? command = Settings.Local.FlyBinds
+				.Where((bind) => bind.KeyBind == e.KeyCode)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
 			{
-				case Keys.W:
+				case ShmeCommand.Forward:
 					_forward = false;
 					break;
-				case Keys.S:
+				case ShmeCommand.Backward:
 					_backward = false;
 					break;
-				case Keys.A:
+				case ShmeCommand.Left:
 					_left = false;
 					break;
-				case Keys.D:
+				case ShmeCommand.Right:
 					_right = false;
 					break;
-				case Keys.E:
+				case ShmeCommand.Up:
 					_up = false;
 					break;
-				case Keys.Q:
+				case ShmeCommand.Down:
 					_down = false;
 					break;
+				case ShmeCommand.None:
+				case null:
 				default:
 					break;
 			}
 		}
 
-		private void TbxCameraFlySensitivity_TextChanged(object sender, EventArgs e)
+		private void BtnCameraFly_LostFocus(object sender, EventArgs e)
 		{
-			bool success = Single.TryParse(TbxCameraFlySensitivity.Text, out float temp);
+			FlyEnabled = false;
+		}
 
-			if (success)
+		private void BtnCameraFly_MouseDown(object sender, MouseEventArgs e)
+		{
+			ShmeCommand? command = Settings.Local.FlyBinds
+				.Where((bind) => bind.MouseBind == e.Button)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
 			{
-				_sensitivity = temp;
+				case ShmeCommand.Forward:
+					_forward = true;
+					break;
+				case ShmeCommand.Backward:
+					_backward = true;
+					break;
+				case ShmeCommand.Left:
+					_left = true;
+					break;
+				case ShmeCommand.Right:
+					_right = true;
+					break;
+				case ShmeCommand.Up:
+					_up = true;
+					break;
+				case ShmeCommand.Down:
+					_down = true;
+					break;
+				case ShmeCommand.None:
+				case null:
+				default:
+					break;
+			}
+		}
+		private void BtnCameraFly_MouseUp(object sender, MouseEventArgs e)
+		{
+			ShmeCommand? command = Settings.Local.FlyBinds
+				.Where((bind) => bind.MouseBind == e.Button)
+				.FirstOrDefault()
+				?.Command;
+
+			switch (command)
+			{
+				case ShmeCommand.Forward:
+					_forward = false;
+					break;
+				case ShmeCommand.Backward:
+					_backward = false;
+					break;
+				case ShmeCommand.Left:
+					_left = false;
+					break;
+				case ShmeCommand.Right:
+					_right = false;
+					break;
+				case ShmeCommand.Up:
+					_up = false;
+					break;
+				case ShmeCommand.Down:
+					_down = false;
+					break;
+				case ShmeCommand.None:
+				case null:
+				default:
+					break;
 			}
 		}
 
-		private void TbxCameraFlySpeed_TextChanged(object sender, EventArgs e)
+		// TODO: Test this in Linux! I think I've had issues with keeping
+		// references to Forms around instead of making a new one every
+		// time I access it? Need to double check.
+		private InputBindsForm? _inputBindsForm;
+		private void BtnInputBinds_Click(object sender, EventArgs e)
 		{
-			bool success = Single.TryParse(TbxCameraFlySpeed.Text, out float temp);
-
-			if (success)
+			_inputBindsForm?.Dispose();
+			_inputBindsForm = new InputBindsForm(Settings)
 			{
-				_speed = temp;
-			}
+				Text = $"{ToolName} input binds"
+			};
+
+			_inputBindsForm.Show(Owner);
+		}
+
+		private void NudCameraFlySensitivity_ValueChanged(object sender, EventArgs e)
+		{
+			_sensitivity = (float)NudCameraFlySensitivity.Value;
+		}
+
+		private void NudCameraFlySpeed_ValueChanged(object sender, EventArgs e)
+		{
+			_speed = (float)NudCameraFlySpeed.Value;
 		}
 	}
 }

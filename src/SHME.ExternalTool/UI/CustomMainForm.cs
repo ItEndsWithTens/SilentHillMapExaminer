@@ -3,6 +3,7 @@ using BizHawk.Common;
 using BizHawk.Emulation.Common;
 using BizHawk.Emulation.Cores.Sony.PSX;
 using SHME.ExternalTool;
+using SHME.ExternalTool.Extras;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -18,7 +20,14 @@ using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
 {
-	[ExternalTool(ToolName, Description = ToolDescription)]
+	[ExternalTool(
+		ToolName,
+		Description = ToolDescription,
+		LoadAssemblyFiles = [
+			"SHME.ExternalTool/dll/JsonSettings/JsonSettings.dll",
+			"SHME.ExternalTool/dll/JsonSettings/Castle.Core.dll",
+			"SHME.ExternalTool/dll/JsonSettings/JsonSettings.Autosave.dll",
+			"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll"])]
 
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
 	[ExternalToolApplicability.RomList(VSystemID.Raw.PSX, USRetailConstants.HashBizHawk)]
@@ -61,32 +70,44 @@ namespace BizHawk.Client.EmuHawk
 
 		protected override string WindowTitleStatic => ToolName;
 
-		public Core Core { get; } = new Core();
+		public Core Core { get; } = new();
 
-		public Camera Camera { get; set; } = new Camera()
+		public Camera Camera { get; set; } = new()
 		{
 			Culling = Culling.Frustum,
-			Fov = 50.0f
+			Fov = 53.13f
 		};
 
-		public IList<Renderable> Boxes { get; } = new List<Renderable>();
-		public IList<Renderable> TestBoxes { get; } = new List<Renderable>();
-		public IList<Renderable> Gems { get; } = new List<Renderable>();
-		public IList<Renderable> Lines { get; } = new List<Renderable>();
+		public IList<Renderable> Boxes { get; } = [];
+		public IList<Renderable> TestBoxes { get; } = [];
+		public IList<Renderable> Gems { get; } = [];
+		public IList<Renderable> Lines { get; } = [];
 
-		public Pen Pen { get; set; } = new Pen(Brushes.White);
-		public Bitmap Reticle { get; set; } = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
-		public Bitmap Overlay { get; set; } = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+		public Pen Pen { get; set; } = new(Brushes.White);
+		public Bitmap Reticle { get; set; } = new(1, 1, PixelFormat.Format32bppArgb);
+		public Bitmap Overlay { get; set; } = new(1, 1, PixelFormat.Format32bppArgb);
 
 		public Rom Rom => Core.Rom;
 
-		private Viewport ClickPort { get; set; } = new Viewport();
-		private Viewport RenderPort { get; set; } = new Viewport();
+		private Viewport ClickPort { get; set; } = new();
+		private Viewport RenderPort { get; set; } = new();
 
 		// TODO: Try to eliminate need for this; maybe better Viewport class,
 		// or a Vertex WorldToScreen method that doesn't need this?
-		private Viewport _dummyViewport = new Viewport();
+		private Viewport _dummyViewport = new();
 		private Rectangle _drawRegionRect;
+
+		// Manually implementing a backing field is necessary to store it as a
+		// plain object, which in turn prevents BizHawk under Mono from failing
+		// to load the Settings type on first reflection access. To see exactly
+		// where things go pear shaped, see the BizHawk codebase:
+		// https://github.com/TASEmulators/BizHawk/blob/745efb1dd8eb82f31ba9201a79cdfc5bcaf1f5d1/src/BizHawk.Client.EmuHawk/tools/ExternalToolManager.cs#L124-L125
+		private object _settings = null!;
+		private Settings Settings
+		{
+			get => (Settings)_settings;
+			set => _settings = value;
+		}
 
 		public CustomMainForm()
 		{
@@ -112,10 +133,11 @@ namespace BizHawk.Client.EmuHawk
 
 			InitializeBasicsTab();
 			InitializePoisTab();
-			InitializeCameraTab();
 			InitializeSaveTab();
 			InitializeFramebufferTab();
 			InitializeUtilityTab();
+
+			_gameCameraLookAt = new BoxGenerator(0.25f, Color.Purple).Generate().ToWorld();
 		}
 
 		protected override void Dispose(bool disposing)
@@ -152,6 +174,12 @@ namespace BizHawk.Client.EmuHawk
 		{
 			base.Restart();
 
+			LoadSettings();
+
+			SetButtonNames();
+
+			LblTestModelScale.Text = TrkTestModelScale.Value.ToString(CultureInfo.CurrentCulture);
+
 			SetPlaceholderText();
 
 			Boxes.Clear();
@@ -167,6 +195,7 @@ namespace BizHawk.Client.EmuHawk
 			Mem.UseMemoryDomain("MainRAM");
 
 			CbxOverlayRenderToFramebuffer_CheckedChanged(this, EventArgs.Empty);
+			CbxAlwaysRun_CheckedChanged(this, EventArgs.Empty);
 
 			Label[] labels =
 			{
@@ -244,6 +273,17 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
+			if (_harryModel == null)
+			{
+				int raw = Mem.ReadS32(Rom.Addresses.MainRam.HarryModelPointer);
+				int address = raw - (int)Rom.Addresses.MainRam.BaseAddress;
+				IReadOnlyList<byte> headerBytes = Mem.ReadByteRange(address, IlmHeader.Length);
+				var header = new IlmHeader(headerBytes, raw);
+
+				IReadOnlyList<byte> remaining = Mem.ReadByteRange(address, (int)(Mem.GetMemoryDomainSize("MainRAM") - address));
+				_harryModel = new Ilm(header, remaining);
+			}
+
 			switch (type)
 			{
 				case ToolFormUpdateType.PreFrame:
@@ -256,21 +296,48 @@ namespace BizHawk.Client.EmuHawk
 					{
 						Mem.WriteByte(Rom.Addresses.MainRam.CameraLockedToHead, 0x1);
 					}
-					if (!CbxOverlayRenderToFramebuffer.Checked)
+					if (CbxShowLookAt.Checked)
 					{
-						if (CbxCameraDetach.Checked)
+						Vector3 pos = _gameCameraLookAt.Position;
+						pos.X = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX));
+						pos.Y = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY));
+						pos.Z = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ));
+						_gameCameraLookAt.Position = pos;
+					}
+					if (CbxCameraDetach.Checked)
+					{
+						HoldCamera();
+					}
+					if (_flyEnabled)
+					{
+						MoveCamera();
+						AimCamera(BtnCameraFly);
+					}
+					else if (_firstPersonEnabled)
+					{
+						long address = Rom.Addresses.MainRam.ControllerLayout;
+						string hash = Mem.HashRegion(address, SHME.ExternalTool.ControllerConfig.Size);
+						if (hash != _lastControllerLayoutHash)
 						{
+							SetButtonNames();
+							_lastControllerLayoutHash = hash;
+						}
+						if (_forcedCameraYaw != null)
+						{
+							_holdCameraPitch = 0;
+							_holdCameraYaw = Core.DegreesToGameUnits((float)_forcedCameraYaw);
+							_holdCameraRoll = 0;
 							HoldCamera();
+
+							_forcedCameraYaw = null;
 						}
-						if (_flyEnabled)
-						{
-							MoveCamera();
-							AimCamera();
-						}
+						MoveCameraFirstPerson();
+						AimCamera(BtnCameraFps);
+						Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
 					}
 					break;
 				case ToolFormUpdateType.PostFrame:
-					if (CbxEnableControlsSection.Checked)
+					if (CbxEnableControllerReporting.Checked)
 					{
 						ReportControls();
 					}
@@ -283,12 +350,15 @@ namespace BizHawk.Client.EmuHawk
 					{
 						ReportOverlayInfo();
 					}
-					if (CbxEnableOverlay.Checked && !CbxOverlayRenderToFramebuffer.Checked)
+					if (CbxEnableOverlay.Checked)
 					{
 						UpdateOverlay();
-						ApplyOverlayToGui();
+						if (!CbxRenderToFramebuffer.Checked)
+						{
+							ApplyOverlayToGui();
+						}
 					}
-					if (CbxStats.Checked)
+					if (CbxEnableStatsReporting.Checked)
 					{
 						ReportStats();
 					}
@@ -313,8 +383,22 @@ namespace BizHawk.Client.EmuHawk
 			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
 		}
 
-		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = new();
-		private IList<(Renderable, bool)> VisibleRenderables = new List<(Renderable, bool)>();
+		private void LoadSettings()
+		{
+			Settings?.Dispose();
+
+			Assembly a = typeof(Core).Assembly;
+			string component = Path.GetFileNameWithoutExtension(a.Location);
+			Settings = new Settings("com.gyroshot", ToolName, component);
+
+			InitializeDataBindings();
+
+			TbxSettingsFilesLocal.Text = Settings.Local.FileName;
+			TbxSettingsFilesRoaming.Text = Settings.Roaming.FileName;
+		}
+
+		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = [];
+		private IList<(Renderable, bool)> VisibleRenderables = [];
 
 		private void UpdateOverlay()
 		{
@@ -324,7 +408,7 @@ namespace BizHawk.Client.EmuHawk
 			Vector3 convertedPosition = CoordinateConverter.Convert(position, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 			Vector3 convertedAngles = AngleConverter.Convert(angles, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 
-			if (!CbxEnableOverlay.Checked && !CbxEnableModelDisplay.Checked)
+			if (!CbxEnableOverlay.Checked && !CbxEnableTestModelSection.Checked)
 			{
 				return;
 			}
@@ -339,25 +423,21 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
-					Boxes
-					.Concat(Gems)
-					.Concat(CameraBoxes)
-					.Concat(CameraGems)
-					.ToList());
+					[.. Boxes, .. Gems, .. CameraBoxes, .. CameraGems]);
 			}
-			if (CbxEnableModelDisplay.Checked)
+			if (CbxEnableTestModelSection.Checked)
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					ModelBoxes);
 			}
-			if (CbxOverlayTestBox.Checked)
+			if (CbxEnableTestBox.Checked)
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					TestBox);
 			}
-			if (CbxOverlayTestSheet.Checked)
+			if (CbxEnableTestSheet.Checked)
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
@@ -367,15 +447,19 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
-					Lines
-					.Concat(CameraLines)
-					.ToList());
+					[.. Lines, .. CameraLines]);
 			}
-			if (CbxOverlayTestLine.Checked)
+			if (CbxEnableTestLine.Checked)
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					TestLines);
+			}
+			if (CbxShowLookAt.Checked)
+			{
+				Camera.GetVisibleRenderables(
+					ref VisibleRenderables,
+					_gameCameraLookAt);
 			}
 
 			var g = Graphics.FromImage(Overlay);
@@ -465,7 +549,7 @@ namespace BizHawk.Client.EmuHawk
 								break;
 							}
 
-							float opacity = (float)NudOverlayRenderableOpacity.Value / 100.0f;
+							float opacity = (float)NudFilledOpacity.Value / 100.0f;
 							int alpha = (int)Math.Round(opacity * 255);
 							Pen.Color = Color.FromArgb(alpha, r.Tint ?? ScreenSpaceLines[0].color);
 							g.FillPolygon(Pen.Brush, visibleVertices.ToArray());
@@ -526,6 +610,7 @@ namespace BizHawk.Client.EmuHawk
 			RaycastSelectionTimer.Tick += RaycastSelectionTimer_Tick;
 
 			BtnCameraFly.LostFocus += BtnCameraFly_LostFocus;
+			BtnCameraFps.LostFocus += BtnCameraFps_LostFocus;
 		}
 		private void DetachEventHandlers()
 		{
@@ -540,6 +625,7 @@ namespace BizHawk.Client.EmuHawk
 			RaycastSelectionTimer.Tick -= RaycastSelectionTimer_Tick;
 
 			BtnCameraFly.LostFocus -= BtnCameraFly_LostFocus;
+			BtnCameraFps.LostFocus -= BtnCameraFps_LostFocus;
 		}
 
 		private float CalculateGameFov()
@@ -621,7 +707,69 @@ namespace BizHawk.Client.EmuHawk
 			FixedPointErrorClearTimer?.Dispose();
 			AnglesErrorClearTimer?.Dispose();
 
+			_inputBindsForm?.Dispose();
+
+			Settings?.Dispose();
+
 			GameSurface = null;
+		}
+
+		private string _lastControllerLayoutHash = String.Empty;
+		private SHME.ExternalTool.ControllerConfig _controllerConfig;
+		private void SetButtonNames()
+		{
+			long address = Rom.Addresses.MainRam.ControllerLayout;
+			IReadOnlyList<byte> bytes = Mem.ReadByteRange(address, SHME.ExternalTool.ControllerConfig.Size);
+			_controllerConfig = new SHME.ExternalTool.ControllerConfig(bytes);
+
+			Dictionary<PsxButtons, string> names = new()
+			{
+				{ PsxButtons.None, String.Empty },
+				{ PsxButtons.Select, "P1 Select" },
+				{ PsxButtons.Start, "P1 Start" },
+				{ PsxButtons.L2, "P1 L2" },
+				{ PsxButtons.R2, "P1 R2" },
+				{ PsxButtons.L1, "P1 L1" },
+				{ PsxButtons.R1, "P1 R1" }
+			};
+
+			if (Octoshock != null)
+			{
+				names[PsxButtons.L3] = "P1 L3";
+				names[PsxButtons.R3] = "P1 R3";
+				names[PsxButtons.Up] = "P1 Up";
+				names[PsxButtons.Right] = "P1 Right";
+				names[PsxButtons.Down] = "P1 Down";
+				names[PsxButtons.Left] = "P1 Left";
+				names[PsxButtons.Triangle] = "P1 Triangle";
+				names[PsxButtons.Circle] = "P1 Circle";
+				names[PsxButtons.X] = "P1 Cross";
+				names[PsxButtons.Square] = "P1 Square";
+			}
+			else
+			{
+				names[PsxButtons.L3] = "P1 Left Stick, Button";
+				names[PsxButtons.R3] = "P1 Right Stick, Button";
+				names[PsxButtons.Up] = "P1 D-Pad Up";
+				names[PsxButtons.Right] = "P1 D-Pad Right";
+				names[PsxButtons.Down] = "P1 D-Pad Down";
+				names[PsxButtons.Left] = "P1 D-Pad Left";
+				names[PsxButtons.Triangle] = "P1 △";
+				names[PsxButtons.Circle] = "P1 ○";
+				names[PsxButtons.X] = "P1 X";
+				names[PsxButtons.Square] = "P1 □";
+			}
+
+			_buttonNames[ShmeCommand.Forward] = names[PsxButtons.Up];
+			_buttonNames[ShmeCommand.Backward] = names[PsxButtons.Down];
+			_buttonNames[ShmeCommand.Action] = names[_controllerConfig.Action.FilterToAny()];
+			_buttonNames[ShmeCommand.Aim] = names[_controllerConfig.Aim.FilterToAny()];
+			_buttonNames[ShmeCommand.Light] = names[_controllerConfig.Light.FilterToAny()];
+			_buttonNames[ShmeCommand.Run] = names[_controllerConfig.Run.FilterToAny()];
+			_buttonNames[ShmeCommand.View] = names[_controllerConfig.View.FilterToAny()];
+			_buttonNames[ShmeCommand.Left] = names[_controllerConfig.StepL.FilterToAny()];
+			_buttonNames[ShmeCommand.Right] = names[_controllerConfig.StepR.FilterToAny()];
+			_buttonNames[ShmeCommand.Map] = names[_controllerConfig.Map.FilterToAny()];
 		}
 
 		private void SetPlaceholderText()
@@ -641,9 +789,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (sender is NumericUpDown nud)
 			{
-				int length = nud.Value.ToString().Length;
-
-				nud.Select(0, length);
+				nud.Select(0, nud.Text.Length);
 			}
 			else if (sender is TextBox tbx)
 			{
@@ -655,12 +801,12 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (Octoshock == null)
 			{
-				CbxOverlayRenderToFramebuffer.Enabled = false;
-				CbxOverlayRenderToFramebuffer.Checked = false;
+				CbxRenderToFramebuffer.Enabled = false;
+				CbxRenderToFramebuffer.Checked = false;
 			}
 			else
 			{
-				CbxOverlayRenderToFramebuffer.Enabled = true;
+				CbxRenderToFramebuffer.Enabled = true;
 			}
 
 			Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
@@ -677,7 +823,7 @@ namespace BizHawk.Client.EmuHawk
 				ClickPort.TopLeft = new Point(17, 8);
 			}
 
-			if (CbxOverlayRenderToFramebuffer.Checked)
+			if (CbxRenderToFramebuffer.Checked)
 			{
 				RenderPort.Width = 320;
 				RenderPort.Height = 224;
@@ -692,7 +838,9 @@ namespace BizHawk.Client.EmuHawk
 
 			_dummyViewport = new Viewport(0, 0, RenderPort.Width, RenderPort.Height);
 
-			CleanUpDisposables();
+			Pen?.Dispose();
+			Reticle?.Dispose();
+			Overlay?.Dispose();
 
 			Pen = new Pen(Brushes.White);
 			Reticle = GenerateReticle(Pen, RenderPort.Width, RenderPort.Height, (float)NudCrosshairLength.Value);
@@ -803,7 +951,32 @@ namespace BizHawk.Client.EmuHawk
 			if (_flyEnabled)
 			{
 				MoveCamera();
-				AimCamera();
+				AimCamera(BtnCameraFly);
+			}
+			else if (_firstPersonEnabled)
+			{
+				MoveCameraFirstPerson();
+				AimCamera(BtnCameraFps);
+				Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
+			}
+		}
+
+		private void Nud_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (sender is NumericUpDown nud && e.KeyCode == Keys.Enter)
+			{
+				nud.ResetIfBad(this);
+				BtnFramebufferGrab_Click(this, EventArgs.Empty);
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+		}
+
+		private void Nud_Leave(object sender, EventArgs e)
+		{
+			if (sender is NumericUpDown nud)
+			{
+				nud.ResetIfBad(this);
 			}
 		}
 	}

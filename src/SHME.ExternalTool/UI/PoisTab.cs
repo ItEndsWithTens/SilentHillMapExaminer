@@ -16,8 +16,6 @@ namespace BizHawk.Client.EmuHawk
 
 		private void InitializePoisTab()
 		{
-			CmbRenderShape.SelectedIndex = 0;
-
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
 		}
 
@@ -383,7 +381,7 @@ namespace BizHawk.Client.EmuHawk
 					float? x = null;
 					float? z = null;
 					float? width = null;
-					if (CmbRenderShape.SelectedIndex == 0)
+					if (CmbPoiRenderShape.SelectedIndex == 0)
 					{
 						(yaw, x, z, width) = PointOfInterest.DecodeGeometry(trigger.Style, p);
 					}
@@ -603,7 +601,7 @@ namespace BizHawk.Client.EmuHawk
 				float tolerance = 0.001f;
 
 				// Positive X is always pointing east.
-				if (!RdoOverlayAxisColorsOff.Checked)
+				if (!RdoAxisColorsOff.Checked)
 				{
 					IEnumerable<Polygon>? easts = r.Polygons
 						.Where((p) => p.Normal.ApproximatelyEquivalent(east, tolerance));
@@ -615,7 +613,7 @@ namespace BizHawk.Client.EmuHawk
 				}
 
 				// Positive Y down, positive Z north
-				if (RdoOverlayAxisColorsGame.Checked)
+				if (RdoAxisColorsGame.Checked)
 				{
 					IEnumerable<Polygon>? downs = r.Polygons
 						.Where((p) => p.Normal.ApproximatelyEquivalent(down, tolerance));
@@ -634,7 +632,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 				}
 				// Positive Y up, positive Z south
-				else if (RdoOverlayAxisColorsOverlay.Checked)
+				else if (RdoAxisColorsOverlay.Checked)
 				{
 					IEnumerable<Polygon>? ups = r.Polygons
 						.Where((p) => p.Normal.ApproximatelyEquivalent(up, tolerance));

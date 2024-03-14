@@ -117,6 +117,8 @@
 
 				HarryState = 0xBA150,
 
+				ControllerLayout = 0xBC728,
+
 				// 0xBC750 // View control normal/reversed
 
 				SaveData = 0xBCA34,

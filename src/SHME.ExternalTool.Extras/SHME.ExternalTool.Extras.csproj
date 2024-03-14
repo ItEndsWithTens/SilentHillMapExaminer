@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Nucs.JsonSettings" Version="2.0.2" />
+    <PackageReference Include="Nucs.JsonSettings.Autosave" Version="2.0.2" />
+
+    <Reference Include="System.Windows.Forms" />
+
+    <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

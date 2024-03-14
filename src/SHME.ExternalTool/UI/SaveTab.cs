@@ -14,19 +14,18 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private ButtonFlags _saveButton = ButtonFlags.None;
+		private PsxButtons _saveButton = PsxButtons.None;
 
 		private void InitializeSaveTab()
 		{
-			CmbSaveButton.DataSource = Enum.GetValues(typeof(ButtonFlags));
-			CmbSaveButton.SelectedItem = ButtonFlags.R3;
+			CmbSaveButton.DataSource = Enum.GetValues(typeof(PsxButtons));
 		}
 
 		private void CheckForSaveButtonPress()
 		{
-			var raw = (ButtonFlags)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
+			var raw = (PsxButtons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
-			if (!raw.FasterHasFlag(_saveButton))
+			if (_saveButton != PsxButtons.None && !raw.FasterHasFlag(_saveButton))
 			{
 				BtnOpenSaveMenu_Click(BtnOpenSaveMenu, EventArgs.Empty);
 			}
@@ -555,7 +554,12 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CmbSaveButton_SelectedValueChanged(object sender, EventArgs e)
 		{
-			Enum.TryParse(CmbSaveButton.SelectedValue.ToString(), out _saveButton);
+			string text = CmbSaveButton.GetItemText(CmbSaveButton.SelectedItem);
+
+			if (!Enum.TryParse(text, out _saveButton))
+			{
+				_saveButton = PsxButtons.None;
+			};
 		}
 
 		private void CbxSaveRamDanger_CheckedChanged(object sender, EventArgs e)

@@ -17,35 +17,36 @@ namespace BizHawk.Client.EmuHawk
 	// bitfields/flags, the alignment helps make it more visually obvious which
 	// bits correspond to which enum members.
 	[Flags]
-	public enum ButtonFlags : ushort
+	public enum PsxButtons
 	{
-		None =     0b00000000_00000000,
-		Select =   0b00000000_00000001,
-		L3 =       0b00000000_00000010,
-		R3 =       0b00000000_00000100,
-		Start =    0b00000000_00001000,
-		Up =       0b00000000_00010000,
-		Right =    0b00000000_00100000,
-		Down =     0b00000000_01000000,
-		Left =     0b00000000_10000000,
-		L2 =       0b00000001_00000000,
-		R2 =       0b00000010_00000000,
-		L1 =       0b00000100_00000000,
-		R1 =       0b00001000_00000000,
-		Triangle = 0b00010000_00000000,
-		Circle =   0b00100000_00000000,
-		X =        0b01000000_00000000,
-		Square =   0b10000000_00000000
+		None =     0x0000,
+		Select =   0x0001,
+		L3 =       0x0002,
+		R3 =       0x0004,
+		Start =    0x0008,
+		Up =       0x0010,
+		Right =    0x0020,
+		Down =     0x0040,
+		Left =     0x0080,
+		L2 =       0x0100,
+		R2 =       0x0200,
+		L1 =       0x0400,
+		R1 =       0x0800,
+		Triangle = 0x1000,
+		Circle =   0x2000,
+		X =        0x4000,
+		Square =   0x8000
 	}
 #pragma warning restore IDE0055
 
 	public partial class CustomMainForm
 	{
+		private Renderable _gameCameraLookAt;
+
 		private void InitializeBasicsTab()
 		{
 			TrkFov.Value = (int)Camera.Fov;
-
-			CmbRenderMode.SelectedIndex = 0;
+			LblFov.Text = TrkFov.Value.ToString(CultureInfo.CurrentCulture);
 		}
 
 		private void ReportAngles()
@@ -66,11 +67,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ReportControls()
 		{
-			var raw = (ButtonFlags)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
+			var raw = (PsxButtons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
-			foreach (ButtonFlags button in Enum.GetValues(typeof(ButtonFlags)))
+			foreach (PsxButtons button in Enum.GetValues(typeof(PsxButtons)))
 			{
-				string buttonName = $"LblButton{Enum.GetName(typeof(ButtonFlags), button)}";
+				string buttonName = $"LblButton{Enum.GetName(typeof(PsxButtons), button)}";
 
 				Type thisType = typeof(CustomMainForm);
 				FieldInfo? info = thisType.GetField(buttonName, BindingFlags.Instance | BindingFlags.NonPublic);
@@ -107,7 +108,7 @@ namespace BizHawk.Client.EmuHawk
 			LblOverlayCamRoll.Text = Camera.Roll.ToString(f, c);
 		}
 
-		private string _lastHarrySpawnPointHash = "";
+		private string _lastHarrySpawnPointHash = String.Empty;
 		private PointOfInterest? _lastHarrySpawnPoint;
 		private void ReportPosition()
 		{
@@ -133,6 +134,20 @@ namespace BizHawk.Client.EmuHawk
 			if (hash != _lastHarrySpawnPointHash)
 			{
 				_lastHarrySpawnPoint = new PointOfInterest(address, Mem.ReadByteRange(address, 12));
+
+				// To prevent the camera from being forcibly reoriented upon
+				// both SHME startup and save state loading, this boolean not
+				// only defaults to true but is set to true in Emu_StateLoaded.
+				if (_suppressForcedCameraYaw)
+				{
+					_forcedCameraYaw = null;
+					_suppressForcedCameraYaw = false;
+				}
+				else
+				{
+					(_forcedCameraYaw, _, _, _) = PointOfInterest.DecodeGeometry(TriggerStyle.ButtonYaw, _lastHarrySpawnPoint);
+				}
+
 				_lastHarrySpawnPointHash = hash;
 
 				string sep = c.NumberFormat.NumberGroupSeparator;
@@ -286,7 +301,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CbxCullBackfaces_CheckedChanged(object sender, EventArgs e)
 		{
-			if (CbxCullBackfaces.Checked)
+			if (CbxBackfaceCulling.Checked)
 			{
 				Camera.Culling |= Culling.Backface;
 			}
@@ -298,7 +313,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CbxCullBeyondFarClip_CheckedChanged(object sender, EventArgs e)
 		{
-			if (CbxCullBeyondFarClip.Checked)
+			if (CbxFarClipping.Checked)
 			{
 				Camera.Culling |= Culling.Far;
 			}
@@ -328,7 +343,7 @@ namespace BizHawk.Client.EmuHawk
 			ClearOverlay();
 			InitializeOverlay();
 
-			if (CbxOverlayRenderToFramebuffer.Checked)
+			if (CbxRenderToFramebuffer.Checked)
 			{
 				long a = Rom.Addresses.MainRam.IndexOfDrawRegion;
 				a += Rom.Addresses.MainRam.BaseAddress;
@@ -351,12 +366,12 @@ namespace BizHawk.Client.EmuHawk
 			switch (CmbRenderMode.SelectedIndex)
 			{
 				case 1:
-					CbxCullBackfaces.Checked = true;
-					CbxCullBeyondFarClip.Checked = true;
+					CbxBackfaceCulling.Checked = true;
+					CbxFarClipping.Checked = true;
 					break;
 				default:
-					CbxCullBackfaces.Checked = false;
-					CbxCullBeyondFarClip.Checked = true;
+					CbxBackfaceCulling.Checked = false;
+					CbxFarClipping.Checked = true;
 					break;
 			}
 		}
@@ -377,6 +392,7 @@ namespace BizHawk.Client.EmuHawk
 			ClearDisplayedTriggerInfo();
 
 			_levelDataNeedsUpdate = true;
+			_suppressForcedCameraYaw = true;
 		}
 
 		private void NudCrosshairLength_ValueChanged(object sender, EventArgs e)

@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E071A977-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomBuildTasks", "src\CustomBuildTasks\CustomBuildTasks.csproj", "{9AAC0A8C-DB0B-452A-ABDF-B3489257B640}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SHME.ExternalTool.Extras", "src\SHME.ExternalTool.Extras\SHME.ExternalTool.Extras.csproj", "{B47A5E6D-A904-4386-8215-F46D98B09D80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{9AAC0A8C-DB0B-452A-ABDF-B3489257B640}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AAC0A8C-DB0B-452A-ABDF-B3489257B640}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AAC0A8C-DB0B-452A-ABDF-B3489257B640}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B47A5E6D-A904-4386-8215-F46D98B09D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B47A5E6D-A904-4386-8215-F46D98B09D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B47A5E6D-A904-4386-8215-F46D98B09D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B47A5E6D-A904-4386-8215-F46D98B09D80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{3022183A-4EF8-49D0-A2BB-99A52B0F8D99} = {5BAA19A5-C284-4540-9024-D609CE689CAA}
 		{44884830-99FF-4FCF-95CA-CC74A8986EFC} = {E071A977-EBEF-4742-A119-C149D25FF858}
 		{9AAC0A8C-DB0B-452A-ABDF-B3489257B640} = {5BAA19A5-C284-4540-9024-D609CE689CAA}
+		{B47A5E6D-A904-4386-8215-F46D98B09D80} = {EF45E51E-80A8-43B2-A2C5-8860BC5D4A59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FBAF1CA-0999-4AA0-A932-125771E0D8D0}
