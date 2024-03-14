@@ -284,16 +284,6 @@ namespace BizHawk.Client.EmuHawk
 				_harryModel = new Ilm(header, remaining);
 			}
 
-			if (_forcedCameraYaw != null)
-			{
-				_holdCameraPitch = 0;
-				_holdCameraYaw = Core.DegreesToGameUnits((float)_forcedCameraYaw);
-				_holdCameraRoll = 0;
-				HoldCamera();
-
-				_forcedCameraYaw = null;
-			}
-
 			switch (type)
 			{
 				case ToolFormUpdateType.PreFrame:
@@ -331,6 +321,15 @@ namespace BizHawk.Client.EmuHawk
 						{
 							SetButtonNames();
 							_lastControllerLayoutHash = hash;
+						}
+						if (_forcedCameraYaw != null)
+						{
+							_holdCameraPitch = 0;
+							_holdCameraYaw = Core.DegreesToGameUnits((float)_forcedCameraYaw);
+							_holdCameraRoll = 0;
+							HoldCamera();
+
+							_forcedCameraYaw = null;
 						}
 						MoveCameraFirstPerson();
 						AimCamera(BtnCameraFps);
