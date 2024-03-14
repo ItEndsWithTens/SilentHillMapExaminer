@@ -370,6 +370,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer = new System.Windows.Forms.TabPage();
             this.TlpFramebufferTab = new System.Windows.Forms.TableLayoutPanel();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
@@ -427,8 +428,19 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonLeft = new System.Windows.Forms.Label();
             this.LblButtonRight = new System.Windows.Forms.Label();
             this.LblButtonDown = new System.Windows.Forms.Label();
+            this.TbpSettings = new System.Windows.Forms.TabPage();
+            this.TlpSettings = new System.Windows.Forms.TableLayoutPanel();
+            this.BtnSettingsResetAll = new System.Windows.Forms.Button();
+            this.GbxSettingsFiles = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel40 = new System.Windows.Forms.TableLayoutPanel();
+            this.BtnSettingsSaveCopies = new System.Windows.Forms.Button();
+            this.BtnSettingsGoRoaming = new System.Windows.Forms.Button();
+            this.BtnSettingsGoLocal = new System.Windows.Forms.Button();
+            this.TbxSettingsFilesRoaming = new System.Windows.Forms.TextBox();
+            this.LblSettingsLocal = new System.Windows.Forms.Label();
+            this.LblSettingsRoaming = new System.Windows.Forms.Label();
+            this.TbxSettingsFilesLocal = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -548,6 +560,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer.SuspendLayout();
             this.TlpFramebufferTab.SuspendLayout();
             this.ScrFramebuffer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
@@ -565,7 +578,10 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel31.SuspendLayout();
             this.tableLayoutPanel30.SuspendLayout();
             this.tableLayoutPanel29.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
+            this.TbpSettings.SuspendLayout();
+            this.TlpSettings.SuspendLayout();
+            this.GbxSettingsFiles.SuspendLayout();
+            this.tableLayoutPanel40.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -1220,6 +1236,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbcMainTabs.Controls.Add(this.TbpFramebuffer);
             this.TbcMainTabs.Controls.Add(this.TbpUtility);
             this.TbcMainTabs.Controls.Add(this.TbpMisc);
+            this.TbcMainTabs.Controls.Add(this.TbpSettings);
             this.TbcMainTabs.Location = new System.Drawing.Point(0, 0);
             this.TbcMainTabs.Margin = new System.Windows.Forms.Padding(0);
             this.TbcMainTabs.Name = "TbcMainTabs";
@@ -5649,6 +5666,17 @@ namespace BizHawk.Client.EmuHawk
             this.ScrFramebuffer.TabIndex = 8;
             this.ScrFramebuffer.Text = "scrollableControl1";
             // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
+            // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.AutoSize = true;
@@ -6422,16 +6450,154 @@ namespace BizHawk.Client.EmuHawk
             this.LblButtonDown.TabIndex = 15;
             this.LblButtonDown.Text = "Down";
             // 
-            // BpbFramebuffer
+            // TbpSettings
             // 
-            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
-            this.BpbFramebuffer.Name = "BpbFramebuffer";
-            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
-            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BpbFramebuffer.TabIndex = 7;
-            this.BpbFramebuffer.TabStop = false;
+            this.TbpSettings.Controls.Add(this.TlpSettings);
+            this.TbpSettings.Location = new System.Drawing.Point(4, 22);
+            this.TbpSettings.Name = "TbpSettings";
+            this.TbpSettings.Size = new System.Drawing.Size(688, 618);
+            this.TbpSettings.TabIndex = 15;
+            this.TbpSettings.Text = "Settings";
+            this.TbpSettings.UseVisualStyleBackColor = true;
+            // 
+            // TlpSettings
+            // 
+            this.TlpSettings.ColumnCount = 1;
+            this.TlpSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.TlpSettings.Controls.Add(this.BtnSettingsResetAll, 0, 1);
+            this.TlpSettings.Controls.Add(this.GbxSettingsFiles, 0, 0);
+            this.TlpSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TlpSettings.Location = new System.Drawing.Point(0, 0);
+            this.TlpSettings.Name = "TlpSettings";
+            this.TlpSettings.RowCount = 2;
+            this.TlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.TlpSettings.Size = new System.Drawing.Size(688, 618);
+            this.TlpSettings.TabIndex = 2;
+            // 
+            // BtnSettingsResetAll
+            // 
+            this.BtnSettingsResetAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnSettingsResetAll.Location = new System.Drawing.Point(610, 590);
+            this.BtnSettingsResetAll.Name = "BtnSettingsResetAll";
+            this.BtnSettingsResetAll.Size = new System.Drawing.Size(75, 25);
+            this.BtnSettingsResetAll.TabIndex = 1;
+            this.BtnSettingsResetAll.Text = "Reset all";
+            this.BtnSettingsResetAll.UseVisualStyleBackColor = true;
+            this.BtnSettingsResetAll.Click += new System.EventHandler(this.BtnSettingsResetAll_Click);
+            // 
+            // GbxSettingsFiles
+            // 
+            this.GbxSettingsFiles.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.GbxSettingsFiles.Controls.Add(this.tableLayoutPanel40);
+            this.GbxSettingsFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GbxSettingsFiles.Location = new System.Drawing.Point(3, 3);
+            this.GbxSettingsFiles.Name = "GbxSettingsFiles";
+            this.GbxSettingsFiles.Size = new System.Drawing.Size(682, 112);
+            this.GbxSettingsFiles.TabIndex = 1;
+            this.GbxSettingsFiles.TabStop = false;
+            this.GbxSettingsFiles.Text = "Files";
+            // 
+            // tableLayoutPanel40
+            // 
+            this.tableLayoutPanel40.AutoSize = true;
+            this.tableLayoutPanel40.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel40.ColumnCount = 3;
+            this.tableLayoutPanel40.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel40.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel40.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel40.Controls.Add(this.BtnSettingsSaveCopies, 1, 2);
+            this.tableLayoutPanel40.Controls.Add(this.BtnSettingsGoRoaming, 2, 1);
+            this.tableLayoutPanel40.Controls.Add(this.BtnSettingsGoLocal, 2, 0);
+            this.tableLayoutPanel40.Controls.Add(this.TbxSettingsFilesRoaming, 1, 1);
+            this.tableLayoutPanel40.Controls.Add(this.LblSettingsLocal, 0, 0);
+            this.tableLayoutPanel40.Controls.Add(this.LblSettingsRoaming, 0, 1);
+            this.tableLayoutPanel40.Controls.Add(this.TbxSettingsFilesLocal, 1, 0);
+            this.tableLayoutPanel40.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel40.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel40.Name = "tableLayoutPanel40";
+            this.tableLayoutPanel40.RowCount = 3;
+            this.tableLayoutPanel40.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel40.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel40.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel40.Size = new System.Drawing.Size(676, 93);
+            this.tableLayoutPanel40.TabIndex = 0;
+            // 
+            // BtnSettingsSaveCopies
+            // 
+            this.BtnSettingsSaveCopies.Location = new System.Drawing.Point(61, 65);
+            this.BtnSettingsSaveCopies.Name = "BtnSettingsSaveCopies";
+            this.BtnSettingsSaveCopies.Size = new System.Drawing.Size(100, 25);
+            this.BtnSettingsSaveCopies.TabIndex = 2;
+            this.BtnSettingsSaveCopies.Text = "Save copies";
+            this.BtnSettingsSaveCopies.UseVisualStyleBackColor = true;
+            this.BtnSettingsSaveCopies.Click += new System.EventHandler(this.BtnSettingsSaveCopies_Click);
+            // 
+            // BtnSettingsGoRoaming
+            // 
+            this.BtnSettingsGoRoaming.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnSettingsGoRoaming.Location = new System.Drawing.Point(598, 34);
+            this.BtnSettingsGoRoaming.Name = "BtnSettingsGoRoaming";
+            this.BtnSettingsGoRoaming.Size = new System.Drawing.Size(75, 25);
+            this.BtnSettingsGoRoaming.TabIndex = 4;
+            this.BtnSettingsGoRoaming.Text = "Go";
+            this.BtnSettingsGoRoaming.UseVisualStyleBackColor = true;
+            this.BtnSettingsGoRoaming.Click += new System.EventHandler(this.BtnSettingsGoRoaming_Click);
+            // 
+            // BtnSettingsGoLocal
+            // 
+            this.BtnSettingsGoLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnSettingsGoLocal.Location = new System.Drawing.Point(598, 3);
+            this.BtnSettingsGoLocal.Name = "BtnSettingsGoLocal";
+            this.BtnSettingsGoLocal.Size = new System.Drawing.Size(75, 25);
+            this.BtnSettingsGoLocal.TabIndex = 1;
+            this.BtnSettingsGoLocal.Text = "Go";
+            this.BtnSettingsGoLocal.UseVisualStyleBackColor = true;
+            this.BtnSettingsGoLocal.Click += new System.EventHandler(this.BtnSettingsGoLocal_Click);
+            // 
+            // TbxSettingsFilesRoaming
+            // 
+            this.TbxSettingsFilesRoaming.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxSettingsFilesRoaming.Location = new System.Drawing.Point(61, 36);
+            this.TbxSettingsFilesRoaming.Name = "TbxSettingsFilesRoaming";
+            this.TbxSettingsFilesRoaming.ReadOnly = true;
+            this.TbxSettingsFilesRoaming.Size = new System.Drawing.Size(531, 20);
+            this.TbxSettingsFilesRoaming.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.TbxSettingsFilesRoaming, "User-specific, machine-independent settings");
+            // 
+            // LblSettingsLocal
+            // 
+            this.LblSettingsLocal.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSettingsLocal.AutoSize = true;
+            this.LblSettingsLocal.Location = new System.Drawing.Point(19, 9);
+            this.LblSettingsLocal.Name = "LblSettingsLocal";
+            this.LblSettingsLocal.Size = new System.Drawing.Size(36, 13);
+            this.LblSettingsLocal.TabIndex = 0;
+            this.LblSettingsLocal.Text = "Local:";
+            this.LblSettingsLocal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.LblSettingsLocal, "User-specific, machine-dependent settings");
+            // 
+            // LblSettingsRoaming
+            // 
+            this.LblSettingsRoaming.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSettingsRoaming.AutoSize = true;
+            this.LblSettingsRoaming.Location = new System.Drawing.Point(3, 40);
+            this.LblSettingsRoaming.Name = "LblSettingsRoaming";
+            this.LblSettingsRoaming.Size = new System.Drawing.Size(52, 13);
+            this.LblSettingsRoaming.TabIndex = 1;
+            this.LblSettingsRoaming.Text = "Roaming:";
+            this.LblSettingsRoaming.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.LblSettingsRoaming, "User-specific, machine-independent settings");
+            // 
+            // TbxSettingsFilesLocal
+            // 
+            this.TbxSettingsFilesLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxSettingsFilesLocal.Location = new System.Drawing.Point(61, 5);
+            this.TbxSettingsFilesLocal.Name = "TbxSettingsFilesLocal";
+            this.TbxSettingsFilesLocal.ReadOnly = true;
+            this.TbxSettingsFilesLocal.Size = new System.Drawing.Size(531, 20);
+            this.TbxSettingsFilesLocal.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.TbxSettingsFilesLocal, "User-specific, machine-dependent settings");
             // 
             // CustomMainForm
             // 
@@ -6604,6 +6770,7 @@ namespace BizHawk.Client.EmuHawk
             this.TlpFramebufferTab.ResumeLayout(false);
             this.TlpFramebufferTab.PerformLayout();
             this.ScrFramebuffer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
@@ -6633,7 +6800,12 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel30.PerformLayout();
             this.tableLayoutPanel29.ResumeLayout(false);
             this.tableLayoutPanel29.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
+            this.TbpSettings.ResumeLayout(false);
+            this.TlpSettings.ResumeLayout(false);
+            this.GbxSettingsFiles.ResumeLayout(false);
+            this.GbxSettingsFiles.PerformLayout();
+            this.tableLayoutPanel40.ResumeLayout(false);
+            this.tableLayoutPanel40.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -7052,5 +7224,17 @@ namespace BizHawk.Client.EmuHawk
 		private NumericUpDown NudCameraFlySpeed;
 		private NumericUpDown NudCameraFlySensitivity;
 		private Button BtnInputBinds;
+		private TabPage TbpSettings;
+		private GroupBox GbxSettingsFiles;
+		private TableLayoutPanel tableLayoutPanel40;
+		private Label LblSettingsLocal;
+		private Label LblSettingsRoaming;
+		private TextBox TbxSettingsFilesRoaming;
+		private TextBox TbxSettingsFilesLocal;
+		private Button BtnSettingsGoLocal;
+		private Button BtnSettingsGoRoaming;
+		private Button BtnSettingsSaveCopies;
+		private Button BtnSettingsResetAll;
+		private TableLayoutPanel TlpSettings;
 	}
 }

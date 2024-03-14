@@ -7,14 +7,18 @@
 
   This is currently implemented as a [BizHawk](https://github.com/TASVideos/BizHawk) external tool; also included are the beginnings of a standalone GUI app based on [Eto.Forms](https://github.com/picoe/Eto) and [Eto.Veldrid](https://github.com/picoe/Eto.Veldrid), but that's a long way off, if it ever happens. For now the external tool is a useful, if scatterbrained, testbed for various ideas.
 
-  Downloads are available through the badges above, or on the releases page. Just unzip into your BizHawk/ExternalTools directory and enjoy! If instead you'd like to build it yourself, read on.
-
 
 
   ## Requirements
 
   - [BizHawk 2.9 or newer](https://github.com/TASEmulators/BizHawk/releases)
   - [Silent Hill USA Original/Greatest Hits](http://redump.org/disc/137/)
+
+
+
+  ## Installation
+
+  Downloads are available through the badges above, or on [the releases page](https://github.com/ItEndsWithTens/SilentHillMapExaminer/releases). Just unzip into your BizHawk/ExternalTools directory and enjoy!
 
 
 

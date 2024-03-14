@@ -393,6 +393,9 @@ namespace BizHawk.Client.EmuHawk
 			Settings = new Settings("com.gyroshot", ToolName, component);
 
 			InitializeDataBindings();
+
+			TbxSettingsFilesLocal.Text = Settings.Local.FileName;
+			TbxSettingsFilesRoaming.Text = Settings.Roaming.FileName;
 		}
 
 		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = [];
@@ -836,7 +839,9 @@ namespace BizHawk.Client.EmuHawk
 
 			_dummyViewport = new Viewport(0, 0, RenderPort.Width, RenderPort.Height);
 
-			CleanUpDisposables();
+			Pen?.Dispose();
+			Reticle?.Dispose();
+			Overlay?.Dispose();
 
 			Pen = new Pen(Brushes.White);
 			Reticle = GenerateReticle(Pen, RenderPort.Width, RenderPort.Height, (float)NudCrosshairLength.Value);

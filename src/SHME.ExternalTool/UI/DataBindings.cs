@@ -1,6 +1,7 @@
 ﻿using Nucs.JsonSettings;
 using SHME.ExternalTool.Extras;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
@@ -9,13 +10,17 @@ namespace BizHawk.Client.EmuHawk
 {
 	public static class BindingExtensions
 	{
-		public static void AddBinding(this Control c, JsonSettings s,
-			string cProp, string sProp, DataSourceUpdateMode m,
+		public static void AddBinding(this Control c,
+			ref IList<Binding> bindings, JsonSettings s,
+			string cProp, string sProp,
 			ConvertEventHandler? f = null, ConvertEventHandler? p = null)
 		{
-			var b = new Binding(cProp, s, sProp, f != null || p != null, m)
+			var b = new Binding(cProp, s, sProp, f != null || p != null)
 			{
-				ControlUpdateMode = ControlUpdateMode.Never
+				// Prepare to set the initial control value from the stored
+				// setting, and trust later code to reverse the relationship.
+				ControlUpdateMode = ControlUpdateMode.OnPropertyChanged,
+				DataSourceUpdateMode = DataSourceUpdateMode.Never
 			};
 
 			if (f != null)
@@ -30,6 +35,8 @@ namespace BizHawk.Client.EmuHawk
 
 			c.DataBindings.Clear();
 			c.DataBindings.Add(b);
+
+			bindings.Add(b);
 		}
 
 		public static string GetFieldName(this CustomMainForm f, object o)
@@ -76,6 +83,8 @@ namespace BizHawk.Client.EmuHawk
 
 	public partial class CustomMainForm
 	{
+		private IList<Binding> _settingsBindings = [];
+
 		private void BindSettings(PropertyInfo[] props, JsonSettings settings)
 		{
 			string[] prefixes = ["Cbx", "Cmb", "Nud", "Rdo", "Trk"];
@@ -95,46 +104,46 @@ namespace BizHawk.Client.EmuHawk
 						case "Cbx":
 							var cbx = (CheckBox)info.GetValue(this);
 							cbx.AddBinding(
+								ref _settingsBindings,
 								settings,
 								nameof(cbx.Checked),
-								prop.Name,
-								DataSourceUpdateMode.OnPropertyChanged);
+								prop.Name);
 							cbx.Checked = (bool)prop.GetValue(settings);
 							break;
 						case "Cmb":
 							var cmb = (ComboBox)info.GetValue(this);
 							cmb.AddBinding(
+								ref _settingsBindings,
 								settings,
 								nameof(cmb.SelectedIndex),
-								prop.Name,
-								DataSourceUpdateMode.OnPropertyChanged);
+								prop.Name);
 							cmb.SelectedIndex = (int)prop.GetValue(settings);
 							break;
 						case "Nud":
 							var nud = (NumericUpDown)info.GetValue(this);
 							nud.AddBinding(
+								ref _settingsBindings,
 								settings,
 								nameof(nud.Value),
-								prop.Name,
-								DataSourceUpdateMode.OnPropertyChanged);
+								prop.Name);
 							nud.Value = (decimal)prop.GetValue(settings);
 							break;
 						case "Rdo":
 							var rdo = (RadioButton)info.GetValue(this);
 							rdo.AddBinding(
+								ref _settingsBindings,
 								settings,
 								nameof(rdo.Checked),
-								prop.Name,
-								DataSourceUpdateMode.OnPropertyChanged);
+								prop.Name);
 							rdo.Checked = (bool)prop.GetValue(settings);
 							break;
 						case "Trk":
 							var trk = (TrackBar)info.GetValue(this);
 							trk.AddBinding(
+								ref _settingsBindings,
 								settings,
 								nameof(trk.Value),
-								prop.Name,
-								DataSourceUpdateMode.OnPropertyChanged);
+								prop.Name);
 							trk.Value = (int)prop.GetValue(settings);
 							break;
 						default:
@@ -150,6 +159,14 @@ namespace BizHawk.Client.EmuHawk
 		{
 			BindSettings(typeof(LocalSettings).GetProperties(), Settings.Local);
 			BindSettings(typeof(RoamingSettings).GetProperties(), Settings.Roaming);
+
+			// Now that the controls have all been initialized with values read
+			// from Settings, reverse the flow so the controls call the shots.
+			foreach (Binding binding in _settingsBindings)
+			{
+				binding.ControlUpdateMode = ControlUpdateMode.Never;
+				binding.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+			}
 		}
 	}
 }

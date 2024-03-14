@@ -45,6 +45,8 @@ namespace SHME.ExternalTool.Extras
 				.LoadNow()
 				.EnableAutosave();
 
+			bool save = false;
+
 			// Settings that are collections need to be initialized as empty
 			// first, then populated later. Otherwise JsonSettings creates a
 			// series of duplicate entries in your settings file on every load.
@@ -61,6 +63,8 @@ namespace SHME.ExternalTool.Extras
 						Local.FpsBinds.Add(new InputBind(d));
 					}
 				}
+
+				save = true;
 			}
 
 			if (Local.FlyBinds?.Count < DefaultLocalSettings.FlyBinds.Count)
@@ -76,6 +80,19 @@ namespace SHME.ExternalTool.Extras
 						Local.FlyBinds.Add(new InputBind(d));
 					}
 				}
+
+				save = true;
+			}
+
+			// JsonSettings can't autosave changes to collections that don't
+			// implement INotifyCollectionChanged, but even for such collection
+			// types there are no change events raised when elements of the
+			// collection have changed, only when the collection itself has
+			// changed. Developing a custom collection class with that feature
+			// is much more involved than just calling Save when necessary.
+			if (save)
+			{
+				Local.Save();
 			}
 
 			Roaming = JsonSettings
