@@ -260,17 +260,35 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			StartCommand(Settings.Local.FpsBinds
-				.Where((bind) => bind.KeyBind == e.KeyCode)
-				.FirstOrDefault()
-				?.Command);
+			ShmeCommand? command = null;
+			for (int i = 0; i < Settings.Local.FpsBinds.Count; i++)
+			{
+				InputBind b = Settings.Local.FpsBinds[i];
+
+				if (b.KeyBind == e.KeyCode)
+				{
+					command = b.Command;
+					break;
+				}
+			}
+
+			StartCommand(command);
 		}
 		private void BtnCameraFps_KeyUp(object sender, KeyEventArgs e)
 		{
-			StopCommand(Settings.Local.FpsBinds
-				.Where((bind) => bind.KeyBind == e.KeyCode)
-				.FirstOrDefault()
-				?.Command);
+			ShmeCommand? command = null;
+			for (int i = 0; i < Settings.Local.FpsBinds.Count; i++)
+			{
+				InputBind b = Settings.Local.FpsBinds[i];
+
+				if (b.KeyBind == e.KeyCode)
+				{
+					command = b.Command;
+					break;
+				}
+			}
+
+			StopCommand(command);
 		}
 
 		private void BtnCameraFps_LostFocus(object sender, EventArgs e)
@@ -280,17 +298,35 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnCameraFps_MouseDown(object sender, MouseEventArgs e)
 		{
-			StartCommand(Settings.Local.FpsBinds
-				.Where((bind) => bind.MouseBind == e.Button)
-				.FirstOrDefault()
-				?.Command);
+			ShmeCommand? command = null;
+			for (int i = 0; i < Settings.Local.FpsBinds.Count; i++)
+			{
+				InputBind b = Settings.Local.FpsBinds[i];
+
+				if (b.MouseBind == e.Button)
+				{
+					command = b.Command;
+					break;
+				}
+			}
+
+			StartCommand(command);
 		}
 		private void BtnCameraFps_MouseUp(object sender, MouseEventArgs e)
 		{
-			StopCommand(Settings.Local.FpsBinds
-				.Where((bind) => bind.MouseBind == e.Button)
-				.FirstOrDefault()
-				?.Command);
+			ShmeCommand? command = null;
+			for (int i = 0; i < Settings.Local.FpsBinds.Count; i++)
+			{
+				InputBind b = Settings.Local.FpsBinds[i];
+
+				if (b.MouseBind == e.Button)
+				{
+					command = b.Command;
+					break;
+				}
+			}
+
+			StopCommand(command);
 		}
 
 		private void CbxAlwaysRun_CheckedChanged(object sender, EventArgs e)
