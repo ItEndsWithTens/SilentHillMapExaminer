@@ -88,7 +88,7 @@
 
 		public long HarryState { get; set; }
 
-		public long ControllerLayout { get; set; }
+		public long ControllerConfig { get; set; }
 
 		public long SaveData { get; set; }
 		public long IndexOfLoadedStage { get; set; }

@@ -315,7 +315,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					else if (_firstPersonEnabled)
 					{
-						long address = Rom.Addresses.MainRam.ControllerLayout;
+						long address = Rom.Addresses.MainRam.ControllerConfig;
 						string hash = Mem.HashRegion(address, SHME.ExternalTool.ControllerConfig.Size);
 						if (hash != _lastControllerLayoutHash)
 						{
@@ -718,7 +718,7 @@ namespace BizHawk.Client.EmuHawk
 		private SHME.ExternalTool.ControllerConfig _controllerConfig;
 		private void SetButtonNames()
 		{
-			long address = Rom.Addresses.MainRam.ControllerLayout;
+			long address = Rom.Addresses.MainRam.ControllerConfig;
 			IReadOnlyList<byte> bytes = Mem.ReadByteRange(address, SHME.ExternalTool.ControllerConfig.Size);
 			_controllerConfig = new SHME.ExternalTool.ControllerConfig(bytes);
 
