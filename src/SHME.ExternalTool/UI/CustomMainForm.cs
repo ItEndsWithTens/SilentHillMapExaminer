@@ -30,7 +30,7 @@ namespace BizHawk.Client.EmuHawk
 			"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll"])]
 
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
-	[ExternalToolApplicability.RomList(VSystemID.Raw.PSX, USRetailConstants.HashBizHawk)]
+	[ExternalToolApplicability.RomList(VSystemID.Raw.PSX, Slus00707Constants.HashBizHawk)]
 
 	public partial class CustomMainForm : ToolFormBase, IExternalToolForm
 	{

@@ -1,17 +1,17 @@
 ﻿namespace SHME.ExternalTool
 {
-	public class USRetail : Rom
+	public class Slus00707 : Rom
 	{
-		public override string Name => USRetailConstants.Name;
+		public override string Name => Slus00707Constants.Name;
 
-		public override string HashBizHawk => USRetailConstants.HashBizHawk;
-		public override string HashCrc32 => USRetailConstants.HashCrc32;
-		public override string HashMd5 => USRetailConstants.HashMd5;
-		public override string HashSha1 => USRetailConstants.HashSha1;
+		public override string HashBizHawk => Slus00707Constants.HashBizHawk;
+		public override string HashCrc32 => Slus00707Constants.HashCrc32;
+		public override string HashMd5 => Slus00707Constants.HashMd5;
+		public override string HashSha1 => Slus00707Constants.HashSha1;
 
 		public override int BaseLba => 0;
 
-		public override Addresses Addresses { get; } = new Addresses()
+		public override Addresses Addresses { get; } = new()
 		{
 			MainRam = new MainRamAddresses()
 			{

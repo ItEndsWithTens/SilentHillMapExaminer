@@ -3,7 +3,7 @@
 	// The ability BizHawk offers to restrict usage of an external tool to only
 	// certain ROMs is implemented via attributes, and they require constant
 	// values. Otherwise these would be stored in each derived Rom class.
-	public static class USRetailConstants
+	public static class Slus00707Constants
 	{
 		public const string Name = "Silent Hill (USA)";
 

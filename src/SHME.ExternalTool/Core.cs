@@ -4,7 +4,7 @@ namespace SHME.ExternalTool
 {
 	public class Core
 	{
-		public Rom Rom { get; set; } = new USRetail();
+		public Rom Rom { get; set; } = new Slus00707();
 
 		public static uint DegreesToGameUnits(float degrees)
 		{
