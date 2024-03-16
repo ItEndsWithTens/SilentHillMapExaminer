@@ -6473,7 +6473,7 @@ namespace BizHawk.Client.EmuHawk
             this.TlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.TlpSettings.Size = new System.Drawing.Size(688, 618);
-            this.TlpSettings.TabIndex = 2;
+            this.TlpSettings.TabIndex = 0;
             // 
             // BtnSettingsResetAll
             // 
@@ -6481,7 +6481,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSettingsResetAll.Location = new System.Drawing.Point(610, 590);
             this.BtnSettingsResetAll.Name = "BtnSettingsResetAll";
             this.BtnSettingsResetAll.Size = new System.Drawing.Size(75, 25);
-            this.BtnSettingsResetAll.TabIndex = 1;
+            this.BtnSettingsResetAll.TabIndex = 5;
             this.BtnSettingsResetAll.Text = "Reset all";
             this.BtnSettingsResetAll.UseVisualStyleBackColor = true;
             this.BtnSettingsResetAll.Click += new System.EventHandler(this.BtnSettingsResetAll_Click);
@@ -6494,7 +6494,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxSettingsFiles.Location = new System.Drawing.Point(3, 3);
             this.GbxSettingsFiles.Name = "GbxSettingsFiles";
             this.GbxSettingsFiles.Size = new System.Drawing.Size(682, 112);
-            this.GbxSettingsFiles.TabIndex = 1;
+            this.GbxSettingsFiles.TabIndex = 0;
             this.GbxSettingsFiles.TabStop = false;
             this.GbxSettingsFiles.Text = "Files";
             // 
@@ -6528,7 +6528,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSettingsSaveCopies.Location = new System.Drawing.Point(61, 65);
             this.BtnSettingsSaveCopies.Name = "BtnSettingsSaveCopies";
             this.BtnSettingsSaveCopies.Size = new System.Drawing.Size(100, 25);
-            this.BtnSettingsSaveCopies.TabIndex = 2;
+            this.BtnSettingsSaveCopies.TabIndex = 30;
             this.BtnSettingsSaveCopies.Text = "Save copies";
             this.BtnSettingsSaveCopies.UseVisualStyleBackColor = true;
             this.BtnSettingsSaveCopies.Click += new System.EventHandler(this.BtnSettingsSaveCopies_Click);
@@ -6539,7 +6539,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSettingsGoRoaming.Location = new System.Drawing.Point(598, 34);
             this.BtnSettingsGoRoaming.Name = "BtnSettingsGoRoaming";
             this.BtnSettingsGoRoaming.Size = new System.Drawing.Size(75, 25);
-            this.BtnSettingsGoRoaming.TabIndex = 4;
+            this.BtnSettingsGoRoaming.TabIndex = 25;
             this.BtnSettingsGoRoaming.Text = "Go";
             this.BtnSettingsGoRoaming.UseVisualStyleBackColor = true;
             this.BtnSettingsGoRoaming.Click += new System.EventHandler(this.BtnSettingsGoRoaming_Click);
@@ -6550,7 +6550,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSettingsGoLocal.Location = new System.Drawing.Point(598, 3);
             this.BtnSettingsGoLocal.Name = "BtnSettingsGoLocal";
             this.BtnSettingsGoLocal.Size = new System.Drawing.Size(75, 25);
-            this.BtnSettingsGoLocal.TabIndex = 1;
+            this.BtnSettingsGoLocal.TabIndex = 10;
             this.BtnSettingsGoLocal.Text = "Go";
             this.BtnSettingsGoLocal.UseVisualStyleBackColor = true;
             this.BtnSettingsGoLocal.Click += new System.EventHandler(this.BtnSettingsGoLocal_Click);
@@ -6562,7 +6562,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSettingsFilesRoaming.Name = "TbxSettingsFilesRoaming";
             this.TbxSettingsFilesRoaming.ReadOnly = true;
             this.TbxSettingsFilesRoaming.Size = new System.Drawing.Size(531, 20);
-            this.TbxSettingsFilesRoaming.TabIndex = 3;
+            this.TbxSettingsFilesRoaming.TabIndex = 20;
             this.toolTip1.SetToolTip(this.TbxSettingsFilesRoaming, "User-specific, machine-independent settings");
             // 
             // LblSettingsLocal
@@ -6584,7 +6584,7 @@ namespace BizHawk.Client.EmuHawk
             this.LblSettingsRoaming.Location = new System.Drawing.Point(3, 40);
             this.LblSettingsRoaming.Name = "LblSettingsRoaming";
             this.LblSettingsRoaming.Size = new System.Drawing.Size(52, 13);
-            this.LblSettingsRoaming.TabIndex = 1;
+            this.LblSettingsRoaming.TabIndex = 15;
             this.LblSettingsRoaming.Text = "Roaming:";
             this.LblSettingsRoaming.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.LblSettingsRoaming, "User-specific, machine-independent settings");
@@ -6596,7 +6596,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSettingsFilesLocal.Name = "TbxSettingsFilesLocal";
             this.TbxSettingsFilesLocal.ReadOnly = true;
             this.TbxSettingsFilesLocal.Size = new System.Drawing.Size(531, 20);
-            this.TbxSettingsFilesLocal.TabIndex = 2;
+            this.TbxSettingsFilesLocal.TabIndex = 5;
             this.toolTip1.SetToolTip(this.TbxSettingsFilesLocal, "User-specific, machine-dependent settings");
             // 
             // CustomMainForm
