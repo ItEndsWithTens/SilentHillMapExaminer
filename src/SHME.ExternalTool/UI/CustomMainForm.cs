@@ -284,6 +284,9 @@ namespace BizHawk.Client.EmuHawk
 				_harryModel = new Ilm(header, remaining);
 			}
 
+			var camState = (CameraState)(Mem.ReadS32(Rom.Addresses.MainRam.CameraState));
+			bool cutscene = camState.FasterHasFlag(CameraState.Cutscene);
+
 			switch (type)
 			{
 				case ToolFormUpdateType.PreFrame:
@@ -303,6 +306,10 @@ namespace BizHawk.Client.EmuHawk
 						pos.Y = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY));
 						pos.Z = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ));
 						_gameCameraLookAt.Position = pos;
+					}
+					if (cutscene)
+					{
+						_holdCameraYaw = Mem.ReadU16(Rom.Addresses.MainRam.HarryYaw);
 					}
 					if (CbxCameraDetach.Checked)
 					{
@@ -332,8 +339,11 @@ namespace BizHawk.Client.EmuHawk
 							_forcedCameraYaw = null;
 						}
 						MoveCameraFirstPerson();
-						AimCamera(BtnCameraFps);
-						Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
+						AimCamera(BtnCameraFps, cutscene);
+						if (!cutscene)
+						{
+							Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
+						}
 					}
 					break;
 				case ToolFormUpdateType.PostFrame:

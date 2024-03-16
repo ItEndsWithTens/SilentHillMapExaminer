@@ -108,7 +108,8 @@ namespace BizHawk.Client.EmuHawk
 		private uint _holdCameraRoll;
 		private void DetachCamera()
 		{
-			Mem.WriteS32(Rom.Addresses.MainRam.CameraState, 0x3);
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraState,
+				(int)(CameraState.LockPitch | CameraState.LockYaw));
 
 			_holdCameraPitch = Mem.ReadU32(Rom.Addresses.MainRam.CameraActualPitch);
 			_holdCameraYaw = Mem.ReadU32(Rom.Addresses.MainRam.CameraActualYaw);
@@ -117,7 +118,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private void HoldCamera()
 		{
-			Mem.WriteS32(Rom.Addresses.MainRam.CameraState, 0x3);
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraState,
+				(int)(CameraState.LockPitch | CameraState.LockYaw));
 
 			Mem.WriteU16(Rom.Addresses.MainRam.CameraIdealPitch, _holdCameraPitch);
 			Mem.WriteU16(Rom.Addresses.MainRam.CameraIdealYaw, _holdCameraYaw);
@@ -254,7 +256,7 @@ namespace BizHawk.Client.EmuHawk
 		// approach real games use for consistent input with varying framerate.
 		private float _sensitivity;
 		private Point _aimCenter;
-		private void AimCamera(Button btn)
+		private void AimCamera(Button btn, bool cutscene = false)
 		{
 			_aimCenter.X = btn.Location.X + ((btn.Bounds.Right - btn.Bounds.Left) / 2);
 			_aimCenter.Y = btn.Location.Y + ((btn.Bounds.Bottom - btn.Bounds.Top) / 2);
@@ -284,7 +286,10 @@ namespace BizHawk.Client.EmuHawk
 			yawDegrees += deltaX;
 
 			_holdCameraPitch = Core.DegreesToGameUnits(pitchDegrees);
-			_holdCameraYaw = Core.DegreesToGameUnits(yawDegrees);
+			if (!cutscene)
+			{
+				_holdCameraYaw = Core.DegreesToGameUnits(yawDegrees);
+			}
 			_holdCameraRoll = 0;
 
 			Cursor.Position = _aimCenter;
@@ -294,7 +299,8 @@ namespace BizHawk.Client.EmuHawk
 		{
 			FlyEnabled = false;
 
-			Mem.WriteS32(Rom.Addresses.MainRam.CameraState, 0x0);
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraState,
+				(int)(CameraState.None));
 		}
 
 		private void BtnCameraFly_KeyDown(object sender, KeyEventArgs e)

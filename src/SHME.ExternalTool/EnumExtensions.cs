@@ -10,6 +10,11 @@ namespace SHME.ExternalTool
 			return (value & flag) != 0;
 		}
 
+		public static bool FasterHasFlag(this CameraState value, CameraState flag)
+		{
+			return (value & flag) != 0;
+		}
+
 		public static bool FasterHasFlag(this Culling value, Culling flag)
 		{
 			return (value & flag) != 0;
