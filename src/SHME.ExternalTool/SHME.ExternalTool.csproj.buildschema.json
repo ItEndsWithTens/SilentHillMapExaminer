@@ -1,0 +1,8 @@
+{
+    "properties": {
+        "SHMEForceNondeterministicPackage": {
+            "type": "bool",
+            "description": "Whether to forcibly package a distribution of SHME even when the embedded debug information contains local file paths."
+        }
+    }
+}

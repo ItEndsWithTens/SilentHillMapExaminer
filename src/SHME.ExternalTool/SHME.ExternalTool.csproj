@@ -38,8 +38,7 @@
   <UsingTask
     TaskName="CustomBuildTasks.ReadBizHawkVersion"
     TaskFactory="TaskHostFactory"
-    AssemblyFile="$(ArtifactsDir)/bin/CustomBuildTasks/$(Configuration)/netstandard2.0/CustomBuildTasks.dll">
-  </UsingTask>
+    AssemblyFile="$(ArtifactsDir)/bin/CustomBuildTasks/$(Configuration)/netstandard2.0/CustomBuildTasks.dll" />
 
   <Target Name="SetAssemblyTitle" AfterTargets="DecideFinalVersionNumber">
     <CustomBuildTasks.ReadBizHawkVersion>
@@ -96,5 +95,11 @@
 
     <ZipDirectory SourceDirectory="$(PrepDir)" DestinationFile="$(DistDir)/$(MSBuildProjectName)-$(Version).zip" Overwrite="true" />
   </Target>
+
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties shme_1externaltool_1csproj_1buildschema_1json__JsonSchema="https://github.com/mhutch/MonoDevelop.MSBuildEditor/blob/main/MonoDevelop.MSBuild/Schemas/buildschema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 
 </Project>

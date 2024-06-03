@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "ms-vscode.mono-debug"
+        "ms-vscode.mono-debug",
+        "EditorConfig.EditorConfig"
     ]
 }

@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.buildschema.json": "jsonc"
+    },
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "/*.buildschema.json"
+            ],
+            "url": "https://github.com/mhutch/MonoDevelop.MSBuildEditor/blob/main/MonoDevelop.MSBuild/Schemas/buildschema.json"
+        }
+    ],
+}
