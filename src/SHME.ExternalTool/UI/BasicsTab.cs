@@ -360,21 +360,6 @@ namespace BizHawk.Client.EmuHawk
 			_levelDataNeedsUpdate = true;
 		}
 
-		private void CmbRenderMode_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			switch (CmbRenderMode.SelectedIndex)
-			{
-				case 1:
-					CbxBackfaceCulling.Checked = true;
-					CbxFarClipping.Checked = true;
-					break;
-				default:
-					CbxBackfaceCulling.Checked = false;
-					CbxFarClipping.Checked = true;
-					break;
-			}
-		}
-
 		private void Emu_StateLoaded(object sender, StateLoadedEventArgs e)
 		{
 			Pois.Clear();

@@ -18,7 +18,7 @@ namespace SHME.ExternalTool.Extras
 
 		public static readonly bool EnableOverlayCameraReporting;
 		public static readonly bool ReadLevelDataOnStageLoad;
-		public static readonly bool Antialiasing;
+		public static readonly bool Antialiasing = true;
 		public static readonly bool BackfaceCulling;
 		public static readonly bool FarClipping = true;
 		public static readonly decimal CrosshairLength = 2.5m;
