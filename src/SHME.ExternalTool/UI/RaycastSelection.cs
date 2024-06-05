@@ -148,12 +148,12 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
+			ClearListControlSelections();
+
 			if (GetClickedThings(gc.PointToScreen(e.Location), ref _clickedThings))
 			{
 				return;
 			}
-
-			ClearListControlSelections();
 
 			if (_clickedThings.Count > 0)
 			{

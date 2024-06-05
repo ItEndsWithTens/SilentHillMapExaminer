@@ -452,9 +452,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		// TODO: Test this in Linux! I think I've had issues with keeping
-		// references to Forms around instead of making a new one every
-		// time I access it? Need to double check.
 		private InputBindsForm? _inputBindsForm;
 		private void BtnInputBinds_Click(object sender, EventArgs e)
 		{

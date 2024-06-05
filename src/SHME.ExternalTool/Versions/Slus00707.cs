@@ -119,6 +119,8 @@
 
 				ControllerConfig = 0xBC728,
 
+				// 0xBC74A // Brightness level, 0 through 7 in game, but values from 0x00 through 0x1F actually take effect (in the dark, with flashlight, at least).
+
 				// 0xBC750 // View control normal/reversed
 
 				SaveData = 0xBCA34,
@@ -142,7 +144,6 @@
 				WalkingDistance = 0xBCC8C,
 
 				FramebufferWidth = 0xBCCB0,
-				// Keep these two in sync if adjusting by hand! Rendering goes screwy otherwise.
 				FramebufferHeight = 0xBCCB2,
 				IndexOfStageBeingLoaded = 0xBCCD9,
 				ProjectionPlaneDistanceCurrent = 0xB9D00,
