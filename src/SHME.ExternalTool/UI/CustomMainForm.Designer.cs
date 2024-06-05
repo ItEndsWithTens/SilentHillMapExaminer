@@ -1661,7 +1661,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxAntialiasing.Location = new System.Drawing.Point(247, 104);
             this.CbxAntialiasing.Name = "CbxAntialiasing";
             this.CbxAntialiasing.Size = new System.Drawing.Size(79, 17);
-            this.CbxAntialiasing.TabIndex = 106;
+            this.CbxAntialiasing.TabIndex = 100;
             this.CbxAntialiasing.Text = "Antialiasing";
             this.CbxAntialiasing.UseVisualStyleBackColor = true;
             this.CbxAntialiasing.CheckedChanged += new System.EventHandler(this.CbxAntialiasing_CheckedChanged);
@@ -6482,7 +6482,7 @@ namespace BizHawk.Client.EmuHawk
             this.BtnSettingsResetAll.Location = new System.Drawing.Point(610, 590);
             this.BtnSettingsResetAll.Name = "BtnSettingsResetAll";
             this.BtnSettingsResetAll.Size = new System.Drawing.Size(75, 25);
-            this.BtnSettingsResetAll.TabIndex = 5;
+            this.BtnSettingsResetAll.TabIndex = 10;
             this.BtnSettingsResetAll.Text = "Reset all";
             this.BtnSettingsResetAll.UseVisualStyleBackColor = true;
             this.BtnSettingsResetAll.Click += new System.EventHandler(this.BtnSettingsResetAll_Click);
@@ -6613,7 +6613,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel42.Size = new System.Drawing.Size(682, 463);
-            this.tableLayoutPanel42.TabIndex = 6;
+            this.tableLayoutPanel42.TabIndex = 5;
             // 
             // GbxOverlayDisplaySurface
             // 
@@ -6624,7 +6624,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlayDisplaySurface.Margin = new System.Windows.Forms.Padding(0);
             this.GbxOverlayDisplaySurface.Name = "GbxOverlayDisplaySurface";
             this.GbxOverlayDisplaySurface.Size = new System.Drawing.Size(136, 88);
-            this.GbxOverlayDisplaySurface.TabIndex = 6;
+            this.GbxOverlayDisplaySurface.TabIndex = 0;
             this.GbxOverlayDisplaySurface.TabStop = false;
             this.GbxOverlayDisplaySurface.Text = "Overlay display surface";
             // 
@@ -6646,7 +6646,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel41.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel41.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel41.Size = new System.Drawing.Size(130, 69);
-            this.tableLayoutPanel41.TabIndex = 3;
+            this.tableLayoutPanel41.TabIndex = 0;
             // 
             // RdoOverlayDisplaySurfaceFramebuffer
             // 
@@ -6655,7 +6655,7 @@ namespace BizHawk.Client.EmuHawk
             this.RdoOverlayDisplaySurfaceFramebuffer.Location = new System.Drawing.Point(3, 49);
             this.RdoOverlayDisplaySurfaceFramebuffer.Name = "RdoOverlayDisplaySurfaceFramebuffer";
             this.RdoOverlayDisplaySurfaceFramebuffer.Size = new System.Drawing.Size(124, 17);
-            this.RdoOverlayDisplaySurfaceFramebuffer.TabIndex = 2;
+            this.RdoOverlayDisplaySurfaceFramebuffer.TabIndex = 10;
             this.RdoOverlayDisplaySurfaceFramebuffer.Text = "Silent Hill framebuffer";
             this.RdoOverlayDisplaySurfaceFramebuffer.UseVisualStyleBackColor = true;
             this.RdoOverlayDisplaySurfaceFramebuffer.CheckedChanged += new System.EventHandler(this.RdoOverlayDisplaySurface_CheckedChanged);
@@ -6682,7 +6682,7 @@ namespace BizHawk.Client.EmuHawk
             this.RdoOverlayDisplaySurfaceEmuCore.Location = new System.Drawing.Point(3, 26);
             this.RdoOverlayDisplaySurfaceEmuCore.Name = "RdoOverlayDisplaySurfaceEmuCore";
             this.RdoOverlayDisplaySurfaceEmuCore.Size = new System.Drawing.Size(90, 17);
-            this.RdoOverlayDisplaySurfaceEmuCore.TabIndex = 1;
+            this.RdoOverlayDisplaySurfaceEmuCore.TabIndex = 5;
             this.RdoOverlayDisplaySurfaceEmuCore.Text = "Emulator core";
             this.toolTip1.SetToolTip(this.RdoOverlayDisplaySurfaceEmuCore, "Highest performance");
             this.RdoOverlayDisplaySurfaceEmuCore.UseVisualStyleBackColor = true;
