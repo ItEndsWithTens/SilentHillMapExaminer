@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace SHME.ExternalTool
 {
@@ -7,7 +9,7 @@ namespace SHME.ExternalTool
 	/// </summary>
 	public class Viewport
 	{
-		private Point _topLeft = new Point(0, 0);
+		private Point _topLeft = new(0, 0);
 		public Point TopLeft
 		{
 			get => _topLeft;
@@ -43,7 +45,7 @@ namespace SHME.ExternalTool
 			}
 		}
 
-		private Point _bottomRight = new Point(319, 223);
+		private Point _bottomRight = new(319, 223);
 		public Point BottomRight
 		{
 			get => _bottomRight;
@@ -61,7 +63,7 @@ namespace SHME.ExternalTool
 		public int Right => BottomRight.X;
 		public int Bottom => BottomRight.Y;
 
-		public Point Center { get; private set; } = new Point(160, 112);
+		public Point Center { get; private set; } = new(160, 112);
 
 		public Viewport()
 		{
@@ -79,6 +81,84 @@ namespace SHME.ExternalTool
 			Height = height;
 			TopLeft = new Point(left, top);
 			BottomRight = new Point(left + width - 1, top + height - 1);
+		}
+
+		/// <summary>
+		/// Create a Viewport based on an input Bitmap, assuming said input has
+		/// image content surrounded by a solid color border.
+		/// </summary>	
+		public static Viewport CreateFrom(Bitmap bmp, Color backgroundColor)
+		{
+			Viewport viewport = new(0, 0, bmp.Width, bmp.Height);
+
+			int halfWidth = bmp.Width / 2;
+			int halfHeight = bmp.Height / 2;
+
+			const int BytesPerPixel = 4;
+			const int Mask = 0xFFFFFF;
+
+			int rgb = backgroundColor.ToArgb() & Mask;
+
+			BitmapData data = bmp.LockBits(
+				new Rectangle(0, 0, bmp.Width, bmp.Height),
+				ImageLockMode.ReadOnly,
+				PixelFormat.Format32bppArgb);
+
+			for (int x = 0; x < halfWidth; x++)
+			{
+				int ofs = (data.Stride * halfHeight) + (BytesPerPixel * x);
+				int pixel = Marshal.ReadInt32(data.Scan0, ofs);
+
+				if ((pixel & Mask) != rgb)
+				{
+					Point tl = viewport.TopLeft;
+					tl.X = x;
+					viewport.TopLeft = tl;
+					break;
+				}
+			}
+
+			for (int y = 0; y < halfHeight; y++)
+			{
+				int ofs = (data.Stride * y) + (BytesPerPixel * halfWidth);
+				int pixel = Marshal.ReadInt32(data.Scan0, ofs);
+
+				if ((pixel & Mask) != rgb)
+				{
+					Point tl = viewport.TopLeft;
+					tl.Y = y;
+					viewport.TopLeft = tl;
+					break;
+				}
+			}
+
+			for (int x = bmp.Width - 1; x > halfWidth; x--)
+			{
+				int ofs = (data.Stride * halfHeight) + (BytesPerPixel * x);
+				int pixel = Marshal.ReadInt32(data.Scan0, ofs);
+
+				if ((pixel & Mask) != rgb)
+				{
+					viewport.Width = x - viewport.Left + 1;
+					break;
+				}
+			}
+
+			for (int y = bmp.Height - 1; y > halfHeight; y--)
+			{
+				int ofs = (data.Stride * y) + (BytesPerPixel * halfWidth);
+				int pixel = Marshal.ReadInt32(data.Scan0, ofs);
+
+				if ((pixel & Mask) != rgb)
+				{
+					viewport.Height = y - viewport.Top + 1;
+					break;
+				}
+			}
+
+			bmp.UnlockBits(data);
+
+			return viewport;
 		}
 	}
 }

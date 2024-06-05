@@ -86,6 +86,12 @@ namespace BizHawk.Client.EmuHawk
             this.NudCameraFlySpeed = new System.Windows.Forms.NumericUpDown();
             this.GbxOverlay = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel26 = new System.Windows.Forms.TableLayoutPanel();
+            this.CbxAntialiasing = new System.Windows.Forms.CheckBox();
+            this.CbxFarClipping = new System.Windows.Forms.CheckBox();
+            this.CbxBackfaceCulling = new System.Windows.Forms.CheckBox();
+            this.LblOverlayCamRoll = new System.Windows.Forms.Label();
+            this.LblOverlayCamYaw = new System.Windows.Forms.Label();
+            this.LblOverlayCamPitch = new System.Windows.Forms.Label();
             this.CbxOverlayCameraMatchGame = new System.Windows.Forms.CheckBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -103,12 +109,7 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayCameraPitch = new System.Windows.Forms.NumericUpDown();
             this.NudOverlayCameraYaw = new System.Windows.Forms.NumericUpDown();
             this.NudOverlayCameraRoll = new System.Windows.Forms.NumericUpDown();
-            this.CbxFarClipping = new System.Windows.Forms.CheckBox();
-            this.CbxBackfaceCulling = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.LblOverlayCamPitch = new System.Windows.Forms.Label();
-            this.LblOverlayCamYaw = new System.Windows.Forms.Label();
-            this.LblOverlayCamRoll = new System.Windows.Forms.Label();
             this.LblOverlayCamPositionX = new System.Windows.Forms.Label();
             this.LblOverlayCamPositionY = new System.Windows.Forms.Label();
             this.LblOverlayCamPositionZ = new System.Windows.Forms.Label();
@@ -117,7 +118,6 @@ namespace BizHawk.Client.EmuHawk
             this.label69 = new System.Windows.Forms.Label();
             this.CbxEnableOverlay = new System.Windows.Forms.CheckBox();
             this.CmbRenderMode = new System.Windows.Forms.ComboBox();
-            this.CbxRenderToFramebuffer = new System.Windows.Forms.CheckBox();
             this.TbpPois = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel33 = new System.Windows.Forms.TableLayoutPanel();
@@ -370,7 +370,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer = new System.Windows.Forms.TabPage();
             this.TlpFramebufferTab = new System.Windows.Forms.TableLayoutPanel();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
-            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
@@ -440,7 +439,14 @@ namespace BizHawk.Client.EmuHawk
             this.LblSettingsLocal = new System.Windows.Forms.Label();
             this.LblSettingsRoaming = new System.Windows.Forms.Label();
             this.TbxSettingsFilesLocal = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel42 = new System.Windows.Forms.TableLayoutPanel();
+            this.GbxOverlayDisplaySurface = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel41 = new System.Windows.Forms.TableLayoutPanel();
+            this.RdoOverlayDisplaySurfaceFramebuffer = new System.Windows.Forms.RadioButton();
+            this.RdoOverlayDisplaySurfaceClient = new System.Windows.Forms.RadioButton();
+            this.RdoOverlayDisplaySurfaceEmuCore = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -560,7 +566,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer.SuspendLayout();
             this.TlpFramebufferTab.SuspendLayout();
             this.ScrFramebuffer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
@@ -582,6 +587,10 @@ namespace BizHawk.Client.EmuHawk
             this.TlpSettings.SuspendLayout();
             this.GbxSettingsFiles.SuspendLayout();
             this.tableLayoutPanel40.SuspendLayout();
+            this.tableLayoutPanel42.SuspendLayout();
+            this.GbxOverlayDisplaySurface.SuspendLayout();
+            this.tableLayoutPanel41.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -1590,6 +1599,12 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel26.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel26.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel26.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel26.Controls.Add(this.CbxAntialiasing, 3, 4);
+            this.tableLayoutPanel26.Controls.Add(this.CbxFarClipping, 3, 6);
+            this.tableLayoutPanel26.Controls.Add(this.CbxBackfaceCulling, 3, 5);
+            this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamRoll, 0, 6);
+            this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamYaw, 0, 5);
+            this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamPitch, 0, 4);
             this.tableLayoutPanel26.Controls.Add(this.CbxOverlayCameraMatchGame, 3, 0);
             this.tableLayoutPanel26.Controls.Add(this.label22, 3, 1);
             this.tableLayoutPanel26.Controls.Add(this.label23, 3, 2);
@@ -1607,12 +1622,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel26.Controls.Add(this.NudOverlayCameraPitch, 4, 1);
             this.tableLayoutPanel26.Controls.Add(this.NudOverlayCameraYaw, 4, 2);
             this.tableLayoutPanel26.Controls.Add(this.NudOverlayCameraRoll, 4, 3);
-            this.tableLayoutPanel26.Controls.Add(this.CbxFarClipping, 3, 6);
-            this.tableLayoutPanel26.Controls.Add(this.CbxBackfaceCulling, 3, 5);
             this.tableLayoutPanel26.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamPitch, 0, 4);
-            this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamYaw, 0, 5);
-            this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamRoll, 0, 6);
             this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamPositionX, 0, 1);
             this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamPositionY, 0, 2);
             this.tableLayoutPanel26.Controls.Add(this.LblOverlayCamPositionZ, 0, 3);
@@ -1621,7 +1631,6 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel26.Controls.Add(this.label69, 0, 9);
             this.tableLayoutPanel26.Controls.Add(this.CbxEnableOverlay, 3, 10);
             this.tableLayoutPanel26.Controls.Add(this.CmbRenderMode, 0, 10);
-            this.tableLayoutPanel26.Controls.Add(this.CbxRenderToFramebuffer, 2, 4);
             this.tableLayoutPanel26.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel26.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
@@ -1637,8 +1646,85 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel26.Size = new System.Drawing.Size(329, 281);
             this.tableLayoutPanel26.TabIndex = 0;
+            // 
+            // CbxAntialiasing
+            // 
+            this.CbxAntialiasing.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CbxAntialiasing.AutoSize = true;
+            this.CbxAntialiasing.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxAntialiasing.Checked = true;
+            this.CbxAntialiasing.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tableLayoutPanel26.SetColumnSpan(this.CbxAntialiasing, 2);
+            this.CbxAntialiasing.Location = new System.Drawing.Point(247, 104);
+            this.CbxAntialiasing.Name = "CbxAntialiasing";
+            this.CbxAntialiasing.Size = new System.Drawing.Size(79, 17);
+            this.CbxAntialiasing.TabIndex = 106;
+            this.CbxAntialiasing.Text = "Antialiasing";
+            this.CbxAntialiasing.UseVisualStyleBackColor = true;
+            this.CbxAntialiasing.CheckedChanged += new System.EventHandler(this.CbxAntialiasing_CheckedChanged);
+            // 
+            // CbxFarClipping
+            // 
+            this.CbxFarClipping.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CbxFarClipping.AutoSize = true;
+            this.CbxFarClipping.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CbxFarClipping.Checked = true;
+            this.CbxFarClipping.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tableLayoutPanel26.SetColumnSpan(this.CbxFarClipping, 2);
+            this.CbxFarClipping.Location = new System.Drawing.Point(246, 150);
+            this.CbxFarClipping.Name = "CbxFarClipping";
+            this.CbxFarClipping.Size = new System.Drawing.Size(80, 17);
+            this.CbxFarClipping.TabIndex = 110;
+            this.CbxFarClipping.Text = "Far clipping";
+            this.CbxFarClipping.UseVisualStyleBackColor = true;
+            this.CbxFarClipping.CheckedChanged += new System.EventHandler(this.CbxCullBeyondFarClip_CheckedChanged);
+            // 
+            // CbxBackfaceCulling
+            // 
+            this.CbxBackfaceCulling.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CbxBackfaceCulling.AutoSize = true;
+            this.CbxBackfaceCulling.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel26.SetColumnSpan(this.CbxBackfaceCulling, 2);
+            this.CbxBackfaceCulling.Location = new System.Drawing.Point(221, 127);
+            this.CbxBackfaceCulling.Name = "CbxBackfaceCulling";
+            this.CbxBackfaceCulling.Size = new System.Drawing.Size(105, 17);
+            this.CbxBackfaceCulling.TabIndex = 105;
+            this.CbxBackfaceCulling.Text = "Backface culling";
+            this.CbxBackfaceCulling.UseVisualStyleBackColor = true;
+            this.CbxBackfaceCulling.CheckedChanged += new System.EventHandler(this.CbxCullBackfaces_CheckedChanged);
+            // 
+            // LblOverlayCamRoll
+            // 
+            this.LblOverlayCamRoll.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblOverlayCamRoll.Location = new System.Drawing.Point(8, 151);
+            this.LblOverlayCamRoll.Name = "LblOverlayCamRoll";
+            this.LblOverlayCamRoll.Size = new System.Drawing.Size(45, 15);
+            this.LblOverlayCamRoll.TabIndex = 35;
+            this.LblOverlayCamRoll.Text = "<roll>";
+            this.LblOverlayCamRoll.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // LblOverlayCamYaw
+            // 
+            this.LblOverlayCamYaw.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblOverlayCamYaw.Location = new System.Drawing.Point(8, 128);
+            this.LblOverlayCamYaw.Name = "LblOverlayCamYaw";
+            this.LblOverlayCamYaw.Size = new System.Drawing.Size(45, 15);
+            this.LblOverlayCamYaw.TabIndex = 30;
+            this.LblOverlayCamYaw.Text = "<yaw>";
+            this.LblOverlayCamYaw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // LblOverlayCamPitch
+            // 
+            this.LblOverlayCamPitch.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.LblOverlayCamPitch.Location = new System.Drawing.Point(8, 105);
+            this.LblOverlayCamPitch.Name = "LblOverlayCamPitch";
+            this.LblOverlayCamPitch.Size = new System.Drawing.Size(45, 15);
+            this.LblOverlayCamPitch.TabIndex = 25;
+            this.LblOverlayCamPitch.Text = "<pitch>";
+            this.LblOverlayCamPitch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CbxOverlayCameraMatchGame
             // 
@@ -1907,36 +1993,6 @@ namespace BizHawk.Client.EmuHawk
             this.NudOverlayCameraRoll.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudOverlayCameraRoll.Enter += new System.EventHandler(this.Selectable_Enter);
             // 
-            // CbxFarClipping
-            // 
-            this.CbxFarClipping.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.CbxFarClipping.AutoSize = true;
-            this.CbxFarClipping.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxFarClipping.Checked = true;
-            this.CbxFarClipping.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tableLayoutPanel26.SetColumnSpan(this.CbxFarClipping, 2);
-            this.CbxFarClipping.Location = new System.Drawing.Point(246, 150);
-            this.CbxFarClipping.Name = "CbxFarClipping";
-            this.CbxFarClipping.Size = new System.Drawing.Size(80, 17);
-            this.CbxFarClipping.TabIndex = 110;
-            this.CbxFarClipping.Text = "Far clipping";
-            this.CbxFarClipping.UseVisualStyleBackColor = true;
-            this.CbxFarClipping.CheckedChanged += new System.EventHandler(this.CbxCullBeyondFarClip_CheckedChanged);
-            // 
-            // CbxBackfaceCulling
-            // 
-            this.CbxBackfaceCulling.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.CbxBackfaceCulling.AutoSize = true;
-            this.CbxBackfaceCulling.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel26.SetColumnSpan(this.CbxBackfaceCulling, 2);
-            this.CbxBackfaceCulling.Location = new System.Drawing.Point(221, 127);
-            this.CbxBackfaceCulling.Name = "CbxBackfaceCulling";
-            this.CbxBackfaceCulling.Size = new System.Drawing.Size(105, 17);
-            this.CbxBackfaceCulling.TabIndex = 105;
-            this.CbxBackfaceCulling.Text = "Backface culling";
-            this.CbxBackfaceCulling.UseVisualStyleBackColor = true;
-            this.CbxBackfaceCulling.CheckedChanged += new System.EventHandler(this.CbxCullBackfaces_CheckedChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -1948,36 +2004,6 @@ namespace BizHawk.Client.EmuHawk
             this.label2.Text = "X east, Y up, Z south";
             this.toolTip1.SetToolTip(this.label2, "Cardinal directions relative to the top-down map view of Old Silent\r\nHill. The ar" +
         "ea maps of indoor levels may not match this.");
-            // 
-            // LblOverlayCamPitch
-            // 
-            this.LblOverlayCamPitch.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblOverlayCamPitch.Location = new System.Drawing.Point(8, 105);
-            this.LblOverlayCamPitch.Name = "LblOverlayCamPitch";
-            this.LblOverlayCamPitch.Size = new System.Drawing.Size(45, 15);
-            this.LblOverlayCamPitch.TabIndex = 25;
-            this.LblOverlayCamPitch.Text = "<pitch>";
-            this.LblOverlayCamPitch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LblOverlayCamYaw
-            // 
-            this.LblOverlayCamYaw.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblOverlayCamYaw.Location = new System.Drawing.Point(8, 128);
-            this.LblOverlayCamYaw.Name = "LblOverlayCamYaw";
-            this.LblOverlayCamYaw.Size = new System.Drawing.Size(45, 15);
-            this.LblOverlayCamYaw.TabIndex = 30;
-            this.LblOverlayCamYaw.Text = "<yaw>";
-            this.LblOverlayCamYaw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LblOverlayCamRoll
-            // 
-            this.LblOverlayCamRoll.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.LblOverlayCamRoll.Location = new System.Drawing.Point(8, 151);
-            this.LblOverlayCamRoll.Name = "LblOverlayCamRoll";
-            this.LblOverlayCamRoll.Size = new System.Drawing.Size(45, 15);
-            this.LblOverlayCamRoll.TabIndex = 35;
-            this.LblOverlayCamRoll.Text = "<roll>";
-            this.LblOverlayCamRoll.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LblOverlayCamPositionX
             // 
@@ -2084,22 +2110,6 @@ namespace BizHawk.Client.EmuHawk
             this.CmbRenderMode.Size = new System.Drawing.Size(116, 21);
             this.CmbRenderMode.TabIndex = 150;
             this.CmbRenderMode.SelectedIndexChanged += new System.EventHandler(this.CmbRenderMode_SelectedIndexChanged);
-            // 
-            // CbxRenderToFramebuffer
-            // 
-            this.CbxRenderToFramebuffer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CbxRenderToFramebuffer.AutoSize = true;
-            this.CbxRenderToFramebuffer.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel26.SetColumnSpan(this.CbxRenderToFramebuffer, 3);
-            this.CbxRenderToFramebuffer.Location = new System.Drawing.Point(197, 104);
-            this.CbxRenderToFramebuffer.Name = "CbxRenderToFramebuffer";
-            this.CbxRenderToFramebuffer.Size = new System.Drawing.Size(129, 17);
-            this.CbxRenderToFramebuffer.TabIndex = 100;
-            this.CbxRenderToFramebuffer.Text = "Render to framebuffer";
-            this.toolTip1.SetToolTip(this.CbxRenderToFramebuffer, "Whether to draw directly on the game\'s framebuffer instead of BizHawk\'s GUI. Curr" +
-        "ently available only in the Octoshock core.");
-            this.CbxRenderToFramebuffer.UseVisualStyleBackColor = true;
-            this.CbxRenderToFramebuffer.CheckedChanged += new System.EventHandler(this.CbxOverlayRenderToFramebuffer_CheckedChanged);
             // 
             // TbpPois
             // 
@@ -5666,17 +5676,6 @@ namespace BizHawk.Client.EmuHawk
             this.ScrFramebuffer.TabIndex = 8;
             this.ScrFramebuffer.Text = "scrollableControl1";
             // 
-            // BpbFramebuffer
-            // 
-            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
-            this.BpbFramebuffer.Name = "BpbFramebuffer";
-            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
-            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BpbFramebuffer.TabIndex = 7;
-            this.BpbFramebuffer.TabStop = false;
-            // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.AutoSize = true;
@@ -6464,14 +6463,16 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.TlpSettings.ColumnCount = 1;
             this.TlpSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TlpSettings.Controls.Add(this.BtnSettingsResetAll, 0, 1);
+            this.TlpSettings.Controls.Add(this.BtnSettingsResetAll, 0, 2);
             this.TlpSettings.Controls.Add(this.GbxSettingsFiles, 0, 0);
+            this.TlpSettings.Controls.Add(this.tableLayoutPanel42, 0, 1);
             this.TlpSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TlpSettings.Location = new System.Drawing.Point(0, 0);
             this.TlpSettings.Name = "TlpSettings";
-            this.TlpSettings.RowCount = 2;
+            this.TlpSettings.RowCount = 3;
             this.TlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.TlpSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TlpSettings.Size = new System.Drawing.Size(688, 618);
             this.TlpSettings.TabIndex = 0;
             // 
@@ -6496,7 +6497,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxSettingsFiles.Size = new System.Drawing.Size(682, 112);
             this.GbxSettingsFiles.TabIndex = 0;
             this.GbxSettingsFiles.TabStop = false;
-            this.GbxSettingsFiles.Text = "Files";
+            this.GbxSettingsFiles.Text = "Config files";
             // 
             // tableLayoutPanel40
             // 
@@ -6598,6 +6599,103 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSettingsFilesLocal.Size = new System.Drawing.Size(531, 20);
             this.TbxSettingsFilesLocal.TabIndex = 5;
             this.toolTip1.SetToolTip(this.TbxSettingsFilesLocal, "User-specific, machine-dependent settings");
+            // 
+            // tableLayoutPanel42
+            // 
+            this.tableLayoutPanel42.ColumnCount = 2;
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel42.Controls.Add(this.GbxOverlayDisplaySurface, 0, 0);
+            this.tableLayoutPanel42.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel42.Location = new System.Drawing.Point(3, 121);
+            this.tableLayoutPanel42.Name = "tableLayoutPanel42";
+            this.tableLayoutPanel42.RowCount = 2;
+            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel42.Size = new System.Drawing.Size(682, 463);
+            this.tableLayoutPanel42.TabIndex = 6;
+            // 
+            // GbxOverlayDisplaySurface
+            // 
+            this.GbxOverlayDisplaySurface.AutoSize = true;
+            this.GbxOverlayDisplaySurface.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.GbxOverlayDisplaySurface.Controls.Add(this.tableLayoutPanel41);
+            this.GbxOverlayDisplaySurface.Location = new System.Drawing.Point(0, 0);
+            this.GbxOverlayDisplaySurface.Margin = new System.Windows.Forms.Padding(0);
+            this.GbxOverlayDisplaySurface.Name = "GbxOverlayDisplaySurface";
+            this.GbxOverlayDisplaySurface.Size = new System.Drawing.Size(136, 88);
+            this.GbxOverlayDisplaySurface.TabIndex = 6;
+            this.GbxOverlayDisplaySurface.TabStop = false;
+            this.GbxOverlayDisplaySurface.Text = "Overlay display surface";
+            // 
+            // tableLayoutPanel41
+            // 
+            this.tableLayoutPanel41.AutoSize = true;
+            this.tableLayoutPanel41.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel41.ColumnCount = 1;
+            this.tableLayoutPanel41.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel41.Controls.Add(this.RdoOverlayDisplaySurfaceFramebuffer, 0, 2);
+            this.tableLayoutPanel41.Controls.Add(this.RdoOverlayDisplaySurfaceClient, 0, 0);
+            this.tableLayoutPanel41.Controls.Add(this.RdoOverlayDisplaySurfaceEmuCore, 0, 1);
+            this.tableLayoutPanel41.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel41.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel41.Name = "tableLayoutPanel41";
+            this.tableLayoutPanel41.RowCount = 4;
+            this.tableLayoutPanel41.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel41.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel41.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel41.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel41.Size = new System.Drawing.Size(130, 69);
+            this.tableLayoutPanel41.TabIndex = 3;
+            // 
+            // RdoOverlayDisplaySurfaceFramebuffer
+            // 
+            this.RdoOverlayDisplaySurfaceFramebuffer.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.RdoOverlayDisplaySurfaceFramebuffer.AutoSize = true;
+            this.RdoOverlayDisplaySurfaceFramebuffer.Location = new System.Drawing.Point(3, 49);
+            this.RdoOverlayDisplaySurfaceFramebuffer.Name = "RdoOverlayDisplaySurfaceFramebuffer";
+            this.RdoOverlayDisplaySurfaceFramebuffer.Size = new System.Drawing.Size(124, 17);
+            this.RdoOverlayDisplaySurfaceFramebuffer.TabIndex = 2;
+            this.RdoOverlayDisplaySurfaceFramebuffer.Text = "Silent Hill framebuffer";
+            this.RdoOverlayDisplaySurfaceFramebuffer.UseVisualStyleBackColor = true;
+            this.RdoOverlayDisplaySurfaceFramebuffer.CheckedChanged += new System.EventHandler(this.RdoOverlayDisplaySurface_CheckedChanged);
+            // 
+            // RdoOverlayDisplaySurfaceClient
+            // 
+            this.RdoOverlayDisplaySurfaceClient.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.RdoOverlayDisplaySurfaceClient.AutoSize = true;
+            this.RdoOverlayDisplaySurfaceClient.Checked = true;
+            this.RdoOverlayDisplaySurfaceClient.Location = new System.Drawing.Point(3, 3);
+            this.RdoOverlayDisplaySurfaceClient.Name = "RdoOverlayDisplaySurfaceClient";
+            this.RdoOverlayDisplaySurfaceClient.Size = new System.Drawing.Size(116, 17);
+            this.RdoOverlayDisplaySurfaceClient.TabIndex = 0;
+            this.RdoOverlayDisplaySurfaceClient.TabStop = true;
+            this.RdoOverlayDisplaySurfaceClient.Text = "Window client area";
+            this.RdoOverlayDisplaySurfaceClient.UseVisualStyleBackColor = true;
+            this.RdoOverlayDisplaySurfaceClient.CheckedChanged += new System.EventHandler(this.RdoOverlayDisplaySurface_CheckedChanged);
+            // 
+            // RdoOverlayDisplaySurfaceEmuCore
+            // 
+            this.RdoOverlayDisplaySurfaceEmuCore.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.RdoOverlayDisplaySurfaceEmuCore.AutoSize = true;
+            this.RdoOverlayDisplaySurfaceEmuCore.Location = new System.Drawing.Point(3, 26);
+            this.RdoOverlayDisplaySurfaceEmuCore.Name = "RdoOverlayDisplaySurfaceEmuCore";
+            this.RdoOverlayDisplaySurfaceEmuCore.Size = new System.Drawing.Size(90, 17);
+            this.RdoOverlayDisplaySurfaceEmuCore.TabIndex = 1;
+            this.RdoOverlayDisplaySurfaceEmuCore.Text = "Emulator core";
+            this.RdoOverlayDisplaySurfaceEmuCore.UseVisualStyleBackColor = true;
+            this.RdoOverlayDisplaySurfaceEmuCore.CheckedChanged += new System.EventHandler(this.RdoOverlayDisplaySurface_CheckedChanged);
+            // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
             // 
             // CustomMainForm
             // 
@@ -6770,7 +6868,6 @@ namespace BizHawk.Client.EmuHawk
             this.TlpFramebufferTab.ResumeLayout(false);
             this.TlpFramebufferTab.PerformLayout();
             this.ScrFramebuffer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
@@ -6806,6 +6903,13 @@ namespace BizHawk.Client.EmuHawk
             this.GbxSettingsFiles.PerformLayout();
             this.tableLayoutPanel40.ResumeLayout(false);
             this.tableLayoutPanel40.PerformLayout();
+            this.tableLayoutPanel42.ResumeLayout(false);
+            this.tableLayoutPanel42.PerformLayout();
+            this.GbxOverlayDisplaySurface.ResumeLayout(false);
+            this.GbxOverlayDisplaySurface.PerformLayout();
+            this.tableLayoutPanel41.ResumeLayout(false);
+            this.tableLayoutPanel41.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -7037,7 +7141,6 @@ namespace BizHawk.Client.EmuHawk
         private Button BtnFramebufferZoomOut;
         private ComboBox CmbFramebufferZoom;
 		private Button BtnFramebufferSave;
-		private CheckBox CbxRenderToFramebuffer;
 		private CheckBox CbxDiscoMode;
 		private NumericUpDown NudCrosshairLength;
 		private Label label70;
@@ -7236,5 +7339,12 @@ namespace BizHawk.Client.EmuHawk
 		private Button BtnSettingsSaveCopies;
 		private Button BtnSettingsResetAll;
 		private TableLayoutPanel TlpSettings;
+		private GroupBox GbxOverlayDisplaySurface;
+		private RadioButton RdoOverlayDisplaySurfaceFramebuffer;
+		private RadioButton RdoOverlayDisplaySurfaceEmuCore;
+		private RadioButton RdoOverlayDisplaySurfaceClient;
+		private TableLayoutPanel tableLayoutPanel42;
+		private TableLayoutPanel tableLayoutPanel41;
+		private CheckBox CbxAntialiasing;
 	}
 }

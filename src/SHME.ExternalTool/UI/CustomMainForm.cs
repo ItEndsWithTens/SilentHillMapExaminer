@@ -182,6 +182,9 @@ namespace BizHawk.Client.EmuHawk
 
 			SetPlaceholderText();
 
+			DetachEventHandlers();
+			AttachEventHandlers();
+
 			Boxes.Clear();
 			Gems.Clear();
 			Lines.Clear();
@@ -194,7 +197,7 @@ namespace BizHawk.Client.EmuHawk
 
 			Mem.UseMemoryDomain("MainRAM");
 
-			CbxOverlayRenderToFramebuffer_CheckedChanged(this, EventArgs.Empty);
+			_initializeOverlayCountdown = 5;
 			CbxAlwaysRun_CheckedChanged(this, EventArgs.Empty);
 
 			Label[] labels =
@@ -221,9 +224,6 @@ namespace BizHawk.Client.EmuHawk
 					l.Cursor = Cursors.Default;
 				}
 			}
-
-			DetachEventHandlers();
-			AttachEventHandlers();
 		}
 
 		public static Bitmap GenerateReticle(Pen pen, int width, int height, float percent)
@@ -235,6 +235,7 @@ namespace BizHawk.Client.EmuHawk
 			var g = Graphics.FromImage(bmp);
 			g.InterpolationMode = InterpolationMode.NearestNeighbor;
 			g.PixelOffsetMode = PixelOffsetMode.None;
+			g.SmoothingMode = SmoothingMode.Default;
 
 			g.Clear(Color.FromArgb(0, 0, 0, 0));
 			g.DrawRectangle(pen, 0, 0, width - 1, height - 1);
@@ -260,6 +261,21 @@ namespace BizHawk.Client.EmuHawk
 			{
 				ClearOverlay();
 				return;
+			}
+
+			// Initializing the overlay graphics includes the need to align the
+			// rendering with the game content. The FindViewport method does that
+			// as part of the InitializeOverlay method, but when loading a save
+			// state the first few frames will be the low res preview screenshot
+			// that was saved as part of the state, and that picture is a couple
+			// of pixels offset horizontally. A few calls to UpdateValues later,
+			// everything's fine, so just wait a bit before init.
+			if (_initializeOverlayCountdown > -1)
+			{
+				if (_initializeOverlayCountdown-- == 0)
+				{
+					InitializeOverlay();
+				}
 			}
 
 			// This value is always 0xFF during gameplay, and switches to other
@@ -363,7 +379,7 @@ namespace BizHawk.Client.EmuHawk
 					if (CbxEnableOverlay.Checked)
 					{
 						UpdateOverlay();
-						if (!CbxRenderToFramebuffer.Checked)
+						if (!RdoOverlayDisplaySurfaceFramebuffer.Checked)
 						{
 							ApplyOverlayToGui();
 						}
@@ -390,7 +406,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			MemEvents?.RemoveMemoryCallback(IndexOfDrawRegion_ValueChanging);
 
-			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
+			Gui.WithSurface(_displaySurfaceID, () => Gui.ClearGraphics());
 		}
 
 		private void LoadSettings()
@@ -433,7 +449,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
-					[.. Boxes, .. Gems, .. CameraBoxes, .. CameraGems]);
+					[.. Boxes, .. Gems, .. CameraBoxes, .. CameraGems, .. Lines, .. CameraLines]);
 			}
 			if (CbxEnableTestModelSection.Checked)
 			{
@@ -452,12 +468,6 @@ namespace BizHawk.Client.EmuHawk
 				Camera.GetVisibleRenderables(
 					ref VisibleRenderables,
 					TestSheet);
-			}
-			if (CbxEnableOverlay.Checked)
-			{
-				Camera.GetVisibleRenderables(
-					ref VisibleRenderables,
-					[.. Lines, .. CameraLines]);
 			}
 			if (CbxEnableTestLine.Checked)
 			{
@@ -502,6 +512,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private SmoothingMode _smoothingMode = SmoothingMode.AntiAlias;
 		public void DrawPolygons(Matrix4x4 matrix, Graphics g)
 		{
 			for (int i = 0; i < VisibleRenderables.Count; i++)
@@ -540,6 +551,8 @@ namespace BizHawk.Client.EmuHawk
 					{
 						continue;
 					}
+
+					g.SmoothingMode = _smoothingMode;
 
 					switch (CmbRenderMode.SelectedIndex)
 					{
@@ -614,6 +627,8 @@ namespace BizHawk.Client.EmuHawk
 
 					GameSurface.MouseDown += GameSurface_MouseDown;
 					GameSurface.MouseUp += GameSurface_MouseUp;
+
+					GameSurface.SizeChanged += GameSurface_SizeChanged;
 				}
 			}
 
@@ -630,6 +645,8 @@ namespace BizHawk.Client.EmuHawk
 			{
 				GameSurface.MouseDown -= GameSurface_MouseDown;
 				GameSurface.MouseUp -= GameSurface_MouseUp;
+
+				GameSurface.SizeChanged -= GameSurface_SizeChanged;
 			}
 
 			RaycastSelectionTimer.Tick -= RaycastSelectionTimer_Tick;
@@ -807,16 +824,25 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private DisplaySurfaceID _displaySurfaceID;
+		private int _initializeOverlayCountdown;
 		private void InitializeOverlay()
 		{
+			if (GameSurface == null)
+			{
+				return;
+			}
+
+			ClearOverlay();
+
 			if (Octoshock == null)
 			{
-				CbxRenderToFramebuffer.Enabled = false;
-				CbxRenderToFramebuffer.Checked = false;
+				RdoOverlayDisplaySurfaceFramebuffer.Enabled = false;
+				RdoOverlayDisplaySurfaceFramebuffer.Checked = false;
 			}
 			else
 			{
-				CbxRenderToFramebuffer.Enabled = true;
+				RdoOverlayDisplaySurfaceFramebuffer.Enabled = true;
 			}
 
 			Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
@@ -833,17 +859,31 @@ namespace BizHawk.Client.EmuHawk
 				ClickPort.TopLeft = new Point(17, 8);
 			}
 
-			if (CbxRenderToFramebuffer.Checked)
+			if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
 			{
 				RenderPort.Width = 320;
 				RenderPort.Height = 224;
 				RenderPort.TopLeft = new Point(0, 0);
 			}
-			else
+			else if (RdoOverlayDisplaySurfaceEmuCore.Checked)
 			{
 				RenderPort.Width = ClickPort.Width;
 				RenderPort.Height = ClickPort.Height;
 				RenderPort.TopLeft = ClickPort.TopLeft;
+			}
+			else
+			{
+				// BizHawk's Emu.BorderWidth and BorderHeight methods seem to be
+				// perpetually one behind a window resize, showing the previous
+				// border size instead of the new one. Grabbing a screenshot of
+				// the window's client area and directly examining its pixels
+				// avoids that, and has the benefit of cropping out the game's
+				// overscan as well.
+
+				IVideoProvider vp = Octoshock != null ? Octoshock.AsVideoProvider() : Nymashock.AsVideoProvider();
+				using Bitmap screenshot = DisplayManager.RenderOffscreen(vp, false).ToSysdrawingBitmap();
+
+				RenderPort = Viewport.CreateFrom(screenshot, Color.Black);
 			}
 
 			_dummyViewport = new Viewport(0, 0, RenderPort.Width, RenderPort.Height);
@@ -857,6 +897,36 @@ namespace BizHawk.Client.EmuHawk
 			Overlay = new Bitmap(RenderPort.Width, RenderPort.Height, PixelFormat.Format32bppArgb);
 
 			_drawRegionRect = new Rectangle(0, 0, RenderPort.Width, RenderPort.Height);
+
+			if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
+			{
+				long a = Rom.Addresses.MainRam.IndexOfDrawRegion;
+				a += Rom.Addresses.MainRam.BaseAddress;
+
+				MemEvents?.AddWriteCallback(IndexOfDrawRegion_ValueChanging, (uint)a, "System Bus");
+			}
+			else
+			{
+				if (RdoOverlayDisplaySurfaceClient.Checked)
+				{
+					_displaySurfaceID = DisplaySurfaceID.Client;
+				}
+				else if (RdoOverlayDisplaySurfaceEmuCore.Checked)
+				{
+					_displaySurfaceID = DisplaySurfaceID.EmuCore;
+				}
+
+				MemEvents?.RemoveMemoryCallback(IndexOfDrawRegion_ValueChanging);
+
+				// Sadly, this can't be done for framebuffer rendering. When
+				// emulation is paused, modifications to the game's framebuffer
+				// won't become visible until it resumes.
+				if (Emu.IsPaused())
+				{
+					UpdateOverlay();
+					ApplyOverlayToGui();
+				}
+			}
 		}
 		private void ApplyOverlayToFramebuffer(uint index)
 		{
@@ -941,7 +1011,20 @@ namespace BizHawk.Client.EmuHawk
 		}
 		private void ApplyOverlayToGui()
 		{
-			Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.DrawImage(Overlay, RenderPort.Left, RenderPort.Top));
+			Gui.WithSurface(_displaySurfaceID,
+				() => Gui.DrawImage(
+					Overlay,
+					RenderPort.Left,
+					RenderPort.Top,
+					RenderPort.Width,
+					RenderPort.Height,
+					true,
+					_displaySurfaceID));
+		}
+
+		private void GameSurface_SizeChanged(object sender, EventArgs e)
+		{
+			InitializeOverlay();
 		}
 
 		private void IndexOfDrawRegion_ValueChanging(uint address, uint value, uint flags)

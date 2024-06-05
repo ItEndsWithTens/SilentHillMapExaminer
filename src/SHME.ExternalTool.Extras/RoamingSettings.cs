@@ -18,7 +18,7 @@ namespace SHME.ExternalTool.Extras
 
 		public static readonly bool EnableOverlayCameraReporting;
 		public static readonly bool ReadLevelDataOnStageLoad;
-		public static readonly bool RenderToFramebuffer;
+		public static readonly bool Antialiasing;
 		public static readonly bool BackfaceCulling;
 		public static readonly bool FarClipping = true;
 		public static readonly decimal CrosshairLength = 2.5m;
@@ -82,6 +82,11 @@ namespace SHME.ExternalTool.Extras
 
 		// Misc tab
 		public static readonly bool EnableControllerReporting;
+
+		// Settings tab
+		public static readonly bool OverlayDisplaySurfaceClient = true;
+		public static readonly bool OverlayDisplaySurfaceEmuCore;
+		public static readonly bool OverlayDisplaySurfaceFramebuffer;
 	}
 
 	public class RoamingSettings : JsonSettings, IVersionable
@@ -102,7 +107,7 @@ namespace SHME.ExternalTool.Extras
 
 		public virtual bool EnableOverlayCameraReporting { get; set; } = DefaultRoamingSettings.EnableOverlayCameraReporting;
 		public virtual bool ReadLevelDataOnStageLoad { get; set; } = DefaultRoamingSettings.ReadLevelDataOnStageLoad;
-		public virtual bool RenderToFramebuffer { get; set; } = DefaultRoamingSettings.RenderToFramebuffer;
+		public virtual bool Antialiasing { get; set; } = DefaultRoamingSettings.Antialiasing;
 		public virtual bool BackfaceCulling { get; set; } = DefaultRoamingSettings.BackfaceCulling;
 		public virtual bool FarClipping { get; set; } = DefaultRoamingSettings.FarClipping;
 		public virtual decimal CrosshairLength { get; set; } = DefaultRoamingSettings.CrosshairLength;
@@ -167,5 +172,10 @@ namespace SHME.ExternalTool.Extras
 
 		// Misc tab
 		public virtual bool EnableControllerReporting { get; set; } = DefaultRoamingSettings.EnableControllerReporting;
+
+		// Settings tab
+		public virtual bool OverlayDisplaySurfaceClient { get; set; } = DefaultRoamingSettings.OverlayDisplaySurfaceClient;
+		public virtual bool OverlayDisplaySurfaceEmuCore { get; set; } = DefaultRoamingSettings.OverlayDisplaySurfaceEmuCore;
+		public virtual bool OverlayDisplaySurfaceFramebuffer { get; set; } = DefaultRoamingSettings.OverlayDisplaySurfaceFramebuffer;
 	}
 }

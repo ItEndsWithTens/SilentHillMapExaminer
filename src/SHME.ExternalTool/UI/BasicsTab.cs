@@ -2,6 +2,7 @@
 using SHME.ExternalTool;
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Numerics;
 using System.Reflection;
@@ -275,6 +276,18 @@ namespace BizHawk.Client.EmuHawk
 			SetHarryAngles(pitch, yaw, roll);
 		}
 
+		private void CbxAntialiasing_CheckedChanged(object sender, EventArgs e)
+		{
+			if (CbxAntialiasing.Checked)
+			{
+				_smoothingMode = SmoothingMode.AntiAlias;
+			}
+			else
+			{
+				_smoothingMode = SmoothingMode.Default;
+			}
+		}
+
 		private void CbxEnableOverlay_CheckedChanged(object sender, EventArgs e)
 		{
 			if (!CbxEnableOverlay.Checked)
@@ -283,7 +296,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 			else
 			{
-				CbxOverlayRenderToFramebuffer_CheckedChanged(this, EventArgs.Empty);
+				InitializeOverlay();
 			}
 		}
 
@@ -338,20 +351,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private void CbxOverlayRenderToFramebuffer_CheckedChanged(object sender, EventArgs e)
-		{
-			ClearOverlay();
-			InitializeOverlay();
-
-			if (CbxRenderToFramebuffer.Checked)
-			{
-				long a = Rom.Addresses.MainRam.IndexOfDrawRegion;
-				a += Rom.Addresses.MainRam.BaseAddress;
-
-				MemEvents?.AddWriteCallback(IndexOfDrawRegion_ValueChanging, (uint)a, "System Bus");
-			}
-		}
-
 		private void CbxReadLevelDataOnStageLoad_CheckedChanged(object sender, EventArgs e)
 		{
 			BtnReadPois.Enabled = !CbxReadLevelDataOnStageLoad.Checked;
@@ -393,6 +392,7 @@ namespace BizHawk.Client.EmuHawk
 
 			_levelDataNeedsUpdate = true;
 			_suppressForcedCameraYaw = true;
+			_initializeOverlayCountdown = 10;
 		}
 
 		private void NudCrosshairLength_ValueChanged(object sender, EventArgs e)

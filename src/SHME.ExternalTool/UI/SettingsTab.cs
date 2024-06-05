@@ -103,5 +103,10 @@ namespace BizHawk.Client.EmuHawk
 
 			DialogController.StartSound();
 		}
+
+		private void RdoOverlayDisplaySurface_CheckedChanged(object sender, EventArgs e)
+		{
+			InitializeOverlay();
+		}
 	}
 }
