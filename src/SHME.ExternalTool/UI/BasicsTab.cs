@@ -395,14 +395,6 @@ namespace BizHawk.Client.EmuHawk
 			_initializeOverlayCountdown = 10;
 		}
 
-		private void NudCrosshairLength_ValueChanged(object sender, EventArgs e)
-		{
-			Bitmap reticle = GenerateReticle(Pen, RenderPort.Width, RenderPort.Height, (float)NudCrosshairLength.Value);
-
-			Reticle?.Dispose();
-			Reticle = reticle;
-		}
-
 		private void NudOverlayCameraPitch_ValueChanged(object sender, EventArgs e)
 		{
 			Camera.Pitch = (float)NudOverlayCameraPitch.Value;

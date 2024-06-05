@@ -2064,7 +2064,6 @@ namespace BizHawk.Client.EmuHawk
             this.NudCrosshairLength.Size = new System.Drawing.Size(55, 20);
             this.NudCrosshairLength.TabIndex = 130;
             this.toolTip1.SetToolTip(this.NudCrosshairLength, "Crosshair length as a percentage of viewport height");
-            this.NudCrosshairLength.ValueChanged += new System.EventHandler(this.NudCrosshairLength_ValueChanged);
             this.NudCrosshairLength.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudCrosshairLength.Enter += new System.EventHandler(this.Selectable_Enter);
             this.NudCrosshairLength.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);

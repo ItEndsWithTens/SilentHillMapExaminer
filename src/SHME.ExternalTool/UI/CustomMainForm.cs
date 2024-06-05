@@ -84,7 +84,6 @@ namespace BizHawk.Client.EmuHawk
 		public IList<Renderable> Lines { get; } = [];
 
 		public Pen Pen { get; set; } = new(Brushes.White);
-		public Bitmap Reticle { get; set; } = new(1, 1, PixelFormat.Format32bppArgb);
 		public Bitmap Overlay { get; set; } = new(1, 1, PixelFormat.Format32bppArgb);
 
 		public Rom Rom => Core.Rom;
@@ -226,18 +225,14 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		public static Bitmap GenerateReticle(Pen pen, int width, int height, float percent)
+		public static void DrawReticle(Graphics g, Pen pen, int width, int height, float percent)
 		{
 			pen.Color = Color.White;
 
-			var bmp = new Bitmap(width, height);
-
-			var g = Graphics.FromImage(bmp);
 			g.InterpolationMode = InterpolationMode.NearestNeighbor;
 			g.PixelOffsetMode = PixelOffsetMode.None;
 			g.SmoothingMode = SmoothingMode.Default;
 
-			g.Clear(Color.FromArgb(0, 0, 0, 0));
 			g.DrawRectangle(pen, 0, 0, width - 1, height - 1);
 
 			int size = (int)Math.Round(height * (percent / 100.0f));
@@ -251,8 +246,6 @@ namespace BizHawk.Client.EmuHawk
 			g.DrawLine(pen, centerW, 0, centerW, size);
 			g.DrawLine(pen, centerW, centerH - size / 2, centerW, centerH + size / 2);
 			g.DrawLine(pen, centerW, height - 1 - size, centerW, height - 1);
-
-			return bmp;
 		}
 
 		public override void UpdateValues(ToolFormUpdateType type)
@@ -494,7 +487,7 @@ namespace BizHawk.Client.EmuHawk
 
 			g.Clear(Color.FromArgb(0, 0, 0, 0));
 			DrawPolygons(matrix, g);
-			g.DrawImage(Reticle, 0, 0);
+			DrawReticle(g, Pen, RenderPort.Width, RenderPort.Height, (float)NudCrosshairLength.Value);
 
 			if (CbxOverlayCameraMatchGame.Checked)
 			{
@@ -732,7 +725,6 @@ namespace BizHawk.Client.EmuHawk
 		private void CleanUpDisposables()
 		{
 			Pen?.Dispose();
-			Reticle?.Dispose();
 			Overlay?.Dispose();
 
 			_mapGraphic?.Dispose();
@@ -901,11 +893,9 @@ namespace BizHawk.Client.EmuHawk
 			_dummyViewport = new Viewport(0, 0, RenderPort.Width, RenderPort.Height);
 
 			Pen?.Dispose();
-			Reticle?.Dispose();
 			Overlay?.Dispose();
 
 			Pen = new Pen(Brushes.White);
-			Reticle = GenerateReticle(Pen, RenderPort.Width, RenderPort.Height, (float)NudCrosshairLength.Value);
 			Overlay = new Bitmap(RenderPort.Width, RenderPort.Height, PixelFormat.Format32bppArgb);
 
 			_drawRegionRect = new Rectangle(0, 0, RenderPort.Width, RenderPort.Height);
