@@ -6671,6 +6671,7 @@ namespace BizHawk.Client.EmuHawk
             this.RdoOverlayDisplaySurfaceClient.TabIndex = 0;
             this.RdoOverlayDisplaySurfaceClient.TabStop = true;
             this.RdoOverlayDisplaySurfaceClient.Text = "Window client area";
+            this.toolTip1.SetToolTip(this.RdoOverlayDisplaySurfaceClient, "Highest resolution");
             this.RdoOverlayDisplaySurfaceClient.UseVisualStyleBackColor = true;
             this.RdoOverlayDisplaySurfaceClient.CheckedChanged += new System.EventHandler(this.RdoOverlayDisplaySurface_CheckedChanged);
             // 
@@ -6683,6 +6684,7 @@ namespace BizHawk.Client.EmuHawk
             this.RdoOverlayDisplaySurfaceEmuCore.Size = new System.Drawing.Size(90, 17);
             this.RdoOverlayDisplaySurfaceEmuCore.TabIndex = 1;
             this.RdoOverlayDisplaySurfaceEmuCore.Text = "Emulator core";
+            this.toolTip1.SetToolTip(this.RdoOverlayDisplaySurfaceEmuCore, "Highest performance");
             this.RdoOverlayDisplaySurfaceEmuCore.UseVisualStyleBackColor = true;
             this.RdoOverlayDisplaySurfaceEmuCore.CheckedChanged += new System.EventHandler(this.RdoOverlayDisplaySurface_CheckedChanged);
             // 

@@ -263,6 +263,14 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
+			// At boot, the button flags address first gets populated right in
+			// the middle of the "violent and disturbing images" title card,
+			// which is the perfect opportunity to set the viewport size. Other
+			// suitable occasions, like save state loading or after a change in
+			// window size, also only occur when the buttons are already active.
+			int buttonFlags = Mem.ReadS32(Rom.Addresses.MainRam.ButtonFlags);
+			bool buttonsActive = buttonFlags != 0x00000000;
+
 			// Initializing the overlay graphics includes the need to align the
 			// rendering with the game content. The FindViewport method does that
 			// as part of the InitializeOverlay method, but when loading a save
@@ -270,7 +278,7 @@ namespace BizHawk.Client.EmuHawk
 			// that was saved as part of the state, and that picture is a couple
 			// of pixels offset horizontally. A few calls to UpdateValues later,
 			// everything's fine, so just wait a bit before init.
-			if (_initializeOverlayCountdown > -1)
+			if (buttonsActive && _initializeOverlayCountdown > -1)
 			{
 				if (_initializeOverlayCountdown-- == 0)
 				{
@@ -837,8 +845,12 @@ namespace BizHawk.Client.EmuHawk
 
 			if (Octoshock == null)
 			{
+				if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
+				{
+					RdoOverlayDisplaySurfaceClient.Checked = true;
+				}
+
 				RdoOverlayDisplaySurfaceFramebuffer.Enabled = false;
-				RdoOverlayDisplaySurfaceFramebuffer.Checked = false;
 			}
 			else
 			{
