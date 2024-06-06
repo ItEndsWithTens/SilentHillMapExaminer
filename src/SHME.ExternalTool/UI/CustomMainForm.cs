@@ -555,7 +555,7 @@ namespace BizHawk.Client.EmuHawk
 
 					g.SmoothingMode = _smoothingMode;
 
-					switch (CmbRenderMode.SelectedIndex)
+					switch (_renderMode)
 					{
 						case 1:
 							var visibleVertices = new List<PointF>();

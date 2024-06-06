@@ -2108,6 +2108,7 @@ namespace BizHawk.Client.EmuHawk
             this.CmbRenderMode.Name = "CmbRenderMode";
             this.CmbRenderMode.Size = new System.Drawing.Size(116, 21);
             this.CmbRenderMode.TabIndex = 150;
+            this.CmbRenderMode.SelectedIndexChanged += new System.EventHandler(this.CmbRenderMode_SelectedIndexChanged);
             // 
             // TbpPois
             // 

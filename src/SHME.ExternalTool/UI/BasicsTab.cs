@@ -360,6 +360,12 @@ namespace BizHawk.Client.EmuHawk
 			_levelDataNeedsUpdate = true;
 		}
 
+		private int _renderMode;
+		private void CmbRenderMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			_renderMode = CmbRenderMode.SelectedIndex;
+		}
+
 		private void Emu_StateLoaded(object sender, StateLoadedEventArgs e)
 		{
 			Pois.Clear();
