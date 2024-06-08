@@ -87,7 +87,7 @@ namespace SHME.ExternalTool
 		/// Create a Viewport based on an input Bitmap, assuming said input has
 		/// image content surrounded by a solid color border.
 		/// </summary>	
-		public static Viewport CreateFrom(Bitmap bmp, Color backgroundColor)
+		public static Viewport FromBitmap(Bitmap bmp, Color backgroundColor)
 		{
 			Viewport viewport = new(0, 0, bmp.Width, bmp.Height);
 

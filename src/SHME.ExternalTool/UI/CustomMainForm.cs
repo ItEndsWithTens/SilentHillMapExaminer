@@ -264,8 +264,8 @@ namespace BizHawk.Client.EmuHawk
 			int buttonFlags = Mem.ReadS32(Rom.Addresses.MainRam.ButtonFlags);
 			bool buttonsActive = buttonFlags != 0x00000000;
 
-			// Initializing the overlay graphics includes the need to align the
-			// rendering with the game content. The FindViewport method does that
+			// Initializing the overlay graphics includes aligning the rendering
+			// with the game content. The Viewport.FromBitmap method does that
 			// as part of the InitializeOverlay method, but when loading a save
 			// state the first few frames will be the low res preview screenshot
 			// that was saved as part of the state, and that picture is a couple
@@ -484,6 +484,8 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			var g = Graphics.FromImage(Overlay);
+			g.CompositingMode = CompositingMode.SourceCopy;
+			g.CompositingQuality = CompositingQuality.HighSpeed;
 
 			g.Clear(Color.FromArgb(0, 0, 0, 0));
 			DrawPolygons(matrix, g);
@@ -516,6 +518,8 @@ namespace BizHawk.Client.EmuHawk
 		private SmoothingMode _smoothingMode = SmoothingMode.AntiAlias;
 		public void DrawPolygons(Matrix4x4 matrix, Graphics g)
 		{
+			g.SmoothingMode = _smoothingMode;
+
 			for (int i = 0; i < VisibleRenderables.Count; i++)
 			{
 				(Renderable r, bool partial) = VisibleRenderables[i];
@@ -553,30 +557,23 @@ namespace BizHawk.Client.EmuHawk
 						continue;
 					}
 
-					g.SmoothingMode = _smoothingMode;
-
 					switch (_renderMode)
 					{
 						case 1:
-							var visibleVertices = new List<PointF>();
+							var visibleVertices = new PointF[ScreenSpaceLines.Count * 2];
 
 							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
 								((Vertex a, Vertex b), _, _) = ScreenSpaceLines[k];
 
-								visibleVertices.Add(new PointF(a.Position.X, a.Position.Y));
-								visibleVertices.Add(new PointF(b.Position.X, b.Position.Y));
-							}
-
-							if (visibleVertices.Count == 0)
-							{
-								break;
+								visibleVertices[k * 2 + 0] = new PointF(a.Position.X, a.Position.Y);
+								visibleVertices[k * 2 + 1] = new PointF(b.Position.X, b.Position.Y);
 							}
 
 							float opacity = (float)NudFilledOpacity.Value / 100.0f;
 							int alpha = (int)Math.Round(opacity * 255);
 							Pen.Color = Color.FromArgb(alpha, r.Tint ?? ScreenSpaceLines[0].color);
-							g.FillPolygon(Pen.Brush, visibleVertices.ToArray());
+							g.FillPolygon(Pen.Brush, visibleVertices);
 							break;
 						case 2:
 							for (int k = 0; k < ScreenSpaceLines.Count; k++)
@@ -887,7 +884,7 @@ namespace BizHawk.Client.EmuHawk
 				IVideoProvider vp = Octoshock != null ? Octoshock.AsVideoProvider() : Nymashock.AsVideoProvider();
 				using Bitmap screenshot = DisplayManager.RenderOffscreen(vp, false).ToSysdrawingBitmap();
 
-				RenderPort = Viewport.CreateFrom(screenshot, Color.Black);
+				RenderPort = Viewport.FromBitmap(screenshot, Color.Black);
 			}
 
 			_dummyViewport = new Viewport(0, 0, RenderPort.Width, RenderPort.Height);
