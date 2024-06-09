@@ -1,5 +1,4 @@
-﻿using BizHawk.Common.CollectionExtensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
@@ -46,7 +45,10 @@ namespace SHME.ExternalTool
 					}
 
 					polygon.Vertices.Clear();
-					polygon.Vertices.AddRange(worldVerts);
+					foreach (Vertex vertex in worldVerts)
+					{
+						polygon.Vertices.Add(vertex);
+					}
 				}
 
 				world.CoordinateSpace = CoordinateSpace.World;
