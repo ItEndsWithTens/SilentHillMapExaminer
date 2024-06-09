@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SHME.ExternalTool\SHME.ExternalTool.csproj" />
+    <ProjectReference Include="..\..\src\SHME.ExternalTool.Graphics\SHME.ExternalTool.Graphics.csproj" />
   </ItemGroup>
 
 </Project>

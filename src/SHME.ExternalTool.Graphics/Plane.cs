@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SHME.ExternalTool
+namespace SHME.ExternalTool.Graphics
 {
 	public class Plane
 	{

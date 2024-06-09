@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace SHME.ExternalTool
+namespace SHME.ExternalTool.Graphics
 {
 	/// <summary>
 	/// An axis-aligned bounding box surrounding a given set of points.

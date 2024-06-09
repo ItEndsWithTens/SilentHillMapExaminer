@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Numerics;
 
-namespace SHME.ExternalTool
+namespace SHME.ExternalTool.Graphics
 {
 	public class GemGenerator : RenderableGenerator
 	{

@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
-namespace SHME.ExternalTool
+namespace SHME.ExternalTool.Graphics
 {
 	public static class Vector3Extensions
 	{

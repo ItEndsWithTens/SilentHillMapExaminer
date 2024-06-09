@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace SHME.ExternalTool
+namespace SHME.ExternalTool.Graphics
 {
 	public static class MathExtensions
 	{

@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using SHME.ExternalTool;
+using SHME.ExternalTool.Graphics;
 using System.Drawing;
 using System.Numerics;
 
@@ -7,11 +7,11 @@ namespace SHME.Benchmarks.Graphics
 {
 	public class AabbBenchmarks
 	{
-		readonly Aabb aabb0 = new Aabb(
+		readonly Aabb aabb0 = new(
 			new Vector3(0.0f, 0.0f, 0.0f),
 			new Vector3(1.0f, 1.0f, 1.0f));
 
-		readonly Aabb aabb1 = new Aabb(
+		readonly Aabb aabb1 = new(
 			new Vector3(2.0f, 3.0f, 4.0f),
 			new Vector3(27.0f, 43.0f, 5.0f));
 
@@ -28,9 +28,9 @@ namespace SHME.Benchmarks.Graphics
 
 	public class CameraBenchmarks
 	{
-		readonly Camera camera = new Camera() { Culling = Culling.Frustum };
+		readonly Camera camera = new() { Culling = Culling.Frustum };
 
-		readonly BoxGenerator boxGenerator = new BoxGenerator(1.0f, Color.White);
+		readonly BoxGenerator boxGenerator = new(1.0f, Color.White);
 		readonly Renderable box;
 
 		readonly SheetGenerator sheetGenerator = new(4096.0f, Color.White);
@@ -52,7 +52,7 @@ namespace SHME.Benchmarks.Graphics
 			return !camera.CanSee(box);
 		}
 
-		Line line = new Line(
+		Line line = new(
 			new Vertex(new Vector3(-4096.0f, 0.0f, 0.0f)),
 			new Vertex(new Vector3(4096.0f, 0.0f, 0.0f)));
 

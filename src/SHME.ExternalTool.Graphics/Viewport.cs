@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-namespace SHME.ExternalTool
+namespace SHME.ExternalTool.Graphics
 {
 	/// <summary>
 	/// A substitute for System.Drawing.Rectangle that sets Right and Bottom correctly.

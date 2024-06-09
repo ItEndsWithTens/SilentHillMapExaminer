@@ -1,4 +1,4 @@
-﻿namespace SHME.ExternalTool
+﻿namespace SHME.ExternalTool.Graphics
 {
 	public enum Winding
 	{

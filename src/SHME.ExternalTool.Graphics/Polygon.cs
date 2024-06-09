@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 
-namespace SHME.ExternalTool
+namespace SHME.ExternalTool.Graphics
 {
 	public class Polygon
 	{

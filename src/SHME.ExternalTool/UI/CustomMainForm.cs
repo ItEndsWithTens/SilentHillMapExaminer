@@ -4,6 +4,7 @@ using BizHawk.Emulation.Common;
 using BizHawk.Emulation.Cores.Sony.PSX;
 using SHME.ExternalTool;
 using SHME.ExternalTool.Extras;
+using SHME.ExternalTool.Graphics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +28,8 @@ namespace BizHawk.Client.EmuHawk
 			"SHME.ExternalTool/dll/JsonSettings/JsonSettings.dll",
 			"SHME.ExternalTool/dll/JsonSettings/Castle.Core.dll",
 			"SHME.ExternalTool/dll/JsonSettings/JsonSettings.Autosave.dll",
-			"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll"])]
+			"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll",
+			"SHME.ExternalTool/dll/SHME.ExternalTool.Graphics.dll"])]
 
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
 	[ExternalToolApplicability.RomList(VSystemID.Raw.PSX, Slus00707Constants.HashBizHawk)]

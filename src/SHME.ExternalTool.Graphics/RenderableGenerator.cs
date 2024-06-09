@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace SHME.ExternalTool
+namespace SHME.ExternalTool.Graphics
 {
 	public class RenderableGenerator
 	{

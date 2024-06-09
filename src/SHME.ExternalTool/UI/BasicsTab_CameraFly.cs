@@ -1,6 +1,7 @@
 ﻿using BizHawk.Client.Common;
 using SHME.ExternalTool;
 using SHME.ExternalTool.Extras;
+using SHME.ExternalTool.Graphics;
 using SHME.ExternalTool.UI;
 using System;
 using System.Drawing;

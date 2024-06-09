@@ -15,16 +15,6 @@ namespace SHME.ExternalTool
 			return (value & flag) != 0;
 		}
 
-		public static bool FasterHasFlag(this Culling value, Culling flag)
-		{
-			return (value & flag) != 0;
-		}
-
-		public static bool FasterHasFlag(this Transformability value, Transformability flag)
-		{
-			return (value & flag) != 0;
-		}
-
 		public static PsxButtons FilterToAny(this PsxButtons value)
 		{
 			PsxButtons filtered = value;

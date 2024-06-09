@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SHME.ExternalTool.Graphics;
+using System;
 
 namespace SHME.ExternalTool
 {
