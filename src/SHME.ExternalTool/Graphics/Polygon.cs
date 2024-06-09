@@ -92,7 +92,32 @@ namespace SHME.ExternalTool
 
 		public Polygon ClipAgainstPlane(Plane plane)
 		{
-			var points = new List<Vertex>(16);
+			Vector3 vertex = Vertices[0];
+			float prevDot = Vector3.Dot(vertex - plane.A, plane.Normal);
+
+			bool needsClip = false;
+			for (int i = 1; i < Vertices.Count; i++)
+			{
+				vertex = Vertices[i];
+
+				float dot = Vector3.Dot(vertex - plane.A, plane.Normal);
+
+				// Does this polygon straddle the provided plane?
+				if ((prevDot < 0 && dot >= 0) || (prevDot >= 0 && dot < 0))
+				{
+					needsClip = true;
+					break;
+				}
+
+				prevDot = dot;
+			}
+
+			if (!needsClip)
+			{
+				return this;
+			}
+
+			var points = new List<Vertex>(Vertices.Count * 2);
 
 			for (int i = 0; i < Vertices.Count; i++)
 			{
