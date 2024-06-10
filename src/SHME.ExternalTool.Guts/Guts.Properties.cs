@@ -1,5 +1,4 @@
-﻿using BizHawk.Client.EmuHawk;
-using SHME.ExternalTool.Graphics;
+﻿using SHME.ExternalTool.Graphics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;

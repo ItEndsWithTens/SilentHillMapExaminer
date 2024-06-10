@@ -3,7 +3,6 @@ using BizHawk.Common;
 using BizHawk.Emulation.Common;
 using BizHawk.Emulation.Cores.Sony.PSX;
 using SHME.ExternalTool;
-using SHME.ExternalTool.Extras;
 using SHME.ExternalTool.Graphics;
 using System;
 using System.Collections.Generic;

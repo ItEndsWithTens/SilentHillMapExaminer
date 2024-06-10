@@ -1,5 +1,4 @@
-﻿using BizHawk.Client.EmuHawk;
-using System;
+﻿using System;
 
 namespace SHME.ExternalTool
 {

@@ -3,7 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Windows.Forms;
 
-namespace SHME.ExternalTool.Extras
+namespace SHME.ExternalTool
 {
 	[Flags]
 	public enum ShmeCommand

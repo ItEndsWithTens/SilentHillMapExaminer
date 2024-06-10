@@ -2,7 +2,7 @@
 using Nucs.JsonSettings.Modulation;
 using System;
 
-namespace SHME.ExternalTool.Extras
+namespace SHME.ExternalTool
 {
 	public static class DefaultRoamingSettings
 	{

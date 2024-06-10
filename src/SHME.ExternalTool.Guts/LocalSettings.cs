@@ -4,7 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
 
-namespace SHME.ExternalTool.Extras
+namespace SHME.ExternalTool
 {
 	public static class DefaultLocalSettings
 	{

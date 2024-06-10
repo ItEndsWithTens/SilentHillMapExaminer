@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace SHME.ExternalTool.Extras
+namespace SHME.ExternalTool
 {
 	public class Settings : IDisposable
 	{

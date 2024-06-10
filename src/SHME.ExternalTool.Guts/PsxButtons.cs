@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BizHawk.Client.EmuHawk;
+namespace SHME.ExternalTool;
 
 #pragma warning disable IDE0055
 // IDE0055 covers all code style formatting rules, including the removal of
