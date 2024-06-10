@@ -1655,8 +1655,6 @@ namespace BizHawk.Client.EmuHawk
             this.CbxAntialiasing.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.CbxAntialiasing.AutoSize = true;
             this.CbxAntialiasing.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CbxAntialiasing.Checked = true;
-            this.CbxAntialiasing.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tableLayoutPanel26.SetColumnSpan(this.CbxAntialiasing, 2);
             this.CbxAntialiasing.Location = new System.Drawing.Point(247, 104);
             this.CbxAntialiasing.Name = "CbxAntialiasing";

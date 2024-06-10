@@ -517,7 +517,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private SmoothingMode _smoothingMode = SmoothingMode.AntiAlias;
+		private SmoothingMode _smoothingMode = SmoothingMode.Default;
 		public void DrawPolygons(Matrix4x4 matrix, Graphics g)
 		{
 			g.SmoothingMode = _smoothingMode;
