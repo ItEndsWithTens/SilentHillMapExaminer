@@ -27,7 +27,7 @@
     <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\SHME.ExternalTool.Extras\SHME.ExternalTool.Extras.csproj" />
+    <ProjectReference Include="..\SHME.ExternalTool.Guts\SHME.ExternalTool.Guts.csproj" />
     <ProjectReference Include="..\SHME.ExternalTool.Graphics\SHME.ExternalTool.Graphics.csproj" />
   </ItemGroup>
 
@@ -59,16 +59,16 @@
   <Target Name="CreatePrepDir" AfterTargets="PostBuildEvent">
     <RemoveDir Directories="$(PrepDir)" />
     <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).dll" DestinationFolder="$(PrepDir)" />
-    <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).Extras.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll" />
     <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).Graphics.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll" />
+    <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).Guts.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll" />
     <Copy SourceFiles="$(OutputPath)/JsonSettings.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll/JsonSettings" />
     <Copy SourceFiles="$(OutputPath)/JsonSettings.Autosave.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll/JsonSettings" />
     <Copy SourceFiles="$(OutputPath)/Castle.Core.dll" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll/JsonSettings" />
     <Copy SourceFiles="$(TopLevelDirectory)/README.md" DestinationFiles="$(PrepDir)/$(MSBuildProjectName).txt" />
 
     <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).pdb" DestinationFolder="$(PrepDir)" Condition="Exists('$(OutputPath)/$(MSBuildProjectName).pdb')" />
-    <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).Extras.pdb" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll" Condition="Exists('$(OutputPath)/$(MSBuildProjectName).Extras.pdb')" />
     <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).Graphics.pdb" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll" Condition="Exists('$(OutputPath)/$(MSBuildProjectName).Graphics.pdb')" />
+    <Copy SourceFiles="$(OutputPath)/$(MSBuildProjectName).Guts.pdb" DestinationFolder="$(PrepDir)/$(MSBuildProjectName)/dll" Condition="Exists('$(OutputPath)/$(MSBuildProjectName).Guts.pdb')" />
   </Target>
 
   <Target Name="InstallInEmulator" AfterTargets="CreatePrepDir">

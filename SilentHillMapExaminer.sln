@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E071A977-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomBuildTasks", "src\CustomBuildTasks\CustomBuildTasks.csproj", "{9AAC0A8C-DB0B-452A-ABDF-B3489257B640}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHME.ExternalTool.Extras", "src\SHME.ExternalTool.Extras\SHME.ExternalTool.Extras.csproj", "{B47A5E6D-A904-4386-8215-F46D98B09D80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHME.ExternalTool.Guts", "src\SHME.ExternalTool.Guts\SHME.ExternalTool.Guts.csproj", "{B47A5E6D-A904-4386-8215-F46D98B09D80}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHME.ExternalTool.Graphics", "src\SHME.ExternalTool.Graphics\SHME.ExternalTool.Graphics.csproj", "{6D340075-B41C-4A5C-BCCB-F4ABC51EC2E4}"
 EndProject

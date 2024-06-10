@@ -29,7 +29,7 @@ namespace BizHawk.Client.EmuHawk
 			"SHME.ExternalTool/dll/JsonSettings/Castle.Core.dll",
 			"SHME.ExternalTool/dll/JsonSettings/JsonSettings.Autosave.dll",
 			"SHME.ExternalTool/dll/SHME.ExternalTool.Graphics.dll",
-			"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll"])]
+			"SHME.ExternalTool/dll/SHME.ExternalTool.Guts.dll"])]
 
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
 	[ExternalToolApplicability.RomList(VSystemID.Raw.PSX, Slus00707Constants.HashBizHawk)]
