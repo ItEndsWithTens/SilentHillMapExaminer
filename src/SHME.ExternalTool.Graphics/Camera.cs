@@ -59,12 +59,16 @@ namespace SHME.ExternalTool.Graphics
 		{
 			bool touches = true;
 
-			foreach (Plane plane in Planes)
+			for (int i = 0; i < Planes.Count; i++)
 			{
+				Plane plane = Planes[i];
+
 				bool allPointsBehind = true;
 
-				foreach (Vector3 p in aabb.Points)
+				for (int j = 0; j < aabb.Points.Count; j++)
 				{
+					Vector3 p = aabb.Points[j];
+
 					if (Vector3.Dot(p - plane.A, plane.Normal) > 0.0f)
 					{
 						allPointsBehind = false;
