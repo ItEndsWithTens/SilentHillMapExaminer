@@ -92,24 +92,18 @@ namespace SHME.ExternalTool
 
 		public Polygon ClipAgainstPlane(Plane plane)
 		{
-			Vector3 vertex = Vertices[0];
-			float prevDot = Vector3.Dot(vertex - plane.A, plane.Normal);
-
 			bool needsClip = false;
-			for (int i = 1; i < Vertices.Count; i++)
+			for (int i = 0; i < Vertices.Count; i++)
 			{
-				vertex = Vertices[i];
+				Vertex vertex = Vertices[i];
 
-				float dot = Vector3.Dot(vertex - plane.A, plane.Normal);
-
-				// Does this polygon straddle the provided plane?
-				if ((prevDot < 0 && dot >= 0) || (prevDot >= 0 && dot < 0))
+				// If any or all of this polygon's vertices are behind the given
+				// plane, it needs to be clipped. Otherwise it's fine as is.
+				if (Vector3.Dot(vertex - plane.A, plane.Normal) < 0.0f)
 				{
 					needsClip = true;
 					break;
 				}
-
-				prevDot = dot;
 			}
 
 			if (!needsClip)
