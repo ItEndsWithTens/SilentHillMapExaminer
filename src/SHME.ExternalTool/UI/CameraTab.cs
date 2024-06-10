@@ -218,7 +218,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				if (r != null)
 				{
-					r.Tint = Color.Yellow;
+					r.Tint = Color.Yellow.ToArgb();
 				}
 			}
 

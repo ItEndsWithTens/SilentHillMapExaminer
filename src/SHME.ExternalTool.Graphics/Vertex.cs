@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
@@ -109,46 +107,39 @@ namespace SHME.ExternalTool.Graphics
 		}
 	}
 
-	public struct Vertex : IEquatable<Vertex>
+	public struct Vertex(Vector3 position, Vector3 normal, int argb, Vector2 texCoords) : IEquatable<Vertex>
 	{
 		public static int MemorySize { get; } = Marshal.SizeOf(typeof(Vertex));
 
-		public Vector3 Position { get; set; }
+		public Vector3 Position { get; set; } = position;
 
-		public Vector3 Normal { get; set; }
+		public Vector3 Normal { get; set; } = normal;
 
-		public Color Color { get; set; }
+		public int Argb { get; set; } = argb;
 
-		public Vector2 TexCoords { get; set; }
+		public Vector2 TexCoords { get; set; } = texCoords;
 
-		public Vertex(Vertex vertex) : this(vertex.Position, vertex.Normal, vertex.Color)
+		public Vertex(Vertex vertex) : this(vertex.Position, vertex.Normal, vertex.Argb)
 		{
 		}
 		public Vertex(Vector3 position) : this(position.X, position.Y, position.Z)
 		{
 		}
 		public Vertex(float x, float y, float z) :
-			this(new Vector3(x, y, z), new Vector3(0.0f, 1.0f, 0.0f), Color.White)
+			this(new Vector3(x, y, z), new Vector3(0.0f, 1.0f, 0.0f), unchecked((int)0xffffffff))
 		{
 		}
-		public Vertex(float x, float y, float z, Color color) :
-			this(new Vector3(x, y, z), new Vector3(0.0f, 1.0f, 0.0f), color)
+		public Vertex(float x, float y, float z, int argb) :
+			this(new Vector3(x, y, z), new Vector3(0.0f, 1.0f, 0.0f), argb)
 		{
 		}
-		public Vertex(Vector3 position, Color color) :
-			this(position, new Vector3(0.0f, 1.0f, 0.0f), color)
+		public Vertex(Vector3 position, int argb) :
+			this(position, new Vector3(0.0f, 1.0f, 0.0f), argb)
 		{
 		}
-		public Vertex(Vector3 position, Vector3 normal, Color color) :
-			this(position, normal, color, new Vector2())
+		public Vertex(Vector3 position, Vector3 normal, int argb) :
+			this(position, normal, argb, new Vector2())
 		{
-		}
-		public Vertex(Vector3 position, Vector3 normal, Color color, Vector2 texCoords)
-		{
-			Position = position;
-			Normal = normal;
-			Color = color;
-			TexCoords = texCoords;
 		}
 
 		public static Vector3 Add(Vertex lhs, Vertex rhs)
@@ -187,35 +178,35 @@ namespace SHME.ExternalTool.Graphics
 			return !(left == right);
 		}
 
-		public override string ToString()
+		public override readonly string ToString()
 		{
 			return Position.ToString();
 		}
 
-		public override bool Equals(object? obj)
+		public override readonly bool Equals(object? obj)
 		{
 			return obj is Vertex vertex && Equals(vertex);
 		}
-		public bool Equals(Vertex other)
+		public readonly bool Equals(Vertex other)
 		{
 			return
 				Position.Equals(other.Position) &&
 				Normal.Equals(other.Normal) &&
-				EqualityComparer<Color>.Default.Equals(Color, other.Color) &&
+				Argb.Equals(other.Argb) &&
 				TexCoords.Equals(other.TexCoords);
 		}
 
-		public override int GetHashCode()
+		public override readonly int GetHashCode()
 		{
 			int hashCode = 252586052;
 			hashCode = hashCode * -1521134295 + Position.GetHashCode();
 			hashCode = hashCode * -1521134295 + Normal.GetHashCode();
-			hashCode = hashCode * -1521134295 + Color.GetHashCode();
+			hashCode = hashCode * -1521134295 + Argb.GetHashCode();
 			hashCode = hashCode * -1521134295 + TexCoords.GetHashCode();
 			return hashCode;
 		}
 
-		public Vertex ConvertCoordinateSpace(Matrix4x4 matrix)
+		public readonly Vertex ConvertCoordinateSpace(Matrix4x4 matrix)
 		{
 			Vector3.Transform(Position, matrix);
 

@@ -62,47 +62,47 @@ namespace SHME.ExternalTool.Graphics
 				// Comments assume Y-up, right-handed coordinates.
 
 				// Negative Y (bottom)
-				new Vertex(Min.X, Min.Y, Min.Z, Color),
-				new Vertex(Max.X, Min.Y, Min.Z, Color),
-				new Vertex(Max.X, Min.Y, Max.Z, Color),
-				new Vertex(Min.X, Min.Y, Max.Z, Color),
+				new Vertex(Min.X, Min.Y, Min.Z, Color.ToArgb()),
+				new Vertex(Max.X, Min.Y, Min.Z, Color.ToArgb()),
+				new Vertex(Max.X, Min.Y, Max.Z, Color.ToArgb()),
+				new Vertex(Min.X, Min.Y, Max.Z, Color.ToArgb()),
 
 				// Positive Y (top)
-				new Vertex(Max.X, Max.Y, Min.Z, Color),
-				new Vertex(Min.X, Max.Y, Min.Z, Color),
-				new Vertex(Min.X, Max.Y, Max.Z, Color),
-				new Vertex(Max.X, Max.Y, Max.Z, Color),
+				new Vertex(Max.X, Max.Y, Min.Z, Color.ToArgb()),
+				new Vertex(Min.X, Max.Y, Min.Z, Color.ToArgb()),
+				new Vertex(Min.X, Max.Y, Max.Z, Color.ToArgb()),
+				new Vertex(Max.X, Max.Y, Max.Z, Color.ToArgb()),
 
 				// Negative X (left)
-				new Vertex(Min.X, Min.Y, Min.Z, Color),
-				new Vertex(Min.X, Min.Y, Max.Z, Color),
-				new Vertex(Min.X, Max.Y, Max.Z, Color),
-				new Vertex(Min.X, Max.Y, Min.Z, Color),
+				new Vertex(Min.X, Min.Y, Min.Z, Color.ToArgb()),
+				new Vertex(Min.X, Min.Y, Max.Z, Color.ToArgb()),
+				new Vertex(Min.X, Max.Y, Max.Z, Color.ToArgb()),
+				new Vertex(Min.X, Max.Y, Min.Z, Color.ToArgb()),
 
 				// Positive X (right)
-				new Vertex(Max.X, Max.Y, Min.Z, Color),
-				new Vertex(Max.X, Max.Y, Max.Z, Color),
-				new Vertex(Max.X, Min.Y, Max.Z, Color),
-				new Vertex(Max.X, Min.Y, Min.Z, Color),
+				new Vertex(Max.X, Max.Y, Min.Z, Color.ToArgb()),
+				new Vertex(Max.X, Max.Y, Max.Z, Color.ToArgb()),
+				new Vertex(Max.X, Min.Y, Max.Z, Color.ToArgb()),
+				new Vertex(Max.X, Min.Y, Min.Z, Color.ToArgb()),
 
 				// Positive Z (back)
-				new Vertex(Min.X, Min.Y, Max.Z, Color),
-				new Vertex(Max.X, Min.Y, Max.Z, Color),
-				new Vertex(Max.X, Max.Y, Max.Z, Color),
-				new Vertex(Min.X, Max.Y, Max.Z, Color),
+				new Vertex(Min.X, Min.Y, Max.Z, Color.ToArgb()),
+				new Vertex(Max.X, Min.Y, Max.Z, Color.ToArgb()),
+				new Vertex(Max.X, Max.Y, Max.Z, Color.ToArgb()),
+				new Vertex(Min.X, Max.Y, Max.Z, Color.ToArgb()),
 
 				// Negative Z (front)
-				new Vertex(Max.X, Min.Y, Min.Z, Color),
-				new Vertex(Min.X, Min.Y, Min.Z, Color),
-				new Vertex(Min.X, Max.Y, Min.Z, Color),
-				new Vertex(Max.X, Max.Y, Min.Z, Color)
+				new Vertex(Max.X, Min.Y, Min.Z, Color.ToArgb()),
+				new Vertex(Min.X, Min.Y, Min.Z, Color.ToArgb()),
+				new Vertex(Min.X, Max.Y, Min.Z, Color.ToArgb()),
+				new Vertex(Max.X, Max.Y, Min.Z, Color.ToArgb())
 			};
 
 			var box = new Renderable() { CoordinateSpace = CoordinateSpace.Model };
 
 			for (int i = 0; i < 24; i += 4)
 			{
-				var p = new Polygon() { Color = Color };
+				var p = new Polygon() { Argb = Color.ToArgb() };
 
 				Vertex a = modelVerts[i + 0];
 				Vertex b = modelVerts[i + 1];
@@ -147,40 +147,40 @@ namespace SHME.ExternalTool.Graphics
 				// Comments assume Y-up, right-handed coordinates.
 
 				// Negative Y (bottom)
-				new Vertex(Min.X, Min.Y, Min.Z, colorMinMinMin),
-				new Vertex(Max.X, Min.Y, Min.Z, colorMaxMinMin),
-				new Vertex(Max.X, Min.Y, Max.Z, colorMaxMinMax),
-				new Vertex(Min.X, Min.Y, Max.Z, colorMinMinMax),
+				new Vertex(Min.X, Min.Y, Min.Z, colorMinMinMin.ToArgb()),
+				new Vertex(Max.X, Min.Y, Min.Z, colorMaxMinMin.ToArgb()),
+				new Vertex(Max.X, Min.Y, Max.Z, colorMaxMinMax.ToArgb()),
+				new Vertex(Min.X, Min.Y, Max.Z, colorMinMinMax.ToArgb()),
 
 				// Positive Y (top)
-				new Vertex(Max.X, Max.Y, Min.Z, colorMaxMaxMin),
-				new Vertex(Min.X, Max.Y, Min.Z, colorMinMaxMin),
-				new Vertex(Min.X, Max.Y, Max.Z, colorMinMaxMax),
-				new Vertex(Max.X, Max.Y, Max.Z, colorMaxMaxMax),
+				new Vertex(Max.X, Max.Y, Min.Z, colorMaxMaxMin.ToArgb()),
+				new Vertex(Min.X, Max.Y, Min.Z, colorMinMaxMin.ToArgb()),
+				new Vertex(Min.X, Max.Y, Max.Z, colorMinMaxMax.ToArgb()),
+				new Vertex(Max.X, Max.Y, Max.Z, colorMaxMaxMax.ToArgb()),
 
 				// Negative X (left)
-				new Vertex(Min.X, Min.Y, Min.Z, colorMinMinMin),
-				new Vertex(Min.X, Min.Y, Max.Z, colorMinMinMax),
-				new Vertex(Min.X, Max.Y, Max.Z, colorMinMaxMax),
-				new Vertex(Min.X, Max.Y, Min.Z, colorMinMaxMin),
+				new Vertex(Min.X, Min.Y, Min.Z, colorMinMinMin.ToArgb()),
+				new Vertex(Min.X, Min.Y, Max.Z, colorMinMinMax.ToArgb()),
+				new Vertex(Min.X, Max.Y, Max.Z, colorMinMaxMax.ToArgb()),
+				new Vertex(Min.X, Max.Y, Min.Z, colorMinMaxMin.ToArgb()),
 
 				// Positive X (right)
-				new Vertex(Max.X, Max.Y, Min.Z, colorMaxMaxMin),
-				new Vertex(Max.X, Max.Y, Max.Z, colorMaxMaxMax),
-				new Vertex(Max.X, Min.Y, Max.Z, colorMaxMinMax),
-				new Vertex(Max.X, Min.Y, Min.Z, colorMaxMinMin),
+				new Vertex(Max.X, Max.Y, Min.Z, colorMaxMaxMin.ToArgb()),
+				new Vertex(Max.X, Max.Y, Max.Z, colorMaxMaxMax.ToArgb()),
+				new Vertex(Max.X, Min.Y, Max.Z, colorMaxMinMax.ToArgb()),
+				new Vertex(Max.X, Min.Y, Min.Z, colorMaxMinMin.ToArgb()),
 
 				// Positive Z (back)
-				new Vertex(Min.X, Min.Y, Max.Z, colorMinMinMax),
-				new Vertex(Max.X, Min.Y, Max.Z, colorMaxMinMax),
-				new Vertex(Max.X, Max.Y, Max.Z, colorMaxMaxMax),
-				new Vertex(Min.X, Max.Y, Max.Z, colorMinMaxMax),
+				new Vertex(Min.X, Min.Y, Max.Z, colorMinMinMax.ToArgb()),
+				new Vertex(Max.X, Min.Y, Max.Z, colorMaxMinMax.ToArgb()),
+				new Vertex(Max.X, Max.Y, Max.Z, colorMaxMaxMax.ToArgb()),
+				new Vertex(Min.X, Max.Y, Max.Z, colorMinMaxMax.ToArgb()),
 
 				// Negative Z (front)
-				new Vertex(Max.X, Min.Y, Min.Z, colorMaxMinMin),
-				new Vertex(Min.X, Min.Y, Min.Z, colorMinMinMin),
-				new Vertex(Min.X, Max.Y, Min.Z, colorMinMaxMin),
-				new Vertex(Max.X, Max.Y, Min.Z, colorMaxMaxMin)
+				new Vertex(Max.X, Min.Y, Min.Z, colorMaxMinMin.ToArgb()),
+				new Vertex(Min.X, Min.Y, Min.Z, colorMinMinMin.ToArgb()),
+				new Vertex(Min.X, Max.Y, Min.Z, colorMinMaxMin.ToArgb()),
+				new Vertex(Max.X, Max.Y, Min.Z, colorMaxMaxMin.ToArgb())
 			};
 
 			var box = new Renderable()

@@ -318,7 +318,7 @@ namespace BizHawk.Client.EmuHawk
 
 			if (r != null)
 			{
-				r.Tint = Color.Yellow;
+				r.Tint = Color.Yellow.ToArgb();
 			}
 
 			CultureInfo c = CultureInfo.CurrentCulture;
@@ -596,7 +596,7 @@ namespace BizHawk.Client.EmuHawk
 
 				foreach (Polygon p in r.Polygons)
 				{
-					p.Color = Color.White;
+					p.Argb = Color.White.ToArgb();
 				}
 
 				float tolerance = 0.001f;
@@ -609,7 +609,7 @@ namespace BizHawk.Client.EmuHawk
 
 					foreach (Polygon p in easts)
 					{
-						p.Color = Color.Red;
+						p.Argb = Color.Red.ToArgb();
 					}
 				}
 
@@ -621,7 +621,7 @@ namespace BizHawk.Client.EmuHawk
 
 					foreach (Polygon p in downs)
 					{
-						p.Color = Color.Lime;
+						p.Argb = Color.Lime.ToArgb();
 					}
 
 					IEnumerable<Polygon>? norths = r.Polygons
@@ -629,7 +629,7 @@ namespace BizHawk.Client.EmuHawk
 
 					foreach (Polygon p in norths)
 					{
-						p.Color = Color.Blue;
+						p.Argb = Color.Blue.ToArgb();
 					}
 				}
 				// Positive Y up, positive Z south
@@ -640,7 +640,7 @@ namespace BizHawk.Client.EmuHawk
 
 					foreach (Polygon p in ups)
 					{
-						p.Color = Color.Lime;
+						p.Argb = Color.Lime.ToArgb();
 					}
 
 					IEnumerable<Polygon>? souths = r.Polygons
@@ -648,7 +648,7 @@ namespace BizHawk.Client.EmuHawk
 
 					foreach (Polygon p in souths)
 					{
-						p.Color = Color.Blue;
+						p.Argb = Color.Blue.ToArgb();
 					}
 				}
 			}

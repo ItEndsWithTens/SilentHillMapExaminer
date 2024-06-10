@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Numerics;
 
 namespace SHME.ExternalTool.Graphics
@@ -136,7 +135,7 @@ namespace SHME.ExternalTool.Graphics
 		/// <summary>
 		/// If defined, this color will replace this Renderable's deselected color.
 		/// </summary>
-		public Color? Tint { get; set; }
+		public int? Tint { get; set; }
 
 		public event EventHandler? Updated;
 
@@ -248,11 +247,11 @@ namespace SHME.ExternalTool.Graphics
 		/// Give this renderable's vertices an arbitrary color, ignoring the
 		/// values in its Colors dictionary.
 		/// </summary>
-		public void SetColor(Color color)
+		public void SetColor(int argb)
 		{
 			foreach (Polygon p in Polygons)
 			{
-				p.Color = color;
+				p.Argb = argb;
 			}
 
 			OnUpdated();

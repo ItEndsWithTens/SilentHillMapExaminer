@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Numerics;
 
 namespace SHME.ExternalTool.Graphics
@@ -25,18 +24,18 @@ namespace SHME.ExternalTool.Graphics
 
 		public Vector3 Normal;
 
-		private Color _color = Color.White;
-		public Color Color
+		private int _argb = unchecked((int)0xFFFFFFFF);
+		public int Argb
 		{
-			get => _color;
+			get => _argb;
 			set
 			{
-				_color = value;
+				_argb = value;
 
 				for (int i = 0; i < Vertices.Count; i++)
 				{
 					Vertex v = Vertices[i];
-					v.Color = _color;
+					v.Argb = _argb;
 
 					Vertices[i] = v;
 				}
@@ -64,7 +63,7 @@ namespace SHME.ExternalTool.Graphics
 
 			// Avoid replacing any existing vertex colors, as otherwise happens
 			// in the Color set method.
-			_color = p.Color;
+			_argb = p.Argb;
 
 			Edges.Clear();
 			for (int i = 0; i < p.Edges.Count; i++)

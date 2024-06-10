@@ -426,7 +426,7 @@ namespace BizHawk.Client.EmuHawk
 			TbxSettingsFilesRoaming.Text = Settings.Roaming.FileName;
 		}
 
-		private List<((Vertex a, Vertex b), Color color, bool visible)> ScreenSpaceLines { get; } = [];
+		private List<((Vertex a, Vertex b), int argb, bool visible)> ScreenSpaceLines { get; } = [];
 		private IList<(Renderable, bool)> VisibleRenderables = [];
 
 		private void UpdateOverlay()
@@ -551,7 +551,7 @@ namespace BizHawk.Client.EmuHawk
 						a = a.WorldToScreen(matrix, _dummyViewport, true);
 						b = b.WorldToScreen(matrix, _dummyViewport, true);
 
-						ScreenSpaceLines.Add(((a, b), r.Tint ?? clipped.Color, visible));
+						ScreenSpaceLines.Add(((a, b), r.Tint ?? clipped.Argb, visible));
 					}
 
 					if (ScreenSpaceLines.Count == 0)
@@ -574,13 +574,16 @@ namespace BizHawk.Client.EmuHawk
 
 							float opacity = (float)NudFilledOpacity.Value / 100.0f;
 							int alpha = (int)Math.Round(opacity * 255);
-							Pen.Color = Color.FromArgb(alpha, r.Tint ?? ScreenSpaceLines[0].color);
+							int argb = (r.Tint ?? ScreenSpaceLines[0].argb) & 0x00FFFFFF;
+							argb |= (alpha << 24);
+							Pen.Color = Color.FromArgb(argb);
 							g.FillPolygon(Pen.Brush, visibleVertices);
 							break;
 						case 2:
 							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
-								((Vertex a, Vertex b), Pen.Color, _) = ScreenSpaceLines[k];
+								((Vertex a, Vertex b), argb, _) = ScreenSpaceLines[k];
+								Pen.Color = Color.FromArgb(argb);
 
 								g.FillEllipse(
 									Pen.Brush,
@@ -593,7 +596,8 @@ namespace BizHawk.Client.EmuHawk
 						default:
 							for (int k = 0; k < ScreenSpaceLines.Count; k++)
 							{
-								((Vertex a, Vertex b), Pen.Color, bool visible) = ScreenSpaceLines[k];
+								((Vertex a, Vertex b), argb, bool visible) = ScreenSpaceLines[k];
+								Pen.Color = Color.FromArgb(argb);
 
 								if (visible)
 								{

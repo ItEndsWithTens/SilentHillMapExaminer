@@ -42,8 +42,8 @@ namespace BizHawk.Client.EmuHawk
 		private IList<Renderable> TestLines { get; } = new List<Renderable>()
 		{
 			new Line(
-				new Vertex(0.0f, 1.0f, 0.0f, Color.Red),
-				new Vertex(1.0f, 1.0f, 0.0f, Color.Lime))
+				new Vertex(0.0f, 1.0f, 0.0f, Color.Red.ToArgb()),
+				new Vertex(1.0f, 1.0f, 0.0f, Color.Lime.ToArgb()))
 		};
 		private Renderable TestSheet { get; set; } = new SheetGenerator(1.0f, Color.White).Generate().ToWorld();
 

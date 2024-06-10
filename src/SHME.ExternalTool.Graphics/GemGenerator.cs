@@ -32,51 +32,51 @@ namespace SHME.ExternalTool.Graphics
 			var modelVerts = new List<Vertex>()
 			{
 				// Top SE
-				new Vertex(halfWidth, 0.0f, 0.0f, Color),
-				new Vertex(0.0f, 0.0f, halfHeight, Color),
-				new Vertex(0.0f, -halfDepth, 0.0f, Color),
+				new Vertex(halfWidth, 0.0f, 0.0f, Color.ToArgb()),
+				new Vertex(0.0f, 0.0f, halfHeight, Color.ToArgb()),
+				new Vertex(0.0f, -halfDepth, 0.0f, Color.ToArgb()),
 
 				// Top NE
-				new Vertex(0.0f, halfDepth, 0.0f, Color),
-				new Vertex(0.0f, 0.0f, halfHeight, Color),
-				new Vertex(halfWidth, 0.0f, 0.0f, Color),
+				new Vertex(0.0f, halfDepth, 0.0f, Color.ToArgb()),
+				new Vertex(0.0f, 0.0f, halfHeight, Color.ToArgb()),
+				new Vertex(halfWidth, 0.0f, 0.0f, Color.ToArgb()),
 
 				// Top NW
-				new Vertex(-halfWidth, 0.0f, 0.0f, Color),
-				new Vertex(0.0f, 0.0f, halfHeight, Color),
-				new Vertex(0.0f, halfDepth, 0.0f, Color),
+				new Vertex(-halfWidth, 0.0f, 0.0f, Color.ToArgb()),
+				new Vertex(0.0f, 0.0f, halfHeight, Color.ToArgb()),
+				new Vertex(0.0f, halfDepth, 0.0f, Color.ToArgb()),
 
 				// Top SW
-				new Vertex(0.0f, -halfDepth, 0.0f, Color),
-				new Vertex(0.0f, 0.0f, halfHeight, Color),
-				new Vertex(-halfWidth, 0.0f, 0.0f, Color),
+				new Vertex(0.0f, -halfDepth, 0.0f, Color.ToArgb()),
+				new Vertex(0.0f, 0.0f, halfHeight, Color.ToArgb()),
+				new Vertex(-halfWidth, 0.0f, 0.0f, Color.ToArgb()),
 
 				// Bottom NW
-				new Vertex(0.0f, halfDepth, 0.0f, Color),
-				new Vertex(0.0f, 0.0f, -halfHeight, Color),
-				new Vertex(-halfWidth, 0.0f, 0.0f, Color),
+				new Vertex(0.0f, halfDepth, 0.0f, Color.ToArgb()),
+				new Vertex(0.0f, 0.0f, -halfHeight, Color.ToArgb()),
+				new Vertex(-halfWidth, 0.0f, 0.0f, Color.ToArgb()),
 
 				// Bottom NE
-				new Vertex(halfWidth, 0.0f, 0.0f, Color),
-				new Vertex(0.0f, 0.0f, -halfHeight, Color),
-				new Vertex(0.0f, halfDepth, 0.0f, Color),
+				new Vertex(halfWidth, 0.0f, 0.0f, Color.ToArgb()),
+				new Vertex(0.0f, 0.0f, -halfHeight, Color.ToArgb()),
+				new Vertex(0.0f, halfDepth, 0.0f, Color.ToArgb()),
 
 				// Bottom SE
-				new Vertex(0.0f, -halfDepth, 0.0f, Color),
-				new Vertex(0.0f, 0.0f, -halfHeight, Color),
-				new Vertex(halfWidth, 0.0f, 0.0f, Color),
+				new Vertex(0.0f, -halfDepth, 0.0f, Color.ToArgb()),
+				new Vertex(0.0f, 0.0f, -halfHeight, Color.ToArgb()),
+				new Vertex(halfWidth, 0.0f, 0.0f, Color.ToArgb()),
 
 				// Bottom SW
-				new Vertex(-halfWidth, 0.0f, 0.0f, Color),
-				new Vertex(0.0f, 0.0f, -halfHeight, Color),
-				new Vertex(0.0f, -halfDepth, 0.0f, Color)
+				new Vertex(-halfWidth, 0.0f, 0.0f, Color.ToArgb()),
+				new Vertex(0.0f, 0.0f, -halfHeight, Color.ToArgb()),
+				new Vertex(0.0f, -halfDepth, 0.0f, Color.ToArgb())
 			};
 
 			var gem = new Renderable() { CoordinateSpace = CoordinateSpace.Model };
 
 			for (int i = 0; i < 24; i += 3)
 			{
-				var p = new Polygon() { Color = Color };
+				var p = new Polygon() { Argb = Color.ToArgb() };
 
 				Vertex a = modelVerts[i + 0];
 				Vertex b = modelVerts[i + 1];

@@ -58,23 +58,23 @@ namespace SHME.ExternalTool.Graphics
 				// Comments assume Y-up, right-handed coordinates.
 
 				// Negative Y (bottom)
-				new Vertex(Min.X, 0.0f, Min.Y, Color),
-				new Vertex(Max.X, 0.0f, Min.Y, Color),
-				new Vertex(Max.X, 0.0f, Max.Y, Color),
-				new Vertex(Min.X, 0.0f, Max.Y, Color),
+				new Vertex(Min.X, 0.0f, Min.Y, Color.ToArgb()),
+				new Vertex(Max.X, 0.0f, Min.Y, Color.ToArgb()),
+				new Vertex(Max.X, 0.0f, Max.Y, Color.ToArgb()),
+				new Vertex(Min.X, 0.0f, Max.Y, Color.ToArgb()),
 
 				// Positive Y (top)
-				new Vertex(Max.X, 0.0f, Min.Y, Color),
-				new Vertex(Min.X, 0.0f, Min.Y, Color),
-				new Vertex(Min.X, 0.0f, Max.Y, Color),
-				new Vertex(Max.X, 0.0f, Max.Y, Color)
+				new Vertex(Max.X, 0.0f, Min.Y, Color.ToArgb()),
+				new Vertex(Min.X, 0.0f, Min.Y, Color.ToArgb()),
+				new Vertex(Min.X, 0.0f, Max.Y, Color.ToArgb()),
+				new Vertex(Max.X, 0.0f, Max.Y, Color.ToArgb())
 			};
 
 			var sheet = new Renderable() { CoordinateSpace = CoordinateSpace.Model };
 
 			for (int i = 0; i < 8; i += 4)
 			{
-				var p = new Polygon() { Color = Color };
+				var p = new Polygon() { Argb = Color.ToArgb() };
 
 				Vertex a = modelVerts[i + 0];
 				Vertex b = modelVerts[i + 1];
