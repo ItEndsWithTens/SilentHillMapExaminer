@@ -13,8 +13,6 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		public Dictionary<PointOfInterest, Renderable?> Pois { get; } = new Dictionary<PointOfInterest, Renderable?>();
-
 		private void InitializePoisTab()
 		{
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
@@ -26,9 +24,9 @@ namespace BizHawk.Client.EmuHawk
 			ClearDisplayedTriggerInfo();
 			LbxPois.Items.Clear();
 			LbxTriggers.Items.Clear();
-			Pois.Clear();
-			Triggers.Clear();
-			Boxes.Clear();
+			Guts.Pois.Clear();
+			Guts.Triggers.Clear();
+			Guts.Boxes.Clear();
 			LblPoiCount.Text = "-";
 			LblTriggerCount.Text = "-";
 		}
@@ -155,7 +153,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private string DecodePoiGeometry(Trigger t)
 		{
-			PointOfInterest p = Pois.ElementAt(t.PoiIndex).Key;
+			PointOfInterest p = Guts.Pois.ElementAt(t.PoiIndex).Key;
 
 			(float? yaw, float? x, float? z, float? width) = PointOfInterest.DecodeGeometry(t.Style, p);
 
@@ -180,8 +178,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnReadPois_Click(object sender, EventArgs e)
 		{
-			Boxes.Clear();
-			Pois.Clear();
+			Guts.Boxes.Clear();
+			Guts.Pois.Clear();
 
 			var generator = new BoxGenerator(1.0f, Color.White);
 
@@ -213,9 +211,9 @@ namespace BizHawk.Client.EmuHawk
 				Renderable box = generator.Generate().ToWorld();
 				box.Position = new Vector3(poi.X, 0.0f, -poi.Z);
 
-				Boxes.Add(box);
+				Guts.Boxes.Add(box);
 
-				Pois.Add(poi, box);
+				Guts.Pois.Add(poi, box);
 				LbxPois.Items.Add(poi);
 			}
 
@@ -300,7 +298,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			foreach (KeyValuePair<PointOfInterest, Renderable?> item in Pois)
+			foreach (KeyValuePair<PointOfInterest, Renderable?> item in Guts.Pois)
 			{
 				if (item.Value != null)
 				{
@@ -314,7 +312,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			Renderable? r = Pois[poi];
+			Renderable? r = Guts.Pois[poi];
 
 			if (r != null)
 			{
@@ -340,8 +338,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		public IList<Trigger> Triggers { get; } = new List<Trigger>();
-
 		private void BtnReadTriggers_Click(object sender, EventArgs e)
 		{
 			BtnReadPois_Click(this, EventArgs.Empty);
@@ -355,27 +351,27 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			Triggers.Clear();
+			Guts.Triggers.Clear();
 			LbxTriggers.Items.Clear();
 
 			int ofs = triggerArrayAddress;
 			var t = new Trigger(ofs, Mem.ReadByteRange(ofs, SilentHillEntitySizes.Trigger));
 			while (t.Style != TriggerStyle.Dummy)
 			{
-				Triggers.Add(t);
+				Guts.Triggers.Add(t);
 				LbxTriggers.Items.Add(t);
 
 				ofs += SilentHillEntitySizes.Trigger;
 				t = new Trigger(ofs, Mem.ReadByteRange(ofs, SilentHillEntitySizes.Trigger));
 			}
 
-			LblTriggerCount.Text = Triggers.Count.ToString(CultureInfo.CurrentCulture);
+			LblTriggerCount.Text = Guts.Triggers.Count.ToString(CultureInfo.CurrentCulture);
 
-			foreach (Trigger trigger in Triggers)
+			foreach (Trigger trigger in Guts.Triggers)
 			{
 				if (trigger.Style != TriggerStyle.ButtonOmni && trigger.Style != TriggerStyle.ButtonYaw)
 				{
-					KeyValuePair<PointOfInterest, Renderable?> pair = Pois.ElementAt(trigger.PoiIndex);
+					KeyValuePair<PointOfInterest, Renderable?> pair = Guts.Pois.ElementAt(trigger.PoiIndex);
 					PointOfInterest p = pair.Key;
 
 					float? yaw = null;
@@ -421,12 +417,12 @@ namespace BizHawk.Client.EmuHawk
 						r.Position = pair.Value.Position;
 					}
 
-					int index = Boxes.IndexOf(pair.Value);
-					Boxes.RemoveAt(index);
-					Boxes.Insert(index, r);
+					int index = Guts.Boxes.IndexOf(pair.Value);
+					Guts.Boxes.RemoveAt(index);
+					Guts.Boxes.Insert(index, r);
 
-					Pois.Remove(p);
-					Pois.Add(p, r);
+					Guts.Pois.Remove(p);
+					Guts.Pois.Add(p, r);
 				}
 			}
 
@@ -459,7 +455,7 @@ namespace BizHawk.Client.EmuHawk
 			CultureInfo c = CultureInfo.CurrentCulture;
 
 			string poiString;
-			if (t.PoiIndex >= Pois.Count)
+			if (t.PoiIndex >= Guts.Pois.Count)
 			{
 				poiString = "null";
 			}
@@ -585,7 +581,7 @@ namespace BizHawk.Client.EmuHawk
 			var south = new Vector3(0.0f, 0.0f, 1.0f);
 			var north = new Vector3(0.0f, 0.0f, -1.0f);
 
-			foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Pois)
+			foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Guts.Pois)
 			{
 				if (pair.Value == null)
 				{

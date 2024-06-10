@@ -10,8 +10,6 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private Ilm? _harryModel;
-
 		private bool _firstPersonEnabled;
 		private bool FpsEnabled
 		{
@@ -63,15 +61,47 @@ namespace BizHawk.Client.EmuHawk
 					_holdCameraRoll = 0;
 					HoldCamera();
 
+					// Using a simple lambda here would be cleaner, but would
+					// generate an anonymous method in the assembly that made
+					// reference to a type in an external assembly. That in turn
+					// would cause Mono in Linux to fail to load the external
+					// tool. A pair of local functions suffices to avoid that.
+					static object GetFeet(object o)
+					{
+						var submeshes = (IList<Submesh>)o;
+						List<Submesh> feet = [];
+						foreach (Submesh m in submeshes)
+						{
+							if (m.Name.EndsWith("FOOT", StringComparison.Ordinal))
+							{
+								feet.Add(m);
+							}
+						}
+						return feet;
+					}
+					static object GetNotFeet(object o)
+					{
+						var submeshes = (IList<Submesh>)o;
+						List<Submesh> notFeet = [];
+						foreach (Submesh m in submeshes)
+						{
+							if (!m.Name.EndsWith("FOOT", StringComparison.Ordinal))
+							{
+								notFeet.Add(m);
+							}
+						}
+						return notFeet;
+					}
+
 					if (CbxHideHarry.Checked)
 					{
-						IEnumerable<Submesh> submeshes = _harryModel.Submeshes.Where((m) =>
-							!m.Name.EndsWith("FOOT", StringComparison.Ordinal));
+						object notFeet = GetNotFeet(Guts.HarryModel.Submeshes);
+						var submeshes = (IEnumerable<Submesh>)notFeet;
 
 						if (!CbxShowFeet.Checked)
 						{
-							submeshes = submeshes.Concat(_harryModel.Submeshes.Where((m) =>
-							m.Name.EndsWith("FOOT", StringComparison.Ordinal)));
+							object feet = GetFeet(Guts.HarryModel.Submeshes);
+							submeshes = submeshes.Concat((IEnumerable<Submesh>)feet);
 						}
 
 						foreach (Submesh s in submeshes)
@@ -90,7 +120,7 @@ namespace BizHawk.Client.EmuHawk
 
 					CbxCameraDetach.Checked = false;
 
-					foreach (Submesh s in _harryModel.Submeshes)
+					foreach (Submesh s in Guts.HarryModel.Submeshes)
 					{
 						Mem.WriteByte((int)((s.BaseAddress + 8) - Rom.Addresses.MainRam.BaseAddress), 1);
 					}

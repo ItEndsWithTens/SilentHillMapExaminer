@@ -8,8 +8,6 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private Tim? _mapGraphic;
-
 		private void BtnGrabMapGraphic_Click(object sender, EventArgs e)
 		{
 			IReadOnlyList<byte> headerBytes = Mem.ReadByteRange(Rom.Addresses.MainRam.MapTim, TimHeader.Length);
@@ -27,9 +25,9 @@ namespace BizHawk.Client.EmuHawk
 			int timLength = header.ImageHeaderOfs + header.ImageBlockLength;
 
 			IReadOnlyList<byte> timBytes = Mem.ReadByteRange(Rom.Addresses.MainRam.MapTim, timLength);
-			_mapGraphic = new Tim(header, timBytes.ToArray());
+			Guts.AreaMapGraphic = new Tim(header, timBytes.ToArray());
 
-			PbxMapGraphic.Image = _mapGraphic.Bitmap;
+			PbxMapGraphic.Image = Guts.AreaMapGraphic.Bitmap;
 			PbxMapGraphic.SizeMode = PictureBoxSizeMode.StretchImage;
 			PbxMapGraphic.Width = 640;
 		}

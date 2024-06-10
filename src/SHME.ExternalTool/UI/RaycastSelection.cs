@@ -13,8 +13,6 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private Control? GameSurface { get; set; }
 
-		private Dictionary<SilentHillEntity, IList<(ListControl control, int index)>> _clickedThings = new();
-
 		private void ClearListControlSelections()
 		{
 			LbxPois.SelectedIndex = -1;
@@ -28,24 +26,24 @@ namespace BizHawk.Client.EmuHawk
 			clicked.Clear();
 
 			Point p = DisplayManager.UntransformPoint(screen);
-			p.X -= ClickPort.Left;
-			p.Y -= ClickPort.Top;
+			p.X -= Guts.ClickPort.Left;
+			p.Y -= Guts.ClickPort.Top;
 
 			// Ray preparation based on an article by Dr. Anton Gerdelan:
 			// https://antongerdelan.net/opengl/raycasting.html
 			// https://github.com/capnramses/antons_opengl_tutorials_book
 			var ndc = new PointF(
-				(p.X * 2.0f / ClickPort.Width) - 1.0f,
-				1.0f - (p.Y * 2.0f / ClickPort.Height));
+				(p.X * 2.0f / Guts.ClickPort.Width) - 1.0f,
+				1.0f - (p.Y * 2.0f / Guts.ClickPort.Height));
 
 			var clip = new Vector3(ndc.X, ndc.Y, 1.0f);
 
-			Matrix4x4.Invert(Camera.ProjectionMatrix, out Matrix4x4 mat);
+			Matrix4x4.Invert(Guts.Camera.ProjectionMatrix, out Matrix4x4 mat);
 			Vector4 cam = Vector4.Transform(clip, mat);
 			cam.Z = -1.0f;
 			cam.W = 0.0f;
 
-			Matrix4x4.Invert(Camera.ViewMatrix, out mat);
+			Matrix4x4.Invert(Guts.Camera.ViewMatrix, out mat);
 			Vector4 world = Vector4.Transform(cam, mat);
 			var three = new Vector3(world.X, world.Y, world.Z);
 
@@ -56,12 +54,12 @@ namespace BizHawk.Client.EmuHawk
 			// https://github.com/tavianator/ray_box
 			var inv = new Vector3(1.0f / n.X, 1.0f / n.Y, 1.0f / n.Z);
 
-			foreach ((Renderable r, bool _) in VisibleRenderables)
+			foreach ((Renderable r, bool _) in Guts.VisibleRenderables)
 			{
 				foreach (Polygon polygon in r.Polygons)
 				{
-					Vector3 min = (r.Aabb.Min - Camera.Position) * inv;
-					Vector3 max = (r.Aabb.Max - Camera.Position) * inv;
+					Vector3 min = (r.Aabb.Min - Guts.Camera.Position) * inv;
+					Vector3 max = (r.Aabb.Max - Guts.Camera.Position) * inv;
 
 					float tmin = 0.0f;
 					tmin = Math.Max(tmin, Math.Min(min.X, max.X));
@@ -77,7 +75,7 @@ namespace BizHawk.Client.EmuHawk
 					{
 						bool hit = false;
 
-						foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Pois)
+						foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Guts.Pois)
 						{
 							if (ReferenceEquals(pair.Value, r))
 							{
@@ -95,7 +93,7 @@ namespace BizHawk.Client.EmuHawk
 
 						if (!hit)
 						{
-							foreach (KeyValuePair<CameraPath, IList<Renderable?>> pair in CameraPaths)
+							foreach (KeyValuePair<CameraPath, IList<Renderable?>> pair in Guts.CameraPaths)
 							{
 								foreach (Renderable? other in pair.Value)
 								{
@@ -129,7 +127,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			bool outside = true;
-			if (p.X >= 0 && p.X < ClickPort.Width && p.Y >= 0 && p.Y < ClickPort.Height)
+			if (p.X >= 0 && p.X < Guts.ClickPort.Width && p.Y >= 0 && p.Y < Guts.ClickPort.Height)
 			{
 				outside = false;
 			}
@@ -151,17 +149,17 @@ namespace BizHawk.Client.EmuHawk
 
 			ClearListControlSelections();
 
-			if (GetClickedThings(gc.PointToScreen(e.Location), ref _clickedThings))
+			if (GetClickedThings(gc.PointToScreen(e.Location), ref Guts.ClickedThings))
 			{
 				return;
 			}
 
-			if (_clickedThings.Count > 0)
+			if (Guts.ClickedThings.Count > 0)
 			{
 				_raycastSelectionIndex = 0;
 
 				KeyValuePair<SilentHillEntity, IList<(ListControl, int)>> first =
-					_clickedThings.ElementAt(_raycastSelectionIndex);
+					Guts.ClickedThings.ElementAt(_raycastSelectionIndex);
 
 				foreach ((ListControl c, int i) val in first.Value)
 				{
@@ -180,7 +178,7 @@ namespace BizHawk.Client.EmuHawk
 		private Timer RaycastSelectionTimer { get; } = new Timer() { Interval = 1000 };
 		private void RaycastSelectionTimer_Tick(object sender, EventArgs e)
 		{
-			if (_clickedThings.Count == 0)
+			if (Guts.ClickedThings.Count == 0)
 			{
 				return;
 			}
@@ -188,7 +186,7 @@ namespace BizHawk.Client.EmuHawk
 			ClearListControlSelections();
 
 			KeyValuePair<SilentHillEntity, IList<(ListControl, int)>> thing =
-				_clickedThings.ElementAt(++_raycastSelectionIndex % _clickedThings.Count);
+				Guts.ClickedThings.ElementAt(++_raycastSelectionIndex % Guts.ClickedThings.Count);
 
 			foreach ((ListControl c, int i) val in thing.Value)
 			{

@@ -12,12 +12,6 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		public Dictionary<CameraPath, IList<Renderable?>> CameraPaths { get; } = new();
-
-		public IList<Renderable> CameraBoxes { get; } = new List<Renderable>();
-		public IList<Renderable> CameraGems { get; } = new List<Renderable>();
-		public IList<Line> CameraLines { get; } = new List<Line>();
-
 		private void ClearDisplayedCameraPathInfo()
 		{
 			string sep = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
@@ -61,11 +55,11 @@ namespace BizHawk.Client.EmuHawk
 			long address = Mem.ReadU32(Rom.Addresses.MainRam.PointerToArrayOfCameraPaths);
 			address -= Rom.Addresses.MainRam.BaseAddress;
 
-			CameraPaths.Clear();
+			Guts.CameraPaths.Clear();
 			LbxCameraPaths.Items.Clear();
-			CameraBoxes.Clear();
-			CameraGems.Clear();
-			CameraLines.Clear();
+			Guts.CameraBoxes.Clear();
+			Guts.CameraGems.Clear();
+			Guts.CameraLines.Clear();
 			var gemGen = new GemGenerator(0.125f, 0.25f, 0.125f, Color.FromArgb(0x25, 0xA5, 0x97));
 			while (true)
 			{
@@ -86,8 +80,8 @@ namespace BizHawk.Client.EmuHawk
 				Renderable gemB = gemGen.Generate().ToWorld();
 				gemB.Position = new Vector3(path.VolumeMax.X, -path.VolumeMax.Y, -path.VolumeMax.Z);
 
-				CameraGems.Add(gemA);
-				CameraGems.Add(gemB);
+				Guts.CameraGems.Add(gemA);
+				Guts.CameraGems.Add(gemB);
 
 				Vector3 volumeMin;
 				volumeMin.X = Math.Min(gemA.Position.X, gemB.Position.X);
@@ -123,7 +117,7 @@ namespace BizHawk.Client.EmuHawk
 				Renderable volume = boxGen.Generate().ToWorld();
 				volume.Position = volumeMin + (size / 2.0f);
 
-				CameraBoxes.Add(volume);
+				Guts.CameraBoxes.Add(volume);
 
 				float sizeX = path.AreaMaxX - path.AreaMinX;
 				float sizeZ = path.AreaMaxZ - path.AreaMinZ;
@@ -134,14 +128,14 @@ namespace BizHawk.Client.EmuHawk
 					0.0f,
 					-(path.AreaMinZ + sizeZ / 2.0f));
 
-				CameraBoxes.Add(area);
+				Guts.CameraBoxes.Add(area);
 
-				CameraPaths.Add(path, new[] { area, gemA, volume, gemB });
+				Guts.CameraPaths.Add(path, new[] { area, gemA, volume, gemB });
 
 				address += SilentHillEntitySizes.CameraPath;
 			}
 
-			LblCameraPathCount.Text = CameraPaths.Count.ToString(CultureInfo.CurrentCulture);
+			LblCameraPathCount.Text = Guts.CameraPaths.Count.ToString(CultureInfo.CurrentCulture);
 		}
 
 		private void CbxSelectedCameraPathEnabled_CheckedChanged(object sender, EventArgs e)
@@ -197,7 +191,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			foreach (KeyValuePair<CameraPath, IList<Renderable?>> item in CameraPaths)
+			foreach (KeyValuePair<CameraPath, IList<Renderable?>> item in Guts.CameraPaths)
 			{
 				foreach (Renderable? r in item.Value)
 				{
@@ -214,7 +208,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			foreach (Renderable? r in CameraPaths[path])
+			foreach (Renderable? r in Guts.CameraPaths[path])
 			{
 				if (r != null)
 				{

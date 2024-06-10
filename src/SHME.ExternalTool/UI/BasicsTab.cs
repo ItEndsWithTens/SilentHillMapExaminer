@@ -12,42 +12,11 @@ using static SHME.ExternalTool.Guts;
 
 namespace BizHawk.Client.EmuHawk
 {
-#pragma warning disable IDE0055
-	// IDE0055 covers all code style formatting rules, including the removal of
-	// whitespace some developers use to line up values when assigning many
-	// variables at once. That's usually desirable, but in cases like this, i.e.
-	// bitfields/flags, the alignment helps make it more visually obvious which
-	// bits correspond to which enum members.
-	[Flags]
-	public enum PsxButtons
-	{
-		None =     0x0000,
-		Select =   0x0001,
-		L3 =       0x0002,
-		R3 =       0x0004,
-		Start =    0x0008,
-		Up =       0x0010,
-		Right =    0x0020,
-		Down =     0x0040,
-		Left =     0x0080,
-		L2 =       0x0100,
-		R2 =       0x0200,
-		L1 =       0x0400,
-		R1 =       0x0800,
-		Triangle = 0x1000,
-		Circle =   0x2000,
-		X =        0x4000,
-		Square =   0x8000
-	}
-#pragma warning restore IDE0055
-
 	public partial class CustomMainForm
 	{
-		private Renderable _gameCameraLookAt;
-
 		private void InitializeBasicsTab()
 		{
-			TrkFov.Value = (int)Camera.Fov;
+			TrkFov.Value = (int)Guts.Camera.Fov;
 			LblFov.Text = TrkFov.Value.ToString(CultureInfo.CurrentCulture);
 		}
 
@@ -101,17 +70,16 @@ namespace BizHawk.Client.EmuHawk
 			string f = "N2";
 			CultureInfo c = CultureInfo.CurrentCulture;
 
-			LblOverlayCamPositionX.Text = Camera.Position.X.ToString(f, c);
-			LblOverlayCamPositionY.Text = Camera.Position.Y.ToString(f, c);
-			LblOverlayCamPositionZ.Text = Camera.Position.Z.ToString(f, c);
+			LblOverlayCamPositionX.Text = Guts.Camera.Position.X.ToString(f, c);
+			LblOverlayCamPositionY.Text = Guts.Camera.Position.Y.ToString(f, c);
+			LblOverlayCamPositionZ.Text = Guts.Camera.Position.Z.ToString(f, c);
 
-			LblOverlayCamPitch.Text = Camera.Pitch.ToString(f, c);
-			LblOverlayCamYaw.Text = Camera.Yaw.ToString(f, c);
-			LblOverlayCamRoll.Text = Camera.Roll.ToString(f, c);
+			LblOverlayCamPitch.Text = Guts.Camera.Pitch.ToString(f, c);
+			LblOverlayCamYaw.Text = Guts.Camera.Yaw.ToString(f, c);
+			LblOverlayCamRoll.Text = Guts.Camera.Roll.ToString(f, c);
 		}
 
 		private string _lastHarrySpawnPointHash = String.Empty;
-		private PointOfInterest? _lastHarrySpawnPoint;
 		private void ReportPosition()
 		{
 			(Vector3 harry, Vector3 camera) = GetPosition();
@@ -135,7 +103,7 @@ namespace BizHawk.Client.EmuHawk
 			string hash = Mem.HashRegion(address, 12);
 			if (hash != _lastHarrySpawnPointHash)
 			{
-				_lastHarrySpawnPoint = new PointOfInterest(address, Mem.ReadByteRange(address, 12));
+				Guts.LastHarrySpawnPoint = new PointOfInterest(address, Mem.ReadByteRange(address, 12));
 
 				// To prevent the camera from being forcibly reoriented upon
 				// both SHME startup and save state loading, this boolean not
@@ -147,17 +115,17 @@ namespace BizHawk.Client.EmuHawk
 				}
 				else
 				{
-					(_forcedCameraYaw, _, _, _) = PointOfInterest.DecodeGeometry(TriggerStyle.ButtonYaw, _lastHarrySpawnPoint);
+					(_forcedCameraYaw, _, _, _) = PointOfInterest.DecodeGeometry(TriggerStyle.ButtonYaw, Guts.LastHarrySpawnPoint);
 				}
 
 				_lastHarrySpawnPointHash = hash;
 
 				string sep = c.NumberFormat.NumberGroupSeparator;
 
-				float x = _lastHarrySpawnPoint.X;
-				float z = _lastHarrySpawnPoint.Z;
+				float x = Guts.LastHarrySpawnPoint.X;
+				float z = Guts.LastHarrySpawnPoint.Z;
 				LblSpawnXZ.Text = $"<{x.ToString("0.##", c)}{sep} {z.ToString("0.##", c)}>";
-				LblSpawnGeometry.Text = $"0x{_lastHarrySpawnPoint.Geometry.ToString("X2", c)}";
+				LblSpawnGeometry.Text = $"0x{Guts.LastHarrySpawnPoint.Geometry.ToString("X2", c)}";
 			}
 		}
 
@@ -317,11 +285,11 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (CbxBackfaceCulling.Checked)
 			{
-				Camera.Culling |= Culling.Backface;
+				Guts.Camera.Culling |= Culling.Backface;
 			}
 			else
 			{
-				Camera.Culling ^= Culling.Backface;
+				Guts.Camera.Culling ^= Culling.Backface;
 			}
 		}
 
@@ -329,11 +297,11 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (CbxFarClipping.Checked)
 			{
-				Camera.Culling |= Culling.Far;
+				Guts.Camera.Culling |= Culling.Far;
 			}
 			else
 			{
-				Camera.Culling ^= Culling.Far;
+				Guts.Camera.Culling ^= Culling.Far;
 			}
 		}
 
@@ -341,14 +309,14 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (!CbxOverlayCameraMatchGame.Checked)
 			{
-				Camera.Position = new Vector3(
+				Guts.Camera.Position = new Vector3(
 					(float)NudOverlayCameraX.Value,
 					(float)NudOverlayCameraY.Value,
 					(float)NudOverlayCameraZ.Value);
 
-				Camera.Pitch = (float)NudOverlayCameraPitch.Value;
-				Camera.Yaw = (float)NudOverlayCameraYaw.Value;
-				Camera.Roll = (float)NudOverlayCameraRoll.Value;
+				Guts.Camera.Pitch = (float)NudOverlayCameraPitch.Value;
+				Guts.Camera.Yaw = (float)NudOverlayCameraYaw.Value;
+				Guts.Camera.Roll = (float)NudOverlayCameraRoll.Value;
 			}
 		}
 
@@ -369,11 +337,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void Emu_StateLoaded(object sender, StateLoadedEventArgs e)
 		{
-			Pois.Clear();
+			Guts.Pois.Clear();
 			LbxPois.Items.Clear();
 			LblPoiCount.Text = "-";
 
-			Triggers.Clear();
+			Guts.Triggers.Clear();
 			LbxTriggers.Items.Clear();
 			LblTriggerCount.Text = "-";
 
@@ -389,40 +357,40 @@ namespace BizHawk.Client.EmuHawk
 
 		private void NudOverlayCameraPitch_ValueChanged(object sender, EventArgs e)
 		{
-			Camera.Pitch = (float)NudOverlayCameraPitch.Value;
+			Guts.Camera.Pitch = (float)NudOverlayCameraPitch.Value;
 		}
 
 		private void NudOverlayCameraYaw_ValueChanged(object sender, EventArgs e)
 		{
-			Camera.Yaw = (float)NudOverlayCameraYaw.Value;
+			Guts.Camera.Yaw = (float)NudOverlayCameraYaw.Value;
 		}
 
 		private void NudOverlayCameraRoll_ValueChanged(object sender, EventArgs e)
 		{
-			Camera.Roll = (float)NudOverlayCameraRoll.Value;
+			Guts.Camera.Roll = (float)NudOverlayCameraRoll.Value;
 		}
 
 		private void NudOverlayCameraX_ValueChanged(object sender, EventArgs e)
 		{
-			Camera.Position = new Vector3(
+			Guts.Camera.Position = new Vector3(
 				(float)NudOverlayCameraX.Value,
-				Camera.Position.Y,
-				Camera.Position.Z);
+				Guts.Camera.Position.Y,
+				Guts.Camera.Position.Z);
 		}
 
 		private void NudOverlayCameraY_ValueChanged(object sender, EventArgs e)
 		{
-			Camera.Position = new Vector3(
-				Camera.Position.X,
+			Guts.Camera.Position = new Vector3(
+				Guts.Camera.Position.X,
 				(float)NudOverlayCameraY.Value,
-				Camera.Position.Z);
+				Guts.Camera.Position.Z);
 		}
 
 		private void NudOverlayCameraZ_ValueChanged(object sender, EventArgs e)
 		{
-			Camera.Position = new Vector3(
-				Camera.Position.X,
-				Camera.Position.Y,
+			Guts.Camera.Position = new Vector3(
+				Guts.Camera.Position.X,
+				Guts.Camera.Position.Y,
 				(float)NudOverlayCameraZ.Value);
 		}
 

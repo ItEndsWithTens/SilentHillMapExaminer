@@ -14,8 +14,6 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
-		private PsxButtons _saveButton = PsxButtons.None;
-
 		private void InitializeSaveTab()
 		{
 			CmbSaveButton.DataSource = Enum.GetValues(typeof(PsxButtons));
@@ -25,7 +23,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			var raw = (PsxButtons)Mem.ReadU16(Rom.Addresses.MainRam.ButtonFlags);
 
-			if (_saveButton != PsxButtons.None && !raw.FasterHasFlag(_saveButton))
+			if (Guts.SaveButton != PsxButtons.None && !raw.FasterHasFlag(Guts.SaveButton))
 			{
 				BtnOpenSaveMenu_Click(BtnOpenSaveMenu, EventArgs.Empty);
 			}
@@ -556,9 +554,9 @@ namespace BizHawk.Client.EmuHawk
 		{
 			string text = CmbSaveButton.GetItemText(CmbSaveButton.SelectedItem);
 
-			if (!Enum.TryParse(text, out _saveButton))
+			if (!Enum.TryParse(text, out Guts.SaveButton))
 			{
-				_saveButton = PsxButtons.None;
+				Guts.SaveButton = PsxButtons.None;
 			};
 		}
 

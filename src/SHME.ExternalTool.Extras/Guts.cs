@@ -3,7 +3,7 @@ using System;
 
 namespace SHME.ExternalTool
 {
-	public class Guts
+	public partial class Guts
 	{
 		public Rom Rom { get; set; } = new Slus00707();
 

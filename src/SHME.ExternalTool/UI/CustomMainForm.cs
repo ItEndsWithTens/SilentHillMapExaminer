@@ -28,8 +28,8 @@ namespace BizHawk.Client.EmuHawk
 			"SHME.ExternalTool/dll/JsonSettings/JsonSettings.dll",
 			"SHME.ExternalTool/dll/JsonSettings/Castle.Core.dll",
 			"SHME.ExternalTool/dll/JsonSettings/JsonSettings.Autosave.dll",
-			"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll",
-			"SHME.ExternalTool/dll/SHME.ExternalTool.Graphics.dll"])]
+			"SHME.ExternalTool/dll/SHME.ExternalTool.Graphics.dll",
+			"SHME.ExternalTool/dll/SHME.ExternalTool.Extras.dll"])]
 
 	// TODO: Add support for other versions of the game; EU, JP, demo, etc.
 	[ExternalToolApplicability.RomList(VSystemID.Raw.PSX, Slus00707Constants.HashBizHawk)]
@@ -72,30 +72,18 @@ namespace BizHawk.Client.EmuHawk
 
 		protected override string WindowTitleStatic => ToolName;
 
-		public Guts Guts { get; } = new();
-
-		public Camera Camera { get; set; } = new()
+		private object _guts = null!;
+		public Guts Guts
 		{
-			Culling = Culling.Frustum,
-			Fov = 53.13f
-		};
-
-		public IList<Renderable> Boxes { get; } = [];
-		public IList<Renderable> TestBoxes { get; } = [];
-		public IList<Renderable> Gems { get; } = [];
-		public IList<Renderable> Lines { get; } = [];
+			get => (Guts)_guts;
+			set => _guts = value;
+		}
 
 		public Pen Pen { get; set; } = new(Brushes.White);
 		public Bitmap Overlay { get; set; } = new(1, 1, PixelFormat.Format32bppArgb);
 
 		public Rom Rom => Guts.Rom;
 
-		private Viewport ClickPort { get; set; } = new();
-		private Viewport RenderPort { get; set; } = new();
-
-		// TODO: Try to eliminate need for this; maybe better Viewport class,
-		// or a Vertex WorldToScreen method that doesn't need this?
-		private Viewport _dummyViewport = new();
 		private Rectangle _drawRegionRect;
 
 		// Manually implementing a backing field is necessary to store it as a
@@ -113,6 +101,8 @@ namespace BizHawk.Client.EmuHawk
 		public CustomMainForm()
 		{
 			InitializeComponent();
+
+			Guts = new Guts();
 
 			// Set initial size, but let users manually resize the form as they
 			// see fit, e.g. for very low res screens. The AutoScroll property
@@ -138,7 +128,7 @@ namespace BizHawk.Client.EmuHawk
 			InitializeFramebufferTab();
 			InitializeUtilityTab();
 
-			_gameCameraLookAt = new BoxGenerator(0.25f, Color.Purple).Generate().ToWorld();
+			Guts.GameCameraLookAt = new BoxGenerator(0.25f, Color.Purple).Generate().ToWorld();
 		}
 
 		protected override void Dispose(bool disposing)
@@ -186,15 +176,15 @@ namespace BizHawk.Client.EmuHawk
 			DetachEventHandlers();
 			AttachEventHandlers();
 
-			Boxes.Clear();
-			Gems.Clear();
-			Lines.Clear();
-			TestBoxes.Clear();
-			ModelBoxes.Clear();
+			Guts.Boxes.Clear();
+			Guts.Gems.Clear();
+			Guts.Lines.Clear();
+			Guts.TestBoxes.Clear();
+			Guts.ModelBoxes.Clear();
 
-			CameraBoxes.Clear();
-			CameraGems.Clear();
-			CameraLines.Clear();
+			Guts.CameraBoxes.Clear();
+			Guts.CameraGems.Clear();
+			Guts.CameraLines.Clear();
 
 			Mem.UseMemoryDomain("MainRAM");
 
@@ -292,7 +282,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			if (_harryModel == null)
+			if (Guts.HarryModel == null)
 			{
 				int raw = Mem.ReadS32(Rom.Addresses.MainRam.HarryModelPointer);
 				int address = raw - (int)Rom.Addresses.MainRam.BaseAddress;
@@ -300,7 +290,7 @@ namespace BizHawk.Client.EmuHawk
 				var header = new IlmHeader(headerBytes, raw);
 
 				IReadOnlyList<byte> remaining = Mem.ReadByteRange(address, (int)(Mem.GetMemoryDomainSize("MainRAM") - address));
-				_harryModel = new Ilm(header, remaining);
+				Guts.HarryModel = new Ilm(header, remaining);
 			}
 
 			var camState = (CameraState)(Mem.ReadS32(Rom.Addresses.MainRam.CameraState));
@@ -320,11 +310,11 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxShowLookAt.Checked)
 					{
-						Vector3 pos = _gameCameraLookAt.Position;
+						Vector3 pos = Guts.GameCameraLookAt.Position;
 						pos.X = Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX));
 						pos.Y = -Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY));
 						pos.Z = -Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ));
-						_gameCameraLookAt.Position = pos;
+						Guts.GameCameraLookAt.Position = pos;
 					}
 					if (cutscene)
 					{
@@ -426,9 +416,6 @@ namespace BizHawk.Client.EmuHawk
 			TbxSettingsFilesRoaming.Text = Settings.Roaming.FileName;
 		}
 
-		private List<((Vertex a, Vertex b), int argb, bool visible)> ScreenSpaceLines { get; } = [];
-		private IList<(Renderable, bool)> VisibleRenderables = [];
-
 		private void UpdateOverlay()
 		{
 			(_, Vector3 position) = GetPosition();
@@ -445,44 +432,44 @@ namespace BizHawk.Client.EmuHawk
 			// Remember that the projection, view, model order from OpenGL
 			// shaders is reversed in C#, to account for System.Numeric's row
 			// major matrix layout.
-			Matrix4x4 matrix = Camera.ViewMatrix * Camera.ProjectionMatrix;
+			Matrix4x4 matrix = Guts.Camera.ViewMatrix * Guts.Camera.ProjectionMatrix;
 
-			VisibleRenderables.Clear();
+			Guts.VisibleRenderables.Clear();
 			if (CbxEnableOverlay.Checked)
 			{
-				Camera.GetVisibleRenderables(
-					ref VisibleRenderables,
-					[.. Boxes, .. Gems, .. CameraBoxes, .. CameraGems, .. Lines, .. CameraLines]);
+				Guts.Camera.GetVisibleRenderables(
+					ref Guts.VisibleRenderables,
+					[.. Guts.Boxes, .. Guts.Gems, .. Guts.CameraBoxes, .. Guts.CameraGems, .. Guts.Lines, .. Guts.CameraLines]);
 			}
 			if (CbxEnableTestModelSection.Checked)
 			{
-				Camera.GetVisibleRenderables(
-					ref VisibleRenderables,
-					ModelBoxes);
+				Guts.Camera.GetVisibleRenderables(
+					ref Guts.VisibleRenderables,
+					Guts.ModelBoxes);
 			}
 			if (CbxEnableTestBox.Checked)
 			{
-				Camera.GetVisibleRenderables(
-					ref VisibleRenderables,
-					TestBox);
+				Guts.Camera.GetVisibleRenderables(
+					ref Guts.VisibleRenderables,
+					Guts.TestBox);
 			}
 			if (CbxEnableTestSheet.Checked)
 			{
-				Camera.GetVisibleRenderables(
-					ref VisibleRenderables,
-					TestSheet);
+				Guts.Camera.GetVisibleRenderables(
+					ref Guts.VisibleRenderables,
+					Guts.TestSheet);
 			}
 			if (CbxEnableTestLine.Checked)
 			{
-				Camera.GetVisibleRenderables(
-					ref VisibleRenderables,
-					TestLines);
+				Guts.Camera.GetVisibleRenderables(
+					ref Guts.VisibleRenderables,
+					Guts.TestLines);
 			}
 			if (CbxShowLookAt.Checked)
 			{
-				Camera.GetVisibleRenderables(
-					ref VisibleRenderables,
-					_gameCameraLookAt);
+				Guts.Camera.GetVisibleRenderables(
+					ref Guts.VisibleRenderables,
+					Guts.GameCameraLookAt);
 			}
 
 			var g = Graphics.FromImage(Overlay);
@@ -491,11 +478,11 @@ namespace BizHawk.Client.EmuHawk
 
 			g.Clear(Color.FromArgb(0, 0, 0, 0));
 			DrawPolygons(matrix, g);
-			DrawReticle(g, Pen, RenderPort.Width, RenderPort.Height, (float)NudCrosshairLength.Value);
+			DrawReticle(g, Pen, Guts.RenderPort.Width, Guts.RenderPort.Height, (float)NudCrosshairLength.Value);
 
 			if (CbxOverlayCameraMatchGame.Checked)
 			{
-				Camera.UpdateAll(
+				Guts.Camera.UpdateAll(
 					convertedPosition,
 					convertedAngles.X, convertedAngles.Y, convertedAngles.Z,
 					null, CalculateGameFov(),
@@ -506,13 +493,13 @@ namespace BizHawk.Client.EmuHawk
 					string f = "N0";
 					CultureInfo c = CultureInfo.CurrentCulture;
 
-					NudOverlayCameraX.Text = Camera.Position.X.ToString(f, c);
-					NudOverlayCameraY.Text = Camera.Position.Y.ToString(f, c);
-					NudOverlayCameraZ.Text = Camera.Position.Z.ToString(f, c);
+					NudOverlayCameraX.Text = Guts.Camera.Position.X.ToString(f, c);
+					NudOverlayCameraY.Text = Guts.Camera.Position.Y.ToString(f, c);
+					NudOverlayCameraZ.Text = Guts.Camera.Position.Z.ToString(f, c);
 
-					NudOverlayCameraPitch.Text = Camera.Pitch.ToString(f, c);
-					NudOverlayCameraYaw.Text = Camera.Yaw.ToString(f, c);
-					NudOverlayCameraRoll.Text = Camera.Roll.ToString(f, c);
+					NudOverlayCameraPitch.Text = Guts.Camera.Pitch.ToString(f, c);
+					NudOverlayCameraYaw.Text = Guts.Camera.Yaw.ToString(f, c);
+					NudOverlayCameraRoll.Text = Guts.Camera.Roll.ToString(f, c);
 				}
 			}
 		}
@@ -522,9 +509,9 @@ namespace BizHawk.Client.EmuHawk
 		{
 			g.SmoothingMode = _smoothingMode;
 
-			for (int i = 0; i < VisibleRenderables.Count; i++)
+			for (int i = 0; i < Guts.VisibleRenderables.Count; i++)
 			{
-				(Renderable r, bool partial) = VisibleRenderables[i];
+				(Renderable r, bool partial) = Guts.VisibleRenderables[i];
 
 				matrix = r.ModelMatrix * matrix;
 
@@ -532,14 +519,14 @@ namespace BizHawk.Client.EmuHawk
 				{
 					Polygon p = r.Polygons[j];
 
-					if (Camera.Culling.FasterHasFlag(Culling.Backface) && p.IsBackface(Camera))
+					if (Guts.Camera.Culling.FasterHasFlag(Culling.Backface) && p.IsBackface(Guts.Camera))
 					{
 						continue;
 					}
 
-					ScreenSpaceLines.Clear();
+					Guts.ScreenSpaceLines.Clear();
 
-					Polygon clipped = partial ? Camera.ClipPolygonAgainstFrustum(p) : p;
+					Polygon clipped = partial ? Guts.Camera.ClipPolygonAgainstFrustum(p) : p;
 
 					for (int k = 0; k < clipped.Edges.Count; k++)
 					{
@@ -548,13 +535,13 @@ namespace BizHawk.Client.EmuHawk
 						Vertex a = clipped.Vertices[idxA];
 						Vertex b = clipped.Vertices[idxB];
 
-						a = a.WorldToScreen(matrix, _dummyViewport, true);
-						b = b.WorldToScreen(matrix, _dummyViewport, true);
+						a = a.WorldToScreen(matrix, Guts.DummyViewport, true);
+						b = b.WorldToScreen(matrix, Guts.DummyViewport, true);
 
-						ScreenSpaceLines.Add(((a, b), r.Tint ?? clipped.Argb, visible));
+						Guts.ScreenSpaceLines.Add(((a, b), r.Tint ?? clipped.Argb, visible));
 					}
 
-					if (ScreenSpaceLines.Count == 0)
+					if (Guts.ScreenSpaceLines.Count == 0)
 					{
 						continue;
 					}
@@ -562,11 +549,11 @@ namespace BizHawk.Client.EmuHawk
 					switch (_renderMode)
 					{
 						case 1:
-							var visibleVertices = new PointF[ScreenSpaceLines.Count * 2];
+							var visibleVertices = new PointF[Guts.ScreenSpaceLines.Count * 2];
 
-							for (int k = 0; k < ScreenSpaceLines.Count; k++)
+							for (int k = 0; k < Guts.ScreenSpaceLines.Count; k++)
 							{
-								((Vertex a, Vertex b), _, _) = ScreenSpaceLines[k];
+								((Vertex a, Vertex b), _, _) = Guts.ScreenSpaceLines[k];
 
 								visibleVertices[k * 2 + 0] = new PointF(a.Position.X, a.Position.Y);
 								visibleVertices[k * 2 + 1] = new PointF(b.Position.X, b.Position.Y);
@@ -574,15 +561,15 @@ namespace BizHawk.Client.EmuHawk
 
 							float opacity = (float)NudFilledOpacity.Value / 100.0f;
 							int alpha = (int)Math.Round(opacity * 255);
-							int argb = (r.Tint ?? ScreenSpaceLines[0].argb) & 0x00FFFFFF;
+							int argb = (r.Tint ?? Guts.ScreenSpaceLines[0].argb) & 0x00FFFFFF;
 							argb |= (alpha << 24);
 							Pen.Color = Color.FromArgb(argb);
 							g.FillPolygon(Pen.Brush, visibleVertices);
 							break;
 						case 2:
-							for (int k = 0; k < ScreenSpaceLines.Count; k++)
+							for (int k = 0; k < Guts.ScreenSpaceLines.Count; k++)
 							{
-								((Vertex a, Vertex b), argb, _) = ScreenSpaceLines[k];
+								((Vertex a, Vertex b), argb, _) = Guts.ScreenSpaceLines[k];
 								Pen.Color = Color.FromArgb(argb);
 
 								g.FillEllipse(
@@ -594,9 +581,9 @@ namespace BizHawk.Client.EmuHawk
 							}
 							break;
 						default:
-							for (int k = 0; k < ScreenSpaceLines.Count; k++)
+							for (int k = 0; k < Guts.ScreenSpaceLines.Count; k++)
 							{
-								((Vertex a, Vertex b), argb, bool visible) = ScreenSpaceLines[k];
+								((Vertex a, Vertex b), argb, bool visible) = Guts.ScreenSpaceLines[k];
 								Pen.Color = Color.FromArgb(argb);
 
 								if (visible)
@@ -730,7 +717,7 @@ namespace BizHawk.Client.EmuHawk
 			Pen?.Dispose();
 			Overlay?.Dispose();
 
-			_mapGraphic?.Dispose();
+			Guts.AreaMapGraphic?.Dispose();
 			PbxHazardStripes?.Image?.Dispose();
 
 			RaycastSelectionTimer?.Dispose();
@@ -745,12 +732,11 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private string _lastControllerLayoutHash = String.Empty;
-		private SHME.ExternalTool.ControllerConfig _controllerConfig;
 		private void SetButtonNames()
 		{
 			long address = Rom.Addresses.MainRam.ControllerConfig;
 			IReadOnlyList<byte> bytes = Mem.ReadByteRange(address, SHME.ExternalTool.ControllerConfig.Size);
-			_controllerConfig = new SHME.ExternalTool.ControllerConfig(bytes);
+			Guts.ControllerConfig = new SHME.ExternalTool.ControllerConfig(bytes);
 
 			Dictionary<PsxButtons, string> names = new()
 			{
@@ -792,14 +778,14 @@ namespace BizHawk.Client.EmuHawk
 
 			_buttonNames[ShmeCommand.Forward] = names[PsxButtons.Up];
 			_buttonNames[ShmeCommand.Backward] = names[PsxButtons.Down];
-			_buttonNames[ShmeCommand.Action] = names[_controllerConfig.Action.FilterToAny()];
-			_buttonNames[ShmeCommand.Aim] = names[_controllerConfig.Aim.FilterToAny()];
-			_buttonNames[ShmeCommand.Light] = names[_controllerConfig.Light.FilterToAny()];
-			_buttonNames[ShmeCommand.Run] = names[_controllerConfig.Run.FilterToAny()];
-			_buttonNames[ShmeCommand.View] = names[_controllerConfig.View.FilterToAny()];
-			_buttonNames[ShmeCommand.Left] = names[_controllerConfig.StepL.FilterToAny()];
-			_buttonNames[ShmeCommand.Right] = names[_controllerConfig.StepR.FilterToAny()];
-			_buttonNames[ShmeCommand.Map] = names[_controllerConfig.Map.FilterToAny()];
+			_buttonNames[ShmeCommand.Action] = names[Guts.ControllerConfig.Action.FilterToAny()];
+			_buttonNames[ShmeCommand.Aim] = names[Guts.ControllerConfig.Aim.FilterToAny()];
+			_buttonNames[ShmeCommand.Light] = names[Guts.ControllerConfig.Light.FilterToAny()];
+			_buttonNames[ShmeCommand.Run] = names[Guts.ControllerConfig.Run.FilterToAny()];
+			_buttonNames[ShmeCommand.View] = names[Guts.ControllerConfig.View.FilterToAny()];
+			_buttonNames[ShmeCommand.Left] = names[Guts.ControllerConfig.StepL.FilterToAny()];
+			_buttonNames[ShmeCommand.Right] = names[Guts.ControllerConfig.StepR.FilterToAny()];
+			_buttonNames[ShmeCommand.Map] = names[Guts.ControllerConfig.Map.FilterToAny()];
 		}
 
 		private void SetPlaceholderText()
@@ -855,28 +841,28 @@ namespace BizHawk.Client.EmuHawk
 			Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
 			if (mode == Octoshock.eResolutionMode.PixelPro)
 			{
-				ClickPort.Width = 640;
-				ClickPort.Height = 448;
-				ClickPort.TopLeft = new Point(84, 16);
+				Guts.ClickPort.Width = 640;
+				Guts.ClickPort.Height = 448;
+				Guts.ClickPort.TopLeft = new Point(84, 16);
 			}
 			else
 			{
-				ClickPort.Width = 320;
-				ClickPort.Height = 224;
-				ClickPort.TopLeft = new Point(17, 8);
+				Guts.ClickPort.Width = 320;
+				Guts.ClickPort.Height = 224;
+				Guts.ClickPort.TopLeft = new Point(17, 8);
 			}
 
 			if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
 			{
-				RenderPort.Width = 320;
-				RenderPort.Height = 224;
-				RenderPort.TopLeft = new Point(0, 0);
+				Guts.RenderPort.Width = 320;
+				Guts.RenderPort.Height = 224;
+				Guts.RenderPort.TopLeft = new Point(0, 0);
 			}
 			else if (RdoOverlayDisplaySurfaceEmuCore.Checked)
 			{
-				RenderPort.Width = ClickPort.Width;
-				RenderPort.Height = ClickPort.Height;
-				RenderPort.TopLeft = ClickPort.TopLeft;
+				Guts.RenderPort.Width = Guts.ClickPort.Width;
+				Guts.RenderPort.Height = Guts.ClickPort.Height;
+				Guts.RenderPort.TopLeft = Guts.ClickPort.TopLeft;
 			}
 			else
 			{
@@ -890,18 +876,18 @@ namespace BizHawk.Client.EmuHawk
 				IVideoProvider vp = Octoshock != null ? Octoshock.AsVideoProvider() : Nymashock.AsVideoProvider();
 				using Bitmap screenshot = DisplayManager.RenderOffscreen(vp, false).ToSysdrawingBitmap();
 
-				RenderPort = Viewport.FromBitmap(screenshot, Color.Black);
+				Guts.RenderPort = Viewport.FromBitmap(screenshot, Color.Black);
 			}
 
-			_dummyViewport = new Viewport(0, 0, RenderPort.Width, RenderPort.Height);
+			Guts.DummyViewport = new Viewport(0, 0, Guts.RenderPort.Width, Guts.RenderPort.Height);
 
 			Pen?.Dispose();
 			Overlay?.Dispose();
 
 			Pen = new Pen(Brushes.White);
-			Overlay = new Bitmap(RenderPort.Width, RenderPort.Height, PixelFormat.Format32bppArgb);
+			Overlay = new Bitmap(Guts.RenderPort.Width, Guts.RenderPort.Height, PixelFormat.Format32bppArgb);
 
-			_drawRegionRect = new Rectangle(0, 0, RenderPort.Width, RenderPort.Height);
+			_drawRegionRect = new Rectangle(0, 0, Guts.RenderPort.Width, Guts.RenderPort.Height);
 
 			if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
 			{
@@ -1019,10 +1005,10 @@ namespace BizHawk.Client.EmuHawk
 			Gui.WithSurface(_displaySurfaceID,
 				() => Gui.DrawImage(
 					Overlay,
-					RenderPort.Left,
-					RenderPort.Top,
-					RenderPort.Width,
-					RenderPort.Height,
+					Guts.RenderPort.Left,
+					Guts.RenderPort.Top,
+					Guts.RenderPort.Width,
+					Guts.RenderPort.Height,
 					true,
 					_displaySurfaceID));
 		}

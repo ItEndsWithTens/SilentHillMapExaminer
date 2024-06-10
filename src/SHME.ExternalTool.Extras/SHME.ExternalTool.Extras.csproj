@@ -16,6 +16,7 @@
     <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\SHME.ExternalTool.Graphics\SHME.ExternalTool.Graphics.csproj" />
   </ItemGroup>
 
 </Project>
