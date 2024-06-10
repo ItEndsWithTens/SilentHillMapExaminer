@@ -110,29 +110,33 @@ namespace SHME.ExternalTool.Graphics
 				return this;
 			}
 
-			var points = new List<Vertex>(Vertices.Count * 2);
+			// Using stackalloc comes with the caveat of stack space being very
+			// limited. Limiting stackalloc usage to 8 vertices worth of bytes,
+			// currently 288 with a Vertex size of 36 bytes, seems prudent.
+			const int Max = 288;
 
+			int potential = Vertices.Count * 2;
+			Span<Vertex> points = Vertex.MemorySize * potential > Max ?
+				new Vertex[potential] : stackalloc Vertex[Max];
+
+			int actual = 0;
 			for (int i = 0; i < Vertices.Count; i++)
 			{
 				int idxA = i;
 				int idxB = (i + 1) % Vertices.Count;
 
-				Vertex a = Vertices[idxA];
-				Vertex b = Vertices[idxB];
+				(Vertex, Vertex) pair = (Vertices[idxA], Vertices[idxB]);
 
-				(a, b, bool visible) = (a, b).ClipPairAgainstPlane(plane);
+				(points[actual], points[actual + 1], bool visible) = pair.ClipPairAgainstPlane(plane);
 
-				if (!visible)
+				if (visible)
 				{
-					continue;
+					actual += 2;
 				}
-
-				points.Add(a);
-				points.Add(b);
 			}
 
 			Vertices.Clear();
-			for (int i = 0; i < points.Count; i++)
+			for (int i = 0; i < actual; i++)
 			{
 				Vertex point = points[i];
 				if (!Vertices.Contains(point))
