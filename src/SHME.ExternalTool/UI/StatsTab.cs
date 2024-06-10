@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using static SHME.ExternalTool.Core;
+using static SHME.ExternalTool.Guts;
 
 namespace BizHawk.Client.EmuHawk
 {

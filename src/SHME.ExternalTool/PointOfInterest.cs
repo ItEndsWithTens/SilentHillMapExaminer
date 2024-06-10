@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using static SHME.ExternalTool.Core;
+using static SHME.ExternalTool.Guts;
 
 namespace SHME.ExternalTool
 {

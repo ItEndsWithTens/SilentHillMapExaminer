@@ -72,7 +72,7 @@ namespace BizHawk.Client.EmuHawk
 
 		protected override string WindowTitleStatic => ToolName;
 
-		public Core Core { get; } = new();
+		public Guts Guts { get; } = new();
 
 		public Camera Camera { get; set; } = new()
 		{
@@ -88,7 +88,7 @@ namespace BizHawk.Client.EmuHawk
 		public Pen Pen { get; set; } = new(Brushes.White);
 		public Bitmap Overlay { get; set; } = new(1, 1, PixelFormat.Format32bppArgb);
 
-		public Rom Rom => Core.Rom;
+		public Rom Rom => Guts.Rom;
 
 		private Viewport ClickPort { get; set; } = new();
 		private Viewport RenderPort { get; set; } = new();
@@ -321,9 +321,9 @@ namespace BizHawk.Client.EmuHawk
 					if (CbxShowLookAt.Checked)
 					{
 						Vector3 pos = _gameCameraLookAt.Position;
-						pos.X = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX));
-						pos.Y = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY));
-						pos.Z = -Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ));
+						pos.X = Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX));
+						pos.Y = -Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY));
+						pos.Z = -Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ));
 						_gameCameraLookAt.Position = pos;
 					}
 					if (cutscene)
@@ -351,7 +351,7 @@ namespace BizHawk.Client.EmuHawk
 						if (_forcedCameraYaw != null)
 						{
 							_holdCameraPitch = 0;
-							_holdCameraYaw = Core.DegreesToGameUnits((float)_forcedCameraYaw);
+							_holdCameraYaw = Guts.DegreesToGameUnits((float)_forcedCameraYaw);
 							_holdCameraRoll = 0;
 							HoldCamera();
 
@@ -416,7 +416,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Settings?.Dispose();
 
-			Assembly a = typeof(Core).Assembly;
+			Assembly a = typeof(Guts).Assembly;
 			string component = Path.GetFileNameWithoutExtension(a.Location);
 			Settings = new Settings("com.gyroshot", ToolName, component);
 

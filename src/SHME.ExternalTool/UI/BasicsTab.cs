@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
-using static SHME.ExternalTool.Core;
+using static SHME.ExternalTool.Guts;
 
 namespace BizHawk.Client.EmuHawk
 {

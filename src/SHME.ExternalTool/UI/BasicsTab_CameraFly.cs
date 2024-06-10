@@ -135,9 +135,9 @@ namespace BizHawk.Client.EmuHawk
 			Mem.WriteU32(Rom.Addresses.MainRam.CameraSpringArmTensionH1, 0);
 			Mem.WriteU32(Rom.Addresses.MainRam.CameraSpringArmTensionV1, 0);
 
-			float pitchFloat = Core.GameUnitsToDegrees(_holdCameraPitch);
-			float yawFloat = Core.GameUnitsToDegrees(_holdCameraYaw);
-			float rollFloat = Core.GameUnitsToDegrees(_holdCameraRoll);
+			float pitchFloat = Guts.GameUnitsToDegrees(_holdCameraPitch);
+			float yawFloat = Guts.GameUnitsToDegrees(_holdCameraYaw);
+			float rollFloat = Guts.GameUnitsToDegrees(_holdCameraRoll);
 
 			// TODO: Use AngleConverter stuff for this?
 
@@ -152,9 +152,9 @@ namespace BizHawk.Client.EmuHawk
 			int zRaw = Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualZ);
 
 			// Convert to overlay camera coords.
-			float x = Core.QToFloat(xRaw);
-			float y = -Core.QToFloat(yRaw);
-			float z = -Core.QToFloat(zRaw);
+			float x = Guts.QToFloat(xRaw);
+			float y = -Guts.QToFloat(yRaw);
+			float z = -Guts.QToFloat(zRaw);
 
 			Vector3 lookAt = Vector3.Transform(new Vector3(0.0f, 0.0f, -1.0f), matrix);
 
@@ -166,9 +166,9 @@ namespace BizHawk.Client.EmuHawk
 			y = -y;
 			z = -z;
 
-			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtX, Core.FloatToQ(x));
-			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtY, Core.FloatToQ(y));
-			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtZ, Core.FloatToQ(z));
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtX, Guts.FloatToQ(x));
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtY, Guts.FloatToQ(y));
+			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtZ, Guts.FloatToQ(z));
 		}
 
 		// These use Silent Hill coordinates, i.e. +X east, +Y down, +Z north.
@@ -186,13 +186,13 @@ namespace BizHawk.Client.EmuHawk
 		private bool _down;
 		private void MoveCamera()
 		{
-			_camPos.X = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualX));
-			_camPos.Y = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualY));
-			_camPos.Z = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualZ));
+			_camPos.X = Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualX));
+			_camPos.Y = Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualY));
+			_camPos.Z = Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraPositionActualZ));
 
-			_camLook.X = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX));
-			_camLook.Y = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY));
-			_camLook.Z = Core.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ));
+			_camLook.X = Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX));
+			_camLook.Y = Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY));
+			_camLook.Z = Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ));
 
 			Vector3 _diff = _camLook - _camPos;
 
@@ -231,9 +231,9 @@ namespace BizHawk.Client.EmuHawk
 				_camLook -= _speed * _worldUp;
 			}
 
-			int qPosX = Core.FloatToQ(_camPos.X);
-			int qPosY = Core.FloatToQ(_camPos.Y);
-			int qPosZ = Core.FloatToQ(_camPos.Z);
+			int qPosX = Guts.FloatToQ(_camPos.X);
+			int qPosY = Guts.FloatToQ(_camPos.Y);
+			int qPosZ = Guts.FloatToQ(_camPos.Z);
 
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualX, qPosX);
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionActualY, qPosY);
@@ -243,9 +243,9 @@ namespace BizHawk.Client.EmuHawk
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealY, qPosY);
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraPositionIdealZ, qPosZ);
 
-			int qLookX = Core.FloatToQ(_camLook.X);
-			int qLookY = Core.FloatToQ(_camLook.Y);
-			int qLookZ = Core.FloatToQ(_camLook.Z);
+			int qLookX = Guts.FloatToQ(_camLook.X);
+			int qLookY = Guts.FloatToQ(_camLook.Y);
+			int qLookZ = Guts.FloatToQ(_camLook.Z);
 
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtX, qLookX);
 			Mem.WriteS32(Rom.Addresses.MainRam.CameraLookAtY, qLookY);
@@ -273,8 +273,8 @@ namespace BizHawk.Client.EmuHawk
 			uint pitch = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealPitch);
 			uint yaw = Mem.ReadU16(Rom.Addresses.MainRam.CameraIdealYaw);
 
-			float pitchDegrees = Core.GameUnitsToDegrees(pitch);
-			float yawDegrees = Core.GameUnitsToDegrees(yaw);
+			float pitchDegrees = Guts.GameUnitsToDegrees(pitch);
+			float yawDegrees = Guts.GameUnitsToDegrees(yaw);
 
 			if (CbxCameraFlyInvert.Checked)
 			{
@@ -286,10 +286,10 @@ namespace BizHawk.Client.EmuHawk
 			}
 			yawDegrees += deltaX;
 
-			_holdCameraPitch = Core.DegreesToGameUnits(pitchDegrees);
+			_holdCameraPitch = Guts.DegreesToGameUnits(pitchDegrees);
 			if (!cutscene)
 			{
-				_holdCameraYaw = Core.DegreesToGameUnits(yawDegrees);
+				_holdCameraYaw = Guts.DegreesToGameUnits(yawDegrees);
 			}
 			_holdCameraRoll = 0;
 

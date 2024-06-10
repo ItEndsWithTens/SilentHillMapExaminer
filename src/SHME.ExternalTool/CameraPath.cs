@@ -32,10 +32,10 @@ namespace SHME.ExternalTool
 
 			Address = address;
 
-			AreaMinX = Core.QToFloat(BitConverter.ToInt16(bytes, 0), 4);
-			AreaMaxX = Core.QToFloat(BitConverter.ToInt16(bytes, 2), 4);
-			AreaMinZ = Core.QToFloat(BitConverter.ToInt16(bytes, 4), 4);
-			AreaMaxZ = Core.QToFloat(BitConverter.ToInt16(bytes, 6), 4);
+			AreaMinX = Guts.QToFloat(BitConverter.ToInt16(bytes, 0), 4);
+			AreaMaxX = Guts.QToFloat(BitConverter.ToInt16(bytes, 2), 4);
+			AreaMinZ = Guts.QToFloat(BitConverter.ToInt16(bytes, 4), 4);
+			AreaMaxZ = Guts.QToFloat(BitConverter.ToInt16(bytes, 6), 4);
 
 			// Sign extending the 8-bit value allows interpreting it as Q12.4.
 			short rawMinY = bytes[18];
@@ -45,9 +45,9 @@ namespace SHME.ExternalTool
 			}
 
 			VolumeMin = new Vector3(
-				Core.QToFloat(BitConverter.ToInt16(bytes, 8), 4),
-				Core.QToFloat(rawMinY, 4),
-				Core.QToFloat(BitConverter.ToInt16(bytes, 12), 4));
+				Guts.QToFloat(BitConverter.ToInt16(bytes, 8), 4),
+				Guts.QToFloat(rawMinY, 4),
+				Guts.QToFloat(BitConverter.ToInt16(bytes, 12), 4));
 
 			short rawMaxY = bytes[19];
 			if (rawMaxY >= 0x80)
@@ -56,9 +56,9 @@ namespace SHME.ExternalTool
 			}
 
 			VolumeMax = new Vector3(
-				Core.QToFloat(BitConverter.ToInt16(bytes, 10), 4),
-				Core.QToFloat(rawMaxY, 4),
-				Core.QToFloat(BitConverter.ToInt16(bytes, 14), 4));
+				Guts.QToFloat(BitConverter.ToInt16(bytes, 10), 4),
+				Guts.QToFloat(rawMaxY, 4),
+				Guts.QToFloat(BitConverter.ToInt16(bytes, 14), 4));
 
 			Thing4 = bytes[16];
 			Disabled = (Thing4 & 0b01000000) == 0b01000000;
@@ -67,8 +67,8 @@ namespace SHME.ExternalTool
 			Thing6 = BitConverter.ToInt16(bytes, 20);
 
 			// TODO: Also where the hell is roll?
-			Pitch = Core.GameUnitsToDegrees((uint)(bytes[22] << 4));
-			Yaw = Core.GameUnitsToDegrees((uint)(bytes[23] << 4));
+			Pitch = Guts.GameUnitsToDegrees((uint)(bytes[22] << 4));
+			Yaw = Guts.GameUnitsToDegrees((uint)(bytes[23] << 4));
 		}
 
 		public override string ToString()

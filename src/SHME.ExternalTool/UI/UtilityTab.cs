@@ -121,7 +121,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			int q = Core.FloatToQ(num, f);
+			int q = Guts.FloatToQ(num, f);
 
 			CultureInfo c = CultureInfo.CurrentCulture;
 
@@ -182,7 +182,7 @@ namespace BizHawk.Client.EmuHawk
 			FixedPointErrorClearTimer.Stop();
 			FixedPointErrorClearTimer.Start();
 
-			float num = Core.QToFloat(q, f);
+			float num = Guts.QToFloat(q, f);
 
 			TbxUtilityFixedPointFloat.Text = num.ToString(c);
 		}
@@ -226,7 +226,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			TbxUtilityAnglesDegrees.Text = Core.GameUnitsToDegrees(hex).ToString(c);
+			TbxUtilityAnglesDegrees.Text = Guts.GameUnitsToDegrees(hex).ToString(c);
 			LblUtilityAnglesError.Text = "None";
 			AnglesErrorClearTimer.Stop();
 			AnglesErrorClearTimer.Start();
@@ -268,7 +268,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			uint u = Core.DegreesToGameUnits(num);
+			uint u = Guts.DegreesToGameUnits(num);
 			TbxUtilityAnglesGameUnits.Text = $"0x{u.ToString("X", c)}";
 			LblUtilityAnglesError.Text = "None";
 			AnglesErrorClearTimer.Stop();
