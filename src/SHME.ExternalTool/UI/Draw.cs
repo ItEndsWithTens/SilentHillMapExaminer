@@ -2,6 +2,7 @@
 using SHME.ExternalTool.Graphics;
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace BizHawk.Client.EmuHawk;
 
@@ -127,5 +128,48 @@ public partial class CustomMainForm
 					(int)b.Position.Y);
 			}
 		}
+	}
+
+	private void DrawReticleBitmap(Graphics g, int width, int height, float percent)
+	{
+		int size = (int)Math.Round(height * (percent / 100.0f));
+		int centerW = width / 2;
+		int centerH = height / 2;
+
+		Pen.Color = Color.White;
+		g.InterpolationMode = InterpolationMode.NearestNeighbor;
+		g.PixelOffsetMode = PixelOffsetMode.None;
+		g.SmoothingMode = SmoothingMode.Default;
+
+		g.DrawRectangle(Pen, 0, 0, width - 1, height - 1);
+
+		g.DrawLine(Pen, 0, centerH, size, centerH);
+		g.DrawLine(Pen, centerW - size / 2, centerH, centerW + size / 2, centerH);
+		g.DrawLine(Pen, width - 1 - size, centerH, width - 1, centerH);
+
+		g.DrawLine(Pen, centerW, 0, centerW, size);
+		g.DrawLine(Pen, centerW, centerH - size / 2, centerW, centerH + size / 2);
+		g.DrawLine(Pen, centerW, height - 1 - size, centerW, height - 1);
+	}
+	private void DrawReticleGui(int width, int height, float percent)
+	{
+		int left = Guts.RenderPort.Left;
+		int top = Guts.RenderPort.Top;
+
+		int size = (int)Math.Round(height * (percent / 100.0f));
+		int centerW = left + width / 2;
+		int centerH = top + height / 2;
+
+		var color = Color.White;
+
+		Gui.DrawRectangle(left, top, width - 1, height - 1, color);
+
+		Gui.DrawLine(left, centerH, left + size, centerH, color);
+		Gui.DrawLine(centerW - size / 2, centerH, centerW + size / 2, centerH, color);
+		Gui.DrawLine(left + (width - 1 - size), centerH, left + (width - 1), centerH, color);
+
+		Gui.DrawLine(centerW, top, centerW, top + size, color);
+		Gui.DrawLine(centerW, centerH - size / 2, centerW, centerH + size / 2, color);
+		Gui.DrawLine(centerW, top + (height - 1 - size), centerW, top + (height - 1), color);
 	}
 }

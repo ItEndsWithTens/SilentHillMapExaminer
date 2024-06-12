@@ -219,48 +219,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		public static void DrawReticleBitmap(Graphics g, Pen pen, int width, int height, float percent)
-		{
-			pen.Color = Color.White;
-
-			g.InterpolationMode = InterpolationMode.NearestNeighbor;
-			g.PixelOffsetMode = PixelOffsetMode.None;
-			g.SmoothingMode = SmoothingMode.Default;
-
-			g.DrawRectangle(pen, 0, 0, width - 1, height - 1);
-
-			int size = (int)Math.Round(height * (percent / 100.0f));
-			int centerW = width / 2;
-			int centerH = height / 2;
-
-			g.DrawLine(pen, 0, centerH, size, centerH);
-			g.DrawLine(pen, centerW - size / 2, centerH, centerW + size / 2, centerH);
-			g.DrawLine(pen, width - 1 - size, centerH, width - 1, centerH);
-
-			g.DrawLine(pen, centerW, 0, centerW, size);
-			g.DrawLine(pen, centerW, centerH - size / 2, centerW, centerH + size / 2);
-			g.DrawLine(pen, centerW, height - 1 - size, centerW, height - 1);
-		}
-		public void DrawReticleGui(Color color, int width, int height, float percent)
-		{
-			int left = Guts.RenderPort.Left;
-			int top = Guts.RenderPort.Top;
-
-			int size = (int)Math.Round(height * (percent / 100.0f));
-			int centerW = left + width / 2;
-			int centerH = top + height / 2;
-
-			Gui.DrawRectangle(left, top, width - 1, height - 1);
-
-			Gui.DrawLine(left, centerH, left + size, centerH);
-			Gui.DrawLine(centerW - size / 2, centerH, centerW + size / 2, centerH);
-			Gui.DrawLine(left + (width - 1 - size), centerH, left + (width - 1), centerH);
-
-			Gui.DrawLine(centerW, top, centerW, top + size);
-			Gui.DrawLine(centerW, centerH - size / 2, centerW, centerH + size / 2);
-			Gui.DrawLine(centerW, top + (height - 1 - size), centerW, top + (height - 1));
-		}
-
 		public override void UpdateValues(ToolFormUpdateType type)
 		{
 			if (Game.IsNullInstance())
@@ -509,7 +467,6 @@ namespace BizHawk.Client.EmuHawk
 			DrawGameObjects(g, ref matrix, Point.Empty);
 			DrawReticleBitmap(
 				g,
-				Pen,
 				Guts.RenderPort.Width,
 				Guts.RenderPort.Height,
 				(float)NudCrosshairLength.Value);
@@ -533,7 +490,6 @@ namespace BizHawk.Client.EmuHawk
 
 				DrawGameObjects(Gui, ref matrix, Guts.RenderPort.TopLeft);
 				DrawReticleGui(
-					Pen.Color,
 					Guts.RenderPort.Width,
 					Guts.RenderPort.Height,
 					(float)NudCrosshairLength.Value);
