@@ -97,6 +97,8 @@ namespace BizHawk.Client.EmuHawk
 			set => _settings = value;
 		}
 
+		private Action DrawOverlay { get; set; }
+
 		public CustomMainForm()
 		{
 			InitializeComponent();
@@ -114,6 +116,8 @@ namespace BizHawk.Client.EmuHawk
 				border + TbcMainTabs.Width + border,
 				border + TbcMainTabs.Height + border);
 			MaximumSize = Size;
+
+			DrawOverlay = DrawOverlayBitmap;
 
 			UpdateArrays = new Action(() =>
 			{
@@ -370,11 +374,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxEnableOverlay.Checked)
 					{
-						UpdateOverlay();
-						if (!RdoOverlayDisplaySurfaceFramebuffer.Checked)
-						{
-							ApplyOverlayToGui();
-						}
+						DrawOverlay();
 					}
 					if (CbxEnableStatsReporting.Checked)
 					{
@@ -415,13 +415,13 @@ namespace BizHawk.Client.EmuHawk
 			TbxSettingsFilesRoaming.Text = Settings.Roaming.FileName;
 		}
 
-		private void UpdateOverlay()
+		private void DrawOverlayCommonPre(ref Matrix4x4 matrix, ref Vector3 position, ref Vector3 angles)
 		{
-			(_, Vector3 position) = GetPosition();
-			(_, Vector3 angles) = GetAngles();
+			(_, position) = GetPosition();
+			(_, angles) = GetAngles();
 
-			Vector3 convertedPosition = CoordinateConverter.Convert(position, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
-			Vector3 convertedAngles = AngleConverter.Convert(angles, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
+			position = CoordinateConverter.Convert(position, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
+			angles = AngleConverter.Convert(angles, CoordinateType.SilentHill, CoordinateType.YUpRightHanded);
 
 			if (!CbxEnableOverlay.Checked && !CbxEnableTestModelSection.Checked)
 			{
@@ -431,7 +431,7 @@ namespace BizHawk.Client.EmuHawk
 			// Remember that the projection, view, model order from OpenGL
 			// shaders is reversed in C#, to account for System.Numeric's row
 			// major matrix layout.
-			Matrix4x4 matrix = Guts.Camera.ViewMatrix * Guts.Camera.ProjectionMatrix;
+			matrix = Guts.Camera.ViewMatrix * Guts.Camera.ProjectionMatrix;
 
 			Guts.VisibleRenderables.Clear();
 			if (CbxEnableOverlay.Checked)
@@ -470,6 +470,14 @@ namespace BizHawk.Client.EmuHawk
 					ref Guts.VisibleRenderables,
 					Guts.GameCameraLookAt);
 			}
+		}
+		private void DrawOverlayBitmap()
+		{
+			Matrix4x4 matrix = Matrix4x4.Identity;
+			Vector3 position = Vector3.Zero;
+			Vector3 angles = Vector3.Zero;
+
+			DrawOverlayCommonPre(ref matrix, ref position, ref angles);
 
 			var g = Graphics.FromImage(Overlay);
 			g.CompositingMode = CompositingMode.SourceCopy;
@@ -479,11 +487,20 @@ namespace BizHawk.Client.EmuHawk
 			DrawPolygons(matrix, g);
 			DrawReticle(g, Pen, Guts.RenderPort.Width, Guts.RenderPort.Height, (float)NudCrosshairLength.Value);
 
+			if (!RdoOverlayDisplaySurfaceFramebuffer.Checked)
+			{
+				ApplyOverlayToGui();
+			}
+
+			DrawOverlayCommonPost(ref position, ref angles);
+		}
+		private void DrawOverlayCommonPost(ref Vector3 position, ref Vector3 angles)
+		{
 			if (CbxOverlayCameraMatchGame.Checked)
 			{
 				Guts.Camera.UpdateAll(
-					convertedPosition,
-					convertedAngles.X, convertedAngles.Y, convertedAngles.Z,
+					position,
+					angles.X, angles.Y, angles.Z,
 					null, CalculateGameFov(),
 					null, null);
 
@@ -913,7 +930,7 @@ namespace BizHawk.Client.EmuHawk
 				// won't become visible until it resumes.
 				if (Emu.IsPaused())
 				{
-					UpdateOverlay();
+					DrawOverlay();
 					ApplyOverlayToGui();
 				}
 			}
@@ -1019,7 +1036,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void IndexOfDrawRegion_ValueChanging(uint address, uint value, uint flags)
 		{
-			UpdateOverlay();
+			DrawOverlay();
 
 			// IndexOfDrawRegion_ValueChanging is attached as a write callback,
 			// which means it's called just before the write is performed. The
