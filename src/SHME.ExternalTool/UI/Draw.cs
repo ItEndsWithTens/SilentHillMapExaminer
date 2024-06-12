@@ -38,7 +38,7 @@ public partial class CustomMainForm
 	private Action<object, Pen, int, int, int, int> _drawEllipse = null!;
 	private Action<object, Pen, int, int, int, int> _drawLine = null!;
 	private Action<object, Pen, Point[]> _drawPolygon = null!;
-	private Action<object, int> RenderAction = null!;
+	private Action<object, int> _drawFace = null!;
 
 	private static void DrawPolygonBitmap(object backend, Pen pen, Point[] visibleVertices)
 	{
@@ -67,7 +67,7 @@ public partial class CustomMainForm
 		((IGuiApi)backend).DrawLine(x1, y1, x2, y2, pen.Color);
 	}
 
-	private void DrawFilled(object api, int argb)
+	private void DrawFaceFilled(object api, int argb)
 	{
 		var visibleVertices = new Point[Guts.ScreenSpaceLines.Count * 2];
 
@@ -93,7 +93,7 @@ public partial class CustomMainForm
 
 		_drawPolygon(api, Pen, visibleVertices);
 	}
-	private void DrawPoints(object api, int argb)
+	private void DrawFacePoints(object api, int argb)
 	{
 		for (int k = 0; k < Guts.ScreenSpaceLines.Count; k++)
 		{
@@ -109,7 +109,7 @@ public partial class CustomMainForm
 				4);
 		}
 	}
-	private void DrawWireframe(object api, int argb)
+	private void DrawFaceWireframe(object api, int argb)
 	{
 		for (int k = 0; k < Guts.ScreenSpaceLines.Count; k++)
 		{

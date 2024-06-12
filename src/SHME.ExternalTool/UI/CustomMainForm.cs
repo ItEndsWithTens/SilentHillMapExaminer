@@ -620,7 +620,7 @@ namespace BizHawk.Client.EmuHawk
 						continue;
 					}
 
-					RenderAction(api, r.Tint ?? Guts.ScreenSpaceLines[0].argb);
+					_drawFace(api, r.Tint ?? Guts.ScreenSpaceLines[0].argb);
 				}
 			}
 		}

@@ -331,11 +331,11 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CmbRenderMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RenderAction = CmbRenderMode.SelectedIndex switch
+			_drawFace = CmbRenderMode.SelectedIndex switch
 			{
-				2 => DrawPoints,
-				1 => DrawFilled,
-				_ => DrawWireframe,
+				2 => DrawFacePoints,
+				1 => DrawFaceFilled,
+				_ => DrawFaceWireframe,
 			};
 		}
 
