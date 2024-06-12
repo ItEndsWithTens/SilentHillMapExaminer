@@ -35,17 +35,22 @@ namespace SHME.ExternalTool
 			FileVersionInfo info = FileVersionInfo.GetVersionInfo(typeof(Settings).Assembly.Location);
 			var version = new Version(info.FileMajorPart, info.FileMinorPart, info.FileBuildPart);
 
-			VersioningResultAction actionV = VersioningResultAction.RenameAndLoadDefault;
+			VersioningResultAction actionV = VersioningResultAction.DoNothing;
 			RecoveryAction actionR = RecoveryAction.RenameAndLoadDefault;
 
 			Local = JsonSettings
 				.Configure<LocalSettings>(localPath)
 				.WithVersioning(version, actionV)
 				.WithRecovery(actionR)
-				.LoadNow()
-				.EnableAutosave();
+				.LoadNow();
 
 			bool save = false;
+
+			if (Local.Version != version)
+			{
+				Local.Version = version;
+				save = true;
+			}
 
 			// Settings that are collections need to be initialized as empty
 			// first, then populated later. Otherwise JsonSettings creates a
@@ -99,8 +104,26 @@ namespace SHME.ExternalTool
 				.Configure<RoamingSettings>(roamingPath)
 				.WithVersioning(version, actionV)
 				.WithRecovery(actionR)
-				.LoadNow()
-				.EnableAutosave();
+				.LoadNow();
+
+			if (Roaming.Version != version)
+			{
+				Roaming.Version = version;
+				Roaming.Save();
+			}
+
+			// For some reason the EnableAutosave fluent method returns the
+			// respective settings instance with its Version property reset to
+			// its default of 1.0.0.0. As such, these calls must be done after
+			// the manual version checks and assignments above.
+			Local = Local.EnableAutosave();
+			Roaming = Roaming.EnableAutosave();
+
+			// Although the files on disk are now up to date, and have the right
+			// version number stored in them, the instance properties as noted
+			// have had their versions reset by the EnableAutosave call. For the
+			// sake of any code that may want to access Version, set it again.
+			Local.Version = Roaming.Version = version;
 		}
 
 		public void Save()

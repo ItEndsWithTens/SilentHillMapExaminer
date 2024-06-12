@@ -405,7 +405,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Settings?.Dispose();
 
-			Assembly a = typeof(Guts).Assembly;
+			Assembly a = typeof(CustomMainForm).Assembly;
 			string component = Path.GetFileNameWithoutExtension(a.Location);
 			Settings = new Settings("com.gyroshot", ToolName, component);
 
