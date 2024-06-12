@@ -82,7 +82,7 @@ namespace SHME.ExternalTool.Graphics
 			return v.ConvertCoordinateSpace(inverted);
 		}
 
-		public static Vertex WorldToScreen(this Vertex v, Matrix4x4 mvpMatrix, Viewport viewport, bool flip)
+		public static Vertex WorldToScreen(this Vertex v, Matrix4x4 mvpMatrix, int width, int height, bool flip)
 		{
 			Vector4 ndc = Vector4.Transform(v.Position, mvpMatrix);
 			if (ndc.W != 0)
@@ -98,8 +98,12 @@ namespace SHME.ExternalTool.Graphics
 			}
 
 			Vector3 position = v.Position;
-			position.X = (int)Math.Round(viewport.Center.X + (ndc.X * viewport.Width / 2));
-			position.Y = (int)Math.Round(viewport.Center.Y + (ndc.Y * viewport.Height / 2));
+
+			int halfW = width / 2;
+			int halfH = height / 2;
+
+			position.X = (int)Math.Round(halfW + (ndc.X * halfW));
+			position.Y = (int)Math.Round(halfH + (ndc.Y * halfH));
 
 			v.Position = position;
 

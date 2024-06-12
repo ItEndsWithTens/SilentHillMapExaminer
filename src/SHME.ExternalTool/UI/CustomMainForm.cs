@@ -484,7 +484,7 @@ namespace BizHawk.Client.EmuHawk
 			g.CompositingQuality = CompositingQuality.HighSpeed;
 
 			g.Clear(Color.FromArgb(0, 0, 0, 0));
-			DrawPolygons(matrix, g);
+			DrawPolygons(matrix, g, Point.Empty);
 			DrawReticle(g, Pen, Guts.RenderPort.Width, Guts.RenderPort.Height, (float)NudCrosshairLength.Value);
 
 			if (!RdoOverlayDisplaySurfaceFramebuffer.Checked)
@@ -521,7 +521,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private SmoothingMode _smoothingMode = SmoothingMode.Default;
-		public void DrawPolygons(Matrix4x4 matrix, Graphics g)
+		public void DrawPolygons(Matrix4x4 matrix, Graphics g, Point topLeft)
 		{
 			g.SmoothingMode = _smoothingMode;
 
@@ -551,8 +551,21 @@ namespace BizHawk.Client.EmuHawk
 						Vertex a = clipped.Vertices[idxA];
 						Vertex b = clipped.Vertices[idxB];
 
-						a = a.WorldToScreen(matrix, Guts.DummyViewport, true);
-						b = b.WorldToScreen(matrix, Guts.DummyViewport, true);
+						int width = Guts.RenderPort.Width;
+						int height = Guts.RenderPort.Height;
+
+						a = a.WorldToScreen(matrix, width, height, true);
+						b = b.WorldToScreen(matrix, width, height, true);
+
+						Vector3 pos = a.Position;
+						pos.X += topLeft.X;
+						pos.Y += topLeft.Y;
+						a.Position = pos;
+
+						pos = b.Position;
+						pos.X += topLeft.X;
+						pos.Y += topLeft.Y;
+						b.Position = pos;
 
 						Guts.ScreenSpaceLines.Add(((a, b), r.Tint ?? clipped.Argb, visible));
 					}
@@ -894,8 +907,6 @@ namespace BizHawk.Client.EmuHawk
 
 				Guts.RenderPort = Viewport.FromBitmap(screenshot, Color.Black);
 			}
-
-			Guts.DummyViewport = new Viewport(0, 0, Guts.RenderPort.Width, Guts.RenderPort.Height);
 
 			Pen?.Dispose();
 			Overlay?.Dispose();

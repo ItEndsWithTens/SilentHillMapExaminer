@@ -21,10 +21,6 @@ namespace SHME.ExternalTool
 		public Viewport ClickPort { get; set; } = new();
 		public Viewport RenderPort { get; set; } = new();
 
-		// TODO: Try to eliminate need for this; maybe better Viewport class,
-		// or a Vertex WorldToScreen method that doesn't need this?
-		public Viewport DummyViewport { get; set; } = new();
-
 		public Renderable GameCameraLookAt { get; set; } = new();
 
 		public Dictionary<PointOfInterest, Renderable?> Pois { get; } = [];
