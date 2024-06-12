@@ -329,10 +329,14 @@ namespace BizHawk.Client.EmuHawk
 			_levelDataNeedsUpdate = true;
 		}
 
-		private int _renderMode;
 		private void CmbRenderMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			_renderMode = CmbRenderMode.SelectedIndex;
+			RenderAction = CmbRenderMode.SelectedIndex switch
+			{
+				2 => DrawPoints,
+				1 => DrawFilled,
+				_ => DrawWireframe,
+			};
 		}
 
 		private void Emu_StateLoaded(object sender, StateLoadedEventArgs e)

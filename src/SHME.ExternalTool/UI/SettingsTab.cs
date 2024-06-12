@@ -104,6 +104,17 @@ namespace BizHawk.Client.EmuHawk
 			DialogController.StartSound();
 		}
 
+		private void RdoOverlayBackend_CheckedChanged(object sender, EventArgs e)
+		{
+			if (RdoOverlayBackendBizHawkGui.Checked)
+			{
+				DrawOverlay = DrawOverlayGui;
+			}
+			else
+			{
+				DrawOverlay = DrawOverlayBitmap;
+			}
+		}
 		private void RdoOverlayDisplaySurface_CheckedChanged(object sender, EventArgs e)
 		{
 			InitializeOverlay();

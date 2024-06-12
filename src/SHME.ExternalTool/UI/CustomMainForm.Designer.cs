@@ -445,6 +445,10 @@ namespace BizHawk.Client.EmuHawk
             this.RdoOverlayDisplaySurfaceFramebuffer = new System.Windows.Forms.RadioButton();
             this.RdoOverlayDisplaySurfaceClient = new System.Windows.Forms.RadioButton();
             this.RdoOverlayDisplaySurfaceEmuCore = new System.Windows.Forms.RadioButton();
+            this.GbxOverlayBackend = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel43 = new System.Windows.Forms.TableLayoutPanel();
+            this.RdoOverlayBackendInternalBitmap = new System.Windows.Forms.RadioButton();
+            this.RdoOverlayBackendBizHawkGui = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
@@ -590,6 +594,8 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel42.SuspendLayout();
             this.GbxOverlayDisplaySurface.SuspendLayout();
             this.tableLayoutPanel41.SuspendLayout();
+            this.GbxOverlayBackend.SuspendLayout();
+            this.tableLayoutPanel43.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.SuspendLayout();
             // 
@@ -6600,27 +6606,27 @@ namespace BizHawk.Client.EmuHawk
             // tableLayoutPanel42
             // 
             this.tableLayoutPanel42.ColumnCount = 2;
-            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel42.Controls.Add(this.GbxOverlayDisplaySurface, 0, 0);
+            this.tableLayoutPanel42.Controls.Add(this.GbxOverlayBackend, 1, 0);
             this.tableLayoutPanel42.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel42.Location = new System.Drawing.Point(3, 121);
             this.tableLayoutPanel42.Name = "tableLayoutPanel42";
             this.tableLayoutPanel42.RowCount = 2;
-            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel42.Size = new System.Drawing.Size(682, 463);
             this.tableLayoutPanel42.TabIndex = 5;
             // 
             // GbxOverlayDisplaySurface
             // 
-            this.GbxOverlayDisplaySurface.AutoSize = true;
-            this.GbxOverlayDisplaySurface.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.GbxOverlayDisplaySurface.Controls.Add(this.tableLayoutPanel41);
+            this.GbxOverlayDisplaySurface.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GbxOverlayDisplaySurface.Location = new System.Drawing.Point(0, 0);
-            this.GbxOverlayDisplaySurface.Margin = new System.Windows.Forms.Padding(0);
+            this.GbxOverlayDisplaySurface.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.GbxOverlayDisplaySurface.Name = "GbxOverlayDisplaySurface";
-            this.GbxOverlayDisplaySurface.Size = new System.Drawing.Size(136, 88);
+            this.GbxOverlayDisplaySurface.Size = new System.Drawing.Size(338, 231);
             this.GbxOverlayDisplaySurface.TabIndex = 0;
             this.GbxOverlayDisplaySurface.TabStop = false;
             this.GbxOverlayDisplaySurface.Text = "Overlay display surface";
@@ -6628,7 +6634,6 @@ namespace BizHawk.Client.EmuHawk
             // tableLayoutPanel41
             // 
             this.tableLayoutPanel41.AutoSize = true;
-            this.tableLayoutPanel41.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel41.ColumnCount = 1;
             this.tableLayoutPanel41.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel41.Controls.Add(this.RdoOverlayDisplaySurfaceFramebuffer, 0, 2);
@@ -6642,7 +6647,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel41.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel41.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel41.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel41.Size = new System.Drawing.Size(130, 69);
+            this.tableLayoutPanel41.Size = new System.Drawing.Size(332, 212);
             this.tableLayoutPanel41.TabIndex = 0;
             // 
             // RdoOverlayDisplaySurfaceFramebuffer
@@ -6684,6 +6689,63 @@ namespace BizHawk.Client.EmuHawk
             this.toolTip1.SetToolTip(this.RdoOverlayDisplaySurfaceEmuCore, "Highest performance");
             this.RdoOverlayDisplaySurfaceEmuCore.UseVisualStyleBackColor = true;
             this.RdoOverlayDisplaySurfaceEmuCore.CheckedChanged += new System.EventHandler(this.RdoOverlayDisplaySurface_CheckedChanged);
+            // 
+            // GbxOverlayBackend
+            // 
+            this.GbxOverlayBackend.Controls.Add(this.tableLayoutPanel43);
+            this.GbxOverlayBackend.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GbxOverlayBackend.Location = new System.Drawing.Point(344, 0);
+            this.GbxOverlayBackend.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.GbxOverlayBackend.Name = "GbxOverlayBackend";
+            this.GbxOverlayBackend.Size = new System.Drawing.Size(338, 231);
+            this.GbxOverlayBackend.TabIndex = 5;
+            this.GbxOverlayBackend.TabStop = false;
+            this.GbxOverlayBackend.Text = "Overlay backend";
+            // 
+            // tableLayoutPanel43
+            // 
+            this.tableLayoutPanel43.AutoSize = true;
+            this.tableLayoutPanel43.ColumnCount = 1;
+            this.tableLayoutPanel43.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel43.Controls.Add(this.RdoOverlayBackendInternalBitmap, 0, 0);
+            this.tableLayoutPanel43.Controls.Add(this.RdoOverlayBackendBizHawkGui, 0, 1);
+            this.tableLayoutPanel43.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel43.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel43.Name = "tableLayoutPanel43";
+            this.tableLayoutPanel43.RowCount = 3;
+            this.tableLayoutPanel43.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel43.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel43.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel43.Size = new System.Drawing.Size(332, 212);
+            this.tableLayoutPanel43.TabIndex = 0;
+            // 
+            // RdoOverlayBackendInternalBitmap
+            // 
+            this.RdoOverlayBackendInternalBitmap.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.RdoOverlayBackendInternalBitmap.AutoSize = true;
+            this.RdoOverlayBackendInternalBitmap.Location = new System.Drawing.Point(3, 3);
+            this.RdoOverlayBackendInternalBitmap.Name = "RdoOverlayBackendInternalBitmap";
+            this.RdoOverlayBackendInternalBitmap.Size = new System.Drawing.Size(94, 17);
+            this.RdoOverlayBackendInternalBitmap.TabIndex = 0;
+            this.RdoOverlayBackendInternalBitmap.Text = "Internal bitmap";
+            this.toolTip1.SetToolTip(this.RdoOverlayBackendInternalBitmap, "Lower performance, but allows antialiasing and framebuffer rendering");
+            this.RdoOverlayBackendInternalBitmap.UseVisualStyleBackColor = true;
+            this.RdoOverlayBackendInternalBitmap.CheckedChanged += new System.EventHandler(this.RdoOverlayBackend_CheckedChanged);
+            // 
+            // RdoOverlayBackendBizHawkGui
+            // 
+            this.RdoOverlayBackendBizHawkGui.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.RdoOverlayBackendBizHawkGui.AutoSize = true;
+            this.RdoOverlayBackendBizHawkGui.Checked = true;
+            this.RdoOverlayBackendBizHawkGui.Location = new System.Drawing.Point(3, 26);
+            this.RdoOverlayBackendBizHawkGui.Name = "RdoOverlayBackendBizHawkGui";
+            this.RdoOverlayBackendBizHawkGui.Size = new System.Drawing.Size(109, 17);
+            this.RdoOverlayBackendBizHawkGui.TabIndex = 5;
+            this.RdoOverlayBackendBizHawkGui.TabStop = true;
+            this.RdoOverlayBackendBizHawkGui.Text = "BizHawk GUI API";
+            this.toolTip1.SetToolTip(this.RdoOverlayBackendBizHawkGui, "Higher performance");
+            this.RdoOverlayBackendBizHawkGui.UseVisualStyleBackColor = true;
+            this.RdoOverlayBackendBizHawkGui.CheckedChanged += new System.EventHandler(this.RdoOverlayBackend_CheckedChanged);
             // 
             // BpbFramebuffer
             // 
@@ -6903,11 +6965,14 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel40.ResumeLayout(false);
             this.tableLayoutPanel40.PerformLayout();
             this.tableLayoutPanel42.ResumeLayout(false);
-            this.tableLayoutPanel42.PerformLayout();
             this.GbxOverlayDisplaySurface.ResumeLayout(false);
             this.GbxOverlayDisplaySurface.PerformLayout();
             this.tableLayoutPanel41.ResumeLayout(false);
             this.tableLayoutPanel41.PerformLayout();
+            this.GbxOverlayBackend.ResumeLayout(false);
+            this.GbxOverlayBackend.PerformLayout();
+            this.tableLayoutPanel43.ResumeLayout(false);
+            this.tableLayoutPanel43.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.ResumeLayout(false);
 
@@ -7345,5 +7410,9 @@ namespace BizHawk.Client.EmuHawk
 		private TableLayoutPanel tableLayoutPanel42;
 		private TableLayoutPanel tableLayoutPanel41;
 		private CheckBox CbxAntialiasing;
+		private GroupBox GbxOverlayBackend;
+		private TableLayoutPanel tableLayoutPanel43;
+		private RadioButton RdoOverlayBackendInternalBitmap;
+		private RadioButton RdoOverlayBackendBizHawkGui;
 	}
 }

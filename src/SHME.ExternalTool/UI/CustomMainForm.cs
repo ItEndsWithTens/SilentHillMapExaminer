@@ -97,8 +97,6 @@ namespace BizHawk.Client.EmuHawk
 			set => _settings = value;
 		}
 
-		private Action DrawOverlay { get; set; }
-
 		public CustomMainForm()
 		{
 			InitializeComponent();
@@ -116,8 +114,6 @@ namespace BizHawk.Client.EmuHawk
 				border + TbcMainTabs.Width + border,
 				border + TbcMainTabs.Height + border);
 			MaximumSize = Size;
-
-			DrawOverlay = DrawOverlayBitmap;
 
 			UpdateArrays = new Action(() =>
 			{
@@ -191,6 +187,9 @@ namespace BizHawk.Client.EmuHawk
 
 			Mem.UseMemoryDomain("MainRAM");
 
+			RdoOverlayBackend_CheckedChanged(this, EventArgs.Empty);
+			CmbRenderMode_SelectedIndexChanged(this, EventArgs.Empty);
+
 			_initializeOverlayCountdown = 5;
 			CbxAlwaysRun_CheckedChanged(this, EventArgs.Empty);
 
@@ -220,7 +219,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		public static void DrawReticle(Graphics g, Pen pen, int width, int height, float percent)
+		public static void DrawReticleBitmap(Graphics g, Pen pen, int width, int height, float percent)
 		{
 			pen.Color = Color.White;
 
@@ -241,6 +240,25 @@ namespace BizHawk.Client.EmuHawk
 			g.DrawLine(pen, centerW, 0, centerW, size);
 			g.DrawLine(pen, centerW, centerH - size / 2, centerW, centerH + size / 2);
 			g.DrawLine(pen, centerW, height - 1 - size, centerW, height - 1);
+		}
+		public void DrawReticleGui(Color color, int width, int height, float percent)
+		{
+			int left = Guts.RenderPort.Left;
+			int top = Guts.RenderPort.Top;
+
+			int size = (int)Math.Round(height * (percent / 100.0f));
+			int centerW = left + width / 2;
+			int centerH = top + height / 2;
+
+			Gui.DrawRectangle(left, top, width - 1, height - 1);
+
+			Gui.DrawLine(left, centerH, left + size, centerH);
+			Gui.DrawLine(centerW - size / 2, centerH, centerW + size / 2, centerH);
+			Gui.DrawLine(left + (width - 1 - size), centerH, left + (width - 1), centerH);
+
+			Gui.DrawLine(centerW, top, centerW, top + size);
+			Gui.DrawLine(centerW, centerH - size / 2, centerW, centerH + size / 2);
+			Gui.DrawLine(centerW, top + (height - 1 - size), centerW, top + (height - 1));
 		}
 
 		public override void UpdateValues(ToolFormUpdateType type)
@@ -374,7 +392,10 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxEnableOverlay.Checked)
 					{
-						DrawOverlay();
+						if (_initializeOverlayCountdown == -1)
+						{
+							DrawOverlay();
+						}
 					}
 					if (CbxEnableStatsReporting.Checked)
 					{
@@ -482,10 +503,16 @@ namespace BizHawk.Client.EmuHawk
 			var g = Graphics.FromImage(Overlay);
 			g.CompositingMode = CompositingMode.SourceCopy;
 			g.CompositingQuality = CompositingQuality.HighSpeed;
+			g.SmoothingMode = _smoothingMode;
 
 			g.Clear(Color.FromArgb(0, 0, 0, 0));
-			DrawPolygons(matrix, g, Point.Empty);
-			DrawReticle(g, Pen, Guts.RenderPort.Width, Guts.RenderPort.Height, (float)NudCrosshairLength.Value);
+			DrawGameObjects(g, ref matrix, Point.Empty);
+			DrawReticleBitmap(
+				g,
+				Pen,
+				Guts.RenderPort.Width,
+				Guts.RenderPort.Height,
+				(float)NudCrosshairLength.Value);
 
 			if (!RdoOverlayDisplaySurfaceFramebuffer.Checked)
 			{
@@ -493,6 +520,26 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			DrawOverlayCommonPost(ref position, ref angles);
+		}
+		private void DrawOverlayGui()
+		{
+			Gui.WithSurface(_displaySurfaceID, () =>
+			{
+				Matrix4x4 matrix = Matrix4x4.Identity;
+				Vector3 position = Vector3.Zero;
+				Vector3 angles = Vector3.Zero;
+
+				DrawOverlayCommonPre(ref matrix, ref position, ref angles);
+
+				DrawGameObjects(Gui, ref matrix, Guts.RenderPort.TopLeft);
+				DrawReticleGui(
+					Pen.Color,
+					Guts.RenderPort.Width,
+					Guts.RenderPort.Height,
+					(float)NudCrosshairLength.Value);
+
+				DrawOverlayCommonPost(ref position, ref angles);
+			});
 		}
 		private void DrawOverlayCommonPost(ref Vector3 position, ref Vector3 angles)
 		{
@@ -521,10 +568,8 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private SmoothingMode _smoothingMode = SmoothingMode.Default;
-		public void DrawPolygons(Matrix4x4 matrix, Graphics g, Point topLeft)
+		public void DrawGameObjects(object api, ref Matrix4x4 matrix, Point topLeft)
 		{
-			g.SmoothingMode = _smoothingMode;
-
 			for (int i = 0; i < Guts.VisibleRenderables.Count; i++)
 			{
 				(Renderable r, bool partial) = Guts.VisibleRenderables[i];
@@ -575,58 +620,7 @@ namespace BizHawk.Client.EmuHawk
 						continue;
 					}
 
-					switch (_renderMode)
-					{
-						case 1:
-							var visibleVertices = new PointF[Guts.ScreenSpaceLines.Count * 2];
-
-							for (int k = 0; k < Guts.ScreenSpaceLines.Count; k++)
-							{
-								((Vertex a, Vertex b), _, _) = Guts.ScreenSpaceLines[k];
-
-								visibleVertices[k * 2 + 0] = new PointF(a.Position.X, a.Position.Y);
-								visibleVertices[k * 2 + 1] = new PointF(b.Position.X, b.Position.Y);
-							}
-
-							float opacity = (float)NudFilledOpacity.Value / 100.0f;
-							int alpha = (int)Math.Round(opacity * 255);
-							int argb = (r.Tint ?? Guts.ScreenSpaceLines[0].argb) & 0x00FFFFFF;
-							argb |= (alpha << 24);
-							Pen.Color = Color.FromArgb(argb);
-							g.FillPolygon(Pen.Brush, visibleVertices);
-							break;
-						case 2:
-							for (int k = 0; k < Guts.ScreenSpaceLines.Count; k++)
-							{
-								((Vertex a, Vertex b), argb, _) = Guts.ScreenSpaceLines[k];
-								Pen.Color = Color.FromArgb(argb);
-
-								g.FillEllipse(
-									Pen.Brush,
-									a.Position.X - 2.0f,
-									b.Position.Y - 2.0f,
-									4.0f,
-									4.0f);
-							}
-							break;
-						default:
-							for (int k = 0; k < Guts.ScreenSpaceLines.Count; k++)
-							{
-								((Vertex a, Vertex b), argb, bool visible) = Guts.ScreenSpaceLines[k];
-								Pen.Color = Color.FromArgb(argb);
-
-								if (visible)
-								{
-									g.DrawLine(
-										Pen,
-										a.Position.X,
-										a.Position.Y,
-										b.Position.X,
-										b.Position.Y);
-								}
-							}
-							break;
-					}
+					RenderAction(api, r.Tint ?? Guts.ScreenSpaceLines[0].argb);
 				}
 			}
 		}
@@ -865,6 +859,16 @@ namespace BizHawk.Client.EmuHawk
 			else
 			{
 				RdoOverlayDisplaySurfaceFramebuffer.Enabled = true;
+
+				if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
+				{
+					RdoOverlayBackendInternalBitmap.Checked = true;
+					RdoOverlayBackendBizHawkGui.Enabled = false;
+				}
+				else
+				{
+					RdoOverlayBackendBizHawkGui.Enabled = true;
+				}
 			}
 
 			Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
