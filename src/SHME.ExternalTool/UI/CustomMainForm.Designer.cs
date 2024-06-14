@@ -5837,7 +5837,6 @@ namespace BizHawk.Client.EmuHawk
             0,
             0,
             0});
-            this.NudFramebufferH.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferH.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferH.Enter += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferH.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
@@ -5866,7 +5865,6 @@ namespace BizHawk.Client.EmuHawk
             0,
             0,
             0});
-            this.NudFramebufferW.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferW.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferW.Enter += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
@@ -5895,7 +5893,6 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferOfsX.Size = new System.Drawing.Size(55, 20);
             this.NudFramebufferOfsX.TabIndex = 10;
             this.toolTip1.SetToolTip(this.NudFramebufferOfsX, "X offset");
-            this.NudFramebufferOfsX.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferOfsX.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferOfsX.Enter += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferOfsX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
@@ -5914,7 +5911,6 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferOfsY.Size = new System.Drawing.Size(55, 20);
             this.NudFramebufferOfsY.TabIndex = 20;
             this.toolTip1.SetToolTip(this.NudFramebufferOfsY, "Y offset");
-            this.NudFramebufferOfsY.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferOfsY.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferOfsY.Enter += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferOfsY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);

@@ -93,6 +93,7 @@ namespace BizHawk.Client.EmuHawk
 
 			bmp.UnlockBits(data);
 
+			BpbFramebuffer.Image?.Dispose();
 			BpbFramebuffer.Image = bmp;
 
 			_framebufferGrabOriginalW = width;

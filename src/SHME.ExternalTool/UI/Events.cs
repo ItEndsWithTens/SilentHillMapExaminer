@@ -36,6 +36,14 @@ public partial class CustomMainForm
 
 		StageLoaded += UpdateArrays;
 		StageLoaded += LoadHarryModel;
+
+		// It's unseemly to have the framebuffer picture box populated
+		// with an image on first loading the tool, so don't attach the
+		// ValueChanged handler until after settings are bound.
+		NudFramebufferOfsX.ValueChanged += NudFramebuffer_ValueChanged;
+		NudFramebufferOfsY.ValueChanged += NudFramebuffer_ValueChanged;
+		NudFramebufferW.ValueChanged += NudFramebuffer_ValueChanged;
+		NudFramebufferH.ValueChanged += NudFramebuffer_ValueChanged;
 	}
 	private void DetachEventHandlers()
 	{
@@ -56,6 +64,11 @@ public partial class CustomMainForm
 
 		StageLoaded -= UpdateArrays;
 		StageLoaded -= LoadHarryModel;
+
+		NudFramebufferOfsX.ValueChanged -= NudFramebuffer_ValueChanged;
+		NudFramebufferOfsY.ValueChanged -= NudFramebuffer_ValueChanged;
+		NudFramebufferW.ValueChanged -= NudFramebuffer_ValueChanged;
+		NudFramebufferH.ValueChanged -= NudFramebuffer_ValueChanged;
 	}
 
 	private void OnStageLoaded(object sender, EventArgs e)
