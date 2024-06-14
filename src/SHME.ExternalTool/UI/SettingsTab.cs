@@ -106,7 +106,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void RdoOverlayBackend_CheckedChanged(object sender, EventArgs e)
 		{
-			if (RdoOverlayBackendBizHawkGui.Checked)
+			if (RdoBackendBizHawkGui.Checked)
 			{
 				DrawOverlay = DrawOverlayGui;
 			}
@@ -115,6 +115,7 @@ namespace BizHawk.Client.EmuHawk
 				DrawOverlay = DrawOverlayBitmap;
 			}
 		}
+
 		private void RdoOverlayDisplaySurface_CheckedChanged(object sender, EventArgs e)
 		{
 			InitializeOverlay();

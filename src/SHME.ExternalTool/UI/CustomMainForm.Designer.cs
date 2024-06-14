@@ -447,8 +447,8 @@ namespace BizHawk.Client.EmuHawk
             this.RdoOverlayDisplaySurfaceEmuCore = new System.Windows.Forms.RadioButton();
             this.GbxOverlayBackend = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel43 = new System.Windows.Forms.TableLayoutPanel();
-            this.RdoOverlayBackendInternalBitmap = new System.Windows.Forms.RadioButton();
-            this.RdoOverlayBackendBizHawkGui = new System.Windows.Forms.RadioButton();
+            this.RdoBackendBitmap = new System.Windows.Forms.RadioButton();
+            this.RdoBackendBizHawkGui = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
@@ -6707,8 +6707,8 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel43.AutoSize = true;
             this.tableLayoutPanel43.ColumnCount = 1;
             this.tableLayoutPanel43.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel43.Controls.Add(this.RdoOverlayBackendInternalBitmap, 0, 0);
-            this.tableLayoutPanel43.Controls.Add(this.RdoOverlayBackendBizHawkGui, 0, 1);
+            this.tableLayoutPanel43.Controls.Add(this.RdoBackendBitmap, 0, 0);
+            this.tableLayoutPanel43.Controls.Add(this.RdoBackendBizHawkGui, 0, 1);
             this.tableLayoutPanel43.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel43.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel43.Name = "tableLayoutPanel43";
@@ -6719,33 +6719,6 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel43.Size = new System.Drawing.Size(332, 212);
             this.tableLayoutPanel43.TabIndex = 0;
             // 
-            // RdoOverlayBackendInternalBitmap
-            // 
-            this.RdoOverlayBackendInternalBitmap.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.RdoOverlayBackendInternalBitmap.AutoSize = true;
-            this.RdoOverlayBackendInternalBitmap.Location = new System.Drawing.Point(3, 3);
-            this.RdoOverlayBackendInternalBitmap.Name = "RdoOverlayBackendInternalBitmap";
-            this.RdoOverlayBackendInternalBitmap.Size = new System.Drawing.Size(94, 17);
-            this.RdoOverlayBackendInternalBitmap.TabIndex = 0;
-            this.RdoOverlayBackendInternalBitmap.Text = "Internal bitmap";
-            this.toolTip1.SetToolTip(this.RdoOverlayBackendInternalBitmap, "Lower performance, but allows antialiasing and framebuffer rendering");
-            this.RdoOverlayBackendInternalBitmap.UseVisualStyleBackColor = true;
-            this.RdoOverlayBackendInternalBitmap.CheckedChanged += new System.EventHandler(this.RdoOverlayBackend_CheckedChanged);
-            // 
-            // RdoOverlayBackendBizHawkGui
-            // 
-            this.RdoOverlayBackendBizHawkGui.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.RdoOverlayBackendBizHawkGui.AutoSize = true;
-            this.RdoOverlayBackendBizHawkGui.Checked = true;
-            this.RdoOverlayBackendBizHawkGui.Location = new System.Drawing.Point(3, 26);
-            this.RdoOverlayBackendBizHawkGui.Name = "RdoOverlayBackendBizHawkGui";
-            this.RdoOverlayBackendBizHawkGui.Size = new System.Drawing.Size(109, 17);
-            this.RdoOverlayBackendBizHawkGui.TabIndex = 5;
-            this.RdoOverlayBackendBizHawkGui.TabStop = true;
-            this.RdoOverlayBackendBizHawkGui.Text = "BizHawk GUI API";
-            this.toolTip1.SetToolTip(this.RdoOverlayBackendBizHawkGui, "Higher performance");
-            this.RdoOverlayBackendBizHawkGui.UseVisualStyleBackColor = true;
-            this.RdoOverlayBackendBizHawkGui.CheckedChanged += new System.EventHandler(this.RdoOverlayBackend_CheckedChanged);
             // 
             // BpbFramebuffer
             // 
@@ -6757,6 +6730,33 @@ namespace BizHawk.Client.EmuHawk
             this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.BpbFramebuffer.TabIndex = 7;
             this.BpbFramebuffer.TabStop = false;
+            // RdoBackendBitmap
+            // 
+            this.RdoBackendBitmap.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.RdoBackendBitmap.AutoSize = true;
+            this.RdoBackendBitmap.Location = new System.Drawing.Point(3, 3);
+            this.RdoBackendBitmap.Name = "RdoBackendBitmap";
+            this.RdoBackendBitmap.Size = new System.Drawing.Size(94, 17);
+            this.RdoBackendBitmap.TabIndex = 0;
+            this.RdoBackendBitmap.Text = "Internal bitmap";
+            this.toolTip1.SetToolTip(this.RdoBackendBitmap, "Lower performance, but allows antialiasing and framebuffer rendering");
+            this.RdoBackendBitmap.UseVisualStyleBackColor = true;
+            this.RdoBackendBitmap.CheckedChanged += new System.EventHandler(this.RdoOverlayBackend_CheckedChanged);
+            // 
+            // RdoBackendBizHawkGui
+            // 
+            this.RdoBackendBizHawkGui.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.RdoBackendBizHawkGui.AutoSize = true;
+            this.RdoBackendBizHawkGui.Checked = true;
+            this.RdoBackendBizHawkGui.Location = new System.Drawing.Point(3, 26);
+            this.RdoBackendBizHawkGui.Name = "RdoBackendBizHawkGui";
+            this.RdoBackendBizHawkGui.Size = new System.Drawing.Size(109, 17);
+            this.RdoBackendBizHawkGui.TabIndex = 5;
+            this.RdoBackendBizHawkGui.TabStop = true;
+            this.RdoBackendBizHawkGui.Text = "BizHawk GUI API";
+            this.toolTip1.SetToolTip(this.RdoBackendBizHawkGui, "Higher performance");
+            this.RdoBackendBizHawkGui.UseVisualStyleBackColor = true;
+            this.RdoBackendBizHawkGui.CheckedChanged += new System.EventHandler(this.RdoOverlayBackend_CheckedChanged);
             // 
             // CustomMainForm
             // 
@@ -7412,7 +7412,7 @@ namespace BizHawk.Client.EmuHawk
 		private CheckBox CbxAntialiasing;
 		private GroupBox GbxOverlayBackend;
 		private TableLayoutPanel tableLayoutPanel43;
-		private RadioButton RdoOverlayBackendInternalBitmap;
-		private RadioButton RdoOverlayBackendBizHawkGui;
+		private RadioButton RdoBackendBitmap;
+		private RadioButton RdoBackendBizHawkGui;
 	}
 }

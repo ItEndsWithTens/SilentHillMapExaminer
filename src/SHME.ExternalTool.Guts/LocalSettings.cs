@@ -8,6 +8,8 @@ namespace SHME.ExternalTool
 {
 	public static class DefaultLocalSettings
 	{
+		// Basics tab
+
 		// This is tough to easily place in either local or roaming settings,
 		// but local might make slightly more sense? Beyond personal preference,
 		// whether one prefers to invert could depend on mouse vs. touchpad vs.
@@ -16,8 +18,6 @@ namespace SHME.ExternalTool
 
 		// Different input hardware means different sensitivity.
 		public static readonly decimal CameraFlySensitivity = 0.25m;
-
-		public static readonly int SaveButton;
 
 		public static readonly Collection<InputBind> FlyBinds = new([
 			new(ShmeCommand.Forward, Keys.W, MouseButtons.None),
@@ -38,6 +38,13 @@ namespace SHME.ExternalTool
 			new(ShmeCommand.Run, Keys.ShiftKey, MouseButtons.None),
 			new(ShmeCommand.View, Keys.Z, MouseButtons.None),
 			new(ShmeCommand.Map, Keys.C, MouseButtons.None)]);
+
+		// Save tab
+		public static readonly int SaveButton;
+
+		// Settings tab
+		public static readonly bool BackendBitmap;
+		public static readonly bool BackendBizHawkGui = true;
 	}
 
 	// Hiding this class, and RoamingSettings, in a satellite assembly turns out
@@ -60,5 +67,9 @@ namespace SHME.ExternalTool
 
 		// Save tab
 		public virtual int SaveButton { get; set; } = DefaultLocalSettings.SaveButton;
+
+		// Settings tab
+		public virtual bool BackendBitmap { get; set; } = DefaultLocalSettings.BackendBitmap;
+		public virtual bool BackendBizHawkGui { get; set; } = DefaultLocalSettings.BackendBizHawkGui;
 	}
 }

@@ -10,6 +10,8 @@
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+
+    <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Client.Common.dll" Private="false" />
   </ItemGroup>
 
   <ItemGroup>

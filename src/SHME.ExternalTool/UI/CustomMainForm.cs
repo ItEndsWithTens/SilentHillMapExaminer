@@ -78,8 +78,32 @@ namespace BizHawk.Client.EmuHawk
 			set => _guts = value;
 		}
 
-		public Pen Pen { get; set; } = new(Brushes.White);
-		public Bitmap Overlay { get; set; } = new(1, 1, PixelFormat.Format32bppArgb);
+		private Pen _pen = new(Brushes.White);
+		public Pen Pen
+		{
+			get => _pen;
+			set
+			{
+				_pen?.Dispose();
+				_pen = value;
+			}
+		}
+
+		private Bitmap _overlay = new(1, 1, PixelFormat.Format32bppArgb);
+		public Bitmap Overlay
+		{
+			get => _overlay;
+			set
+			{
+				_overlay?.Dispose();
+				_overlay = value;
+
+				if (Backend is BitmapBackend)
+				{
+					Backend = new BitmapBackend(Overlay);
+				}
+			}
+		}
 
 		public Rom Rom => Guts.Rom;
 
@@ -163,6 +187,8 @@ namespace BizHawk.Client.EmuHawk
 		public override void Restart()
 		{
 			base.Restart();
+
+			Backend = new BizHawkGuiBackend(Gui);
 
 			LoadSettings();
 
@@ -458,15 +484,13 @@ namespace BizHawk.Client.EmuHawk
 
 			DrawOverlayCommonPre(ref matrix, ref position, ref angles);
 
-			var g = Graphics.FromImage(Overlay);
-			g.CompositingMode = CompositingMode.SourceCopy;
-			g.CompositingQuality = CompositingQuality.HighSpeed;
-			g.SmoothingMode = _smoothingMode;
-
-			g.Clear(Color.FromArgb(0, 0, 0, 0));
-			DrawGameObjects(g, ref matrix, Point.Empty);
-			DrawReticleBitmap(
-				g,
+			Backend.Clear(0, 0, 0, 0);
+			Backend.Antialiasing = CbxAntialiasing.Checked;
+			DrawGameObjects(ref matrix, Point.Empty);
+			Backend.DrawReticle(
+				Pen,
+				0,
+				0,
 				Guts.RenderPort.Width,
 				Guts.RenderPort.Height,
 				(float)NudCrosshairLength.Value);
@@ -488,8 +512,13 @@ namespace BizHawk.Client.EmuHawk
 
 				DrawOverlayCommonPre(ref matrix, ref position, ref angles);
 
-				DrawGameObjects(Gui, ref matrix, Guts.RenderPort.TopLeft);
-				DrawReticleGui(
+				Backend.Clear(0, 0, 0, 0);
+				Backend.Antialiasing = CbxAntialiasing.Checked;
+				DrawGameObjects(ref matrix, Guts.RenderPort.TopLeft);
+				Backend.DrawReticle(
+					Pen,
+					Guts.RenderPort.Left,
+					Guts.RenderPort.Top,
 					Guts.RenderPort.Width,
 					Guts.RenderPort.Height,
 					(float)NudCrosshairLength.Value);
@@ -523,9 +552,10 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private SmoothingMode _smoothingMode = SmoothingMode.Default;
-		public void DrawGameObjects(object api, ref Matrix4x4 matrix, Point topLeft)
+		public void DrawGameObjects(ref Matrix4x4 matrix, Point topLeft)
 		{
+			bool backfaceCulling = Guts.Camera.Culling.FasterHasFlag(Culling.Backface);
+
 			for (int i = 0; i < Guts.VisibleRenderables.Count; i++)
 			{
 				(Renderable r, bool partial) = Guts.VisibleRenderables[i];
@@ -536,7 +566,7 @@ namespace BizHawk.Client.EmuHawk
 				{
 					Polygon p = r.Polygons[j];
 
-					if (Guts.Camera.Culling.FasterHasFlag(Culling.Backface) && p.IsBackface(Guts.Camera))
+					if (backfaceCulling && p.IsBackface(Guts.Camera))
 					{
 						continue;
 					}
@@ -576,7 +606,7 @@ namespace BizHawk.Client.EmuHawk
 						continue;
 					}
 
-					_drawFace(api, r.Tint ?? Guts.ScreenSpaceLines[0].argb);
+					_drawFace(r.Tint ?? Guts.ScreenSpaceLines[0].argb);
 				}
 			}
 		}
@@ -693,8 +723,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CleanUpDisposables()
 		{
-			Pen?.Dispose();
-			Overlay?.Dispose();
+			_pen?.Dispose();
+			_overlay?.Dispose();
 
 			Guts.AreaMapGraphic?.Dispose();
 			PbxHazardStripes?.Image?.Dispose();
@@ -818,12 +848,12 @@ namespace BizHawk.Client.EmuHawk
 
 				if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
 				{
-					RdoOverlayBackendInternalBitmap.Checked = true;
-					RdoOverlayBackendBizHawkGui.Enabled = false;
+					RdoBackendBitmap.Checked = true;
+					RdoBackendBizHawkGui.Enabled = false;
 				}
 				else
 				{
-					RdoOverlayBackendBizHawkGui.Enabled = true;
+					RdoBackendBizHawkGui.Enabled = true;
 				}
 			}
 
@@ -867,9 +897,6 @@ namespace BizHawk.Client.EmuHawk
 
 				Guts.RenderPort = Viewport.FromBitmap(screenshot, Color.Black);
 			}
-
-			Pen?.Dispose();
-			Overlay?.Dispose();
 
 			Pen = new Pen(Brushes.White);
 			Overlay = new Bitmap(Guts.RenderPort.Width, Guts.RenderPort.Height, PixelFormat.Format32bppArgb);

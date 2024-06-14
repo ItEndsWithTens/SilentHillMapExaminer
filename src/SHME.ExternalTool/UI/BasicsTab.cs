@@ -247,14 +247,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void CbxAntialiasing_CheckedChanged(object sender, EventArgs e)
 		{
-			if (CbxAntialiasing.Checked)
-			{
-				_smoothingMode = SmoothingMode.AntiAlias;
-			}
-			else
-			{
-				_smoothingMode = SmoothingMode.Default;
-			}
+			Backend.Antialiasing = CbxAntialiasing.Checked;
 		}
 
 		private void CbxEnableOverlay_CheckedChanged(object sender, EventArgs e)
