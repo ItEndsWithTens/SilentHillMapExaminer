@@ -160,6 +160,17 @@ namespace BizHawk.Client.EmuHawk
 			SetFramebufferZoom();
 		}
 
+		private void NudFramebuffer_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (sender is NumericUpDown nud && e.KeyCode == Keys.Enter)
+			{
+				nud.ResetIfBad(this);
+				BtnFramebufferGrab_Click(this, EventArgs.Empty);
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+		}
+
 		private void NudFramebuffer_ValueChanged(object sender, EventArgs e)
 		{
 			BtnFramebufferGrab_Click(this, EventArgs.Empty);

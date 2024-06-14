@@ -74,7 +74,6 @@ public partial class CustomMainForm
 		if (sender is NumericUpDown nud && e.KeyCode == Keys.Enter)
 		{
 			nud.ResetIfBad(this);
-			BtnFramebufferGrab_Click(this, EventArgs.Empty);
 			e.Handled = true;
 			e.SuppressKeyPress = true;
 		}

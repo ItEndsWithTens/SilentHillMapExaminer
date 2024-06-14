@@ -5840,7 +5840,7 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferH.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferH.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferH.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudFramebufferH.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudFramebufferH.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
             this.NudFramebufferH.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // NudFramebufferW
@@ -5869,7 +5869,7 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferW.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferW.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferW.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudFramebufferW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudFramebufferW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
             this.NudFramebufferW.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // label91
@@ -5898,7 +5898,7 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferOfsX.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferOfsX.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferOfsX.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudFramebufferOfsX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudFramebufferOfsX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
             this.NudFramebufferOfsX.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // NudFramebufferOfsY
@@ -5917,7 +5917,7 @@ namespace BizHawk.Client.EmuHawk
             this.NudFramebufferOfsY.ValueChanged += new System.EventHandler(this.NudFramebuffer_ValueChanged);
             this.NudFramebufferOfsY.Click += new System.EventHandler(this.Selectable_Enter);
             this.NudFramebufferOfsY.Enter += new System.EventHandler(this.Selectable_Enter);
-            this.NudFramebufferOfsY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Nud_KeyDown);
+            this.NudFramebufferOfsY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NudFramebuffer_KeyDown);
             this.NudFramebufferOfsY.Leave += new System.EventHandler(this.Nud_Leave);
             // 
             // TbpUtility
