@@ -172,7 +172,7 @@ jobs:
 
     - name: Download old releases
       if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-      run: gh release download latest --dir old_releases
+      run: gh release download -R ItEndsWithTens/SilentHillMapExaminer latest --dir old_releases
 
     - name: Prep old releases
       if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
