@@ -156,6 +156,39 @@ jobs:
       with:
         name: zip
 
+    - name: Rename current release
+      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+      shell: pwsh
+      run: |
+        $oldName = Get-Item -Path '*.zip'
+        $newName = $oldName.Name -replace '(.*?)-(.*)', '$1-dev-newest-$2'
+        Rename-Item -Path $oldName -NewName $newName
+
+    - name: Download old releases
+      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+      shell: pwsh
+      run: gh release download latest --dir old_releases
+
+    - name: Prep old releases
+      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+      shell: pwsh
+      working-directory: old_releases
+      run: |
+        Remove-Item -Path *oldest*
+        if (Test-Path *older*)
+        {
+          $oldName = Get-Item -Path *older*
+          $newName = $oldName.Name -replace 'older', 'oldest'
+          Rename-Item -Path $oldName -NewName $newName
+        }
+        if (Test-Path *newest*)
+        {
+          $oldName = Get-Item -Path *newest*
+          $newName = $oldName.Name -replace 'newest', 'older'
+          Rename-Item -Path $oldName -NewName $newName
+        }
+        Move-Item -Path *.zip -Destination ..
+
     - name: Release latest dev build
       if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
       uses: crowbarmaster/GH-Automatic-Releases@v1.6.0
@@ -163,6 +196,7 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: 'latest'
         title: 'Latest dev build'
+        body: "This rolling window release offers the 3 most recent development builds of SHME. Try 'newest' first, then 'older' or 'oldest' if something's broken. Have fun!"
         prerelease: false
         generate_notes: true
         files: |
