@@ -35,8 +35,8 @@ namespace SHME.ExternalTool.Graphics
 	{
 		public static (Vertex, Vertex, bool) ClipPairAgainstPlane(this (Vertex a, Vertex b) pair, Plane plane)
 		{
-			Vector3 p = plane.A;
 			Vector3 n = plane.Normal;
+			Vector3 p = n * plane.D;
 
 			float distanceA = Vector3.Dot(pair.a.Position - p, n);
 			float distanceB = Vector3.Dot(pair.b.Position - p, n);

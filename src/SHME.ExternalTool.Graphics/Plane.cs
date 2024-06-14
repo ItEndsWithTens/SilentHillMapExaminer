@@ -3,39 +3,26 @@ using System.Numerics;
 
 namespace SHME.ExternalTool.Graphics
 {
-	public class Plane
+	public readonly struct Plane(Vector3 normal, float d) : IEquatable<Plane>
 	{
-		public Vector3 A { get; } = Vector3.Zero;
-		public Vector3 B { get; } = Vector3.UnitZ;
-		public Vector3 C { get; } = Vector3.UnitX;
+		public Vector3 Normal { get; } = normal;
 
-		public Vector3 Normal { get; } = Vector3.UnitY;
+		public float D { get; } = d;
 
-		public float DistanceFromOrigin { get; }
-
-		public Winding Winding { get; } = Winding.Ccw;
-
-		public Plane()
+		public static Plane FromVerticesCcw(Vector3 a, Vector3 b, Vector3 c)
 		{
+			Vector3 one = b - a;
+			Vector3 two = c - a;
+
+			Vector3 n = Vector3.Normalize(Vector3.Cross(one, two));
+
+			float d = Vector3.Dot(a, n);
+
+			return new Plane(n, d);
 		}
-		public Plane(Vector3 a, Vector3 b, Vector3 c, Winding w)
+		public static Plane FromVerticesCw(Vector3 a, Vector3 b, Vector3 c)
 		{
-			A = a;
-			B = b;
-			C = c;
-			Winding = w;
-
-			Vector3 one = C - A;
-			Vector3 two = B - A;
-
-			if (Winding == Winding.Ccw)
-			{
-				(one, two) = (two, one);
-			}
-
-			Normal = Vector3.Normalize(Vector3.Cross(one, two));
-
-			DistanceFromOrigin = Vector3.Dot(A, Normal);
+			return FromVerticesCcw(a, c, b);
 		}
 
 		public static Vector3 Intersect(Plane a, Plane b, Plane c)
@@ -49,16 +36,44 @@ namespace SHME.ExternalTool.Graphics
 			}
 
 			var crossAB = Vector3.Cross(a.Normal, b.Normal);
-			crossAB *= c.DistanceFromOrigin;
+			crossAB *= c.D;
 
 			var crossBC = Vector3.Cross(b.Normal, c.Normal);
-			crossBC *= a.DistanceFromOrigin;
+			crossBC *= a.D;
 
 			var crossCA = Vector3.Cross(c.Normal, a.Normal);
-			crossCA *= b.DistanceFromOrigin;
+			crossCA *= b.D;
 
 			Vector3 added = crossBC + crossCA + crossAB;
 			return new Vector3(added.X, added.Y, added.Z) / denominator;
+		}
+
+		public static bool operator ==(Plane left, Plane right)
+		{
+			return left.Equals(right);
+		}
+		public static bool operator !=(Plane left, Plane right)
+		{
+			return !(left == right);
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is Plane plane && Equals(plane);
+		}
+		public bool Equals(Plane other)
+		{
+			return
+				Normal.Equals(other.Normal) &&
+				D == other.D;
+		}
+
+		public override int GetHashCode()
+		{
+			int hashCode = 1385373013;
+			hashCode = hashCode * -1521134295 + Normal.GetHashCode();
+			hashCode = hashCode * -1521134295 + D.GetHashCode();
+			return hashCode;
 		}
 	}
 }

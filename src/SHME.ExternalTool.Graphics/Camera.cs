@@ -31,14 +31,14 @@ namespace SHME.ExternalTool.Graphics
 		public Vector3 FarBottomLeft { get; set; }
 		public Vector3 FarBottomRight { get; set; }
 
-		public Plane Left { get; private set; } = new Plane();
-		public Plane Right { get; private set; } = new Plane();
-		public Plane Top { get; private set; } = new Plane();
-		public Plane Bottom { get; private set; } = new Plane();
-		public Plane Near { get; private set; } = new Plane();
-		public Plane Far { get; private set; } = new Plane();
+		public Plane Left { get; private set; }
+		public Plane Right { get; private set; }
+		public Plane Top { get; private set; }
+		public Plane Bottom { get; private set; }
+		public Plane Near { get; private set; }
+		public Plane Far { get; private set; }
 
-		public IList<Plane> Planes { get; } = new List<Plane>();
+		public IList<Plane> Planes { get; } = [];
 
 		public Frustum()
 		{
@@ -62,14 +62,15 @@ namespace SHME.ExternalTool.Graphics
 			for (int i = 0; i < Planes.Count; i++)
 			{
 				Plane plane = Planes[i];
+				Vector3 planeP = plane.Normal * plane.D;
 
 				bool allPointsBehind = true;
 
 				for (int j = 0; j < aabb.Points.Count; j++)
 				{
-					Vector3 p = aabb.Points[j];
+					Vector3 aabbP = aabb.Points[j];
 
-					if (Vector3.Dot(p - plane.A, plane.Normal) > 0.0f)
+					if (Vector3.Dot(aabbP - planeP, plane.Normal) > 0.0f)
 					{
 						allPointsBehind = false;
 						break;
@@ -116,12 +117,12 @@ namespace SHME.ExternalTool.Graphics
 			FarBottomLeft = (farTarget - farEdgeHorizontal) - farEdgeVertical;
 			FarBottomRight = (farTarget + farEdgeHorizontal) - farEdgeVertical;
 
-			Left = new Plane(NearTopLeft, NearBottomLeft, FarBottomLeft, Winding.Ccw);
-			Right = new Plane(NearTopRight, FarTopRight, FarBottomRight, Winding.Ccw);
-			Top = new Plane(NearTopLeft, FarTopLeft, FarTopRight, Winding.Ccw);
-			Bottom = new Plane(NearBottomRight, FarBottomRight, FarBottomLeft, Winding.Ccw);
-			Near = new Plane(NearTopLeft, NearTopRight, NearBottomRight, Winding.Ccw);
-			Far = new Plane(FarBottomRight, FarTopRight, FarTopLeft, Winding.Ccw);
+			Left = Plane.FromVerticesCcw(NearTopLeft, NearBottomLeft, FarBottomLeft);
+			Right = Plane.FromVerticesCcw(NearTopRight, FarTopRight, FarBottomRight);
+			Top = Plane.FromVerticesCcw(NearTopLeft, FarTopLeft, FarTopRight);
+			Bottom = Plane.FromVerticesCcw(NearBottomRight, FarBottomRight, FarBottomLeft);
+			Near = Plane.FromVerticesCcw(NearTopLeft, NearTopRight, NearBottomRight);
+			Far = Plane.FromVerticesCcw(FarBottomRight, FarTopRight, FarTopLeft);
 
 			Planes.Clear();
 
@@ -508,14 +509,15 @@ namespace SHME.ExternalTool.Graphics
 				for (int j = 0; j < Frustum.Planes.Count; j++)
 				{
 					Plane plane = Frustum.Planes[j];
+					Vector3 planeP = plane.Normal * plane.D;
 
 					bool anyPointsBehind = false;
 
 					for (int k = 0; k < r.Aabb.Points.Count; k++)
 					{
-						Vector3 p = r.Aabb.Points[k];
+						Vector3 aabbP = r.Aabb.Points[k];
 
-						if (Vector3.Dot(p - plane.A, plane.Normal) <= 0.0f)
+						if (Vector3.Dot(aabbP - planeP, plane.Normal) <= 0.0f)
 						{
 							anyPointsBehind = true;
 							break;
@@ -573,8 +575,8 @@ namespace SHME.ExternalTool.Graphics
 				{
 					Plane plane = planes[j];
 
-					Vector3 point = plane.A;
 					Vector3 n = plane.Normal;
+					Vector3 point = n * plane.D;
 
 					float distanceA = Vector3.Dot(a.Position - point, n);
 					float distanceB = Vector3.Dot(b.Position - point, n);
@@ -616,8 +618,8 @@ namespace SHME.ExternalTool.Graphics
 		// https://www.cubic.org/docs/3dclip.htm
 		public static bool ClipLineAgainstPlane(ref Line line, Plane plane)
 		{
-			Vector3 p = plane.A;
 			Vector3 n = plane.Normal;
+			Vector3 p = n * plane.D;
 
 			float distanceA = Vector3.Dot(line.A - p, n);
 			float distanceB = Vector3.Dot(line.B - p, n);

@@ -95,10 +95,11 @@ namespace SHME.ExternalTool.Graphics
 			for (int i = 0; i < Vertices.Count; i++)
 			{
 				Vertex vertex = Vertices[i];
+				Vector3 point = plane.Normal * plane.D;
 
 				// If any or all of this polygon's vertices are behind the given
 				// plane, it needs to be clipped. Otherwise it's fine as is.
-				if (Vector3.Dot(vertex - plane.A, plane.Normal) < 0.0f)
+				if (Vector3.Dot(vertex - point, plane.Normal) < 0.0f)
 				{
 					needsClip = true;
 					break;
