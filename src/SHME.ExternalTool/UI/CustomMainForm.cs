@@ -595,56 +595,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private void AttachEventHandlers()
-		{
-			Emu.StateLoaded += Emu_StateLoaded;
-
-			PropertyInfo? pInfo = typeof(DisplayManager).GetProperty("_graphicsControl", BindingFlags.NonPublic | BindingFlags.Instance);
-			if (pInfo != null)
-			{
-				var gc = (GraphicsControl)pInfo.GetValue(DisplayManager);
-
-				FieldInfo? fInfo = typeof(GraphicsControl).GetField("_managed", BindingFlags.NonPublic | BindingFlags.Instance);
-				if (fInfo != null)
-				{
-					GameSurface = (Control)fInfo.GetValue(gc);
-
-					GameSurface.MouseDown += GameSurface_MouseDown;
-					GameSurface.MouseUp += GameSurface_MouseUp;
-
-					GameSurface.SizeChanged += GameSurface_SizeChanged;
-				}
-			}
-
-			RaycastSelectionTimer.Tick += RaycastSelectionTimer_Tick;
-
-			BtnCameraFly.LostFocus += BtnCameraFly_LostFocus;
-			BtnCameraFps.LostFocus += BtnCameraFps_LostFocus;
-
-			StageLoaded += UpdateArrays;
-			StageLoaded += LoadHarryModel;
-		}
-		private void DetachEventHandlers()
-		{
-			Emu.StateLoaded -= Emu_StateLoaded;
-
-			if (GameSurface != null)
-			{
-				GameSurface.MouseDown -= GameSurface_MouseDown;
-				GameSurface.MouseUp -= GameSurface_MouseUp;
-
-				GameSurface.SizeChanged -= GameSurface_SizeChanged;
-			}
-
-			RaycastSelectionTimer.Tick -= RaycastSelectionTimer_Tick;
-
-			BtnCameraFly.LostFocus -= BtnCameraFly_LostFocus;
-			BtnCameraFps.LostFocus -= BtnCameraFps_LostFocus;
-
-			StageLoaded -= UpdateArrays;
-			StageLoaded -= LoadHarryModel;
-		}
-
 		private float CalculateGameFov()
 		{
 			// The idea that the render height and projection plane distance are
@@ -797,18 +747,6 @@ namespace BizHawk.Client.EmuHawk
 			LblCameraPathVolumeMax.Text = $"<x{sep} y{sep} z>";
 			LblCameraPathAreaMin.Text = $"<x{sep} z>";
 			LblCameraPathAreaMax.Text = $"<x{sep} z>";
-		}
-
-		private void Selectable_Enter(object sender, EventArgs e)
-		{
-			if (sender is NumericUpDown nud)
-			{
-				nud.Select(0, nud.Text.Length);
-			}
-			else if (sender is TextBox tbx)
-			{
-				tbx.SelectAll();
-			}
 		}
 
 		private DisplaySurfaceID _displaySurfaceID;
@@ -1045,25 +983,6 @@ namespace BizHawk.Client.EmuHawk
 				MoveCameraFirstPerson();
 				AimCamera(BtnCameraFps);
 				Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
-			}
-		}
-
-		private void Nud_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (sender is NumericUpDown nud && e.KeyCode == Keys.Enter)
-			{
-				nud.ResetIfBad(this);
-				BtnFramebufferGrab_Click(this, EventArgs.Empty);
-				e.Handled = true;
-				e.SuppressKeyPress = true;
-			}
-		}
-
-		private void Nud_Leave(object sender, EventArgs e)
-		{
-			if (sender is NumericUpDown nud)
-			{
-				nud.ResetIfBad(this);
 			}
 		}
 	}
