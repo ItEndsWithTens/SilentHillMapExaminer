@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
@@ -60,54 +61,7 @@ namespace BizHawk.Client.EmuHawk
 					_holdCameraRoll = 0;
 					HoldCamera();
 
-					// Using a simple lambda here would be cleaner, but would
-					// generate an anonymous method in the assembly that made
-					// reference to a type in an external assembly. That in turn
-					// would cause Mono in Linux to fail to load the external
-					// tool. A pair of local functions suffices to avoid that.
-					static object GetFeet(object o)
-					{
-						var submeshes = (IList<Submesh>)o;
-						List<Submesh> feet = [];
-						foreach (Submesh m in submeshes)
-						{
-							if (m.Name.EndsWith("FOOT", StringComparison.Ordinal))
-							{
-								feet.Add(m);
-							}
-						}
-						return feet;
-					}
-					static object GetNotFeet(object o)
-					{
-						var submeshes = (IList<Submesh>)o;
-						List<Submesh> notFeet = [];
-						foreach (Submesh m in submeshes)
-						{
-							if (!m.Name.EndsWith("FOOT", StringComparison.Ordinal))
-							{
-								notFeet.Add(m);
-							}
-						}
-						return notFeet;
-					}
-
-					if (CbxHideHarry.Checked)
-					{
-						object notFeet = GetNotFeet(Guts.HarryModel.Submeshes);
-						var submeshes = (IEnumerable<Submesh>)notFeet;
-
-						if (!CbxShowFeet.Checked)
-						{
-							object feet = GetFeet(Guts.HarryModel.Submeshes);
-							submeshes = submeshes.Concat((IEnumerable<Submesh>)feet);
-						}
-
-						foreach (Submesh s in submeshes)
-						{
-							Mem.WriteByte((int)((s.BaseAddress + 8) - Rom.Addresses.MainRam.BaseAddress), 0);
-						}
-					}
+					CbxHideHarry_CheckedChanged(this, EventArgs.Empty);
 
 					CbxCameraDetach.Checked = true;
 
@@ -119,10 +73,7 @@ namespace BizHawk.Client.EmuHawk
 
 					CbxCameraDetach.Checked = false;
 
-					foreach (Submesh s in Guts.HarryModel.Submeshes)
-					{
-						Mem.WriteByte((int)((s.BaseAddress + 8) - Rom.Addresses.MainRam.BaseAddress), 1);
-					}
+					CbxHideHarry_CheckedChanged(this, EventArgs.Empty);
 
 					Cursor.Clip = Rectangle.Empty;
 
@@ -272,6 +223,26 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private async void LoadHarryModel(object sender, EventArgs e)
+		{
+			if (Guts.HarryModel == null)
+			{
+				int raw = Mem.ReadS32(Rom.Addresses.MainRam.HarryModelPointer);
+				int a = raw - (int)Rom.Addresses.MainRam.BaseAddress;
+
+				IReadOnlyList<byte> headerBytes = Mem.ReadByteRange(a, IlmHeader.Length);
+				IReadOnlyList<byte> remaining = Mem.ReadByteRange(a, (int)(Mem.GetMemoryDomainSize("MainRAM") - a));
+
+				await Task.Run(() =>
+				{
+					IlmHeader header = new(headerBytes, raw);
+					Guts.HarryModel = new Ilm(header, remaining);
+				}).ConfigureAwait(true);
+
+				CbxHideHarry_CheckedChanged(this, EventArgs.Empty);
+			}
+		}
+
 		private void BtnCameraFps_ClickFirst(object sender, EventArgs e)
 		{
 			FpsEnabled = true;
@@ -370,6 +341,72 @@ namespace BizHawk.Client.EmuHawk
 			if (!CbxHideHarry.Checked)
 			{
 				CbxShowFeet.Checked = true;
+			}
+
+			if (Guts.HarryModel is null)
+			{
+				return;
+			}
+
+			MainRamAddresses ram = Rom.Addresses.MainRam;
+
+			if (!FpsEnabled)
+			{
+				foreach (Submesh s in Guts.HarryModel.Submeshes)
+				{
+					Mem.WriteByte((int)((s.BaseAddress + 8) - ram.BaseAddress), 1);
+				}
+
+				return;
+			}
+
+			// Using a simple lambda here would be cleaner, but would
+			// generate an anonymous method in the assembly that made
+			// reference to a type in an external assembly. That in turn
+			// would cause Mono in Linux to fail to load the external
+			// tool. A pair of local functions suffices to avoid that.
+			static object GetFeet(object o)
+			{
+				var submeshes = (IList<Submesh>)o;
+				List<Submesh> feet = [];
+				foreach (Submesh m in submeshes)
+				{
+					if (m.Name.EndsWith("FOOT", StringComparison.Ordinal))
+					{
+						feet.Add(m);
+					}
+				}
+				return feet;
+			}
+			static object GetNotFeet(object o)
+			{
+				var submeshes = (IList<Submesh>)o;
+				List<Submesh> notFeet = [];
+				foreach (Submesh m in submeshes)
+				{
+					if (!m.Name.EndsWith("FOOT", StringComparison.Ordinal))
+					{
+						notFeet.Add(m);
+					}
+				}
+				return notFeet;
+			}
+
+			if (CbxHideHarry.Checked)
+			{
+				object notFeet = GetNotFeet(Guts.HarryModel.Submeshes);
+				var submeshes = (IEnumerable<Submesh>)notFeet;
+
+				if (!CbxShowFeet.Checked)
+				{
+					object feet = GetFeet(Guts.HarryModel.Submeshes);
+					submeshes = submeshes.Concat((IEnumerable<Submesh>)feet);
+				}
+
+				foreach (Submesh s in submeshes)
+				{
+					Mem.WriteByte((int)((s.BaseAddress + 8) - ram.BaseAddress), 0);
+				}
 			}
 		}
 	}

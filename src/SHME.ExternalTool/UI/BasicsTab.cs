@@ -319,7 +319,7 @@ namespace BizHawk.Client.EmuHawk
 			BtnReadTriggers.Enabled = !CbxReadLevelDataOnStageLoad.Checked;
 			BtnCameraPathReadArray.Enabled = !CbxReadLevelDataOnStageLoad.Checked;
 
-			_levelDataNeedsUpdate = true;
+			_stageLoaded = true;
 		}
 
 		private void CmbRenderMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -347,7 +347,7 @@ namespace BizHawk.Client.EmuHawk
 			ClearDisplayedPoiInfo();
 			ClearDisplayedTriggerInfo();
 
-			_levelDataNeedsUpdate = true;
+			_stageLoaded = true;
 			_suppressForcedCameraYaw = true;
 			_initializeOverlayCountdown = 10;
 		}

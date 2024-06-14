@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
@@ -139,12 +138,6 @@ namespace BizHawk.Client.EmuHawk
 				border + TbcMainTabs.Height + border);
 			MaximumSize = Size;
 
-			UpdateArrays = new Action(() =>
-			{
-				BtnReadTriggers_Click(this, EventArgs.Empty);
-				BtnCameraPathReadArray_Click(this, EventArgs.Empty);
-			});
-
 			InitializeBasicsTab();
 			InitializePoisTab();
 			InitializeSaveTab();
@@ -253,12 +246,14 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
+			MainRamAddresses ram = Rom.Addresses.MainRam;
+
 			// At boot, the button flags address first gets populated right in
 			// the middle of the "violent and disturbing images" title card,
 			// which is the perfect opportunity to set the viewport size. Other
 			// suitable occasions, like save state loading or after a change in
 			// window size, also only occur when the buttons are already active.
-			int buttonFlags = Mem.ReadS32(Rom.Addresses.MainRam.ButtonFlags);
+			int buttonFlags = Mem.ReadS32(ram.ButtonFlags);
 			bool buttonsActive = buttonFlags != 0x00000000;
 
 			// Initializing the overlay graphics includes aligning the rendering
@@ -280,25 +275,14 @@ namespace BizHawk.Client.EmuHawk
 			// values only when a stage is being loaded. Once that's done, the
 			// value goes back to 0xFF, so any other value means we're not in
 			// an actual level yet, and there's no sense continuing.
-			uint stage = Mem.ReadByte(Rom.Addresses.MainRam.IndexOfStageBeingLoaded);
+			uint stage = Mem.ReadByte(ram.IndexOfStageBeingLoaded);
 			if (stage != 0xFF)
 			{
-				_levelDataNeedsUpdate = true;
+				_stageLoaded = true;
 				return;
 			}
 
-			if (Guts.HarryModel == null)
-			{
-				int raw = Mem.ReadS32(Rom.Addresses.MainRam.HarryModelPointer);
-				int address = raw - (int)Rom.Addresses.MainRam.BaseAddress;
-				IReadOnlyList<byte> headerBytes = Mem.ReadByteRange(address, IlmHeader.Length);
-				var header = new IlmHeader(headerBytes, raw);
-
-				IReadOnlyList<byte> remaining = Mem.ReadByteRange(address, (int)(Mem.GetMemoryDomainSize("MainRAM") - address));
-				Guts.HarryModel = new Ilm(header, remaining);
-			}
-
-			var camState = (CameraState)(Mem.ReadS32(Rom.Addresses.MainRam.CameraState));
+			var camState = (CameraState)(Mem.ReadS32(ram.CameraState));
 			bool cutscene = camState.FasterHasFlag(CameraState.Cutscene);
 
 			switch (type)
@@ -311,19 +295,19 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxCameraLockToHead.Checked)
 					{
-						Mem.WriteByte(Rom.Addresses.MainRam.CameraLockedToHead, 0x1);
+						Mem.WriteByte(ram.CameraLockedToHead, 0x1);
 					}
 					if (CbxShowLookAt.Checked)
 					{
 						Vector3 pos = Guts.GameCameraLookAt.Position;
-						pos.X = Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtX));
-						pos.Y = -Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtY));
-						pos.Z = -Guts.QToFloat(Mem.ReadS32(Rom.Addresses.MainRam.CameraLookAtZ));
+						pos.X = Guts.QToFloat(Mem.ReadS32(ram.CameraLookAtX));
+						pos.Y = -Guts.QToFloat(Mem.ReadS32(ram.CameraLookAtY));
+						pos.Z = -Guts.QToFloat(Mem.ReadS32(ram.CameraLookAtZ));
 						Guts.GameCameraLookAt.Position = pos;
 					}
 					if (cutscene)
 					{
-						_holdCameraYaw = Mem.ReadU16(Rom.Addresses.MainRam.HarryYaw);
+						_holdCameraYaw = Mem.ReadU16(ram.HarryYaw);
 					}
 					if (CbxCameraDetach.Checked)
 					{
@@ -336,7 +320,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					else if (_firstPersonEnabled)
 					{
-						long address = Rom.Addresses.MainRam.ControllerConfig;
+						long address = ram.ControllerConfig;
 						string hash = Mem.HashRegion(address, SHME.ExternalTool.ControllerConfig.Size);
 						if (hash != _lastControllerLayoutHash)
 						{
@@ -356,7 +340,7 @@ namespace BizHawk.Client.EmuHawk
 						AimCamera(BtnCameraFps, cutscene);
 						if (!cutscene)
 						{
-							Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
+							Mem.WriteU16(ram.HarryYaw, _holdCameraYaw);
 						}
 					}
 					break;
@@ -387,7 +371,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxReadLevelDataOnStageLoad.Checked)
 					{
-						CheckForArrayUpdates();
+						CheckForStageLoaded();
 					}
 					if (CbxSelectedTriggerEnableUpdates.Checked)
 					{
@@ -636,6 +620,9 @@ namespace BizHawk.Client.EmuHawk
 
 			BtnCameraFly.LostFocus += BtnCameraFly_LostFocus;
 			BtnCameraFps.LostFocus += BtnCameraFps_LostFocus;
+
+			StageLoaded += UpdateArrays;
+			StageLoaded += LoadHarryModel;
 		}
 		private void DetachEventHandlers()
 		{
@@ -653,6 +640,9 @@ namespace BizHawk.Client.EmuHawk
 
 			BtnCameraFly.LostFocus -= BtnCameraFly_LostFocus;
 			BtnCameraFps.LostFocus -= BtnCameraFps_LostFocus;
+
+			StageLoaded -= UpdateArrays;
+			StageLoaded -= LoadHarryModel;
 		}
 
 		private float CalculateGameFov()
@@ -707,18 +697,17 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private bool _levelDataNeedsUpdate;
-		private Action UpdateArrays { get; }
-		private void CheckForArrayUpdates()
+		private bool _stageLoaded;
+		private void CheckForStageLoaded()
 		{
-			if (!_levelDataNeedsUpdate)
+			if (!_stageLoaded)
 			{
 				return;
 			}
 
-			Invoke(UpdateArrays);
+			OnStageLoaded(this, EventArgs.Empty);
 
-			_levelDataNeedsUpdate = false;
+			_stageLoaded = false;
 		}
 
 		private void CleanUpDisposables()
