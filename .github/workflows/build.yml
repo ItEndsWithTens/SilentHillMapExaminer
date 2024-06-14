@@ -200,11 +200,22 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: 'latest'
         title: 'Latest dev build'
-        body: "This rolling window release offers the 3 most recent development builds of SHME. Try 'newest' first, then 'older' or 'oldest' if something's broken. Have fun!"
+        draft: true
         prerelease: false
         generate_notes: true
         files: |
           *.zip
+
+    - name: Prepend boilerplate to release body
+      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+      run: |
+        $body = gh release view -R ItEndsWithTens/SilentHillMapExaminer latest --json body --jq '.[]'
+        $body = "This rolling window release offers the 3 most recent development builds of SHME. " +
+                "Try 'newest' first, then 'older' or 'oldest' if something's broken. Have fun!" +
+                "`n`n" +
+                body
+        gh release edit -R ItEndsWithTens/SilentHillMapExaminer latest --notes $body
+        gh release edit -R ItEndsWithTens/SilentHillMapExaminer latest --draft=false
 
     - name: Prepare draft release of tag
       if: ${{ startsWith(github.ref, 'refs/tags/v') }}
