@@ -18,7 +18,7 @@ jobs:
         shell: pwsh
 
     env:
-      DOTNET_INSTALL_DIR: D:\dotnet
+      DOTNET_INSTALL_DIR: ${{ github.workspace }}\.dotnet
       GH_TOKEN: ${{ github.token }}
       NUGET_PACKAGES: ${{ github.workspace }}\.nuget\packages
       bizhawk_hash: ''
@@ -213,7 +213,7 @@ jobs:
         $body = "This rolling window release offers the 3 most recent development builds of SHME. " +
                 "Try 'newest' first, then 'older' or 'oldest' if something's broken. Have fun!" +
                 "`n`n" +
-                body
+                $body
         gh release edit -R ItEndsWithTens/SilentHillMapExaminer latest --notes $body
         gh release edit -R ItEndsWithTens/SilentHillMapExaminer latest --draft=false
 
