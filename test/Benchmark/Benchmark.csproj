@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>10.0</LangVersion>
-    <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
     <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
@@ -12,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SHME.ExternalTool\SHME.ExternalTool.csproj" />
-    <ProjectReference Include="..\..\src\SHME.ExternalTool.Graphics\SHME.ExternalTool.Graphics.csproj" />
+    <ProjectReference Include="../../src/SHME.ExternalTool/SHME.ExternalTool.csproj" />
+    <ProjectReference Include="../../src/SHME.ExternalTool.Graphics/SHME.ExternalTool.Graphics.csproj" />
   </ItemGroup>
 
 </Project>

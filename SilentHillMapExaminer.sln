@@ -27,6 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{3022183A-4EF
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "standalone", "standalone", "{C3E10F25-B9A6-44BA-97EC-342CFE171955}"
+	ProjectSection(SolutionItems) = preProject
+		src\SilentHillMapExaminer\Directory.Build.props = src\SilentHillMapExaminer\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugin", "plugin", "{EF45E51E-80A8-43B2-A2C5-8860BC5D4A59}"
 EndProject

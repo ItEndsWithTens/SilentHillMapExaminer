@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>12.0</LangVersion>
-    <Nullable>enable</Nullable>
     <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
 
@@ -13,10 +11,10 @@
 
     <Reference Include="System.Windows.Forms" />
 
-    <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj">
+    <ProjectReference Include="../CustomBuildTasks/CustomBuildTasks.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\SHME.ExternalTool.Graphics\SHME.ExternalTool.Graphics.csproj" />
+    <ProjectReference Include="../SHME.ExternalTool.Graphics/SHME.ExternalTool.Graphics.csproj" />
   </ItemGroup>
 
 </Project>

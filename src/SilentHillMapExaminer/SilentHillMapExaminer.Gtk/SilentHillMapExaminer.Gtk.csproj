@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SilentHillMapExaminer\SilentHillMapExaminer.csproj" />
+    <ProjectReference Include="../SilentHillMapExaminer/SilentHillMapExaminer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

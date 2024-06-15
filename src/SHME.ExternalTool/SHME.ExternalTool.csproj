@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>12.0</LangVersion>
-    <Nullable>enable</Nullable>
     <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
 
@@ -14,21 +12,21 @@
     </PackageReference>
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
 
-    <Reference Include="BizHawk.Bizware.BizwareGL" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Bizware.BizwareGL.dll" Private="false" />
-    <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Client.Common.dll" Private="false" />
-    <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(BizHawkOutputDir)\EmuHawk.exe" Private="false" />
-    <Reference Include="BizHawk.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Common.dll" Private="false" />
-    <Reference Include="BizHawk.Emulation.Common" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.Common.dll" Private="false" />
-    <Reference Include="BizHawk.Emulation.Cores" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.Cores.dll" Private="false" />
-    <Reference Include="BizHawk.Emulation.DiscSystem" HintPath="$(BizHawkOutputDir)\dll\BizHawk.Emulation.DiscSystem.dll" Private="false" />
-    <Reference Include="BizHawk.WinForms.Controls" HintPath="$(BizHawkOutputDir)\dll\BizHawk.WinForms.Controls.dll" Private="false" />
+    <Reference Include="BizHawk.Bizware.BizwareGL" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Bizware.BizwareGL.dll" Private="false" />
+    <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Client.Common.dll" Private="false" />
+    <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(BizHawkOutputDir)/EmuHawk.exe" Private="false" />
+    <Reference Include="BizHawk.Common" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Common.dll" Private="false" />
+    <Reference Include="BizHawk.Emulation.Common" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Emulation.Common.dll" Private="false" />
+    <Reference Include="BizHawk.Emulation.Cores" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Emulation.Cores.dll" Private="false" />
+    <Reference Include="BizHawk.Emulation.DiscSystem" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Emulation.DiscSystem.dll" Private="false" />
+    <Reference Include="BizHawk.WinForms.Controls" HintPath="$(BizHawkOutputDir)/dll/BizHawk.WinForms.Controls.dll" Private="false" />
     <Reference Include="System.Windows.Forms" />
 
-    <ProjectReference Include="..\CustomBuildTasks\CustomBuildTasks.csproj">
+    <ProjectReference Include="../CustomBuildTasks/CustomBuildTasks.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\SHME.ExternalTool.Guts\SHME.ExternalTool.Guts.csproj" />
-    <ProjectReference Include="..\SHME.ExternalTool.Graphics\SHME.ExternalTool.Graphics.csproj" />
+    <ProjectReference Include="../$(MSBuildProjectName).Guts/$(MSBuildProjectName).Guts.csproj" />
+    <ProjectReference Include="../$(MSBuildProjectName).Graphics/$(MSBuildProjectName).Graphics.csproj" />
   </ItemGroup>
 
   <!--Node reuse by MSBuild means that after a build, an inline task using the

@@ -1,0 +1,13 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <RestoreAdditionalProjectSources>https://www.myget.org/F/eto/</RestoreAdditionalProjectSources>
+
+    <MacBuildBundle>true</MacBuildBundle>
+    <MacBundleName>$(Product)</MacBundleName>
+    <MacBundleMono>false</MacBundleMono>
+  </PropertyGroup>
+
+</Project>

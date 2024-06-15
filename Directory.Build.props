@@ -1,10 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <RestoreAdditionalProjectSources>https://www.myget.org/F/eto/</RestoreAdditionalProjectSources>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <Company>Rob Martens</Company>
     <Copyright>Copyright © $([System.DateTime]::Now.Year)</Copyright>
     <Product>Silent Hill Map Examiner</Product>
@@ -14,16 +10,15 @@
     <BuildOS Condition="$([MSBuild]::IsOsPlatform(`OSX`)) == true">macOS</BuildOS>
 
     <TopLevelDirectory>$(MSBuildThisFileDirectory)</TopLevelDirectory>
-    <BizHawkOutputDir>$(TopLevelDirectory)\lib\BizHawk\output\</BizHawkOutputDir>
+    <BizHawkOutputDir>$(TopLevelDirectory)/lib/BizHawk/output/</BizHawkOutputDir>
 
-    <ArtifactsDir>$(TopLevelDirectory)\artifacts\</ArtifactsDir>
-    <BaseIntermediateOutputPath>$(ArtifactsDir)\obj\$(BuildOS)\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-    <BaseOutputPath>$(ArtifactsDir)\bin\$(MSBuildProjectName)\</BaseOutputPath>
+    <ArtifactsDir>$(TopLevelDirectory)/artifacts/</ArtifactsDir>
+    <BaseIntermediateOutputPath>$(ArtifactsDir)/obj/$(BuildOS)/$(MSBuildProjectName)/</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(ArtifactsDir)/bin/$(MSBuildProjectName)/</BaseOutputPath>
 
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <MacBuildBundle>true</MacBuildBundle>
-    <MacBundleName>$(Product)</MacBundleName>
-    <MacBundleMono>false</MacBundleMono>
 
     <!--Taken together with DebugType, in Directory.Build.targets, these 
     properties allow Source Link to provide embedded debug information 
