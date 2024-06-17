@@ -185,7 +185,7 @@ namespace BizHawk.Client.EmuHawk
 
 			LoadSettings();
 
-			SetButtonNames();
+			_lastControllerLayoutHash = String.Empty;
 
 			LblTestModelScale.Text = TrkTestModelScale.Value.ToString(CultureInfo.CurrentCulture);
 
@@ -209,7 +209,7 @@ namespace BizHawk.Client.EmuHawk
 			RdoOverlayBackend_CheckedChanged(this, EventArgs.Empty);
 			CmbRenderMode_SelectedIndexChanged(this, EventArgs.Empty);
 
-			_initializeOverlayCountdown = 5;
+			_initOverlayCountdown = 5;
 			CbxAlwaysRun_CheckedChanged(this, EventArgs.Empty);
 
 			Label[] labels =
@@ -256,16 +256,26 @@ namespace BizHawk.Client.EmuHawk
 			int buttonFlags = Mem.ReadS32(ram.ButtonFlags);
 			bool buttonsActive = buttonFlags != 0x00000000;
 
-			// Initializing the overlay graphics includes aligning the rendering
-			// with the game content. The Viewport.FromBitmap method does that
-			// as part of the InitializeOverlay method, but when loading a save
-			// state the first few frames will be the low res preview screenshot
-			// that was saved as part of the state, and that picture is a couple
-			// of pixels offset horizontally. A few calls to UpdateValues later,
-			// everything's fine, so just wait a bit before init.
-			if (buttonsActive && _initializeOverlayCountdown > -1)
+			if (buttonsActive)
 			{
-				if (_initializeOverlayCountdown-- == 0)
+				long address = ram.ControllerConfig;
+				string hash = Mem.HashRegion(address, SHME.ExternalTool.ControllerConfig.Size);
+				if (hash != _lastControllerLayoutHash)
+				{
+					SetButtonNames();
+					_lastControllerLayoutHash = hash;
+				}
+
+				// Initializing the overlay graphics includes aligning
+				// rendering with the game content. Creating a Viewport
+				// with said class's static FromBitmap method from within
+				// InitializeOverlay handles that, but when loading a
+				// save state the first few frames will be the low res
+				// preview screenshot that was saved as part of the
+				// state, and that picture is a couple of pixels offset
+				// horizontally. A few calls to UpdateValues later,
+				// everything's fine, so just wait a bit before init.
+				if (_initOverlayCountdown > -1 && _initOverlayCountdown-- == 0)
 				{
 					InitializeOverlay();
 				}
@@ -320,13 +330,6 @@ namespace BizHawk.Client.EmuHawk
 					}
 					else if (_firstPersonEnabled)
 					{
-						long address = ram.ControllerConfig;
-						string hash = Mem.HashRegion(address, SHME.ExternalTool.ControllerConfig.Size);
-						if (hash != _lastControllerLayoutHash)
-						{
-							SetButtonNames();
-							_lastControllerLayoutHash = hash;
-						}
 						if (_forcedCameraYaw != null)
 						{
 							_holdCameraPitch = 0;
@@ -360,7 +363,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxEnableOverlay.Checked)
 					{
-						if (_initializeOverlayCountdown == -1)
+						if (_initOverlayCountdown == -1)
 						{
 							DrawOverlay();
 						}
@@ -750,7 +753,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private DisplaySurfaceID _displaySurfaceID;
-		private int _initializeOverlayCountdown;
+		private int _initOverlayCountdown;
 		private void InitializeOverlay()
 		{
 			if (GameSurface == null)

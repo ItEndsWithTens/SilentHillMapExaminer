@@ -73,7 +73,7 @@ namespace BizHawk.Client.EmuHawk
 
 			// Select the "Load" menu option and press X.
 			Mem.WriteByte(Rom.Addresses.MainRam.IndexOfSelectedTitleScreenOption, 0);
-			HoldButtonsAndDoFrameAdvance(15, Octoshock != null ? "P1 Cross" : "P1 X");
+			HoldButtonsAndDoFrameAdvance(15, _buttonNames[ShmeCommand.Action]);
 
 			// Wait for the load screen transition to complete.
 			for (int i = 0; i < 350; i++)
@@ -84,7 +84,7 @@ namespace BizHawk.Client.EmuHawk
 			// Select the newest save slot and load.
 			uint slotCount = Mem.ReadU32(Rom.Addresses.MainRam.SaveLoadSlotCount);
 			Mem.WriteByte(Rom.Addresses.MainRam.IndexOfSelectedSaveLoadSlot, slotCount - 1);
-			HoldButtonsAndDoFrameAdvance(15, Octoshock != null ? "P1 Cross" : "P1 X");
+			HoldButtonsAndDoFrameAdvance(15, _buttonNames[ShmeCommand.Action]);
 
 			// Wait until the load is complete.
 			for (int i = 0; i < 1000; i++)
@@ -140,7 +140,7 @@ namespace BizHawk.Client.EmuHawk
 			Mem.WriteByte(Rom.Addresses.MainRam.IndexOfSelectedSaveLoadSlot, slotCount - 1);
 
 			// Create new in-game save.
-			HoldButtonsAndDoFrameAdvance(15, Octoshock != null ? "P1 Cross" : "P1 X");
+			HoldButtonsAndDoFrameAdvance(15, _buttonNames[ShmeCommand.Action]);
 
 			// Wait for save to complete.
 			for (int i = 0; i < 200; i++)

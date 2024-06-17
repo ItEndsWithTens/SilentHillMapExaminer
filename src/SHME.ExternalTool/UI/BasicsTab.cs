@@ -349,7 +349,7 @@ namespace BizHawk.Client.EmuHawk
 
 			_stageLoaded = true;
 			_suppressForcedCameraYaw = true;
-			_initializeOverlayCountdown = 10;
+			_initOverlayCountdown = 10;
 		}
 
 		private void NudOverlayCameraPitch_ValueChanged(object sender, EventArgs e)
