@@ -1,4 +1,4 @@
-﻿using BizHawk.Emulation.Cores.Sony.PSX;
+﻿using BizHawk.Emulation.Common;
 using SHME.ExternalTool;
 using System;
 using System.Collections.Generic;
@@ -166,15 +166,7 @@ namespace BizHawk.Client.EmuHawk
 			bool wasPaused = Emu.IsPaused();
 			Emu.Pause();
 
-			byte[]? sram = null;
-			if (Octoshock != null)
-			{
-				sram = Octoshock.CloneSaveRam();
-			}
-			else if (Nymashock != null)
-			{
-				sram = Nymashock.CloneSaveRam();
-			}
+			byte[]? sram = (Emulator as ISaveRam)?.CloneSaveRam();
 
 			using var fs = new FileStream(file, FileMode.Create, FileAccess.Write);
 			using var bw = new BinaryWriter(fs);
@@ -209,14 +201,7 @@ namespace BizHawk.Client.EmuHawk
 			// Silent Hill won't pick up on SaveRAM changes without a reboot.
 			Emu.RebootCore();
 
-			if (Octoshock != null)
-			{
-				Octoshock.StoreSaveRam(sram);
-			}
-			else if (Nymashock != null)
-			{
-				Nymashock.StoreSaveRam(sram);
-			}
+			(Emulator as ISaveRam)?.StoreSaveRam(sram);
 
 			if (!wasPaused)
 			{

@@ -59,11 +59,8 @@ namespace BizHawk.Client.EmuHawk
 		[RequiredService]
 		private IMemoryDomains? MemDomains { get; set; }
 
-		[OptionalService]
-		public Octoshock? Octoshock { get; set; }
-
-		[OptionalService]
-		public Nymashock? Nymashock { get; set; }
+		[RequiredService]
+		public IEmulator? Emulator { get; set; }
 
 		public const string ToolName = "Silent Hill Map Examiner";
 		public const string ToolDescription = "";
@@ -700,7 +697,7 @@ namespace BizHawk.Client.EmuHawk
 				{ PsxButtons.R1, "P1 R1" }
 			};
 
-			if (Octoshock != null)
+			if (Emulator is Octoshock)
 			{
 				names[PsxButtons.L3] = "P1 L3";
 				names[PsxButtons.R3] = "P1 R3";
@@ -763,17 +760,11 @@ namespace BizHawk.Client.EmuHawk
 
 			ClearOverlay();
 
-			if (Octoshock == null)
+			Octoshock.eResolutionMode? mode = null;
+			if (Emulator is Octoshock octo)
 			{
-				if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
-				{
-					RdoOverlayDisplaySurfaceClient.Checked = true;
-				}
+				mode = octo.GetSettings().ResolutionMode;
 
-				RdoOverlayDisplaySurfaceFramebuffer.Enabled = false;
-			}
-			else
-			{
 				RdoOverlayDisplaySurfaceFramebuffer.Enabled = true;
 
 				if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
@@ -786,8 +777,17 @@ namespace BizHawk.Client.EmuHawk
 					RdoBackendBizHawkGui.Enabled = true;
 				}
 			}
+			else
+			{
+				if (RdoOverlayDisplaySurfaceFramebuffer.Checked)
+				{
+					RdoOverlayDisplaySurfaceClient.Checked = true;
+				}
 
-			Octoshock.eResolutionMode? mode = Octoshock?.GetSettings().ResolutionMode;
+				RdoBackendBizHawkGui.Enabled = true;
+				RdoOverlayDisplaySurfaceFramebuffer.Enabled = false;
+			}
+
 			if (mode == Octoshock.eResolutionMode.PixelPro)
 			{
 				Guts.ClickPort.Width = 640;
@@ -815,15 +815,15 @@ namespace BizHawk.Client.EmuHawk
 			}
 			else
 			{
-				// BizHawk's Emu.BorderWidth and BorderHeight methods seem to be
-				// perpetually one behind a window resize, showing the previous
-				// border size instead of the new one. Grabbing a screenshot of
-				// the window's client area and directly examining its pixels
-				// avoids that, and has the benefit of cropping out the game's
-				// overscan as well.
-
-				IVideoProvider vp = Octoshock != null ? Octoshock.AsVideoProvider() : Nymashock.AsVideoProvider();
-				using Bitmap screenshot = DisplayManager.RenderOffscreen(vp, false).ToSysdrawingBitmap();
+				// BizHawk's Emu.BorderWidth and BorderHeight methods
+				// seem to be perpetually one behind a window resize,
+				// showing the previous border size instead of the new
+				// one. Grabbing a screenshot of the window's client
+				// area and directly examining its pixels avoids that,
+				// while at the same time cropping the game's overscan.
+				using Bitmap screenshot = DisplayManager
+					.RenderOffscreen(Emulator.AsVideoProvider(), false)
+					.ToSysdrawingBitmap();
 
 				Guts.RenderPort = Viewport.FromBitmap(screenshot, Color.Black);
 			}
