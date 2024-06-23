@@ -55,16 +55,19 @@ namespace BizHawk.Client.EmuHawk
 
 	public partial class CustomMainForm
 	{
-		private readonly List<string> _directories = new List<string>();
-		private readonly List<string> _extensions = new List<string>();
-		private readonly List<FileRecord> _records = new List<FileRecord>();
+		private readonly List<string> _directories = [];
+		private readonly List<string> _extensions = [];
+		private readonly List<FileRecord> _records = [];
+
+		private Disc? _disc;
+		private DiscSectorReader? _discSectorReader;
 
 		private void ExtractFiles(IEnumerable<FileRecord> records, string path, bool createDirectories = false)
 		{
-			using Disc disc = Disc.LoadAutomagic(MainForm.CurrentlyOpenRom);
-
-			var dsr = new DiscSectorReader(disc);
-			dsr.Policy.UserData2048Mode = DiscSectorReaderPolicy.EUserData2048Mode.AssumeMode2_Form1;
+			if (_discSectorReader is null)
+			{
+				return;
+			}
 
 			if (createDirectories)
 			{
@@ -130,7 +133,7 @@ namespace BizHawk.Client.EmuHawk
 
 			foreach (FileRecord r in records)
 			{
-				byte[] bytes = RetrieveFile(r, dsr);
+				byte[] bytes = RetrieveFile(r, _discSectorReader);
 
 				string finalPath;
 				if (createDirectories)

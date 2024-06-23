@@ -2,6 +2,7 @@
 using BizHawk.Common;
 using BizHawk.Emulation.Common;
 using BizHawk.Emulation.Cores.Sony.PSX;
+using BizHawk.Emulation.DiscSystem;
 using SHME.ExternalTool;
 using SHME.ExternalTool.Graphics;
 using System;
@@ -177,6 +178,12 @@ namespace BizHawk.Client.EmuHawk
 		public override void Restart()
 		{
 			base.Restart();
+
+			_disc?.Dispose();
+			_disc = Disc.LoadAutomagic(MainForm.CurrentlyOpenRom);
+
+			_discSectorReader = new DiscSectorReader(_disc);
+			_discSectorReader.Policy.UserData2048Mode = DiscSectorReaderPolicy.EUserData2048Mode.AssumeMode2_Form1;
 
 			Backend = new BizHawkGuiBackend(Gui);
 
@@ -675,6 +682,8 @@ namespace BizHawk.Client.EmuHawk
 			_inputBindsForm?.Dispose();
 
 			Settings?.Dispose();
+
+			_disc?.Dispose();
 
 			GameSurface = null;
 		}
