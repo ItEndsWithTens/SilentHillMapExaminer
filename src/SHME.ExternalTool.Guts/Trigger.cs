@@ -15,7 +15,8 @@ namespace SHME.ExternalTool
 		Function1 = 0x0A,
 
 		/// <summary>
-		/// A trigger that updates the area map with red marker scribbles.
+		/// A trigger that updates the area map with red marker
+		/// scribbles.
 		/// </summary>
 		MapScribble = 0x0B
 	}
@@ -28,27 +29,28 @@ namespace SHME.ExternalTool
 		Unknown0 = 0x0,
 
 		/// <summary>
-		/// Activated by touching an axis-aligned bounding box, defined by two
-		/// radii and with its origin in the center.
+		/// Activated by touching an axis-aligned bounding box, defined
+		/// by two radii and with its origin in the center.
 		/// </summary>
 		TouchAabb = 0x1,
 
 		/// <summary>
-		/// Activated by pressing the action button when in range of and aimed
-		/// toward the trigger's POI.
+		/// Activated by pressing the action button when in range of and
+		/// aimed toward the trigger's POI.
 		/// </summary>
 		ButtonOmni = 0x2,
 
 		/// <summary>
-		/// Activated by pressing the action button when in range of and aimed
-		/// toward the trigger's POI, while also aimed opposite that POI's yaw.
+		/// Activated by pressing the action button when in range of and
+		/// aimed toward the trigger's POI, while also aimed opposite
+		/// that POI's yaw.
 		/// </summary>
 		ButtonYaw = 0x3,
 
 		/// <summary>
-		/// Activated by touching an oriented bounding box, defined by a width
-		/// and yaw, always 4 units deep and with its origin flush with the back
-		/// face.
+		/// Activated by touching an oriented bounding box, defined by a
+		/// width and yaw, always 4 units deep and with its origin flush
+		/// with the back face.
 		/// </summary>
 		TouchObb = 0x4,
 
@@ -58,18 +60,18 @@ namespace SHME.ExternalTool
 		Dummy = 0x0F
 	}
 
-	public class Trigger : SilentHillEntity
+	public class Trigger : SilentHillType
 	{
-		public override int SizeInBytes => SilentHillEntitySizes.Trigger;
+		public override int SizeInBytes => SilentHillTypeSizes.Trigger;
 
 		public byte Thing0 { get; }
 		/// <summary>
 		/// Whether this trigger is usable or not.
 		/// </summary>
 		/// <remarks>
-		/// A property named "Enabled" might be more intuitive, but it would be
-		/// less reflective of the Silent Hill engine, which sets a bit for the
-		/// disabled state and clears it for enabled.
+		/// A property named "Enabled" might be more intuitive, but it
+		/// would be less reflective of the Silent Hill engine, which
+		/// sets a bit for the disabled state and clears it for enabled.
 		/// </remarks>
 		public bool Disabled { get; }
 		public byte Thing1 { get; }
@@ -95,8 +97,8 @@ namespace SHME.ExternalTool
 		public byte Thing3 { get; } // Could be string index when door is locked?
 		public byte Thing4 { get; }
 		/// <summary>
-		/// Trigger type info, e.g. whether this is a door, and if so where
-		/// it goes.
+		/// Trigger type info, e.g. whether this is a door, and if so
+		/// where it goes.
 		/// </summary>
 		/// <remarks>
 		/// Low 5 bits seems to be the type:
@@ -106,11 +108,12 @@ namespace SHME.ExternalTool
 		/// 0x0A: Function
 		/// 0x0B: Function(?)
 		///
-		/// If this is in fact a door trigger, shifting the remainder right by 5
-		/// and taking the low 8 bits of the result gives the target POI index.
+		/// If this is in fact a door trigger, shifting the remainder
+		/// right by 5 and taking the low 8 bits of the result gives the
+		/// target POI index.
 		///
-		/// Likewise, the same bit shift provides the string array index for
-		/// text triggers.
+		/// Likewise, the same bit shift provides the string array index
+		/// for text triggers.
 		/// </remarks>
 		public uint TypeInfo { get; }
 
@@ -152,10 +155,10 @@ namespace SHME.ExternalTool
 			uint raw8 = (TypeInfo & 0b00000000_00000111_11100000_00000000) >> 13;
 			uint raw9 = (TypeInfo & 0b00000001_11111000_00000000_00000000) >> 19;
 
-			// rawA is what map to load for Door1 types, i.e. changelevel
-			// triggers. Zero-based offset, relative to 1995, the file record
-			// index corresponding to MAP0_S00.BIN. Not sure if this is used
-			// for anything else yet.
+			// rawA is what stage to load for Door1 types, i.e. level
+			// change triggers. Zero-based offset, relative to 1995, the
+			// file record index corresponding to MAP0_S00.BIN. Not sure
+			// if this is used for anything else yet.
 			uint rawA = (TypeInfo & 0b01111110_00000000_00000000_00000000) >> 25;
 
 			uint rawB = (TypeInfo & 0b10000000_00000000_00000000_00000000) >> 31;

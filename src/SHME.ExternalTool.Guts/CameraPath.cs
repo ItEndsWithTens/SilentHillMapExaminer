@@ -4,9 +4,9 @@ using System.Numerics;
 
 namespace SHME.ExternalTool
 {
-	public class CameraPath : SilentHillEntity
+	public class CameraPath : SilentHillType
 	{
-		public override int SizeInBytes => SilentHillEntitySizes.CameraPath;
+		public override int SizeInBytes => SilentHillTypeSizes.CameraPath;
 
 		// These are separate floats only to avoid the potential confusion of
 		// using Vector2s, which have X and Y components instead of X and Z.

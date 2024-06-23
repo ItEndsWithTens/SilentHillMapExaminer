@@ -1,13 +1,13 @@
 ﻿namespace SHME.ExternalTool;
 
-public static class SilentHillEntitySizes
+public static class SilentHillTypeSizes
 {
 	public static int CameraPath => 24;
 	public static int PointOfInterest => 12;
 	public static int Trigger => 12;
 }
 
-public class SilentHillEntity
+public class SilentHillType
 {
 	public virtual int SizeInBytes { get; }
 

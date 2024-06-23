@@ -355,14 +355,14 @@ namespace BizHawk.Client.EmuHawk
 			LbxTriggers.Items.Clear();
 
 			int ofs = triggerArrayAddress;
-			var t = new Trigger(ofs, Mem.ReadByteRange(ofs, SilentHillEntitySizes.Trigger));
+			var t = new Trigger(ofs, Mem.ReadByteRange(ofs, SilentHillTypeSizes.Trigger));
 			while (t.Style != TriggerStyle.Dummy)
 			{
 				Guts.Triggers.Add(t);
 				LbxTriggers.Items.Add(t);
 
-				ofs += SilentHillEntitySizes.Trigger;
-				t = new Trigger(ofs, Mem.ReadByteRange(ofs, SilentHillEntitySizes.Trigger));
+				ofs += SilentHillTypeSizes.Trigger;
+				t = new Trigger(ofs, Mem.ReadByteRange(ofs, SilentHillTypeSizes.Trigger));
 			}
 
 			LblTriggerCount.Text = Guts.Triggers.Count.ToString(CultureInfo.CurrentCulture);

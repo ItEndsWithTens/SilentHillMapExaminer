@@ -63,7 +63,7 @@ namespace BizHawk.Client.EmuHawk
 			var gemGen = new GemGenerator(0.125f, 0.25f, 0.125f, Color.FromArgb(0x25, 0xA5, 0x97));
 			while (true)
 			{
-				IReadOnlyList<byte> bytes = Mem.ReadByteRange(address, SilentHillEntitySizes.CameraPath);
+				IReadOnlyList<byte> bytes = Mem.ReadByteRange(address, SilentHillTypeSizes.CameraPath);
 
 				var path = new CameraPath(address, bytes.ToArray());
 
@@ -132,7 +132,7 @@ namespace BizHawk.Client.EmuHawk
 
 				Guts.CameraPaths.Add(path, new[] { area, gemA, volume, gemB });
 
-				address += SilentHillEntitySizes.CameraPath;
+				address += SilentHillTypeSizes.CameraPath;
 			}
 
 			LblCameraPathCount.Text = Guts.CameraPaths.Count.ToString(CultureInfo.CurrentCulture);

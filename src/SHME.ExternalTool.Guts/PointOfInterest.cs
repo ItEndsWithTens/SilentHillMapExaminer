@@ -6,9 +6,9 @@ using static SHME.ExternalTool.Guts;
 
 namespace SHME.ExternalTool
 {
-	public class PointOfInterest : SilentHillEntity
+	public class PointOfInterest : SilentHillType
 	{
-		public override int SizeInBytes => SilentHillEntitySizes.PointOfInterest;
+		public override int SizeInBytes => SilentHillTypeSizes.PointOfInterest;
 
 		public float X { get; }
 

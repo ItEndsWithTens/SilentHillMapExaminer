@@ -60,8 +60,8 @@ partial class Guts
 
 	public IList<Trigger> Triggers { get; } = [];
 
-	private Dictionary<SilentHillEntity, IList<(ListControl control, int index)>> _clickedThings = [];
-	public ref Dictionary<SilentHillEntity, IList<(ListControl control, int index)>> ClickedThings => ref _clickedThings;
+	private Dictionary<SilentHillType, IList<(ListControl control, int index)>> _clickedThings = [];
+	public ref Dictionary<SilentHillType, IList<(ListControl control, int index)>> ClickedThings => ref _clickedThings;
 
 	public Tim? AreaMapGraphic { get; set; }
 }

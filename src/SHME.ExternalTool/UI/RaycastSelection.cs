@@ -21,7 +21,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private bool GetClickedThings(
 			Point screen,
-			ref Dictionary<SilentHillEntity, IList<(ListControl control, int index)>> clicked)
+			ref Dictionary<SilentHillType, IList<(ListControl control, int index)>> clicked)
 		{
 			clicked.Clear();
 
@@ -158,7 +158,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				_raycastSelectionIndex = 0;
 
-				KeyValuePair<SilentHillEntity, IList<(ListControl, int)>> first =
+				KeyValuePair<SilentHillType, IList<(ListControl, int)>> first =
 					Guts.ClickedThings.ElementAt(_raycastSelectionIndex);
 
 				foreach ((ListControl c, int i) val in first.Value)
@@ -185,7 +185,7 @@ namespace BizHawk.Client.EmuHawk
 
 			ClearListControlSelections();
 
-			KeyValuePair<SilentHillEntity, IList<(ListControl, int)>> thing =
+			KeyValuePair<SilentHillType, IList<(ListControl, int)>> thing =
 				Guts.ClickedThings.ElementAt(++_raycastSelectionIndex % Guts.ClickedThings.Count);
 
 			foreach ((ListControl c, int i) val in thing.Value)
