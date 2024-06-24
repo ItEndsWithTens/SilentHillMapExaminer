@@ -137,8 +137,8 @@
 
 		public long ButtonFlags { get; set; }
 
-		public long MapHeader { get; set; }
-		public long MapChunkset { get; set; }
+		public long StageHeader { get; set; }
+		public long WorldChunkSet { get; set; }
 		public long Pointer2 { get; set; }
 		public long Value1 { get; set; }
 		public long Pointer3 { get; set; }

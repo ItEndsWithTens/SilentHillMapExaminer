@@ -79,6 +79,21 @@ public class SilentHillTypeTest
 	}
 
 	[Test]
+	public void StageTest()
+	{
+		byte[] expected = [
+			0xDE, 0xAD, 0xBE, 0xEF];
+
+		Stage s = new(0x800C9578, expected);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(s.Address, Is.EqualTo(0x800C9578));
+			Assert.That(s.ToBytes(), Is.EqualTo(expected));
+		});
+	}
+
+	[Test]
 	public void TriggerTest()
 	{
 		byte[] expected = [

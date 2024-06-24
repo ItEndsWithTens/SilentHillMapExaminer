@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SHME.ExternalTool;
+using System;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -34,6 +36,21 @@ public partial class CustomMainForm
 		BtnCameraFly.LostFocus += BtnCameraFly_LostFocus;
 		BtnCameraFps.LostFocus += BtnCameraFps_LostFocus;
 
+		StageLoaded += (sender, e) =>
+		{
+			MainRamAddresses ram = Rom.Addresses.MainRam;
+
+			const int StageIndexBase = 1995;
+
+			int idx = StageIndexBase + (int)Mem.ReadByte(ram.IndexOfLoadedStage);
+
+			var dict = _records.ToDictionary((r) => r.Index);
+
+			// Load the stage file directly from disc, not MainRAM, so
+			// changes to entities can be reset to their original state.
+			long stageBase = ram.BaseAddress + ram.StageHeader;
+			Guts.Stage = new Stage(stageBase, RetrieveFile(dict[idx]));
+		};
 		StageLoaded += UpdateArrays;
 		StageLoaded += LoadHarryModel;
 

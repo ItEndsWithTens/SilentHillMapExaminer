@@ -11,7 +11,7 @@ public static class SilentHillTypeSizes
 
 public abstract class SilentHillType
 {
-	public virtual int SizeInBytes { get; }
+	public virtual int SizeInBytes { get; protected set; }
 
 	public virtual long Address { get; protected set; }
 

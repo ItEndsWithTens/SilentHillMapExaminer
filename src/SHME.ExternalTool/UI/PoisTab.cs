@@ -186,7 +186,7 @@ namespace BizHawk.Client.EmuHawk
 			int poiArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
 			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			if (poiArrayAddress < Rom.Addresses.MainRam.MapHeader)
+			if (poiArrayAddress < Rom.Addresses.MainRam.StageHeader)
 			{
 				return;
 			}
@@ -346,7 +346,7 @@ namespace BizHawk.Client.EmuHawk
 			int triggerArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
 			triggerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			if (triggerArrayAddress < Rom.Addresses.MainRam.MapHeader)
+			if (triggerArrayAddress < Rom.Addresses.MainRam.StageHeader)
 			{
 				return;
 			}

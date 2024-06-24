@@ -185,8 +185,8 @@
 
 				ButtonFlags = 0xC71A2,
 
-				MapHeader = 0xC9578,
-				MapChunkset = 0xC9578 + 0x4,
+				StageHeader = 0xC9578,
+				WorldChunkSet = 0xC9578 + 0x4,
 				Pointer2 = 0xC9578 + 0x8,
 				Value1 = 0xC9578 + 0xC,
 				Pointer3 = 0xC9578 + 0x10,

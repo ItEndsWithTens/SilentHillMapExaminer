@@ -47,6 +47,8 @@ partial class Guts
 	private IList<(Renderable, bool)> _visibleRenderables = [];
 	public ref IList<(Renderable, bool)> VisibleRenderables => ref _visibleRenderables;
 
+	public Stage? Stage { get; set; }
+
 	public PointOfInterest? LastHarrySpawnPoint { get; set; }
 
 	public ControllerConfig ControllerConfig { get; set; }
