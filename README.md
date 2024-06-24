@@ -87,6 +87,24 @@
 
 
 
+  ### Testing
+
+  For just the unit tests, run `dotnet test` from the project's top level directory, or use Visual Studio's built-in Test Explorer. If instead you want to collect code coverage information at the same time, first install the coverage collection tool:
+   - `dotnet tool install --global dotnet-coverage`
+
+  Then install Daniel Palme's [ReportGenerator](https://github.com/danielpalme/ReportGenerator):
+   - `dotnet tool install --global dotnet-reportgenerator-globaltool`
+
+  Run the tests and collect coverage data:
+   - `dotnet-coverage collect dotnet test --settings CodeCoverage.runsettings --output artifacts/test/coverage.xml --output-format xml`
+
+  Generate the human readable coverage report:
+   - `reportgenerator -reports:"artifacts/test/coverage.xml" -targetdir:"artifacts/test/coveragereport" -reporttypes:Html`
+
+  Finally, open `artifacts/test/coveragereport/index.html` and wallow in despair at the lack of code coverage.
+
+
+
   ### Benchmarking
 
   Accumulated benchmark results can be viewed [here](https://itendswithtens.github.io/PerfTrendsWithTens/SHME/bench/), with the caveat that by running on CI servers with unpredictable performance characteristics, said benchmarks are useful only as an extremely high level overview of long term trends.

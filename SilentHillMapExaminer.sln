@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{5BAA19A5-C284-4540-9024-D609CE689CAA}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		CodeCoverage.runsettings = CodeCoverage.runsettings
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 	EndProjectSection
@@ -42,6 +43,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHME.ExternalTool.Guts", "src\SHME.ExternalTool.Guts\SHME.ExternalTool.Guts.csproj", "{B47A5E6D-A904-4386-8215-F46D98B09D80}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHME.ExternalTool.Graphics", "src\SHME.ExternalTool.Graphics\SHME.ExternalTool.Graphics.csproj", "{6D340075-B41C-4A5C-BCCB-F4ABC51EC2E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GutsTest", "test\GutsTest\GutsTest.csproj", "{3054863D-DA4E-423A-86EC-9D3333BF928C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +88,10 @@ Global
 		{6D340075-B41C-4A5C-BCCB-F4ABC51EC2E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D340075-B41C-4A5C-BCCB-F4ABC51EC2E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D340075-B41C-4A5C-BCCB-F4ABC51EC2E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3054863D-DA4E-423A-86EC-9D3333BF928C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3054863D-DA4E-423A-86EC-9D3333BF928C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3054863D-DA4E-423A-86EC-9D3333BF928C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3054863D-DA4E-423A-86EC-9D3333BF928C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +107,7 @@ Global
 		{9AAC0A8C-DB0B-452A-ABDF-B3489257B640} = {5BAA19A5-C284-4540-9024-D609CE689CAA}
 		{B47A5E6D-A904-4386-8215-F46D98B09D80} = {EF45E51E-80A8-43B2-A2C5-8860BC5D4A59}
 		{6D340075-B41C-4A5C-BCCB-F4ABC51EC2E4} = {EF45E51E-80A8-43B2-A2C5-8860BC5D4A59}
+		{3054863D-DA4E-423A-86EC-9D3333BF928C} = {E071A977-EBEF-4742-A119-C149D25FF858}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FBAF1CA-0999-4AA0-A932-125771E0D8D0}

@@ -26,6 +26,7 @@ jobs:
         lib/BizHawk/output/dll/BizHawk.*.dll
         lib/BizHawk/output/EmuHawk.exe
       skip_benchmarks: false
+      skip_tests: false
 
     steps:
     - name: Checkout
@@ -82,7 +83,7 @@ jobs:
       run: dotnet build -c:Release -t:CreateZip
       working-directory: src/SHME.ExternalTool
 
-    - name: Check for [skip benchmarks]
+    - name: Check for [skip benchmarks] and [skip tests]
       run: |
         $pr = "${{ github.event_name == 'pull_request' }}" -eq 'true'
 
@@ -97,20 +98,31 @@ jobs:
           # commandlet concatenates arrays into one big string, avoiding that.
           $msg = $(git show -s --format=%B $sha) | Out-String
 
-          $skip = $msg -match '\[skip benchmarks?\]'
+          $skip_b = $msg -match '\[skip benchmarks?\]'
+          $skip_t = $msg -match '\[skip tests?\]'
+          $skip_either = $skip_b -or $skip_t
 
           # In case of a force push to a pull request, Github will add an
           # invisible merge commit that doesn't contain the expected newest
           # commit message. Merge commits should otherwise be rare in a PR,
           # so simply checking the message for the word "Merge" handles this.
-          if ((-not $skip) -and $pr -and $msg.StartsWith('Merge'))
+          if ((-not $skip_either) -and $pr -and $msg.StartsWith('Merge'))
           {
             continue
           }
 
-          echo "skip_benchmarks=$skip" >> $env:GITHUB_ENV
+          echo "skip_benchmarks=$skip_b" >> $env:GITHUB_ENV
+          echo "skip_tests=$skip_t" >> $env:GITHUB_ENV
           break
         }
+
+    # The desire to optionally skip building and running tests and/or
+    # benchmarks precludes the use of a solution-level 'dotnet build'.
+    - name: Build and run unit tests
+      if: ${{ env.skip_tests != 'true' }}
+      run: |
+        dir "test/*Test*/*.csproj" -Recurse | %{dotnet build $PSItem.FullName -c:Release --no-dependencies}
+        dotnet test -c:Release --no-build
 
     - name: Run benchmarks
       if: ${{ env.skip_benchmarks != 'true' }}
