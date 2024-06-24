@@ -333,18 +333,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private void Emu_StateLoaded(object sender, StateLoadedEventArgs e)
 		{
-			Guts.Pois.Clear();
-			LbxPois.Items.Clear();
-			LblPoiCount.Text = "-";
-
-			Guts.Triggers.Clear();
-			LbxTriggers.Items.Clear();
-			LblTriggerCount.Text = "-";
-
-			LbxPoiAssociatedTriggers.Items.Clear();
-
-			ClearDisplayedPoiInfo();
-			ClearDisplayedTriggerInfo();
+			ClearLoadedGameObjects();
 
 			_stageLoaded = true;
 			_suppressForcedCameraYaw = true;

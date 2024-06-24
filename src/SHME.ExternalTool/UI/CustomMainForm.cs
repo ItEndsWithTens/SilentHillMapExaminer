@@ -198,15 +198,7 @@ namespace BizHawk.Client.EmuHawk
 			DetachEventHandlers();
 			AttachEventHandlers();
 
-			Guts.Boxes.Clear();
-			Guts.Gems.Clear();
-			Guts.Lines.Clear();
-			Guts.TestBoxes.Clear();
-			Guts.ModelBoxes.Clear();
-
-			Guts.CameraBoxes.Clear();
-			Guts.CameraGems.Clear();
-			Guts.CameraLines.Clear();
+			ClearLoadedGameObjects();
 
 			Mem.UseMemoryDomain("MainRAM");
 
@@ -691,6 +683,22 @@ namespace BizHawk.Client.EmuHawk
 			_disc?.Dispose();
 
 			GameSurface = null;
+		}
+
+		private void ClearLoadedGameObjects()
+		{
+			Guts.Clear();
+
+			LbxPois.Items.Clear();
+			LblPoiCount.Text = "-";
+
+			LbxTriggers.Items.Clear();
+			LblTriggerCount.Text = "-";
+
+			LbxPoiAssociatedTriggers.Items.Clear();
+
+			ClearDisplayedPoiInfo();
+			ClearDisplayedTriggerInfo();
 		}
 
 		private string _lastControllerLayoutHash = String.Empty;

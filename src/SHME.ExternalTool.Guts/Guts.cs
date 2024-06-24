@@ -39,5 +39,20 @@ namespace SHME.ExternalTool
 		{
 			return (float)(q * Math.Pow(2.0, -fractionalBits));
 		}
+
+		public void Clear()
+		{
+			Pois.Clear();
+			Triggers.Clear();
+			Boxes.Clear();
+			Gems.Clear();
+			Lines.Clear();
+			TestBoxes.Clear();
+			ModelBoxes.Clear();
+
+			CameraBoxes.Clear();
+			CameraGems.Clear();
+			CameraLines.Clear();
+		}
 	}
 }
