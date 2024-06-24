@@ -213,7 +213,7 @@ namespace BizHawk.Client.EmuHawk
 			RdoOverlayBackend_CheckedChanged(this, EventArgs.Empty);
 			CmbRenderMode_SelectedIndexChanged(this, EventArgs.Empty);
 
-			_initOverlayCountdown = 5;
+			_initCountdown = 5;
 			CbxAlwaysRun_CheckedChanged(this, EventArgs.Empty);
 
 			Label[] labels =
@@ -279,9 +279,11 @@ namespace BizHawk.Client.EmuHawk
 				// state, and that picture is a couple of pixels offset
 				// horizontally. A few calls to UpdateValues later,
 				// everything's fine, so just wait a bit before init.
-				if (_initOverlayCountdown > -1 && _initOverlayCountdown-- == 0)
+				if (_initCountdown > -1 && _initCountdown-- == 0)
 				{
 					InitializeOverlay();
+
+					BtnReadFiles_Click(this, EventArgs.Empty);
 				}
 			}
 
@@ -367,7 +369,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxEnableOverlay.Checked)
 					{
-						if (_initOverlayCountdown == -1)
+						if (_initCountdown == -1)
 						{
 							DrawOverlay();
 						}
@@ -378,7 +380,10 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxReadLevelDataOnStageLoad.Checked)
 					{
-						CheckForStageLoaded();
+						if (_initCountdown == -1)
+						{
+							CheckForStageLoaded();
+						}
 					}
 					if (CbxSelectedTriggerEnableUpdates.Checked)
 					{
@@ -759,7 +764,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 
 		private DisplaySurfaceID _displaySurfaceID;
-		private int _initOverlayCountdown;
+		private int _initCountdown;
 		private void InitializeOverlay()
 		{
 			if (GameSurface == null)

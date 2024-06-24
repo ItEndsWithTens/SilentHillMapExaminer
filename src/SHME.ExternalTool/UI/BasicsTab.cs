@@ -3,7 +3,6 @@ using SHME.ExternalTool;
 using SHME.ExternalTool.Graphics;
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Numerics;
 using System.Reflection;
@@ -349,7 +348,7 @@ namespace BizHawk.Client.EmuHawk
 
 			_stageLoaded = true;
 			_suppressForcedCameraYaw = true;
-			_initOverlayCountdown = 10;
+			_initCountdown = 10;
 		}
 
 		private void NudOverlayCameraPitch_ValueChanged(object sender, EventArgs e)

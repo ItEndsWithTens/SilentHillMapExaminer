@@ -133,7 +133,7 @@ namespace BizHawk.Client.EmuHawk
 
 			foreach (FileRecord r in records)
 			{
-				byte[] bytes = RetrieveFile(r, _discSectorReader);
+				byte[] bytes = RetrieveFile(r);
 
 				string finalPath;
 				if (createDirectories)
@@ -151,7 +151,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private byte[] RetrieveFile(FileRecord r, DiscSectorReader dsr)
+		private byte[] RetrieveFile(FileRecord r)
 		{
 			int sectorSize = 2048;
 			int totalSectors = (int)Math.Ceiling(r.Size / (double)sectorSize);
@@ -161,7 +161,7 @@ namespace BizHawk.Client.EmuHawk
 			int start = Rom.BaseLba + r.StartSector;
 			for (int j = 0; j < totalSectors; j++)
 			{
-				dsr.ReadLBA_2048(start + j, raw, sectorSize * j);
+				_discSectorReader.ReadLBA_2048(start + j, raw, sectorSize * j);
 			}
 
 			byte[] final = new byte[r.Size];
@@ -184,13 +184,15 @@ namespace BizHawk.Client.EmuHawk
 			LbxFilesFiles.DataSource = null;
 			LbxFilesFiles.Items.Clear();
 
-			long address = Rom.Addresses.MainRam.ArrayOfDirectoryNames;
+			MainRamAddresses ram = Rom.Addresses.MainRam;
+
+			long address = ram.ArrayOfDirectoryNames;
 
 			var sb = new StringBuilder();
 			for (int i = 0; i < 11; i++)
 			{
 				int sp = Mem.ReadS32(address);
-				sp -= (int)Rom.Addresses.MainRam.BaseAddress;
+				sp -= (int)ram.BaseAddress;
 
 				char c = (char)Mem.ReadS8(sp++);
 				while (c != 0)
@@ -206,12 +208,12 @@ namespace BizHawk.Client.EmuHawk
 				address += 4;
 			}
 
-			address = Rom.Addresses.MainRam.ArrayOfFileExtensions;
+			address = ram.ArrayOfFileExtensions;
 
 			for (int i = 0; i < 12; i++)
 			{
 				int sp = Mem.ReadS32(address);
-				sp -= (int)Rom.Addresses.MainRam.BaseAddress;
+				sp -= (int)ram.BaseAddress;
 
 				char c = (char)Mem.ReadS8(sp++);
 				while (c != 0)
@@ -227,7 +229,7 @@ namespace BizHawk.Client.EmuHawk
 				address += 4;
 			}
 
-			address = Rom.Addresses.MainRam.ArrayOfFileRecords;
+			address = ram.ArrayOfFileRecords;
 
 			// TODO: Is the file record count stored somewhere, or are there
 			// just hardcoded assumptions made in each version of the game?
