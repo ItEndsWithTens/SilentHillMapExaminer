@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Numerics;
 
@@ -26,18 +27,24 @@ namespace SHME.ExternalTool
 		public float Pitch { get; }
 		public float Yaw { get; }
 
-		public CameraPath(long address, byte[] bytes)
+		public CameraPath(long address, IReadOnlyList<byte> current) :
+			this(address, current, current)
 		{
-			_ = bytes ?? throw new ArgumentNullException(nameof(bytes));
-
+		}
+		public CameraPath(long address, IReadOnlyList<byte> current, IReadOnlyList<byte> original)
+		{
 			Address = address;
+			OriginalBytes = original;
+
+			byte[] bytes = [.. current];
 
 			AreaMinX = Guts.QToFloat(BitConverter.ToInt16(bytes, 0), 4);
 			AreaMaxX = Guts.QToFloat(BitConverter.ToInt16(bytes, 2), 4);
 			AreaMinZ = Guts.QToFloat(BitConverter.ToInt16(bytes, 4), 4);
 			AreaMaxZ = Guts.QToFloat(BitConverter.ToInt16(bytes, 6), 4);
 
-			// Sign extending the 8-bit value allows interpreting it as Q12.4.
+			// Sign extending the 8-bit value allows interpreting it as
+			// Q12.4 fixed point.
 			short rawMinY = bytes[18];
 			if (rawMinY >= 0x80)
 			{
@@ -69,6 +76,62 @@ namespace SHME.ExternalTool
 			// TODO: Also where the hell is roll?
 			Pitch = Guts.GameUnitsToDegrees((uint)(bytes[22] << 4));
 			Yaw = Guts.GameUnitsToDegrees((uint)(bytes[23] << 4));
+		}
+
+		public override IReadOnlyList<byte> ToBytes()
+		{
+			byte[] bytes = new byte[SilentHillTypeSizes.CameraPath];
+
+			short areaMinX = (short)Guts.FloatToQ(AreaMinX, 4);
+			bytes[0x00] = (byte)((areaMinX & 0x00FF) >> 0);
+			bytes[0x01] = (byte)((areaMinX & 0xFF00) >> 8);
+
+			short areaMaxX = (short)Guts.FloatToQ(AreaMaxX, 4);
+			bytes[0x02] = (byte)((areaMaxX & 0x00FF) >> 0);
+			bytes[0x03] = (byte)((areaMaxX & 0xFF00) >> 8);
+
+			short areaMinZ = (short)Guts.FloatToQ(AreaMinZ, 4);
+			bytes[0x04] = (byte)((areaMinZ & 0x00FF) >> 0);
+			bytes[0x05] = (byte)((areaMinZ & 0xFF00) >> 8);
+
+			short areaMaxZ = (short)Guts.FloatToQ(AreaMaxZ, 4);
+			bytes[0x06] = (byte)((areaMaxZ & 0x00FF) >> 0);
+			bytes[0x07] = (byte)((areaMaxZ & 0xFF00) >> 8);
+
+			short volumeMinX = (short)Guts.FloatToQ(VolumeMin.X, 4);
+			bytes[0x08] = (byte)((volumeMinX & 0x00FF) >> 0);
+			bytes[0x09] = (byte)((volumeMinX & 0xFF00) >> 8);
+
+			short volumeMaxX = (short)Guts.FloatToQ(VolumeMax.X, 4);
+			bytes[0x0A] = (byte)((volumeMaxX & 0x00FF) >> 0);
+			bytes[0x0B] = (byte)((volumeMaxX & 0xFF00) >> 8);
+
+			short volumeMinZ = (short)Guts.FloatToQ(VolumeMin.Z, 4);
+			bytes[0x0C] = (byte)((volumeMinZ & 0x00FF) >> 0);
+			bytes[0x0D] = (byte)((volumeMinZ & 0xFF00) >> 8);
+
+			short volumeMaxZ = (short)Guts.FloatToQ(VolumeMax.Z, 4);
+			bytes[0x0E] = (byte)((volumeMaxZ & 0x00FF) >> 0);
+			bytes[0x0F] = (byte)((volumeMaxZ & 0xFF00) >> 8);
+
+			bytes[0x10] = Thing4;
+			if (Disabled)
+			{
+				bytes[0x10] |= 0b01000000;
+			}
+
+			bytes[0x11] = Thing5;
+
+			bytes[0x12] = (byte)Guts.FloatToQ(VolumeMin.Y, 4);
+			bytes[0x13] = (byte)Guts.FloatToQ(VolumeMax.Y, 4);
+
+			bytes[0x14] = (byte)((Thing6 & 0x00FF) >> 0);
+			bytes[0x15] = (byte)((Thing6 & 0xFF00) >> 8);
+
+			bytes[0x16] = (byte)(Guts.DegreesToGameUnits(Pitch) >> 4);
+			bytes[0x17] = (byte)(Guts.DegreesToGameUnits(Yaw) >> 4);
+
+			return bytes;
 		}
 
 		public override string ToString()

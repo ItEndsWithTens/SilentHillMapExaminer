@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using static SHME.ExternalTool.Guts;
 
 namespace SHME.ExternalTool
@@ -62,28 +61,44 @@ namespace SHME.ExternalTool
 			return (yaw, x, z, width);
 		}
 
-		public PointOfInterest(long address, IReadOnlyList<byte> bytes) :
-			this(address, bytes.ToArray())
+		public PointOfInterest(long address, IReadOnlyList<byte> current) :
+			this(address, current, current)
 		{
 		}
-		public PointOfInterest(long address, byte[] bytes) :
-			this(address,
-				BitConverter.ToInt32(bytes, 0),
-				BitConverter.ToUInt32(bytes, 4),
-				BitConverter.ToInt32(bytes, 8))
-		{
-		}
-		public PointOfInterest(long address, int x, uint geo, int z) :
-			this(address, QToFloat(x), geo, QToFloat(z))
-		{
-		}
-		public PointOfInterest(long address, float x, uint geo, float z)
+		public PointOfInterest(long address, IReadOnlyList<byte> current, IReadOnlyList<byte> original)
 		{
 			Address = address;
+			OriginalBytes = original;
 
-			X = x;
-			Geometry = geo;
-			Z = z;
+			byte[] bytes = [.. current];
+
+			X = QToFloat(BitConverter.ToInt32(bytes, 0));
+			Geometry = BitConverter.ToUInt32(bytes, 4);
+			Z = QToFloat(BitConverter.ToInt32(bytes, 8));
+		}
+
+		public override IReadOnlyList<byte> ToBytes()
+		{
+			byte[] bytes = new byte[SilentHillTypeSizes.PointOfInterest];
+
+			int x = FloatToQ(X);
+			bytes[0x0] = (byte)((x & 0x000000FF) >> 0);
+			bytes[0x1] = (byte)((x & 0x0000FF00) >> 8);
+			bytes[0x2] = (byte)((x & 0x00FF0000) >> 16);
+			bytes[0x3] = (byte)((x & 0xFF000000) >> 24);
+
+			bytes[0x4] = (byte)((Geometry & 0x000000FF) >> 0);
+			bytes[0x5] = (byte)((Geometry & 0x0000FF00) >> 8);
+			bytes[0x6] = (byte)((Geometry & 0x00FF0000) >> 16);
+			bytes[0x7] = (byte)((Geometry & 0xFF000000) >> 24);
+
+			int z = FloatToQ(Z);
+			bytes[0x8] = (byte)((z & 0x000000FF) >> 0);
+			bytes[0x9] = (byte)((z & 0x0000FF00) >> 8);
+			bytes[0xA] = (byte)((z & 0x00FF0000) >> 16);
+			bytes[0xB] = (byte)((z & 0xFF000000) >> 24);
+
+			return bytes;
 		}
 
 		public override string ToString()

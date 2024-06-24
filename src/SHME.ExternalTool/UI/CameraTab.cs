@@ -65,7 +65,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				IReadOnlyList<byte> bytes = Mem.ReadByteRange(address, SilentHillTypeSizes.CameraPath);
 
-				var path = new CameraPath(address, bytes.ToArray());
+				var path = new CameraPath(address, bytes);
 
 				if (path.Thing4 == 0x1)
 				{

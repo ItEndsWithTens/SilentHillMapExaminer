@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SHME.ExternalTool
 {
-	public enum TriggerType : byte
+	public enum TriggerType
 	{
 		Unknown0 = 0x00,
 		Door1 = 0x05,
@@ -120,12 +119,16 @@ namespace SHME.ExternalTool
 		public TriggerType TriggerType { get; }
 		public int TargetIndex { get; }
 
-		public Trigger(long address, IReadOnlyList<byte> bytes) : this(address, bytes.ToArray())
+		public Trigger(long address, IReadOnlyList<byte> current) :
+			this(address, current, current)
 		{
 		}
-		public Trigger(long address, byte[] bytes)
+		public Trigger(long address, IReadOnlyList<byte> current, IReadOnlyList<byte> original)
 		{
 			Address = address;
+			OriginalBytes = original;
+
+			byte[] bytes = [.. current];
 
 			int raw0 = (bytes[0] & 0b01111111) >> 0;
 			int raw1 = (bytes[0] & 0b10000000) >> 7;
@@ -164,6 +167,40 @@ namespace SHME.ExternalTool
 			uint rawB = (TypeInfo & 0b10000000_00000000_00000000_00000000) >> 31;
 			TriggerType = (TriggerType)raw6;
 			TargetIndex = (byte)raw7;
+		}
+
+		public override IReadOnlyList<byte> ToBytes()
+		{
+			byte[] bytes = new byte[SilentHillTypeSizes.Trigger];
+
+			bytes[0x0] = Thing0;
+			if (Disabled)
+			{
+				bytes[0x0] |= 0b10000000;
+			}
+
+			bytes[0x1] = Thing1;
+
+			int raw0 = (SomeIndex << 5) | ((int)FiredBitShift);
+			bytes[0x2] = (byte)(raw0 & 0x00FF);
+			bytes[0x3] = (byte)(raw0 & 0xFF00);
+
+			int raw1 = (Thing2 << 4) | (byte)Style;
+			bytes[0x4] = (byte)raw1;
+
+			bytes[0x5] = PoiIndex;
+			bytes[0x6] = Thing3;
+			bytes[0x7] = Thing4;
+
+			uint info = TypeInfo;
+			info |= (uint)((int)TriggerType & 0b00011111);
+			info |= (uint)(((byte)TargetIndex) << 5);
+			bytes[0x8] = (byte)((info & 0x000000FF) >> 0);
+			bytes[0x9] = (byte)((info & 0x0000FF00) >> 8);
+			bytes[0xA] = (byte)((info & 0x00FF0000) >> 16);
+			bytes[0xB] = (byte)((info & 0xFF000000) >> 24);
+
+			return bytes;
 		}
 	}
 }

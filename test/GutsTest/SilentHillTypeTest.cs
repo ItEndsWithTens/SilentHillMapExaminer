@@ -52,6 +52,8 @@ public class SilentHillTypeTest
 
 			Assert.That(c.Pitch, Is.EqualTo(0.0f).Within(Tolerance));
 			Assert.That(c.Yaw, Is.EqualTo(0.0f).Within(Tolerance));
+
+			Assert.That(c.ToBytes(), Is.EqualTo(expected));
 		});
 	}
 
@@ -71,6 +73,8 @@ public class SilentHillTypeTest
 			Assert.That(p.X, Is.EqualTo(-6.2).Within(Tolerance));
 			Assert.That(p.Geometry, Is.EqualTo(0x4040000));
 			Assert.That(p.Z, Is.EqualTo(160.5).Within(Tolerance));
+
+			Assert.That(p.ToBytes(), Is.EqualTo(expected));
 		});
 	}
 
@@ -100,6 +104,8 @@ public class SilentHillTypeTest
 			Assert.That(t.Thing4, Is.EqualTo(0x00));
 			Assert.That(t.TriggerType, Is.EqualTo(TriggerType.Function1));
 			Assert.That(t.TargetIndex, Is.EqualTo(4));
+
+			Assert.That(t.ToBytes(), Is.EqualTo(expected));
 		});
 	}
 }

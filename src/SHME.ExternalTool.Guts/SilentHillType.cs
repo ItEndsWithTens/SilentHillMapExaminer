@@ -1,4 +1,6 @@
-﻿namespace SHME.ExternalTool;
+﻿using System.Collections.Generic;
+
+namespace SHME.ExternalTool;
 
 public static class SilentHillTypeSizes
 {
@@ -7,9 +9,13 @@ public static class SilentHillTypeSizes
 	public static int Trigger => 12;
 }
 
-public class SilentHillType
+public abstract class SilentHillType
 {
 	public virtual int SizeInBytes { get; }
 
 	public virtual long Address { get; protected set; }
+
+	public virtual IReadOnlyList<byte> OriginalBytes { get; protected set; } = [];
+
+	public abstract IReadOnlyList<byte> ToBytes();
 }
