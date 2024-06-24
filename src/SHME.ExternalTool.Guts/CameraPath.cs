@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Numerics;
@@ -78,41 +79,33 @@ namespace SHME.ExternalTool
 			Yaw = Guts.GameUnitsToDegrees((uint)(bytes[23] << 4));
 		}
 
-		public override IReadOnlyList<byte> ToBytes()
+		public override ReadOnlySpan<byte> ToBytes()
 		{
-			byte[] bytes = new byte[SilentHillTypeSizes.CameraPath];
+			Span<byte> bytes = new byte[SizeInBytes];
 
-			short areaMinX = (short)Guts.FloatToQ(AreaMinX, 4);
-			bytes[0x00] = (byte)((areaMinX & 0x00FF) >> 0);
-			bytes[0x01] = (byte)((areaMinX & 0xFF00) >> 8);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x00), (short)Guts.FloatToQ(AreaMinX, 4));
 
-			short areaMaxX = (short)Guts.FloatToQ(AreaMaxX, 4);
-			bytes[0x02] = (byte)((areaMaxX & 0x00FF) >> 0);
-			bytes[0x03] = (byte)((areaMaxX & 0xFF00) >> 8);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x02), (short)Guts.FloatToQ(AreaMaxX, 4));
 
-			short areaMinZ = (short)Guts.FloatToQ(AreaMinZ, 4);
-			bytes[0x04] = (byte)((areaMinZ & 0x00FF) >> 0);
-			bytes[0x05] = (byte)((areaMinZ & 0xFF00) >> 8);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x04), (short)Guts.FloatToQ(AreaMinZ, 4));
 
-			short areaMaxZ = (short)Guts.FloatToQ(AreaMaxZ, 4);
-			bytes[0x06] = (byte)((areaMaxZ & 0x00FF) >> 0);
-			bytes[0x07] = (byte)((areaMaxZ & 0xFF00) >> 8);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x06), (short)Guts.FloatToQ(AreaMaxZ, 4));
 
-			short volumeMinX = (short)Guts.FloatToQ(VolumeMin.X, 4);
-			bytes[0x08] = (byte)((volumeMinX & 0x00FF) >> 0);
-			bytes[0x09] = (byte)((volumeMinX & 0xFF00) >> 8);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x08), (short)Guts.FloatToQ(VolumeMin.X, 4));
 
-			short volumeMaxX = (short)Guts.FloatToQ(VolumeMax.X, 4);
-			bytes[0x0A] = (byte)((volumeMaxX & 0x00FF) >> 0);
-			bytes[0x0B] = (byte)((volumeMaxX & 0xFF00) >> 8);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x0A), (short)Guts.FloatToQ(VolumeMax.X, 4));
 
-			short volumeMinZ = (short)Guts.FloatToQ(VolumeMin.Z, 4);
-			bytes[0x0C] = (byte)((volumeMinZ & 0x00FF) >> 0);
-			bytes[0x0D] = (byte)((volumeMinZ & 0xFF00) >> 8);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x0C), (short)Guts.FloatToQ(VolumeMin.Z, 4));
 
-			short volumeMaxZ = (short)Guts.FloatToQ(VolumeMax.Z, 4);
-			bytes[0x0E] = (byte)((volumeMaxZ & 0x00FF) >> 0);
-			bytes[0x0F] = (byte)((volumeMaxZ & 0xFF00) >> 8);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x0E), (short)Guts.FloatToQ(VolumeMax.Z, 4));
 
 			bytes[0x10] = Thing4;
 			if (Disabled)
@@ -123,12 +116,14 @@ namespace SHME.ExternalTool
 			bytes[0x11] = Thing5;
 
 			bytes[0x12] = (byte)Guts.FloatToQ(VolumeMin.Y, 4);
+
 			bytes[0x13] = (byte)Guts.FloatToQ(VolumeMax.Y, 4);
 
-			bytes[0x14] = (byte)((Thing6 & 0x00FF) >> 0);
-			bytes[0x15] = (byte)((Thing6 & 0xFF00) >> 8);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x14), Thing6);
 
 			bytes[0x16] = (byte)(Guts.DegreesToGameUnits(Pitch) >> 4);
+
 			bytes[0x17] = (byte)(Guts.DegreesToGameUnits(Yaw) >> 4);
 
 			return bytes;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SHME.ExternalTool;
 
@@ -17,5 +18,5 @@ public abstract class SilentHillType
 
 	public virtual IReadOnlyList<byte> OriginalBytes { get; protected set; } = [];
 
-	public abstract IReadOnlyList<byte> ToBytes();
+	public abstract ReadOnlySpan<byte> ToBytes();
 }

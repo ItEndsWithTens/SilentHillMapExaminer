@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Globalization;
 using static SHME.ExternalTool.Guts;
@@ -77,26 +78,18 @@ namespace SHME.ExternalTool
 			Z = QToFloat(BitConverter.ToInt32(bytes, 8));
 		}
 
-		public override IReadOnlyList<byte> ToBytes()
+		public override ReadOnlySpan<byte> ToBytes()
 		{
-			byte[] bytes = new byte[SilentHillTypeSizes.PointOfInterest];
+			Span<byte> bytes = new byte[SizeInBytes];
 
-			int x = FloatToQ(X);
-			bytes[0x0] = (byte)((x & 0x000000FF) >> 0);
-			bytes[0x1] = (byte)((x & 0x0000FF00) >> 8);
-			bytes[0x2] = (byte)((x & 0x00FF0000) >> 16);
-			bytes[0x3] = (byte)((x & 0xFF000000) >> 24);
+			BinaryPrimitives.WriteInt32LittleEndian(
+				bytes.Slice(0x0), FloatToQ(X));
 
-			bytes[0x4] = (byte)((Geometry & 0x000000FF) >> 0);
-			bytes[0x5] = (byte)((Geometry & 0x0000FF00) >> 8);
-			bytes[0x6] = (byte)((Geometry & 0x00FF0000) >> 16);
-			bytes[0x7] = (byte)((Geometry & 0xFF000000) >> 24);
+			BinaryPrimitives.WriteUInt32LittleEndian(
+				bytes.Slice(0x4), Geometry);
 
-			int z = FloatToQ(Z);
-			bytes[0x8] = (byte)((z & 0x000000FF) >> 0);
-			bytes[0x9] = (byte)((z & 0x0000FF00) >> 8);
-			bytes[0xA] = (byte)((z & 0x00FF0000) >> 16);
-			bytes[0xB] = (byte)((z & 0xFF000000) >> 24);
+			BinaryPrimitives.WriteInt32LittleEndian(
+				bytes.Slice(0x8), FloatToQ(Z));
 
 			return bytes;
 		}

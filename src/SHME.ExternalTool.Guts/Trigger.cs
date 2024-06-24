@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 
 namespace SHME.ExternalTool
@@ -169,9 +170,9 @@ namespace SHME.ExternalTool
 			TargetIndex = (byte)raw7;
 		}
 
-		public override IReadOnlyList<byte> ToBytes()
+		public override ReadOnlySpan<byte> ToBytes()
 		{
-			byte[] bytes = new byte[SilentHillTypeSizes.Trigger];
+			Span<byte> bytes = new byte[SizeInBytes];
 
 			bytes[0x0] = Thing0;
 			if (Disabled)
@@ -181,15 +182,15 @@ namespace SHME.ExternalTool
 
 			bytes[0x1] = Thing1;
 
-			int raw0 = (SomeIndex << 5) | ((int)FiredBitShift);
-			bytes[0x2] = (byte)(raw0 & 0x00FF);
-			bytes[0x3] = (byte)(raw0 & 0xFF00);
+			BinaryPrimitives.WriteInt16LittleEndian(
+				bytes.Slice(0x2), (short)((SomeIndex << 5) | FiredBitShift));
 
-			int raw1 = (Thing2 << 4) | (byte)Style;
-			bytes[0x4] = (byte)raw1;
+			bytes[0x4] = (byte)((Thing2 << 4) | (byte)Style);
 
 			bytes[0x5] = PoiIndex;
+
 			bytes[0x6] = Thing3;
+
 			bytes[0x7] = Thing4;
 
 			uint info = TypeInfo;
@@ -199,6 +200,9 @@ namespace SHME.ExternalTool
 			bytes[0x9] = (byte)((info & 0x0000FF00) >> 8);
 			bytes[0xA] = (byte)((info & 0x00FF0000) >> 16);
 			bytes[0xB] = (byte)((info & 0xFF000000) >> 24);
+
+			BinaryPrimitives.WriteUInt32LittleEndian(
+				bytes.Slice(0x8), info);
 
 			return bytes;
 		}

@@ -18,8 +18,8 @@ public class Stage : SilentHillType
 		SizeInBytes = current.Count;
 	}
 
-	public override IReadOnlyList<byte> ToBytes()
+	public override ReadOnlySpan<byte> ToBytes()
 	{
-		return OriginalBytes;
+		return OriginalBytes.ToArray();
 	}
 }
