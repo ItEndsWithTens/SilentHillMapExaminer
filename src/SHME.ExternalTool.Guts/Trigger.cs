@@ -96,29 +96,22 @@ namespace SHME.ExternalTool
 		public byte PoiIndex { get; }
 		public byte Thing3 { get; } // Could be string index when door is locked?
 		public byte Thing4 { get; }
-		/// <summary>
-		/// Trigger type info, e.g. whether this is a door, and if so
-		/// where it goes.
-		/// </summary>
-		/// <remarks>
-		/// Low 5 bits seems to be the type:
-		/// 0x05: Door
-		/// 0x06: Door
-		/// 0x07: Text
-		/// 0x0A: Function
-		/// 0x0B: Function(?)
-		///
-		/// If this is in fact a door trigger, shifting the remainder
-		/// right by 5 and taking the low 8 bits of the result gives the
-		/// target POI index.
-		///
-		/// Likewise, the same bit shift provides the string array index
-		/// for text triggers.
-		/// </remarks>
-		public uint TypeInfo { get; }
 
 		public TriggerType TriggerType { get; }
 		public int TargetIndex { get; }
+
+		public byte Thing5 { get; }
+		public byte Thing6 { get; }
+
+		/// <summary>
+		/// What stage to load for Door1 types, i.e. level change
+		/// triggers. Zero-based offset, relative to 1995, the file
+		/// record index corresponding to MAP0_S00.BIN. Not sure if this
+		/// is used for anything else yet.
+		/// </summary>
+		public byte StageIndex { get; }
+
+		public bool SomeBool { get; }
 
 		public Trigger(long address, IReadOnlyList<byte> current) :
 			this(address, current, current)
@@ -153,21 +146,19 @@ namespace SHME.ExternalTool
 			Thing3 = bytes[6];
 			Thing4 = bytes[7];
 
-			TypeInfo = BitConverter.ToUInt32(bytes, 8);
-			uint raw6 = (TypeInfo & 0b00000000_00000000_00000000_00011111) >> 0;
-			uint raw7 = (TypeInfo & 0b00000000_00000000_00011111_11100000) >> 5;
-			uint raw8 = (TypeInfo & 0b00000000_00000111_11100000_00000000) >> 13;
-			uint raw9 = (TypeInfo & 0b00000001_11111000_00000000_00000000) >> 19;
-
-			// rawA is what stage to load for Door1 types, i.e. level
-			// change triggers. Zero-based offset, relative to 1995, the
-			// file record index corresponding to MAP0_S00.BIN. Not sure
-			// if this is used for anything else yet.
-			uint rawA = (TypeInfo & 0b01111110_00000000_00000000_00000000) >> 25;
-
-			uint rawB = (TypeInfo & 0b10000000_00000000_00000000_00000000) >> 31;
+			uint info = BitConverter.ToUInt32(bytes, 8);
+			uint raw6 = (info & 0b00000000_00000000_00000000_00011111) >> 0;
+			uint raw7 = (info & 0b00000000_00000000_00011111_11100000) >> 5;
+			uint raw8 = (info & 0b00000000_00000111_11100000_00000000) >> 13;
+			uint raw9 = (info & 0b00000001_11111000_00000000_00000000) >> 19;
+			uint rawA = (info & 0b01111110_00000000_00000000_00000000) >> 25;
+			uint rawB = (info & 0b10000000_00000000_00000000_00000000) >> 31;
 			TriggerType = (TriggerType)raw6;
 			TargetIndex = (byte)raw7;
+			Thing5 = (byte)raw8;
+			Thing6 = (byte)raw9;
+			StageIndex = (byte)rawA;
+			SomeBool = rawB == 1;
 		}
 
 		public override ReadOnlySpan<byte> ToBytes()
@@ -193,13 +184,16 @@ namespace SHME.ExternalTool
 
 			bytes[0x7] = Thing4;
 
-			uint info = TypeInfo;
+			uint info = 0;
 			info |= (uint)((int)TriggerType & 0b00011111);
 			info |= (uint)(((byte)TargetIndex) << 5);
-			bytes[0x8] = (byte)((info & 0x000000FF) >> 0);
-			bytes[0x9] = (byte)((info & 0x0000FF00) >> 8);
-			bytes[0xA] = (byte)((info & 0x00FF0000) >> 16);
-			bytes[0xB] = (byte)((info & 0xFF000000) >> 24);
+			info |= (uint)((Thing5 & 0b00111111) << 13);
+			info |= (uint)((Thing6 & 0b00111111) << 19);
+			info |= (uint)((StageIndex & 0b00111111) << 25);
+			if (SomeBool)
+			{
+				info |= 0x80000000;
+			}
 
 			BinaryPrimitives.WriteUInt32LittleEndian(
 				bytes.Slice(0x8), info);

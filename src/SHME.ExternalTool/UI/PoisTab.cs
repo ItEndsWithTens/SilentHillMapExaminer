@@ -15,6 +15,7 @@ namespace BizHawk.Client.EmuHawk
 	{
 		private void InitializePoisTab()
 		{
+			CmbSelectedTriggerStyle.DataSource = Enum.GetValues(typeof(TriggerStyle));
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
 		}
 
@@ -86,34 +87,49 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ClearDisplayedPoiInfo()
 		{
-			CultureInfo c = CultureInfo.CurrentCulture;
-			string sep = c.NumberFormat.NumberGroupSeparator;
-
 			LblSelectedPoiAddress.Text = "0x";
-			LblSelectedPoiXZ.Text = $"<x{sep} z>";
-			LblSelectedPoiGeometry.Text = "0x";
+			TbxSelectedPoiX.Text = "<x>";
+			TbxSelectedPoiZ.Text = "<z>";
+			MtbSelectedPoiGeometry.ResetText();
 			LbxPoiAssociatedTriggers.Items.Clear();
 		}
 
 		private void ClearDisplayedTriggerInfo()
 		{
 			LblSelectedTriggerAddress.Text = "0x";
-			LblSelectedTriggerThing0.Text = "0x";
+
 			CbxSelectedTriggerDisabled.Checked = false;
 			CbxSelectedTriggerDisabled.Enabled = false;
-			LblSelectedTriggerPoiGeometry.Text = "";
-			LblSelectedTriggerThing1.Text = "0x";
-			LblSelectedTriggerFired.Text = "";
+
+			MtbSelectedTriggerPoiGeometry.ResetText();
+			MtbSelectedTriggerThing0.ResetText();
+			MtbSelectedTriggerThing1.ResetText();
+
+			CbxSelectedTriggerFired.Checked = false;
 			LblSelectedTriggerFiredDetails.Text = $"Group 0x, bit 0x";
-			LblSelectedTriggerSomeIndex.Text = "0x";
-			LblSelectedTriggerThing2.Text = "0x";
-			LblSelectedTriggerStyle.Text = "0x";
-			LblSelectedTriggerPoiIndex.Text = "";
-			LblSelectedTriggerThing3.Text = "0x";
-			LblSelectedTriggerThing4.Text = "0x";
-			LblSelectedTriggerTypeInfo.Text = "0x";
-			NudSelectedTriggerTargetIndex.Value = -1;
+
+			NudSelectedTriggerSomeIndex.Value = -1;
+			NudSelectedTriggerSomeIndex.ResetText();
+
+			MtbSelectedTriggerThing2.ResetText();
+			CmbSelectedTriggerStyle.ResetText();
+
+			NudSelectedTriggerPoiIndex.Value = -1;
+			NudSelectedTriggerPoiIndex.ResetText();
+
+			MtbSelectedTriggerThing3.ResetText();
+			MtbSelectedTriggerThing4.ResetText();
 			CmbSelectedTriggerType.SelectedIndex = -1;
+
+			NudSelectedTriggerTargetIndex.Value = -1;
+			NudSelectedTriggerTargetIndex.ResetText();
+
+			MtbSelectedTriggerThing5.ResetText();
+			MtbSelectedTriggerThing6.ResetText();
+
+			CmbSelectedTriggerStyle.SelectedIndex = -1;
+
+			CbxSelectedTriggerSomeBool.Checked = false;
 		}
 
 		private void RefreshLbxPoiAssociatedTriggers()
@@ -320,11 +336,11 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			CultureInfo c = CultureInfo.CurrentCulture;
-			string sep = c.NumberFormat.NumberGroupSeparator;
 
 			LblSelectedPoiAddress.Text = $"0x{poi.Address.ToString("X2", c)}";
-			LblSelectedPoiXZ.Text = $"<{poi.X.ToString("0.##", c)}{sep} {poi.Z.ToString("0.##", c)}>";
-			LblSelectedPoiGeometry.Text = $"0x{poi.Geometry.ToString("X2", c)}";
+			TbxSelectedPoiX.Text = poi.X.ToString("0.##", c);
+			TbxSelectedPoiZ.Text = poi.Z.ToString("0.##", c);
+			MtbSelectedPoiGeometry.Text = $"0x{poi.Geometry.ToString("X8", c)}";
 
 			RefreshLbxPoiAssociatedTriggers();
 
@@ -485,25 +501,30 @@ namespace BizHawk.Client.EmuHawk
 			CultureInfo c = CultureInfo.CurrentCulture;
 
 			LblSelectedTriggerAddress.Text = $"0x{t.Address.ToString("X", c)}";
-			LblSelectedTriggerThing0.Text = $"0x{t.Thing0.ToString("X2", c)}";
+			MtbSelectedTriggerThing0.Text = $"0x{t.Thing0.ToString("X2", c)}";
 			CbxSelectedTriggerDisabled.Checked = t.Disabled;
 			CbxSelectedTriggerDisabled.Enabled = true;
-			LblSelectedTriggerThing1.Text = $"0x{t.Thing1.ToString("X2", c)}";
-			LblSelectedTriggerSomeIndex.Text = $"0x{t.SomeIndex.ToString("X", c)}";
-			LblSelectedTriggerThing2.Text = $"0x{t.Thing2.ToString("X1", c)}";
-			LblSelectedTriggerPoiIndex.Text = $"{t.PoiIndex.ToString(c)}";
-			LblSelectedTriggerThing3.Text = $"0x{t.Thing3.ToString("X2", c)}";
-			LblSelectedTriggerThing4.Text = $"0x{t.Thing4.ToString("X2", c)}";
-			LblSelectedTriggerTypeInfo.Text = $"0x{t.TypeInfo.ToString("X8", c)}";
+			MtbSelectedTriggerThing1.Text = $"0x{t.Thing1.ToString("X2", c)}";
+			NudSelectedTriggerSomeIndex.Value = t.SomeIndex;
+			MtbSelectedTriggerThing2.Text = $"0x{t.Thing2.ToString("X1", c)}";
+			NudSelectedTriggerPoiIndex.Value = t.PoiIndex;
+			MtbSelectedTriggerThing3.Text = $"0x{t.Thing3.ToString("X2", c)}";
+			MtbSelectedTriggerThing4.Text = $"0x{t.Thing4.ToString("X2", c)}";
+			MtbSelectedTriggerThing5.Text = $"0x{t.Thing5.ToString("X2", c)}";
+			MtbSelectedTriggerThing6.Text = $"0x{t.Thing6.ToString("X2", c)}";
+			CbxSelectedTriggerSomeBool.Checked = t.SomeBool;
 
 			string? style = Enum.GetName(typeof(TriggerStyle), t.Style);
-			LblSelectedTriggerStyle.Text = $"{style ?? $"0x{t.Style:X}"}";
+			if (style is not null)
+			{
+				CmbSelectedTriggerStyle.Text = style.ToString(c);
+			}
 
 			long ofs = Rom.Addresses.MainRam.SaveData;
 			long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
 			int group = Mem.ReadS32(groupOfs);
 			int firedBit = (group >> t.FiredBitShift) & 1;
-			LblSelectedTriggerFired.Text = $"{(firedBit != 0).ToString(c)}";
+			CbxSelectedTriggerFired.Checked = firedBit != 0;
 			LblSelectedTriggerFiredDetails.Text =
 				$"Group 0x{groupOfs.ToString("X", c)}, " +
 				$"bit 0x{(1 << t.FiredBitShift).ToString("X", c)}";
@@ -515,6 +536,15 @@ namespace BizHawk.Client.EmuHawk
 			else
 			{
 				LbxPois.SelectedIndex = -1;
+			}
+
+			if (Enum.IsDefined(typeof(TriggerStyle), t.Style))
+			{
+				CmbSelectedTriggerStyle.SelectedItem = t.Style;
+			}
+			else
+			{
+				CmbSelectedTriggerStyle.SelectedItem = -1;
 			}
 
 			if (Enum.IsDefined(typeof(TriggerType), t.TriggerType))
@@ -562,7 +592,7 @@ namespace BizHawk.Client.EmuHawk
 					break;
 			}
 
-			LblSelectedTriggerPoiGeometry.Text = DecodePoiGeometry(t);
+			MtbSelectedTriggerPoiGeometry.Text = DecodePoiGeometry(t);
 
 			object triggersItem = LbxTriggers.SelectedItem;
 			object associatedItem = LbxPoiAssociatedTriggers.SelectedItem;

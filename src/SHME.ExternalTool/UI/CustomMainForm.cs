@@ -764,7 +764,8 @@ namespace BizHawk.Client.EmuHawk
 			string sep = f.NumberGroupSeparator;
 
 			LblSpawnXZ.Text = $"<x{sep} z>";
-			LblSelectedPoiXZ.Text = $"<x{sep} z>";
+			TbxSelectedPoiX.Text = $"<x>";
+			TbxSelectedPoiZ.Text = $"<z>";
 			LblCameraPathVolumeMin.Text = $"<x{sep} y{sep} z>";
 			LblCameraPathVolumeMax.Text = $"<x{sep} y{sep} z>";
 			LblCameraPathAreaMin.Text = $"<x{sep} z>";
