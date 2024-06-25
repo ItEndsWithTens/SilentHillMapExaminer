@@ -1,25 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SHME.ExternalTool;
 
 public class Stage : SilentHillType
 {
-	public Stage(long address, IReadOnlyList<byte> current) :
-		this(address, current, current)
-	{
-	}
-	public Stage(long address, IReadOnlyList<byte> current, IReadOnlyList<byte> original)
+	private readonly byte[] _bytes;
+
+	public Stage(long address, ReadOnlySpan<byte> current)
 	{
 		Address = address;
-		OriginalBytes = original;
 
-		SizeInBytes = current.Count;
+		_bytes = current.ToArray();
+
+		SizeInBytes = current.Length;
 	}
 
 	public override ReadOnlySpan<byte> ToBytes()
 	{
-		return OriginalBytes.ToArray();
+		return _bytes;
 	}
 }

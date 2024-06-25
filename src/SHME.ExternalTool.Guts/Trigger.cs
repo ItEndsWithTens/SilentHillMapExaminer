@@ -113,14 +113,9 @@ namespace SHME.ExternalTool
 
 		public bool SomeBool { get; }
 
-		public Trigger(long address, IReadOnlyList<byte> current) :
-			this(address, current, current)
-		{
-		}
-		public Trigger(long address, IReadOnlyList<byte> current, IReadOnlyList<byte> original)
+		public Trigger(long address, ReadOnlySpan<byte> current)
 		{
 			Address = address;
-			OriginalBytes = original;
 
 			byte[] bytes = [.. current];
 

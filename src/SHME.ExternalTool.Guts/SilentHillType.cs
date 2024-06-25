@@ -16,7 +16,5 @@ public abstract class SilentHillType
 
 	public virtual long Address { get; protected set; }
 
-	public virtual IReadOnlyList<byte> OriginalBytes { get; protected set; } = [];
-
 	public abstract ReadOnlySpan<byte> ToBytes();
 }

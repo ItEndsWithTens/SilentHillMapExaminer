@@ -63,9 +63,9 @@ namespace BizHawk.Client.EmuHawk
 			var gemGen = new GemGenerator(0.125f, 0.25f, 0.125f, Color.FromArgb(0x25, 0xA5, 0x97));
 			while (true)
 			{
-				IReadOnlyList<byte> bytes = Mem.ReadByteRange(address, SilentHillTypeSizes.CameraPath);
+				ReadOnlySpan<byte> span = Mem.ReadByteRange(address, SilentHillTypeSizes.CameraPath).ToArray();
 
-				var path = new CameraPath(address, bytes);
+				var path = new CameraPath(address, span);
 
 				if (path.Thing4 == 0x1)
 				{

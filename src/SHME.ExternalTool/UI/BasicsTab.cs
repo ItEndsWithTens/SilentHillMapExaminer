@@ -4,6 +4,7 @@ using SHME.ExternalTool.Graphics;
 using System;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Windows.Forms;
@@ -102,7 +103,8 @@ namespace BizHawk.Client.EmuHawk
 			string hash = Mem.HashRegion(address, 12);
 			if (hash != _lastHarrySpawnPointHash)
 			{
-				Guts.LastHarrySpawnPoint = new PointOfInterest(address, Mem.ReadByteRange(address, 12));
+				ReadOnlySpan<byte> span = Mem.ReadByteRange(address, 12).ToArray();
+				Guts.LastHarrySpawnPoint = new PointOfInterest(address, span);
 
 				// To prevent the camera from being forcibly reoriented upon
 				// both SHME startup and save state loading, this boolean not

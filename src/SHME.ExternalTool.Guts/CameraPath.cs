@@ -28,14 +28,9 @@ namespace SHME.ExternalTool
 		public float Pitch { get; }
 		public float Yaw { get; }
 
-		public CameraPath(long address, IReadOnlyList<byte> current) :
-			this(address, current, current)
-		{
-		}
-		public CameraPath(long address, IReadOnlyList<byte> current, IReadOnlyList<byte> original)
+		public CameraPath(long address, ReadOnlySpan<byte> current)
 		{
 			Address = address;
-			OriginalBytes = original;
 
 			byte[] bytes = [.. current];
 

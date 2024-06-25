@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Buffers.Binary;
-using System.Collections.Generic;
 using System.Globalization;
 using static SHME.ExternalTool.Guts;
 
@@ -62,14 +61,9 @@ namespace SHME.ExternalTool
 			return (yaw, x, z, width);
 		}
 
-		public PointOfInterest(long address, IReadOnlyList<byte> current) :
-			this(address, current, current)
-		{
-		}
-		public PointOfInterest(long address, IReadOnlyList<byte> current, IReadOnlyList<byte> original)
+		public PointOfInterest(long address, ReadOnlySpan<byte> current)
 		{
 			Address = address;
-			OriginalBytes = original;
 
 			byte[] bytes = [.. current];
 

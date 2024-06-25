@@ -70,7 +70,7 @@ namespace BizHawk.Client.EmuHawk
 
 			if (body != _previousTriggerBodyHash || fired != _previousTriggerFired)
 			{
-				IReadOnlyList<byte> bytes = Mem.ReadByteRange(t.Address, 12);
+				ReadOnlySpan<byte> bytes = Mem.ReadByteRange(t.Address, 12).ToArray();
 
 				var updated = new Trigger(t.Address, bytes);
 
@@ -222,7 +222,8 @@ namespace BizHawk.Client.EmuHawk
 			{
 				int ofs = poiArrayAddress + (poiBytes * i);
 
-				var poi = new PointOfInterest(ofs, Mem.ReadByteRange(ofs, 12));
+				ReadOnlySpan<byte> array = Mem.ReadByteRange(ofs, 12).ToArray();
+				var poi = new PointOfInterest(ofs, array);
 
 				Renderable box = generator.Generate().ToWorld();
 				box.Position = new Vector3(poi.X, 0.0f, -poi.Z);
@@ -371,14 +372,16 @@ namespace BizHawk.Client.EmuHawk
 			LbxTriggers.Items.Clear();
 
 			int ofs = triggerArrayAddress;
-			var t = new Trigger(ofs, Mem.ReadByteRange(ofs, SilentHillTypeSizes.Trigger));
+			ReadOnlySpan<byte> span = Mem.ReadByteRange(ofs, SilentHillTypeSizes.Trigger).ToArray();
+			var t = new Trigger(ofs, span);
 			while (t.Style != TriggerStyle.Dummy)
 			{
 				Guts.Triggers.Add(t);
 				LbxTriggers.Items.Add(t);
 
 				ofs += SilentHillTypeSizes.Trigger;
-				t = new Trigger(ofs, Mem.ReadByteRange(ofs, SilentHillTypeSizes.Trigger));
+				span = Mem.ReadByteRange(ofs, SilentHillTypeSizes.Trigger).ToArray();
+				t = new Trigger(ofs, span);
 			}
 
 			LblTriggerCount.Text = Guts.Triggers.Count.ToString(CultureInfo.CurrentCulture);
