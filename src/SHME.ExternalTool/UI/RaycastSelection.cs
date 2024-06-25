@@ -16,6 +16,7 @@ namespace BizHawk.Client.EmuHawk
 		private void ClearListControlSelections()
 		{
 			LbxPois.SelectedIndex = -1;
+			LbxTriggers.SelectedIndex = -1;
 			LbxCameraPaths.SelectedIndex = -1;
 		}
 
