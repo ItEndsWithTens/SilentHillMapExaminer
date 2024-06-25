@@ -9,7 +9,7 @@ namespace SHME.ExternalTool
 	{
 		public override int SizeInBytes => SilentHillTypeSizes.PointOfInterest;
 
-		public float X { get; }
+		public float X { get; set; }
 
 		/// <summary>
 		/// The shape of this point in the world.
@@ -19,9 +19,9 @@ namespace SHME.ExternalTool
 		/// e.g. for action button activated triggers this stores the yaw, while
 		/// touch triggers use this to hold their width and length.
 		/// </remarks>
-		public uint Geometry { get; }
+		public uint Geometry { get; set; }
 
-		public float Z { get; }
+		public float Z { get; set; }
 
 		public static (float?, float?, float?, float?) DecodeGeometry(TriggerStyle s, PointOfInterest p)
 		{

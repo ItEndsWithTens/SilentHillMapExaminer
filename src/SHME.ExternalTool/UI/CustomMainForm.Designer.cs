@@ -139,6 +139,10 @@ namespace BizHawk.Client.EmuHawk
             this.RdoAxisColorsGame = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel37 = new System.Windows.Forms.TableLayoutPanel();
             this.GbxSelectedTrigger = new System.Windows.Forms.GroupBox();
+            this.CmsSelectedTrigger = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.TsmSelectedTriggerResetProperty = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.TsmSelectedTriggerResetAllProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.TlpSelectedTriggerLeft = new System.Windows.Forms.TableLayoutPanel();
             this.CbxSelectedTriggerDisabled = new System.Windows.Forms.CheckBox();
             this.LblSelectedTriggerAddress = new System.Windows.Forms.Label();
@@ -173,7 +177,13 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing4 = new System.Windows.Forms.MaskedTextBox();
             this.NudSelectedTriggerSomeIndex = new System.Windows.Forms.NumericUpDown();
             this.NudSelectedTriggerPoiIndex = new System.Windows.Forms.NumericUpDown();
+            this.CmbSelectedTriggerStyle = new System.Windows.Forms.ComboBox();
+            this.CbxSelectedTriggerFired = new System.Windows.Forms.CheckBox();
             this.GbxSelectedPoi = new System.Windows.Forms.GroupBox();
+            this.CmsSelectedPoi = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.TsmSelectedPoiResetProperty = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.TsmSelectedPoiResetAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel36 = new System.Windows.Forms.TableLayoutPanel();
             this.LbxPoiAssociatedTriggers = new System.Windows.Forms.ListBox();
             this.label33 = new System.Windows.Forms.Label();
@@ -373,6 +383,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer = new System.Windows.Forms.TabPage();
             this.TlpFramebufferTab = new System.Windows.Forms.TableLayoutPanel();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
@@ -453,9 +464,6 @@ namespace BizHawk.Client.EmuHawk
             this.RdoBackendBitmap = new System.Windows.Forms.RadioButton();
             this.RdoBackendBizHawkGui = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.CmbSelectedTriggerStyle = new System.Windows.Forms.ComboBox();
-            this.CbxSelectedTriggerFired = new System.Windows.Forms.CheckBox();
-            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -493,12 +501,14 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel32.SuspendLayout();
             this.tableLayoutPanel37.SuspendLayout();
             this.GbxSelectedTrigger.SuspendLayout();
+            this.CmsSelectedTrigger.SuspendLayout();
             this.TlpSelectedTriggerLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerTargetIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerStageIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerSomeIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerPoiIndex)).BeginInit();
             this.GbxSelectedPoi.SuspendLayout();
+            this.CmsSelectedPoi.SuspendLayout();
             this.tableLayoutPanel36.SuspendLayout();
             this.TbpCamera.SuspendLayout();
             this.tableLayoutPanel21.SuspendLayout();
@@ -578,6 +588,7 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer.SuspendLayout();
             this.TlpFramebufferTab.SuspendLayout();
             this.ScrFramebuffer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
@@ -604,7 +615,6 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel41.SuspendLayout();
             this.GbxOverlayBackend.SuspendLayout();
             this.tableLayoutPanel43.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -2413,6 +2423,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // GbxSelectedTrigger
             // 
+            this.GbxSelectedTrigger.ContextMenuStrip = this.CmsSelectedTrigger;
             this.GbxSelectedTrigger.Controls.Add(this.TlpSelectedTriggerLeft);
             this.GbxSelectedTrigger.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GbxSelectedTrigger.Location = new System.Drawing.Point(0, 244);
@@ -2422,6 +2433,33 @@ namespace BizHawk.Client.EmuHawk
             this.GbxSelectedTrigger.TabIndex = 5;
             this.GbxSelectedTrigger.TabStop = false;
             this.GbxSelectedTrigger.Text = "Selected trigger";
+            // 
+            // CmsSelectedTrigger
+            // 
+            this.CmsSelectedTrigger.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TsmSelectedTriggerResetProperty,
+            this.toolStripSeparator2,
+            this.TsmSelectedTriggerResetAllProperties});
+            this.CmsSelectedTrigger.Name = "CmsSelectedTrigger";
+            this.CmsSelectedTrigger.Size = new System.Drawing.Size(265, 54);
+            this.CmsSelectedTrigger.Opening += new System.ComponentModel.CancelEventHandler(this.CmsSelectedTrigger_Opening);
+            // 
+            // TsmSelectedTriggerResetProperty
+            // 
+            this.TsmSelectedTriggerResetProperty.Name = "TsmSelectedTriggerResetProperty";
+            this.TsmSelectedTriggerResetProperty.Size = new System.Drawing.Size(264, 22);
+            this.TsmSelectedTriggerResetProperty.Text = "Reset property from disc";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(261, 6);
+            // 
+            // TsmSelectedTriggerResetAllProperties
+            // 
+            this.TsmSelectedTriggerResetAllProperties.Name = "TsmSelectedTriggerResetAllProperties";
+            this.TsmSelectedTriggerResetAllProperties.Size = new System.Drawing.Size(264, 22);
+            this.TsmSelectedTriggerResetAllProperties.Text = "Reset all trigger properties from disc";
             // 
             // TlpSelectedTriggerLeft
             // 
@@ -2492,6 +2530,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.CbxSelectedTriggerDisabled.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.CbxSelectedTriggerDisabled.AutoSize = true;
+            this.CbxSelectedTriggerDisabled.ContextMenuStrip = this.CmsSelectedTrigger;
             this.CbxSelectedTriggerDisabled.Location = new System.Drawing.Point(83, 32);
             this.CbxSelectedTriggerDisabled.Name = "CbxSelectedTriggerDisabled";
             this.CbxSelectedTriggerDisabled.Size = new System.Drawing.Size(67, 17);
@@ -2525,6 +2564,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label15.AutoSize = true;
+            this.label15.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label15.Location = new System.Drawing.Point(3, 61);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(74, 13);
@@ -2535,6 +2575,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label32.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label32.AutoSize = true;
+            this.label32.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label32.Location = new System.Drawing.Point(34, 88);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(43, 13);
@@ -2545,6 +2586,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label39.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label39.AutoSize = true;
+            this.label39.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label39.Location = new System.Drawing.Point(34, 115);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(43, 13);
@@ -2570,6 +2612,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label49.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label49.AutoSize = true;
+            this.label49.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label49.Location = new System.Drawing.Point(34, 331);
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(43, 13);
@@ -2580,6 +2623,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label47.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label47.AutoSize = true;
+            this.label47.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label47.Location = new System.Drawing.Point(34, 304);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(43, 13);
@@ -2590,6 +2634,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label45.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label45.AutoSize = true;
+            this.label45.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label45.Location = new System.Drawing.Point(26, 277);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(51, 13);
@@ -2600,6 +2645,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label43.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label43.AutoSize = true;
+            this.label43.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label43.Location = new System.Drawing.Point(44, 250);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(33, 13);
@@ -2610,6 +2656,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label60.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label60.AutoSize = true;
+            this.label60.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label60.Location = new System.Drawing.Point(34, 223);
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(43, 13);
@@ -2620,6 +2667,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label50.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label50.AutoSize = true;
+            this.label50.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label50.Location = new System.Drawing.Point(14, 196);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(63, 13);
@@ -2642,6 +2690,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label46.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label46.AutoSize = true;
+            this.label46.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label46.Location = new System.Drawing.Point(219, 196);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(34, 13);
@@ -2674,6 +2723,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label42.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label42.AutoSize = true;
+            this.label42.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label42.Location = new System.Drawing.Point(184, 223);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(69, 13);
@@ -2684,6 +2734,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label51.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label51.AutoSize = true;
+            this.label51.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label51.Location = new System.Drawing.Point(210, 250);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(43, 13);
@@ -2694,6 +2745,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label94.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label94.AutoSize = true;
+            this.label94.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label94.Location = new System.Drawing.Point(210, 277);
             this.label94.Name = "label94";
             this.label94.Size = new System.Drawing.Size(43, 13);
@@ -2704,6 +2756,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label95.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label95.AutoSize = true;
+            this.label95.ContextMenuStrip = this.CmsSelectedTrigger;
             this.label95.Location = new System.Drawing.Point(187, 304);
             this.label95.Name = "label95";
             this.label95.Size = new System.Drawing.Size(66, 13);
@@ -2714,6 +2767,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.CbxSelectedTriggerSomeBool.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.CbxSelectedTriggerSomeBool.AutoSize = true;
+            this.CbxSelectedTriggerSomeBool.ContextMenuStrip = this.CmsSelectedTrigger;
             this.CbxSelectedTriggerSomeBool.Location = new System.Drawing.Point(259, 329);
             this.CbxSelectedTriggerSomeBool.Name = "CbxSelectedTriggerSomeBool";
             this.CbxSelectedTriggerSomeBool.Size = new System.Drawing.Size(74, 17);
@@ -2736,7 +2790,7 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerPoiGeometry.Location = new System.Drawing.Point(83, 57);
             this.MtbSelectedTriggerPoiGeometry.Name = "MtbSelectedTriggerPoiGeometry";
             this.MtbSelectedTriggerPoiGeometry.Size = new System.Drawing.Size(170, 20);
-            this.MtbSelectedTriggerPoiGeometry.TabIndex = 176;
+            this.MtbSelectedTriggerPoiGeometry.TabIndex = 25;
             // 
             // MtbSelectedTriggerThing0
             // 
@@ -2745,7 +2799,8 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing0.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing0.Name = "MtbSelectedTriggerThing0";
             this.MtbSelectedTriggerThing0.Size = new System.Drawing.Size(82, 20);
-            this.MtbSelectedTriggerThing0.TabIndex = 177;
+            this.MtbSelectedTriggerThing0.TabIndex = 35;
+            this.MtbSelectedTriggerThing0.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // MtbSelectedTriggerThing1
             // 
@@ -2754,7 +2809,8 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing1.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing1.Name = "MtbSelectedTriggerThing1";
             this.MtbSelectedTriggerThing1.Size = new System.Drawing.Size(82, 20);
-            this.MtbSelectedTriggerThing1.TabIndex = 178;
+            this.MtbSelectedTriggerThing1.TabIndex = 45;
+            this.MtbSelectedTriggerThing1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // MtbSelectedTriggerThing5
             // 
@@ -2763,7 +2819,8 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing5.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing5.Name = "MtbSelectedTriggerThing5";
             this.MtbSelectedTriggerThing5.Size = new System.Drawing.Size(82, 20);
-            this.MtbSelectedTriggerThing5.TabIndex = 179;
+            this.MtbSelectedTriggerThing5.TabIndex = 150;
+            this.MtbSelectedTriggerThing5.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // MtbSelectedTriggerThing6
             // 
@@ -2772,7 +2829,8 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing6.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing6.Name = "MtbSelectedTriggerThing6";
             this.MtbSelectedTriggerThing6.Size = new System.Drawing.Size(82, 20);
-            this.MtbSelectedTriggerThing6.TabIndex = 180;
+            this.MtbSelectedTriggerThing6.TabIndex = 160;
+            this.MtbSelectedTriggerThing6.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // MtbSelectedTriggerThing2
             // 
@@ -2781,7 +2839,7 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing2.Mask = "\\0\\xA";
             this.MtbSelectedTriggerThing2.Name = "MtbSelectedTriggerThing2";
             this.MtbSelectedTriggerThing2.Size = new System.Drawing.Size(82, 20);
-            this.MtbSelectedTriggerThing2.TabIndex = 181;
+            this.MtbSelectedTriggerThing2.TabIndex = 80;
             // 
             // MtbSelectedTriggerThing3
             // 
@@ -2790,7 +2848,8 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing3.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing3.Name = "MtbSelectedTriggerThing3";
             this.MtbSelectedTriggerThing3.Size = new System.Drawing.Size(82, 20);
-            this.MtbSelectedTriggerThing3.TabIndex = 182;
+            this.MtbSelectedTriggerThing3.TabIndex = 110;
+            this.MtbSelectedTriggerThing3.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // MtbSelectedTriggerThing4
             // 
@@ -2799,7 +2858,8 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing4.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing4.Name = "MtbSelectedTriggerThing4";
             this.MtbSelectedTriggerThing4.Size = new System.Drawing.Size(82, 20);
-            this.MtbSelectedTriggerThing4.TabIndex = 183;
+            this.MtbSelectedTriggerThing4.TabIndex = 120;
+            this.MtbSelectedTriggerThing4.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // NudSelectedTriggerSomeIndex
             // 
@@ -2817,7 +2877,7 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudSelectedTriggerSomeIndex.Name = "NudSelectedTriggerSomeIndex";
             this.NudSelectedTriggerSomeIndex.Size = new System.Drawing.Size(82, 20);
-            this.NudSelectedTriggerSomeIndex.TabIndex = 184;
+            this.NudSelectedTriggerSomeIndex.TabIndex = 70;
             // 
             // NudSelectedTriggerPoiIndex
             // 
@@ -2835,10 +2895,32 @@ namespace BizHawk.Client.EmuHawk
             -2147483648});
             this.NudSelectedTriggerPoiIndex.Name = "NudSelectedTriggerPoiIndex";
             this.NudSelectedTriggerPoiIndex.Size = new System.Drawing.Size(82, 20);
-            this.NudSelectedTriggerPoiIndex.TabIndex = 185;
+            this.NudSelectedTriggerPoiIndex.TabIndex = 100;
+            // 
+            // CmbSelectedTriggerStyle
+            // 
+            this.CmbSelectedTriggerStyle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.CmbSelectedTriggerStyle.FormattingEnabled = true;
+            this.CmbSelectedTriggerStyle.Location = new System.Drawing.Point(83, 246);
+            this.CmbSelectedTriggerStyle.Name = "CmbSelectedTriggerStyle";
+            this.CmbSelectedTriggerStyle.Size = new System.Drawing.Size(82, 21);
+            this.CmbSelectedTriggerStyle.TabIndex = 90;
+            // 
+            // CbxSelectedTriggerFired
+            // 
+            this.CbxSelectedTriggerFired.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.CbxSelectedTriggerFired.AutoSize = true;
+            this.CbxSelectedTriggerFired.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.CbxSelectedTriggerFired.Location = new System.Drawing.Point(83, 140);
+            this.CbxSelectedTriggerFired.Name = "CbxSelectedTriggerFired";
+            this.CbxSelectedTriggerFired.Size = new System.Drawing.Size(49, 17);
+            this.CbxSelectedTriggerFired.TabIndex = 50;
+            this.CbxSelectedTriggerFired.Text = "Fired";
+            this.CbxSelectedTriggerFired.UseVisualStyleBackColor = true;
             // 
             // GbxSelectedPoi
             // 
+            this.GbxSelectedPoi.ContextMenuStrip = this.CmsSelectedPoi;
             this.GbxSelectedPoi.Controls.Add(this.tableLayoutPanel36);
             this.GbxSelectedPoi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GbxSelectedPoi.Location = new System.Drawing.Point(0, 0);
@@ -2848,6 +2930,35 @@ namespace BizHawk.Client.EmuHawk
             this.GbxSelectedPoi.TabIndex = 0;
             this.GbxSelectedPoi.TabStop = false;
             this.GbxSelectedPoi.Text = "Selected POI";
+            // 
+            // CmsSelectedPoi
+            // 
+            this.CmsSelectedPoi.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TsmSelectedPoiResetProperty,
+            this.toolStripSeparator1,
+            this.TsmSelectedPoiResetAll});
+            this.CmsSelectedPoi.Name = "CmsSelectedPoi";
+            this.CmsSelectedPoi.Size = new System.Drawing.Size(249, 54);
+            this.CmsSelectedPoi.Opening += new System.ComponentModel.CancelEventHandler(this.CmsSelectedPoi_Opening);
+            // 
+            // TsmSelectedPoiResetProperty
+            // 
+            this.TsmSelectedPoiResetProperty.Name = "TsmSelectedPoiResetProperty";
+            this.TsmSelectedPoiResetProperty.Size = new System.Drawing.Size(248, 22);
+            this.TsmSelectedPoiResetProperty.Text = "Reset property from disc";
+            this.TsmSelectedPoiResetProperty.Click += new System.EventHandler(this.TsmSelectedPoiResetProperty_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(245, 6);
+            // 
+            // TsmSelectedPoiResetAll
+            // 
+            this.TsmSelectedPoiResetAll.Name = "TsmSelectedPoiResetAll";
+            this.TsmSelectedPoiResetAll.Size = new System.Drawing.Size(248, 22);
+            this.TsmSelectedPoiResetAll.Text = "Reset all POI properties from disc";
+            this.TsmSelectedPoiResetAll.Click += new System.EventHandler(this.TsmSelectedPoiResetAll_Click);
             // 
             // tableLayoutPanel36
             // 
@@ -2919,10 +3030,12 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label38.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label38.AutoSize = true;
+            this.label38.ContextMenuStrip = this.CmsSelectedPoi;
             this.label38.Location = new System.Drawing.Point(52, 35);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(24, 13);
             this.label38.TabIndex = 10;
+            this.label38.Tag = "XZ";
             this.label38.Text = "XZ:";
             // 
             // LblSelectedPoiAddress
@@ -2950,10 +3063,12 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.label35.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label35.AutoSize = true;
+            this.label35.ContextMenuStrip = this.CmsSelectedPoi;
             this.label35.Location = new System.Drawing.Point(21, 63);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(55, 13);
             this.label35.TabIndex = 25;
+            this.label35.Tag = "Geometry";
             this.label35.Text = "Geometry:";
             // 
             // TbxSelectedPoiX
@@ -2962,8 +3077,11 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSelectedPoiX.Location = new System.Drawing.Point(82, 32);
             this.TbxSelectedPoiX.Name = "TbxSelectedPoiX";
             this.TbxSelectedPoiX.Size = new System.Drawing.Size(73, 20);
-            this.TbxSelectedPoiX.TabIndex = 41;
+            this.TbxSelectedPoiX.TabIndex = 15;
+            this.TbxSelectedPoiX.Tag = "X";
             this.TbxSelectedPoiX.Text = "<x>";
+            this.TbxSelectedPoiX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxSelectedPoiX_KeyDown);
+            this.TbxSelectedPoiX.Leave += new System.EventHandler(this.TbxSelectedPoiX_Leave);
             // 
             // TbxSelectedPoiZ
             // 
@@ -2971,18 +3089,26 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSelectedPoiZ.Location = new System.Drawing.Point(161, 32);
             this.TbxSelectedPoiZ.Name = "TbxSelectedPoiZ";
             this.TbxSelectedPoiZ.Size = new System.Drawing.Size(73, 20);
-            this.TbxSelectedPoiZ.TabIndex = 42;
+            this.TbxSelectedPoiZ.TabIndex = 16;
+            this.TbxSelectedPoiZ.Tag = "Z";
             this.TbxSelectedPoiZ.Text = "<z>";
+            this.TbxSelectedPoiZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxSelectedPoiX_KeyDown);
+            this.TbxSelectedPoiZ.Leave += new System.EventHandler(this.TbxSelectedPoiX_Leave);
             // 
             // MtbSelectedPoiGeometry
             // 
             this.MtbSelectedPoiGeometry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel36.SetColumnSpan(this.MtbSelectedPoiGeometry, 2);
             this.MtbSelectedPoiGeometry.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.MtbSelectedPoiGeometry.Location = new System.Drawing.Point(82, 60);
             this.MtbSelectedPoiGeometry.Mask = "\\0\\xAAAAAAAA";
             this.MtbSelectedPoiGeometry.Name = "MtbSelectedPoiGeometry";
-            this.MtbSelectedPoiGeometry.Size = new System.Drawing.Size(73, 20);
-            this.MtbSelectedPoiGeometry.TabIndex = 43;
+            this.MtbSelectedPoiGeometry.Size = new System.Drawing.Size(152, 20);
+            this.MtbSelectedPoiGeometry.TabIndex = 30;
+            this.MtbSelectedPoiGeometry.Tag = "Geometry";
+            this.MtbSelectedPoiGeometry.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbSelectedPoiGeometry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxSelectedPoiX_KeyDown);
+            this.MtbSelectedPoiGeometry.Leave += new System.EventHandler(this.TbxSelectedPoiX_Leave);
             // 
             // TbpCamera
             // 
@@ -5723,6 +5849,17 @@ namespace BizHawk.Client.EmuHawk
             this.ScrFramebuffer.TabIndex = 8;
             this.ScrFramebuffer.Text = "scrollableControl1";
             // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
+            // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.AutoSize = true;
@@ -6787,37 +6924,6 @@ namespace BizHawk.Client.EmuHawk
             this.RdoBackendBizHawkGui.UseVisualStyleBackColor = true;
             this.RdoBackendBizHawkGui.CheckedChanged += new System.EventHandler(this.RdoOverlayBackend_CheckedChanged);
             // 
-            // CmbSelectedTriggerStyle
-            // 
-            this.CmbSelectedTriggerStyle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.CmbSelectedTriggerStyle.FormattingEnabled = true;
-            this.CmbSelectedTriggerStyle.Location = new System.Drawing.Point(83, 246);
-            this.CmbSelectedTriggerStyle.Name = "CmbSelectedTriggerStyle";
-            this.CmbSelectedTriggerStyle.Size = new System.Drawing.Size(82, 21);
-            this.CmbSelectedTriggerStyle.TabIndex = 186;
-            // 
-            // CbxSelectedTriggerFired
-            // 
-            this.CbxSelectedTriggerFired.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.CbxSelectedTriggerFired.AutoSize = true;
-            this.CbxSelectedTriggerFired.Location = new System.Drawing.Point(83, 140);
-            this.CbxSelectedTriggerFired.Name = "CbxSelectedTriggerFired";
-            this.CbxSelectedTriggerFired.Size = new System.Drawing.Size(82, 17);
-            this.CbxSelectedTriggerFired.TabIndex = 187;
-            this.CbxSelectedTriggerFired.Text = "Fired";
-            this.CbxSelectedTriggerFired.UseVisualStyleBackColor = true;
-            // 
-            // BpbFramebuffer
-            // 
-            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
-            this.BpbFramebuffer.Name = "BpbFramebuffer";
-            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
-            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BpbFramebuffer.TabIndex = 7;
-            this.BpbFramebuffer.TabStop = false;
-            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -6875,6 +6981,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel37.ResumeLayout(false);
             this.GbxSelectedTrigger.ResumeLayout(false);
             this.GbxSelectedTrigger.PerformLayout();
+            this.CmsSelectedTrigger.ResumeLayout(false);
             this.TlpSelectedTriggerLeft.ResumeLayout(false);
             this.TlpSelectedTriggerLeft.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerTargetIndex)).EndInit();
@@ -6882,6 +6989,7 @@ namespace BizHawk.Client.EmuHawk
             ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerSomeIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudSelectedTriggerPoiIndex)).EndInit();
             this.GbxSelectedPoi.ResumeLayout(false);
+            this.CmsSelectedPoi.ResumeLayout(false);
             this.tableLayoutPanel36.ResumeLayout(false);
             this.tableLayoutPanel36.PerformLayout();
             this.TbpCamera.ResumeLayout(false);
@@ -6992,6 +7100,7 @@ namespace BizHawk.Client.EmuHawk
             this.TlpFramebufferTab.ResumeLayout(false);
             this.TlpFramebufferTab.PerformLayout();
             this.ScrFramebuffer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
@@ -7036,7 +7145,6 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlayBackend.PerformLayout();
             this.tableLayoutPanel43.ResumeLayout(false);
             this.tableLayoutPanel43.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -7462,6 +7570,10 @@ namespace BizHawk.Client.EmuHawk
 		private TableLayoutPanel tableLayoutPanel43;
 		private RadioButton RdoBackendBitmap;
 		private RadioButton RdoBackendBizHawkGui;
+		private ContextMenuStrip CmsSelectedPoi;
+		private ToolStripMenuItem TsmSelectedPoiResetProperty;
+		private ToolStripSeparator toolStripSeparator1;
+		private ToolStripMenuItem TsmSelectedPoiResetAll;
 		private Label label51;
 		private Label label94;
 		private Label label95;
@@ -7482,5 +7594,9 @@ namespace BizHawk.Client.EmuHawk
 		private NumericUpDown NudSelectedTriggerPoiIndex;
 		private ComboBox CmbSelectedTriggerStyle;
 		private CheckBox CbxSelectedTriggerFired;
+		private ContextMenuStrip CmsSelectedTrigger;
+		private ToolStripMenuItem TsmSelectedTriggerResetProperty;
+		private ToolStripSeparator toolStripSeparator2;
+		private ToolStripMenuItem TsmSelectedTriggerResetAllProperties;
 	}
 }

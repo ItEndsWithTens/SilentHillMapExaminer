@@ -216,6 +216,8 @@ namespace BizHawk.Client.EmuHawk
 
 			LblPoiCount.Text = poiCount.ToString();
 
+			LbxPois.BeginUpdate();
+			LbxPois.SelectedIndex = -1;
 			LbxPois.Items.Clear();
 
 			for (int i = 0; i < poiCount; i++)
@@ -233,6 +235,8 @@ namespace BizHawk.Client.EmuHawk
 				Guts.Pois.Add(poi, box);
 				LbxPois.Items.Add(poi);
 			}
+
+			LbxPois.EndUpdate();
 
 			NudSelectedTriggerTargetIndex.Maximum = poiCount - 1;
 
@@ -369,6 +373,9 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			Guts.Triggers.Clear();
+
+			LbxTriggers.BeginUpdate();
+			LbxTriggers.SelectedIndex = -1;
 			LbxTriggers.Items.Clear();
 
 			int ofs = triggerArrayAddress;
@@ -383,6 +390,8 @@ namespace BizHawk.Client.EmuHawk
 				span = Mem.ReadByteRange(ofs, SilentHillTypeSizes.Trigger).ToArray();
 				t = new Trigger(ofs, span);
 			}
+
+			LbxTriggers.EndUpdate();
 
 			LblTriggerCount.Text = Guts.Triggers.Count.ToString(CultureInfo.CurrentCulture);
 
