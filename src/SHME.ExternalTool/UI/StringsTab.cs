@@ -61,7 +61,7 @@ namespace BizHawk.Client.EmuHawk
 			int arrayStart = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
 			arrayStart -= (int)Rom.Addresses.MainRam.BaseAddress;
 
-			int arrayEnd = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
+			int arrayEnd = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggers);
 			arrayEnd -= (int)Rom.Addresses.MainRam.BaseAddress;
 
 			int arrayBytes = arrayEnd - arrayStart;

@@ -116,7 +116,7 @@ namespace BizHawk.Client.EmuHawk
 				}
 				else
 				{
-					(_forcedCameraYaw, _, _, _) = PointOfInterest.DecodeGeometry(TriggerStyle.ButtonYaw, Guts.LastHarrySpawnPoint);
+					(_forcedCameraYaw, _) = Guts.LastHarrySpawnPoint.DecodeGeometry(TriggerStyle.ButtonYaw);
 				}
 
 				_lastHarrySpawnPointHash = hash;

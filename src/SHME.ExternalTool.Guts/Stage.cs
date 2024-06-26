@@ -17,6 +17,12 @@ public class Stage : SilentHillType
 
 	public override ReadOnlySpan<byte> ToBytes()
 	{
-		return _bytes;
+		Span<byte> span = _bytes;
+
+		return ToBytes(span);
+	}
+	public override ReadOnlySpan<byte> ToBytes(Span<byte> span)
+	{
+		return span;
 	}
 }

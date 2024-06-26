@@ -171,25 +171,20 @@ namespace BizHawk.Client.EmuHawk
 		{
 			PointOfInterest p = Guts.Pois.ElementAt(t.PoiIndex).Key;
 
-			(float? yaw, float? x, float? z, float? width) = PointOfInterest.DecodeGeometry(t.Style, p);
+			(float geoA, float geoB) = p.DecodeGeometry(t.Style);
 
 			CultureInfo c = CultureInfo.CurrentCulture;
 
-			string geometry = "";
-			if (x != null && z != null)
+			return t.Style switch
 			{
-				geometry = $"X size: {x.Value.ToString(c)} Z size: {z.Value.ToString(c)}";
-			}
-			else if (yaw != null && width != null)
-			{
-				geometry = $"Width: {width.Value.ToString(c)} Yaw: {yaw.Value.ToString(c)}";
-			}
-			else if (yaw != null)
-			{
-				geometry = $"Yaw: {yaw.Value.ToString(c)}";
-			}
+				TriggerStyle.TouchAabb =>
+					$"X size: {geoA.ToString(c)} Z size: {geoB.ToString(c)}",
 
-			return geometry;
+				TriggerStyle.TouchObb =>
+					$"Yaw: {geoA.ToString(c)} Width: {geoB.ToString(c)}",
+
+				_ => $"Yaw: {geoA.ToString(c)}"
+			};
 		}
 
 		private void BtnReadPois_Click(object sender, EventArgs e)
@@ -197,38 +192,39 @@ namespace BizHawk.Client.EmuHawk
 			Guts.Boxes.Clear();
 			Guts.Pois.Clear();
 
-			var generator = new BoxGenerator(1.0f, Color.White);
+			MainRamAddresses ram = Rom.Addresses.MainRam;
 
-			int poiArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointsOfInterest);
-			poiArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+			int start = Mem.ReadS32(ram.PointerToArrayOfPointsOfInterest);
+			start -= (int)ram.BaseAddress;
 
-			if (poiArrayAddress < Rom.Addresses.MainRam.StageHeader)
+			if (start < ram.StageHeader)
 			{
 				return;
 			}
 
-			int functionPointersArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
-			functionPointersArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+			int end = Mem.ReadS32(ram.PointerToArrayOfPointersToFunctions);
+			end -= (int)ram.BaseAddress;
 
-			int poiArrayBytes = functionPointersArrayAddress - poiArrayAddress;
-			int poiBytes = 12;
-			int poiCount = poiArrayBytes / poiBytes;
+			int size = SilentHillTypeSizes.PointOfInterest;
+			int count = (end - start) / size;
 
-			LblPoiCount.Text = poiCount.ToString();
+			LblPoiCount.Text = count.ToString();
+			NudSelectedTriggerTargetIndex.Maximum = count - 1;
 
 			LbxPois.BeginUpdate();
 			LbxPois.SelectedIndex = -1;
 			LbxPois.Items.Clear();
 
-			for (int i = 0; i < poiCount; i++)
+			var generator = new BoxGenerator(1.0f, Color.White);
+			for (int i = start; i < end; i += size)
 			{
-				int ofs = poiArrayAddress + (poiBytes * i);
-
-				ReadOnlySpan<byte> array = Mem.ReadByteRange(ofs, 12).ToArray();
-				var poi = new PointOfInterest(ofs, array);
+				PointOfInterest poi = new(i, Mem.ReadByteRange(i, size).ToArray());
 
 				Renderable box = generator.Generate().ToWorld();
-				box.Position = new Vector3(poi.X, 0.0f, -poi.Z);
+				Vector3 pos = box.Position;
+				pos.X = poi.X;
+				pos.Z = -poi.Z;
+				box.Position = pos;
 
 				Guts.Boxes.Add(box);
 
@@ -237,8 +233,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			LbxPois.EndUpdate();
-
-			NudSelectedTriggerTargetIndex.Maximum = poiCount - 1;
 
 			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 		}
@@ -364,10 +358,12 @@ namespace BizHawk.Client.EmuHawk
 			BtnReadPois_Click(this, EventArgs.Empty);
 			BtnReadStrings_Click(this, EventArgs.Empty);
 
-			int triggerArrayAddress = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfTriggersMaybe);
-			triggerArrayAddress -= (int)Rom.Addresses.MainRam.BaseAddress;
+			MainRamAddresses ram = Rom.Addresses.MainRam;
 
-			if (triggerArrayAddress < Rom.Addresses.MainRam.StageHeader)
+			int address = Mem.ReadS32(ram.PointerToArrayOfTriggers);
+			address -= (int)ram.BaseAddress;
+
+			if (address < ram.StageHeader)
 			{
 				return;
 			}
@@ -378,80 +374,85 @@ namespace BizHawk.Client.EmuHawk
 			LbxTriggers.SelectedIndex = -1;
 			LbxTriggers.Items.Clear();
 
-			int ofs = triggerArrayAddress;
-			ReadOnlySpan<byte> span = Mem.ReadByteRange(ofs, SilentHillTypeSizes.Trigger).ToArray();
-			var t = new Trigger(ofs, span);
-			while (t.Style != TriggerStyle.Dummy)
+			int max = address + Guts.Stage.SizeInBytes;
+			int size = SilentHillTypeSizes.Trigger;
+			for (int i = address; i < max; i += size)
 			{
+				Trigger t = new(i, Mem.ReadByteRange(i, size).ToArray());
+
+				if (t.Style == TriggerStyle.Dummy)
+				{
+					break;
+				}
+
 				Guts.Triggers.Add(t);
 				LbxTriggers.Items.Add(t);
-
-				ofs += SilentHillTypeSizes.Trigger;
-				span = Mem.ReadByteRange(ofs, SilentHillTypeSizes.Trigger).ToArray();
-				t = new Trigger(ofs, span);
 			}
 
 			LbxTriggers.EndUpdate();
 
 			LblTriggerCount.Text = Guts.Triggers.Count.ToString(CultureInfo.CurrentCulture);
 
-			foreach (Trigger trigger in Guts.Triggers)
+			foreach (Trigger t in Guts.Triggers)
 			{
-				if (trigger.Style != TriggerStyle.ButtonOmni && trigger.Style != TriggerStyle.ButtonYaw)
+				if (t.Style == TriggerStyle.ButtonOmni || t.Style == TriggerStyle.ButtonYaw)
 				{
-					KeyValuePair<PointOfInterest, Renderable?> pair = Guts.Pois.ElementAt(trigger.PoiIndex);
-					PointOfInterest p = pair.Key;
-
-					float? yaw = null;
-					float? x = null;
-					float? z = null;
-					float? width = null;
-					if (CmbPoiRenderShape.SelectedIndex == 0)
-					{
-						(yaw, x, z, width) = PointOfInterest.DecodeGeometry(trigger.Style, p);
-					}
-
-					Renderable r;
-					if (x != null && z != null)
-					{
-						r = new BoxGenerator((float)x, 1.0f, (float)z, Color.Orange).Generate().ToWorld();
-						r.Position = pair.Value.Position;
-					}
-					else if (yaw != null && width != null)
-					{
-						float depth = 4.0f;
-						float yawConverted = -(float)yaw;
-
-						r = new BoxGenerator((float)width, 1.0f, depth, Color.Orange).Generate().ToWorld();
-						r.Transformability |= Transformability.Rotate;
-
-						var rotation = new Vector3(0.0f, yawConverted, 0.0f);
-						r.Transform(
-							Vector3.Zero,
-							rotation,
-							Vector3.One,
-							r.Position);
-
-						// OBB triggers' volumes aren't centered on their
-						// positions, instead extending away 4 units in the
-						// direction of their yaw.
-						Vector3 point = new Vector3(0.0f, 0.0f, 1.0f) * (depth / 2.0f);
-						point = point.Rotate(rotation, Vector3.Zero);
-						r.Position = pair.Value.Position - point;
-					}
-					else
-					{
-						r = new BoxGenerator(1.0f, Color.White).Generate().ToWorld();
-						r.Position = pair.Value.Position;
-					}
-
-					int index = Guts.Boxes.IndexOf(pair.Value);
-					Guts.Boxes.RemoveAt(index);
-					Guts.Boxes.Insert(index, r);
-
-					Guts.Pois.Remove(p);
-					Guts.Pois.Add(p, r);
+					continue;
 				}
+
+				KeyValuePair<PointOfInterest, Renderable?> pair = Guts.Pois.ElementAt(t.PoiIndex);
+				PointOfInterest p = pair.Key;
+
+				float geoA = 0.0f;
+				float geoB = 0.0f;
+				if (CmbPoiRenderShape.SelectedIndex == 0)
+				{
+					(geoA, geoB) = p.DecodeGeometry(t.Style);
+				}
+
+				BoxGenerator gen;
+				Renderable r;
+				if (t.Style == TriggerStyle.TouchAabb)
+				{
+					gen = new BoxGenerator(geoA, 1.0f, geoB, Color.Orange);
+					r = gen.Generate().ToWorld();
+					r.Position = pair.Value.Position;
+				}
+				else if (t.Style == TriggerStyle.TouchObb)
+				{
+					float depth = 4.0f;
+
+					gen = new BoxGenerator(geoB, 1.0f, depth, Color.Orange);
+					r = gen.Generate().ToWorld();
+					r.Transformability |= Transformability.Rotate;
+
+					Vector3 rotation = new(0.0f, -geoA, 0.0f);
+					r.Transform(
+						Vector3.Zero,
+						rotation,
+						Vector3.One,
+						r.Position);
+
+					// OBB triggers' volumes aren't centered on their
+					// positions, instead extending away 4 units in the
+					// direction of their yaw.
+					Vector3 point = new Vector3(0.0f, 0.0f, 1.0f) * (depth / 2.0f);
+					point = point.Rotate(rotation, Vector3.Zero);
+					r.Position = pair.Value.Position - point;
+				}
+				else
+				{
+					gen = new BoxGenerator(1.0f, Color.White);
+					r = gen.Generate().ToWorld();
+					r.Position = pair.Value.Position;
+				}
+
+				int index = Guts.Boxes.IndexOf(pair.Value);
+				Guts.Boxes.RemoveAt(index);
+				Guts.Boxes.Insert(index, r);
+
+				Guts.Pois.Remove(p);
+				Guts.Pois.Add(p, r);
 			}
 
 			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);

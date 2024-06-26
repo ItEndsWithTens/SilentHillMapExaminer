@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Buffers.Binary;
-using System.Collections.Generic;
+using bp = System.Buffers.Binary.BinaryPrimitives;
 
 namespace SHME.ExternalTool
 {
@@ -113,35 +112,33 @@ namespace SHME.ExternalTool
 
 		public bool SomeBool { get; }
 
-		public Trigger(long address, ReadOnlySpan<byte> current)
+		public Trigger(long address, ReadOnlySpan<byte> span)
 		{
 			Address = address;
 
-			byte[] bytes = [.. current];
-
-			int raw0 = (bytes[0] & 0b01111111) >> 0;
-			int raw1 = (bytes[0] & 0b10000000) >> 7;
+			int raw0 = (span[0] & 0b01111111) >> 0;
+			int raw1 = (span[0] & 0b10000000) >> 7;
 			Thing0 = (byte)raw0;
 			Disabled = raw1 == 1;
 
-			Thing1 = bytes[1];
+			Thing1 = span[1];
 
-			short stateRaw = BitConverter.ToInt16(bytes, 2);
+			short stateRaw = bp.ReadInt16LittleEndian(span.Slice(2));
 			int raw2 = (stateRaw & 0b00000000_00011111) >> 0;
 			int raw3 = (stateRaw & 0b11111111_11100000) >> 5;
 			FiredBitShift = (byte)raw2;
 			SomeIndex = (short)raw3;
 
-			int raw4 = (bytes[4] & 0b00001111) >> 0;
-			int raw5 = (bytes[4] & 0b11110000) >> 4;
+			int raw4 = (span[4] & 0b00001111) >> 0;
+			int raw5 = (span[4] & 0b11110000) >> 4;
 			Style = (TriggerStyle)raw4;
 			Thing2 = (byte)raw5;
 
-			PoiIndex = bytes[5];
-			Thing3 = bytes[6];
-			Thing4 = bytes[7];
+			PoiIndex = span[5];
+			Thing3 = span[6];
+			Thing4 = span[7];
 
-			uint info = BitConverter.ToUInt32(bytes, 8);
+			uint info = bp.ReadUInt32LittleEndian(span.Slice(8));
 			uint raw6 = (info & 0b00000000_00000000_00000000_00011111) >> 0;
 			uint raw7 = (info & 0b00000000_00000000_00011111_11100000) >> 5;
 			uint raw8 = (info & 0b00000000_00000111_11100000_00000000) >> 13;
@@ -158,26 +155,31 @@ namespace SHME.ExternalTool
 
 		public override ReadOnlySpan<byte> ToBytes()
 		{
-			Span<byte> bytes = new byte[SizeInBytes];
+			Span<byte> span = new byte[SizeInBytes];
 
-			bytes[0x0] = Thing0;
+			return ToBytes(span);
+		}
+
+		public override ReadOnlySpan<byte> ToBytes(Span<byte> span)
+		{
+			span[0x0] = Thing0;
 			if (Disabled)
 			{
-				bytes[0x0] |= 0b10000000;
+				span[0x0] |= 0b10000000;
 			}
 
-			bytes[0x1] = Thing1;
+			span[0x1] = Thing1;
 
-			BinaryPrimitives.WriteInt16LittleEndian(
-				bytes.Slice(0x2), (short)((SomeIndex << 5) | FiredBitShift));
+			bp.WriteInt16LittleEndian(
+				span.Slice(0x2), (short)((SomeIndex << 5) | FiredBitShift));
 
-			bytes[0x4] = (byte)((Thing2 << 4) | (byte)Style);
+			span[0x4] = (byte)((Thing2 << 4) | (byte)Style);
 
-			bytes[0x5] = PoiIndex;
+			span[0x5] = PoiIndex;
 
-			bytes[0x6] = Thing3;
+			span[0x6] = Thing3;
 
-			bytes[0x7] = Thing4;
+			span[0x7] = Thing4;
 
 			uint info = 0;
 			info |= (uint)((int)TriggerType & 0b00011111);
@@ -190,10 +192,9 @@ namespace SHME.ExternalTool
 				info |= 0x80000000;
 			}
 
-			BinaryPrimitives.WriteUInt32LittleEndian(
-				bytes.Slice(0x8), info);
+			bp.WriteUInt32LittleEndian(span.Slice(0x8), info);
 
-			return bytes;
+			return span;
 		}
 	}
 }

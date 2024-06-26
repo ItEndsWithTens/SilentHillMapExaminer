@@ -1,10 +1,52 @@
 ﻿using System;
-using System.Buffers.Binary;
 using System.Globalization;
 using static SHME.ExternalTool.Guts;
+using bp = System.Buffers.Binary.BinaryPrimitives;
 
 namespace SHME.ExternalTool
 {
+	public static class PointOfInterestExtensions
+	{
+		public static (float geoA, float geoB) DecodeGeometry(this PointOfInterest p, TriggerStyle s)
+		{
+			float geoA = 0.0f;
+			float geoB = 0.0f;
+
+			uint geo = p.Geometry;
+			uint rawA;
+			uint rawB;
+
+			switch (s)
+			{
+				case TriggerStyle.ButtonOmni:
+				case TriggerStyle.ButtonYaw:
+					geoA = GameUnitsToDegrees((geo & 0x00FFF000) >> 12);
+					break;
+				case TriggerStyle.TouchAabb:
+					rawA = (geo & 0x00FF0000) >> 16;
+					rawB = (geo & 0xFF000000) >> 24;
+
+					float radiusX = QToFloat((int)rawA * 1024);
+					float radiusZ = QToFloat((int)rawB * 1024);
+
+					geoA = radiusX * 2.0f;
+					geoB = radiusZ * 2.0f;
+					break;
+				case TriggerStyle.TouchObb:
+					rawA = (geo & 0x00FF0000) >> 16;
+					rawB = (geo & 0xFF000000) >> 24;
+
+					geoA = GameUnitsToDegrees((rawA << 0x14) >> 0x10);
+					geoB = QToFloat((int)(rawB << 9));
+					break;
+				default:
+					break;
+			}
+
+			return (geoA, geoB);
+		}
+	}
+
 	public class PointOfInterest : SilentHillType
 	{
 		public override int SizeInBytes => SilentHillTypeSizes.PointOfInterest;
@@ -23,69 +65,28 @@ namespace SHME.ExternalTool
 
 		public float Z { get; set; }
 
-		public static (float?, float?, float?, float?) DecodeGeometry(TriggerStyle s, PointOfInterest p)
-		{
-			float? yaw = null;
-			float? x = null;
-			float? z = null;
-			float? width = null;
-
-			uint geo = p.Geometry;
-
-			if (s == TriggerStyle.ButtonOmni || s == TriggerStyle.ButtonYaw)
-			{
-				uint raw = (geo & 0b00000000_11111111_11110000_00000000) >> 12;
-
-				yaw = GameUnitsToDegrees(raw);
-			}
-			else if (s == TriggerStyle.TouchAabb)
-			{
-				uint rawA = (geo & 0b00000000_11111111_00000000_00000000) >> 16;
-				uint rawB = (geo & 0b11111111_00000000_00000000_00000000) >> 24;
-
-				float radiusX = QToFloat((int)rawA * 1024);
-				float radiusZ = QToFloat((int)rawB * 1024);
-
-				x = radiusX * 2.0f;
-				z = radiusZ * 2.0f;
-			}
-			else if (s == TriggerStyle.TouchObb)
-			{
-				uint rawA = (geo & 0b00000000_11111111_00000000_00000000) >> 16;
-				uint rawB = (geo & 0b11111111_00000000_00000000_00000000) >> 24;
-
-				yaw = GameUnitsToDegrees((rawA << 0x14) >> 0x10);
-				width = QToFloat((int)(rawB << 9));
-			}
-
-			return (yaw, x, z, width);
-		}
-
-		public PointOfInterest(long address, ReadOnlySpan<byte> current)
+		public PointOfInterest(long address, ReadOnlySpan<byte> bytes)
 		{
 			Address = address;
 
-			byte[] bytes = [.. current];
-
-			X = QToFloat(BitConverter.ToInt32(bytes, 0));
-			Geometry = BitConverter.ToUInt32(bytes, 4);
-			Z = QToFloat(BitConverter.ToInt32(bytes, 8));
+			X = QToFloat(bp.ReadInt32LittleEndian(bytes.Slice(0)));
+			Geometry = bp.ReadUInt32LittleEndian(bytes.Slice(4));
+			Z = QToFloat(bp.ReadInt32LittleEndian(bytes.Slice(8)));
 		}
 
 		public override ReadOnlySpan<byte> ToBytes()
 		{
-			Span<byte> bytes = new byte[SizeInBytes];
+			Span<byte> span = new byte[SizeInBytes];
 
-			BinaryPrimitives.WriteInt32LittleEndian(
-				bytes.Slice(0x0), FloatToQ(X));
+			return ToBytes(span);
+		}
+		public override ReadOnlySpan<byte> ToBytes(Span<byte> span)
+		{
+			bp.WriteInt32LittleEndian(span.Slice(0x0), FloatToQ(X));
+			bp.WriteUInt32LittleEndian(span.Slice(0x4), Geometry);
+			bp.WriteInt32LittleEndian(span.Slice(0x8), FloatToQ(Z));
 
-			BinaryPrimitives.WriteUInt32LittleEndian(
-				bytes.Slice(0x4), Geometry);
-
-			BinaryPrimitives.WriteInt32LittleEndian(
-				bytes.Slice(0x8), FloatToQ(Z));
-
-			return bytes;
+			return span;
 		}
 
 		public override string ToString()

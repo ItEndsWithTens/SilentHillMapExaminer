@@ -147,7 +147,7 @@
 		public long Pointer5 { get; set; }
 		public long PointerToArrayOfPointsOfInterest { get; set; }
 		public long PointerToArrayOfPointersToFunctions { get; set; }
-		public long PointerToArrayOfTriggersMaybe { get; set; }
+		public long PointerToArrayOfTriggers { get; set; }
 		public long Pointer9 { get; set; }
 		public long Pointer10 { get; set; }
 		public long PointerToArrayOfPointersToStrings { get; set; }
