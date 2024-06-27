@@ -76,15 +76,15 @@ namespace BizHawk.Client.EmuHawk
 					{
 						bool hit = false;
 
-						foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Guts.Pois)
+						foreach ((PointOfInterest, Renderable?) tuple in Guts.Pois)
 						{
-							if (ReferenceEquals(pair.Value, r))
+							if (ReferenceEquals(tuple.Item2, r))
 							{
-								if (!clicked.ContainsKey(pair.Key))
+								if (!clicked.ContainsKey(tuple.Item1))
 								{
 									ListBox lbx = LbxPois;
-									int idx = LbxPois.Items.IndexOf(pair.Key);
-									clicked.Add(pair.Key, new List<(ListControl, int)>() { (lbx, idx) });
+									int idx = LbxPois.Items.IndexOf(tuple.Item1);
+									clicked.Add(tuple.Item1, new List<(ListControl, int)>() { (lbx, idx) });
 								}
 
 								hit = true;

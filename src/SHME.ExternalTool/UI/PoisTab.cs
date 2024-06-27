@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
+using static SHME.ExternalTool.CollectionExtensions;
 
 namespace BizHawk.Client.EmuHawk
 {
@@ -194,7 +195,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private string DecodePoiGeometry(Trigger t)
 		{
-			PointOfInterest p = Guts.Pois.ElementAt(t.PoiIndex).Key;
+			PointOfInterest p = Guts.Pois[t.PoiIndex].Item1;
 
 			(float geoA, float geoB) = p.DecodeGeometry(t.Style);
 
@@ -214,10 +215,8 @@ namespace BizHawk.Client.EmuHawk
 
 		private (PointOfInterest, Renderable?) GetRenderableFromTrigger(Trigger t)
 		{
-			KeyValuePair<PointOfInterest, Renderable?> pair =
-				Guts.Pois.ElementAt(t.PoiIndex);
+			(PointOfInterest p, Renderable? oldR) = Guts.Pois[t.PoiIndex];
 
-			PointOfInterest p = pair.Key;
 			Vector3 pos = new(p.X, 0.0f, -p.Z);
 
 			float geoA = 0.0f;
@@ -264,7 +263,7 @@ namespace BizHawk.Client.EmuHawk
 				r.Position = pos;
 			}
 
-			r.Tint = pair.Value.Tint;
+			r.Tint = oldR.Tint;
 
 			return (p, r);
 		}
@@ -307,7 +306,7 @@ namespace BizHawk.Client.EmuHawk
 				pos.Z = -poi.Z;
 				box.Position = pos;
 
-				Guts.Pois.Add(poi, box);
+				Guts.Pois.Add((poi, box));
 				LbxPois.Items.Add(poi);
 			}
 
@@ -392,11 +391,11 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			foreach (KeyValuePair<PointOfInterest, Renderable?> item in Guts.Pois)
+			foreach ((PointOfInterest, Renderable?) tuple in Guts.Pois)
 			{
-				if (item.Value != null)
+				if (tuple.Item2 != null)
 				{
-					item.Value.Tint = null;
+					tuple.Item2.Tint = null;
 				}
 			}
 
@@ -406,7 +405,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			Renderable? r = Guts.Pois[poi];
+			Renderable? r = Guts.Pois[Guts.Pois.IndexOf(poi)].Item2;
 
 			if (r != null)
 			{
@@ -474,10 +473,9 @@ namespace BizHawk.Client.EmuHawk
 
 			foreach (Trigger t in Guts.Triggers)
 			{
-				(PointOfInterest p, Renderable? r) = GetRenderableFromTrigger(t);
+				(PointOfInterest, Renderable?) changed = GetRenderableFromTrigger(t);
 
-				Guts.Pois.Remove(p);
-				Guts.Pois.Add(p, r);
+				Guts.Pois[Guts.Pois.IndexOf(changed.Item1)] = changed;
 			}
 
 			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
@@ -649,14 +647,12 @@ namespace BizHawk.Client.EmuHawk
 			var south = new Vector3(0.0f, 0.0f, 1.0f);
 			var north = new Vector3(0.0f, 0.0f, -1.0f);
 
-			foreach (KeyValuePair<PointOfInterest, Renderable?> pair in Guts.Pois)
+			foreach ((PointOfInterest poi, Renderable? r) in Guts.Pois)
 			{
-				if (pair.Value == null)
+				if (r == null)
 				{
 					continue;
 				}
-
-				Renderable r = pair.Value;
 
 				foreach (Polygon p in r.Polygons)
 				{

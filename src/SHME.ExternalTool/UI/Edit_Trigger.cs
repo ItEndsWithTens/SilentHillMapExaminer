@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using static SHME.ExternalTool.CollectionExtensions;
 
 namespace BizHawk.Client.EmuHawk;
 
@@ -24,9 +25,9 @@ partial class CustomMainForm
 		LbxTriggers.EndUpdate();
 		LbxPois.EndUpdate();
 
-		(PointOfInterest p, Renderable? r) = GetRenderableFromTrigger(t);
-		Guts.Pois.Remove(p);
-		Guts.Pois.Add(p, r);
+		(PointOfInterest, Renderable?) changed = GetRenderableFromTrigger(t);
+
+		Guts.Pois[Guts.Pois.IndexOf(changed.Item1)] = changed;
 
 		RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 	}

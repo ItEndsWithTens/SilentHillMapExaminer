@@ -431,7 +431,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Guts.Camera.GetVisibleRenderables(
 					ref Guts.VisibleRenderables,
-					[.. Guts.Pois.Select((pair) => pair.Value),
+					[.. Guts.Pois.Select((tuple) => tuple.Item2),
 						.. Guts.Gems,
 						.. Guts.CameraBoxes,
 						.. Guts.CameraGems,

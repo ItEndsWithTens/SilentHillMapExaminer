@@ -22,7 +22,7 @@ partial class Guts
 
 	public Renderable GameCameraLookAt { get; set; } = new();
 
-	public Dictionary<PointOfInterest, Renderable?> Pois { get; } = [];
+	public IList<(PointOfInterest, Renderable?)> Pois { get; } = [];
 
 	public Renderable TestBox { get; set; } = new BoxGenerator(1.0f, Color.White).GenerateRainbowBox().ToWorld();
 	public IList<Renderable> TestLines { get; } =

@@ -130,7 +130,9 @@ partial class CustomMainForm
 		int ofs = (int)(p.Address - ram.StageHeader);
 		PointOfInterest reset = new(p.Address, stage.Slice(ofs, p.SizeInBytes));
 
-		Renderable? r = Guts.Pois[p];
+		int index = Guts.Pois.IndexOf(p);
+
+		Renderable? r = Guts.Pois[index].Item2;
 		if (r is not null)
 		{
 			Vector3 pos = r.Position;
@@ -138,8 +140,8 @@ partial class CustomMainForm
 			pos.Z = reset.Z;
 			r.Position = pos;
 		}
-		Guts.Pois.Remove(p);
-		Guts.Pois.Add(reset, r);
+
+		Guts.Pois[index] = (reset, r);
 
 		LbxPois.Items[LbxPois.SelectedIndex] = reset;
 
