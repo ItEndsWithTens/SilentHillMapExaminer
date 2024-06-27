@@ -44,7 +44,6 @@ namespace SHME.ExternalTool
 		{
 			Pois.Clear();
 			Triggers.Clear();
-			Boxes.Clear();
 			Gems.Clear();
 			Lines.Clear();
 			TestBoxes.Clear();

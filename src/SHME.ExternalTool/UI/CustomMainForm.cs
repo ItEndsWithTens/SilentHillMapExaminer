@@ -431,7 +431,12 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Guts.Camera.GetVisibleRenderables(
 					ref Guts.VisibleRenderables,
-					[.. Guts.Boxes, .. Guts.Gems, .. Guts.CameraBoxes, .. Guts.CameraGems, .. Guts.Lines, .. Guts.CameraLines]);
+					[.. Guts.Pois.Select((pair) => pair.Value),
+						.. Guts.Gems,
+						.. Guts.CameraBoxes,
+						.. Guts.CameraGems,
+						.. Guts.Lines,
+						.. Guts.CameraLines]);
 			}
 			if (CbxEnableTestModelSection.Checked)
 			{

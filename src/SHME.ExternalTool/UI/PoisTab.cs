@@ -47,7 +47,6 @@ namespace BizHawk.Client.EmuHawk
 			LbxTriggers.Items.Clear();
 			Guts.Pois.Clear();
 			Guts.Triggers.Clear();
-			Guts.Boxes.Clear();
 			LblPoiCount.Text = "-";
 			LblTriggerCount.Text = "-";
 		}
@@ -213,9 +212,65 @@ namespace BizHawk.Client.EmuHawk
 			};
 		}
 
+		private (PointOfInterest, Renderable?) GetRenderableFromTrigger(Trigger t)
+		{
+			KeyValuePair<PointOfInterest, Renderable?> pair =
+				Guts.Pois.ElementAt(t.PoiIndex);
+
+			PointOfInterest p = pair.Key;
+			Vector3 pos = new(p.X, 0.0f, -p.Z);
+
+			float geoA = 0.0f;
+			float geoB = 0.0f;
+			if (CmbPoiRenderShape.SelectedIndex == 0)
+			{
+				(geoA, geoB) = p.DecodeGeometry(t.Style);
+			}
+
+			BoxGenerator gen;
+			Renderable r;
+			if (t.Style == TriggerStyle.TouchAabb)
+			{
+				gen = new BoxGenerator(geoA, 1.0f, geoB, Color.Orange);
+				r = gen.Generate().ToWorld();
+				r.Position = pos;
+			}
+			else if (t.Style == TriggerStyle.TouchObb)
+			{
+				float depth = 4.0f;
+
+				gen = new BoxGenerator(geoB, 1.0f, depth, Color.Orange);
+				r = gen.Generate().ToWorld();
+				r.Transformability |= Transformability.Rotate;
+
+				Vector3 rotation = new(0.0f, -geoA, 0.0f);
+				r.Transform(
+					Vector3.Zero,
+					rotation,
+					Vector3.One,
+					r.Position);
+
+				// OBB triggers' volumes aren't centered on their
+				// positions, instead extending away 4 units in the
+				// direction of their yaw.
+				Vector3 point = new Vector3(0.0f, 0.0f, 1.0f) * (depth / 2.0f);
+				point = point.Rotate(rotation, Vector3.Zero);
+				r.Position = pos - point;
+			}
+			else
+			{
+				gen = new BoxGenerator(1.0f, Color.White);
+				r = gen.Generate().ToWorld();
+				r.Position = pos;
+			}
+
+			r.Tint = pair.Value.Tint;
+
+			return (p, r);
+		}
+
 		private void BtnReadPois_Click(object sender, EventArgs e)
 		{
-			Guts.Boxes.Clear();
 			Guts.Pois.Clear();
 
 			MainRamAddresses ram = Rom.Addresses.MainRam;
@@ -251,8 +306,6 @@ namespace BizHawk.Client.EmuHawk
 				pos.X = poi.X;
 				pos.Z = -poi.Z;
 				box.Position = pos;
-
-				Guts.Boxes.Add(box);
 
 				Guts.Pois.Add(poi, box);
 				LbxPois.Items.Add(poi);
@@ -421,61 +474,7 @@ namespace BizHawk.Client.EmuHawk
 
 			foreach (Trigger t in Guts.Triggers)
 			{
-				if (t.Style == TriggerStyle.ButtonOmni || t.Style == TriggerStyle.ButtonYaw)
-				{
-					continue;
-				}
-
-				KeyValuePair<PointOfInterest, Renderable?> pair = Guts.Pois.ElementAt(t.PoiIndex);
-				PointOfInterest p = pair.Key;
-
-				float geoA = 0.0f;
-				float geoB = 0.0f;
-				if (CmbPoiRenderShape.SelectedIndex == 0)
-				{
-					(geoA, geoB) = p.DecodeGeometry(t.Style);
-				}
-
-				BoxGenerator gen;
-				Renderable r;
-				if (t.Style == TriggerStyle.TouchAabb)
-				{
-					gen = new BoxGenerator(geoA, 1.0f, geoB, Color.Orange);
-					r = gen.Generate().ToWorld();
-					r.Position = pair.Value.Position;
-				}
-				else if (t.Style == TriggerStyle.TouchObb)
-				{
-					float depth = 4.0f;
-
-					gen = new BoxGenerator(geoB, 1.0f, depth, Color.Orange);
-					r = gen.Generate().ToWorld();
-					r.Transformability |= Transformability.Rotate;
-
-					Vector3 rotation = new(0.0f, -geoA, 0.0f);
-					r.Transform(
-						Vector3.Zero,
-						rotation,
-						Vector3.One,
-						r.Position);
-
-					// OBB triggers' volumes aren't centered on their
-					// positions, instead extending away 4 units in the
-					// direction of their yaw.
-					Vector3 point = new Vector3(0.0f, 0.0f, 1.0f) * (depth / 2.0f);
-					point = point.Rotate(rotation, Vector3.Zero);
-					r.Position = pair.Value.Position - point;
-				}
-				else
-				{
-					gen = new BoxGenerator(1.0f, Color.White);
-					r = gen.Generate().ToWorld();
-					r.Position = pair.Value.Position;
-				}
-
-				int index = Guts.Boxes.IndexOf(pair.Value);
-				Guts.Boxes.RemoveAt(index);
-				Guts.Boxes.Insert(index, r);
+				(PointOfInterest p, Renderable? r) = GetRenderableFromTrigger(t);
 
 				Guts.Pois.Remove(p);
 				Guts.Pois.Add(p, r);

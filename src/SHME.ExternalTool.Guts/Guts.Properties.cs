@@ -13,7 +13,6 @@ partial class Guts
 		Fov = 53.13f
 	};
 
-	public IList<Renderable> Boxes { get; } = [];
 	public IList<Renderable> TestBoxes { get; } = [];
 	public IList<Renderable> Gems { get; } = [];
 	public IList<Renderable> Lines { get; } = [];

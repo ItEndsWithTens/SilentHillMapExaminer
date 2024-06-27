@@ -1,4 +1,5 @@
 ﻿using SHME.ExternalTool;
+using SHME.ExternalTool.Graphics;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -22,6 +23,12 @@ partial class CustomMainForm
 
 		LbxTriggers.EndUpdate();
 		LbxPois.EndUpdate();
+
+		(PointOfInterest p, Renderable? r) = GetRenderableFromTrigger(t);
+		Guts.Pois.Remove(p);
+		Guts.Pois.Add(p, r);
+
+		RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 	}
 
 	private void SelectedTrigger_ValidateInput(Control? ctrl)
@@ -140,7 +147,7 @@ partial class CustomMainForm
 				t.SomeBool = check;
 				break;
 			default:
-				break;
+				return;
 		}
 
 		CommitTriggerChanges(t);
