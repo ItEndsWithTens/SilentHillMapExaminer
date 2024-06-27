@@ -320,7 +320,7 @@ namespace BizHawk.Client.EmuHawk
 			BtnReadTriggers.Enabled = !CbxReadLevelDataOnStageLoad.Checked;
 			BtnCameraPathReadArray.Enabled = !CbxReadLevelDataOnStageLoad.Checked;
 
-			_stageLoaded = true;
+			_stageLoaded = CbxReadLevelDataOnStageLoad.Checked;
 		}
 
 		private void CmbRenderMode_SelectedIndexChanged(object sender, EventArgs e)

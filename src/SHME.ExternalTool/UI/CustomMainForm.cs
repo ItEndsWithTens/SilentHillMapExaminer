@@ -118,7 +118,7 @@ namespace BizHawk.Client.EmuHawk
 			set => _settings = value;
 		}
 
-		private bool _stageLoaded;
+		private bool _stageLoaded = true;
 
 		public CustomMainForm()
 		{
