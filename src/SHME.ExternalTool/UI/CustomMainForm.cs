@@ -286,6 +286,7 @@ namespace BizHawk.Client.EmuHawk
 			uint stage = Mem.ReadByte(ram.IndexOfStageBeingLoaded);
 			if (stage != 0xFF)
 			{
+				ClearLoadedGameObjects();
 				_stageLoaded = true;
 				return;
 			}
