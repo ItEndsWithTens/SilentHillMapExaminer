@@ -2726,11 +2726,6 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.NudSelectedTriggerTargetIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.NudSelectedTriggerTargetIndex.Location = new System.Drawing.Point(259, 219);
-            this.NudSelectedTriggerTargetIndex.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
             this.NudSelectedTriggerTargetIndex.Name = "NudSelectedTriggerTargetIndex";
             this.NudSelectedTriggerTargetIndex.Size = new System.Drawing.Size(82, 20);
             this.NudSelectedTriggerTargetIndex.TabIndex = 140;
@@ -2947,11 +2942,6 @@ namespace BizHawk.Client.EmuHawk
             0,
             0,
             0});
-            this.NudSelectedTriggerSomeIndex.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
             this.NudSelectedTriggerSomeIndex.Name = "NudSelectedTriggerSomeIndex";
             this.NudSelectedTriggerSomeIndex.Size = new System.Drawing.Size(82, 20);
             this.NudSelectedTriggerSomeIndex.TabIndex = 70;
@@ -2970,11 +2960,6 @@ namespace BizHawk.Client.EmuHawk
             0,
             0,
             0});
-            this.NudSelectedTriggerPoiIndex.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
             this.NudSelectedTriggerPoiIndex.Name = "NudSelectedTriggerPoiIndex";
             this.NudSelectedTriggerPoiIndex.Size = new System.Drawing.Size(82, 20);
             this.NudSelectedTriggerPoiIndex.TabIndex = 100;

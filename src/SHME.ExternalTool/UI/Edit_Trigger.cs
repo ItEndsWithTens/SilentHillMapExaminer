@@ -19,15 +19,14 @@ partial class CustomMainForm
 		LbxPois.BeginUpdate();
 		LbxTriggers.BeginUpdate();
 
-		int index = LbxTriggers.Items.IndexOf(t);
-		LbxTriggers.Items[index] = t;
-
-		LbxTriggers.EndUpdate();
-		LbxPois.EndUpdate();
+		Guts.Triggers[Guts.Triggers.IndexOf(t)] = t;
 
 		(PointOfInterest, Renderable?) changed = GetRenderableFromTrigger(t);
 
 		Guts.Pois[Guts.Pois.IndexOf(changed.Item1)] = changed;
+
+		LbxPois.EndUpdate();
+		LbxTriggers.EndUpdate();
 
 		RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 	}

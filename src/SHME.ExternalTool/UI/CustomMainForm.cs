@@ -691,10 +691,10 @@ namespace BizHawk.Client.EmuHawk
 			LbxCameraPaths.Items.Clear();
 			LblCameraPathCount.Text = "-";
 
-			LbxPois.Items.Clear();
+			LbxPois.DataSource = null;
 			LblPoiCount.Text = "-";
 
-			LbxTriggers.Items.Clear();
+			LbxTriggers.DataSource = null;
 			LblTriggerCount.Text = "-";
 
 			LbxPoiAssociatedTriggers.Items.Clear();

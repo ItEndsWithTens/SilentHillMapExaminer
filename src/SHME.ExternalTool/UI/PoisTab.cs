@@ -44,11 +44,15 @@ namespace BizHawk.Client.EmuHawk
 		{
 			ClearDisplayedPoiInfo();
 			ClearDisplayedTriggerInfo();
-			LbxPois.Items.Clear();
-			LbxTriggers.Items.Clear();
+
+			LbxPois.SelectedIndex = -1;
+			LbxPois.DataSource = null;
 			Guts.Pois.Clear();
-			Guts.Triggers.Clear();
 			LblPoiCount.Text = "-";
+
+			LbxTriggers.SelectedIndex = -1;
+			LbxTriggers.DataSource = null;
+			Guts.Triggers.Clear();
 			LblTriggerCount.Text = "-";
 		}
 
@@ -72,7 +76,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			string body = Mem.HashRegion(t.Address, 12);
+			string body = Mem.HashRegion(t.Address, t.SizeInBytes);
 
 			long ofs = Rom.Addresses.MainRam.SaveData;
 			int group = Mem.ReadS32(ofs + (t.SomeIndex * 4) + 0x168);
@@ -99,11 +103,11 @@ namespace BizHawk.Client.EmuHawk
 					return;
 				}
 
-				ReadOnlySpan<byte> bytes = Mem.ReadByteRange(t.Address, 12).ToArray();
+				ReadOnlySpan<byte> bytes = Mem.ReadByteRange(t.Address, t.SizeInBytes).ToArray();
 
 				var updated = new Trigger(t.Address, bytes);
 
-				LbxTriggers.Items[LbxTriggers.SelectedIndex] = updated;
+				Guts.Triggers[LbxTriggers.SelectedIndex] = updated;
 
 				LbxTriggers_SelectedIndexChanged(LbxTriggers, EventArgs.Empty);
 
@@ -134,27 +138,17 @@ namespace BizHawk.Client.EmuHawk
 			CbxSelectedTriggerFired.Checked = false;
 			LblSelectedTriggerFiredDetails.Text = $"Group 0x, bit 0x";
 
-			NudSelectedTriggerSomeIndex.Value = -1;
-			NudSelectedTriggerSomeIndex.ResetText();
-
+			NudSelectedTriggerSomeIndex.Value = 0;
 			MtbSelectedTriggerThing2.ResetText();
 			CmbSelectedTriggerStyle.ResetText();
-
-			NudSelectedTriggerPoiIndex.Value = -1;
-			NudSelectedTriggerPoiIndex.ResetText();
-
+			NudSelectedTriggerPoiIndex.Value = 0;
 			MtbSelectedTriggerThing3.ResetText();
 			MtbSelectedTriggerThing4.ResetText();
-			CmbSelectedTriggerType.SelectedIndex = -1;
-
-			NudSelectedTriggerTargetIndex.Value = -1;
-			NudSelectedTriggerTargetIndex.ResetText();
-
+			CmbSelectedTriggerType.ResetText();
+			NudSelectedTriggerTargetIndex.Value = 0;
 			MtbSelectedTriggerThing5.ResetText();
 			MtbSelectedTriggerThing6.ResetText();
-
-			CmbSelectedTriggerStyle.SelectedIndex = -1;
-
+			NudSelectedTriggerStageIndex.Value = 0;
 			CbxSelectedTriggerSomeBool.Checked = false;
 		}
 
@@ -291,10 +285,6 @@ namespace BizHawk.Client.EmuHawk
 			LblPoiCount.Text = count.ToString(CultureInfo.CurrentCulture);
 			NudSelectedTriggerTargetIndex.Maximum = count - 1;
 
-			LbxPois.BeginUpdate();
-			LbxPois.SelectedIndex = -1;
-			LbxPois.Items.Clear();
-
 			var generator = new BoxGenerator(1.0f, Color.White);
 			for (int i = start; i < end; i += size)
 			{
@@ -307,9 +297,12 @@ namespace BizHawk.Client.EmuHawk
 				box.Position = pos;
 
 				Guts.Pois.Add((poi, box));
-				LbxPois.Items.Add(poi);
 			}
 
+			LbxPois.BeginUpdate();
+			LbxPois.DataSource = Guts.Pois
+				.Select((tuple) => tuple.Item1)
+				.ToList();
 			LbxPois.EndUpdate();
 
 			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
@@ -448,10 +441,6 @@ namespace BizHawk.Client.EmuHawk
 
 			Guts.Triggers.Clear();
 
-			LbxTriggers.BeginUpdate();
-			LbxTriggers.SelectedIndex = -1;
-			LbxTriggers.Items.Clear();
-
 			int max = address + Guts.Stage.SizeInBytes;
 			int size = SilentHillTypeSizes.Trigger;
 			for (int i = address; i < max; i += size)
@@ -464,9 +453,10 @@ namespace BizHawk.Client.EmuHawk
 				}
 
 				Guts.Triggers.Add(t);
-				LbxTriggers.Items.Add(t);
 			}
 
+			LbxTriggers.BeginUpdate();
+			LbxTriggers.DataSource = Guts.Triggers;
 			LbxTriggers.EndUpdate();
 
 			LblTriggerCount.Text = Guts.Triggers.Count.ToString(CultureInfo.CurrentCulture);
@@ -548,6 +538,7 @@ namespace BizHawk.Client.EmuHawk
 			MtbSelectedTriggerThing4.Text = $"0x{t.Thing4.ToString("X2", c)}";
 			MtbSelectedTriggerThing5.Text = $"0x{t.Thing5.ToString("X2", c)}";
 			MtbSelectedTriggerThing6.Text = $"0x{t.Thing6.ToString("X2", c)}";
+			NudSelectedTriggerStageIndex.Value = t.StageIndex;
 			CbxSelectedTriggerSomeBool.Checked = t.SomeBool;
 
 			string? style = Enum.GetName(typeof(TriggerStyle), t.Style);
@@ -580,7 +571,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 			else
 			{
-				CmbSelectedTriggerStyle.SelectedItem = -1;
+				CmbSelectedTriggerStyle.ResetText();
 			}
 
 			if (Enum.IsDefined(typeof(TriggerType), t.TriggerType))
@@ -589,7 +580,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 			else
 			{
-				CmbSelectedTriggerType.SelectedIndex = -1;
+				CmbSelectedTriggerType.ResetText();
 			}
 
 			switch (t.TriggerType)
@@ -624,7 +615,7 @@ namespace BizHawk.Client.EmuHawk
 				case TriggerType.Unknown0:
 				default:
 					NudSelectedTriggerTargetIndex.Maximum = Int32.MaxValue;
-					NudSelectedTriggerTargetIndex.Value = -1;
+					NudSelectedTriggerTargetIndex.ResetText();
 					break;
 			}
 

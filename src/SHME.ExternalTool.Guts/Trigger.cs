@@ -6,6 +6,10 @@ namespace SHME.ExternalTool
 	public enum TriggerType
 	{
 		Unknown0 = 0x00,
+		Unknown1 = 0x01,
+		Unknown2 = 0x02,
+		Unknown3 = 0x03,
+		Unknown4 = 0x04,
 		Door1 = 0x05,
 		Door2 = 0x06,
 		Text = 0x07,
@@ -17,7 +21,11 @@ namespace SHME.ExternalTool
 		/// A trigger that updates the area map with red marker
 		/// scribbles.
 		/// </summary>
-		MapScribble = 0x0B
+		MapScribble = 0x0B,
+		Unknown5 = 0x0C,
+		Unknown6 = 0x0D,
+		Unknown7 = 0x0E,
+		Unknown8 = 0x0F
 	}
 
 	public enum TriggerStyle

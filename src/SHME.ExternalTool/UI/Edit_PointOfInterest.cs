@@ -34,8 +34,8 @@ partial class CustomMainForm
 		LbxPois.SelectedIndex = idxBeforeP;
 		LbxTriggers.SelectedIndex = idxBeforeT;
 
-		LbxTriggers.EndUpdate();
 		LbxPois.EndUpdate();
+		LbxTriggers.EndUpdate();
 	}
 
 	private void SelectedPoi_ValidateInput(Control? c)
