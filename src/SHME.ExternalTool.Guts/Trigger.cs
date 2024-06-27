@@ -63,7 +63,7 @@ namespace SHME.ExternalTool
 	{
 		public override int SizeInBytes => SilentHillTypeSizes.Trigger;
 
-		public byte Thing0 { get; }
+		public byte Thing0 { get; set; }
 		/// <summary>
 		/// Whether this trigger is usable or not.
 		/// </summary>
@@ -72,10 +72,10 @@ namespace SHME.ExternalTool
 		/// would be less reflective of the Silent Hill engine, which
 		/// sets a bit for the disabled state and clears it for enabled.
 		/// </remarks>
-		public bool Disabled { get; }
-		public byte Thing1 { get; }
+		public bool Disabled { get; set; }
+		public byte Thing1 { get; set; }
 		public byte FiredBitShift { get; }
-		public short SomeIndex { get; }
+		public short SomeIndex { get; set; }
 
 		/// <summary>
 		/// How this trigger is activated.
@@ -83,24 +83,24 @@ namespace SHME.ExternalTool
 		/// <remarks>
 		/// The low nibble of its respective byte.
 		/// </remarks>
-		public TriggerStyle Style { get; }
+		public TriggerStyle Style { get; set; }
 		/// <summary>
 		/// ?
 		/// </summary>
 		/// <remarks>
 		/// The high nibble of the byte that produces Style.
 		/// </remarks>
-		public byte Thing2 { get; }
+		public byte Thing2 { get; set; }
 
-		public byte PoiIndex { get; }
-		public byte Thing3 { get; } // Could be string index when door is locked?
-		public byte Thing4 { get; }
+		public byte PoiIndex { get; set; }
+		public byte Thing3 { get; set; } // Could be string index when door is locked?
+		public byte Thing4 { get; set; }
 
-		public TriggerType TriggerType { get; }
-		public int TargetIndex { get; }
+		public TriggerType TriggerType { get; set; }
+		public int TargetIndex { get; set; }
 
-		public byte Thing5 { get; }
-		public byte Thing6 { get; }
+		public byte Thing5 { get; set; }
+		public byte Thing6 { get; set; }
 
 		/// <summary>
 		/// What stage to load for Door1 types, i.e. level change
@@ -108,9 +108,9 @@ namespace SHME.ExternalTool
 		/// record index corresponding to MAP0_S00.BIN. Not sure if this
 		/// is used for anything else yet.
 		/// </summary>
-		public byte StageIndex { get; }
+		public byte StageIndex { get; set; }
 
-		public bool SomeBool { get; }
+		public bool SomeBool { get; set; }
 
 		public Trigger(long address, ReadOnlySpan<byte> span)
 		{

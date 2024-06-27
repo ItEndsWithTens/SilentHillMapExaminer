@@ -17,6 +17,26 @@ namespace BizHawk.Client.EmuHawk
 		{
 			CmbSelectedTriggerStyle.DataSource = Enum.GetValues(typeof(TriggerStyle));
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
+
+			TbxSelectedPoiX.Tag = nameof(PointOfInterest.X);
+			TbxSelectedPoiZ.Tag = nameof(PointOfInterest.Z);
+			MtbSelectedPoiGeometry.Tag = nameof(PointOfInterest.Geometry);
+
+			CbxSelectedTriggerDisabled.Tag = nameof(Trigger.Disabled);
+			MtbSelectedTriggerPoiGeometry.Tag = nameof(PointOfInterest.Geometry);
+			MtbSelectedTriggerThing0.Tag = nameof(Trigger.Thing0);
+			MtbSelectedTriggerThing1.Tag = nameof(Trigger.Thing1);
+			MtbSelectedTriggerThing2.Tag = nameof(Trigger.Thing2);
+			CmbSelectedTriggerStyle.Tag = nameof(Trigger.Style);
+			NudSelectedTriggerPoiIndex.Tag = nameof(Trigger.PoiIndex);
+			MtbSelectedTriggerThing3.Tag = nameof(Trigger.Thing3);
+			MtbSelectedTriggerThing4.Tag = nameof(Trigger.Thing4);
+			CmbSelectedTriggerType.Tag = nameof(Trigger.TriggerType);
+			NudSelectedTriggerTargetIndex.Tag = nameof(Trigger.TargetIndex);
+			MtbSelectedTriggerThing5.Tag = nameof(Trigger.Thing5);
+			MtbSelectedTriggerThing6.Tag = nameof(Trigger.Thing6);
+			NudSelectedTriggerStageIndex.Tag = nameof(Trigger.StageIndex);
+			CbxSelectedTriggerSomeBool.Tag = nameof(Trigger.SomeBool);
 		}
 
 		private void BtnClearPoisTriggers_Click(object sender, EventArgs e)
@@ -70,14 +90,20 @@ namespace BizHawk.Client.EmuHawk
 
 			if (body != _previousTriggerBodyHash || fired != _previousTriggerFired)
 			{
+				_previousTriggerBodyHash = body;
+				_previousTriggerFired = fired;
+
+				if (_userChange)
+				{
+					_userChange = false;
+					return;
+				}
+
 				ReadOnlySpan<byte> bytes = Mem.ReadByteRange(t.Address, 12).ToArray();
 
 				var updated = new Trigger(t.Address, bytes);
 
 				LbxTriggers.Items[LbxTriggers.SelectedIndex] = updated;
-
-				_previousTriggerBodyHash = body;
-				_previousTriggerFired = fired;
 
 				LbxTriggers_SelectedIndexChanged(LbxTriggers, EventArgs.Empty);
 
@@ -208,7 +234,7 @@ namespace BizHawk.Client.EmuHawk
 			int size = SilentHillTypeSizes.PointOfInterest;
 			int count = (end - start) / size;
 
-			LblPoiCount.Text = count.ToString();
+			LblPoiCount.Text = count.ToString(CultureInfo.CurrentCulture);
 			NudSelectedTriggerTargetIndex.Maximum = count - 1;
 
 			LbxPois.BeginUpdate();

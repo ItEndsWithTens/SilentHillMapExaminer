@@ -11,17 +11,31 @@ namespace BizHawk.Client.EmuHawk;
 
 partial class CustomMainForm
 {
+	/// <summary>
+	/// Whether a change to the game's memory was initiated by the user
+	/// or is the result of the game itself updating something. Used for
+	/// avoiding infinite loops when syncing form controls to the game.
+	/// </summary>
+	private bool _userChange;
+
 	private void CommitPoiChanges(PointOfInterest p)
 	{
+		_userChange = true;
 		Mem.WriteByteRange(p.Address, p.ToBytes().ToArray());
 
-		int idxPois = LbxPois.SelectedIndex;
-		int idxTriggers = LbxTriggers.SelectedIndex;
+		int idxBeforeP = LbxPois.SelectedIndex;
+		int idxBeforeT = LbxTriggers.SelectedIndex;
+
+		LbxPois.BeginUpdate();
+		LbxTriggers.BeginUpdate();
 
 		BtnReadTriggers_Click(this, EventArgs.Empty);
 
-		LbxPois.SelectedIndex = idxPois;
-		LbxTriggers.SelectedIndex = idxTriggers;
+		LbxPois.SelectedIndex = idxBeforeP;
+		LbxTriggers.SelectedIndex = idxBeforeT;
+
+		LbxTriggers.EndUpdate();
+		LbxPois.EndUpdate();
 	}
 
 	private void SelectedPoi_ValidateInput(Control? c)
@@ -31,28 +45,36 @@ partial class CustomMainForm
 			return;
 		}
 
+		const float Tolerance = 0.0001f;
+
 		switch (c?.Tag)
 		{
-			case "X":
+			case nameof(PointOfInterest.X):
 				if (Single.TryParse(c.Text, out float x))
 				{
+					if (p.X.ApproximatelyEquivalent(x, Tolerance))
+						return;
 					p.X = x;
 				}
 				break;
-			case "Z":
+			case nameof(PointOfInterest.Z):
 				if (Single.TryParse(c.Text, out float z))
 				{
+					if (p.Z.ApproximatelyEquivalent(z, Tolerance))
+						return;
 					p.Z = z;
 				}
 				break;
-			case "Geometry":
+			case nameof(PointOfInterest.Geometry):
 				if (UInt32.TryParse(c.Text, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out uint geo))
 				{
+					if (p.Geometry == geo)
+						return;
 					p.Geometry = geo;
 				}
 				break;
 			default:
-				break;
+				return;
 		}
 
 		CommitPoiChanges(p);
@@ -73,14 +95,12 @@ partial class CustomMainForm
 			return;
 		}
 
-		ReadOnlySpan<byte> stageBytes = Guts.Stage.ToBytes();
+		ReadOnlySpan<byte> stage = Guts.Stage.ToBytes();
 
 		MainRamAddresses ram = Rom.Addresses.MainRam;
 		int ofs = (int)(p.Address - ram.StageHeader);
-		PointOfInterest reset = new(p.Address, stageBytes.Slice(ofs, p.SizeInBytes));
+		PointOfInterest reset = new(p.Address, stage.Slice(ofs, p.SizeInBytes));
 
-		// Now figure out which property needs resetting, and just
-		// copy the value from the one in 'reset'.
 		switch (CmsSelectedPoi.SourceControl.Tag)
 		{
 			case "XZ":
@@ -104,11 +124,11 @@ partial class CustomMainForm
 			return;
 		}
 
-		ReadOnlySpan<byte> stageBytes = Guts.Stage.ToBytes();
+		ReadOnlySpan<byte> stage = Guts.Stage.ToBytes();
 
 		MainRamAddresses ram = Rom.Addresses.MainRam;
 		int ofs = (int)(p.Address - ram.StageHeader);
-		PointOfInterest reset = new(p.Address, stageBytes.Slice(ofs, p.SizeInBytes));
+		PointOfInterest reset = new(p.Address, stage.Slice(ofs, p.SizeInBytes));
 
 		Renderable? r = Guts.Pois[p];
 		if (r is not null)
@@ -126,7 +146,7 @@ partial class CustomMainForm
 		CommitPoiChanges(reset);
 	}
 
-	private void TbxSelectedPoiX_KeyDown(object sender, KeyEventArgs e)
+	private void SelectedPoi_KeyDown(object sender, KeyEventArgs e)
 	{
 		if (e.KeyCode == Keys.Enter)
 		{
@@ -136,7 +156,7 @@ partial class CustomMainForm
 		}
 	}
 
-	private void TbxSelectedPoiX_Leave(object sender, EventArgs e)
+	private void SelectedPoi_Leave(object sender, EventArgs e)
 	{
 		SelectedPoi_ValidateInput(sender as Control);
 	}

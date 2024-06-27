@@ -2535,6 +2535,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxSelectedTriggerDisabled.Name = "CbxSelectedTriggerDisabled";
             this.CbxSelectedTriggerDisabled.Size = new System.Drawing.Size(67, 17);
             this.CbxSelectedTriggerDisabled.TabIndex = 15;
+            this.CbxSelectedTriggerDisabled.Tag = "";
             this.CbxSelectedTriggerDisabled.Text = "Disabled";
             this.CbxSelectedTriggerDisabled.UseVisualStyleBackColor = true;
             this.CbxSelectedTriggerDisabled.CheckedChanged += new System.EventHandler(this.CbxSelectedTriggerEnabled_CheckedChanged);
@@ -2569,6 +2570,7 @@ namespace BizHawk.Client.EmuHawk
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(74, 13);
             this.label15.TabIndex = 20;
+            this.label15.Tag = "";
             this.label15.Text = "POI geometry:";
             // 
             // label32
@@ -2580,6 +2582,7 @@ namespace BizHawk.Client.EmuHawk
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(43, 13);
             this.label32.TabIndex = 30;
+            this.label32.Tag = "";
             this.label32.Text = "Thing0:";
             // 
             // label39
@@ -2591,6 +2594,7 @@ namespace BizHawk.Client.EmuHawk
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(43, 13);
             this.label39.TabIndex = 40;
+            this.label39.Tag = "";
             this.label39.Text = "Thing1:";
             // 
             // CbxSelectedTriggerEnableUpdates
@@ -2617,6 +2621,7 @@ namespace BizHawk.Client.EmuHawk
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(43, 13);
             this.label49.TabIndex = 115;
+            this.label49.Tag = "";
             this.label49.Text = "Thing4:";
             // 
             // label47
@@ -2628,6 +2633,7 @@ namespace BizHawk.Client.EmuHawk
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(43, 13);
             this.label47.TabIndex = 105;
+            this.label47.Tag = "";
             this.label47.Text = "Thing3:";
             // 
             // label45
@@ -2639,6 +2645,7 @@ namespace BizHawk.Client.EmuHawk
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(51, 13);
             this.label45.TabIndex = 95;
+            this.label45.Tag = "";
             this.label45.Text = "PoiIndex:";
             // 
             // label43
@@ -2650,6 +2657,7 @@ namespace BizHawk.Client.EmuHawk
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(33, 13);
             this.label43.TabIndex = 85;
+            this.label43.Tag = "";
             this.label43.Text = "Style:";
             // 
             // label60
@@ -2661,6 +2669,7 @@ namespace BizHawk.Client.EmuHawk
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(43, 13);
             this.label60.TabIndex = 75;
+            this.label60.Tag = "";
             this.label60.Text = "Thing2:";
             // 
             // label50
@@ -2672,6 +2681,7 @@ namespace BizHawk.Client.EmuHawk
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(63, 13);
             this.label50.TabIndex = 65;
+            this.label50.Tag = "";
             this.label50.Text = "SomeIndex:";
             // 
             // LblSelectedTriggerFiredDetails
@@ -2695,6 +2705,7 @@ namespace BizHawk.Client.EmuHawk
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(34, 13);
             this.label46.TabIndex = 125;
+            this.label46.Tag = "";
             this.label46.Text = "Type:";
             // 
             // CmbSelectedTriggerType
@@ -2705,6 +2716,11 @@ namespace BizHawk.Client.EmuHawk
             this.CmbSelectedTriggerType.Name = "CmbSelectedTriggerType";
             this.CmbSelectedTriggerType.Size = new System.Drawing.Size(82, 21);
             this.CmbSelectedTriggerType.TabIndex = 130;
+            this.CmbSelectedTriggerType.Tag = "";
+            this.CmbSelectedTriggerType.SelectedValueChanged += new System.EventHandler(this.CmbSelectedTrigger_SelectedValueChanged);
+            this.CmbSelectedTriggerType.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.CmbSelectedTriggerType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.CmbSelectedTriggerType.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
             // 
             // NudSelectedTriggerTargetIndex
             // 
@@ -2718,6 +2734,11 @@ namespace BizHawk.Client.EmuHawk
             this.NudSelectedTriggerTargetIndex.Name = "NudSelectedTriggerTargetIndex";
             this.NudSelectedTriggerTargetIndex.Size = new System.Drawing.Size(82, 20);
             this.NudSelectedTriggerTargetIndex.TabIndex = 140;
+            this.NudSelectedTriggerTargetIndex.Tag = "";
+            this.NudSelectedTriggerTargetIndex.ValueChanged += new System.EventHandler(this.NudSelectedTrigger_ValueChanged);
+            this.NudSelectedTriggerTargetIndex.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudSelectedTriggerTargetIndex.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.NudSelectedTriggerTargetIndex.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
             // 
             // label42
             // 
@@ -2728,6 +2749,7 @@ namespace BizHawk.Client.EmuHawk
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(69, 13);
             this.label42.TabIndex = 135;
+            this.label42.Tag = "";
             this.label42.Text = "Target index:";
             // 
             // label51
@@ -2739,6 +2761,7 @@ namespace BizHawk.Client.EmuHawk
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(43, 13);
             this.label51.TabIndex = 145;
+            this.label51.Tag = "";
             this.label51.Text = "Thing5:";
             // 
             // label94
@@ -2750,6 +2773,7 @@ namespace BizHawk.Client.EmuHawk
             this.label94.Name = "label94";
             this.label94.Size = new System.Drawing.Size(43, 13);
             this.label94.TabIndex = 155;
+            this.label94.Tag = "";
             this.label94.Text = "Thing6:";
             // 
             // label95
@@ -2761,6 +2785,7 @@ namespace BizHawk.Client.EmuHawk
             this.label95.Name = "label95";
             this.label95.Size = new System.Drawing.Size(66, 13);
             this.label95.TabIndex = 165;
+            this.label95.Tag = "";
             this.label95.Text = "Stage index:";
             // 
             // CbxSelectedTriggerSomeBool
@@ -2772,6 +2797,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxSelectedTriggerSomeBool.Name = "CbxSelectedTriggerSomeBool";
             this.CbxSelectedTriggerSomeBool.Size = new System.Drawing.Size(74, 17);
             this.CbxSelectedTriggerSomeBool.TabIndex = 175;
+            this.CbxSelectedTriggerSomeBool.Tag = "";
             this.CbxSelectedTriggerSomeBool.Text = "SomeBool";
             this.CbxSelectedTriggerSomeBool.UseVisualStyleBackColor = true;
             // 
@@ -2782,6 +2808,11 @@ namespace BizHawk.Client.EmuHawk
             this.NudSelectedTriggerStageIndex.Name = "NudSelectedTriggerStageIndex";
             this.NudSelectedTriggerStageIndex.Size = new System.Drawing.Size(82, 20);
             this.NudSelectedTriggerStageIndex.TabIndex = 170;
+            this.NudSelectedTriggerStageIndex.Tag = "";
+            this.NudSelectedTriggerStageIndex.ValueChanged += new System.EventHandler(this.NudSelectedTrigger_ValueChanged);
+            this.NudSelectedTriggerStageIndex.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudSelectedTriggerStageIndex.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.NudSelectedTriggerStageIndex.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
             // 
             // MtbSelectedTriggerPoiGeometry
             // 
@@ -2791,75 +2822,121 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerPoiGeometry.Name = "MtbSelectedTriggerPoiGeometry";
             this.MtbSelectedTriggerPoiGeometry.Size = new System.Drawing.Size(170, 20);
             this.MtbSelectedTriggerPoiGeometry.TabIndex = 25;
+            this.MtbSelectedTriggerPoiGeometry.Tag = "";
+            this.MtbSelectedTriggerPoiGeometry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.MtbSelectedTriggerPoiGeometry.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
             // 
             // MtbSelectedTriggerThing0
             // 
             this.MtbSelectedTriggerThing0.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbSelectedTriggerThing0.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.MtbSelectedTriggerThing0.Location = new System.Drawing.Point(83, 84);
             this.MtbSelectedTriggerThing0.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing0.Name = "MtbSelectedTriggerThing0";
             this.MtbSelectedTriggerThing0.Size = new System.Drawing.Size(82, 20);
             this.MtbSelectedTriggerThing0.TabIndex = 35;
+            this.MtbSelectedTriggerThing0.Tag = "";
             this.MtbSelectedTriggerThing0.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbSelectedTriggerThing0.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbSelectedTriggerThing0.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.MtbSelectedTriggerThing0.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
+            this.MtbSelectedTriggerThing0.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing1
             // 
             this.MtbSelectedTriggerThing1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbSelectedTriggerThing1.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.MtbSelectedTriggerThing1.Location = new System.Drawing.Point(83, 111);
             this.MtbSelectedTriggerThing1.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing1.Name = "MtbSelectedTriggerThing1";
             this.MtbSelectedTriggerThing1.Size = new System.Drawing.Size(82, 20);
             this.MtbSelectedTriggerThing1.TabIndex = 45;
+            this.MtbSelectedTriggerThing1.Tag = "";
             this.MtbSelectedTriggerThing1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbSelectedTriggerThing1.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbSelectedTriggerThing1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.MtbSelectedTriggerThing1.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
+            this.MtbSelectedTriggerThing1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing5
             // 
             this.MtbSelectedTriggerThing5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbSelectedTriggerThing5.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.MtbSelectedTriggerThing5.Location = new System.Drawing.Point(259, 246);
             this.MtbSelectedTriggerThing5.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing5.Name = "MtbSelectedTriggerThing5";
             this.MtbSelectedTriggerThing5.Size = new System.Drawing.Size(82, 20);
             this.MtbSelectedTriggerThing5.TabIndex = 150;
+            this.MtbSelectedTriggerThing5.Tag = "";
             this.MtbSelectedTriggerThing5.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbSelectedTriggerThing5.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbSelectedTriggerThing5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.MtbSelectedTriggerThing5.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
+            this.MtbSelectedTriggerThing5.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing6
             // 
             this.MtbSelectedTriggerThing6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbSelectedTriggerThing6.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.MtbSelectedTriggerThing6.Location = new System.Drawing.Point(259, 273);
             this.MtbSelectedTriggerThing6.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing6.Name = "MtbSelectedTriggerThing6";
             this.MtbSelectedTriggerThing6.Size = new System.Drawing.Size(82, 20);
             this.MtbSelectedTriggerThing6.TabIndex = 160;
+            this.MtbSelectedTriggerThing6.Tag = "";
             this.MtbSelectedTriggerThing6.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbSelectedTriggerThing6.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbSelectedTriggerThing6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.MtbSelectedTriggerThing6.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
+            this.MtbSelectedTriggerThing6.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing2
             // 
             this.MtbSelectedTriggerThing2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbSelectedTriggerThing2.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.MtbSelectedTriggerThing2.Location = new System.Drawing.Point(83, 219);
             this.MtbSelectedTriggerThing2.Mask = "\\0\\xA";
             this.MtbSelectedTriggerThing2.Name = "MtbSelectedTriggerThing2";
             this.MtbSelectedTriggerThing2.Size = new System.Drawing.Size(82, 20);
             this.MtbSelectedTriggerThing2.TabIndex = 80;
+            this.MtbSelectedTriggerThing2.Tag = "";
+            this.MtbSelectedTriggerThing2.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbSelectedTriggerThing2.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbSelectedTriggerThing2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.MtbSelectedTriggerThing2.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
+            this.MtbSelectedTriggerThing2.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing3
             // 
             this.MtbSelectedTriggerThing3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbSelectedTriggerThing3.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.MtbSelectedTriggerThing3.Location = new System.Drawing.Point(83, 300);
             this.MtbSelectedTriggerThing3.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing3.Name = "MtbSelectedTriggerThing3";
             this.MtbSelectedTriggerThing3.Size = new System.Drawing.Size(82, 20);
             this.MtbSelectedTriggerThing3.TabIndex = 110;
+            this.MtbSelectedTriggerThing3.Tag = "";
             this.MtbSelectedTriggerThing3.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbSelectedTriggerThing3.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbSelectedTriggerThing3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.MtbSelectedTriggerThing3.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
+            this.MtbSelectedTriggerThing3.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing4
             // 
             this.MtbSelectedTriggerThing4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbSelectedTriggerThing4.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.MtbSelectedTriggerThing4.Location = new System.Drawing.Point(83, 327);
             this.MtbSelectedTriggerThing4.Mask = "\\0\\xAA";
             this.MtbSelectedTriggerThing4.Name = "MtbSelectedTriggerThing4";
             this.MtbSelectedTriggerThing4.Size = new System.Drawing.Size(82, 20);
             this.MtbSelectedTriggerThing4.TabIndex = 120;
+            this.MtbSelectedTriggerThing4.Tag = "";
             this.MtbSelectedTriggerThing4.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbSelectedTriggerThing4.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbSelectedTriggerThing4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.MtbSelectedTriggerThing4.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
+            this.MtbSelectedTriggerThing4.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
             // 
             // NudSelectedTriggerSomeIndex
             // 
@@ -2878,6 +2955,11 @@ namespace BizHawk.Client.EmuHawk
             this.NudSelectedTriggerSomeIndex.Name = "NudSelectedTriggerSomeIndex";
             this.NudSelectedTriggerSomeIndex.Size = new System.Drawing.Size(82, 20);
             this.NudSelectedTriggerSomeIndex.TabIndex = 70;
+            this.NudSelectedTriggerSomeIndex.Tag = "";
+            this.NudSelectedTriggerSomeIndex.ValueChanged += new System.EventHandler(this.NudSelectedTrigger_ValueChanged);
+            this.NudSelectedTriggerSomeIndex.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudSelectedTriggerSomeIndex.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.NudSelectedTriggerSomeIndex.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
             // 
             // NudSelectedTriggerPoiIndex
             // 
@@ -2896,6 +2978,11 @@ namespace BizHawk.Client.EmuHawk
             this.NudSelectedTriggerPoiIndex.Name = "NudSelectedTriggerPoiIndex";
             this.NudSelectedTriggerPoiIndex.Size = new System.Drawing.Size(82, 20);
             this.NudSelectedTriggerPoiIndex.TabIndex = 100;
+            this.NudSelectedTriggerPoiIndex.Tag = "";
+            this.NudSelectedTriggerPoiIndex.ValueChanged += new System.EventHandler(this.NudSelectedTrigger_ValueChanged);
+            this.NudSelectedTriggerPoiIndex.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.NudSelectedTriggerPoiIndex.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.NudSelectedTriggerPoiIndex.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
             // 
             // CmbSelectedTriggerStyle
             // 
@@ -2905,6 +2992,11 @@ namespace BizHawk.Client.EmuHawk
             this.CmbSelectedTriggerStyle.Name = "CmbSelectedTriggerStyle";
             this.CmbSelectedTriggerStyle.Size = new System.Drawing.Size(82, 21);
             this.CmbSelectedTriggerStyle.TabIndex = 90;
+            this.CmbSelectedTriggerStyle.Tag = "";
+            this.CmbSelectedTriggerStyle.SelectedValueChanged += new System.EventHandler(this.CmbSelectedTrigger_SelectedValueChanged);
+            this.CmbSelectedTriggerStyle.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.CmbSelectedTriggerStyle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
+            this.CmbSelectedTriggerStyle.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
             // 
             // CbxSelectedTriggerFired
             // 
@@ -2915,6 +3007,7 @@ namespace BizHawk.Client.EmuHawk
             this.CbxSelectedTriggerFired.Name = "CbxSelectedTriggerFired";
             this.CbxSelectedTriggerFired.Size = new System.Drawing.Size(49, 17);
             this.CbxSelectedTriggerFired.TabIndex = 50;
+            this.CbxSelectedTriggerFired.Tag = "";
             this.CbxSelectedTriggerFired.Text = "Fired";
             this.CbxSelectedTriggerFired.UseVisualStyleBackColor = true;
             // 
@@ -3035,7 +3128,7 @@ namespace BizHawk.Client.EmuHawk
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(24, 13);
             this.label38.TabIndex = 10;
-            this.label38.Tag = "XZ";
+            this.label38.Tag = "";
             this.label38.Text = "XZ:";
             // 
             // LblSelectedPoiAddress
@@ -3068,7 +3161,7 @@ namespace BizHawk.Client.EmuHawk
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(55, 13);
             this.label35.TabIndex = 25;
-            this.label35.Tag = "Geometry";
+            this.label35.Tag = "";
             this.label35.Text = "Geometry:";
             // 
             // TbxSelectedPoiX
@@ -3078,10 +3171,11 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSelectedPoiX.Name = "TbxSelectedPoiX";
             this.TbxSelectedPoiX.Size = new System.Drawing.Size(73, 20);
             this.TbxSelectedPoiX.TabIndex = 15;
-            this.TbxSelectedPoiX.Tag = "X";
+            this.TbxSelectedPoiX.Tag = "";
             this.TbxSelectedPoiX.Text = "<x>";
-            this.TbxSelectedPoiX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxSelectedPoiX_KeyDown);
-            this.TbxSelectedPoiX.Leave += new System.EventHandler(this.TbxSelectedPoiX_Leave);
+            this.TbxSelectedPoiX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxSelectedPoiX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedPoi_KeyDown);
+            this.TbxSelectedPoiX.Leave += new System.EventHandler(this.SelectedPoi_Leave);
             // 
             // TbxSelectedPoiZ
             // 
@@ -3090,10 +3184,11 @@ namespace BizHawk.Client.EmuHawk
             this.TbxSelectedPoiZ.Name = "TbxSelectedPoiZ";
             this.TbxSelectedPoiZ.Size = new System.Drawing.Size(73, 20);
             this.TbxSelectedPoiZ.TabIndex = 16;
-            this.TbxSelectedPoiZ.Tag = "Z";
+            this.TbxSelectedPoiZ.Tag = "";
             this.TbxSelectedPoiZ.Text = "<z>";
-            this.TbxSelectedPoiZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxSelectedPoiX_KeyDown);
-            this.TbxSelectedPoiZ.Leave += new System.EventHandler(this.TbxSelectedPoiX_Leave);
+            this.TbxSelectedPoiZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxSelectedPoiZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedPoi_KeyDown);
+            this.TbxSelectedPoiZ.Leave += new System.EventHandler(this.SelectedPoi_Leave);
             // 
             // MtbSelectedPoiGeometry
             // 
@@ -3105,10 +3200,11 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedPoiGeometry.Name = "MtbSelectedPoiGeometry";
             this.MtbSelectedPoiGeometry.Size = new System.Drawing.Size(152, 20);
             this.MtbSelectedPoiGeometry.TabIndex = 30;
-            this.MtbSelectedPoiGeometry.Tag = "Geometry";
+            this.MtbSelectedPoiGeometry.Tag = "";
             this.MtbSelectedPoiGeometry.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.MtbSelectedPoiGeometry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbxSelectedPoiX_KeyDown);
-            this.MtbSelectedPoiGeometry.Leave += new System.EventHandler(this.TbxSelectedPoiX_Leave);
+            this.MtbSelectedPoiGeometry.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbSelectedPoiGeometry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedPoi_KeyDown);
+            this.MtbSelectedPoiGeometry.Leave += new System.EventHandler(this.SelectedPoi_Leave);
             // 
             // TbpCamera
             // 

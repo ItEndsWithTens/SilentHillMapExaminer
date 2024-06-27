@@ -118,13 +118,22 @@ public partial class CustomMainForm
 	}
 	private void Selectable_Enter(object sender, EventArgs e)
 	{
-		if (sender is NumericUpDown nud)
+		BeginInvoke(() =>
 		{
-			nud.Select(0, nud.Text.Length);
-		}
-		else if (sender is TextBox tbx)
-		{
-			tbx.SelectAll();
-		}
+			if (sender is NumericUpDown nud)
+			{
+				nud.Select(0, nud.Text.Length);
+			}
+			else if (sender is TextBox tbx)
+			{
+				tbx.SelectAll();
+			}
+			else if (sender is MaskedTextBox mtb)
+			{
+				int start = 2;
+				int length = mtb.TextLength - start;
+				mtb.Select(2, length);
+			}
+		});
 	}
 }
