@@ -118,6 +118,8 @@ namespace BizHawk.Client.EmuHawk
 			set => _settings = value;
 		}
 
+		private bool _stageLoaded;
+
 		public CustomMainForm()
 		{
 			InitializeComponent();
@@ -286,9 +288,20 @@ namespace BizHawk.Client.EmuHawk
 			uint stage = Mem.ReadByte(ram.IndexOfStageBeingLoaded);
 			if (stage != 0xFF)
 			{
-				ClearLoadedGameObjects();
 				_stageLoaded = true;
 				return;
+			}
+
+			if (_stageLoaded)
+			{
+				ClearLoadedGameObjects();
+
+				if (_initCountdown == -1)
+				{
+					OnStageLoaded(this, EventArgs.Empty);
+
+					_stageLoaded = false;
+				}
 			}
 
 			var camState = (CameraState)(Mem.ReadS32(ram.CameraState));
@@ -370,13 +383,6 @@ namespace BizHawk.Client.EmuHawk
 					if (CbxEnableStatsReporting.Checked)
 					{
 						ReportStats();
-					}
-					if (CbxReadLevelDataOnStageLoad.Checked)
-					{
-						if (_initCountdown == -1)
-						{
-							CheckForStageLoaded();
-						}
 					}
 					if (CbxSelectedTriggerEnableUpdates.Checked)
 					{
@@ -657,19 +663,6 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private bool _stageLoaded;
-		private void CheckForStageLoaded()
-		{
-			if (!_stageLoaded)
-			{
-				return;
-			}
-
-			OnStageLoaded(this, EventArgs.Empty);
-
-			_stageLoaded = false;
-		}
-
 		private void CleanUpDisposables()
 		{
 			_pen?.Dispose();
@@ -695,6 +688,9 @@ namespace BizHawk.Client.EmuHawk
 		{
 			Guts.Clear();
 
+			LbxCameraPaths.Items.Clear();
+			LblCameraPathCount.Text = "-";
+
 			LbxPois.Items.Clear();
 			LblPoiCount.Text = "-";
 
@@ -703,6 +699,7 @@ namespace BizHawk.Client.EmuHawk
 
 			LbxPoiAssociatedTriggers.Items.Clear();
 
+			ClearDisplayedCameraPathInfo();
 			ClearDisplayedPoiInfo();
 			ClearDisplayedTriggerInfo();
 		}

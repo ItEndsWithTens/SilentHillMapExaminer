@@ -95,6 +95,11 @@ public partial class CustomMainForm
 
 	private void UpdateArrays(object sender, EventArgs e)
 	{
+		if (!CbxReadLevelDataOnStageLoad.Checked)
+		{
+			return;
+		}
+
 		BtnReadTriggers_Click(this, EventArgs.Empty);
 		BtnCameraPathReadArray_Click(this, EventArgs.Empty);
 	}

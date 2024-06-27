@@ -42,8 +42,10 @@ namespace SHME.ExternalTool
 
 		public void Clear()
 		{
+			CameraPaths.Clear();
 			Pois.Clear();
 			Triggers.Clear();
+
 			Gems.Clear();
 			Lines.Clear();
 			TestBoxes.Clear();
