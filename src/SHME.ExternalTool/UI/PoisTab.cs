@@ -20,7 +20,7 @@ namespace BizHawk.Client.EmuHawk
 			CmbSelectedTriggerStyle.DataSource = Enum.GetValues(typeof(TriggerStyle));
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
 
-			LblSelectedPoiXZ.Tag = nameof(PointOfInterest.X);
+			LblSelectedPoiXZ.Tag = nameof(PointOfInterest.X) + nameof(PointOfInterest.Z);
 			TbxSelectedPoiX.Tag = nameof(PointOfInterest.X);
 			TbxSelectedPoiZ.Tag = nameof(PointOfInterest.Z);
 

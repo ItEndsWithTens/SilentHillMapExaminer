@@ -38,6 +38,47 @@ partial class CustomMainForm
 		LbxTriggers.EndUpdate();
 	}
 
+	private void SelectedPoi_ResetProperty(PointOfInterest p, bool all = false)
+	{
+		ReadOnlySpan<byte> stage = Guts.Stage.ToBytes();
+
+		MainRamAddresses ram = Rom.Addresses.MainRam;
+		int ofs = (int)(p.Address - ram.StageHeader);
+		PointOfInterest reset = new(p.Address, stage.Slice(ofs, p.SizeInBytes));
+
+		if (all)
+		{
+			Renderable? r = Guts.Pois[p.Address].Item2;
+			if (r is not null)
+			{
+				Vector3 pos = r.Position;
+				pos.X = reset.X;
+				pos.Z = reset.Z;
+				r.Position = pos;
+			}
+
+			Guts.Pois[p.Address] = (reset, r);
+
+			CommitPoiChanges(reset);
+			return;
+		}
+
+		switch (CmsSelectedPoi.SourceControl.Tag)
+		{
+			case nameof(PointOfInterest.X) + nameof(PointOfInterest.Z):
+				p.X = reset.X;
+				p.Z = reset.Z;
+				break;
+			case nameof(PointOfInterest.Geometry):
+				p.Geometry = reset.Geometry;
+				break;
+			default:
+				break;
+		}
+
+		CommitPoiChanges(p);
+	}
+
 	private void SelectedPoi_ValidateInput(Control? c)
 	{
 		if (LbxPois.SelectedItem is not PointOfInterest p)
@@ -110,26 +151,7 @@ partial class CustomMainForm
 			return;
 		}
 
-		ReadOnlySpan<byte> stage = Guts.Stage.ToBytes();
-
-		MainRamAddresses ram = Rom.Addresses.MainRam;
-		int ofs = (int)(p.Address - ram.StageHeader);
-		PointOfInterest reset = new(p.Address, stage.Slice(ofs, p.SizeInBytes));
-
-		switch (CmsSelectedPoi.SourceControl.Tag)
-		{
-			case nameof(PointOfInterest.X):
-				p.X = reset.X;
-				p.Z = reset.Z;
-				break;
-			case nameof(PointOfInterest.Geometry):
-				p.Geometry = reset.Geometry;
-				break;
-			default:
-				break;
-		}
-
-		CommitPoiChanges(p);
+		SelectedPoi_ResetProperty(p);
 	}
 
 	private void TsmSelectedPoiResetAll_Click(object sender, EventArgs e)
@@ -139,23 +161,6 @@ partial class CustomMainForm
 			return;
 		}
 
-		ReadOnlySpan<byte> stage = Guts.Stage.ToBytes();
-
-		MainRamAddresses ram = Rom.Addresses.MainRam;
-		int ofs = (int)(p.Address - ram.StageHeader);
-		PointOfInterest reset = new(p.Address, stage.Slice(ofs, p.SizeInBytes));
-
-		Renderable? r = Guts.Pois[p.Address].Item2;
-		if (r is not null)
-		{
-			Vector3 pos = r.Position;
-			pos.X = reset.X;
-			pos.Z = reset.Z;
-			r.Position = pos;
-		}
-
-		Guts.Pois[p.Address] = (reset, r);
-
-		CommitPoiChanges(reset);
+		SelectedPoi_ResetProperty(p, true);
 	}
 }
