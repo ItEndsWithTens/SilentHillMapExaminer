@@ -26,31 +26,52 @@ partial class CustomMainForm
 		RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 	}
 
-	private void SelectedTrigger_ResetProperty(Trigger t, bool all = false)
+	private void SelectedTrigger_ResetProperty(Trigger t, string? prop = null)
 	{
+		if (Guts.Stage is null)
+		{
+			return;
+		}
+
+		if (String.IsNullOrEmpty(prop))
+		{
+			prop = CmsSelectedTrigger.SourceControl.Tag as string;
+		}
+
 		ReadOnlySpan<byte> stage = Guts.Stage.ToBytes();
 
 		MainRamAddresses ram = Rom.Addresses.MainRam;
 		int ofs = (int)(t.Address - ram.StageHeader);
 		Trigger reset = new(t.Address, stage.Slice(ofs, t.SizeInBytes));
 
-		if (all)
+		PointOfInterest p = Guts.Pois.ElementAt(t.PoiIndex).Value.Item1;
+
+		if (String.Equals(prop, "all", StringComparison.OrdinalIgnoreCase))
 		{
+			// The coordinates of a PointOfInterest are unrelated to the
+			// particular trigger targeting it, so even a full reset of a
+			// Trigger should not affect the PointOfInterest's position.
+			SelectedPoi_ResetProperty(p, nameof(PointOfInterest.Geometry));
+
 			CommitTriggerChanges(reset);
 			return;
 		}
 
-		switch (CmsSelectedTrigger.SourceControl.Tag)
+		switch (prop)
 		{
-			case nameof(PointOfInterest.Geometry):
-				// TODO: Figure this one out, a bit complicated.
+			case nameof(Trigger.Disabled):
+				t.Disabled = reset.Disabled;
 				break;
+			case nameof(PointOfInterest.Geometry):
+				SelectedPoi_ResetProperty(p, prop);
+				return;
 			case nameof(Trigger.Thing0):
 				t.Thing0 = reset.Thing0;
 				break;
 			case nameof(Trigger.Thing1):
 				t.Thing1 = reset.Thing1;
 				break;
+			// TODO: Fired checkbox
 			case nameof(Trigger.SomeIndex):
 				t.SomeIndex = reset.SomeIndex;
 				break;
@@ -290,6 +311,6 @@ partial class CustomMainForm
 			return;
 		}
 
-		SelectedTrigger_ResetProperty(t, true);
+		SelectedTrigger_ResetProperty(t, "all");
 	}
 }

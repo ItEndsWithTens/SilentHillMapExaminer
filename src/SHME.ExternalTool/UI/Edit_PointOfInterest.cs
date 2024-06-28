@@ -38,15 +38,25 @@ partial class CustomMainForm
 		LbxTriggers.EndUpdate();
 	}
 
-	private void SelectedPoi_ResetProperty(PointOfInterest p, bool all = false)
+	private void SelectedPoi_ResetProperty(PointOfInterest p, string? prop = null)
 	{
+		if (Guts.Stage is null)
+		{
+			return;
+		}
+
+		if (String.IsNullOrEmpty(prop))
+		{
+			prop = CmsSelectedPoi.SourceControl.Tag as string;
+		}
+
 		ReadOnlySpan<byte> stage = Guts.Stage.ToBytes();
 
 		MainRamAddresses ram = Rom.Addresses.MainRam;
 		int ofs = (int)(p.Address - ram.StageHeader);
 		PointOfInterest reset = new(p.Address, stage.Slice(ofs, p.SizeInBytes));
 
-		if (all)
+		if (String.Equals(prop, "all", StringComparison.OrdinalIgnoreCase))
 		{
 			Renderable? r = Guts.Pois[p.Address].Item2;
 			if (r is not null)
@@ -63,7 +73,7 @@ partial class CustomMainForm
 			return;
 		}
 
-		switch (CmsSelectedPoi.SourceControl.Tag)
+		switch (prop)
 		{
 			case nameof(PointOfInterest.X) + nameof(PointOfInterest.Z):
 				p.X = reset.X;
@@ -161,6 +171,6 @@ partial class CustomMainForm
 			return;
 		}
 
-		SelectedPoi_ResetProperty(p, true);
+		SelectedPoi_ResetProperty(p, "all");
 	}
 }
