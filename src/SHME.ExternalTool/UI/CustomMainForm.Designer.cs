@@ -147,24 +147,24 @@ namespace BizHawk.Client.EmuHawk
             this.CbxSelectedTriggerDisabled = new System.Windows.Forms.CheckBox();
             this.LblSelectedTriggerAddress = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerPoiGeometry = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing0 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing1 = new System.Windows.Forms.Label();
             this.CbxSelectedTriggerEnableUpdates = new System.Windows.Forms.CheckBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label47 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label60 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing4 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing3 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerPoiIndex = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerStyle = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing2 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerSomeIndex = new System.Windows.Forms.Label();
             this.LblSelectedTriggerFiredDetails = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerType = new System.Windows.Forms.Label();
             this.CmbSelectedTriggerType = new System.Windows.Forms.ComboBox();
             this.NudSelectedTriggerTargetIndex = new System.Windows.Forms.NumericUpDown();
-            this.label42 = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label94 = new System.Windows.Forms.Label();
-            this.label95 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerTargetIndex = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing5 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerThing6 = new System.Windows.Forms.Label();
+            this.LblSelectedTriggerStageIndex = new System.Windows.Forms.Label();
             this.CbxSelectedTriggerSomeBool = new System.Windows.Forms.CheckBox();
             this.NudSelectedTriggerStageIndex = new System.Windows.Forms.NumericUpDown();
             this.MtbSelectedTriggerPoiGeometry = new System.Windows.Forms.MaskedTextBox();
@@ -188,10 +188,10 @@ namespace BizHawk.Client.EmuHawk
             this.LbxPoiAssociatedTriggers = new System.Windows.Forms.ListBox();
             this.label33 = new System.Windows.Forms.Label();
             this.BtnGoToPoi = new System.Windows.Forms.Button();
-            this.label38 = new System.Windows.Forms.Label();
+            this.LblSelectedPoiXZ = new System.Windows.Forms.Label();
             this.LblSelectedPoiAddress = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
+            this.LblSelectedPoiGeometry = new System.Windows.Forms.Label();
             this.TbxSelectedPoiX = new System.Windows.Forms.TextBox();
             this.TbxSelectedPoiZ = new System.Windows.Forms.TextBox();
             this.MtbSelectedPoiGeometry = new System.Windows.Forms.MaskedTextBox();
@@ -383,7 +383,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer = new System.Windows.Forms.TabPage();
             this.TlpFramebufferTab = new System.Windows.Forms.TableLayoutPanel();
             this.ScrFramebuffer = new System.Windows.Forms.ScrollableControl();
-            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnFramebufferSave = new System.Windows.Forms.Button();
             this.BtnFramebufferZoomIn = new System.Windows.Forms.Button();
@@ -464,6 +463,7 @@ namespace BizHawk.Client.EmuHawk
             this.RdoBackendBitmap = new System.Windows.Forms.RadioButton();
             this.RdoBackendBizHawkGui = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.BpbFramebuffer = new SHME.ExternalTool.BetterPictureBox();
             this.GbxHarry.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.GbxCamera.SuspendLayout();
@@ -588,7 +588,6 @@ namespace BizHawk.Client.EmuHawk
             this.TbpFramebuffer.SuspendLayout();
             this.TlpFramebufferTab.SuspendLayout();
             this.ScrFramebuffer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferW)).BeginInit();
@@ -615,6 +614,7 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel41.SuspendLayout();
             this.GbxOverlayBackend.SuspendLayout();
             this.tableLayoutPanel43.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnGetPosition
@@ -2449,6 +2449,7 @@ namespace BizHawk.Client.EmuHawk
             this.TsmSelectedTriggerResetProperty.Name = "TsmSelectedTriggerResetProperty";
             this.TsmSelectedTriggerResetProperty.Size = new System.Drawing.Size(264, 22);
             this.TsmSelectedTriggerResetProperty.Text = "Reset property from disc";
+            this.TsmSelectedTriggerResetProperty.Click += new System.EventHandler(this.TsmSelectedTriggerResetProperty_Click);
             // 
             // toolStripSeparator2
             // 
@@ -2460,6 +2461,7 @@ namespace BizHawk.Client.EmuHawk
             this.TsmSelectedTriggerResetAllProperties.Name = "TsmSelectedTriggerResetAllProperties";
             this.TsmSelectedTriggerResetAllProperties.Size = new System.Drawing.Size(264, 22);
             this.TsmSelectedTriggerResetAllProperties.Text = "Reset all trigger properties from disc";
+            this.TsmSelectedTriggerResetAllProperties.Click += new System.EventHandler(this.TsmSelectedTriggerResetAllProperties_Click);
             // 
             // TlpSelectedTriggerLeft
             // 
@@ -2473,24 +2475,24 @@ namespace BizHawk.Client.EmuHawk
             this.TlpSelectedTriggerLeft.Controls.Add(this.CbxSelectedTriggerDisabled, 1, 1);
             this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerAddress, 1, 0);
             this.TlpSelectedTriggerLeft.Controls.Add(this.label40, 0, 0);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label15, 0, 2);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label32, 0, 3);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label39, 0, 4);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerPoiGeometry, 0, 2);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerThing0, 0, 3);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerThing1, 0, 4);
             this.TlpSelectedTriggerLeft.Controls.Add(this.CbxSelectedTriggerEnableUpdates, 2, 0);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label49, 0, 12);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label47, 0, 11);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label45, 0, 10);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label43, 0, 9);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label60, 0, 8);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label50, 0, 7);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerThing4, 0, 12);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerThing3, 0, 11);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerPoiIndex, 0, 10);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerStyle, 0, 9);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerThing2, 0, 8);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerSomeIndex, 0, 7);
             this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerFiredDetails, 1, 6);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label46, 2, 7);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerType, 2, 7);
             this.TlpSelectedTriggerLeft.Controls.Add(this.CmbSelectedTriggerType, 3, 7);
             this.TlpSelectedTriggerLeft.Controls.Add(this.NudSelectedTriggerTargetIndex, 3, 8);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label42, 2, 8);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label51, 2, 9);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label94, 2, 10);
-            this.TlpSelectedTriggerLeft.Controls.Add(this.label95, 2, 11);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerTargetIndex, 2, 8);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerThing5, 2, 9);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerThing6, 2, 10);
+            this.TlpSelectedTriggerLeft.Controls.Add(this.LblSelectedTriggerStageIndex, 2, 11);
             this.TlpSelectedTriggerLeft.Controls.Add(this.CbxSelectedTriggerSomeBool, 3, 12);
             this.TlpSelectedTriggerLeft.Controls.Add(this.NudSelectedTriggerStageIndex, 3, 11);
             this.TlpSelectedTriggerLeft.Controls.Add(this.MtbSelectedTriggerPoiGeometry, 1, 2);
@@ -2561,41 +2563,41 @@ namespace BizHawk.Client.EmuHawk
             this.label40.TabIndex = 5;
             this.label40.Text = "Address:";
             // 
-            // label15
+            // LblSelectedTriggerPoiGeometry
             // 
-            this.label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label15.AutoSize = true;
-            this.label15.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label15.Location = new System.Drawing.Point(3, 61);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(74, 13);
-            this.label15.TabIndex = 20;
-            this.label15.Tag = "";
-            this.label15.Text = "POI geometry:";
+            this.LblSelectedTriggerPoiGeometry.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerPoiGeometry.AutoSize = true;
+            this.LblSelectedTriggerPoiGeometry.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerPoiGeometry.Location = new System.Drawing.Point(3, 61);
+            this.LblSelectedTriggerPoiGeometry.Name = "LblSelectedTriggerPoiGeometry";
+            this.LblSelectedTriggerPoiGeometry.Size = new System.Drawing.Size(74, 13);
+            this.LblSelectedTriggerPoiGeometry.TabIndex = 20;
+            this.LblSelectedTriggerPoiGeometry.Tag = "";
+            this.LblSelectedTriggerPoiGeometry.Text = "POI geometry:";
             // 
-            // label32
+            // LblSelectedTriggerThing0
             // 
-            this.label32.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label32.AutoSize = true;
-            this.label32.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label32.Location = new System.Drawing.Point(34, 88);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(43, 13);
-            this.label32.TabIndex = 30;
-            this.label32.Tag = "";
-            this.label32.Text = "Thing0:";
+            this.LblSelectedTriggerThing0.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerThing0.AutoSize = true;
+            this.LblSelectedTriggerThing0.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerThing0.Location = new System.Drawing.Point(34, 88);
+            this.LblSelectedTriggerThing0.Name = "LblSelectedTriggerThing0";
+            this.LblSelectedTriggerThing0.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedTriggerThing0.TabIndex = 30;
+            this.LblSelectedTriggerThing0.Tag = "";
+            this.LblSelectedTriggerThing0.Text = "Thing0:";
             // 
-            // label39
+            // LblSelectedTriggerThing1
             // 
-            this.label39.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label39.AutoSize = true;
-            this.label39.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label39.Location = new System.Drawing.Point(34, 115);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(43, 13);
-            this.label39.TabIndex = 40;
-            this.label39.Tag = "";
-            this.label39.Text = "Thing1:";
+            this.LblSelectedTriggerThing1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerThing1.AutoSize = true;
+            this.LblSelectedTriggerThing1.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerThing1.Location = new System.Drawing.Point(34, 115);
+            this.LblSelectedTriggerThing1.Name = "LblSelectedTriggerThing1";
+            this.LblSelectedTriggerThing1.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedTriggerThing1.TabIndex = 40;
+            this.LblSelectedTriggerThing1.Tag = "";
+            this.LblSelectedTriggerThing1.Text = "Thing1:";
             // 
             // CbxSelectedTriggerEnableUpdates
             // 
@@ -2612,77 +2614,77 @@ namespace BizHawk.Client.EmuHawk
             this.CbxSelectedTriggerEnableUpdates.Text = "Enable updates";
             this.CbxSelectedTriggerEnableUpdates.UseVisualStyleBackColor = true;
             // 
-            // label49
+            // LblSelectedTriggerThing4
             // 
-            this.label49.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label49.AutoSize = true;
-            this.label49.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label49.Location = new System.Drawing.Point(34, 331);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(43, 13);
-            this.label49.TabIndex = 115;
-            this.label49.Tag = "";
-            this.label49.Text = "Thing4:";
+            this.LblSelectedTriggerThing4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerThing4.AutoSize = true;
+            this.LblSelectedTriggerThing4.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerThing4.Location = new System.Drawing.Point(34, 331);
+            this.LblSelectedTriggerThing4.Name = "LblSelectedTriggerThing4";
+            this.LblSelectedTriggerThing4.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedTriggerThing4.TabIndex = 115;
+            this.LblSelectedTriggerThing4.Tag = "";
+            this.LblSelectedTriggerThing4.Text = "Thing4:";
             // 
-            // label47
+            // LblSelectedTriggerThing3
             // 
-            this.label47.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label47.AutoSize = true;
-            this.label47.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label47.Location = new System.Drawing.Point(34, 304);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(43, 13);
-            this.label47.TabIndex = 105;
-            this.label47.Tag = "";
-            this.label47.Text = "Thing3:";
+            this.LblSelectedTriggerThing3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerThing3.AutoSize = true;
+            this.LblSelectedTriggerThing3.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerThing3.Location = new System.Drawing.Point(34, 304);
+            this.LblSelectedTriggerThing3.Name = "LblSelectedTriggerThing3";
+            this.LblSelectedTriggerThing3.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedTriggerThing3.TabIndex = 105;
+            this.LblSelectedTriggerThing3.Tag = "";
+            this.LblSelectedTriggerThing3.Text = "Thing3:";
             // 
-            // label45
+            // LblSelectedTriggerPoiIndex
             // 
-            this.label45.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label45.AutoSize = true;
-            this.label45.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label45.Location = new System.Drawing.Point(26, 277);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(51, 13);
-            this.label45.TabIndex = 95;
-            this.label45.Tag = "";
-            this.label45.Text = "PoiIndex:";
+            this.LblSelectedTriggerPoiIndex.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerPoiIndex.AutoSize = true;
+            this.LblSelectedTriggerPoiIndex.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerPoiIndex.Location = new System.Drawing.Point(26, 277);
+            this.LblSelectedTriggerPoiIndex.Name = "LblSelectedTriggerPoiIndex";
+            this.LblSelectedTriggerPoiIndex.Size = new System.Drawing.Size(51, 13);
+            this.LblSelectedTriggerPoiIndex.TabIndex = 95;
+            this.LblSelectedTriggerPoiIndex.Tag = "";
+            this.LblSelectedTriggerPoiIndex.Text = "PoiIndex:";
             // 
-            // label43
+            // LblSelectedTriggerStyle
             // 
-            this.label43.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label43.AutoSize = true;
-            this.label43.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label43.Location = new System.Drawing.Point(44, 250);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(33, 13);
-            this.label43.TabIndex = 85;
-            this.label43.Tag = "";
-            this.label43.Text = "Style:";
+            this.LblSelectedTriggerStyle.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerStyle.AutoSize = true;
+            this.LblSelectedTriggerStyle.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerStyle.Location = new System.Drawing.Point(44, 250);
+            this.LblSelectedTriggerStyle.Name = "LblSelectedTriggerStyle";
+            this.LblSelectedTriggerStyle.Size = new System.Drawing.Size(33, 13);
+            this.LblSelectedTriggerStyle.TabIndex = 85;
+            this.LblSelectedTriggerStyle.Tag = "";
+            this.LblSelectedTriggerStyle.Text = "Style:";
             // 
-            // label60
+            // LblSelectedTriggerThing2
             // 
-            this.label60.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label60.AutoSize = true;
-            this.label60.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label60.Location = new System.Drawing.Point(34, 223);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(43, 13);
-            this.label60.TabIndex = 75;
-            this.label60.Tag = "";
-            this.label60.Text = "Thing2:";
+            this.LblSelectedTriggerThing2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerThing2.AutoSize = true;
+            this.LblSelectedTriggerThing2.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerThing2.Location = new System.Drawing.Point(34, 223);
+            this.LblSelectedTriggerThing2.Name = "LblSelectedTriggerThing2";
+            this.LblSelectedTriggerThing2.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedTriggerThing2.TabIndex = 75;
+            this.LblSelectedTriggerThing2.Tag = "";
+            this.LblSelectedTriggerThing2.Text = "Thing2:";
             // 
-            // label50
+            // LblSelectedTriggerSomeIndex
             // 
-            this.label50.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label50.AutoSize = true;
-            this.label50.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label50.Location = new System.Drawing.Point(14, 196);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(63, 13);
-            this.label50.TabIndex = 65;
-            this.label50.Tag = "";
-            this.label50.Text = "SomeIndex:";
+            this.LblSelectedTriggerSomeIndex.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerSomeIndex.AutoSize = true;
+            this.LblSelectedTriggerSomeIndex.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerSomeIndex.Location = new System.Drawing.Point(14, 196);
+            this.LblSelectedTriggerSomeIndex.Name = "LblSelectedTriggerSomeIndex";
+            this.LblSelectedTriggerSomeIndex.Size = new System.Drawing.Size(63, 13);
+            this.LblSelectedTriggerSomeIndex.TabIndex = 65;
+            this.LblSelectedTriggerSomeIndex.Tag = "";
+            this.LblSelectedTriggerSomeIndex.Text = "SomeIndex:";
             // 
             // LblSelectedTriggerFiredDetails
             // 
@@ -2696,17 +2698,17 @@ namespace BizHawk.Client.EmuHawk
             this.LblSelectedTriggerFiredDetails.Text = "Group 0x , bit 0x";
             this.LblSelectedTriggerFiredDetails.Click += new System.EventHandler(this.LblSelectedTriggerFiredDetails_Click);
             // 
-            // label46
+            // LblSelectedTriggerType
             // 
-            this.label46.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label46.AutoSize = true;
-            this.label46.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label46.Location = new System.Drawing.Point(219, 196);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(34, 13);
-            this.label46.TabIndex = 125;
-            this.label46.Tag = "";
-            this.label46.Text = "Type:";
+            this.LblSelectedTriggerType.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerType.AutoSize = true;
+            this.LblSelectedTriggerType.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerType.Location = new System.Drawing.Point(219, 196);
+            this.LblSelectedTriggerType.Name = "LblSelectedTriggerType";
+            this.LblSelectedTriggerType.Size = new System.Drawing.Size(34, 13);
+            this.LblSelectedTriggerType.TabIndex = 125;
+            this.LblSelectedTriggerType.Tag = "";
+            this.LblSelectedTriggerType.Text = "Type:";
             // 
             // CmbSelectedTriggerType
             // 
@@ -2735,53 +2737,53 @@ namespace BizHawk.Client.EmuHawk
             this.NudSelectedTriggerTargetIndex.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
             this.NudSelectedTriggerTargetIndex.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
             // 
-            // label42
+            // LblSelectedTriggerTargetIndex
             // 
-            this.label42.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label42.AutoSize = true;
-            this.label42.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label42.Location = new System.Drawing.Point(184, 223);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(69, 13);
-            this.label42.TabIndex = 135;
-            this.label42.Tag = "";
-            this.label42.Text = "Target index:";
+            this.LblSelectedTriggerTargetIndex.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerTargetIndex.AutoSize = true;
+            this.LblSelectedTriggerTargetIndex.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerTargetIndex.Location = new System.Drawing.Point(184, 223);
+            this.LblSelectedTriggerTargetIndex.Name = "LblSelectedTriggerTargetIndex";
+            this.LblSelectedTriggerTargetIndex.Size = new System.Drawing.Size(69, 13);
+            this.LblSelectedTriggerTargetIndex.TabIndex = 135;
+            this.LblSelectedTriggerTargetIndex.Tag = "";
+            this.LblSelectedTriggerTargetIndex.Text = "Target index:";
             // 
-            // label51
+            // LblSelectedTriggerThing5
             // 
-            this.label51.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label51.AutoSize = true;
-            this.label51.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label51.Location = new System.Drawing.Point(210, 250);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(43, 13);
-            this.label51.TabIndex = 145;
-            this.label51.Tag = "";
-            this.label51.Text = "Thing5:";
+            this.LblSelectedTriggerThing5.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerThing5.AutoSize = true;
+            this.LblSelectedTriggerThing5.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerThing5.Location = new System.Drawing.Point(210, 250);
+            this.LblSelectedTriggerThing5.Name = "LblSelectedTriggerThing5";
+            this.LblSelectedTriggerThing5.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedTriggerThing5.TabIndex = 145;
+            this.LblSelectedTriggerThing5.Tag = "";
+            this.LblSelectedTriggerThing5.Text = "Thing5:";
             // 
-            // label94
+            // LblSelectedTriggerThing6
             // 
-            this.label94.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label94.AutoSize = true;
-            this.label94.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label94.Location = new System.Drawing.Point(210, 277);
-            this.label94.Name = "label94";
-            this.label94.Size = new System.Drawing.Size(43, 13);
-            this.label94.TabIndex = 155;
-            this.label94.Tag = "";
-            this.label94.Text = "Thing6:";
+            this.LblSelectedTriggerThing6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerThing6.AutoSize = true;
+            this.LblSelectedTriggerThing6.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerThing6.Location = new System.Drawing.Point(210, 277);
+            this.LblSelectedTriggerThing6.Name = "LblSelectedTriggerThing6";
+            this.LblSelectedTriggerThing6.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedTriggerThing6.TabIndex = 155;
+            this.LblSelectedTriggerThing6.Tag = "";
+            this.LblSelectedTriggerThing6.Text = "Thing6:";
             // 
-            // label95
+            // LblSelectedTriggerStageIndex
             // 
-            this.label95.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label95.AutoSize = true;
-            this.label95.ContextMenuStrip = this.CmsSelectedTrigger;
-            this.label95.Location = new System.Drawing.Point(187, 304);
-            this.label95.Name = "label95";
-            this.label95.Size = new System.Drawing.Size(66, 13);
-            this.label95.TabIndex = 165;
-            this.label95.Tag = "";
-            this.label95.Text = "Stage index:";
+            this.LblSelectedTriggerStageIndex.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedTriggerStageIndex.AutoSize = true;
+            this.LblSelectedTriggerStageIndex.ContextMenuStrip = this.CmsSelectedTrigger;
+            this.LblSelectedTriggerStageIndex.Location = new System.Drawing.Point(187, 304);
+            this.LblSelectedTriggerStageIndex.Name = "LblSelectedTriggerStageIndex";
+            this.LblSelectedTriggerStageIndex.Size = new System.Drawing.Size(66, 13);
+            this.LblSelectedTriggerStageIndex.TabIndex = 165;
+            this.LblSelectedTriggerStageIndex.Tag = "";
+            this.LblSelectedTriggerStageIndex.Text = "Stage index:";
             // 
             // CbxSelectedTriggerSomeBool
             // 
@@ -3048,10 +3050,10 @@ namespace BizHawk.Client.EmuHawk
             this.tableLayoutPanel36.Controls.Add(this.LbxPoiAssociatedTriggers, 0, 4);
             this.tableLayoutPanel36.Controls.Add(this.label33, 0, 3);
             this.tableLayoutPanel36.Controls.Add(this.BtnGoToPoi, 3, 1);
-            this.tableLayoutPanel36.Controls.Add(this.label38, 0, 1);
+            this.tableLayoutPanel36.Controls.Add(this.LblSelectedPoiXZ, 0, 1);
             this.tableLayoutPanel36.Controls.Add(this.LblSelectedPoiAddress, 1, 0);
             this.tableLayoutPanel36.Controls.Add(this.label21, 0, 0);
-            this.tableLayoutPanel36.Controls.Add(this.label35, 0, 2);
+            this.tableLayoutPanel36.Controls.Add(this.LblSelectedPoiGeometry, 0, 2);
             this.tableLayoutPanel36.Controls.Add(this.TbxSelectedPoiX, 1, 1);
             this.tableLayoutPanel36.Controls.Add(this.TbxSelectedPoiZ, 2, 1);
             this.tableLayoutPanel36.Controls.Add(this.MtbSelectedPoiGeometry, 1, 2);
@@ -3104,17 +3106,17 @@ namespace BizHawk.Client.EmuHawk
             this.BtnGoToPoi.UseVisualStyleBackColor = true;
             this.BtnGoToPoi.Click += new System.EventHandler(this.BtnGoToPoi_Click);
             // 
-            // label38
+            // LblSelectedPoiXZ
             // 
-            this.label38.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label38.AutoSize = true;
-            this.label38.ContextMenuStrip = this.CmsSelectedPoi;
-            this.label38.Location = new System.Drawing.Point(52, 35);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(24, 13);
-            this.label38.TabIndex = 10;
-            this.label38.Tag = "";
-            this.label38.Text = "XZ:";
+            this.LblSelectedPoiXZ.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedPoiXZ.AutoSize = true;
+            this.LblSelectedPoiXZ.ContextMenuStrip = this.CmsSelectedPoi;
+            this.LblSelectedPoiXZ.Location = new System.Drawing.Point(52, 35);
+            this.LblSelectedPoiXZ.Name = "LblSelectedPoiXZ";
+            this.LblSelectedPoiXZ.Size = new System.Drawing.Size(24, 13);
+            this.LblSelectedPoiXZ.TabIndex = 10;
+            this.LblSelectedPoiXZ.Tag = "";
+            this.LblSelectedPoiXZ.Text = "XZ:";
             // 
             // LblSelectedPoiAddress
             // 
@@ -3137,17 +3139,17 @@ namespace BizHawk.Client.EmuHawk
             this.label21.TabIndex = 0;
             this.label21.Text = "Address:";
             // 
-            // label35
+            // LblSelectedPoiGeometry
             // 
-            this.label35.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label35.AutoSize = true;
-            this.label35.ContextMenuStrip = this.CmsSelectedPoi;
-            this.label35.Location = new System.Drawing.Point(21, 63);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(55, 13);
-            this.label35.TabIndex = 25;
-            this.label35.Tag = "";
-            this.label35.Text = "Geometry:";
+            this.LblSelectedPoiGeometry.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedPoiGeometry.AutoSize = true;
+            this.LblSelectedPoiGeometry.ContextMenuStrip = this.CmsSelectedPoi;
+            this.LblSelectedPoiGeometry.Location = new System.Drawing.Point(21, 63);
+            this.LblSelectedPoiGeometry.Name = "LblSelectedPoiGeometry";
+            this.LblSelectedPoiGeometry.Size = new System.Drawing.Size(55, 13);
+            this.LblSelectedPoiGeometry.TabIndex = 25;
+            this.LblSelectedPoiGeometry.Tag = "";
+            this.LblSelectedPoiGeometry.Text = "Geometry:";
             // 
             // TbxSelectedPoiX
             // 
@@ -5930,17 +5932,6 @@ namespace BizHawk.Client.EmuHawk
             this.ScrFramebuffer.TabIndex = 8;
             this.ScrFramebuffer.Text = "scrollableControl1";
             // 
-            // BpbFramebuffer
-            // 
-            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
-            this.BpbFramebuffer.Name = "BpbFramebuffer";
-            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
-            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BpbFramebuffer.TabIndex = 7;
-            this.BpbFramebuffer.TabStop = false;
-            // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.AutoSize = true;
@@ -7005,6 +6996,17 @@ namespace BizHawk.Client.EmuHawk
             this.RdoBackendBizHawkGui.UseVisualStyleBackColor = true;
             this.RdoBackendBizHawkGui.CheckedChanged += new System.EventHandler(this.RdoOverlayBackend_CheckedChanged);
             // 
+            // BpbFramebuffer
+            // 
+            this.BpbFramebuffer.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.BpbFramebuffer.Location = new System.Drawing.Point(3, 3);
+            this.BpbFramebuffer.Name = "BpbFramebuffer";
+            this.BpbFramebuffer.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.BpbFramebuffer.Size = new System.Drawing.Size(670, 544);
+            this.BpbFramebuffer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BpbFramebuffer.TabIndex = 7;
+            this.BpbFramebuffer.TabStop = false;
+            // 
             // CustomMainForm
             // 
             this.AutoScroll = true;
@@ -7181,7 +7183,6 @@ namespace BizHawk.Client.EmuHawk
             this.TlpFramebufferTab.ResumeLayout(false);
             this.TlpFramebufferTab.PerformLayout();
             this.ScrFramebuffer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudFramebufferH)).EndInit();
@@ -7226,6 +7227,7 @@ namespace BizHawk.Client.EmuHawk
             this.GbxOverlayBackend.PerformLayout();
             this.tableLayoutPanel43.ResumeLayout(false);
             this.tableLayoutPanel43.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BpbFramebuffer)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -7325,19 +7327,19 @@ namespace BizHawk.Client.EmuHawk
 		private ListBox LbxPois;
 		private Label LblPoiCount;
 		private Button BtnReadPois;
-		private Label label35;
-		private Label label38;
+		private Label LblSelectedPoiGeometry;
+		private Label LblSelectedPoiXZ;
 		private Label LblTriggerCount;
 		private Button BtnReadTriggers;
 		private ListBox LbxTriggers;
 		private GroupBox GbxSelectedTrigger;
 		private GroupBox GbxSelectedPoi;
-		private Label label49;
-		private Label label47;
-		private Label label45;
-		private Label label43;
-		private Label label39;
-		private Label label32;
+		private Label LblSelectedTriggerThing4;
+		private Label LblSelectedTriggerThing3;
+		private Label LblSelectedTriggerPoiIndex;
+		private Label LblSelectedTriggerStyle;
+		private Label LblSelectedTriggerThing1;
+		private Label LblSelectedTriggerThing0;
 		private Label LblSelectedTriggerAddress;
 		private Label label40;
 		private Label LblSelectedPoiAddress;
@@ -7345,11 +7347,11 @@ namespace BizHawk.Client.EmuHawk
 		private Label label33;
 		private ListBox LbxPoiAssociatedTriggers;
 		private Button BtnGoToPoi;
-		private Label label42;
+		private Label LblSelectedTriggerTargetIndex;
 		private NumericUpDown NudSelectedTriggerTargetIndex;
 		private ComboBox CmbSelectedTriggerType;
-		private Label label46;
-		private Label label50;
+		private Label LblSelectedTriggerType;
+		private Label LblSelectedTriggerSomeIndex;
 		private Label LblTotalTime;
 		private Label label52;
 		private CheckBox CbxSelectedTriggerEnableUpdates;
@@ -7365,13 +7367,13 @@ namespace BizHawk.Client.EmuHawk
 		private TextBox TbxSaveRamExportPath;
 		private TextBox TbxSaveRamImportPath;
 		private Button BtnSaveRamImport;
-		private Label label15;
+		private Label LblSelectedTriggerPoiGeometry;
 		private ComboBox CmbPoiRenderShape;
 		private Button BtnClearPoisTriggers;
 		private GroupBox GbxConvertStatesOrSaveRam;
 		private PictureBox PbxHazardStripes;
 		private CheckBox CbxSaveRamDanger;
-		private Label label60;
+		private Label LblSelectedTriggerThing2;
 		private Label label59;
 		private Label label61;
 		private Label label19;
@@ -7655,9 +7657,9 @@ namespace BizHawk.Client.EmuHawk
 		private ToolStripMenuItem TsmSelectedPoiResetProperty;
 		private ToolStripSeparator toolStripSeparator1;
 		private ToolStripMenuItem TsmSelectedPoiResetAll;
-		private Label label51;
-		private Label label94;
-		private Label label95;
+		private Label LblSelectedTriggerThing5;
+		private Label LblSelectedTriggerThing6;
+		private Label LblSelectedTriggerStageIndex;
 		private CheckBox CbxSelectedTriggerSomeBool;
 		private NumericUpDown NudSelectedTriggerStageIndex;
 		private TextBox TbxSelectedPoiX;

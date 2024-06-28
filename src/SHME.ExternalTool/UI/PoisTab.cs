@@ -20,24 +20,57 @@ namespace BizHawk.Client.EmuHawk
 			CmbSelectedTriggerStyle.DataSource = Enum.GetValues(typeof(TriggerStyle));
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
 
+			LblSelectedPoiXZ.Tag = nameof(PointOfInterest.X);
 			TbxSelectedPoiX.Tag = nameof(PointOfInterest.X);
 			TbxSelectedPoiZ.Tag = nameof(PointOfInterest.Z);
+
+			LblSelectedPoiGeometry.Tag = nameof(PointOfInterest.Geometry);
 			MtbSelectedPoiGeometry.Tag = nameof(PointOfInterest.Geometry);
 
 			CbxSelectedTriggerDisabled.Tag = nameof(Trigger.Disabled);
+
+			LblSelectedTriggerPoiGeometry.Tag = nameof(PointOfInterest.Geometry);
 			MtbSelectedTriggerPoiGeometry.Tag = nameof(PointOfInterest.Geometry);
+
+			LblSelectedTriggerThing0.Tag = nameof(Trigger.Thing0);
 			MtbSelectedTriggerThing0.Tag = nameof(Trigger.Thing0);
+
+			LblSelectedTriggerThing1.Tag = nameof(Trigger.Thing1);
 			MtbSelectedTriggerThing1.Tag = nameof(Trigger.Thing1);
+
+			LblSelectedTriggerSomeIndex.Tag = nameof(Trigger.SomeIndex);
+			NudSelectedTriggerSomeIndex.Tag = nameof(Trigger.SomeIndex);
+
+			LblSelectedTriggerThing2.Tag = nameof(Trigger.Thing2);
 			MtbSelectedTriggerThing2.Tag = nameof(Trigger.Thing2);
+
+			LblSelectedTriggerStyle.Tag = nameof(Trigger.Style);
 			CmbSelectedTriggerStyle.Tag = nameof(Trigger.Style);
+
+			LblSelectedTriggerPoiIndex.Tag = nameof(Trigger.PoiIndex);
 			NudSelectedTriggerPoiIndex.Tag = nameof(Trigger.PoiIndex);
+
+			LblSelectedTriggerThing3.Tag = nameof(Trigger.Thing3);
 			MtbSelectedTriggerThing3.Tag = nameof(Trigger.Thing3);
+
+			LblSelectedTriggerThing4.Tag = nameof(Trigger.Thing4);
 			MtbSelectedTriggerThing4.Tag = nameof(Trigger.Thing4);
+
+			LblSelectedTriggerType.Tag = nameof(Trigger.TriggerType);
 			CmbSelectedTriggerType.Tag = nameof(Trigger.TriggerType);
+
+			LblSelectedTriggerTargetIndex.Tag = nameof(Trigger.TargetIndex);
 			NudSelectedTriggerTargetIndex.Tag = nameof(Trigger.TargetIndex);
+
+			LblSelectedTriggerThing5.Tag = nameof(Trigger.Thing5);
 			MtbSelectedTriggerThing5.Tag = nameof(Trigger.Thing5);
+
+			LblSelectedTriggerThing6.Tag = nameof(Trigger.Thing6);
 			MtbSelectedTriggerThing6.Tag = nameof(Trigger.Thing6);
+
+			LblSelectedTriggerStageIndex.Tag = nameof(Trigger.StageIndex);
 			NudSelectedTriggerStageIndex.Tag = nameof(Trigger.StageIndex);
+
 			CbxSelectedTriggerSomeBool.Tag = nameof(Trigger.SomeBool);
 		}
 
@@ -46,14 +79,12 @@ namespace BizHawk.Client.EmuHawk
 			ClearDisplayedPoiInfo();
 			ClearDisplayedTriggerInfo();
 
-			LbxPois.SelectedIndex = -1;
-			LbxPois.DataSource = null;
 			Guts.Pois.Clear();
+			LbxPois.Items.Clear();
 			LblPoiCount.Text = "-";
 
-			LbxTriggers.SelectedIndex = -1;
-			LbxTriggers.DataSource = null;
 			Guts.Triggers.Clear();
+			LbxTriggers.Items.Clear();
 			LblTriggerCount.Text = "-";
 		}
 
@@ -108,7 +139,7 @@ namespace BizHawk.Client.EmuHawk
 
 				var updated = new Trigger(t.Address, bytes);
 
-				Guts.Triggers[LbxTriggers.SelectedIndex] = updated;
+				Guts.Triggers[t.Address] = updated;
 
 				LbxTriggers_SelectedIndexChanged(LbxTriggers, EventArgs.Empty);
 
@@ -190,7 +221,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private string DecodePoiGeometry(Trigger t)
 		{
-			PointOfInterest p = Guts.Pois[t.PoiIndex].Item1;
+			PointOfInterest p = Guts.Pois.ElementAt(t.PoiIndex).Value.Item1;
 
 			(float geoA, float geoB) = p.DecodeGeometry(t.Style);
 
@@ -219,7 +250,7 @@ namespace BizHawk.Client.EmuHawk
 			float geoA;
 			float geoB;
 
-			PointOfInterest poi = Guts.Pois[t.PoiIndex].Item1;
+			PointOfInterest poi = Guts.Pois.ElementAt(t.PoiIndex).Value.Item1;
 
 			bool success = false;
 
@@ -279,7 +310,7 @@ namespace BizHawk.Client.EmuHawk
 
 		private (PointOfInterest, Renderable?) GetRenderableFromTrigger(Trigger t)
 		{
-			(PointOfInterest p, Renderable? oldR) = Guts.Pois[t.PoiIndex];
+			(PointOfInterest p, Renderable? oldR) = Guts.Pois.ElementAt(t.PoiIndex).Value;
 
 			Vector3 pos = new(p.X, 0.0f, -p.Z);
 
@@ -334,8 +365,6 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnReadPois_Click(object sender, EventArgs e)
 		{
-			Guts.Pois.Clear();
-
 			MainRamAddresses ram = Rom.Addresses.MainRam;
 
 			int start = Mem.ReadS32(ram.PointerToArrayOfPointsOfInterest);
@@ -356,6 +385,9 @@ namespace BizHawk.Client.EmuHawk
 			NudSelectedTriggerTargetIndex.Maximum = count - 1;
 
 			var generator = new BoxGenerator(1.0f, Color.White);
+
+			Guts.Pois.Clear();
+			LbxPois.Items.Clear();
 			for (int i = start; i < end; i += size)
 			{
 				PointOfInterest poi = new(i, Mem.ReadByteRange(i, size).ToArray());
@@ -366,14 +398,9 @@ namespace BizHawk.Client.EmuHawk
 				pos.Z = -poi.Z;
 				box.Position = pos;
 
-				Guts.Pois.Add((poi, box));
+				Guts.Pois.Add(poi.Address, (poi, box));
+				LbxPois.Items.Add(poi);
 			}
-
-			LbxPois.BeginUpdate();
-			LbxPois.DataSource = Guts.Pois
-				.Select((tuple) => tuple.Item1)
-				.ToList();
-			LbxPois.EndUpdate();
 
 			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
 		}
@@ -454,7 +481,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			foreach ((PointOfInterest, Renderable?) tuple in Guts.Pois)
+			foreach ((PointOfInterest, Renderable?) tuple in Guts.Pois.Values)
 			{
 				if (tuple.Item2 != null)
 				{
@@ -468,7 +495,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			Renderable? r = Guts.Pois[Guts.Pois.IndexOf(poi)].Item2;
+			Renderable? r = Guts.Pois[poi.Address].Item2;
 
 			if (r != null)
 			{
@@ -510,6 +537,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 
 			Guts.Triggers.Clear();
+			LbxTriggers.Items.Clear();
 
 			int max = address + Guts.Stage.SizeInBytes;
 			int size = SilentHillTypeSizes.Trigger;
@@ -522,20 +550,23 @@ namespace BizHawk.Client.EmuHawk
 					break;
 				}
 
-				Guts.Triggers.Add(t);
+				Guts.Triggers.Add(t.Address, t);
 			}
 
 			LbxTriggers.BeginUpdate();
-			LbxTriggers.DataSource = Guts.Triggers;
+			foreach (Trigger t in Guts.Triggers.Values)
+			{
+				LbxTriggers.Items.Add(t);
+			}
 			LbxTriggers.EndUpdate();
 
 			LblTriggerCount.Text = Guts.Triggers.Count.ToString(CultureInfo.CurrentCulture);
 
-			foreach (Trigger t in Guts.Triggers)
+			foreach (Trigger t in Guts.Triggers.Values)
 			{
 				(PointOfInterest, Renderable?) changed = GetRenderableFromTrigger(t);
 
-				Guts.Pois[Guts.Pois.IndexOf(changed.Item1)] = changed;
+				Guts.Pois[changed.Item1.Address] = changed;
 			}
 
 			RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
@@ -617,7 +648,9 @@ namespace BizHawk.Client.EmuHawk
 				CmbSelectedTriggerStyle.Text = style.ToString(c);
 			}
 
-			long ofs = Rom.Addresses.MainRam.SaveData;
+			MainRamAddresses ram = Rom.Addresses.MainRam;
+
+			long ofs = ram.SaveData;
 			long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
 			int group = Mem.ReadS32(groupOfs);
 			int firedBit = (group >> t.FiredBitShift) & 1;
@@ -653,41 +686,49 @@ namespace BizHawk.Client.EmuHawk
 				CmbSelectedTriggerType.ResetText();
 			}
 
+			int max = Int32.MaxValue;
+			int val = t.TargetIndex;
 			switch (t.TriggerType)
 			{
 				case TriggerType.Door1:
 				case TriggerType.Door2:
-					NudSelectedTriggerTargetIndex.Maximum = LbxPois.Items.Count - 1;
-					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+					max = Guts.Pois.Count - 1;
 					break;
 				case TriggerType.Text:
-					NudSelectedTriggerTargetIndex.Maximum = Int32.Parse(LblStringCount.Text) - 1;
-					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+					max = RtbStrings.Lines.Length - 1;
 					break;
 				case TriggerType.Save0:
 				case TriggerType.Save1:
-					// On using a save trigger, address 0x801E74A8 is loaded
-					// with an array of pointers to save point name strings.
-					// There are only 24 in the entire game, plus "Anywhere"
-					// which I hope suggests a debug function somewhere that
-					// can save wherever you want. Fingers crossed.
-					NudSelectedTriggerTargetIndex.Maximum = 24;
-					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+					// On using a save trigger, address 0x801E74A8 is
+					// loaded with an array of pointers to save point
+					// name strings. There are 24 names in the game, plus
+					// "Anywhere" for debug saves (not at a save point).
+					max = 24;
 					break;
 				case TriggerType.Function1:
 				case TriggerType.MapScribble:
-					int s = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToStrings);
-					int f = Mem.ReadS32(Rom.Addresses.MainRam.PointerToArrayOfPointersToFunctions);
-					long count = (s - f) / 4;
-					NudSelectedTriggerTargetIndex.Maximum = count - 1;
-					NudSelectedTriggerTargetIndex.Value = t.TargetIndex;
+					int s = Mem.ReadS32(ram.PointerToArrayOfPointersToStrings);
+					int f = Mem.ReadS32(ram.PointerToArrayOfPointersToFunctions);
+					int count = (s - f) / sizeof(int);
+					max = count - 1;
 					break;
 				case TriggerType.Unknown0:
 				default:
-					NudSelectedTriggerTargetIndex.Maximum = Int32.MaxValue;
-					NudSelectedTriggerTargetIndex.ResetText();
+					val = 0;
 					break;
 			}
+
+			// It's important that t.TargetIndex was cached in 'val'
+			// earlier, because of how setting Maximum and Value here
+			// affect the trigger in question. If Maximum is set first,
+			// Value will be automatically capped, but that will in turn
+			// be stored in the trigger instance, and subsequent access
+			// of t.TargetIndex will yield the wrong value. If done the
+			// other way around, setting Value first, an exception will
+			// be thrown if Value is above Maximum. Simply storing a
+			// copy of the target index takes care of both problems.
+			NudSelectedTriggerTargetIndex.Maximum = max;
+			NudSelectedTriggerTargetIndex.Value = val;
 
 			MtbSelectedTriggerPoiGeometry.Text = DecodePoiGeometry(t);
 
@@ -708,7 +749,7 @@ namespace BizHawk.Client.EmuHawk
 			var south = new Vector3(0.0f, 0.0f, 1.0f);
 			var north = new Vector3(0.0f, 0.0f, -1.0f);
 
-			foreach ((PointOfInterest poi, Renderable? r) in Guts.Pois)
+			foreach ((PointOfInterest poi, Renderable? r) in Guts.Pois.Values)
 			{
 				if (r == null)
 				{

@@ -16,17 +16,83 @@ partial class CustomMainForm
 		_userChange = true;
 		Mem.WriteByteRange(t.Address, t.ToBytes().ToArray());
 
-		LbxPois.BeginUpdate();
-		LbxTriggers.BeginUpdate();
+		Guts.Triggers[t.Address] = t;
+		LbxTriggers.Items[Guts.Triggers.IndexFromKey(t.Address)] = t;
 
 		(PointOfInterest, Renderable?) changed = GetRenderableFromTrigger(t);
 
-		Guts.Pois[Guts.Pois.IndexOf(changed.Item1)] = changed;
-
-		LbxPois.EndUpdate();
-		LbxTriggers.EndUpdate();
+		Guts.Pois[changed.Item1.Address] = changed;
 
 		RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
+	}
+
+	private void SelectedTrigger_ResetProperty(Trigger t, bool all = false)
+	{
+		ReadOnlySpan<byte> stage = Guts.Stage.ToBytes();
+
+		MainRamAddresses ram = Rom.Addresses.MainRam;
+		int ofs = (int)(t.Address - ram.StageHeader);
+		Trigger reset = new(t.Address, stage.Slice(ofs, t.SizeInBytes));
+
+		if (all)
+		{
+			CommitTriggerChanges(reset);
+			return;
+		}
+
+		switch (CmsSelectedTrigger.SourceControl.Tag)
+		{
+			case nameof(PointOfInterest.Geometry):
+				// TODO: Figure this one out, a bit complicated.
+				break;
+			case nameof(Trigger.Thing0):
+				t.Thing0 = reset.Thing0;
+				break;
+			case nameof(Trigger.Thing1):
+				t.Thing1 = reset.Thing1;
+				break;
+			case nameof(Trigger.SomeIndex):
+				t.SomeIndex = reset.SomeIndex;
+				break;
+			case nameof(Trigger.Thing2):
+				t.Thing2 = reset.Thing2;
+				break;
+			case nameof(Trigger.Style):
+				t.Style = reset.Style;
+				break;
+			case nameof(Trigger.PoiIndex):
+				t.PoiIndex = reset.PoiIndex;
+				break;
+			case nameof(Trigger.Thing3):
+				t.Thing3 = reset.Thing3;
+				break;
+			case nameof(Trigger.Thing4):
+				t.Thing4 = reset.Thing4;
+				break;
+			case nameof(Trigger.TriggerType):
+				t.TriggerType = reset.TriggerType;
+				break;
+			case nameof(Trigger.TargetIndex):
+				t.TargetIndex = reset.TargetIndex;
+				break;
+			case nameof(Trigger.Thing5):
+				t.Thing5 = reset.Thing5;
+				break;
+			case nameof(Trigger.Thing6):
+				t.Thing6 = reset.Thing6;
+				break;
+			case nameof(Trigger.StageIndex):
+				t.StageIndex = reset.StageIndex;
+				break;
+			case nameof(Trigger.SomeBool):
+				t.SomeBool = reset.SomeBool;
+				break;
+			default:
+				break;
+
+		}
+
+		CommitTriggerChanges(t);
 	}
 
 	private void SelectedTrigger_ValidateInput(Control? ctrl)
@@ -50,7 +116,7 @@ partial class CustomMainForm
 			case nameof(PointOfInterest.Geometry):
 				if (!TryEncodePoiGeometry(MtbSelectedTriggerPoiGeometry.Text, t))
 					return;
-				CommitPoiChanges(Guts.Pois[t.PoiIndex].Item1);
+				CommitPoiChanges(Guts.Pois.ElementAt(t.PoiIndex).Value.Item1);
 				break;
 			case nameof(Trigger.Thing0):
 				string text = MtbSelectedTriggerThing0.Text;
@@ -205,5 +271,25 @@ partial class CustomMainForm
 	private void SelectedTrigger_Leave(object sender, EventArgs e)
 	{
 		SelectedTrigger_ValidateInput(sender as Control);
+	}
+
+	private void TsmSelectedTriggerResetProperty_Click(object sender, EventArgs e)
+	{
+		if (LbxTriggers.SelectedItem is not Trigger t)
+		{
+			return;
+		}
+
+		SelectedTrigger_ResetProperty(t);
+	}
+
+	private void TsmSelectedTriggerResetAllProperties_Click(object sender, EventArgs e)
+	{
+		if (LbxTriggers.SelectedItem is not Trigger t)
+		{
+			return;
+		}
+
+		SelectedTrigger_ResetProperty(t, true);
 	}
 }

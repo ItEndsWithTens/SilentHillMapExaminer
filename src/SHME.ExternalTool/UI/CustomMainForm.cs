@@ -438,7 +438,7 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Guts.Camera.GetVisibleRenderables(
 					ref Guts.VisibleRenderables,
-					[.. Guts.Pois.Select((tuple) => tuple.Item2),
+					[.. Guts.Pois.Values.Select((tuple) => tuple.Item2),
 						.. Guts.Gems,
 						.. Guts.CameraBoxes,
 						.. Guts.CameraGems,
@@ -691,10 +691,10 @@ namespace BizHawk.Client.EmuHawk
 			LbxCameraPaths.Items.Clear();
 			LblCameraPathCount.Text = "-";
 
-			LbxPois.DataSource = null;
+			LbxPois.Items.Clear();
 			LblPoiCount.Text = "-";
 
-			LbxTriggers.DataSource = null;
+			LbxTriggers.Items.Clear();
 			LblTriggerCount.Text = "-";
 
 			LbxPoiAssociatedTriggers.Items.Clear();

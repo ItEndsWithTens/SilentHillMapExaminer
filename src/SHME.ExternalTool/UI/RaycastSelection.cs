@@ -76,7 +76,7 @@ namespace BizHawk.Client.EmuHawk
 					{
 						bool hit = false;
 
-						foreach ((PointOfInterest, Renderable?) tuple in Guts.Pois)
+						foreach ((PointOfInterest, Renderable?) tuple in Guts.Pois.Values)
 						{
 							if (ReferenceEquals(tuple.Item2, r))
 							{

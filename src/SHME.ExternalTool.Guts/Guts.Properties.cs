@@ -22,7 +22,21 @@ partial class Guts
 
 	public Renderable GameCameraLookAt { get; set; } = new();
 
-	public IList<(PointOfInterest, Renderable?)> Pois { get; } = [];
+	// SortedDictionary is the best type available for this purpose, it
+	// seems. It allows access by key, in this case the address of the
+	// SilentHillType, but keeps elements sorted by said key. A simple
+	// extension method, IndexFromKey, then allows getting the index in
+	// situations that warrant it.
+	//
+	// Sadly, dictionaries don't implement INotifyCollectionChanged, so
+	// data binding is a problem. ObservableCollection does, but then it
+	// doesn't implement IBindingList, which is an issue for ListBoxes:
+	// https://learn.microsoft.com/en-us/dotnet/desktop/winforms/controls/how-to-bind-a-windows-forms-combobox-or-listbox-control-to-data
+	//
+	// Managing these dictionaries and the associated ListBoxes by hand
+	// is a bit more work, but avoids a whole load of nonsense otherwise.
+	public SortedDictionary<long, (PointOfInterest, Renderable?)> Pois { get; } = [];
+	public SortedDictionary<long, Trigger> Triggers { get; } = [];
 
 	public Renderable TestBox { get; set; } = new BoxGenerator(1.0f, Color.White).GenerateRainbowBox().ToWorld();
 	public IList<Renderable> TestLines { get; } =
@@ -58,8 +72,6 @@ partial class Guts
 
 	private PsxButtons _saveButton = PsxButtons.None;
 	public ref PsxButtons SaveButton => ref _saveButton;
-
-	public IList<Trigger> Triggers { get; } = [];
 
 	private Dictionary<SilentHillType, IList<(ListControl control, int index)>> _clickedThings = [];
 	public ref Dictionary<SilentHillType, IList<(ListControl control, int index)>> ClickedThings => ref _clickedThings;

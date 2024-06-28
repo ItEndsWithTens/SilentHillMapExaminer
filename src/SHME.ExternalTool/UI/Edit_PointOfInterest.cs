@@ -88,6 +88,21 @@ partial class CustomMainForm
 			.Contains(CmsSelectedPoi.SourceControl.GetType());
 	}
 
+	private void SelectedPoi_KeyDown(object sender, KeyEventArgs e)
+	{
+		if (e.KeyCode == Keys.Enter)
+		{
+			SelectedPoi_ValidateInput(sender as Control);
+			e.Handled = true;
+			e.SuppressKeyPress = true;
+		}
+	}
+
+	private void SelectedPoi_Leave(object sender, EventArgs e)
+	{
+		SelectedPoi_ValidateInput(sender as Control);
+	}
+
 	private void TsmSelectedPoiResetProperty_Click(object sender, EventArgs e)
 	{
 		if (LbxPois.SelectedItem is not PointOfInterest p)
@@ -103,11 +118,11 @@ partial class CustomMainForm
 
 		switch (CmsSelectedPoi.SourceControl.Tag)
 		{
-			case "XZ":
+			case nameof(PointOfInterest.X):
 				p.X = reset.X;
 				p.Z = reset.Z;
 				break;
-			case "Geometry":
+			case nameof(PointOfInterest.Geometry):
 				p.Geometry = reset.Geometry;
 				break;
 			default:
@@ -130,9 +145,7 @@ partial class CustomMainForm
 		int ofs = (int)(p.Address - ram.StageHeader);
 		PointOfInterest reset = new(p.Address, stage.Slice(ofs, p.SizeInBytes));
 
-		int index = LbxPois.Items.IndexOf(p);
-
-		Renderable? r = Guts.Pois[index].Item2;
+		Renderable? r = Guts.Pois[p.Address].Item2;
 		if (r is not null)
 		{
 			Vector3 pos = r.Position;
@@ -141,23 +154,8 @@ partial class CustomMainForm
 			r.Position = pos;
 		}
 
-		Guts.Pois[index] = (reset, r);
+		Guts.Pois[p.Address] = (reset, r);
 
 		CommitPoiChanges(reset);
-	}
-
-	private void SelectedPoi_KeyDown(object sender, KeyEventArgs e)
-	{
-		if (e.KeyCode == Keys.Enter)
-		{
-			SelectedPoi_ValidateInput(sender as Control);
-			e.Handled = true;
-			e.SuppressKeyPress = true;
-		}
-	}
-
-	private void SelectedPoi_Leave(object sender, EventArgs e)
-	{
-		SelectedPoi_ValidateInput(sender as Control);
 	}
 }
