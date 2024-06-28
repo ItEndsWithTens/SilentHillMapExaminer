@@ -45,6 +45,37 @@ namespace SHME.ExternalTool
 
 			return (geoA, geoB);
 		}
+
+		public static void EncodeGeometry(this PointOfInterest p, TriggerStyle s, float? geoA, float? geoB)
+		{
+			switch (s)
+			{
+				case TriggerStyle.ButtonOmni:
+				case TriggerStyle.ButtonYaw:
+					p.Geometry = (DegreesToGameUnits((float)geoA) & 0xFFF) << 12;
+					break;
+				case TriggerStyle.TouchAabb:
+					float radiusX = (float)geoA / 2.0f;
+					float radiusZ = (float)geoB / 2.0f;
+
+					int rawA = ((FloatToQ(radiusX) / 1024) & 0xFF) << 16;
+					int rawB = ((FloatToQ(radiusZ) / 1024) & 0xFF) << 24;
+
+					p.Geometry = (uint)(rawA | rawB);
+					break;
+				case TriggerStyle.TouchObb:
+					rawA = (int)((DegreesToGameUnits((float)geoA) << 0x10) >> 0x14);
+					rawB = FloatToQ((float)geoB) >> 9;
+
+					rawA = (rawA & 0xFF) << 16;
+					rawB = (rawB & 0xFF) << 24;
+
+					p.Geometry = (uint)(rawA | rawB);
+					break;
+				default:
+					break;
+			}
+		}
 	}
 
 	public class PointOfInterest : SilentHillType

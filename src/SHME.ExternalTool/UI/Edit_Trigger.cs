@@ -19,8 +19,6 @@ partial class CustomMainForm
 		LbxPois.BeginUpdate();
 		LbxTriggers.BeginUpdate();
 
-		Guts.Triggers[Guts.Triggers.IndexOf(t)] = t;
-
 		(PointOfInterest, Renderable?) changed = GetRenderableFromTrigger(t);
 
 		Guts.Pois[Guts.Pois.IndexOf(changed.Item1)] = changed;
@@ -50,7 +48,9 @@ partial class CustomMainForm
 				t.Disabled = check;
 				break;
 			case nameof(PointOfInterest.Geometry):
-				// TODO: Figure out how to parse user input.
+				if (!TryEncodePoiGeometry(MtbSelectedTriggerPoiGeometry.Text, t))
+					return;
+				CommitPoiChanges(Guts.Pois[t.PoiIndex].Item1);
 				break;
 			case nameof(Trigger.Thing0):
 				string text = MtbSelectedTriggerThing0.Text;

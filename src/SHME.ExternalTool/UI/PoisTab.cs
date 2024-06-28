@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static SHME.ExternalTool.CollectionExtensions;
 
@@ -205,6 +206,75 @@ namespace BizHawk.Client.EmuHawk
 
 				_ => $"Yaw: {geoA.ToString(c)}"
 			};
+		}
+
+		private bool TryEncodePoiGeometry(string text, Trigger t)
+		{
+			string pattern;
+			RegexOptions options = RegexOptions.IgnoreCase;
+			var timeout = TimeSpan.FromSeconds(1);
+			Regex regex;
+			Match match;
+
+			float geoA;
+			float geoB;
+
+			PointOfInterest poi = Guts.Pois[t.PoiIndex].Item1;
+
+			bool success = false;
+
+			switch (t.Style)
+			{
+				case TriggerStyle.TouchAabb:
+					string x = @"X\s*?size:";
+					string z = @"Z\s*?size:";
+					string xz = $"{x}(?<groupX>.*){z}(?<groupZ>.*)";
+					string zx = $"{z}(?<groupZ>.*){x}(?<groupX>.*)";
+					pattern = $"{xz}|{zx}";
+					regex = new Regex(pattern, options, timeout);
+					match = regex.Match(text);
+					if (!match.Success)
+						break;
+					if (!Single.TryParse(match.Groups["groupX"].Value, out geoA))
+						break;
+					if (!Single.TryParse(match.Groups["groupZ"].Value, out geoB))
+						break;
+					poi.EncodeGeometry(t.Style, geoA, geoB);
+					success = true;
+					break;
+				case TriggerStyle.TouchObb:
+					string yaw = "Yaw:";
+					string width = "Width:";
+					string yawWidth = $"{yaw}(?<groupYaw>.*){width}(?<groupWidth>.*)";
+					string widthYaw = $"{width}(?<groupWidth>.*){yaw}(?<groupYaw>.*)";
+					pattern = $"{yawWidth}|{widthYaw}";
+					regex = new Regex(pattern, options, timeout);
+					match = regex.Match(text);
+					if (!match.Success)
+						break;
+					if (!Single.TryParse(match.Groups["groupYaw"].Value, out geoA))
+						break;
+					if (!Single.TryParse(match.Groups["groupWidth"].Value, out geoB))
+						break;
+					poi.EncodeGeometry(t.Style, geoA, geoB);
+					success = true;
+					break;
+				case TriggerStyle.ButtonYaw:
+					pattern = @"Yaw:\s*?(\S+?)";
+					regex = new Regex(pattern, options, timeout);
+					match = regex.Match(text);
+					if (!match.Success)
+						break;
+					if (!Single.TryParse(match.Groups[1].Value, out geoA))
+						break;
+					poi.EncodeGeometry(t.Style, geoA, null);
+					success = true;
+					break;
+				default:
+					break;
+			}
+
+			return success;
 		}
 
 		private (PointOfInterest, Renderable?) GetRenderableFromTrigger(Trigger t)
