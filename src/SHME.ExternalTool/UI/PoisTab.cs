@@ -9,7 +9,6 @@ using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using static SHME.ExternalTool.CollectionExtensions;
 
 namespace BizHawk.Client.EmuHawk
 {
@@ -76,9 +75,6 @@ namespace BizHawk.Client.EmuHawk
 
 		private void BtnClearPoisTriggers_Click(object sender, EventArgs e)
 		{
-			ClearDisplayedPoiInfo();
-			ClearDisplayedTriggerInfo();
-
 			Guts.Pois.Clear();
 			LbxPois.Items.Clear();
 			LblPoiCount.Text = "-";
@@ -86,6 +82,9 @@ namespace BizHawk.Client.EmuHawk
 			Guts.Triggers.Clear();
 			LbxTriggers.Items.Clear();
 			LblTriggerCount.Text = "-";
+
+			ClearDisplayedPoiInfo();
+			ClearDisplayedTriggerInfo();
 		}
 
 		private void BtnGoToPoi_Click(object sender, EventArgs e)

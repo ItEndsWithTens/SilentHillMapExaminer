@@ -697,8 +697,6 @@ namespace BizHawk.Client.EmuHawk
 			LbxTriggers.Items.Clear();
 			LblTriggerCount.Text = "-";
 
-			LbxPoiAssociatedTriggers.Items.Clear();
-
 			ClearDisplayedCameraPathInfo();
 			ClearDisplayedPoiInfo();
 			ClearDisplayedTriggerInfo();
