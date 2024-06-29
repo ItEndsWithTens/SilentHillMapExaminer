@@ -37,6 +37,7 @@ partial class Guts
 	// is a bit more work, but avoids a whole load of nonsense otherwise.
 	public SortedDictionary<long, (PointOfInterest, Renderable?)> Pois { get; } = [];
 	public SortedDictionary<long, Trigger> Triggers { get; } = [];
+	public SortedDictionary<long, (CameraPath, IList<Renderable?>)> CameraPaths { get; } = [];
 
 	public Renderable TestBox { get; set; } = new BoxGenerator(1.0f, Color.White).GenerateRainbowBox().ToWorld();
 	public IList<Renderable> TestLines { get; } =
@@ -48,12 +49,6 @@ partial class Guts
 	public Renderable TestSheet { get; set; } = new SheetGenerator(1.0f, Color.White).Generate().ToWorld();
 
 	public IList<Renderable> ModelBoxes { get; } = [];
-
-	public Dictionary<CameraPath, IList<Renderable?>> CameraPaths { get; } = [];
-
-	public IList<Renderable> CameraBoxes { get; } = [];
-	public IList<Renderable> CameraGems { get; } = [];
-	public IList<Line> CameraLines { get; } = [];
 
 	private IList<((Vertex a, Vertex b), int argb, bool visible)> _screenSpaceLines = [];
 	public ref IList<((Vertex a, Vertex b), int argb, bool visible)> ScreenSpaceLines => ref _screenSpaceLines;

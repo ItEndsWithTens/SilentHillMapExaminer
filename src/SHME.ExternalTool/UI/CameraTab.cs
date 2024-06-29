@@ -57,9 +57,6 @@ namespace BizHawk.Client.EmuHawk
 
 			Guts.CameraPaths.Clear();
 			LbxCameraPaths.Items.Clear();
-			Guts.CameraBoxes.Clear();
-			Guts.CameraGems.Clear();
-			Guts.CameraLines.Clear();
 			var gemGen = new GemGenerator(0.125f, 0.25f, 0.125f, Color.FromArgb(0x25, 0xA5, 0x97));
 			while (true)
 			{
@@ -79,9 +76,6 @@ namespace BizHawk.Client.EmuHawk
 
 				Renderable gemB = gemGen.Generate().ToWorld();
 				gemB.Position = new Vector3(path.VolumeMax.X, -path.VolumeMax.Y, -path.VolumeMax.Z);
-
-				Guts.CameraGems.Add(gemA);
-				Guts.CameraGems.Add(gemB);
 
 				Vector3 volumeMin;
 				volumeMin.X = Math.Min(gemA.Position.X, gemB.Position.X);
@@ -117,8 +111,6 @@ namespace BizHawk.Client.EmuHawk
 				Renderable volume = boxGen.Generate().ToWorld();
 				volume.Position = volumeMin + (size / 2.0f);
 
-				Guts.CameraBoxes.Add(volume);
-
 				float sizeX = path.AreaMaxX - path.AreaMinX;
 				float sizeZ = path.AreaMaxZ - path.AreaMinZ;
 				var sheetGen = new SheetGenerator(sizeX, sizeZ, Color.FromArgb(0x52, 0x3A, 0xB5));
@@ -128,9 +120,7 @@ namespace BizHawk.Client.EmuHawk
 					0.0f,
 					-(path.AreaMinZ + sizeZ / 2.0f));
 
-				Guts.CameraBoxes.Add(area);
-
-				Guts.CameraPaths.Add(path, new[] { area, gemA, volume, gemB });
+				Guts.CameraPaths.Add(path.Address, (path, [area, gemA, volume, gemB]));
 
 				address += SilentHillTypeSizes.CameraPath;
 			}
@@ -191,9 +181,9 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			foreach (KeyValuePair<CameraPath, IList<Renderable?>> item in Guts.CameraPaths)
+			foreach ((CameraPath, IList<Renderable?>) tuple in Guts.CameraPaths.Values)
 			{
-				foreach (Renderable? r in item.Value)
+				foreach (Renderable? r in tuple.Item2)
 				{
 					if (r != null)
 					{
@@ -208,7 +198,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			foreach (Renderable? r in Guts.CameraPaths[path])
+			foreach (Renderable? r in Guts.CameraPaths[path.Address].Item2)
 			{
 				if (r != null)
 				{

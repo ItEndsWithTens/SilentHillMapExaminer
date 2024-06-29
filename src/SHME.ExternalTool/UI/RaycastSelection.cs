@@ -94,9 +94,9 @@ namespace BizHawk.Client.EmuHawk
 
 						if (!hit)
 						{
-							foreach (KeyValuePair<CameraPath, IList<Renderable?>> pair in Guts.CameraPaths)
+							foreach ((CameraPath, IList<Renderable?>) tuple in Guts.CameraPaths.Values)
 							{
-								foreach (Renderable? other in pair.Value)
+								foreach (Renderable? other in tuple.Item2)
 								{
 									if (other == null)
 									{
@@ -105,11 +105,11 @@ namespace BizHawk.Client.EmuHawk
 
 									if (ReferenceEquals(other, r))
 									{
-										if (!clicked.ContainsKey(pair.Key))
+										if (!clicked.ContainsKey(tuple.Item1))
 										{
 											ListBox lbx = LbxCameraPaths;
-											int idx = LbxCameraPaths.Items.IndexOf(pair.Key);
-											clicked.Add(pair.Key, new List<(ListControl, int)>() { (lbx, idx) });
+											int idx = LbxCameraPaths.Items.IndexOf(tuple.Item1);
+											clicked.Add(tuple.Item1, new List<(ListControl, int)>() { (lbx, idx) });
 										}
 
 										hit = true;

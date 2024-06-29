@@ -50,10 +50,6 @@ namespace SHME.ExternalTool
 			Lines.Clear();
 			TestBoxes.Clear();
 			ModelBoxes.Clear();
-
-			CameraBoxes.Clear();
-			CameraGems.Clear();
-			CameraLines.Clear();
 		}
 	}
 }
