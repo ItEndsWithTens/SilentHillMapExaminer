@@ -166,6 +166,10 @@ namespace BizHawk.Client.EmuHawk
 			return (harry, camera);
 		}
 
+		public void SetHarryPosition(Vector3 position)
+		{
+			SetHarryPosition(position.X, position.Y, position.Z);
+		}
 		public void SetHarryPosition(float x, float y, float z)
 		{
 			MainRamAddresses ram = Rom.Addresses.MainRam;

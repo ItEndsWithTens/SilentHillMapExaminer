@@ -55,6 +55,21 @@ public class SilentHillTypeTest
 
 			Assert.That(c.ToBytes().ToArray(), Is.EqualTo(expected));
 		});
+
+		byte[] disabledExpected = [
+			0x58, 0x01, 0xE0, 0x01,
+			0xC0, 0x08, 0xA0, 0x09,
+			0x88, 0x01, 0x88, 0x01,
+			0xD3, 0x08, 0xA0, 0x09,
+			0x40, 0x02, 0xEF, 0xEF,
+			0xE7, 0x00, 0x00, 0x00];
+
+		CameraPath disabled = new(0x800C9D80, disabledExpected);
+		Assert.Multiple(() =>
+		{
+			Assert.That(disabled.Disabled, Is.True);
+			Assert.That(disabled.ToBytes().ToArray(), Is.EqualTo(disabledExpected));
+		});
 	}
 
 	[Test]

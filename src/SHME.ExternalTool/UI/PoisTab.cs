@@ -19,7 +19,10 @@ namespace BizHawk.Client.EmuHawk
 			CmbSelectedTriggerStyle.DataSource = Enum.GetValues(typeof(TriggerStyle));
 			CmbSelectedTriggerType.DataSource = Enum.GetValues(typeof(TriggerType));
 
-			LblSelectedPoiXZ.Tag = nameof(PointOfInterest.X) + nameof(PointOfInterest.Z);
+			LblSelectedPoiXZ.Tag =
+				nameof(PointOfInterest.X) +
+				nameof(PointOfInterest.Z);
+
 			TbxSelectedPoiX.Tag = nameof(PointOfInterest.X);
 			TbxSelectedPoiZ.Tag = nameof(PointOfInterest.Z);
 
@@ -577,16 +580,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			uint existing = Mem.ReadByte(t.Address);
-
-			if (CbxSelectedTriggerDisabled.Checked)
-			{
-				Mem.WriteByte(t.Address, (byte)(existing | 0b10000000));
-			}
-			else
-			{
-				Mem.WriteByte(t.Address, (byte)(existing & 0b01111111));
-			}
+			SelectedTrigger_ValidateInput(sender as Control);
 		}
 
 		private void CbxSelectedTriggerFired_CheckedChanged(object sender, EventArgs e)

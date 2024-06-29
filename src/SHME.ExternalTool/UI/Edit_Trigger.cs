@@ -299,40 +299,9 @@ partial class CustomMainForm
 		}
 	}
 
-	private void SelectedTrigger_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-	{
-		bool alphanumeric =
-			(e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.Z) ||
-			(e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9);
-
-		if (!alphanumeric || sender is not MaskedTextBox mtb)
-		{
-			return;
-		}
-
-		// If any of the two literals in the hex prefix "0x" are selected
-		// when starting to type in a MaskedTextBox, the first character
-		// typed will be swallowed. To have it simply overwrite the first
-		// editable character, reset the selection before KeyDown.
-		if (mtb.SelectionLength > 0 && mtb.SelectionStart < 2)
-		{
-			BeginInvoke(() => mtb.SelectionLength = 0);
-		}
-	}
-
 	private void SelectedTrigger_Leave(object sender, EventArgs e)
 	{
 		SelectedTrigger_ValidateInput(sender as Control);
-	}
-
-	private void TsmSelectedTriggerResetProperty_Click(object sender, EventArgs e)
-	{
-		if (LbxTriggers.SelectedItem is not Trigger t)
-		{
-			return;
-		}
-
-		SelectedTrigger_ResetProperty(t);
 	}
 
 	private void TsmSelectedTriggerResetAllProperties_Click(object sender, EventArgs e)
@@ -343,5 +312,15 @@ partial class CustomMainForm
 		}
 
 		SelectedTrigger_ResetProperty(t, "all");
+	}
+
+	private void TsmSelectedTriggerResetProperty_Click(object sender, EventArgs e)
+	{
+		if (LbxTriggers.SelectedItem is not Trigger t)
+		{
+			return;
+		}
+
+		SelectedTrigger_ResetProperty(t);
 	}
 }

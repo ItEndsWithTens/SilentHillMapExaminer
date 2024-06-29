@@ -198,32 +198,44 @@ namespace BizHawk.Client.EmuHawk
             this.TbpCamera = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel21 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanel44 = new System.Windows.Forms.TableLayoutPanel();
             this.LbxCameraPaths = new System.Windows.Forms.ListBox();
+            this.BtnClearCameraPaths = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.CmsSelectedCameraPath = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.TsmSelectedCameraPathResetProperty = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.TsmSelectedCameraPathResetAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel22 = new System.Windows.Forms.TableLayoutPanel();
             this.label107 = new System.Windows.Forms.Label();
-            this.LblCameraPathPitch = new System.Windows.Forms.Label();
-            this.LblCameraPathYaw = new System.Windows.Forms.Label();
-            this.LblCameraPathAddress = new System.Windows.Forms.Label();
-            this.label82 = new System.Windows.Forms.Label();
-            this.label108 = new System.Windows.Forms.Label();
-            this.label77 = new System.Windows.Forms.Label();
-            this.label80 = new System.Windows.Forms.Label();
-            this.label83 = new System.Windows.Forms.Label();
-            this.LblCameraPathThing6 = new System.Windows.Forms.Label();
-            this.label81 = new System.Windows.Forms.Label();
-            this.LblCameraPathVolumeMin = new System.Windows.Forms.Label();
+            this.LblSelectedCameraPathYaw = new System.Windows.Forms.Label();
+            this.LblSelectedCameraPathVolumeMin = new System.Windows.Forms.Label();
+            this.LblSelectedCameraPathPitch = new System.Windows.Forms.Label();
+            this.LblSelectedCameraPathVolumeMax = new System.Windows.Forms.Label();
+            this.LblSelectedCameraPathThing6 = new System.Windows.Forms.Label();
+            this.LblSelectedCameraPathThing5 = new System.Windows.Forms.Label();
             this.BtnCameraPathGoToVolumeMin = new System.Windows.Forms.Button();
-            this.LblCameraPathThing5 = new System.Windows.Forms.Label();
             this.BtnCameraPathGoToVolumeMax = new System.Windows.Forms.Button();
-            this.LblCameraPathVolumeMax = new System.Windows.Forms.Label();
-            this.LblCameraPathThing4 = new System.Windows.Forms.Label();
-            this.label104 = new System.Windows.Forms.Label();
-            this.label92 = new System.Windows.Forms.Label();
-            this.LblCameraPathAreaMin = new System.Windows.Forms.Label();
-            this.LblCameraPathAreaMax = new System.Windows.Forms.Label();
-            this.label102 = new System.Windows.Forms.Label();
+            this.LblSelectedCameraPathAreaMin = new System.Windows.Forms.Label();
+            this.LblSelectedCameraPathThing4 = new System.Windows.Forms.Label();
+            this.LblSelectedCameraPathAreaMax = new System.Windows.Forms.Label();
+            this.LblCameraPathAddress = new System.Windows.Forms.Label();
             this.CbxSelectedCameraPathDisabled = new System.Windows.Forms.CheckBox();
+            this.TbxCameraPathVolumeMinX = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathVolumeMinY = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathVolumeMinZ = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathVolumeMaxX = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathVolumeMaxY = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathVolumeMaxZ = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathAreaMinX = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathAreaMinZ = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathAreaMaxX = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathAreaMaxZ = new System.Windows.Forms.TextBox();
+            this.MtbCameraPathThing4 = new System.Windows.Forms.MaskedTextBox();
+            this.MtbCameraPathThing5 = new System.Windows.Forms.MaskedTextBox();
+            this.MtbCameraPathThing6 = new System.Windows.Forms.MaskedTextBox();
+            this.TbxCameraPathPitch = new System.Windows.Forms.TextBox();
+            this.TbxCameraPathYaw = new System.Windows.Forms.TextBox();
             this.LblCameraPathCount = new System.Windows.Forms.Label();
             this.BtnCameraPathReadArray = new System.Windows.Forms.Button();
             this.TbpStats = new System.Windows.Forms.TabPage();
@@ -516,7 +528,9 @@ namespace BizHawk.Client.EmuHawk
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.tableLayoutPanel44.SuspendLayout();
             this.groupBox10.SuspendLayout();
+            this.CmsSelectedCameraPath.SuspendLayout();
             this.tableLayoutPanel22.SuspendLayout();
             this.TbpStats.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -2825,7 +2839,7 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing0.Enter += new System.EventHandler(this.Selectable_Enter);
             this.MtbSelectedTriggerThing0.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
             this.MtbSelectedTriggerThing0.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
-            this.MtbSelectedTriggerThing0.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
+            this.MtbSelectedTriggerThing0.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing1
             // 
@@ -2841,7 +2855,7 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing1.Enter += new System.EventHandler(this.Selectable_Enter);
             this.MtbSelectedTriggerThing1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
             this.MtbSelectedTriggerThing1.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
-            this.MtbSelectedTriggerThing1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
+            this.MtbSelectedTriggerThing1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing5
             // 
@@ -2857,7 +2871,7 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing5.Enter += new System.EventHandler(this.Selectable_Enter);
             this.MtbSelectedTriggerThing5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
             this.MtbSelectedTriggerThing5.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
-            this.MtbSelectedTriggerThing5.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
+            this.MtbSelectedTriggerThing5.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing6
             // 
@@ -2873,7 +2887,7 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing6.Enter += new System.EventHandler(this.Selectable_Enter);
             this.MtbSelectedTriggerThing6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
             this.MtbSelectedTriggerThing6.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
-            this.MtbSelectedTriggerThing6.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
+            this.MtbSelectedTriggerThing6.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing2
             // 
@@ -2889,7 +2903,7 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing2.Enter += new System.EventHandler(this.Selectable_Enter);
             this.MtbSelectedTriggerThing2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
             this.MtbSelectedTriggerThing2.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
-            this.MtbSelectedTriggerThing2.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
+            this.MtbSelectedTriggerThing2.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing3
             // 
@@ -2905,7 +2919,7 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing3.Enter += new System.EventHandler(this.Selectable_Enter);
             this.MtbSelectedTriggerThing3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
             this.MtbSelectedTriggerThing3.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
-            this.MtbSelectedTriggerThing3.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
+            this.MtbSelectedTriggerThing3.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
             // 
             // MtbSelectedTriggerThing4
             // 
@@ -2921,7 +2935,7 @@ namespace BizHawk.Client.EmuHawk
             this.MtbSelectedTriggerThing4.Enter += new System.EventHandler(this.Selectable_Enter);
             this.MtbSelectedTriggerThing4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedTrigger_KeyDown);
             this.MtbSelectedTriggerThing4.Leave += new System.EventHandler(this.SelectedTrigger_Leave);
-            this.MtbSelectedTriggerThing4.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SelectedTrigger_PreviewKeyDown);
+            this.MtbSelectedTriggerThing4.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
             // 
             // NudSelectedTriggerPoiIndex
             // 
@@ -3232,7 +3246,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.LbxCameraPaths);
+            this.splitContainer2.Panel1.Controls.Add(this.tableLayoutPanel44);
             // 
             // splitContainer2.Panel2
             // 
@@ -3241,20 +3255,48 @@ namespace BizHawk.Client.EmuHawk
             this.splitContainer2.SplitterDistance = 225;
             this.splitContainer2.TabIndex = 10;
             // 
+            // tableLayoutPanel44
+            // 
+            this.tableLayoutPanel44.ColumnCount = 1;
+            this.tableLayoutPanel44.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel44.Controls.Add(this.LbxCameraPaths, 0, 0);
+            this.tableLayoutPanel44.Controls.Add(this.BtnClearCameraPaths, 0, 1);
+            this.tableLayoutPanel44.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel44.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel44.Name = "tableLayoutPanel44";
+            this.tableLayoutPanel44.RowCount = 2;
+            this.tableLayoutPanel44.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel44.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel44.Size = new System.Drawing.Size(225, 577);
+            this.tableLayoutPanel44.TabIndex = 1;
+            // 
             // LbxCameraPaths
             // 
             this.LbxCameraPaths.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LbxCameraPaths.FormattingEnabled = true;
             this.LbxCameraPaths.IntegralHeight = false;
-            this.LbxCameraPaths.Location = new System.Drawing.Point(0, 0);
+            this.LbxCameraPaths.Location = new System.Drawing.Point(3, 3);
             this.LbxCameraPaths.Name = "LbxCameraPaths";
-            this.LbxCameraPaths.Size = new System.Drawing.Size(225, 577);
+            this.LbxCameraPaths.Size = new System.Drawing.Size(219, 546);
             this.LbxCameraPaths.TabIndex = 0;
             this.LbxCameraPaths.SelectedIndexChanged += new System.EventHandler(this.LbxCameraPaths_SelectedIndexChanged);
             this.LbxCameraPaths.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.LbxCameraPaths_Format);
             // 
+            // BtnClearCameraPaths
+            // 
+            this.BtnClearCameraPaths.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BtnClearCameraPaths.Location = new System.Drawing.Point(0, 552);
+            this.BtnClearCameraPaths.Margin = new System.Windows.Forms.Padding(0);
+            this.BtnClearCameraPaths.Name = "BtnClearCameraPaths";
+            this.BtnClearCameraPaths.Size = new System.Drawing.Size(225, 25);
+            this.BtnClearCameraPaths.TabIndex = 1;
+            this.BtnClearCameraPaths.Text = "Clear";
+            this.BtnClearCameraPaths.UseVisualStyleBackColor = true;
+            this.BtnClearCameraPaths.Click += new System.EventHandler(this.BtnClearCameraPaths_Click);
+            // 
             // groupBox10
             // 
+            this.groupBox10.ContextMenuStrip = this.CmsSelectedCameraPath;
             this.groupBox10.Controls.Add(this.tableLayoutPanel22);
             this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox10.Location = new System.Drawing.Point(0, 0);
@@ -3264,36 +3306,73 @@ namespace BizHawk.Client.EmuHawk
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Selected path";
             // 
+            // CmsSelectedCameraPath
+            // 
+            this.CmsSelectedCameraPath.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TsmSelectedCameraPathResetProperty,
+            this.toolStripSeparator3,
+            this.TsmSelectedCameraPathResetAll});
+            this.CmsSelectedCameraPath.Name = "CmdSelectedCameraPath";
+            this.CmsSelectedCameraPath.Size = new System.Drawing.Size(296, 54);
+            this.CmsSelectedCameraPath.Opening += new System.ComponentModel.CancelEventHandler(this.CmsSelectedCameraPath_Opening);
+            // 
+            // TsmSelectedCameraPathResetProperty
+            // 
+            this.TsmSelectedCameraPathResetProperty.Name = "TsmSelectedCameraPathResetProperty";
+            this.TsmSelectedCameraPathResetProperty.Size = new System.Drawing.Size(295, 22);
+            this.TsmSelectedCameraPathResetProperty.Text = "Reset property from disc";
+            this.TsmSelectedCameraPathResetProperty.Click += new System.EventHandler(this.TsmSelectedCameraPathResetProperty_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(292, 6);
+            // 
+            // TsmSelectedCameraPathResetAll
+            // 
+            this.TsmSelectedCameraPathResetAll.Name = "TsmSelectedCameraPathResetAll";
+            this.TsmSelectedCameraPathResetAll.Size = new System.Drawing.Size(295, 22);
+            this.TsmSelectedCameraPathResetAll.Text = "Reset all camera path properties from disc";
+            this.TsmSelectedCameraPathResetAll.Click += new System.EventHandler(this.TsmSelectedCameraPathResetAll_Click);
+            // 
             // tableLayoutPanel22
             // 
             this.tableLayoutPanel22.AutoSize = true;
-            this.tableLayoutPanel22.ColumnCount = 3;
+            this.tableLayoutPanel22.ColumnCount = 5;
             this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel22.Controls.Add(this.label107, 0, 0);
-            this.tableLayoutPanel22.Controls.Add(this.LblCameraPathPitch, 1, 13);
-            this.tableLayoutPanel22.Controls.Add(this.LblCameraPathYaw, 1, 14);
+            this.tableLayoutPanel22.Controls.Add(this.LblSelectedCameraPathYaw, 0, 14);
+            this.tableLayoutPanel22.Controls.Add(this.LblSelectedCameraPathVolumeMin, 0, 3);
+            this.tableLayoutPanel22.Controls.Add(this.LblSelectedCameraPathPitch, 0, 13);
+            this.tableLayoutPanel22.Controls.Add(this.LblSelectedCameraPathVolumeMax, 0, 4);
+            this.tableLayoutPanel22.Controls.Add(this.LblSelectedCameraPathThing6, 0, 11);
+            this.tableLayoutPanel22.Controls.Add(this.LblSelectedCameraPathThing5, 0, 10);
+            this.tableLayoutPanel22.Controls.Add(this.BtnCameraPathGoToVolumeMin, 4, 3);
+            this.tableLayoutPanel22.Controls.Add(this.BtnCameraPathGoToVolumeMax, 4, 4);
+            this.tableLayoutPanel22.Controls.Add(this.LblSelectedCameraPathAreaMin, 0, 6);
+            this.tableLayoutPanel22.Controls.Add(this.LblSelectedCameraPathThing4, 0, 9);
+            this.tableLayoutPanel22.Controls.Add(this.LblSelectedCameraPathAreaMax, 0, 7);
             this.tableLayoutPanel22.Controls.Add(this.LblCameraPathAddress, 1, 0);
-            this.tableLayoutPanel22.Controls.Add(this.label82, 0, 14);
-            this.tableLayoutPanel22.Controls.Add(this.label108, 0, 3);
-            this.tableLayoutPanel22.Controls.Add(this.label77, 0, 13);
-            this.tableLayoutPanel22.Controls.Add(this.label80, 0, 4);
-            this.tableLayoutPanel22.Controls.Add(this.label83, 0, 11);
-            this.tableLayoutPanel22.Controls.Add(this.LblCameraPathThing6, 1, 11);
-            this.tableLayoutPanel22.Controls.Add(this.label81, 0, 10);
-            this.tableLayoutPanel22.Controls.Add(this.LblCameraPathVolumeMin, 1, 3);
-            this.tableLayoutPanel22.Controls.Add(this.BtnCameraPathGoToVolumeMin, 2, 3);
-            this.tableLayoutPanel22.Controls.Add(this.LblCameraPathThing5, 1, 10);
-            this.tableLayoutPanel22.Controls.Add(this.BtnCameraPathGoToVolumeMax, 2, 4);
-            this.tableLayoutPanel22.Controls.Add(this.LblCameraPathVolumeMax, 1, 4);
-            this.tableLayoutPanel22.Controls.Add(this.LblCameraPathThing4, 1, 9);
-            this.tableLayoutPanel22.Controls.Add(this.label104, 0, 6);
-            this.tableLayoutPanel22.Controls.Add(this.label92, 0, 9);
-            this.tableLayoutPanel22.Controls.Add(this.LblCameraPathAreaMin, 1, 6);
-            this.tableLayoutPanel22.Controls.Add(this.LblCameraPathAreaMax, 1, 7);
-            this.tableLayoutPanel22.Controls.Add(this.label102, 0, 7);
             this.tableLayoutPanel22.Controls.Add(this.CbxSelectedCameraPathDisabled, 1, 1);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathVolumeMinX, 1, 3);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathVolumeMinY, 2, 3);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathVolumeMinZ, 3, 3);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathVolumeMaxX, 1, 4);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathVolumeMaxY, 2, 4);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathVolumeMaxZ, 3, 4);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathAreaMinX, 1, 6);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathAreaMinZ, 3, 6);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathAreaMaxX, 1, 7);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathAreaMaxZ, 3, 7);
+            this.tableLayoutPanel22.Controls.Add(this.MtbCameraPathThing4, 1, 9);
+            this.tableLayoutPanel22.Controls.Add(this.MtbCameraPathThing5, 1, 10);
+            this.tableLayoutPanel22.Controls.Add(this.MtbCameraPathThing6, 1, 11);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathPitch, 1, 13);
+            this.tableLayoutPanel22.Controls.Add(this.TbxCameraPathYaw, 1, 14);
             this.tableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel22.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel22.Name = "tableLayoutPanel22";
@@ -3326,25 +3405,128 @@ namespace BizHawk.Client.EmuHawk
             this.label107.TabIndex = 0;
             this.label107.Text = "Address:";
             // 
-            // LblCameraPathPitch
+            // LblSelectedCameraPathYaw
             // 
-            this.LblCameraPathPitch.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPathPitch.AutoSize = true;
-            this.LblCameraPathPitch.Location = new System.Drawing.Point(100, 493);
-            this.LblCameraPathPitch.Name = "LblCameraPathPitch";
-            this.LblCameraPathPitch.Size = new System.Drawing.Size(42, 13);
-            this.LblCameraPathPitch.TabIndex = 100;
-            this.LblCameraPathPitch.Text = "<pitch>";
+            this.LblSelectedCameraPathYaw.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedCameraPathYaw.AutoSize = true;
+            this.LblSelectedCameraPathYaw.ContextMenuStrip = this.CmsSelectedCameraPath;
+            this.LblSelectedCameraPathYaw.Location = new System.Drawing.Point(63, 531);
+            this.LblSelectedCameraPathYaw.Name = "LblSelectedCameraPathYaw";
+            this.LblSelectedCameraPathYaw.Size = new System.Drawing.Size(31, 13);
+            this.LblSelectedCameraPathYaw.TabIndex = 105;
+            this.LblSelectedCameraPathYaw.Text = "Yaw:";
             // 
-            // LblCameraPathYaw
+            // LblSelectedCameraPathVolumeMin
             // 
-            this.LblCameraPathYaw.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPathYaw.AutoSize = true;
-            this.LblCameraPathYaw.Location = new System.Drawing.Point(100, 531);
-            this.LblCameraPathYaw.Name = "LblCameraPathYaw";
-            this.LblCameraPathYaw.Size = new System.Drawing.Size(38, 13);
-            this.LblCameraPathYaw.TabIndex = 110;
-            this.LblCameraPathYaw.Text = "<yaw>";
+            this.LblSelectedCameraPathVolumeMin.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedCameraPathVolumeMin.AutoSize = true;
+            this.LblSelectedCameraPathVolumeMin.ContextMenuStrip = this.CmsSelectedCameraPath;
+            this.LblSelectedCameraPathVolumeMin.Location = new System.Drawing.Point(6, 123);
+            this.LblSelectedCameraPathVolumeMin.Name = "LblSelectedCameraPathVolumeMin";
+            this.LblSelectedCameraPathVolumeMin.Size = new System.Drawing.Size(88, 13);
+            this.LblSelectedCameraPathVolumeMin.TabIndex = 15;
+            this.LblSelectedCameraPathVolumeMin.Text = "Volume min XYZ:";
+            // 
+            // LblSelectedCameraPathPitch
+            // 
+            this.LblSelectedCameraPathPitch.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedCameraPathPitch.AutoSize = true;
+            this.LblSelectedCameraPathPitch.ContextMenuStrip = this.CmsSelectedCameraPath;
+            this.LblSelectedCameraPathPitch.Location = new System.Drawing.Point(60, 493);
+            this.LblSelectedCameraPathPitch.Name = "LblSelectedCameraPathPitch";
+            this.LblSelectedCameraPathPitch.Size = new System.Drawing.Size(34, 13);
+            this.LblSelectedCameraPathPitch.TabIndex = 95;
+            this.LblSelectedCameraPathPitch.Text = "Pitch:";
+            // 
+            // LblSelectedCameraPathVolumeMax
+            // 
+            this.LblSelectedCameraPathVolumeMax.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedCameraPathVolumeMax.AutoSize = true;
+            this.LblSelectedCameraPathVolumeMax.ContextMenuStrip = this.CmsSelectedCameraPath;
+            this.LblSelectedCameraPathVolumeMax.Location = new System.Drawing.Point(3, 160);
+            this.LblSelectedCameraPathVolumeMax.Name = "LblSelectedCameraPathVolumeMax";
+            this.LblSelectedCameraPathVolumeMax.Size = new System.Drawing.Size(91, 13);
+            this.LblSelectedCameraPathVolumeMax.TabIndex = 30;
+            this.LblSelectedCameraPathVolumeMax.Text = "Volume max XYZ:";
+            // 
+            // LblSelectedCameraPathThing6
+            // 
+            this.LblSelectedCameraPathThing6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedCameraPathThing6.AutoSize = true;
+            this.LblSelectedCameraPathThing6.ContextMenuStrip = this.CmsSelectedCameraPath;
+            this.LblSelectedCameraPathThing6.Location = new System.Drawing.Point(51, 419);
+            this.LblSelectedCameraPathThing6.Name = "LblSelectedCameraPathThing6";
+            this.LblSelectedCameraPathThing6.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedCameraPathThing6.TabIndex = 85;
+            this.LblSelectedCameraPathThing6.Text = "Thing6:";
+            // 
+            // LblSelectedCameraPathThing5
+            // 
+            this.LblSelectedCameraPathThing5.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedCameraPathThing5.AutoSize = true;
+            this.LblSelectedCameraPathThing5.ContextMenuStrip = this.CmsSelectedCameraPath;
+            this.LblSelectedCameraPathThing5.Location = new System.Drawing.Point(51, 382);
+            this.LblSelectedCameraPathThing5.Name = "LblSelectedCameraPathThing5";
+            this.LblSelectedCameraPathThing5.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedCameraPathThing5.TabIndex = 75;
+            this.LblSelectedCameraPathThing5.Text = "Thing5:";
+            // 
+            // BtnCameraPathGoToVolumeMin
+            // 
+            this.BtnCameraPathGoToVolumeMin.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnCameraPathGoToVolumeMin.AutoSize = true;
+            this.BtnCameraPathGoToVolumeMin.Location = new System.Drawing.Point(337, 117);
+            this.BtnCameraPathGoToVolumeMin.Name = "BtnCameraPathGoToVolumeMin";
+            this.BtnCameraPathGoToVolumeMin.Size = new System.Drawing.Size(100, 25);
+            this.BtnCameraPathGoToVolumeMin.TabIndex = 25;
+            this.BtnCameraPathGoToVolumeMin.Text = "Go to min";
+            this.BtnCameraPathGoToVolumeMin.UseVisualStyleBackColor = true;
+            this.BtnCameraPathGoToVolumeMin.Click += new System.EventHandler(this.BtnCameraPathGoToVolumeMin_Click);
+            // 
+            // BtnCameraPathGoToVolumeMax
+            // 
+            this.BtnCameraPathGoToVolumeMax.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnCameraPathGoToVolumeMax.AutoSize = true;
+            this.BtnCameraPathGoToVolumeMax.Location = new System.Drawing.Point(337, 154);
+            this.BtnCameraPathGoToVolumeMax.Name = "BtnCameraPathGoToVolumeMax";
+            this.BtnCameraPathGoToVolumeMax.Size = new System.Drawing.Size(100, 25);
+            this.BtnCameraPathGoToVolumeMax.TabIndex = 40;
+            this.BtnCameraPathGoToVolumeMax.Text = "Go to max";
+            this.BtnCameraPathGoToVolumeMax.UseVisualStyleBackColor = true;
+            this.BtnCameraPathGoToVolumeMax.Click += new System.EventHandler(this.BtnCameraPathGoToVolumeMax_Click);
+            // 
+            // LblSelectedCameraPathAreaMin
+            // 
+            this.LblSelectedCameraPathAreaMin.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedCameraPathAreaMin.AutoSize = true;
+            this.LblSelectedCameraPathAreaMin.ContextMenuStrip = this.CmsSelectedCameraPath;
+            this.LblSelectedCameraPathAreaMin.Location = new System.Drawing.Point(26, 234);
+            this.LblSelectedCameraPathAreaMin.Name = "LblSelectedCameraPathAreaMin";
+            this.LblSelectedCameraPathAreaMin.Size = new System.Drawing.Size(68, 13);
+            this.LblSelectedCameraPathAreaMin.TabIndex = 45;
+            this.LblSelectedCameraPathAreaMin.Text = "Area min XZ:";
+            // 
+            // LblSelectedCameraPathThing4
+            // 
+            this.LblSelectedCameraPathThing4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedCameraPathThing4.AutoSize = true;
+            this.LblSelectedCameraPathThing4.ContextMenuStrip = this.CmsSelectedCameraPath;
+            this.LblSelectedCameraPathThing4.Location = new System.Drawing.Point(51, 345);
+            this.LblSelectedCameraPathThing4.Name = "LblSelectedCameraPathThing4";
+            this.LblSelectedCameraPathThing4.Size = new System.Drawing.Size(43, 13);
+            this.LblSelectedCameraPathThing4.TabIndex = 65;
+            this.LblSelectedCameraPathThing4.Text = "Thing4:";
+            // 
+            // LblSelectedCameraPathAreaMax
+            // 
+            this.LblSelectedCameraPathAreaMax.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LblSelectedCameraPathAreaMax.AutoSize = true;
+            this.LblSelectedCameraPathAreaMax.ContextMenuStrip = this.CmsSelectedCameraPath;
+            this.LblSelectedCameraPathAreaMax.Location = new System.Drawing.Point(23, 271);
+            this.LblSelectedCameraPathAreaMax.Name = "LblSelectedCameraPathAreaMax";
+            this.LblSelectedCameraPathAreaMax.Size = new System.Drawing.Size(71, 13);
+            this.LblSelectedCameraPathAreaMax.TabIndex = 55;
+            this.LblSelectedCameraPathAreaMax.Text = "Area max XZ:";
             // 
             // LblCameraPathAddress
             // 
@@ -3357,194 +3539,11 @@ namespace BizHawk.Client.EmuHawk
             this.LblCameraPathAddress.Text = "<address>";
             this.LblCameraPathAddress.Click += new System.EventHandler(this.LblCameraPathAddress_Click);
             // 
-            // label82
-            // 
-            this.label82.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label82.AutoSize = true;
-            this.label82.Location = new System.Drawing.Point(63, 531);
-            this.label82.Name = "label82";
-            this.label82.Size = new System.Drawing.Size(31, 13);
-            this.label82.TabIndex = 105;
-            this.label82.Text = "Yaw:";
-            // 
-            // label108
-            // 
-            this.label108.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label108.AutoSize = true;
-            this.label108.Location = new System.Drawing.Point(6, 123);
-            this.label108.Name = "label108";
-            this.label108.Size = new System.Drawing.Size(88, 13);
-            this.label108.TabIndex = 15;
-            this.label108.Text = "Volume min XYZ:";
-            // 
-            // label77
-            // 
-            this.label77.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label77.AutoSize = true;
-            this.label77.Location = new System.Drawing.Point(60, 493);
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(34, 13);
-            this.label77.TabIndex = 95;
-            this.label77.Text = "Pitch:";
-            // 
-            // label80
-            // 
-            this.label80.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label80.AutoSize = true;
-            this.label80.Location = new System.Drawing.Point(3, 160);
-            this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(91, 13);
-            this.label80.TabIndex = 30;
-            this.label80.Text = "Volume max XYZ:";
-            // 
-            // label83
-            // 
-            this.label83.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label83.AutoSize = true;
-            this.label83.Location = new System.Drawing.Point(51, 419);
-            this.label83.Name = "label83";
-            this.label83.Size = new System.Drawing.Size(43, 13);
-            this.label83.TabIndex = 85;
-            this.label83.Text = "Thing6:";
-            // 
-            // LblCameraPathThing6
-            // 
-            this.LblCameraPathThing6.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPathThing6.AutoSize = true;
-            this.LblCameraPathThing6.Location = new System.Drawing.Point(100, 419);
-            this.LblCameraPathThing6.Name = "LblCameraPathThing6";
-            this.LblCameraPathThing6.Size = new System.Drawing.Size(48, 13);
-            this.LblCameraPathThing6.TabIndex = 90;
-            this.LblCameraPathThing6.Text = "<thing6>";
-            // 
-            // label81
-            // 
-            this.label81.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label81.AutoSize = true;
-            this.label81.Location = new System.Drawing.Point(51, 382);
-            this.label81.Name = "label81";
-            this.label81.Size = new System.Drawing.Size(43, 13);
-            this.label81.TabIndex = 75;
-            this.label81.Text = "Thing5:";
-            // 
-            // LblCameraPathVolumeMin
-            // 
-            this.LblCameraPathVolumeMin.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPathVolumeMin.AutoSize = true;
-            this.LblCameraPathVolumeMin.Location = new System.Drawing.Point(100, 123);
-            this.LblCameraPathVolumeMin.Name = "LblCameraPathVolumeMin";
-            this.LblCameraPathVolumeMin.Size = new System.Drawing.Size(117, 13);
-            this.LblCameraPathVolumeMin.TabIndex = 20;
-            this.LblCameraPathVolumeMin.Text = "PLACEHOLDER TEXT";
-            // 
-            // BtnCameraPathGoToVolumeMin
-            // 
-            this.BtnCameraPathGoToVolumeMin.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BtnCameraPathGoToVolumeMin.AutoSize = true;
-            this.BtnCameraPathGoToVolumeMin.Location = new System.Drawing.Point(338, 117);
-            this.BtnCameraPathGoToVolumeMin.Name = "BtnCameraPathGoToVolumeMin";
-            this.BtnCameraPathGoToVolumeMin.Size = new System.Drawing.Size(100, 25);
-            this.BtnCameraPathGoToVolumeMin.TabIndex = 25;
-            this.BtnCameraPathGoToVolumeMin.Text = "Go to min";
-            this.BtnCameraPathGoToVolumeMin.UseVisualStyleBackColor = true;
-            this.BtnCameraPathGoToVolumeMin.Click += new System.EventHandler(this.BtnCameraPathGoToVolumeMin_Click);
-            // 
-            // LblCameraPathThing5
-            // 
-            this.LblCameraPathThing5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPathThing5.AutoSize = true;
-            this.LblCameraPathThing5.Location = new System.Drawing.Point(100, 382);
-            this.LblCameraPathThing5.Name = "LblCameraPathThing5";
-            this.LblCameraPathThing5.Size = new System.Drawing.Size(48, 13);
-            this.LblCameraPathThing5.TabIndex = 80;
-            this.LblCameraPathThing5.Text = "<thing5>";
-            // 
-            // BtnCameraPathGoToVolumeMax
-            // 
-            this.BtnCameraPathGoToVolumeMax.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BtnCameraPathGoToVolumeMax.AutoSize = true;
-            this.BtnCameraPathGoToVolumeMax.Location = new System.Drawing.Point(338, 154);
-            this.BtnCameraPathGoToVolumeMax.Name = "BtnCameraPathGoToVolumeMax";
-            this.BtnCameraPathGoToVolumeMax.Size = new System.Drawing.Size(100, 25);
-            this.BtnCameraPathGoToVolumeMax.TabIndex = 40;
-            this.BtnCameraPathGoToVolumeMax.Text = "Go to max";
-            this.BtnCameraPathGoToVolumeMax.UseVisualStyleBackColor = true;
-            this.BtnCameraPathGoToVolumeMax.Click += new System.EventHandler(this.BtnCameraPathGoToVolumeMax_Click);
-            // 
-            // LblCameraPathVolumeMax
-            // 
-            this.LblCameraPathVolumeMax.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPathVolumeMax.AutoSize = true;
-            this.LblCameraPathVolumeMax.Location = new System.Drawing.Point(100, 160);
-            this.LblCameraPathVolumeMax.Name = "LblCameraPathVolumeMax";
-            this.LblCameraPathVolumeMax.Size = new System.Drawing.Size(117, 13);
-            this.LblCameraPathVolumeMax.TabIndex = 35;
-            this.LblCameraPathVolumeMax.Text = "PLACEHOLDER TEXT";
-            // 
-            // LblCameraPathThing4
-            // 
-            this.LblCameraPathThing4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPathThing4.AutoSize = true;
-            this.LblCameraPathThing4.Location = new System.Drawing.Point(100, 345);
-            this.LblCameraPathThing4.Name = "LblCameraPathThing4";
-            this.LblCameraPathThing4.Size = new System.Drawing.Size(48, 13);
-            this.LblCameraPathThing4.TabIndex = 70;
-            this.LblCameraPathThing4.Text = "<thing4>";
-            // 
-            // label104
-            // 
-            this.label104.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label104.AutoSize = true;
-            this.label104.Location = new System.Drawing.Point(26, 234);
-            this.label104.Name = "label104";
-            this.label104.Size = new System.Drawing.Size(68, 13);
-            this.label104.TabIndex = 45;
-            this.label104.Text = "Area min XZ:";
-            // 
-            // label92
-            // 
-            this.label92.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label92.AutoSize = true;
-            this.label92.Location = new System.Drawing.Point(51, 345);
-            this.label92.Name = "label92";
-            this.label92.Size = new System.Drawing.Size(43, 13);
-            this.label92.TabIndex = 65;
-            this.label92.Text = "Thing4:";
-            // 
-            // LblCameraPathAreaMin
-            // 
-            this.LblCameraPathAreaMin.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPathAreaMin.AutoSize = true;
-            this.LblCameraPathAreaMin.Location = new System.Drawing.Point(100, 234);
-            this.LblCameraPathAreaMin.Name = "LblCameraPathAreaMin";
-            this.LblCameraPathAreaMin.Size = new System.Drawing.Size(117, 13);
-            this.LblCameraPathAreaMin.TabIndex = 50;
-            this.LblCameraPathAreaMin.Text = "PLACEHOLDER TEXT";
-            // 
-            // LblCameraPathAreaMax
-            // 
-            this.LblCameraPathAreaMax.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LblCameraPathAreaMax.AutoSize = true;
-            this.LblCameraPathAreaMax.Location = new System.Drawing.Point(100, 271);
-            this.LblCameraPathAreaMax.Name = "LblCameraPathAreaMax";
-            this.LblCameraPathAreaMax.Size = new System.Drawing.Size(117, 13);
-            this.LblCameraPathAreaMax.TabIndex = 60;
-            this.LblCameraPathAreaMax.Text = "PLACEHOLDER TEXT";
-            // 
-            // label102
-            // 
-            this.label102.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label102.AutoSize = true;
-            this.label102.Location = new System.Drawing.Point(23, 271);
-            this.label102.Name = "label102";
-            this.label102.Size = new System.Drawing.Size(71, 13);
-            this.label102.TabIndex = 55;
-            this.label102.Text = "Area max XZ:";
-            // 
             // CbxSelectedCameraPathDisabled
             // 
             this.CbxSelectedCameraPathDisabled.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.CbxSelectedCameraPathDisabled.AutoSize = true;
+            this.CbxSelectedCameraPathDisabled.ContextMenuStrip = this.CmsSelectedCameraPath;
             this.CbxSelectedCameraPathDisabled.Location = new System.Drawing.Point(100, 47);
             this.CbxSelectedCameraPathDisabled.Name = "CbxSelectedCameraPathDisabled";
             this.CbxSelectedCameraPathDisabled.Size = new System.Drawing.Size(67, 17);
@@ -3552,6 +3551,186 @@ namespace BizHawk.Client.EmuHawk
             this.CbxSelectedCameraPathDisabled.Text = "Disabled";
             this.CbxSelectedCameraPathDisabled.UseVisualStyleBackColor = true;
             this.CbxSelectedCameraPathDisabled.CheckedChanged += new System.EventHandler(this.CbxSelectedCameraPathEnabled_CheckedChanged);
+            // 
+            // TbxCameraPathVolumeMinX
+            // 
+            this.TbxCameraPathVolumeMinX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathVolumeMinX.Location = new System.Drawing.Point(100, 119);
+            this.TbxCameraPathVolumeMinX.Name = "TbxCameraPathVolumeMinX";
+            this.TbxCameraPathVolumeMinX.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathVolumeMinX.TabIndex = 111;
+            this.TbxCameraPathVolumeMinX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathVolumeMinX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathVolumeMinX.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathVolumeMinY
+            // 
+            this.TbxCameraPathVolumeMinY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathVolumeMinY.Location = new System.Drawing.Point(179, 119);
+            this.TbxCameraPathVolumeMinY.Name = "TbxCameraPathVolumeMinY";
+            this.TbxCameraPathVolumeMinY.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathVolumeMinY.TabIndex = 112;
+            this.TbxCameraPathVolumeMinY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathVolumeMinY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathVolumeMinY.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathVolumeMinZ
+            // 
+            this.TbxCameraPathVolumeMinZ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathVolumeMinZ.Location = new System.Drawing.Point(258, 119);
+            this.TbxCameraPathVolumeMinZ.Name = "TbxCameraPathVolumeMinZ";
+            this.TbxCameraPathVolumeMinZ.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathVolumeMinZ.TabIndex = 113;
+            this.TbxCameraPathVolumeMinZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathVolumeMinZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathVolumeMinZ.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathVolumeMaxX
+            // 
+            this.TbxCameraPathVolumeMaxX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathVolumeMaxX.Location = new System.Drawing.Point(100, 156);
+            this.TbxCameraPathVolumeMaxX.Name = "TbxCameraPathVolumeMaxX";
+            this.TbxCameraPathVolumeMaxX.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathVolumeMaxX.TabIndex = 114;
+            this.TbxCameraPathVolumeMaxX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathVolumeMaxX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathVolumeMaxX.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathVolumeMaxY
+            // 
+            this.TbxCameraPathVolumeMaxY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathVolumeMaxY.Location = new System.Drawing.Point(179, 156);
+            this.TbxCameraPathVolumeMaxY.Name = "TbxCameraPathVolumeMaxY";
+            this.TbxCameraPathVolumeMaxY.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathVolumeMaxY.TabIndex = 115;
+            this.TbxCameraPathVolumeMaxY.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathVolumeMaxY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathVolumeMaxY.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathVolumeMaxZ
+            // 
+            this.TbxCameraPathVolumeMaxZ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathVolumeMaxZ.Location = new System.Drawing.Point(258, 156);
+            this.TbxCameraPathVolumeMaxZ.Name = "TbxCameraPathVolumeMaxZ";
+            this.TbxCameraPathVolumeMaxZ.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathVolumeMaxZ.TabIndex = 116;
+            this.TbxCameraPathVolumeMaxZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathVolumeMaxZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathVolumeMaxZ.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathAreaMinX
+            // 
+            this.TbxCameraPathAreaMinX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathAreaMinX.Location = new System.Drawing.Point(100, 230);
+            this.TbxCameraPathAreaMinX.Name = "TbxCameraPathAreaMinX";
+            this.TbxCameraPathAreaMinX.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathAreaMinX.TabIndex = 117;
+            this.TbxCameraPathAreaMinX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathAreaMinX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathAreaMinX.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathAreaMinZ
+            // 
+            this.TbxCameraPathAreaMinZ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathAreaMinZ.Location = new System.Drawing.Point(258, 230);
+            this.TbxCameraPathAreaMinZ.Name = "TbxCameraPathAreaMinZ";
+            this.TbxCameraPathAreaMinZ.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathAreaMinZ.TabIndex = 118;
+            this.TbxCameraPathAreaMinZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathAreaMinZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathAreaMinZ.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathAreaMaxX
+            // 
+            this.TbxCameraPathAreaMaxX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathAreaMaxX.Location = new System.Drawing.Point(100, 267);
+            this.TbxCameraPathAreaMaxX.Name = "TbxCameraPathAreaMaxX";
+            this.TbxCameraPathAreaMaxX.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathAreaMaxX.TabIndex = 119;
+            this.TbxCameraPathAreaMaxX.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathAreaMaxX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathAreaMaxX.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathAreaMaxZ
+            // 
+            this.TbxCameraPathAreaMaxZ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathAreaMaxZ.Location = new System.Drawing.Point(258, 267);
+            this.TbxCameraPathAreaMaxZ.Name = "TbxCameraPathAreaMaxZ";
+            this.TbxCameraPathAreaMaxZ.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathAreaMaxZ.TabIndex = 120;
+            this.TbxCameraPathAreaMaxZ.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathAreaMaxZ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathAreaMaxZ.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // MtbCameraPathThing4
+            // 
+            this.MtbCameraPathThing4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbCameraPathThing4.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.MtbCameraPathThing4.Location = new System.Drawing.Point(100, 341);
+            this.MtbCameraPathThing4.Mask = "\\0\\xAA";
+            this.MtbCameraPathThing4.Name = "MtbCameraPathThing4";
+            this.MtbCameraPathThing4.Size = new System.Drawing.Size(73, 20);
+            this.MtbCameraPathThing4.TabIndex = 121;
+            this.MtbCameraPathThing4.Tag = "";
+            this.MtbCameraPathThing4.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbCameraPathThing4.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbCameraPathThing4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.MtbCameraPathThing4.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            this.MtbCameraPathThing4.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
+            // 
+            // MtbCameraPathThing5
+            // 
+            this.MtbCameraPathThing5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbCameraPathThing5.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.MtbCameraPathThing5.Location = new System.Drawing.Point(100, 378);
+            this.MtbCameraPathThing5.Mask = "\\0\\xAA";
+            this.MtbCameraPathThing5.Name = "MtbCameraPathThing5";
+            this.MtbCameraPathThing5.Size = new System.Drawing.Size(73, 20);
+            this.MtbCameraPathThing5.TabIndex = 122;
+            this.MtbCameraPathThing5.Tag = "";
+            this.MtbCameraPathThing5.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbCameraPathThing5.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbCameraPathThing5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.MtbCameraPathThing5.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            this.MtbCameraPathThing5.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
+            // 
+            // MtbCameraPathThing6
+            // 
+            this.MtbCameraPathThing6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.MtbCameraPathThing6.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.MtbCameraPathThing6.Location = new System.Drawing.Point(100, 415);
+            this.MtbCameraPathThing6.Mask = "\\0\\xAAAA";
+            this.MtbCameraPathThing6.Name = "MtbCameraPathThing6";
+            this.MtbCameraPathThing6.Size = new System.Drawing.Size(73, 20);
+            this.MtbCameraPathThing6.TabIndex = 123;
+            this.MtbCameraPathThing6.Tag = "";
+            this.MtbCameraPathThing6.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.MtbCameraPathThing6.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.MtbCameraPathThing6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.MtbCameraPathThing6.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            this.MtbCameraPathThing6.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HexMaskedTextBox_PreviewKeyDown);
+            // 
+            // TbxCameraPathPitch
+            // 
+            this.TbxCameraPathPitch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathPitch.Location = new System.Drawing.Point(100, 489);
+            this.TbxCameraPathPitch.Name = "TbxCameraPathPitch";
+            this.TbxCameraPathPitch.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathPitch.TabIndex = 124;
+            this.TbxCameraPathPitch.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathPitch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathPitch.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
+            // 
+            // TbxCameraPathYaw
+            // 
+            this.TbxCameraPathYaw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbxCameraPathYaw.Location = new System.Drawing.Point(100, 528);
+            this.TbxCameraPathYaw.Name = "TbxCameraPathYaw";
+            this.TbxCameraPathYaw.Size = new System.Drawing.Size(73, 20);
+            this.TbxCameraPathYaw.TabIndex = 125;
+            this.TbxCameraPathYaw.Enter += new System.EventHandler(this.Selectable_Enter);
+            this.TbxCameraPathYaw.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCameraPath_KeyDown);
+            this.TbxCameraPathYaw.Leave += new System.EventHandler(this.SelectedCameraPath_Leave);
             // 
             // LblCameraPathCount
             // 
@@ -7084,8 +7263,10 @@ namespace BizHawk.Client.EmuHawk
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.tableLayoutPanel44.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
+            this.CmsSelectedCameraPath.ResumeLayout(false);
             this.tableLayoutPanel22.ResumeLayout(false);
             this.tableLayoutPanel22.PerformLayout();
             this.TbpStats.ResumeLayout(false);
@@ -7471,28 +7652,19 @@ namespace BizHawk.Client.EmuHawk
 		private ListBox LbxCameraPaths;
 		private Label LblCameraPathCount;
 		private GroupBox groupBox10;
-		private Label LblCameraPathThing4;
-		private Label label92;
-		private Label LblCameraPathAreaMax;
-		private Label label102;
-		private Label LblCameraPathAreaMin;
-		private Label label104;
+		private Label LblSelectedCameraPathThing4;
+		private Label LblSelectedCameraPathAreaMax;
+		private Label LblSelectedCameraPathAreaMin;
 		private Button BtnCameraPathGoToVolumeMin;
 		private Label LblCameraPathAddress;
 		private Label label107;
-		private Label label108;
-		private Label LblCameraPathVolumeMin;
+		private Label LblSelectedCameraPathVolumeMin;
 		private Button BtnCameraPathGoToVolumeMax;
-		private Label label80;
-		private Label LblCameraPathVolumeMax;
-		private Label LblCameraPathThing6;
-		private Label label83;
-		private Label LblCameraPathThing5;
-		private Label label81;
-		private Label LblCameraPathYaw;
-		private Label LblCameraPathPitch;
-		private Label label82;
-		private Label label77;
+		private Label LblSelectedCameraPathVolumeMax;
+		private Label LblSelectedCameraPathThing6;
+		private Label LblSelectedCameraPathThing5;
+		private Label LblSelectedCameraPathYaw;
+		private Label LblSelectedCameraPathPitch;
 		private CheckBox CbxReadLevelDataOnStageLoad;
 		private CheckBox CbxFarClipping;
 		private CheckBox CbxBackfaceCulling;
@@ -7682,5 +7854,26 @@ namespace BizHawk.Client.EmuHawk
 		private ToolStripMenuItem TsmSelectedTriggerResetProperty;
 		private ToolStripSeparator toolStripSeparator2;
 		private ToolStripMenuItem TsmSelectedTriggerResetAllProperties;
+		private TableLayoutPanel tableLayoutPanel44;
+		private Button BtnClearCameraPaths;
+		private TextBox TbxCameraPathVolumeMinX;
+		private TextBox TbxCameraPathVolumeMinY;
+		private TextBox TbxCameraPathVolumeMinZ;
+		private TextBox TbxCameraPathVolumeMaxX;
+		private TextBox TbxCameraPathVolumeMaxY;
+		private TextBox TbxCameraPathVolumeMaxZ;
+		private TextBox TbxCameraPathAreaMinX;
+		private TextBox TbxCameraPathAreaMinZ;
+		private TextBox TbxCameraPathAreaMaxX;
+		private TextBox TbxCameraPathAreaMaxZ;
+		private MaskedTextBox MtbCameraPathThing4;
+		private MaskedTextBox MtbCameraPathThing5;
+		private MaskedTextBox MtbCameraPathThing6;
+		private TextBox TbxCameraPathPitch;
+		private TextBox TbxCameraPathYaw;
+		private ContextMenuStrip CmsSelectedCameraPath;
+		private ToolStripMenuItem TsmSelectedCameraPathResetProperty;
+		private ToolStripSeparator toolStripSeparator3;
+		private ToolStripMenuItem TsmSelectedCameraPathResetAll;
 	}
 }

@@ -11,13 +11,6 @@ namespace BizHawk.Client.EmuHawk;
 
 partial class CustomMainForm
 {
-	/// <summary>
-	/// Whether a change to the game's memory was initiated by the user
-	/// or is the result of the game itself updating something. Used for
-	/// avoiding infinite loops when syncing form controls to the game.
-	/// </summary>
-	private bool _userChange;
-
 	private void CommitPoiChanges(PointOfInterest p)
 	{
 		_userChange = true;
@@ -154,16 +147,6 @@ partial class CustomMainForm
 		SelectedPoi_ValidateInput(sender as Control);
 	}
 
-	private void TsmSelectedPoiResetProperty_Click(object sender, EventArgs e)
-	{
-		if (LbxPois.SelectedItem is not PointOfInterest p)
-		{
-			return;
-		}
-
-		SelectedPoi_ResetProperty(p);
-	}
-
 	private void TsmSelectedPoiResetAll_Click(object sender, EventArgs e)
 	{
 		if (LbxPois.SelectedItem is not PointOfInterest p)
@@ -172,5 +155,15 @@ partial class CustomMainForm
 		}
 
 		SelectedPoi_ResetProperty(p, "all");
+	}
+
+	private void TsmSelectedPoiResetProperty_Click(object sender, EventArgs e)
+	{
+		if (LbxPois.SelectedItem is not PointOfInterest p)
+		{
+			return;
+		}
+
+		SelectedPoi_ResetProperty(p);
 	}
 }

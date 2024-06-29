@@ -140,6 +140,7 @@ namespace BizHawk.Client.EmuHawk
 
 			InitializeBasicsTab();
 			InitializePoisTab();
+			InitializeCameraTab();
 			InitializeSaveTab();
 			InitializeFramebufferTab();
 			InitializeUtilityTab();
@@ -386,6 +387,7 @@ namespace BizHawk.Client.EmuHawk
 					}
 					if (CbxSelectedTriggerEnableUpdates.Checked)
 					{
+						CheckForSelectedCameraPathUpdate();
 						CheckForSelectedTriggerUpdate();
 					}
 					break;
@@ -768,10 +770,16 @@ namespace BizHawk.Client.EmuHawk
 			LblSpawnXZ.Text = $"<x{sep} z>";
 			TbxSelectedPoiX.Text = $"<x>";
 			TbxSelectedPoiZ.Text = $"<z>";
-			LblCameraPathVolumeMin.Text = $"<x{sep} y{sep} z>";
-			LblCameraPathVolumeMax.Text = $"<x{sep} y{sep} z>";
-			LblCameraPathAreaMin.Text = $"<x{sep} z>";
-			LblCameraPathAreaMax.Text = $"<x{sep} z>";
+			TbxCameraPathVolumeMinX.Text = "<x>";
+			TbxCameraPathVolumeMinY.Text = "<y>";
+			TbxCameraPathVolumeMinZ.Text = "<z>";
+			TbxCameraPathVolumeMaxX.Text = "<x>";
+			TbxCameraPathVolumeMaxY.Text = "<y>";
+			TbxCameraPathVolumeMaxZ.Text = "<z>";
+			TbxCameraPathAreaMinX.Text = "<x>";
+			TbxCameraPathAreaMinZ.Text = "<z>";
+			TbxCameraPathAreaMaxX.Text = "<x>";
+			TbxCameraPathAreaMaxZ.Text = "<z>";
 		}
 
 		private DisplaySurfaceID _displaySurfaceID;

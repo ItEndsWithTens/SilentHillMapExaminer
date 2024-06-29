@@ -11,21 +11,21 @@ namespace SHME.ExternalTool
 
 		// These are separate floats only to avoid the potential confusion of
 		// using Vector2s, which have X and Y components instead of X and Z.
-		public float AreaMinX { get; }
-		public float AreaMaxX { get; }
-		public float AreaMinZ { get; }
-		public float AreaMaxZ { get; }
+		public float AreaMinX { get; set; }
+		public float AreaMaxX { get; set; }
+		public float AreaMinZ { get; set; }
+		public float AreaMaxZ { get; set; }
 
-		public Vector3 VolumeMin { get; }
-		public Vector3 VolumeMax { get; }
+		public Vector3 VolumeMin { get; set; }
+		public Vector3 VolumeMax { get; set; }
 
-		public byte Thing4 { get; }
-		public bool Disabled { get; }
-		public byte Thing5 { get; }
-		public short Thing6 { get; }
+		public byte Thing4 { get; set; }
+		public bool Disabled { get; set; }
+		public byte Thing5 { get; set; }
+		public short Thing6 { get; set; }
 
-		public float Pitch { get; }
-		public float Yaw { get; }
+		public float Pitch { get; set; }
+		public float Yaw { get; set; }
 
 		public CameraPath(long address, ReadOnlySpan<byte> span)
 		{

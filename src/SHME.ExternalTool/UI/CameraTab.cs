@@ -12,22 +12,116 @@ namespace BizHawk.Client.EmuHawk
 {
 	public partial class CustomMainForm
 	{
+		private void InitializeCameraTab()
+		{
+			CbxSelectedCameraPathDisabled.Tag = nameof(CameraPath.Disabled);
+
+			LblSelectedCameraPathVolumeMin.Tag = nameof(CameraPath.VolumeMin);
+
+			TbxCameraPathVolumeMinX.Tag =
+				nameof(CameraPath.VolumeMin) +
+				nameof(CameraPath.VolumeMin.X);
+
+			TbxCameraPathVolumeMinY.Tag =
+				nameof(CameraPath.VolumeMin) +
+				nameof(CameraPath.VolumeMin.Y);
+
+			TbxCameraPathVolumeMinZ.Tag =
+				nameof(CameraPath.VolumeMin) +
+				nameof(CameraPath.VolumeMin.Z);
+
+			LblSelectedCameraPathVolumeMax.Tag = nameof(CameraPath.VolumeMax);
+
+			TbxCameraPathVolumeMaxX.Tag =
+				nameof(CameraPath.VolumeMax) +
+				nameof(CameraPath.VolumeMax.X);
+
+			TbxCameraPathVolumeMaxY.Tag =
+				nameof(CameraPath.VolumeMax) +
+				nameof(CameraPath.VolumeMax.Y);
+
+			TbxCameraPathVolumeMaxZ.Tag =
+				nameof(CameraPath.VolumeMax) +
+				nameof(CameraPath.VolumeMax.Z);
+
+			LblSelectedCameraPathAreaMin.Tag =
+				nameof(CameraPath.AreaMinX) +
+				nameof(CameraPath.AreaMinZ);
+
+			TbxCameraPathAreaMinX.Tag = nameof(CameraPath.AreaMinX);
+			TbxCameraPathAreaMinZ.Tag = nameof(CameraPath.AreaMinZ);
+
+			LblSelectedCameraPathAreaMax.Tag =
+				nameof(CameraPath.AreaMaxX) +
+				nameof(CameraPath.AreaMaxZ);
+
+			TbxCameraPathAreaMaxX.Tag = nameof(CameraPath.AreaMaxX);
+			TbxCameraPathAreaMaxZ.Tag = nameof(CameraPath.AreaMaxZ);
+
+			LblSelectedCameraPathThing4.Tag = nameof(CameraPath.Thing4);
+			LblSelectedCameraPathThing5.Tag = nameof(CameraPath.Thing5);
+			LblSelectedCameraPathThing6.Tag = nameof(CameraPath.Thing6);
+
+			LblSelectedCameraPathPitch.Tag = nameof(CameraPath.Pitch);
+			LblSelectedCameraPathYaw.Tag = nameof(CameraPath.Yaw);
+		}
+
+		private int? _previousSelectedCameraPathIndex;
+		private string? _previousSelectedCameraPathBodyHash;
+		private void CheckForSelectedCameraPathUpdate()
+		{
+			if (LbxCameraPaths.SelectedItem is not CameraPath c)
+			{
+				return;
+			}
+
+			string body = Mem.HashRegion(c.Address, c.SizeInBytes);
+
+			if (LbxCameraPaths.SelectedIndex != _previousSelectedCameraPathIndex)
+			{
+				_previousSelectedCameraPathIndex = LbxCameraPaths.SelectedIndex;
+				_previousSelectedCameraPathBodyHash = body;
+
+				return;
+			}
+
+			if (body != _previousSelectedCameraPathBodyHash)
+			{
+				_previousSelectedCameraPathBodyHash = body;
+
+				if (_userChange)
+				{
+					_userChange = false;
+					return;
+				}
+
+				int index = LbxCameraPaths.SelectedIndex;
+
+				LbxCameraPaths.BeginUpdate();
+				BtnCameraPathReadArray_Click(this, EventArgs.Empty);
+				LbxCameraPaths.SelectedIndex = index;
+				LbxCameraPaths.EndUpdate();
+			}
+		}
+
 		private void ClearDisplayedCameraPathInfo()
 		{
-			string sep = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
-
 			LblCameraPathAddress.Text = "0x";
 			CbxSelectedCameraPathDisabled.Enabled = false;
 			CbxSelectedCameraPathDisabled.Checked = false;
-			LblCameraPathVolumeMin.Text = $"<x{sep} y{sep} z>";
-			LblCameraPathVolumeMax.Text = $"<x{sep} y{sep} z>";
-			LblCameraPathAreaMin.Text = $"<x{sep} z>";
-			LblCameraPathAreaMax.Text = $"<x{sep} z>";
-			LblCameraPathThing4.Text = "0x";
-			LblCameraPathThing5.Text = "0x";
-			LblCameraPathThing6.Text = "0x";
-			LblCameraPathThing5.Text = String.Empty;
-			LblCameraPathThing6.Text = String.Empty;
+			TbxCameraPathVolumeMinX.Text = "<x>";
+			TbxCameraPathVolumeMinY.Text = "<y>";
+			TbxCameraPathVolumeMinZ.Text = "<z>";
+			TbxCameraPathVolumeMaxX.Text = "<x>";
+			TbxCameraPathVolumeMaxY.Text = "<y>";
+			TbxCameraPathVolumeMaxZ.Text = "<z>";
+			TbxCameraPathAreaMinX.Text = "<x>";
+			TbxCameraPathAreaMinZ.Text = "<z>";
+			TbxCameraPathAreaMaxX.Text = "<x>";
+			TbxCameraPathAreaMaxZ.Text = "<z>";
+			MtbCameraPathThing4.ResetText();
+			MtbCameraPathThing5.ResetText();
+			MtbCameraPathThing6.ResetText();
 		}
 
 		private void BtnCameraPathGoToVolumeMin_Click(object sender, EventArgs e)
@@ -37,7 +131,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			SetHarryPosition(path.VolumeMin.X, path.VolumeMin.Y, path.VolumeMin.Z);
+			SetHarryPosition(path.VolumeMin);
 		}
 
 		private void BtnCameraPathGoToVolumeMax_Click(object sender, EventArgs e)
@@ -47,29 +141,31 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			SetHarryPosition(path.VolumeMax.X, path.VolumeMax.Y, path.VolumeMax.Z);
+			SetHarryPosition(path.VolumeMax);
 		}
 
 		private void BtnCameraPathReadArray_Click(object sender, EventArgs e)
 		{
-			long address = Mem.ReadU32(Rom.Addresses.MainRam.PointerToArrayOfCameraPaths);
-			address -= Rom.Addresses.MainRam.BaseAddress;
+			MainRamAddresses ram = Rom.Addresses.MainRam;
+
+			long address = Mem.ReadU32(ram.PointerToArrayOfCameraPaths);
+			address -= ram.BaseAddress;
 
 			Guts.CameraPaths.Clear();
 			LbxCameraPaths.Items.Clear();
-			var gemGen = new GemGenerator(0.125f, 0.25f, 0.125f, Color.FromArgb(0x25, 0xA5, 0x97));
+
+			GemGenerator gemGen = new(0.125f, 0.25f, 0.125f, Color.FromArgb(0x25, 0xA5, 0x97));
+
 			while (true)
 			{
 				ReadOnlySpan<byte> span = Mem.ReadByteRange(address, SilentHillTypeSizes.CameraPath).ToArray();
 
-				var path = new CameraPath(address, span);
+				CameraPath path = new(address, span);
 
 				if (path.Thing4 == 0x1)
 				{
 					break;
 				}
-
-				LbxCameraPaths.Items.Add(path);
 
 				Renderable gemA = gemGen.Generate().ToWorld();
 				gemA.Position = new Vector3(path.VolumeMin.X, -path.VolumeMin.Y, -path.VolumeMin.Z);
@@ -92,9 +188,10 @@ namespace BizHawk.Client.EmuHawk
 				bool equalZ = gemA.Position.Z == gemB.Position.Z;
 				if ((equalX && equalY) || (equalY && equalZ) || (equalZ && equalX))
 				{
-					// To ensure that a one-dimensional camera path can be
-					// clicked in the viewport, and that it will be drawn on
-					// screen in filled render mode, nudge the ends a bit.
+					// To ensure that a one-dimensional camera path can
+					// be clicked in the viewport, and that it will be
+					// drawn on screen in filled render mode, nudge the
+					// ends a bit.
 					float cheat = 0.0125f;
 
 					volumeMin.X -= cheat;
@@ -107,13 +204,13 @@ namespace BizHawk.Client.EmuHawk
 				}
 
 				Vector3 size = volumeMax - volumeMin;
-				var boxGen = new BoxGenerator(size, Color.Orange);
+				BoxGenerator boxGen = new(size, Color.Orange);
 				Renderable volume = boxGen.Generate().ToWorld();
 				volume.Position = volumeMin + (size / 2.0f);
 
 				float sizeX = path.AreaMaxX - path.AreaMinX;
 				float sizeZ = path.AreaMaxZ - path.AreaMinZ;
-				var sheetGen = new SheetGenerator(sizeX, sizeZ, Color.FromArgb(0x52, 0x3A, 0xB5));
+				SheetGenerator sheetGen = new(sizeX, sizeZ, Color.FromArgb(0x52, 0x3A, 0xB5));
 				Renderable area = sheetGen.Generate().ToWorld();
 				area.Position = new Vector3(
 					path.AreaMinX + sizeX / 2.0f,
@@ -121,11 +218,21 @@ namespace BizHawk.Client.EmuHawk
 					-(path.AreaMinZ + sizeZ / 2.0f));
 
 				Guts.CameraPaths.Add(path.Address, (path, [area, gemA, volume, gemB]));
+				LbxCameraPaths.Items.Add(path);
 
 				address += SilentHillTypeSizes.CameraPath;
 			}
 
 			LblCameraPathCount.Text = Guts.CameraPaths.Count.ToString(CultureInfo.CurrentCulture);
+		}
+
+		private void BtnClearCameraPaths_Click(object sender, EventArgs e)
+		{
+			Guts.CameraPaths.Clear();
+			LbxCameraPaths.Items.Clear();
+			LblCameraPathCount.Text = "-";
+
+			ClearDisplayedCameraPathInfo();
 		}
 
 		private void CbxSelectedCameraPathEnabled_CheckedChanged(object sender, EventArgs e)
@@ -135,26 +242,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			// TODO: Data binding? Or whatever, just come up with some way of
-			// connecting the CameraPath instance and its in-game memory
-			// representation. Need blittable types to shadow the POCOs? Ugh.
-			long address = p.Address + 16;
-
-			uint existing = Mem.ReadByte(address);
-			if (CbxSelectedCameraPathDisabled.Checked)
-			{
-				Mem.WriteByte(address, (byte)(existing | 0b01000000));
-			}
-			else
-			{
-				Mem.WriteByte(address, (byte)(existing & 0b10111111));
-			}
-
-			int index = LbxCameraPaths.SelectedIndex;
-			LbxCameraPaths.BeginUpdate();
-			BtnCameraPathReadArray_Click(this, EventArgs.Empty);
-			LbxCameraPaths.SelectedIndex = index;
-			LbxCameraPaths.EndUpdate();
+			SelectedCameraPath_ValidateInput(sender as Control);
 		}
 
 		private void LblCameraPathAddress_Click(object sender, EventArgs e)
@@ -212,15 +300,21 @@ namespace BizHawk.Client.EmuHawk
 			LblCameraPathAddress.Text = $"0x{path.Address.ToString("X", c)}";
 			CbxSelectedCameraPathDisabled.Enabled = true;
 			CbxSelectedCameraPathDisabled.Checked = path.Disabled;
-			LblCameraPathVolumeMin.Text = $"{path.VolumeMin.ToString(String.Empty, c)}";
-			LblCameraPathVolumeMax.Text = $"{path.VolumeMax.ToString(String.Empty, c)}";
-			LblCameraPathAreaMin.Text = $"<{path.AreaMinX.ToString(c)}, {path.AreaMinZ.ToString(c)}>";
-			LblCameraPathAreaMax.Text = $"<{path.AreaMaxX.ToString(c)}, {path.AreaMaxZ.ToString(c)}>";
-			LblCameraPathThing4.Text = $"0x{path.Thing4.ToString("X2", c)}";
-			LblCameraPathThing5.Text = $"0x{path.Thing5.ToString("X2", c)}";
-			LblCameraPathThing6.Text = $"0x{path.Thing6.ToString("X4", c)}";
-			LblCameraPathPitch.Text = $"{path.Pitch.ToString(c)}";
-			LblCameraPathYaw.Text = $"{path.Yaw.ToString(c)}";
+			TbxCameraPathVolumeMinX.Text = path.VolumeMin.X.ToString(c);
+			TbxCameraPathVolumeMinY.Text = path.VolumeMin.Y.ToString(c);
+			TbxCameraPathVolumeMinZ.Text = path.VolumeMin.Z.ToString(c);
+			TbxCameraPathVolumeMaxX.Text = path.VolumeMax.X.ToString(c);
+			TbxCameraPathVolumeMaxY.Text = path.VolumeMax.Y.ToString(c);
+			TbxCameraPathVolumeMaxZ.Text = path.VolumeMax.Z.ToString(c);
+			TbxCameraPathAreaMinX.Text = path.AreaMinX.ToString(c);
+			TbxCameraPathAreaMinZ.Text = path.AreaMinZ.ToString(c);
+			TbxCameraPathAreaMaxX.Text = path.AreaMaxX.ToString(c);
+			TbxCameraPathAreaMaxZ.Text = path.AreaMaxZ.ToString(c);
+			MtbCameraPathThing4.Text = $"0x{path.Thing4.ToString("X2", c)}";
+			MtbCameraPathThing5.Text = $"0x{path.Thing5.ToString("X2", c)}";
+			MtbCameraPathThing6.Text = $"0x{path.Thing6.ToString("X4", c)}";
+			TbxCameraPathPitch.Text = path.Pitch.ToString(c);
+			TbxCameraPathYaw.Text = path.Yaw.ToString(c);
 			ResumeLayout();
 		}
 	}
