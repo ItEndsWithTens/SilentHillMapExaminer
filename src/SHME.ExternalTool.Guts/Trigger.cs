@@ -83,7 +83,8 @@ namespace SHME.ExternalTool
 		public bool Disabled { get; set; }
 		public byte Thing1 { get; set; }
 		public byte FiredBitShift { get; }
-		public short SomeIndex { get; set; }
+		public short FiredGroup { get; set; }
+		public bool Fired { get; set; }
 
 		/// <summary>
 		/// How this trigger is activated.
@@ -135,7 +136,7 @@ namespace SHME.ExternalTool
 			int raw2 = (stateRaw & 0b00000000_00011111) >> 0;
 			int raw3 = (stateRaw & 0b11111111_11100000) >> 5;
 			FiredBitShift = (byte)raw2;
-			SomeIndex = (short)raw3;
+			FiredGroup = (short)raw3;
 
 			int raw4 = (span[4] & 0b00001111) >> 0;
 			int raw5 = (span[4] & 0b11110000) >> 4;
@@ -179,7 +180,7 @@ namespace SHME.ExternalTool
 			span[0x1] = Thing1;
 
 			bp.WriteInt16LittleEndian(
-				span.Slice(0x2), (short)((SomeIndex << 5) | FiredBitShift));
+				span.Slice(0x2), (short)((FiredGroup << 5) | FiredBitShift));
 
 			span[0x4] = (byte)((Thing2 << 4) | (byte)Style);
 

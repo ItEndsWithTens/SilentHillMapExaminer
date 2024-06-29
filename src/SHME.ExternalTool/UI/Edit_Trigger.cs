@@ -15,6 +15,7 @@ partial class CustomMainForm
 	{
 		_userChange = true;
 		Mem.WriteByteRange(t.Address, t.ToBytes().ToArray());
+		SetTriggerFired(t);
 
 		Guts.Triggers[t.Address] = t;
 		LbxTriggers.Items[Guts.Triggers.IndexFromKey(t.Address)] = t;
@@ -24,6 +25,32 @@ partial class CustomMainForm
 		Guts.Pois[changed.Item1.Address] = changed;
 
 		RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
+	}
+
+	private bool GetTriggerFired(Trigger t)
+	{
+		MainRamAddresses ram = Rom.Addresses.MainRam;
+		long ofs = ram.SaveData + 0x168 + t.FiredGroup * sizeof(int);
+
+		return (Mem.ReadS32(ofs) & (1 << t.FiredBitShift)) != 0;
+	}
+	private void SetTriggerFired(Trigger t)
+	{
+		MainRamAddresses ram = Rom.Addresses.MainRam;
+
+		long ofs = ram.SaveData + 0x168 + t.FiredGroup * sizeof(int);
+
+		int group = Mem.ReadS32(ofs);
+		if (t.Fired)
+		{
+			group |= 1 << t.FiredBitShift;
+		}
+		else
+		{
+			group &= ~(1 << t.FiredBitShift);
+		}
+
+		Mem.WriteS32(ofs, group);
 	}
 
 	private void SelectedTrigger_ResetProperty(Trigger t, string? prop = null)
@@ -71,9 +98,11 @@ partial class CustomMainForm
 			case nameof(Trigger.Thing1):
 				t.Thing1 = reset.Thing1;
 				break;
-			// TODO: Fired checkbox
-			case nameof(Trigger.SomeIndex):
-				t.SomeIndex = reset.SomeIndex;
+			case nameof(Trigger.FiredGroup):
+				t.FiredGroup = reset.FiredGroup;
+				break;
+			case nameof(Trigger.Fired):
+				t.Fired = reset.Fired;
 				break;
 			case nameof(Trigger.Thing2):
 				t.Thing2 = reset.Thing2;
@@ -153,14 +182,16 @@ partial class CustomMainForm
 					return;
 				t.Thing1 = b;
 				break;
-			// TODO: Figure this one out. The 'fired' bit is stored in a
-			// separate location from the bytes of the trigger.
-			//case "Fired":
-			case nameof(Trigger.SomeIndex):
-				short s = (short)NudSelectedTriggerSomeIndex.Value;
-				if (t.SomeIndex == s)
+			case nameof(Trigger.FiredGroup):
+				short s = (short)NudSelectedTriggerFiredGroup.Value;
+				if (t.FiredGroup == s)
 					return;
-				t.SomeIndex = s;
+				t.FiredGroup = s;
+				break;
+			case nameof(Trigger.Fired):
+				if (t.Fired == CbxSelectedTriggerFired.Checked)
+					return;
+				t.Fired = CbxSelectedTriggerFired.Checked;
 				break;
 			case nameof(Trigger.Thing2):
 				text = MtbSelectedTriggerThing2.Text;

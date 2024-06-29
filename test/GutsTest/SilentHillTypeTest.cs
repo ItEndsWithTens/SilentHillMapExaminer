@@ -107,11 +107,10 @@ public class SilentHillTypeTest
 		{
 			Assert.That(t.Address, Is.EqualTo(0x800DF76C));
 			Assert.That(t.Disabled, Is.False);
-
 			Assert.That(t.Thing0, Is.EqualTo(0x00));
 			Assert.That(t.Thing1, Is.EqualTo(0x00));
-
-			Assert.That(t.SomeIndex, Is.EqualTo(0x00));
+			Assert.That(t.Fired, Is.False);
+			Assert.That(t.FiredGroup, Is.EqualTo(0x00));
 			Assert.That(t.Thing2, Is.EqualTo(0x00));
 			Assert.That(t.Style, Is.EqualTo(TriggerStyle.TouchAabb));
 			Assert.That(t.PoiIndex, Is.EqualTo(8));
@@ -119,6 +118,10 @@ public class SilentHillTypeTest
 			Assert.That(t.Thing4, Is.EqualTo(0x00));
 			Assert.That(t.TriggerType, Is.EqualTo(TriggerType.Function1));
 			Assert.That(t.TargetIndex, Is.EqualTo(4));
+			Assert.That(t.Thing5, Is.EqualTo(0x01));
+			Assert.That(t.Thing6, Is.EqualTo(0x00));
+			Assert.That(t.StageIndex, Is.EqualTo(0));
+			Assert.That(t.SomeBool, Is.False);
 
 			Assert.That(t.ToBytes().ToArray(), Is.EqualTo(expected));
 		});

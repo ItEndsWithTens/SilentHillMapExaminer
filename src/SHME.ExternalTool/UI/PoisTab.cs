@@ -37,8 +37,11 @@ namespace BizHawk.Client.EmuHawk
 			LblSelectedTriggerThing1.Tag = nameof(Trigger.Thing1);
 			MtbSelectedTriggerThing1.Tag = nameof(Trigger.Thing1);
 
-			LblSelectedTriggerSomeIndex.Tag = nameof(Trigger.SomeIndex);
-			NudSelectedTriggerSomeIndex.Tag = nameof(Trigger.SomeIndex);
+			LblSelectedTriggerFiredGroup.Tag = nameof(Trigger.FiredGroup);
+			NudSelectedTriggerFiredGroup.Tag = nameof(Trigger.FiredGroup);
+
+			CbxSelectedTriggerFired.Tag = nameof(Trigger.Fired);
+			LblSelectedTriggerFiredDetails.Tag = nameof(Trigger.Fired);
 
 			LblSelectedTriggerThing2.Tag = nameof(Trigger.Thing2);
 			MtbSelectedTriggerThing2.Tag = nameof(Trigger.Thing2);
@@ -109,10 +112,7 @@ namespace BizHawk.Client.EmuHawk
 
 			string body = Mem.HashRegion(t.Address, t.SizeInBytes);
 
-			long ofs = Rom.Addresses.MainRam.SaveData;
-			int group = Mem.ReadS32(ofs + (t.SomeIndex * 4) + 0x168);
-			int firedBit = (group >> t.FiredBitShift) & 1;
-			bool fired = firedBit != 0;
+			bool fired = GetTriggerFired(t);
 
 			if (LbxTriggers.SelectedIndex != _previousSelectedTriggerIndex)
 			{
@@ -134,11 +134,8 @@ namespace BizHawk.Client.EmuHawk
 					return;
 				}
 
-				ReadOnlySpan<byte> bytes = Mem.ReadByteRange(t.Address, t.SizeInBytes).ToArray();
-
-				var updated = new Trigger(t.Address, bytes);
-
-				Guts.Triggers[t.Address] = updated;
+				Guts.Triggers[t.Address] = new Trigger(t.Address,
+					Mem.ReadByteRange(t.Address, t.SizeInBytes).ToArray());
 
 				LbxTriggers_SelectedIndexChanged(LbxTriggers, EventArgs.Empty);
 
@@ -148,11 +145,12 @@ namespace BizHawk.Client.EmuHawk
 
 		private void ClearDisplayedPoiInfo()
 		{
+			LbxPoiAssociatedTriggers.Items.Clear();
+
 			LblSelectedPoiAddress.Text = "0x";
 			TbxSelectedPoiX.Text = "<x>";
 			TbxSelectedPoiZ.Text = "<z>";
 			MtbSelectedPoiGeometry.ResetText();
-			LbxPoiAssociatedTriggers.Items.Clear();
 		}
 
 		private void ClearDisplayedTriggerInfo()
@@ -169,7 +167,7 @@ namespace BizHawk.Client.EmuHawk
 			CbxSelectedTriggerFired.Checked = false;
 			LblSelectedTriggerFiredDetails.Text = $"Group 0x, bit 0x";
 
-			NudSelectedTriggerSomeIndex.Value = 0;
+			NudSelectedTriggerFiredGroup.Value = 0;
 			MtbSelectedTriggerThing2.ResetText();
 			CmbSelectedTriggerStyle.ResetText();
 			NudSelectedTriggerPoiIndex.Value = 0;
@@ -447,10 +445,10 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			long ofs = Rom.Addresses.MainRam.SaveData;
-			long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
+			MainRamAddresses ram = Rom.Addresses.MainRam;
+			long ofs = ram.SaveData + 0x168 + t.FiredGroup * sizeof(int);
 
-			HexEditorGoToAddress(groupOfs);
+			HexEditorGoToAddress(ofs);
 		}
 
 		private void LbxPoiAssociatedTriggers_SelectedIndexChanged(object sender, EventArgs e)
@@ -543,6 +541,7 @@ namespace BizHawk.Client.EmuHawk
 			for (int i = address; i < max; i += size)
 			{
 				Trigger t = new(i, Mem.ReadByteRange(i, size).ToArray());
+				t.Fired = GetTriggerFired(t);
 
 				if (t.Style == TriggerStyle.Dummy)
 				{
@@ -590,6 +589,16 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		private void CbxSelectedTriggerFired_CheckedChanged(object sender, EventArgs e)
+		{
+			if (LbxTriggers.SelectedItem is not Trigger t)
+			{
+				return;
+			}
+
+			SelectedTrigger_ValidateInput(sender as Control);
+		}
+
 		private void LbxTriggers_Format(object sender, ListControlConvertEventArgs e)
 		{
 			var t = (Trigger)e.ListItem;
@@ -631,7 +640,7 @@ namespace BizHawk.Client.EmuHawk
 			CbxSelectedTriggerDisabled.Checked = t.Disabled;
 			CbxSelectedTriggerDisabled.Enabled = true;
 			MtbSelectedTriggerThing1.Text = $"0x{t.Thing1.ToString("X2", c)}";
-			NudSelectedTriggerSomeIndex.Value = t.SomeIndex;
+			NudSelectedTriggerFiredGroup.Value = t.FiredGroup;
 			MtbSelectedTriggerThing2.Text = $"0x{t.Thing2.ToString("X1", c)}";
 			NudSelectedTriggerPoiIndex.Value = t.PoiIndex;
 			MtbSelectedTriggerThing3.Text = $"0x{t.Thing3.ToString("X2", c)}";
@@ -649,13 +658,11 @@ namespace BizHawk.Client.EmuHawk
 
 			MainRamAddresses ram = Rom.Addresses.MainRam;
 
-			long ofs = ram.SaveData;
-			long groupOfs = ofs + (t.SomeIndex * 4) + 0x168;
-			int group = Mem.ReadS32(groupOfs);
-			int firedBit = (group >> t.FiredBitShift) & 1;
-			CbxSelectedTriggerFired.Checked = firedBit != 0;
+			long ofs = ram.SaveData + 0x168 + t.FiredGroup * sizeof(int);
+
+			CbxSelectedTriggerFired.Checked = GetTriggerFired(t);
 			LblSelectedTriggerFiredDetails.Text =
-				$"Group 0x{groupOfs.ToString("X", c)}, " +
+				$"Group 0x{ofs.ToString("X", c)}, " +
 				$"bit 0x{(1 << t.FiredBitShift).ToString("X", c)}";
 
 			if (t.PoiIndex >= 0 && t.PoiIndex < LbxPois.Items.Count)
