@@ -1,7 +1,6 @@
 ﻿using SHME.ExternalTool;
 using SHME.ExternalTool.Graphics;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -17,15 +16,9 @@ partial class CustomMainForm
 		_userChange = true;
 		Mem.WriteByteRange(c.Address, c.ToBytes().ToArray());
 
-		LbxCameraPaths.BeginUpdate();
-
-		int idxBefore = LbxCameraPaths.SelectedIndex;
-
+		BeginArrayUpdate();
 		BtnCameraPathReadArray_Click(this, EventArgs.Empty);
-
-		LbxCameraPaths.SelectedIndex = idxBefore;
-
-		LbxCameraPaths.EndUpdate();
+		EndArrayUpdate();
 	}
 
 	private void SelectedCameraPath_ResetProperty(CameraPath c, string? prop = null)

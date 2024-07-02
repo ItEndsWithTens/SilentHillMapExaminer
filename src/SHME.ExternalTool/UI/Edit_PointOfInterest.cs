@@ -16,19 +16,9 @@ partial class CustomMainForm
 		_userChange = true;
 		Mem.WriteByteRange(p.Address, p.ToBytes().ToArray());
 
-		int idxBeforeP = LbxPois.SelectedIndex;
-		int idxBeforeT = LbxTriggers.SelectedIndex;
-
-		LbxPois.BeginUpdate();
-		LbxTriggers.BeginUpdate();
-
+		BeginArrayUpdate();
 		BtnReadTriggers_Click(this, EventArgs.Empty);
-
-		LbxPois.SelectedIndex = idxBeforeP;
-		LbxTriggers.SelectedIndex = idxBeforeT;
-
-		LbxPois.EndUpdate();
-		LbxTriggers.EndUpdate();
+		EndArrayUpdate();
 	}
 
 	private void SelectedPoi_ResetProperty(PointOfInterest p, string? prop = null)

@@ -554,12 +554,10 @@ namespace BizHawk.Client.EmuHawk
 				Guts.Triggers.Add(t.Address, t);
 			}
 
-			LbxTriggers.BeginUpdate();
 			foreach (Trigger t in Guts.Triggers.Values)
 			{
 				LbxTriggers.Items.Add(t);
 			}
-			LbxTriggers.EndUpdate();
 
 			LblTriggerCount.Text = Guts.Triggers.Count.ToString(CultureInfo.CurrentCulture);
 

@@ -1,11 +1,9 @@
 ﻿using SHME.ExternalTool;
-using SHME.ExternalTool.Graphics;
 using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using static SHME.ExternalTool.CollectionExtensions;
 
 namespace BizHawk.Client.EmuHawk;
 
@@ -17,14 +15,9 @@ partial class CustomMainForm
 		Mem.WriteByteRange(t.Address, t.ToBytes().ToArray());
 		SetTriggerFired(t);
 
-		Guts.Triggers[t.Address] = t;
-		LbxTriggers.Items[Guts.Triggers.IndexFromKey(t.Address)] = t;
-
-		(PointOfInterest, Renderable?) changed = GetRenderableFromTrigger(t);
-
-		Guts.Pois[changed.Item1.Address] = changed;
-
-		RdoOverlayAxisColors_CheckedChanged(this, EventArgs.Empty);
+		BeginArrayUpdate();
+		BtnReadTriggers_Click(this, EventArgs.Empty);
+		EndArrayUpdate();
 	}
 
 	private bool GetTriggerFired(Trigger t)
