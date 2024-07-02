@@ -291,7 +291,7 @@ namespace BizHawk.Client.EmuHawk
 					success = true;
 					break;
 				case TriggerStyle.ButtonYaw:
-					pattern = @"Yaw:\s*?(\S+?)";
+					pattern = @"Yaw:\s*?(\S+)";
 					regex = new Regex(pattern, options, timeout);
 					match = regex.Match(text);
 					if (!match.Success)
