@@ -20,7 +20,22 @@ namespace SHME.ExternalTool
 		public Vector3 VolumeMax { get; set; }
 
 		public byte Thing4 { get; set; }
-		public bool Disabled { get; set; }
+		public bool Disabled
+		{
+			get => (Thing4 & 0b01000000) != 0;
+			set
+			{
+				if (value)
+				{
+					Thing4 |= 0b01000000;
+				}
+				else
+				{
+					Thing4 &= 0b10111111;
+				}
+			}
+		}
+
 		public byte Thing5 { get; set; }
 		public short Thing6 { get; set; }
 
@@ -68,8 +83,6 @@ namespace SHME.ExternalTool
 				Guts.QToFloat(bp.ReadInt16LittleEndian(span.Slice(14)), 4));
 
 			Thing4 = span[16];
-			Disabled = (Thing4 & 0b01000000) == 0b01000000;
-
 			Thing5 = span[17];
 			Thing6 = bp.ReadInt16LittleEndian(span.Slice(20));
 
@@ -111,10 +124,6 @@ namespace SHME.ExternalTool
 				span.Slice(0x0E), (short)Guts.FloatToQ(VolumeMax.Z, 4));
 
 			span[0x10] = Thing4;
-			if (Disabled)
-			{
-				span[0x10] |= 0b01000000;
-			}
 
 			span[0x11] = Thing5;
 
