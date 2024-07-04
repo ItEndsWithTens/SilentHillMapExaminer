@@ -124,10 +124,11 @@ jobs:
         dir "test/*Test*/*.csproj" -Recurse | %{dotnet build $PSItem.FullName -c:Release --no-dependencies}
         dotnet test -c:Release --no-build
 
-    - name: Run benchmarks
+    - name: Build and run benchmarks
       if: ${{ env.skip_benchmarks != 'true' }}
-      run: dotnet run -c Release -- -f * -e json -a ../../artifacts/test/benchmark
-      working-directory: test/Benchmark
+      run: |
+        dir "test/*Benchmark*/*.csproj" -Recurse | %{dotnet build $PSItem.FullName -c:Release --no-dependencies}
+        dotnet run --project test/Benchmark/Benchmark.csproj -c Release --no-build -- -f * -e json -a artifacts/test/benchmark
 
     - name: Rename benchmark results
       if: ${{ env.skip_benchmarks != 'true' }}
