@@ -154,6 +154,8 @@ namespace BizHawk.Client.EmuHawk
 			TbxSelectedPoiX.Text = "<x>";
 			TbxSelectedPoiZ.Text = "<z>";
 			MtbSelectedPoiGeometry.ResetText();
+
+			ResetFonts(typeof(PointOfInterest));
 		}
 
 		private void ClearDisplayedTriggerInfo()
@@ -182,6 +184,8 @@ namespace BizHawk.Client.EmuHawk
 			MtbSelectedTriggerThing6.ResetText();
 			NudSelectedTriggerStageIndex.Value = 0;
 			CbxSelectedTriggerSomeBool.Checked = false;
+
+			ResetFonts(typeof(Trigger));
 		}
 
 		private void RefreshLbxPoiAssociatedTriggers()

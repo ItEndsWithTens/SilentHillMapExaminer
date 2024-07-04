@@ -185,6 +185,17 @@ partial class CustomMainForm
 		}
 	}
 
+	private void ResetFonts(Type type)
+	{
+		foreach ((string _, IList<Control> controls) in _fontChangeMap[type])
+		{
+			foreach (Control control in controls)
+			{
+				control.Font = _fontDefaultValue;
+			}
+		}
+	}
+
 	private void HexMaskedTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
 	{
 		bool alphanumeric =

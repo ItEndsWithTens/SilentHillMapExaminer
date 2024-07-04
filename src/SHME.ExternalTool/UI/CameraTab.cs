@@ -112,6 +112,8 @@ namespace BizHawk.Client.EmuHawk
 			MtbCameraPathThing4.ResetText();
 			MtbCameraPathThing5.ResetText();
 			MtbCameraPathThing6.ResetText();
+
+			ResetFonts(typeof(CameraPath));
 		}
 
 		private void BtnCameraPathGoToVolumeMin_Click(object sender, EventArgs e)
