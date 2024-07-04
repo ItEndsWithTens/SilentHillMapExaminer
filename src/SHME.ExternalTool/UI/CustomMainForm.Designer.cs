@@ -3543,6 +3543,7 @@ namespace BizHawk.Client.EmuHawk
             // 
             this.CbxSelectedCameraPathDisabled.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.CbxSelectedCameraPathDisabled.AutoSize = true;
+            this.tableLayoutPanel22.SetColumnSpan(this.CbxSelectedCameraPathDisabled, 2);
             this.CbxSelectedCameraPathDisabled.ContextMenuStrip = this.CmsSelectedCameraPath;
             this.CbxSelectedCameraPathDisabled.Location = new System.Drawing.Point(100, 47);
             this.CbxSelectedCameraPathDisabled.Name = "CbxSelectedCameraPathDisabled";

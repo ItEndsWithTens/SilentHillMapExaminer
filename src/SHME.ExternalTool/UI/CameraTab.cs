@@ -17,32 +17,14 @@ namespace BizHawk.Client.EmuHawk
 			CbxSelectedCameraPathDisabled.Tag = nameof(CameraPath.Disabled);
 
 			LblSelectedCameraPathVolumeMin.Tag = nameof(CameraPath.VolumeMin);
-
-			TbxCameraPathVolumeMinX.Tag =
-				nameof(CameraPath.VolumeMin) +
-				nameof(CameraPath.VolumeMin.X);
-
-			TbxCameraPathVolumeMinY.Tag =
-				nameof(CameraPath.VolumeMin) +
-				nameof(CameraPath.VolumeMin.Y);
-
-			TbxCameraPathVolumeMinZ.Tag =
-				nameof(CameraPath.VolumeMin) +
-				nameof(CameraPath.VolumeMin.Z);
+			TbxCameraPathVolumeMinX.Tag = $"{nameof(CameraPath.VolumeMin)}.X";
+			TbxCameraPathVolumeMinY.Tag = $"{nameof(CameraPath.VolumeMin)}.Y";
+			TbxCameraPathVolumeMinZ.Tag = $"{nameof(CameraPath.VolumeMin)}.Z";
 
 			LblSelectedCameraPathVolumeMax.Tag = nameof(CameraPath.VolumeMax);
-
-			TbxCameraPathVolumeMaxX.Tag =
-				nameof(CameraPath.VolumeMax) +
-				nameof(CameraPath.VolumeMax.X);
-
-			TbxCameraPathVolumeMaxY.Tag =
-				nameof(CameraPath.VolumeMax) +
-				nameof(CameraPath.VolumeMax.Y);
-
-			TbxCameraPathVolumeMaxZ.Tag =
-				nameof(CameraPath.VolumeMax) +
-				nameof(CameraPath.VolumeMax.Z);
+			TbxCameraPathVolumeMaxX.Tag = $"{nameof(CameraPath.VolumeMax)}.X";
+			TbxCameraPathVolumeMaxY.Tag = $"{nameof(CameraPath.VolumeMax)}.Y";
+			TbxCameraPathVolumeMaxZ.Tag = $"{nameof(CameraPath.VolumeMax)}.Z";
 
 			LblSelectedCameraPathAreaMin.Tag =
 				nameof(CameraPath.AreaMinX) +
@@ -59,11 +41,19 @@ namespace BizHawk.Client.EmuHawk
 			TbxCameraPathAreaMaxZ.Tag = nameof(CameraPath.AreaMaxZ);
 
 			LblSelectedCameraPathThing4.Tag = nameof(CameraPath.Thing4);
+			MtbCameraPathThing4.Tag = nameof(CameraPath.Thing4);
+
 			LblSelectedCameraPathThing5.Tag = nameof(CameraPath.Thing5);
+			MtbCameraPathThing5.Tag = nameof(CameraPath.Thing5);
+
 			LblSelectedCameraPathThing6.Tag = nameof(CameraPath.Thing6);
+			MtbCameraPathThing6.Tag = nameof(CameraPath.Thing6);
 
 			LblSelectedCameraPathPitch.Tag = nameof(CameraPath.Pitch);
+			TbxCameraPathPitch.Tag = nameof(CameraPath.Pitch);
+
 			LblSelectedCameraPathYaw.Tag = nameof(CameraPath.Yaw);
+			TbxCameraPathYaw.Tag = nameof(CameraPath.Yaw);
 		}
 
 		private int? _previousSelectedCameraPathIndex;
@@ -297,6 +287,7 @@ namespace BizHawk.Client.EmuHawk
 			CultureInfo c = CultureInfo.CurrentCulture;
 
 			SuspendLayout();
+
 			LblCameraPathAddress.Text = $"0x{path.Address.ToString("X", c)}";
 			CbxSelectedCameraPathDisabled.Enabled = true;
 			CbxSelectedCameraPathDisabled.Checked = path.Disabled;
@@ -315,6 +306,16 @@ namespace BizHawk.Client.EmuHawk
 			MtbCameraPathThing6.Text = $"0x{path.Thing6.ToString("X4", c)}";
 			TbxCameraPathPitch.Text = path.Pitch.ToString(c);
 			TbxCameraPathYaw.Text = path.Yaw.ToString(c);
+
+			IList<(string, IList<Control>)> map = _fontChangeMap[typeof(CameraPath)];
+			foreach ((string property, IList<Control> controls) in map)
+			{
+				foreach (Control control in controls)
+				{
+					MakeBoldIfChanged(control, path, property);
+				}
+			}
+
 			ResumeLayout();
 		}
 	}

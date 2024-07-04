@@ -145,6 +145,8 @@ namespace BizHawk.Client.EmuHawk
 			InitializeFramebufferTab();
 			InitializeUtilityTab();
 
+			InitializeEditBindings();
+
 			Guts.GameCameraLookAt = new BoxGenerator(0.25f, Color.Purple).Generate().ToWorld();
 		}
 
@@ -181,6 +183,9 @@ namespace BizHawk.Client.EmuHawk
 		public override void Restart()
 		{
 			base.Restart();
+
+			_fontDefaultValue = DefaultFont;
+			_fontChangedValue = new Font(DefaultFont, FontStyle.Bold);
 
 			_disc?.Dispose();
 			_disc = Disc.LoadAutomagic(MainForm.CurrentlyOpenRom);
@@ -683,6 +688,9 @@ namespace BizHawk.Client.EmuHawk
 			Settings?.Dispose();
 
 			_disc?.Dispose();
+
+			_fontDefaultValue?.Dispose();
+			_fontChangedValue?.Dispose();
 
 			GameSurface = null;
 		}

@@ -103,7 +103,7 @@ partial class CustomMainForm
 
 		switch (c?.Tag)
 		{
-			case nameof(CameraPath.VolumeMin) + nameof(CameraPath.VolumeMin.X):
+			case $"{nameof(CameraPath.VolumeMin)}.X":
 				if (Single.TryParse(c.Text, out float x))
 				{
 					if (path.VolumeMin.X.ApproximatelyEquivalent(x, Tolerance))
@@ -113,7 +113,7 @@ partial class CustomMainForm
 					path.VolumeMin = min;
 				}
 				break;
-			case nameof(CameraPath.VolumeMin) + nameof(CameraPath.VolumeMin.Y):
+			case $"{nameof(CameraPath.VolumeMin)}.Y":
 				if (Single.TryParse(c.Text, out float y))
 				{
 					if (path.VolumeMin.Y.ApproximatelyEquivalent(y, Tolerance))
@@ -123,7 +123,7 @@ partial class CustomMainForm
 					path.VolumeMin = min;
 				}
 				break;
-			case nameof(CameraPath.VolumeMin) + nameof(CameraPath.VolumeMin.Z):
+			case $"{nameof(CameraPath.VolumeMin)}.Z":
 				if (Single.TryParse(c.Text, out float z))
 				{
 					if (path.VolumeMin.Z.ApproximatelyEquivalent(z, Tolerance))
@@ -133,7 +133,7 @@ partial class CustomMainForm
 					path.VolumeMin = min;
 				}
 				break;
-			case nameof(CameraPath.VolumeMax) + nameof(CameraPath.VolumeMax.X):
+			case $"{nameof(CameraPath.VolumeMax)}.X":
 				if (Single.TryParse(c.Text, out x))
 				{
 					if (path.VolumeMax.X.ApproximatelyEquivalent(x, Tolerance))
@@ -143,7 +143,7 @@ partial class CustomMainForm
 					path.VolumeMax = max;
 				}
 				break;
-			case nameof(CameraPath.VolumeMax) + nameof(CameraPath.VolumeMax.Y):
+			case $"{nameof(CameraPath.VolumeMax)}.Y":
 				if (Single.TryParse(c.Text, out y))
 				{
 					if (path.VolumeMax.Y.ApproximatelyEquivalent(y, Tolerance))
@@ -153,7 +153,7 @@ partial class CustomMainForm
 					path.VolumeMax = max;
 				}
 				break;
-			case nameof(CameraPath.VolumeMax) + nameof(CameraPath.VolumeMax.Z):
+			case $"{nameof(CameraPath.VolumeMax)}.Z":
 				if (Single.TryParse(c.Text, out z))
 				{
 					if (path.VolumeMax.Z.ApproximatelyEquivalent(z, Tolerance))
@@ -214,10 +214,10 @@ partial class CustomMainForm
 				path.Thing5 = b;
 				break;
 			case nameof(CameraPath.Thing6):
-				good = Byte.TryParse(c.Text, hex, culture, out b);
-				if (!good || path.Thing6 == b)
+				good = Int16.TryParse(c.Text, hex, culture, out short s);
+				if (!good || path.Thing6 == s)
 					return;
-				path.Thing6 = b;
+				path.Thing6 = s;
 				break;
 			case nameof(CameraPath.Pitch):
 				if (Single.TryParse(c.Text, out float pitch))

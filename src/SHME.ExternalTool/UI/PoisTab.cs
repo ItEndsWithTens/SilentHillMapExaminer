@@ -384,7 +384,7 @@ namespace BizHawk.Client.EmuHawk
 			LblPoiCount.Text = count.ToString(CultureInfo.CurrentCulture);
 			NudSelectedTriggerTargetIndex.Maximum = count - 1;
 
-			var generator = new BoxGenerator(1.0f, Color.White);
+			BoxGenerator generator = new(1.0f, Color.White);
 
 			Guts.Pois.Clear();
 			LbxPois.Items.Clear();
@@ -509,6 +509,15 @@ namespace BizHawk.Client.EmuHawk
 			TbxSelectedPoiZ.Text = poi.Z.ToString("0.##", c);
 			MtbSelectedPoiGeometry.Text = $"0x{poi.Geometry.ToString("X8", c)}";
 
+			IList<(string, IList<Control>)> map = _fontChangeMap[typeof(PointOfInterest)];
+			foreach ((string property, IList<Control> controls) in map)
+			{
+				foreach (Control control in controls)
+				{
+					MakeBoldIfChanged(control, poi, property);
+				}
+			}
+
 			RefreshLbxPoiAssociatedTriggers();
 
 			IEnumerable<Trigger>? associated = LbxTriggers.Items
@@ -628,9 +637,9 @@ namespace BizHawk.Client.EmuHawk
 			CultureInfo c = CultureInfo.CurrentCulture;
 
 			LblSelectedTriggerAddress.Text = $"0x{t.Address.ToString("X", c)}";
-			MtbSelectedTriggerThing0.Text = $"0x{t.Thing0.ToString("X2", c)}";
 			CbxSelectedTriggerDisabled.Checked = t.Disabled;
 			CbxSelectedTriggerDisabled.Enabled = true;
+			MtbSelectedTriggerThing0.Text = $"0x{t.Thing0.ToString("X2", c)}";
 			MtbSelectedTriggerThing1.Text = $"0x{t.Thing1.ToString("X2", c)}";
 			NudSelectedTriggerFiredGroup.Value = t.FiredGroup;
 			MtbSelectedTriggerThing2.Text = $"0x{t.Thing2.ToString("X1", c)}";
@@ -736,6 +745,15 @@ namespace BizHawk.Client.EmuHawk
 			if (contains && !ReferenceEquals(triggersItem, associatedItem))
 			{
 				LbxPoiAssociatedTriggers.SelectedItem = LbxTriggers.SelectedItem;
+			}
+
+			IList<(string, IList<Control>)> map = _fontChangeMap[typeof(Trigger)];
+			foreach ((string property, IList<Control> controls) in map)
+			{
+				foreach (Control control in controls)
+				{
+					MakeBoldIfChanged(control, t, property);
+				}
 			}
 		}
 
