@@ -445,11 +445,10 @@ namespace BizHawk.Client.EmuHawk
 			{
 				Guts.Camera.GetVisibleRenderables(
 					ref Guts.VisibleRenderables, [
-						.. Guts.Pois.Values
-							.Select((tuple) => tuple.Item2),
+						.. Guts.Pois.Values.SelectItem2(),
 						.. Guts.CameraPaths.Values
-							.Select((path) => path)
-							.SelectMany((tuple) => tuple.Item2),
+							.SelectTuple()
+							.SelectManyItem2(),
 						.. Guts.Gems,
 						.. Guts.Lines]);
 			}

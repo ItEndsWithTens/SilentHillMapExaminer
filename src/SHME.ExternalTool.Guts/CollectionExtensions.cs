@@ -1,6 +1,7 @@
 ﻿using SHME.ExternalTool.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SHME.ExternalTool;
 
@@ -46,5 +47,27 @@ public static class CollectionExtensions
 		}
 
 		return -1;
+	}
+
+	// These SelectX methods are just a hack to avoid creating anonymous
+	// methods in the main tool assembly whose signatures contain types
+	// defined in an external assembly. PointOfInterest or Trigger, for
+	// example, are defined in SHME.ExternalTool.Guts. Under Mono in
+	// Linux, when BizHawk tries to load the main plugin assembly, Mono
+	// tries to load the types it finds in method signatures, failing on
+	// the aforementioned examples (among others) because the DLLs found
+	// in the ExternalTool attribute's LoadAssemblyFiles array haven't
+	// been loaded yet. This is a bit roundabout, but still effective.
+	public static IEnumerable<TItem2> SelectItem2<TItem1, TItem2>(this IEnumerable<(TItem1, TItem2)> enumerable)
+	{
+		return enumerable.Select((tuple) => tuple.Item2);
+	}
+	public static IEnumerable<TItem2> SelectManyItem2<TItem1, TItem2>(this IEnumerable<(TItem1, IList<TItem2>)> enumerable)
+	{
+		return enumerable.SelectMany((tuple) => tuple.Item2);
+	}
+	public static IEnumerable<(TItem1, TItem2)> SelectTuple<TItem1, TItem2>(this IEnumerable<(TItem1, TItem2)> enumerable)
+	{
+		return enumerable.Select((tuple) => tuple);
 	}
 }
