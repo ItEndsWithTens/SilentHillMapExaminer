@@ -12,7 +12,8 @@
     </PackageReference>
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
 
-    <Reference Include="BizHawk.Bizware.BizwareGL" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Bizware.BizwareGL.dll" Private="false" />
+    <Reference Include="BizHawk.Bizware.Graphics" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Bizware.Graphics.dll" Private="false" />
+    <Reference Include="BizHawk.Bizware.Graphics.Controls" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Bizware.Graphics.Controls.dll" Private="false" />
     <Reference Include="BizHawk.Client.Common" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Client.Common.dll" Private="false" />
     <Reference Include="BizHawk.Client.EmuHawk" HintPath="$(BizHawkOutputDir)/EmuHawk.exe" Private="false" />
     <Reference Include="BizHawk.Common" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Common.dll" Private="false" />

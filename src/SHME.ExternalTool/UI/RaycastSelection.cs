@@ -1,4 +1,5 @@
-﻿using SHME.ExternalTool;
+﻿using BizHawk.Bizware.Graphics.Controls;
+using SHME.ExternalTool;
 using SHME.ExternalTool.Graphics;
 using System;
 using System.Collections.Generic;
@@ -143,7 +144,7 @@ namespace BizHawk.Client.EmuHawk
 				return;
 			}
 
-			if (sender is not Control c || c.Parent is not GraphicsControl gc)
+			if (sender is not GraphicsControl gc)
 			{
 				return;
 			}

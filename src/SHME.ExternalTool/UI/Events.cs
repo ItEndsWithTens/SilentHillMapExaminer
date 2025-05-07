@@ -14,21 +14,17 @@ public partial class CustomMainForm
 	{
 		Emu.StateLoaded += Emu_StateLoaded;
 
-		PropertyInfo? pInfo = typeof(DisplayManager).GetProperty("_graphicsControl", BindingFlags.NonPublic | BindingFlags.Instance);
-		if (pInfo != null)
+		FieldInfo? fInfo = typeof(MainForm).GetField("_presentationPanel", BindingFlags.NonPublic | BindingFlags.Instance);
+		if (fInfo != null)
 		{
-			var gc = (GraphicsControl)pInfo.GetValue(DisplayManager);
+			var pp = (PresentationPanel)fInfo.GetValue(MainForm);
 
-			FieldInfo? fInfo = typeof(GraphicsControl).GetField("_managed", BindingFlags.NonPublic | BindingFlags.Instance);
-			if (fInfo != null)
-			{
-				GameSurface = (Control)fInfo.GetValue(gc);
+			GameSurface = pp.Control;
 
-				GameSurface.MouseDown += GameSurface_MouseDown;
-				GameSurface.MouseUp += GameSurface_MouseUp;
+			GameSurface.MouseDown += GameSurface_MouseDown;
+			GameSurface.MouseUp += GameSurface_MouseUp;
 
-				GameSurface.SizeChanged += GameSurface_SizeChanged;
-			}
+			GameSurface.SizeChanged += GameSurface_SizeChanged;
 		}
 
 		RaycastSelectionTimer.Tick += RaycastSelectionTimer_Tick;
