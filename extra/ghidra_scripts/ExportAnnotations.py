@@ -96,25 +96,22 @@ with open(outFile.getAbsolutePath(), 'w') as of:
     of.write(f'ProjectDirectory {os.path.dirname(marker)}\n')
     of.write(f'ProgramPath {program.getDomainFile().getPathname()}\n\n')
 
-    for label in [item for item in labels if item[1] == analysis_s]:
-        of.write(' '.join(label) + '\n')
+    strings = [' '.join(item) for item in labels if item[1] == analysis_s]
+    if len(strings) > 0:
+        of.write('\n'.join(strings) + '\n\n\n\n')
 
-    of.write('\n\n\n')
+    strings = [' '.join(item) for item in labels if item[1] == user_s]
+    if len(strings) > 0:
+        of.write('\n'.join(strings) + '\n\n\n\n')
 
-    for label in [item for item in labels if item[1] == user_s]:
-        of.write(' '.join(label) + '\n')
+    strings = [' '.join(item) for item in functions if item[1] == analysis_s]
+    if len(strings) > 0:
+        of.write('\n'.join(strings) + '\n\n\n\n')
 
-    of.write('\n\n\n')
+    strings = [' '.join(item) for item in functions if item[1] == user_s]
+    if len(strings) > 0:
+        of.write('\n'.join(strings) + '\n\n\n\n')
 
-    for function in [item for item in functions if item[1] == analysis_s]:
-        of.write(' '.join(function) + '\n')
-
-    of.write('\n\n\n')
-
-    for function in [item for item in functions if item[1] == user_s]:
-        of.write(' '.join(function) + '\n')
-
-    of.write('\n\n\n')
-
-    for tuple in comments:
-        of.write(' '.join(tuple) + '\n\n')
+    strings = [' '.join(item) for item in comments]
+    if len(strings) > 0:
+        of.write('\n\n'.join(strings) + '\n\n')
