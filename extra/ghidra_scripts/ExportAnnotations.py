@@ -75,9 +75,6 @@ for space in factory.getAllAddressSpaces():
 labels = [l for l in symbol_lists if l[0] == f'{SymbolType.LABEL}']
 functions = [l for l in symbol_lists if l[0] == f'{SymbolType.FUNCTION}']
 
-analysis_s = SourceType.ANALYSIS.toString()
-user_s = SourceType.USER_DEFINED.toString()
-
 # A GUID for such a primitive format may be overkill, but it's prudent, and
 # they're easy enough to generate. An existing format for this sort of data
 # would have been preferable, but curiously none seem to exist.
@@ -97,29 +94,23 @@ with open(outFile.getAbsolutePath(), 'w') as of:
         f'ProjectDirectory {os.path.dirname(marker)}\n' + \
         f'ProgramPath {program.getDomainFile().getPathname()}\n')
 
-    strings = [' '.join(item) for item in labels if item[1] == analysis_s]
-    length = len(strings)
-    of.write(f'\n\n\n# {length} analysis-defined labels\n')
-    if length > 0:
-        of.write('\n' + '\n'.join(strings) + '\n')
+    source_types = SourceType.values()
 
-    strings = [' '.join(item) for item in labels if item[1] == user_s]
-    length = len(strings)
-    of.write(f'\n\n\n# {length} user-defined labels\n')
-    if length > 0:
-        of.write('\n' + '\n'.join(strings) + '\n')
+    for src in source_types:
+        src_s = src.toString()
+        strings = [' '.join(item) for item in labels if item[1] == src_s]
+        length = len(strings)
+        of.write(f'\n\n\n# {length} {src_s} labels\n')
+        if length > 0:
+            of.write('\n' + '\n'.join(strings) + '\n')
 
-    strings = [' '.join(item) for item in functions if item[1] == analysis_s]
-    length = len(strings)
-    of.write(f'\n\n\n# {length} analysis-defined functions\n')
-    if length > 0:
-        of.write('\n' + '\n'.join(strings) + '\n')
-
-    strings = [' '.join(item) for item in functions if item[1] == user_s]
-    length = len(strings)
-    of.write(f'\n\n\n# {length} user-defined functions\n')
-    if length > 0:
-        of.write('\n' + '\n'.join(strings) + '\n')
+    for src in source_types:
+        src_s = src.toString()
+        strings = [' '.join(item) for item in functions if item[1] == src_s]
+        length = len(strings)
+        of.write(f'\n\n\n# {length} {src_s} functions\n')
+        if length > 0:
+            of.write('\n' + '\n'.join(strings) + '\n')
 
     strings = [' '.join(item) for item in comments]
     length = len(strings)
