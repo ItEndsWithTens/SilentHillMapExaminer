@@ -85,33 +85,44 @@ FILE_FORMAT_GUID = '67035dec-e33b-4268-b074-f9cafc98295d'
 FILE_FORMAT_VERSION = 1
 
 with open(outFile.getAbsolutePath(), 'w') as of:
-    of.write(f'FileFormatGuid {FILE_FORMAT_GUID}\n')
-    of.write(f'FileFormatVersion {FILE_FORMAT_VERSION}\n\n')
-
     locator = getProjectRootFolder().getProjectLocator()
     name = locator.getName()
     marker = locator.getMarkerFile().toString()
 
-    of.write(f'ProjectName {name}\n')
-    of.write(f'ProjectDirectory {os.path.dirname(marker)}\n')
-    of.write(f'ProgramPath {program.getDomainFile().getPathname()}\n\n')
+    of.write( \
+        f'FileFormatGuid {FILE_FORMAT_GUID}\n' + \
+        f'FileFormatVersion {FILE_FORMAT_VERSION}\n' + \
+        '\n' + \
+        f'ProjectName {name}\n' + \
+        f'ProjectDirectory {os.path.dirname(marker)}\n' + \
+        f'ProgramPath {program.getDomainFile().getPathname()}\n')
 
     strings = [' '.join(item) for item in labels if item[1] == analysis_s]
-    if len(strings) > 0:
-        of.write('\n'.join(strings) + '\n\n\n\n')
+    length = len(strings)
+    of.write(f'\n\n\n# {length} analysis-defined labels\n')
+    if length > 0:
+        of.write('\n' + '\n'.join(strings) + '\n')
 
     strings = [' '.join(item) for item in labels if item[1] == user_s]
-    if len(strings) > 0:
-        of.write('\n'.join(strings) + '\n\n\n\n')
+    length = len(strings)
+    of.write(f'\n\n\n# {length} user-defined labels\n')
+    if length > 0:
+        of.write('\n' + '\n'.join(strings) + '\n')
 
     strings = [' '.join(item) for item in functions if item[1] == analysis_s]
-    if len(strings) > 0:
-        of.write('\n'.join(strings) + '\n\n\n\n')
+    length = len(strings)
+    of.write(f'\n\n\n# {length} analysis-defined functions\n')
+    if length > 0:
+        of.write('\n' + '\n'.join(strings) + '\n')
 
     strings = [' '.join(item) for item in functions if item[1] == user_s]
-    if len(strings) > 0:
-        of.write('\n'.join(strings) + '\n\n\n\n')
+    length = len(strings)
+    of.write(f'\n\n\n# {length} user-defined functions\n')
+    if length > 0:
+        of.write('\n' + '\n'.join(strings) + '\n')
 
     strings = [' '.join(item) for item in comments]
-    if len(strings) > 0:
-        of.write('\n\n'.join(strings) + '\n\n')
+    length = len(strings)
+    of.write(f'\n\n\n# {length} comments\n')
+    if length > 0:
+        of.write('\n' + '\n\n'.join(strings) + '\n\n')
