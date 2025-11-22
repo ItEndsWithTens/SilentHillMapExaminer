@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Framework" Version="17.10.4" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.10.4" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="18.0.2" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="18.0.2" />
 
     <Reference Include="BizHawk.Common" HintPath="$(BizHawkOutputDir)/dll/BizHawk.Common.dll" />
   </ItemGroup>
