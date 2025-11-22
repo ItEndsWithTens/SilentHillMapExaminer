@@ -11,7 +11,7 @@ on:
 jobs:
   build:
 
-    runs-on: windows-2022
+    runs-on: windows-2025
 
     defaults:
       run:
@@ -30,13 +30,13 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         fetch-depth: 0
         submodules: false
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: 9.0.x
 
@@ -148,7 +148,7 @@ jobs:
         auto-push: true
 
     - name: Upload .zip
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: zip
         path: artifacts/dist/*.zip
@@ -172,7 +172,7 @@ jobs:
 
     steps:
     - name: Download zip file
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v6
       with:
         name: zip
 
