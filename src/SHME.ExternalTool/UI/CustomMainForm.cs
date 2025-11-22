@@ -405,7 +405,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			MemEvents?.RemoveMemoryCallback(IndexOfDrawRegion_ValueChanging);
 
-			Gui.WithSurface(_displaySurfaceID, () => Gui.ClearGraphics());
+			Gui.WithSurface(_displaySurfaceID, gui => gui.ClearGraphics());
 		}
 
 		private void LoadSettings()
@@ -511,7 +511,7 @@ namespace BizHawk.Client.EmuHawk
 		}
 		private void DrawOverlayGui()
 		{
-			Gui.WithSurface(_displaySurfaceID, () =>
+			Gui.WithSurface(_displaySurfaceID, gui =>
 			{
 				Matrix4x4 matrix = Matrix4x4.Identity;
 				Vector3 position = Vector3.Zero;
@@ -987,7 +987,7 @@ namespace BizHawk.Client.EmuHawk
 		private void ApplyOverlayToGui()
 		{
 			Gui.WithSurface(_displaySurfaceID,
-				() => Gui.DrawImage(
+				gui => gui.DrawImage(
 					Overlay,
 					Guts.RenderPort.Left,
 					Guts.RenderPort.Top,
@@ -1002,7 +1002,7 @@ namespace BizHawk.Client.EmuHawk
 			InitializeOverlay();
 		}
 
-		private void IndexOfDrawRegion_ValueChanging(uint address, uint value, uint flags)
+		private uint? IndexOfDrawRegion_ValueChanging(uint address, uint value, uint flags)
 		{
 			DrawOverlay();
 
@@ -1027,6 +1027,8 @@ namespace BizHawk.Client.EmuHawk
 				AimCamera(BtnCameraFps);
 				Mem.WriteU16(Rom.Addresses.MainRam.HarryYaw, _holdCameraYaw);
 			}
+
+			return null;
 		}
 	}
 }

@@ -347,7 +347,7 @@ namespace BizHawk.Client.EmuHawk
 		{
 			if (!CbxEnableTestModelSection.Checked)
 			{
-				Gui.WithSurface(DisplaySurfaceID.EmuCore, () => Gui.ClearGraphics());
+				Gui.WithSurface(DisplaySurfaceID.EmuCore, gui => gui.ClearGraphics());
 			}
 		}
 
